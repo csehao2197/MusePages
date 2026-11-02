@@ -1,0 +1,95 @@
+Create a nutrition coaching page for a fitness brand called "FuelRight Nutrition" that offers personalized meal planning and coaching. Include these sections:
+
+1. HERO SECTION
+- Split layout: left side has headline and CTA, right side shows a vibrant image of a balanced meal prep spread
+- Headline: "Eat Smarter. Perform Better. Feel Amazing."
+- Subheadline: "Personalized nutrition plans backed by science, built for your lifestyle"
+- Primary CTA: "Get Your Free Assessment"
+- Trust badges below CTA: "500+ Clients Coached", "Certified Nutritionists", "No Fad Diets"
+- Light gradient background from white to soft green (#F0FFF4)
+
+2. PROBLEM / SOLUTION SECTION
+- Headline: "Tired of Guessing What to Eat?"
+- 3-column layout showing common frustrations with X icons:
+  - "Conflicting diet advice everywhere"
+  - "Meal plans that don't fit your schedule"
+  - "No accountability or support"
+- Arrow or divider transition
+- 3-column layout showing solutions with checkmark icons:
+  - "Evidence-based plans tailored to you"
+  - "Flexible meals that fit real life"
+  - "Weekly 1-on-1 check-ins with your coach"
+
+3. COACHING PLANS (3-tier pricing cards)
+- Starter: $99/month
+  - Personalized macro targets
+  - Custom meal plan (updated monthly)
+  - Recipe database access (200+ recipes)
+  - Email support
+
+- Pro: $179/month (Most Popular badge, highlighted border)
+  - Everything in Starter
+  - Weekly 30-min video check-in
+  - Grocery shopping lists
+  - Restaurant dining guide
+  - Progress tracking dashboard
+
+- Elite: $299/month
+  - Everything in Pro
+  - Daily coach messaging via app
+  - Supplement recommendations
+  - Bi-weekly body composition analysis
+  - Priority scheduling
+  - Quarterly in-person consultation
+
+- Toggle switch above cards: "Monthly" / "Annual (Save 20%)"
+- Each card has a "Start Now" CTA button
+
+4. HOW IT WORKS (4-step vertical timeline, alternating left/right)
+- Step 1: "Complete Your Assessment" — 10-minute questionnaire covering goals, dietary preferences, allergies, lifestyle
+- Step 2: "Meet Your Coach" — Get matched with a certified nutritionist who specializes in your goal
+- Step 3: "Receive Your Plan" — Custom meal plan with macros, recipes, and shopping lists delivered within 48 hours
+- Step 4: "Track & Adjust" — Regular check-ins to monitor progress and tweak your plan for optimal results
+- Each step has an icon and a brief description
+
+5. COACH PROFILES (horizontal scroll or 2x2 grid)
+- 4 featured coaches:
+  - Dr. Amanda Chen, MS, RD — Sports Nutrition Specialist — "Helping athletes fuel their peak performance"
+  - Marcus Johnson, CSCS, PN1 — Weight Loss Expert — "Sustainable habits, not crash diets"
+  - Sofia Reyes, CNS — Plant-Based Nutrition — "Thriving on plants without sacrificing taste"
+  - David Kim, RD, CISSN — Muscle Building — "Strategic nutrition for serious gains"
+- Each with professional headshot, credentials, specialty, and "Book a Call" link
+
+6. CLIENT RESULTS
+- 3 result cards in a row:
+  - Card 1: "Lost 35 lbs in 5 months" — Before/after silhouette illustration — "I finally found an approach that works with my busy schedule." — Jake T., Software Engineer
+  - Card 2: "Gained 12 lbs lean muscle" — Progress chart graphic — "The meal plans are delicious and I never feel deprived." — Mia L., Competitive Swimmer
+  - Card 3: "Reversed pre-diabetes" — Health metric improvement graphic — "My doctor was shocked at my bloodwork improvements." — Robert H., Age 54
+- Each card has a subtle green gradient border on the left side
+
+7. SAMPLE MEAL PLAN PREVIEW
+- Headline: "A Day on the FuelRight Plan"
+- Visual timeline layout for one day:
+  - Breakfast (7:00 AM): Overnight oats with berries, chia seeds, almond butter — 420 cal, 35g protein
+  - Snack (10:00 AM): Greek yogurt with walnuts and honey — 250 cal, 18g protein
+  - Lunch (12:30 PM): Grilled chicken quinoa bowl with roasted vegetables and tahini dressing — 550 cal, 42g protein
+  - Snack (3:30 PM): Apple slices with peanut butter and dark chocolate chips — 280 cal, 8g protein
+  - Dinner (7:00 PM): Pan-seared salmon with sweet potato and steamed broccoli — 520 cal, 38g protein
+- Daily total displayed: 2,020 cal | 141g protein | 198g carbs | 78g fat
+- "This is just a sample — your plan is 100% customized" note below
+
+8. FAQ SECTION
+- "Do I need to count calories?" — We handle the numbers. You just follow the plan and enjoy the food.
+- "Can you work with food allergies?" — Yes, all plans are built around your restrictions and preferences.
+- "How quickly will I see results?" — Most clients notice changes in energy within 1 week and visible body composition changes within 4-6 weeks.
+- "Can I still eat out at restaurants?" — Absolutely. Pro and Elite plans include a restaurant dining guide.
+- "What if I don't like a meal on my plan?" — Swap it out instantly from our 200+ recipe library.
+
+9. LEAD CAPTURE / CTA SECTION
+- Background: soft gradient green (#10B981 to #059669)
+- Headline: "Your Transformation Starts With One Meal"
+- Subheadline: "Take the free 2-minute nutrition assessment and get a personalized recommendation"
+- Email input field + "Get My Free Assessment" button
+- Small print: "No spam. Unsubscribe anytime."
+
+Design: Clean, health-focused palette — white (#FFFFFF) base, emerald green (#10B981) primary accent, dark slate (#1E293B) text. Typography: Outfit for headings, Source Sans 3 for body. Cards with 12px border-radius, soft shadow (0 4px 6px rgba(0,0,0,0.07)). Fully responsive: single-column stack on mobile with touch-friendly spacing (min 44px tap targets).

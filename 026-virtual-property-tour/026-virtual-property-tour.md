@@ -1,0 +1,148 @@
+Create an immersive virtual tour page for a real estate listing. Include these sections:
+
+1. HEADER BAR (Minimal, overlay)
+- Property address
+- Price: $1,250,000
+- Key stats: 4 bed | 3.5 bath | 3,200 sq ft
+- "Schedule Tour" button
+- "Save" heart icon
+- "Share" button
+- "Exit Tour" link
+
+2. 360° VIEWER (Full-screen capable)
+Main interactive experience:
+- Panoramic 360° view
+- Click and drag to look around
+- Pinch to zoom (mobile)
+- Mouse scroll zoom (desktop)
+- Gyroscope support (mobile devices)
+- VR headset compatible option
+
+Controls:
+- Fullscreen toggle
+- Zoom in/out buttons
+- Auto-rotate toggle
+- Reset view button
+
+3. ROOM NAVIGATION
+Thumbnail strip or floor plan navigation:
+- Clickable room thumbnails
+- Current room highlighted
+- Room names: Living Room, Kitchen, Primary Bedroom, etc.
+- Transition animation between rooms
+
+Floor plan overlay option:
+- Show floor plan
+- Current position marked
+- Click rooms to navigate
+- Legend for room types
+
+4. HOTSPOT MARKERS
+Interactive points of interest:
+- Info hotspots (i icon): Property details
+  - "Hardwood floors throughout"
+  - "Custom built-in shelving"
+  - "New HVAC system (2023)"
+
+- Navigation hotspots (arrow icon): Move to next room
+- Video hotspots: Embedded video clips
+- Link hotspots: External resources
+
+Hotspot behavior:
+- Pulse animation to draw attention
+- Click to expand info panel
+- Auto-close when clicking elsewhere
+
+5. ROOM INFO PANEL (Slide-out)
+When viewing a room:
+- Room name and dimensions
+- Key features list
+- Photo gallery for this room
+- Notes: "Recently renovated" etc.
+
+6. TOUR MODES
+Toggle between:
+- Self-guided: User controls pace
+- Guided tour: Auto-play with narration
+  - Play/pause
+  - Skip forward/back
+  - Audio on/off
+  - Transcript available
+
+7. MEASUREMENT TOOLS
+Interactive measuring:
+- Room dimensions displayed
+- Click two points to measure
+- Furniture placement visualization
+- "Will my couch fit?" helper
+
+8. BEFORE/AFTER SLIDER (if applicable)
+- Renovation comparison
+- Staging vs empty
+- Slider to compare views
+
+9. MINI MAP
+Small corner overlay:
+- Shows property outline
+- Current viewing position
+- Clickable to navigate
+- Toggle visibility
+
+10. MEDIA GALLERY
+Additional content:
+- High-res photos
+- Video walkthrough
+- Drone footage
+- Neighborhood video
+- Thumbnail grid access
+
+11. PROPERTY DETAILS PANEL
+Expandable sidebar:
+- Full property information
+- Features list
+- School district info
+- Tax information
+- HOA details
+- Agent contact
+
+12. COMPARISON VIEW
+For multiple properties:
+- Split screen option
+- View two tours side-by-side
+- Compare similar rooms
+
+13. SCHEDULE TOUR CTA (Persistent)
+- "Love this home?"
+- "Schedule an In-Person Tour"
+- Date/time picker
+- Contact form
+- "Request More Info" alternative
+
+14. SOCIAL SHARING
+- Share tour link
+- Embed code for social media
+- Email tour to a friend
+- QR code for mobile access
+
+15. MOBILE EXPERIENCE
+Touch-optimized controls:
+- Swipe to navigate
+- Pinch to zoom
+- Tap hotspots
+- Bottom navigation bar
+- Portrait and landscape support
+
+16. ACCESSIBILITY FEATURES
+- Keyboard navigation
+- Screen reader descriptions
+- High contrast mode
+- Reduced motion option
+- Text alternatives for visual content
+
+17. LOADING EXPERIENCE
+- Progress indicator
+- Low-res preview while loading
+- Bandwidth detection
+- "Loading Living Room..." status
+
+Design: Immersive, minimal UI that stays out of the way. Dark overlay elements. Smooth transitions. Fast loading. Works on all devices. Professional photography essential. Ambient background music option (off by default).

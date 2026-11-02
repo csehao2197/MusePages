@@ -1,0 +1,109 @@
+Create a group travel booking page for "TrekTribe Adventures" that helps friends, families, and corporate teams plan and book group trips together:
+
+1. NAVIGATION BAR
+- Logo: "TrekTribe" with mountain + people silhouette icon
+- Links: Destinations, Group Trips (active), Corporate Retreats, About, Blog
+- Right side: "Start a Group Trip" CTA button (#E85D04 burnt orange)
+- Sticky on scroll with white background and border-bottom
+
+2. HERO SECTION (75vh)
+- Full-bleed photo of a diverse group of friends hiking with mountain vista behind them
+- Dark gradient overlay from bottom
+- Headline: "Adventure Is Better Together"
+- Subheadline: "Plan group trips for 6-50 people with shared itineraries, split payments, and zero hassle"
+- Two CTAs: "Browse Group Packages" (solid #E85D04) and "Build Custom Trip" (outline white)
+- Social proof strip: "12,400+ groups served" · "4.9★ average rating" · "98% would book again"
+
+3. HOW IT WORKS (4-step horizontal timeline)
+- Step 1: "Choose a Destination" — Globe icon — "Pick from 80+ curated group destinations"
+- Step 2: "Set Your Group Size" — People icon — "6 to 50 travelers, we handle the logistics"
+- Step 3: "Customize Together" — Puzzle icon — "Share a planning link — everyone votes on activities"
+- Step 4: "Book & Split" — Credit card icon — "Each member pays their share directly"
+- Connecting line between steps with animated progress dots
+
+4. GROUP SIZE CALCULATOR (interactive tool)
+- Headline: "Estimate Your Group Trip Cost"
+- Slider or stepper: Group size (6-50 people)
+- Destination dropdown: Bali, Costa Rica, Iceland, Japan, Morocco, Portugal, Thailand, Peru
+- Trip length: 5 days / 7 days / 10 days / Custom
+- Accommodation tier: Budget, Mid-Range, Premium
+- Live price output:
+  - Per person: $1,240
+  - Total group cost: $14,880 (12 people)
+  - "You save $3,720 vs booking individually" (green highlight)
+- "Get Detailed Quote" CTA button
+
+5. FEATURED GROUP PACKAGES (card grid, 3 columns)
+- Section headline: "Most Popular Group Trips"
+- Filter tabs: All, Adventure, Beach & Relax, Cultural, Corporate
+- Package 1: "Bali Bliss" — 7 days — Ubud, Seminyak, Nusa Penida — From $1,100/person — Group: 8-20 — Photo of rice terraces — Tags: Beach, Culture — Rating: 4.9★ (342 reviews)
+- Package 2: "Iceland Ring Road" — 10 days — Full island circuit — From $2,400/person — Group: 6-15 — Photo of northern lights — Tags: Adventure — Rating: 4.8★ (187 reviews)
+- Package 3: "Costa Rica Adventure" — 7 days — Arenal, Monteverde, Manuel Antonio — From $1,350/person — Group: 8-25 — Photo of zip-lining — Tags: Adventure, Nature — Rating: 4.9★ (256 reviews)
+- Package 4: "Morocco Explorer" — 9 days — Marrakech, Sahara, Fes, Chefchaouen — From $1,500/person — Group: 8-20 — Photo of desert camp — Tags: Cultural — Rating: 4.7★ (198 reviews)
+- Package 5: "Portugal Coast" — 7 days — Lisbon, Sintra, Algarve, Porto — From $1,200/person — Group: 6-18 — Photo of cliffside beach — Tags: Beach, Culture — Rating: 4.8★ (221 reviews)
+- Package 6: "Japan Highlights" — 10 days — Tokyo, Kyoto, Osaka, Hakone — From $2,800/person — Group: 6-16 — Photo of Fushimi Inari — Tags: Cultural — Rating: 4.9★ (164 reviews)
+- Each card: hero photo, destination name, duration, price/person, group size range, rating, "View Trip" button
+- "View All 40+ Packages" link
+
+6. COLLABORATIVE PLANNING FEATURE (split layout)
+- Left side (50%): Mockup of the shared planning dashboard on laptop/phone screens
+- Right side (50%): Feature bullets with icons:
+  - 🔗 "Share a planning link — no app download needed"
+  - 🗳️ "Vote on activities, restaurants, and excursions as a group"
+  - 📅 "Real-time shared itinerary synced across all devices"
+  - 💬 "Built-in group chat for trip discussions"
+  - 📊 "Dashboard showing who's confirmed, who's pending"
+  - 🔔 "Automated reminders for payments, passports, and packing"
+- CTA: "Try the Planning Tool" (outline orange)
+
+7. SPLIT PAYMENT SECTION
+- Headline: "Everyone Pays Their Own Way"
+- Visual showing a $12,000 trip split across 8 avatars ($1,500 each)
+- Features:
+  - Individual payment links for each group member
+  - Flexible payment plans: 3 installments or pay in full
+  - Track who has paid and who hasn't (dashboard preview)
+  - Automatic refund policy for cancellations
+- Trust badges: Stripe secured, 256-bit encryption, refund guarantee
+
+8. CORPORATE RETREATS SECTION
+- Dark background (#1A1A2E) with accent orange
+- Headline: "Team Retreats That Actually Build Teams"
+- Subheadline: "Offsite planning for companies of 10-50 people"
+- 3 feature cards:
+  - "Team Building Activities" — Curated experiences from cooking classes to adventure sports
+  - "Meeting Spaces Included" — Conference rooms and WiFi at every destination
+  - "Dedicated Trip Coordinator" — Your own planner handles every detail
+- Logos of companies served (placeholder): "Trusted by teams from 200+ companies"
+- CTA: "Plan a Corporate Retreat"
+
+9. TESTIMONIALS (carousel, 3 visible at a time)
+- Testimonial 1: "We took 14 friends to Costa Rica and TrekTribe handled everything. The group voting feature was a game-changer." — Marcus & friends, 14 travelers, Costa Rica
+- Testimonial 2: "Our company retreat in Portugal was the best team event we've ever done. Worth every penny." — Sarah K., VP People, 28 travelers, Portugal
+- Testimonial 3: "Planning a bachelorette for 12 girls used to be a nightmare. This made it fun." — Jess T., 12 travelers, Bali
+- Each: quote, photo, group type, size, destination, star rating
+
+10. FAQ SECTION (accordion)
+- "What's the minimum group size?" — 6 travelers for standard packages, 10 for corporate retreats
+- "Can we customize the itinerary?" — Absolutely, every package is fully customizable after booking
+- "How does split payment work?" — Each member gets a unique payment link and can pay in installments
+- "What if someone drops out?" — Flexible cancellation up to 30 days before departure with full refund
+- "Do you handle flights?" — We can include flights or you can book your own
+- "Is travel insurance included?" — Optional travel insurance available at checkout
+
+11. CTA SECTION
+- Warm gradient background (#E85D04 to #DC2626)
+- Headline: "Your Next Group Adventure Starts Here"
+- Subheadline: "Tell us your dream destination and group size — we'll handle the rest"
+- Inline form: Destination input, Group size dropdown, Email input, "Get Free Quote" button
+- Or: "Call us: (555) 234-5678 — Group travel specialists available 7 days a week"
+
+12. FOOTER
+- Columns: Destinations, Trip Types, Company, Support, Legal
+- Social: Instagram, Facebook, TikTok, YouTube, Pinterest
+- "B Corp Certified" and "Carbon Neutral Trips" badges
+- © 2026 TrekTribe Adventures
+
+Design: Warm and adventurous. Primary: #E85D04 (burnt orange), dark: #1A1A2E (navy), accent: #059669 (green for savings). White backgrounds with #FFF7ED warm-tinted alternating sections. Typography: Sora for headings, Inter for body. Cards with 12px border-radius, generous photography, warm shadows. Hover effects on package cards with slight scale.
+
+Responsive: On mobile, group size calculator stacks vertically. Package cards become horizontal scroll carousel. How-it-works becomes vertical timeline. Collaborative planning section stacks with device mockup on top. Testimonials show 1 at a time with swipe. Sticky bottom bar with "Get Quote" CTA.

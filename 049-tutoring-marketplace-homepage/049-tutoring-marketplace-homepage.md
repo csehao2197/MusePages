@@ -1,0 +1,131 @@
+Create a homepage for an online tutoring marketplace called "BrightMinds" that connects students with expert tutors for 1-on-1 live sessions. The design should feel trustworthy, modern, and approachable for both students and parents.
+
+1. NAVIGATION BAR
+- Logo: "BrightMinds" with a lightbulb-graduation cap icon
+- Links: Find a Tutor, Subjects, How It Works, Pricing, For Tutors
+- Right side: "Log In" text link, "Get Started Free" CTA button (solid #7C3AED purple)
+- White background with subtle bottom shadow
+- Sticky on scroll
+
+2. HERO SECTION
+- Split layout: left side content (55%), right side illustration/image (45%)
+- Left side:
+  - Eyebrow badge: "⭐ Rated 4.9/5 by 50,000+ students"
+  - Headline: "Learn Anything, From Anyone, Anywhere"
+  - Subheadline: "Connect with expert tutors for personalized 1-on-1 lessons in 150+ subjects. First lesson free."
+  - Search bar: large input "What do you want to learn?" with autocomplete suggestions (Math, Spanish, Python, SAT Prep, Piano...) + "Find Tutors" button (solid purple)
+  - Popular subjects pills below search: "📐 Math", "🇪🇸 Spanish", "🐍 Python", "📝 SAT Prep", "🎹 Piano", "📊 Statistics"
+- Right side: Photo collage of diverse students in video call sessions with tutors on laptop screens
+- Background: subtle gradient from white to lavender (#F5F3FF)
+
+3. TRUST BAR
+- Light gray background (#F8FAFC)
+- Stats in a row:
+  - "12,000+ Verified Tutors"
+  - "150+ Subjects"
+  - "50,000+ Students"
+  - "4.9/5 Average Rating"
+  - "1M+ Lessons Delivered"
+- As seen in: logos of education publications (EdSurge, TechCrunch, Forbes, Education Week)
+
+4. HOW IT WORKS (3 steps)
+- Headline: "Start Learning in 3 Simple Steps"
+- Step 1: "Search & Compare" — "Browse tutor profiles, read reviews, watch intro videos, and compare rates" — magnifying glass icon
+- Step 2: "Book a Lesson" — "Choose a time that works for you. Your first 30-minute lesson is free" — calendar icon
+- Step 3: "Learn & Grow" — "Meet your tutor in our HD video classroom with shared whiteboard and screen sharing" — video call icon
+- Steps connected by a dotted line with numbered purple circles
+- Below: "Find Your Tutor" CTA button
+
+5. POPULAR SUBJECTS (category grid — 4 columns, 2 rows)
+- Headline: "Explore 150+ Subjects" with "View All →" link
+- Card 1: "📐 Mathematics" — "Algebra, Calculus, Statistics, Geometry" — 2,400 tutors — From $25/hr
+- Card 2: "💻 Programming" — "Python, JavaScript, Java, C++" — 1,800 tutors — From $30/hr
+- Card 3: "🌍 Languages" — "Spanish, French, Mandarin, Japanese" — 3,200 tutors — From $20/hr
+- Card 4: "📝 Test Prep" — "SAT, ACT, GRE, GMAT, IELTS" — 1,500 tutors — From $35/hr
+- Card 5: "🔬 Sciences" — "Physics, Chemistry, Biology" — 1,600 tutors — From $28/hr
+- Card 6: "📖 Writing" — "Essay Writing, Creative Writing, Grammar" — 900 tutors — From $22/hr
+- Card 7: "🎵 Music" — "Piano, Guitar, Voice, Music Theory" — 1,100 tutors — From $30/hr
+- Card 8: "💼 Business" — "Accounting, Economics, Finance, Marketing" — 700 tutors — From $32/hr
+- Each card: icon, subject name, sub-topics, tutor count, starting price, slight purple hover border
+- White cards with 12px border-radius, subtle shadow
+
+6. FEATURED TUTORS (horizontal scroll of tutor cards)
+- Headline: "Top-Rated Tutors" with "Browse All →" link
+- Tutor 1: "Dr. Sarah Chen" — Photo — Math & Statistics — University of Stanford — 4.98★ (412 reviews) — $45/hr — "PhD in Mathematics" badge — "1,200+ lessons taught" — "Book Free Trial" button
+- Tutor 2: "Carlos Mendez" — Photo — Spanish & Portuguese — Native Speaker from Madrid — 4.96★ (678 reviews) — $28/hr — "Native Speaker" badge — "2,100+ lessons" — "Book Free Trial"
+- Tutor 3: "Emily Park" — Photo — SAT/ACT Prep — Princeton grad, 1580 SAT — 4.97★ (356 reviews) — $55/hr — "Top SAT Score" badge — "Average 200pt improvement" — "Book Free Trial"
+- Tutor 4: "Raj Patel" — Photo — Python & Web Dev — Senior Engineer at Google — 4.95★ (534 reviews) — $40/hr — "Industry Expert" badge — "1,800+ lessons" — "Book Free Trial"
+- Card layout: photo top, info below, rating prominent, green online indicator dot
+- "Verified" checkmark on each tutor
+
+7. PLATFORM FEATURES (alternating left-right sections)
+- Feature 1: "HD Video Classroom"
+  - Screenshot of video call interface with shared whiteboard
+  - "Crystal-clear video, interactive whiteboard, screen sharing, and chat — all built in. No downloads required."
+  - Sub-features: "Record lessons for later", "Collaborative document editing", "Built-in code editor for programming lessons"
+
+- Feature 2: "Smart Matching"
+  - Illustration of matching algorithm
+  - "Our AI analyzes your goals, learning style, and schedule to recommend the perfect tutor for you."
+  - Sub-features: "Personality compatibility scoring", "Subject specialization matching", "Schedule alignment"
+
+- Feature 3: "Progress Tracking"
+  - Screenshot of student dashboard with charts
+  - "Track your improvement with detailed analytics, lesson summaries, and goal milestones."
+  - Sub-features: "Lesson notes & recordings library", "Custom study plans", "Parent dashboard for younger students"
+
+8. STUDENT SUCCESS STORIES (3 testimonial cards)
+- Headline: "Real Results from Real Students"
+- Card 1: Photo, "My SAT score went from 1320 to 1520 in just 8 weeks of tutoring. Emily's strategies were game-changing." — Jason W., High School Junior — Subject: SAT Prep — Result: +200 points
+- Card 2: Photo, "I went from failing Calculus to getting an A. Dr. Chen explains things in ways my professor never could." — Maria G., College Sophomore — Subject: Calculus II — Result: F → A
+- Card 3: Photo, "My daughter is now conversationally fluent in Spanish after 6 months. Carlos made every lesson fun." — Patricia L., Parent — Subject: Spanish — Result: Conversational fluency
+- Each card: purple left border accent, photo, quote, name, context, measurable result highlighted
+
+9. PRICING SECTION
+- Headline: "Simple, Transparent Pricing"
+- Subheadline: "Tutors set their own rates. You only pay for lessons you book."
+- Price range display by subject:
+  - Languages: $20–$50/hr
+  - Math & Science: $25–$60/hr
+  - Test Prep: $35–$80/hr
+  - Music: $25–$55/hr
+  - Programming: $30–$70/hr
+- Callout card: "First Lesson Free" — "Try any tutor with a free 30-minute trial lesson. No credit card required." — "Get Started" button
+- Below: "Packages save 15%" — "Buy 5 lessons, get 1 free" — "10-lesson and 20-lesson bundles available"
+- Money-back guarantee badge: "100% Satisfaction Guarantee — if you're not happy, we'll find you a new tutor or refund your lesson"
+
+10. FOR TUTORS CTA SECTION
+- Light purple background (#F5F3FF)
+- Split layout: text left, image right (tutor teaching on laptop)
+- Headline: "Share Your Knowledge, Earn Your Way"
+- Body: "Join 12,000+ tutors earning $25–$80/hour teaching what they love. Set your own schedule, rates, and subjects."
+- Stats: "Average tutor earns $2,400/month" · "Flexible hours" · "Teach from anywhere"
+- CTA: "Apply to Teach" button (outline purple)
+
+11. FAQ SECTION
+- "Do I need to commit to a schedule?" — No, book lessons whenever you want. No subscriptions or commitments.
+- "How are tutors vetted?" — Every tutor passes a background check, subject knowledge test, and teaching demo. Only 8% of applicants are accepted.
+- "What if I don't like my tutor?" — Your first lesson is free. If you're not satisfied, we'll match you with another tutor or offer a full refund.
+- "Can I use BrightMinds for my child?" — Absolutely. We have a dedicated parent dashboard where you can manage bookings, track progress, and message tutors.
+- "What technology do I need?" — Just a computer or tablet with a webcam and stable internet. Our classroom runs in the browser — no downloads needed.
+
+12. FINAL CTA SECTION
+- Dark purple gradient background (#4C1D95 to #7C3AED)
+- Headline: "Your First Lesson Is Free"
+- Subheadline: "Find the perfect tutor and start learning today. No credit card required."
+- Email input + "Get Started" button (white on purple)
+- Below: "Join 50,000+ students already learning on BrightMinds"
+
+13. FOOTER
+- 4 columns: Subjects, For Students, For Tutors, Company
+- Subjects: Math, Science, Languages, Test Prep, Music, Programming, Writing, Business
+- For Students: How It Works, Find a Tutor, Pricing, Free Trial, Student Resources
+- For Tutors: Apply to Teach, Tutor Resources, Tutor Stories, Help Center
+- Company: About Us, Careers, Press, Blog, Contact
+- Social icons: Instagram, Twitter, LinkedIn, YouTube, TikTok
+- App download badges: App Store, Google Play
+- Bottom: © 2026 BrightMinds Inc. · Privacy · Terms · Accessibility
+
+Design: Friendly, trustworthy, education-focused. Primary: #7C3AED (purple), secondary: #5B21B6 (dark purple), accent: #F59E0B (amber for badges/highlights), success: #16A34A (green for online/active). Backgrounds: white, #F5F3FF (light purple), #F8FAFC (light gray). Typography: Plus Jakarta Sans for headings (rounded, friendly), Inter for body. Cards with 12px border-radius, soft shadows. Rounded avatars for tutors (64px with 2px purple border for featured).
+
+Responsive: On mobile, hero stacks vertically (content on top). Subject grid becomes 2-column. Tutor cards become horizontal scroll. Platform features stack with image on top. Pricing ranges become stacked cards. Search bar takes full width with expandable filters. Sticky bottom bar with "Find a Tutor" CTA on mobile.

@@ -1,0 +1,1657 @@
+{
+  "started_at_utc": "2026-10-31T16:32:47.2672099Z",
+  "objective": "100 individually tailored Next.js demos generated beside original briefs; mocked external services; sequential implementation, build and interaction checks",
+  "completed": 36,
+  "projects": [
+    {
+      "id": 1,
+      "title": "Destination guide",
+      "folder": "001-destination-guide",
+      "brief": "001-destination-guide\\001-destination-guide.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": [
+            "C:\\Program Files\\nodejs\\node.exe",
+            "C:\\Code\\Docs\\sampe-md\\nextjs-project-samples\\node_modules\\next\\dist\\bin\\next",
+            "build",
+            "--webpack"
+          ],
+          "exitCode": 0,
+          "status": "passed",
+          "durationMs": 19422,
+          "log": "validation-logs\\001-build.log"
+        },
+        {
+          "check": "typecheck",
+          "command": [
+            "C:\\Program Files\\nodejs\\node.exe",
+            "C:\\Code\\Docs\\sampe-md\\nextjs-project-samples\\node_modules\\typescript\\bin\\tsc",
+            "--noEmit"
+          ],
+          "exitCode": 0,
+          "status": "passed",
+          "durationMs": 2339,
+          "log": "validation-logs\\001-typecheck.log"
+        },
+        {
+          "check": "interactions",
+          "command": [
+            "C:\\Program Files\\nodejs\\node.exe",
+            "C:\\Code\\Docs\\sampe-md\\nextjs-project-samples\\node_modules\\@playwright\\test\\cli.js",
+            "test",
+            "--config",
+            "C:\\Code\\Docs\\sampe-md\\nextjs-project-samples\\001-destination-guide\\playwright.config.ts"
+          ],
+          "exitCode": 0,
+          "status": "passed",
+          "durationMs": 28152,
+          "log": "validation-logs\\001-interactions.log"
+        }
+      ],
+      "agent_id": "44160cbb-7888-4f62-9b43-45d2acd9fee8",
+      "verified_at_utc": "2026-10-31T16:45:35.4081069Z"
+    },
+    {
+      "id": 2,
+      "title": "Eco-tourism landing page",
+      "folder": "002-eco-tourism-landing-page",
+      "brief": "002-eco-tourism-landing-page\\002-eco-tourism-landing-page.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "002-eco-tourism-landing-page\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm test",
+          "status": "passed",
+          "testsPassed": 18,
+          "evidence": "002-eco-tourism-landing-page\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "agent_id": "0e14f0c4-db86-49d9-b18b-aba10e787925",
+      "started_at_utc": "2026-10-31T16:46:27.992427Z",
+      "verified_at_utc": "2026-10-31T17:03:02.7913161Z"
+    },
+    {
+      "id": 3,
+      "title": "Flight search and booking page",
+      "folder": "003-flight-search-and-booking-page",
+      "brief": "003-flight-search-and-booking-page\\003-flight-search-and-booking-page.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "003-flight-search-and-booking-page\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm run test:e2e",
+          "status": "passed",
+          "testsPassed": 22,
+          "evidence": "003-flight-search-and-booking-page\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "agent_id": "bbdba41a-aa26-4d24-aa34-211b2d26389e",
+      "started_at_utc": "2026-10-31T17:03:46.7530567Z",
+      "verified_at_utc": "2026-10-31T17:21:24.301608Z"
+    },
+    {
+      "id": 4,
+      "title": "Group travel booking",
+      "folder": "004-group-travel-booking",
+      "brief": "004-group-travel-booking\\004-group-travel-booking.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm.cmd run build",
+          "status": "passed",
+          "evidence": "004-group-travel-booking\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm.cmd run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm.cmd test",
+          "status": "passed",
+          "testsPassed": 22,
+          "evidence": "004-group-travel-booking\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "agent_id": "2040de5e-57e7-4e85-8bba-cf4136796525",
+      "started_at_utc": "2026-10-31T17:22:21.6801421Z",
+      "verified_at_utc": "2026-10-31T17:39:41.5990661Z"
+    },
+    {
+      "id": 5,
+      "title": "Hotel search and booking",
+      "folder": "005-hotel-search-and-booking",
+      "brief": "005-hotel-search-and-booking\\005-hotel-search-and-booking.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "005-hotel-search-and-booking\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm run test",
+          "status": "passed",
+          "testsPassed": 14,
+          "evidence": "005-hotel-search-and-booking\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-10-31T17:39:41.6083108Z",
+      "agent_id": "5e882b2c-ad01-4bab-8b1c-0e12ccf07f7a",
+      "verified_at_utc": "2026-10-31T17:55:25.250314Z"
+    },
+    {
+      "id": 6,
+      "title": "Travel agency homepage",
+      "folder": "006-travel-agency-homepage",
+      "brief": "006-travel-agency-homepage\\006-travel-agency-homepage.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "006-travel-agency-homepage\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm test",
+          "status": "passed",
+          "testsPassed": 20,
+          "evidence": "006-travel-agency-homepage\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-10-31T17:55:25.2587283Z",
+      "agent_id": "4c11a8c8-a9d0-4242-a34d-5092ba3679d2",
+      "verified_at_utc": "2026-10-31T18:16:26.5798666Z"
+    },
+    {
+      "id": 7,
+      "title": "Travel blog",
+      "folder": "007-travel-blog",
+      "brief": "007-travel-blog\\007-travel-blog.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "007-travel-blog\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm test",
+          "status": "passed",
+          "testsPassed": 16,
+          "evidence": "007-travel-blog\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-10-31T18:16:26.5884748Z",
+      "agent_id": "46abb324-8fc7-428a-bf0b-07a84209204e",
+      "verified_at_utc": "2026-10-31T18:29:59.3489111Z"
+    },
+    {
+      "id": 8,
+      "title": "Travel deals page",
+      "folder": "008-travel-deals-page",
+      "brief": "008-travel-deals-page\\008-travel-deals-page.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "008-travel-deals-page\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm test",
+          "status": "passed",
+          "testsPassed": 16,
+          "evidence": "008-travel-deals-page\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-10-31T18:29:59.35811Z",
+      "agent_id": "9322840e-9c22-4cc3-b406-80d24fce7cbc",
+      "verified_at_utc": "2026-10-31T18:42:07.3697301Z"
+    },
+    {
+      "id": 9,
+      "title": "Vacation rental listing",
+      "folder": "009-vacation-rental-listing",
+      "brief": "009-vacation-rental-listing\\009-vacation-rental-listing.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "009-vacation-rental-listing\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm test",
+          "status": "passed",
+          "testsPassed": 29,
+          "evidence": "009-vacation-rental-listing\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-10-31T18:42:07.3781999Z",
+      "agent_id": "f8c18fdc-e784-430e-8dc1-97d992343929",
+      "verified_at_utc": "2026-10-31T19:00:55.5319733Z"
+    },
+    {
+      "id": 10,
+      "title": "Artisan coffee shop",
+      "folder": "010-artisan-coffee-shop",
+      "brief": "010-artisan-coffee-shop\\010-artisan-coffee-shop.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "010-artisan-coffee-shop\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm test",
+          "status": "passed",
+          "testsPassed": 16,
+          "evidence": "010-artisan-coffee-shop\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-10-31T19:00:55.5413179Z",
+      "agent_id": "224a0b27-f065-423d-ac3a-0367a1943ada",
+      "verified_at_utc": "2026-10-31T19:14:03.4867868Z"
+    },
+    {
+      "id": 11,
+      "title": "Bakery and cafe",
+      "folder": "011-bakery-and-cafe",
+      "brief": "011-bakery-and-cafe\\011-bakery-and-cafe.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "011-bakery-and-cafe\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm run test",
+          "status": "passed",
+          "testsPassed": 16,
+          "evidence": "011-bakery-and-cafe\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-10-31T19:14:03.4950512Z",
+      "agent_id": "58a2917c-d958-40cf-a267-b1024d985810",
+      "verified_at_utc": "2026-10-31T19:28:24.2739351Z"
+    },
+    {
+      "id": 12,
+      "title": "Catering services",
+      "folder": "012-catering-services",
+      "brief": "012-catering-services\\012-catering-services.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "012-catering-services\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm test",
+          "status": "passed",
+          "testsPassed": 18,
+          "evidence": "012-catering-services\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-10-31T19:28:24.2827199Z",
+      "agent_id": "9ef65bdf-6ddd-4122-8fc3-bdb1942ebb74",
+      "verified_at_utc": "2026-10-31T19:36:20.366662Z"
+    },
+    {
+      "id": 13,
+      "title": "Brewery and taproom",
+      "folder": "013-brewery-and-taproom",
+      "brief": "013-brewery-and-taproom\\013-brewery-and-taproom.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "013-brewery-and-taproom\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm test",
+          "status": "passed",
+          "testsPassed": 12,
+          "evidence": "013-brewery-and-taproom\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-10-31T19:36:20.3750271Z",
+      "agent_id": "6d6a35cd-a8c1-434a-89b3-d1cc5818c152",
+      "verified_at_utc": "2026-10-31T19:46:25.2697377Z"
+    },
+    {
+      "id": 14,
+      "title": "Farm-to-table restaurant",
+      "folder": "014-farm-to-table-restaurant",
+      "brief": "014-farm-to-table-restaurant\\014-farm-to-table-restaurant.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "014-farm-to-table-restaurant\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm test -- --reporter=json",
+          "status": "passed",
+          "testsPassed": 24,
+          "evidence": "014-farm-to-table-restaurant\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-10-31T19:46:25.2785477Z",
+      "agent_id": "d03777ac-05cb-4890-b06a-caefa0a6bc7f",
+      "verified_at_utc": "2026-10-31T20:02:57.5899066Z"
+    },
+    {
+      "id": 15,
+      "title": "Fine dining restaurant",
+      "folder": "015-fine-dining-restaurant",
+      "brief": "015-fine-dining-restaurant\\015-fine-dining-restaurant.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "015-fine-dining-restaurant\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm test",
+          "status": "passed",
+          "testsPassed": 14,
+          "evidence": "015-fine-dining-restaurant\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-10-31T20:02:57.5996623Z",
+      "agent_id": "9ebb48a9-8004-4d05-aaef-b1694673742b",
+      "verified_at_utc": "2026-10-31T20:14:08.4170589Z"
+    },
+    {
+      "id": 16,
+      "title": "Food truck festival",
+      "folder": "016-food-truck-festival",
+      "brief": "016-food-truck-festival\\016-food-truck-festival.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "016-food-truck-festival\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm test",
+          "status": "passed",
+          "testsPassed": 18,
+          "evidence": "016-food-truck-festival\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-10-31T20:14:08.4253437Z",
+      "agent_id": "d5fcd709-cfc0-439d-837f-d33fc5d3ccf9",
+      "verified_at_utc": "2026-10-31T20:29:18.5945517Z"
+    },
+    {
+      "id": 17,
+      "title": "Sushi restaurant",
+      "folder": "017-sushi-restaurant",
+      "brief": "017-sushi-restaurant\\017-sushi-restaurant.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "017-sushi-restaurant\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm run test",
+          "status": "passed",
+          "testsPassed": 20,
+          "evidence": "017-sushi-restaurant\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-10-31T20:29:18.6028512Z",
+      "agent_id": "7b8050ad-43ac-4161-9e83-28071dc4d15b",
+      "verified_at_utc": "2026-10-31T21:12:13.0868535Z"
+    },
+    {
+      "id": 18,
+      "title": "Wine bar",
+      "folder": "018-wine-bar",
+      "brief": "018-wine-bar\\018-wine-bar.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "018-wine-bar\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm test",
+          "status": "passed",
+          "testsPassed": 34,
+          "evidence": "018-wine-bar\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-10-31T21:12:13.1075611Z",
+      "agent_id": "00284786-1759-4f68-96ae-1eaa5e7f2f94",
+      "verified_at_utc": "2026-10-31T21:26:13.511794Z"
+    },
+    {
+      "id": 19,
+      "title": "Commercial property listings",
+      "folder": "019-commercial-property-listings",
+      "brief": "019-commercial-property-listings\\019-commercial-property-listings.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "019-commercial-property-listings\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm test",
+          "status": "passed",
+          "testsPassed": 35,
+          "evidence": "019-commercial-property-listings\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-10-31T21:26:13.5202535Z",
+      "agent_id": "3b58f9e7-7b48-425e-b0cc-86ecff7356e0",
+      "verified_at_utc": "2026-10-31T21:45:25.2382308Z"
+    },
+    {
+      "id": 20,
+      "title": "Home valuation landing page",
+      "folder": "020-home-valuation-landing-page",
+      "brief": "020-home-valuation-landing-page\\020-home-valuation-landing-page.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "020-home-valuation-landing-page\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm test",
+          "status": "passed",
+          "testsPassed": 22,
+          "evidence": "020-home-valuation-landing-page\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-10-31T21:45:25.2468741Z",
+      "agent_id": "1894850e-a5e0-4e24-bb90-6b37eb59fffc",
+      "verified_at_utc": "2026-10-31T21:59:12.1232718Z"
+    },
+    {
+      "id": 21,
+      "title": "Luxury property showcase",
+      "folder": "021-luxury-property-showcase",
+      "brief": "021-luxury-property-showcase\\021-luxury-property-showcase.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "021-luxury-property-showcase\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm test",
+          "status": "passed",
+          "testsPassed": 20,
+          "evidence": "021-luxury-property-showcase\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-10-31T21:59:12.1323621Z",
+      "agent_id": "5d81188e-9f54-4745-a9e2-4f303a48dee2",
+      "verified_at_utc": "2026-10-31T22:14:27.6457171Z"
+    },
+    {
+      "id": 22,
+      "title": "Neighborhood guide",
+      "folder": "022-neighborhood-guide",
+      "brief": "022-neighborhood-guide\\022-neighborhood-guide.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "022-neighborhood-guide\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm run test",
+          "status": "passed",
+          "testsPassed": 18,
+          "evidence": "022-neighborhood-guide\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-10-31T22:14:27.6551858Z",
+      "agent_id": "e6379c09-68fd-409b-8f76-6028b096d715",
+      "verified_at_utc": "2026-10-31T22:43:40.4968383Z"
+    },
+    {
+      "id": 23,
+      "title": "New construction development",
+      "folder": "023-new-construction-development",
+      "brief": "023-new-construction-development\\023-new-construction-development.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "023-new-construction-development\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm run test",
+          "status": "passed",
+          "testsPassed": 24,
+          "evidence": "023-new-construction-development\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-10-31T22:43:40.5084161Z",
+      "agent_id": "d7bc0506-2472-4e14-9236-1d8684635fbb",
+      "verified_at_utc": "2026-10-31T23:09:19.0478766Z"
+    },
+    {
+      "id": 24,
+      "title": "Open house landing page",
+      "folder": "024-open-house-landing-page",
+      "brief": "024-open-house-landing-page\\024-open-house-landing-page.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "024-open-house-landing-page\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm run test",
+          "status": "passed",
+          "testsPassed": 22,
+          "evidence": "024-open-house-landing-page\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-10-31T23:09:19.0566641Z",
+      "agent_id": "0daf84ed-1eb2-4953-bb0b-4006056473a3",
+      "verified_at_utc": "2026-11-01T01:16:42.0023092Z"
+    },
+    {
+      "id": 25,
+      "title": "Property management company",
+      "folder": "025-property-management-company",
+      "brief": "025-property-management-company\\025-property-management-company.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "025-property-management-company\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm test",
+          "status": "passed",
+          "testsPassed": 16,
+          "evidence": "025-property-management-company\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-11-01T01:16:42.0110899Z",
+      "agent_id": "20538b20-4b2b-49b5-927f-102682303799",
+      "verified_at_utc": "2026-11-01T01:28:21.5483299Z"
+    },
+    {
+      "id": 26,
+      "title": "Virtual property tour",
+      "folder": "026-virtual-property-tour",
+      "brief": "026-virtual-property-tour\\026-virtual-property-tour.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "026-virtual-property-tour\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm test",
+          "status": "passed",
+          "testsPassed": 32,
+          "evidence": "026-virtual-property-tour\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-11-01T01:28:21.5566489Z",
+      "agent_id": "f150f50e-67dd-431b-b288-70e668a9ed5e",
+      "verified_at_utc": "2026-11-01T01:43:32.7273457Z"
+    },
+    {
+      "id": 27,
+      "title": "Graphic designer portfolio",
+      "folder": "027-graphic-designer-portfolio",
+      "brief": "027-graphic-designer-portfolio\\027-graphic-designer-portfolio.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "027-graphic-designer-portfolio\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm test",
+          "status": "passed",
+          "testsPassed": 16,
+          "evidence": "027-graphic-designer-portfolio\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-11-01T01:43:32.7357807Z",
+      "agent_id": "317909b7-c6ee-449a-88eb-bc5c107f2866",
+      "verified_at_utc": "2026-11-01T01:52:18.7126285Z"
+    },
+    {
+      "id": 28,
+      "title": "Illustrator portfolio",
+      "folder": "028-illustrator-portfolio",
+      "brief": "028-illustrator-portfolio\\028-illustrator-portfolio.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "028-illustrator-portfolio\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm test",
+          "status": "passed",
+          "testsPassed": 25,
+          "testsSkipped": 1,
+          "evidence": "028-illustrator-portfolio\\test-results\\.last-run.json and README.md; desktop copy of mobile touch test intentionally skipped"
+        }
+      ],
+      "started_at_utc": "2026-11-01T01:52:18.7217413Z",
+      "agent_id": "a66419fa-06f3-4c23-b750-90e9360f1ea7",
+      "verified_at_utc": "2026-11-01T02:01:25.0521761Z"
+    },
+    {
+      "id": 29,
+      "title": "Music producer portfolio",
+      "folder": "029-music-producer-portfolio",
+      "brief": "029-music-producer-portfolio\\029-music-producer-portfolio.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "029-music-producer-portfolio\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm test",
+          "status": "passed",
+          "testsPassed": 26,
+          "evidence": "029-music-producer-portfolio\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-11-01T02:01:25.0610949Z",
+      "agent_id": "61de988d-4fc3-4d72-b008-5eedfb1f98b2",
+      "verified_at_utc": "2026-11-01T02:17:32.8362216Z"
+    },
+    {
+      "id": 30,
+      "title": "UX/UI designer portfolio",
+      "folder": "030-ux-ui-designer-portfolio",
+      "brief": "030-ux-ui-designer-portfolio\\030-ux-ui-designer-portfolio.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "030-ux-ui-designer-portfolio\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm run test",
+          "status": "passed",
+          "testsPassed": 24,
+          "evidence": "030-ux-ui-designer-portfolio\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-11-01T02:17:32.8451731Z",
+      "agent_id": "c089bb86-dff2-4e2a-a9f5-2648bbe1cbf1",
+      "verified_at_utc": "2026-11-01T02:30:11.4415053Z"
+    },
+    {
+      "id": 31,
+      "title": "Agency portfolio",
+      "folder": "031-agency-portfolio",
+      "brief": "031-agency-portfolio\\031-agency-portfolio.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "031-agency-portfolio\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm test",
+          "status": "passed",
+          "testsPassed": 24,
+          "evidence": "031-agency-portfolio\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-11-01T02:30:11.4514562Z",
+      "agent_id": "a774d2f8-4480-46e8-acaf-fe833c888a3d",
+      "verified_at_utc": "2026-11-01T02:44:09.6519449Z"
+    },
+    {
+      "id": 32,
+      "title": "Agency process page",
+      "folder": "032-agency-process-page",
+      "brief": "032-agency-process-page\\032-agency-process-page.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "032-agency-process-page\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm run test",
+          "status": "passed",
+          "testsPassed": 18,
+          "evidence": "032-agency-process-page\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-11-01T02:44:09.6607015Z",
+      "agent_id": "2f5d136d-7f8c-475a-bced-fe2b76f8eb30",
+      "verified_at_utc": "2026-11-01T02:57:41.8278516Z"
+    },
+    {
+      "id": 33,
+      "title": "Creative agency team",
+      "folder": "033-creative-agency-team",
+      "brief": "033-creative-agency-team\\033-creative-agency-team.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "033-creative-agency-team\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm test",
+          "status": "passed",
+          "testsPassed": 16,
+          "evidence": "033-creative-agency-team\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-11-01T02:57:41.836998Z",
+      "agent_id": "db84b32b-4b3e-4c1c-b477-4f81035eb532",
+      "verified_at_utc": "2026-11-01T03:05:51.4482126Z"
+    },
+    {
+      "id": 34,
+      "title": "Fitness challenge landing page",
+      "folder": "034-fitness-challenge-landing-page",
+      "brief": "034-fitness-challenge-landing-page\\034-fitness-challenge-landing-page.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "034-fitness-challenge-landing-page\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm run test",
+          "status": "passed",
+          "testsPassed": 16,
+          "evidence": "034-fitness-challenge-landing-page\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-11-01T03:05:51.4569201Z",
+      "agent_id": "e13583fb-7b63-4a59-846e-974f18db6acd",
+      "verified_at_utc": "2026-11-01T03:14:40.7502592Z"
+    },
+    {
+      "id": 35,
+      "title": "CrossFit gym",
+      "folder": "035-crossfit-gym",
+      "brief": "035-crossfit-gym\\035-crossfit-gym.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "035-crossfit-gym\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm test",
+          "status": "passed",
+          "testsPassed": 18,
+          "evidence": "035-crossfit-gym\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-11-01T03:14:40.7587585Z",
+      "agent_id": "7eb2064f-4b57-4a33-a661-4e0552de7da4",
+      "verified_at_utc": "2026-11-01T03:26:20.9290339Z"
+    },
+    {
+      "id": 36,
+      "title": "Dance studio",
+      "folder": "036-dance-studio",
+      "brief": "036-dance-studio\\036-dance-studio.md",
+      "status": "verified",
+      "validation": [
+        {
+          "check": "build",
+          "command": "npm run build",
+          "status": "passed",
+          "evidence": "036-dance-studio\\README.md and .next\\BUILD_ID"
+        },
+        {
+          "check": "typecheck",
+          "command": "npm run typecheck",
+          "status": "passed",
+          "evidence": "Implementation agent results and project README"
+        },
+        {
+          "check": "interactions",
+          "command": "npm test",
+          "status": "passed",
+          "testsPassed": 24,
+          "evidence": "036-dance-studio\\test-results\\.last-run.json and README.md"
+        }
+      ],
+      "started_at_utc": "2026-11-01T03:26:20.9375608Z",
+      "agent_id": "21d7f6a3-b99d-424a-8d65-fde06497d82f",
+      "verified_at_utc": "2026-11-01T03:45:21.9725919Z"
+    },
+    {
+      "id": 37,
+      "title": "Martial arts academy",
+      "folder": "037-martial-arts-academy",
+      "brief": "037-martial-arts-academy\\037-martial-arts-academy.md",
+      "status": "in_progress",
+      "validation": [],
+      "started_at_utc": "2026-11-01T03:45:21.9812053Z",
+      "agent_id": "93ed91e8-2b7a-497d-8226-aaac1796ead3"
+    },
+    {
+      "id": 38,
+      "title": "Membership comparison",
+      "folder": "038-membership-comparison",
+      "brief": "038-membership-comparison\\038-membership-comparison.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 39,
+      "title": "Nutrition coaching",
+      "folder": "039-nutrition-coaching",
+      "brief": "039-nutrition-coaching\\039-nutrition-coaching.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 40,
+      "title": "Transformation story gallery",
+      "folder": "040-transformation-story-gallery",
+      "brief": "040-transformation-story-gallery\\040-transformation-story-gallery.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 41,
+      "title": "Yoga studio",
+      "folder": "041-yoga-studio",
+      "brief": "041-yoga-studio\\041-yoga-studio.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 42,
+      "title": "Coding bootcamp",
+      "folder": "042-coding-bootcamp",
+      "brief": "042-coding-bootcamp\\042-coding-bootcamp.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 43,
+      "title": "E-library catalog",
+      "folder": "043-e-library-catalog",
+      "brief": "043-e-library-catalog\\043-e-library-catalog.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 44,
+      "title": "Language-learning app landing page",
+      "folder": "044-language-learning-app-landing-page",
+      "brief": "044-language-learning-app-landing-page\\044-language-learning-app-landing-page.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 45,
+      "title": "Music academy",
+      "folder": "045-music-academy",
+      "brief": "045-music-academy\\045-music-academy.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 46,
+      "title": "Online course landing page",
+      "folder": "046-online-course-landing-page",
+      "brief": "046-online-course-landing-page\\046-online-course-landing-page.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 47,
+      "title": "Professional certification platform",
+      "folder": "047-professional-certification-platform",
+      "brief": "047-professional-certification-platform\\047-professional-certification-platform.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 48,
+      "title": "Student dashboard",
+      "folder": "048-student-dashboard",
+      "brief": "048-student-dashboard\\048-student-dashboard.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 49,
+      "title": "Tutoring marketplace homepage",
+      "folder": "049-tutoring-marketplace-homepage",
+      "brief": "049-tutoring-marketplace-homepage\\049-tutoring-marketplace-homepage.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 50,
+      "title": "University alumni network",
+      "folder": "050-university-alumni-network",
+      "brief": "050-university-alumni-network\\050-university-alumni-network.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 51,
+      "title": "Lifestyle blog",
+      "folder": "051-lifestyle-blog",
+      "brief": "051-lifestyle-blog\\051-lifestyle-blog.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 52,
+      "title": "Personal finance blog",
+      "folder": "052-personal-finance-blog",
+      "brief": "052-personal-finance-blog\\052-personal-finance-blog.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 53,
+      "title": "Photography blog",
+      "folder": "053-photography-blog",
+      "brief": "053-photography-blog\\053-photography-blog.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 54,
+      "title": "Podcast website",
+      "folder": "054-podcast-website",
+      "brief": "054-podcast-website\\054-podcast-website.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 55,
+      "title": "Flash sale page",
+      "folder": "055-flash-sale-page",
+      "brief": "055-flash-sale-page\\055-flash-sale-page.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 56,
+      "title": "Gift card purchase",
+      "folder": "056-gift-card-purchase",
+      "brief": "056-gift-card-purchase\\056-gift-card-purchase.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 57,
+      "title": "Loyalty rewards portal",
+      "folder": "057-loyalty-rewards-portal",
+      "brief": "057-loyalty-rewards-portal\\057-loyalty-rewards-portal.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 58,
+      "title": "Product comparison",
+      "folder": "058-product-comparison",
+      "brief": "058-product-comparison\\058-product-comparison.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 59,
+      "title": "Product reviews",
+      "folder": "059-product-reviews",
+      "brief": "059-product-reviews\\059-product-reviews.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 60,
+      "title": "Interactive calculator landing page",
+      "folder": "060-interactive-calculator-landing-page",
+      "brief": "060-interactive-calculator-landing-page\\060-interactive-calculator-landing-page.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 61,
+      "title": "Product waitlist",
+      "folder": "061-product-waitlist",
+      "brief": "061-product-waitlist\\061-product-waitlist.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 62,
+      "title": "API documentation website",
+      "folder": "062-api-documentation-website",
+      "brief": "062-api-documentation-website\\062-api-documentation-website.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 63,
+      "title": "SaaS content hub",
+      "folder": "063-saas-content-hub",
+      "brief": "063-saas-content-hub\\063-saas-content-hub.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 64,
+      "title": "SaaS status website",
+      "folder": "064-saas-status-website",
+      "brief": "064-saas-status-website\\064-saas-status-website.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 65,
+      "title": "Personal portfolio",
+      "folder": "065-personal-portfolio",
+      "brief": "065-personal-portfolio\\065-personal-portfolio.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 66,
+      "title": "Editorial portfolio",
+      "folder": "066-editorial-portfolio",
+      "brief": "066-editorial-portfolio\\066-editorial-portfolio.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 67,
+      "title": "DevNexus developer portfolio",
+      "folder": "067-devnexus-developer-portfolio",
+      "brief": "067-devnexus-developer-portfolio\\067-devnexus-developer-portfolio.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 68,
+      "title": "Handmade footwear store",
+      "folder": "068-handmade-footwear-store",
+      "brief": "068-handmade-footwear-store\\068-handmade-footwear-store.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 69,
+      "title": "GoHealth commerce platform",
+      "folder": "069-gohealth-commerce-platform",
+      "brief": "069-gohealth-commerce-platform\\069-gohealth-commerce-platform.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 70,
+      "title": "Personal financial planner",
+      "folder": "070-personal-financial-planner",
+      "brief": "070-personal-financial-planner\\070-personal-financial-planner.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 71,
+      "title": "Financial analytics dashboard",
+      "folder": "071-financial-analytics-dashboard",
+      "brief": "071-financial-analytics-dashboard\\071-financial-analytics-dashboard.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 72,
+      "title": "Caltrain commuter website",
+      "folder": "072-caltrain-commuter-website",
+      "brief": "072-caltrain-commuter-website\\072-caltrain-commuter-website.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 73,
+      "title": "Creative photography/video studio",
+      "folder": "073-creative-photography-video-studio",
+      "brief": "073-creative-photography-video-studio\\073-creative-photography-video-studio.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 74,
+      "title": "Restaurant loyalty platform",
+      "folder": "074-restaurant-loyalty-platform",
+      "brief": "074-restaurant-loyalty-platform\\074-restaurant-loyalty-platform.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 75,
+      "title": "Collaborative design canvas",
+      "folder": "075-collaborative-design-canvas",
+      "brief": "075-collaborative-design-canvas\\075-collaborative-design-canvas.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 76,
+      "title": "Visual page-design editor",
+      "folder": "076-visual-page-design-editor",
+      "brief": "076-visual-page-design-editor\\076-visual-page-design-editor.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 77,
+      "title": "Bedtime-story PWA",
+      "folder": "077-bedtime-story-pwa",
+      "brief": "077-bedtime-story-pwa\\077-bedtime-story-pwa.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 78,
+      "title": "IT service-desk assistant",
+      "folder": "078-it-service-desk-assistant",
+      "brief": "078-it-service-desk-assistant\\078-it-service-desk-assistant.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 79,
+      "title": "Messaging automation SaaS",
+      "folder": "079-messaging-automation-saas",
+      "brief": "079-messaging-automation-saas\\079-messaging-automation-saas.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 80,
+      "title": "AI chatbot website",
+      "folder": "080-ai-chatbot-website",
+      "brief": "080-ai-chatbot-website\\080-ai-chatbot-website.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 81,
+      "title": "File-upload SaaS",
+      "folder": "081-file-upload-saas",
+      "brief": "081-file-upload-saas\\081-file-upload-saas.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 82,
+      "title": "Transit-alert PWA",
+      "folder": "082-transit-alert-pwa",
+      "brief": "082-transit-alert-pwa\\082-transit-alert-pwa.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 83,
+      "title": "Professional kitchen recipe manager",
+      "folder": "083-professional-kitchen-recipe-manager",
+      "brief": "083-professional-kitchen-recipe-manager\\083-professional-kitchen-recipe-manager.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 84,
+      "title": "Grocery and meal planner",
+      "folder": "084-grocery-and-meal-planner",
+      "brief": "084-grocery-and-meal-planner\\084-grocery-and-meal-planner.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 85,
+      "title": "Photography portfolio",
+      "folder": "085-photography-portfolio",
+      "brief": "085-photography-portfolio\\085-photography-portfolio.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 86,
+      "title": "MedSpa clinic website",
+      "folder": "086-medspa-clinic-website",
+      "brief": "086-medspa-clinic-website\\086-medspa-clinic-website.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 87,
+      "title": "Developer bounty marketplace",
+      "folder": "087-developer-bounty-marketplace",
+      "brief": "087-developer-bounty-marketplace\\087-developer-bounty-marketplace.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 88,
+      "title": "Historical-location directory",
+      "folder": "088-historical-location-directory",
+      "brief": "088-historical-location-directory\\088-historical-location-directory.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 89,
+      "title": "Classroom lab-support app",
+      "folder": "089-classroom-lab-support-app",
+      "brief": "089-classroom-lab-support-app\\089-classroom-lab-support-app.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 90,
+      "title": "AI artifact library",
+      "folder": "090-ai-artifact-library",
+      "brief": "090-ai-artifact-library\\090-ai-artifact-library.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 91,
+      "title": "Personal productivity hub",
+      "folder": "091-personal-productivity-hub",
+      "brief": "091-personal-productivity-hub\\091-personal-productivity-hub.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 92,
+      "title": "Interactive developer cheatsheet",
+      "folder": "092-interactive-developer-cheatsheet",
+      "brief": "092-interactive-developer-cheatsheet\\092-interactive-developer-cheatsheet.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 93,
+      "title": "Themed ecommerce platform",
+      "folder": "093-themed-ecommerce-platform",
+      "brief": "093-themed-ecommerce-platform\\093-themed-ecommerce-platform.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 94,
+      "title": "Distinctive single-page portfolio",
+      "folder": "094-distinctive-single-page-portfolio",
+      "brief": "094-distinctive-single-page-portfolio\\094-distinctive-single-page-portfolio.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 95,
+      "title": "Knowledge-capture dashboard",
+      "folder": "095-knowledge-capture-dashboard",
+      "brief": "095-knowledge-capture-dashboard\\095-knowledge-capture-dashboard.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 96,
+      "title": "Fashion catalog website",
+      "folder": "096-fashion-catalog-website",
+      "brief": "096-fashion-catalog-website\\096-fashion-catalog-website.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 97,
+      "title": "Golf charity membership platform",
+      "folder": "097-golf-charity-membership-platform",
+      "brief": "097-golf-charity-membership-platform\\097-golf-charity-membership-platform.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 98,
+      "title": "Office cafeteria seat reservation",
+      "folder": "098-office-cafeteria-seat-reservation",
+      "brief": "098-office-cafeteria-seat-reservation\\098-office-cafeteria-seat-reservation.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 99,
+      "title": "Invitation-based VPN account portal",
+      "folder": "099-invitation-based-vpn-account-portal",
+      "brief": "099-invitation-based-vpn-account-portal\\099-invitation-based-vpn-account-portal.md",
+      "status": "pending",
+      "validation": []
+    },
+    {
+      "id": 100,
+      "title": "Pomodoro productivity app",
+      "folder": "100-pomodoro-productivity-app",
+      "brief": "100-pomodoro-productivity-app\\100-pomodoro-productivity-app.md",
+      "status": "pending",
+      "validation": []
+    }
+  ]
+}

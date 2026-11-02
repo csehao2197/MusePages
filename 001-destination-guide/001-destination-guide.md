@@ -1,0 +1,116 @@
+Create a comprehensive destination guide page for "Wanderly Travel" featuring Tokyo, Japan. The page should feel like an editorial travel magazine combined with practical planning tools, inspiring visitors to book their trip.
+
+1. NAVIGATION BAR
+- Logo: "Wanderly" with compass rose icon
+- Links: Destinations, Trip Styles, Deals, About Us, Blog
+- Right side: "Plan My Trip" CTA button (solid #0D9488 teal)
+- Sticky on scroll with white background and subtle shadow
+- Breadcrumb below nav: Home → Destinations → Asia → Tokyo, Japan
+
+2. HERO SECTION (70vh height)
+- Full-bleed cinematic photo of Tokyo skyline at dusk with Mount Fuji in background and neon lights below
+- Overlay gradient from transparent to dark at bottom
+- Content at bottom-left:
+  - Country flag emoji 🇯🇵 + "Japan"
+  - Headline: "Tokyo"
+  - Tagline: "Where ancient temples meet neon-lit streets"
+- Quick stats row (white icons + text on dark overlay):
+  - ✈️ "14h from NYC" · 🌡️ "Best: Mar–May, Oct–Nov" · 💴 "$$$ Moderate" · 🗣️ "Japanese"
+- "Start Planning" CTA button (teal #0D9488)
+
+3. AT A GLANCE SIDEBAR (sticky on desktop, collapsible on mobile)
+- Card with white background, 12px border-radius, soft shadow
+- Quick facts:
+  - Currency: Japanese Yen (¥)
+  - Language: Japanese (English widely understood in tourist areas)
+  - Time Zone: JST (UTC+9)
+  - Visa: 90-day visa-free for US/EU citizens
+  - Plug Type: Type A (US-compatible)
+  - Tipping: Not customary
+  - Safety Rating: ★★★★★ "Very Safe"
+- "Download PDF Guide" button (outline teal)
+- "Book This Destination" button (solid teal)
+
+4. OVERVIEW SECTION
+- 2-column layout: text left (60%), image collage right (40%)
+- Introductory paragraph: "Tokyo is a city of contrasts — a place where centuries-old shrines sit in the shadow of soaring skyscrapers, where Michelin-starred sushi bars share streets with bustling ramen stalls, and where cutting-edge technology coexists with deeply rooted tradition. With 14 million residents, the world's largest metropolitan area offers endless discovery."
+- Key highlights as icon cards (2x3 grid):
+  - 🏯 "38,000+ temples & shrines"
+  - 🍣 "More Michelin stars than any city on Earth"
+  - 🚄 "Bullet trains at 200mph"
+  - 🌸 "Cherry blossom season (late March)"
+  - 🎮 "Global capital of gaming & anime"
+  - 🛍️ "Shopping districts for every style"
+
+5. TOP ATTRACTIONS (card grid, 3 columns desktop, scrollable on mobile)
+- Section headline: "Must-See Attractions" with filter tabs: All, Culture, Nature, Food, Shopping
+- Attraction 1: "Senso-ji Temple" — Asakusa — "Tokyo's oldest temple, dating to 645 AD, with the iconic Kaminarimon thunder gate" — ⏱️ 2-3 hours — Free — Rating: 4.8★
+- Attraction 2: "Shibuya Crossing" — Shibuya — "The world's busiest pedestrian crossing — up to 3,000 people cross at once" — ⏱️ 30 min — Free — Rating: 4.6★
+- Attraction 3: "Tsukiji Outer Market" — Chuo — "Street food paradise with the freshest sushi, tamagoyaki, and wagyu skewers" — ⏱️ 2-3 hours — Free entry — Rating: 4.9★
+- Attraction 4: "Meiji Shrine" — Harajuku — "A serene Shinto shrine surrounded by 170 acres of forest in the heart of the city" — ⏱️ 1-2 hours — Free — Rating: 4.7★
+- Attraction 5: "TeamLab Borderless" — Odaiba — "An immersive digital art museum with stunning interactive light installations" — ⏱️ 3-4 hours — ¥3,800 — Rating: 4.8★
+- Attraction 6: "Akihabara Electric Town" — Akihabara — "Neon-drenched district for anime, manga, retro games, and electronics" — ⏱️ 3-4 hours — Free — Rating: 4.5★
+- Each card: photo, name, neighborhood tag, description, time needed, cost, star rating
+- Heart/save icon on each card
+
+6. SAMPLE ITINERARIES (tabbed section)
+- Tab 1: "3 Days — Highlights" (most popular badge)
+  - Day 1: Senso-ji → Nakamise Street → Skytree → Akihabara → Ramen dinner in Shinjuku
+  - Day 2: Meiji Shrine → Harajuku → Shibuya Crossing → Shibuya Sky → Izakaya crawl
+  - Day 3: Tsukiji Market → Ginza shopping → Imperial Palace gardens → Roppongi night views
+- Tab 2: "5 Days — Deep Dive"
+  - Adds: Day trip to Kamakura, Shimokitazawa vintage shopping, Odaiba & TeamLab, Sumo tournament
+- Tab 3: "7 Days — Complete Tokyo"
+  - Adds: Day trip to Hakone/Mt. Fuji, Yanaka old town, Toyosu fish market auction, Ueno museums
+- Each day: timeline with icons, attraction photos, estimated times, and meal suggestions
+- "Customize This Itinerary" CTA button
+
+7. WHERE TO STAY (3 neighborhood cards)
+- Headline: "Best Neighborhoods to Stay"
+- Card 1: "Shinjuku" — "Central hub with great transport links, nightlife, and department stores" — From $120/night — Best for: First-timers — Photo of Shinjuku at night
+- Card 2: "Shibuya" — "Young, trendy, and walkable with great dining and shopping" — From $100/night — Best for: Couples & nightlife — Photo of Shibuya street
+- Card 3: "Asakusa" — "Traditional atmosphere near Senso-ji with budget-friendly options" — From $65/night — Best for: Culture lovers & budget travelers — Photo of traditional street
+- "View All Hotels" link
+- Each card shows price range, best-for tag, transit info
+
+8. LOCAL TIPS (icon list on light background #F0FDFA)
+- Headline: "Insider Tips from Our Travel Experts"
+- 💳 "Get a Suica or Pasmo IC card for seamless subway and convenience store payments"
+- 🚇 "Avoid rush hour (7:30–9:30 AM) on the subway — it's extremely crowded"
+- 🍜 "Slurping noodles is polite — it shows you're enjoying the meal"
+- 🏪 "7-Eleven and Lawson convenience stores have surprisingly excellent food"
+- 👟 "Wear slip-on shoes — you'll remove them frequently at temples and restaurants"
+- 📶 "Rent a pocket WiFi at the airport — coverage is fast and reliable everywhere"
+- 🗑️ "Public trash cans are rare — carry a small bag for your waste"
+- 💴 "Japan is still very cash-based — carry yen, especially outside tourist areas"
+
+9. WEATHER & BEST TIME TO VISIT
+- Horizontal month chart showing temperature and rainfall
+- Months color-coded: green "Best", yellow "Good", orange "Hot/Rainy", blue "Cold"
+- Best: March–May (cherry blossoms, mild 15-22°C), October–November (autumn foliage, 15-20°C)
+- Good: December–February (cold but festive, illuminations, fewer crowds)
+- Avoid: June–August (rainy season into extreme humidity, 30°C+)
+- Special events callouts: Cherry Blossom season (late March), Sumidagawa Fireworks (July), Autumn leaves (November)
+
+10. TRAVELER REVIEWS
+- Headline: "What Travelers Say About Tokyo"
+- Review 1: "Tokyo exceeded every expectation. The food alone is worth the flight." — James R. — 5 days, October — ★★★★★
+- Review 2: "We felt so safe walking around at midnight. The city is incredibly clean and the people are so kind." — Priya & Anil M. — 7 days, April — ★★★★★
+- Review 3: "Third time visiting and I still discover something new every day." — Sophie L. — 10 days, November — ★★★★★
+- Photo + name + trip duration + season visited + star rating
+
+11. CTA SECTION
+- Dark teal background (#134E4A)
+- Headline: "Ready to Explore Tokyo?"
+- Subheadline: "Our travel experts will craft a personalized itinerary just for you"
+- Two CTAs: "Plan My Tokyo Trip" (white button) and "Browse Tokyo Packages" (outline white button)
+- Starting from: "$2,899/person · 7 days · Flights + Hotels + Experiences"
+
+12. FOOTER
+- Same as site-wide footer with destinations, trip styles, company, and support columns
+- Social icons: Instagram, Facebook, Pinterest, YouTube, TikTok
+- © 2026 Wanderly Travel Co.
+
+Design: Editorial, magazine-style layout. Primary: #0D9488 (teal), dark: #134E4A, accent: #F59E0B (amber for badges/highlights). Clean white backgrounds with alternating #F0FDFA teal-tinted and #F9FAFB neutral sections. Typography: DM Serif Display for headings, Inter for body. Cards with 12px border-radius, generous photography, soft shadows. Smooth scroll anchors for each section.
+
+Responsive: On mobile, sidebar collapses to expandable accordion below hero. Attraction cards become horizontal scroll carousel. Itinerary tabs stack with swipeable navigation. Month chart scrolls horizontally. Neighborhood cards stack vertically. Sticky bottom bar with "Plan My Trip" CTA on mobile.
