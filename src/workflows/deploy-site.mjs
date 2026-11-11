@@ -67,10 +67,29 @@ async function inputPrompts(workspace) {
   return inputs;
 }
 
+function pageOptions(config) {
+  return Object.entries(config.pages).flatMap(([prompt, models]) =>
+    models.map((page) => ({ ...page, prompt })));
+}
+
 function validateConfig(config) {
-  if (config?.version !== 1 || !Array.isArray(config.pages)) throw Error("Expected config version 1 and a pages array");
+  if (config?.version !== 2 || !config.pages || typeof config.pages !== "object" || Array.isArray(config.pages)) {
+    throw Error("Expected config version 2 and a pages object keyed by prompt filename");
+  }
+  const prompts = new Set();
+  for (const [prompt, models] of Object.entries(config.pages)) {
+    checkName(prompt, "prompt filename");
+    if (prompts.has(prompt.toLowerCase())) throw Error(`Duplicate prompt key: ${prompt}`);
+    prompts.add(prompt.toLowerCase());
+    if (!Array.isArray(models)) throw Error(`Expected a model options array for ${prompt}`);
+    for (const page of models) {
+      if (!page || typeof page !== "object" || Array.isArray(page) || Object.hasOwn(page, "prompt")) {
+        throw Error(`Invalid model option for ${prompt}; prompt belongs in the pages key`);
+      }
+    }
+  }
   const keys = new Set();
-  for (const page of config.pages) {
+  for (const page of pageOptions(config)) {
     checkName(page.prompt, "prompt");
     checkName(page.model, "model");
     checkName(page.slug, "public prompt slug");
@@ -87,6 +106,24 @@ function validateConfig(config) {
     if (keys.has(key)) throw Error(`Duplicate deployment option: ${key}`);
     keys.add(key);
   }
+}
+
+async function readConfig(file) {
+  const config = await exists(file) ? JSON.parse(await readFile(file, "utf8")) : { version: 2, pages: {} };
+  if (config?.version === 1 && Array.isArray(config.pages)) {
+    const pages = new Map();
+    for (const page of config.pages) {
+      if (!page || typeof page !== "object") throw Error("Invalid legacy deployment option");
+      checkName(page.prompt, "prompt filename");
+      const { prompt, ...option } = page;
+      if (!pages.has(prompt)) pages.set(prompt, []);
+      pages.get(prompt).push(option);
+    }
+    config.version = 2;
+    config.pages = Object.fromEntries(pages);
+  }
+  validateConfig(config);
+  return config;
 }
 
 async function writeConfig(workspace, config) {
@@ -112,10 +149,9 @@ async function isNextProject(folder) {
 
 async function synchronize(workspace) {
   const file = path.join(workspace, "deploy", "config.json");
-  const config = await exists(file) ? JSON.parse(await readFile(file, "utf8")) : { version: 1, pages: [] };
-  validateConfig(config);
+  const config = await readConfig(file);
   const inputs = await inputPrompts(workspace);
-  const known = new Set(config.pages.map((page) => `${page.prompt}/${page.model}`.toLowerCase()));
+  const known = new Set(pageOptions(config).map((page) => `${page.prompt}/${page.model}`.toLowerCase()));
   const output = path.join(workspace, "out");
   if (await exists(output)) await directory(output);
   for (const prompt of await directories(path.join(output, "pages"))) {
@@ -129,8 +165,12 @@ async function synchronize(workspace) {
       const next = await isNextProject(source);
       if (!next && !await exists(path.join(source, "index.html"))) continue;
       const slug = prompt.replace(/^\d+-/, "");
-      config.pages.push({
-        prompt, model, enabled: false, slug, title: slug.replaceAll("-", " "),
+      const promptKey = Object.keys(config.pages).find((key) => key.toLowerCase() === prompt.toLowerCase()) ?? prompt;
+      if (!Object.hasOwn(config.pages, promptKey)) {
+        Object.defineProperty(config.pages, promptKey, { value: [], enumerable: true, writable: true, configurable: true });
+      }
+      config.pages[promptKey].push({
+        model, enabled: false, slug, title: slug.replaceAll("-", " "),
         tags: [], staticDir: next ? "out" : ".",
       });
       known.add(key);
@@ -176,32 +216,38 @@ export async function registerGeneratedPage(workspace, page) {
     if (await exists(file) && (await lstat(file)).isSymbolicLink()) {
       throw Error("Deployment config cannot be a symbolic link");
     }
-    const config = await exists(file) ? JSON.parse(await readFile(file, "utf8")) : { version: 1, pages: [] };
-    validateConfig(config);
-    const option = { ...page, enabled: false };
-    validateConfig({ version: 1, pages: [option] });
-    if (config.pages.some((entry) => entry.prompt.toLowerCase() !== page.prompt.toLowerCase()
+    const config = await readConfig(file);
+    const { prompt, ...option } = { ...page, enabled: false };
+    validateConfig({ version: 2, pages: { [prompt]: [option] } });
+    const options = pageOptions(config);
+    if (options.some((entry) => entry.prompt.toLowerCase() !== page.prompt.toLowerCase()
       && entry.slug.toLowerCase() === page.slug.toLowerCase())) {
       throw Error(`Conflicting public slug: ${page.slug}`);
     }
-    if (config.pages.some((entry) => entry.prompt.toLowerCase() === page.prompt.toLowerCase() && entry.slug !== page.slug)) {
+    if (options.some((entry) => entry.prompt.toLowerCase() === page.prompt.toLowerCase() && entry.slug !== page.slug)) {
       throw Error(`Prompt has a different public slug: ${page.prompt}`);
     }
-    const existing = config.pages.find((entry) =>
+    const existing = options.find((entry) =>
       entry.prompt.toLowerCase() === page.prompt.toLowerCase() && entry.model.toLowerCase() === page.model.toLowerCase());
     if (existing) {
       if (existing.prompt !== page.prompt || existing.model !== page.model
         || existing.slug !== page.slug || existing.staticDir !== page.staticDir) {
         throw Error(`Deployment mapping conflicts with metadata: ${page.prompt}/${page.model}`);
       }
+      await writeConfig(workspace, config);
       return false;
     }
-    config.pages.push(option);
+    const promptKey = Object.keys(config.pages).find((key) => key.toLowerCase() === prompt.toLowerCase());
+    if (promptKey && promptKey !== prompt) throw Error(`Deployment prompt casing conflicts with metadata: ${prompt}`);
+    if (!Object.hasOwn(config.pages, prompt)) {
+      Object.defineProperty(config.pages, prompt, { value: [], enumerable: true, writable: true, configurable: true });
+    }
+    config.pages[prompt].push(option);
     validateConfig(config);
     await writeConfig(workspace, config);
     const saved = JSON.parse(await readFile(file, "utf8"));
     validateConfig(saved);
-    if (!saved.pages.some((entry) => entry.prompt === page.prompt && entry.model === page.model)) {
+    if (!pageOptions(saved).some((entry) => entry.prompt === page.prompt && entry.model === page.model)) {
       throw Error("Deployment registration was not saved");
     }
     return true;
@@ -329,7 +375,7 @@ async function replaceWebsite(target, staging) {
 export async function publishSite(workspace = root) {
   return withLock(workspace, async () => {
     const { config, inputs } = await synchronize(workspace);
-    const selected = config.pages.filter((page) => page.enabled);
+    const selected = pageOptions(config).filter((page) => page.enabled);
     const destinations = new Set();
     const slugOwners = new Map();
     const promptSlugs = new Map();
@@ -391,7 +437,7 @@ export async function watchDeployConfig(workspace = root) {
     clearTimeout(timer);
     timer = setTimeout(() => {
       pending = pending.then(() => syncDeployConfig(workspace))
-        .then((config) => console.log(`Deployment options synchronized: ${config.pages.length}`))
+        .then((config) => console.log(`Deployment options synchronized: ${pageOptions(config).length}`))
         .catch((error) => console.error("Deployment option sync failed:", error));
     }, 150);
   });
@@ -416,7 +462,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     const command = process.argv[2] ?? "publish";
     if (command === "sync") {
       const config = await syncDeployConfig();
-      console.log(`Deployment options synchronized: ${config.pages.length}`);
+      console.log(`Deployment options synchronized: ${pageOptions(config).length}`);
     } else if (command === "watch") {
       const watcher = await watchDeployConfig();
       console.log("Watching out\\pages for new deployment options. Press Ctrl+C to stop.");

@@ -26,7 +26,7 @@ MusePages 收集由 AI 根据原始需求生成的网站首页。同一个 promp
 | `npm run ai-generate -- <ai model>` | 执行[AI页面生成工作流](#ai页面生成工作流) |
 | `npm run deploy` | 按发布选择执行[deploy工作流](#deploy工作流) |
 
-`generate` 已实现，配置与限制见[模型与发布配置](#模型与发布配置)。`ai-generate` 仍是待实现接口；现有 `deploy` 仅支持 version 1 配置下的完整本地发布，不代表下文的增量处理、发布状态回写和轮播设计已实现。
+`generate` 已实现，配置与限制见[模型与发布配置](#模型与发布配置)。`ai-generate` 仍是待实现接口；现有 `deploy` 使用按 prompt 文件名分组的 version 2 配置执行完整本地发布，兼容迁移旧版数组配置，不代表下文的增量处理、发布状态回写和轮播设计已实现。
 
 生成前，由管理员配置并启动模型服务，提供调用 URI、API 类型、认证方式和真实模型 ID。`<ai model>` 用于选择服务配置，不等于真实模型 ID；凭据仅从本地环境读取。脚本不管理模型服务器，也不能在服务不兼容时自动换模型。
 
@@ -316,28 +316,39 @@ node --test src\workflows\render-prompt-pages.test.mjs src\workflows\deploy-site
 
 当前只支持 Responses 接口，并要求同一 API 根路径下的 `GET /models` 返回 `data[].id`，且包含精确匹配的 `modelId`。仅在需要调用模型时连接服务并读取认证环境；覆盖检查和已有结果的补登记不需要在线服务或 Codex。配置不兼容、连接失败或模型未被列出时明确失败，不切换服务或模型。该检查证明服务声明提供该 ID，不独立证明服务内部使用的模型权重；Codex 事件若报告不同模型 ID，会拒绝结果。实际调用还需安装兼容的 Codex CLI；隔离测试不能代替真实服务联调。
 
-生成脚本只登记现有发布器支持的 **version 1** 配置，新选项保持 `enabled: false`，已有选项的开关、顺序及用户展示信息不覆盖；已有 slug 或导出路径与元数据冲突时报告登记失败。遇到 version 2 时不自动迁移、不覆盖配置，保留已生成代码及独立的登记失败状态。
+生成脚本与发布器使用 **version 2** 发布配置。`pages` 是以原始 prompt Markdown 文件名（不含 `.md`，保留内部编号）为 key 的对象，每个值为该 prompt 的模型选项数组；模型选项不再重复保存 `prompt` 字段。新选项保持 `enabled: false`，已有选项的开关、组内模型顺序及用户展示信息不覆盖；已有 slug 或导出路径与元数据冲突时报告登记失败。
 
-以下 **目标** 发布配置按 prompt 聚合模型，仅保存发布选择；展示与导出信息存入 out 元数据：
+以下是可直接使用的 `deploy\config.json` 示例。它保存发布选择及发布器所需的展示、导出设置，不代替 out 元数据中的执行状态：
 
 ```json
 {
   "version": 2,
-  "pages": [
-    {
-      "prompt": "006-travel-agency-homepage",
-      "model": [
-        { "name": "model-a", "enabled": true },
-        { "name": "model-b", "enabled": false }
-      ]
-    }
-  ]
+  "pages": {
+    "006-travel-agency-homepage": [
+      {
+        "model": "model-a",
+        "enabled": true,
+        "slug": "travel-agency-homepage",
+        "title": "旅行社首页",
+        "tags": ["Travel"],
+        "staticDir": "out"
+      },
+      {
+        "model": "model-b",
+        "enabled": false,
+        "slug": "travel-agency-homepage",
+        "title": "旅行社首页",
+        "tags": [],
+        "staticDir": "."
+      }
+    ]
+  }
 }
 ```
 
-每个 `prompt` 只出现一次，`model[].name` 对应模型目录且不能重复；数组顺序决定已发布模型的轮播顺序。新选项默认关闭，同步保留已有开关和顺序，不因重新生成而重复登记，也不因源码临时缺失而删除旧配置。
+每个 prompt 对应一个 key，不能用公开 slug 或需求父目录名代替文件名。组内 `model` 对应实际模型目录，同一 prompt 下不能重复（忽略大小写）；prompt key 也不能仅大小写不同。对象中 prompt 的顺序及组内数组顺序决定集合卡片排列；当前仍为每个已选模型独立显示卡片，并未实现轮播。新选项默认关闭，同步保留已有开关和顺序，不因重新生成而重复登记，也不因源码临时缺失而删除旧配置。`slug` 不含编号，`staticDir` 相对于模型源码目录，必须指向实际静态产物。
 
-**此 version 2 示例不能直接交给现有 version 1 发布脚本。** 迁移时保留每个组合的开关与顺序，将旧配置中的 `slug`、`title`、`tags` 和 `staticDir` 移入对应元数据；核验实际导出位置，不直接把旧路径改成 `out` 冒充准备完成。字段冲突、输入缺失或元数据不一致时停止，不静默覆盖或丢弃记录。
+`npm run deploy:sync`、生成结果登记和 `npm run deploy` 均兼容原 version 1 的 `pages` 数组，读取后按 prompt 首次出现顺序分组，并在成功同步或登记时原子写回 version 2；保留每个组合的开关、组内顺序、`slug`、`title`、`tags`、`staticDir` 及其他已有字段，不修改模型元数据或实际产物。原数组中交错排列的不同 prompt 会归并到各自分组。旧文档中以数组表示的 version 2 草案并非受支持格式，遇到它或其他无效配置时明确报错，不覆盖原文件。仅同步或登记配置不会发布网站；实际组装本地集合仍须运行 `npm run deploy`。
 
 
 ### 静态产物边界

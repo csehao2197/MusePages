@@ -1,11 +1,11 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { copyFile, lstat, mkdir, mkdtemp, readFile, readdir, rm, symlink, writeFile } from "node:fs/promises";
+import { copyFile, lstat, mkdir, mkdtemp, readFile, readdir, rename, rm, symlink, writeFile } from "node:fs/promises";
 import path from "node:path";
 import os from "node:os";
 import { setTimeout } from "node:timers/promises";
 import { spawnSync } from "node:child_process";
-import { publishSite, syncDeployConfig, watchDeployConfig } from "./deploy-site.mjs";
+import { publishSite, registerGeneratedPage, syncDeployConfig, watchDeployConfig } from "./deploy-site.mjs";
 
 async function fixture(t) {
   const workspace = await mkdtemp(path.join(os.tmpdir(), "musepages-publish-"));
@@ -38,26 +38,130 @@ async function saveConfig(workspace, config) {
   await writeFile(path.join(workspace, "deploy", "config.json"), JSON.stringify(config, null, 2));
 }
 
+function options(config) {
+  return Object.values(config.pages).flat();
+}
+
 test("sync discovers every prompt/model result, defaults to disabled, and preserves edits without duplicates", async (t) => {
   const workspace = await fixture(t);
   await result(workspace, "001-travel", "model-a");
   await result(workspace, "001-travel", "model-b");
   await result(workspace, "002-food", "model-c", true);
   let config = await syncDeployConfig(workspace);
-  assert.equal(config.pages.length, 3);
-  assert.ok(config.pages.every((page) => page.enabled === false));
-  assert.equal(config.pages.find((page) => page.model === "model-c").staticDir, "out");
-  config.pages[0].enabled = true;
-  config.pages[0].title = "User-edited title";
-  config.pages[0].staticDir = "exported";
+  assert.equal(config.version, 2);
+  assert.deepEqual(Object.keys(config.pages), ["001-travel", "002-food"]);
+  assert.deepEqual(config.pages["001-travel"].map((page) => page.model), ["model-a", "model-b"]);
+  assert.ok(options(config).every((page) => page.enabled === false && !Object.hasOwn(page, "prompt")));
+  assert.equal(config.pages["002-food"][0].staticDir, "out");
+  config.pages["001-travel"][0].enabled = true;
+  config.pages["001-travel"][0].title = "User-edited title";
+  config.pages["001-travel"][0].staticDir = "exported";
   await saveConfig(workspace, config);
   await result(workspace, "002-food", "model-d");
   config = await syncDeployConfig(workspace);
-  assert.equal(config.pages.length, 4);
-  assert.equal(config.pages[0].enabled, true);
-  assert.equal(config.pages[0].title, "User-edited title");
-  assert.equal(config.pages[0].staticDir, "exported");
-  assert.equal((await syncDeployConfig(workspace)).pages.length, 4);
+  assert.equal(options(config).length, 4);
+  assert.equal(config.pages["001-travel"][0].enabled, true);
+  assert.equal(config.pages["001-travel"][0].title, "User-edited title");
+  assert.equal(config.pages["001-travel"][0].staticDir, "exported");
+  assert.deepEqual(await syncDeployConfig(workspace), config);
+});
+
+test("legacy arrays migrate once by first prompt appearance, preserving model order and every option field", async (t) => {
+  const workspace = await fixture(t);
+  await result(workspace, "001-travel", "model-a");
+  await result(workspace, "001-travel", "model-b");
+  await result(workspace, "002-food", "model-c");
+  const initial = await syncDeployConfig(workspace);
+  const travel = initial.pages["001-travel"];
+  travel[0].enabled = true;
+  travel[0].title = "Keep custom title";
+  travel[0].tags = ["Custom"];
+  travel[0].staticDir = "exported";
+  travel[0].custom = { keep: true };
+  const legacy = {
+    version: 1, custom: "preserve top-level fields",
+    pages: [
+      { prompt: "001-travel", ...travel[1] },
+      { prompt: "002-food", ...initial.pages["002-food"][0] },
+      { prompt: "001-travel", ...travel[0] },
+    ],
+  };
+  await saveConfig(workspace, legacy);
+  const migrated = await syncDeployConfig(workspace);
+  assert.deepEqual(migrated, {
+    version: 2, custom: legacy.custom,
+    pages: { "001-travel": [travel[1], travel[0]], "002-food": initial.pages["002-food"] },
+  });
+  assert.deepEqual(await configFile(workspace), migrated);
+  const contents = await readFile(path.join(workspace, "deploy", "config.json"), "utf8");
+  assert.deepEqual(await syncDeployConfig(workspace), migrated);
+  assert.equal(await readFile(path.join(workspace, "deploy", "config.json"), "utf8"), contents);
+  await assert.rejects(lstat(path.join(workspace, "deploy", "MusePages")), { code: "ENOENT" });
+});
+
+test("group keys use the prompt filename rather than its parent directory or public slug", async (t) => {
+  const workspace = await fixture(t);
+  await result(workspace, "001-travel", "model-a");
+  await rename(path.join(workspace, "data", "prompts", "001-travel"),
+    path.join(workspace, "data", "prompts", "different-parent"));
+  const config = await syncDeployConfig(workspace);
+  assert.deepEqual(Object.keys(config.pages), ["001-travel"]);
+  config.pages["001-travel"][0].enabled = true;
+  await saveConfig(workspace, config);
+  assert.deepEqual(await publishSite(workspace), { pages: 1, prompts: 1 });
+  assert.match(await readFile(path.join(workspace, "deploy", "MusePages", "pages", "travel", "model-a", "prompt.html"), "utf8"),
+    /&lt;literal prompt&gt;/);
+});
+
+test("registration migrates an existing legacy option and appends models to its group without overwriting edits", async (t) => {
+  const workspace = await fixture(t);
+  await result(workspace, "001-travel", "model-a");
+  const config = await syncDeployConfig(workspace);
+  const page = { prompt: "001-travel", ...config.pages["001-travel"][0], enabled: true, title: "Keep title" };
+  await saveConfig(workspace, { version: 1, pages: [page] });
+  assert.equal(await registerGeneratedPage(workspace, page), false);
+  const migrated = await configFile(workspace);
+  assert.equal(migrated.version, 2);
+  assert.deepEqual(migrated.pages["001-travel"], config.pages["001-travel"].map((entry) =>
+    ({ ...entry, enabled: true, title: "Keep title" })));
+  assert.equal(await registerGeneratedPage(workspace, { ...page, model: "model-b" }), true);
+  const saved = await configFile(workspace);
+  assert.deepEqual(Object.keys(saved.pages), ["001-travel"]);
+  assert.deepEqual(saved.pages["001-travel"].map((entry) => [entry.model, entry.enabled]),
+    [["model-a", true], ["model-b", false]]);
+  assert.equal(await registerGeneratedPage(workspace, { ...page, title: "Do not overwrite" }), false);
+  await assert.rejects(registerGeneratedPage(workspace, { ...page, staticDir: "out" }), /conflicts with metadata/);
+  await assert.rejects(registerGeneratedPage(workspace, { ...page, prompt: "001-TRAVEL", model: "model-c" }), /casing conflicts/);
+  assert.deepEqual(await configFile(workspace), saved);
+});
+
+test("invalid prompt groups and duplicate legacy options fail without changing config or the website", async (t) => {
+  const workspace = await fixture(t);
+  await result(workspace, "001-travel", "model-a");
+  const base = await syncDeployConfig(workspace);
+  const option = base.pages["001-travel"][0];
+  const target = path.join(workspace, "deploy", "MusePages");
+  await mkdir(target);
+  await writeFile(path.join(target, "index.html"), "keep the old website");
+  for (const config of [
+    { version: 2, pages: [] },
+    { version: 2, pages: null },
+    { version: 2, pages: { "../escape": [option] } },
+    { version: 2, pages: { "001-travel": {} } },
+    { version: 2, pages: { "001-travel": [null] } },
+    { version: 2, pages: { "001-travel": [{ ...option, prompt: "002-food" }] } },
+    { version: 2, pages: { "001-travel": [option], "001-TRAVEL": [option] } },
+    { version: 2, pages: { "001-travel": [option, { ...option, model: "MODEL-A" }] } },
+    { version: 1, pages: [{ prompt: "001-travel", ...option }, { prompt: "001-travel", ...option }] },
+    { version: 3, pages: {} },
+  ]) {
+    await saveConfig(workspace, config);
+    const contents = await readFile(path.join(workspace, "deploy", "config.json"), "utf8");
+    await assert.rejects(publishSite(workspace));
+    assert.equal(await readFile(path.join(workspace, "deploy", "config.json"), "utf8"), contents);
+    assert.equal(await readFile(path.join(target, "index.html"), "utf8"), "keep the old website");
+    await assert.rejects(lstat(path.join(workspace, "deploy", ".publish.lock")), { code: "ENOENT" });
+  }
 });
 
 test("publishing copies only selected variants and removing the last selected model removes its prompt", async (t) => {
@@ -66,17 +170,17 @@ test("publishing copies only selected variants and removing the last selected mo
   await result(workspace, "001-travel", "model-b");
   await result(workspace, "002-food", "model-c");
   const config = await syncDeployConfig(workspace);
-  config.pages.forEach((page) => { page.enabled = true; });
+  options(config).forEach((page) => { page.enabled = true; });
   await saveConfig(workspace, config);
   assert.deepEqual(await publishSite(workspace), { pages: 3, prompts: 2 });
   const target = path.join(workspace, "deploy", "MusePages");
   await writeFile(path.join(target, "obsolete.txt"), "old");
-  config.pages.find((page) => page.model === "model-a").enabled = false;
+  config.pages["001-travel"][0].enabled = false;
   await saveConfig(workspace, config);
   await publishSite(workspace);
   assert.deepEqual(await readdir(path.join(target, "pages", "travel")), ["model-b"]);
   await assert.rejects(lstat(path.join(target, "obsolete.txt")), { code: "ENOENT" });
-  config.pages.find((page) => page.model === "model-b").enabled = false;
+  config.pages["001-travel"][1].enabled = false;
   await saveConfig(workspace, config);
   await publishSite(workspace);
   assert.deepEqual(await readdir(path.join(target, "pages")), ["food"]);
@@ -100,7 +204,7 @@ test("no selected models produces a valid empty collection and keeps config and 
   assert.match(await readFile(path.join(target, "index.html"), "utf8"), /No published pages yet/);
   assert.equal(await readFile(path.join(target, ".git", "sentinel"), "utf8"), "keep repository metadata");
   assert.equal(await readFile(path.join(target, ".gitignore"), "utf8"), "local-only");
-  assert.equal((await configFile(workspace)).pages.length, 1);
+  assert.equal(options(await configFile(workspace)).length, 1);
   assert.deepEqual((await readdir(path.join(workspace, "deploy"))).sort(), ["MusePages", "config.json"]);
 });
 
@@ -118,7 +222,7 @@ test("Next.js publishes exported static files and app-router browser chunks, nev
   await writeFile(path.join(exported, "original.md"), "raw prompt");
   await writeFile(path.join(exported, "LICENSE.md"), "Keep license notice");
   const config = await syncDeployConfig(workspace);
-  config.pages[0].enabled = true;
+  config.pages["001-travel"][0].enabled = true;
   await saveConfig(workspace, config);
   await publishSite(workspace);
   const target = path.join(workspace, "deploy", "MusePages", "pages", "travel", "model-a");
@@ -137,7 +241,7 @@ test("invalid or unexported selections leave the old website untouched and relea
   const workspace = await fixture(t);
   const { exported } = await result(workspace, "001-travel", "model-a", true);
   const config = await syncDeployConfig(workspace);
-  config.pages[0].enabled = true;
+  config.pages["001-travel"][0].enabled = true;
   await saveConfig(workspace, config);
   const target = path.join(workspace, "deploy", "MusePages");
   await mkdir(target);
@@ -145,7 +249,7 @@ test("invalid or unexported selections leave the old website untouched and relea
   await rm(path.join(exported, "index.html"));
   await assert.rejects(publishSite(workspace), /Static index\.html is missing/);
   assert.equal(await readFile(path.join(target, "index.html"), "utf8"), "old website");
-  config.pages[0].staticDir = ".";
+  config.pages["001-travel"][0].staticDir = ".";
   await saveConfig(workspace, config);
   await assert.rejects(publishSite(workspace), /Next\.js source cannot be deployed/);
   assert.equal(await readFile(path.join(target, "index.html"), "utf8"), "old website");
@@ -158,14 +262,14 @@ test("publish synchronizes a newly discovered result but does not publish it wit
   await syncDeployConfig(workspace);
   await result(workspace, "001-travel", "model-b");
   assert.deepEqual(await publishSite(workspace), { pages: 0, prompts: 0 });
-  assert.equal((await configFile(workspace)).pages.length, 2);
+  assert.equal(options(await configFile(workspace)).length, 2);
 });
 
 test("broken subpath exports fail before replacing the old website", async (t) => {
   const workspace = await fixture(t);
   const { exported } = await result(workspace, "001-travel", "model-a", true);
   const config = await syncDeployConfig(workspace);
-  config.pages[0].enabled = true;
+  config.pages["001-travel"][0].enabled = true;
   await saveConfig(workspace, config);
   const target = path.join(workspace, "deploy", "MusePages");
   await mkdir(target);
@@ -179,9 +283,9 @@ test("gallery keeps literal replacement characters and escapes user-edited title
   const workspace = await fixture(t);
   await result(workspace, "001-travel", "model-a");
   const config = await syncDeployConfig(workspace);
-  config.pages[0].enabled = true;
-  config.pages[0].title = "Title $& <script>";
-  config.pages[0].tags = ["$& <tag>"];
+  config.pages["001-travel"][0].enabled = true;
+  config.pages["001-travel"][0].title = "Title $& <script>";
+  config.pages["001-travel"][0].tags = ["$& <tag>"];
   await saveConfig(workspace, config);
   await publishSite(workspace);
   const html = await readFile(path.join(workspace, "deploy", "MusePages", "index.html"), "utf8");
@@ -197,13 +301,13 @@ test("malformed config, traversal paths, duplicates and public path collisions f
   const base = await syncDeployConfig(workspace);
   for (const [field, value] of [["prompt", "../escape"], ["model", ".."], ["slug", "001-numbered"], ["staticDir", "../outside"], ["enabled", "true"]]) {
     const config = structuredClone(base);
-    config.pages[0][field] = value;
+    config.pages["001-travel"][0][field] = value;
     await saveConfig(workspace, config);
     await assert.rejects(publishSite(workspace));
   }
-  await saveConfig(workspace, { ...base, pages: [base.pages[0], base.pages[0]] });
+  await saveConfig(workspace, { ...base, pages: { "001-travel": [base.pages["001-travel"][0], base.pages["001-travel"][0]] } });
   await assert.rejects(publishSite(workspace), /Duplicate deployment option/);
-  base.pages.forEach((page) => { page.enabled = true; });
+  options(base).forEach((page) => { page.enabled = true; });
   await saveConfig(workspace, base);
   await assert.rejects(publishSite(workspace), /Conflicting public path/);
   await writeFile(path.join(workspace, "deploy", "config.json"), "{bad json");
@@ -218,7 +322,7 @@ test("symbolic result assets cannot read outside the result or alter the existin
   await writeFile(path.join(outside, "private.txt"), "not public");
   await symlink(outside, path.join(output, "linked"), process.platform === "win32" ? "junction" : "dir");
   const config = await syncDeployConfig(workspace);
-  config.pages[0].enabled = true;
+  config.pages["001-travel"][0].enabled = true;
   await saveConfig(workspace, config);
   await assert.rejects(publishSite(workspace), /cannot be symbolic links/);
   assert.equal(await readFile(path.join(outside, "private.txt"), "utf8"), "not public");
@@ -229,10 +333,10 @@ test("different prompts cannot share a public slug even when their models differ
   await result(workspace, "001-travel", "model-a");
   await result(workspace, "002-travel", "model-b");
   const config = await syncDeployConfig(workspace);
-  config.pages.forEach((page) => { page.enabled = true; });
+  options(config).forEach((page) => { page.enabled = true; });
   await saveConfig(workspace, config);
   await assert.rejects(publishSite(workspace), /Conflicting public path/);
-  config.pages[1].slug = "travel-adventures";
+  config.pages["002-travel"][0].slug = "travel-adventures";
   await saveConfig(workspace, config);
   assert.deepEqual(await publishSite(workspace), { pages: 2, prompts: 2 });
 });
@@ -250,9 +354,9 @@ test("watching adds an externally generated result to config without publishing 
     do {
       await setTimeout(100);
       config = await configFile(workspace);
-    } while (config.pages.length === 0 && Date.now() < deadline);
-    assert.equal(config.pages.length, 1);
-    assert.equal(config.pages[0].enabled, false);
+    } while (options(config).length === 0 && Date.now() < deadline);
+    assert.equal(options(config).length, 1);
+    assert.equal(config.pages["001-travel"][0].enabled, false);
     await assert.rejects(lstat(path.join(workspace, "deploy", "MusePages")), { code: "ENOENT" });
   } finally {
     await watcher.close();
@@ -263,8 +367,8 @@ test("concurrent sync operations preserve one option and leave no lock behind", 
   const workspace = await fixture(t);
   await result(workspace, "001-travel", "model-a");
   const configs = await Promise.all([syncDeployConfig(workspace), syncDeployConfig(workspace)]);
-  assert.ok(configs.every((config) => config.pages.length === 1));
-  assert.equal((await configFile(workspace)).pages.length, 1);
+  assert.ok(configs.every((config) => options(config).length === 1));
+  assert.equal(options(await configFile(workspace)).length, 1);
   await assert.rejects(lstat(path.join(workspace, "deploy", ".publish.lock")), { code: "ENOENT" });
 });
 
@@ -286,14 +390,14 @@ test("the JavaScript CLI synchronizes options and rebuilds the exact configured 
   };
   assert.match(cli("sync"), /options synchronized: 2/);
   const config = await configFile(workspace);
-  config.pages[0].enabled = true;
+  config.pages["001-travel"][0].enabled = true;
   await saveConfig(workspace, config);
   assert.match(cli("publish"), /Published 1 pages from 1 prompts/);
   const target = path.join(workspace, "deploy", "MusePages", "pages", "travel");
   assert.deepEqual(await readdir(target), ["model-a"]);
-  config.pages[0].enabled = false;
+  config.pages["001-travel"][0].enabled = false;
   await saveConfig(workspace, config);
   assert.match(cli("publish"), /Published 0 pages from 0 prompts/);
   await assert.rejects(lstat(target), { code: "ENOENT" });
-  assert.equal((await configFile(workspace)).pages.length, 2);
+  assert.equal(options(await configFile(workspace)).length, 2);
 });

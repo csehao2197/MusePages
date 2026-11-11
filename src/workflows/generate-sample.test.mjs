@@ -26,8 +26,8 @@ async function sampleWorkspace() {
 async function selectSample(workspace) {
   const file = path.join(workspace, "deploy", "config.json");
   const config = JSON.parse(await readFile(file, "utf8"));
-  config.pages[0].enabled = true;
-  config.pages[0].title = "Tokyo destination guide";
+  config.pages["001-destination-guide"][0].enabled = true;
+  config.pages["001-destination-guide"][0].title = "Tokyo destination guide";
   await writeFile(file, JSON.stringify(config));
   await publishSite(workspace);
 }
@@ -38,8 +38,8 @@ test("generates a linked gallery, nested sample, and plain-text prompt page", as
   try {
     await generateSample(workspace);
     const config = JSON.parse(await readFile(path.join(workspace, "deploy", "config.json"), "utf8"));
-    assert.equal(config.pages.length, 1);
-    assert.equal(config.pages[0].enabled, false);
+    assert.deepEqual(Object.keys(config.pages), ["001-destination-guide"]);
+    assert.equal(config.pages["001-destination-guide"][0].enabled, false);
     await selectSample(workspace);
     const gallery = await readFile(path.join(output, "index.html"), "utf8");
     const page = path.join(output, "pages", "destination-guide", "unspecified");
@@ -165,7 +165,7 @@ test("four selected prompt pages show original text and return to the collection
     await writeFile(path.join(output, "index.html"), "<h1>Static result</h1>");
   }
   const config = await syncDeployConfig(workspace);
-  config.pages.forEach((entry) => { entry.enabled = true; });
+  Object.values(config.pages).flat().forEach((entry) => { entry.enabled = true; });
   await writeFile(path.join(workspace, "deploy", "config.json"), JSON.stringify(config));
   await publishSite(workspace);
   const server = createStaticServer(path.join(workspace, "deploy", "MusePages"));
@@ -180,7 +180,7 @@ test("four selected prompt pages show original text and return to the collection
     assert.equal(prompts.length, 4);
     for (const href of prompts) {
       assert.ok(href.endsWith("/prompt.html"));
-      const folder = config.pages.find((entry) => entry.slug === href.split("/")[1]).prompt;
+      const folder = Object.keys(config.pages).find((key) => config.pages[key].some((entry) => entry.slug === href.split("/")[1]));
       const prompt = await readFile(new URL(`../../data/prompts/${folder}/${folder}.md`, import.meta.url), "utf8");
       for (const width of [1280, 375]) {
         await page.setViewportSize({ width, height: 800 });

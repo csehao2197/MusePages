@@ -120,7 +120,7 @@ async function snapshot(folder) {
   return result;
 }
 
-test("generates through a child process with stdin, real model selection, static checks and disabled v1 registration", async (t) => {
+test("generates through a child process with stdin, real model selection, static checks and disabled grouped registration", async (t) => {
   const f = await fixture(t);
   const requests = await service(t, f.workspace);
   await save(path.join(f.workspace, "deploy", "MusePages", "index.html"), "existing website");
@@ -130,9 +130,10 @@ test("generates through a child process with stdin, real model selection, static
   const state = await readJson(path.join(f.output, "metadata.json"));
   assert.deepEqual(state, metadata({ generated: true, validated: true, config_added: true }));
   const config = await readJson(path.join(f.workspace, "deploy", "config.json"));
-  assert.deepEqual(config.pages, [{
-    prompt, model: "model-a", enabled: false, slug: "travel", title: "travel", tags: [], staticDir: "out",
-  }]);
+  assert.equal(config.version, 2);
+  assert.deepEqual(config.pages, { [prompt]: [{
+    model: "model-a", enabled: false, slug: "travel", title: "travel", tags: [], staticDir: "out",
+  }] });
   const invocation = await readJson(path.join(f.output, ".invocation.json"));
   assert.equal(invocation.cwd, f.output);
   assert.equal(invocation.args.at(-1), "-");
@@ -173,13 +174,15 @@ test("completed results repair registration without a model call and preserve ex
   assert.equal(repaired.summary.registered, 1, JSON.stringify(repaired));
   const file = path.join(f.workspace, "deploy", "config.json");
   const config = await readJson(file);
-  config.pages[1].enabled = true;
-  config.pages[1].title = "Keep my title";
+  config.pages[prompt][0].enabled = true;
+  config.pages[prompt][0].title = "Keep my title";
   await save(file, config);
   const skipped = await renderPromptPages(f.workspace, ["local"], noModel);
   assert.equal(skipped.summary.skipped, 1);
-  assert.deepEqual((await readJson(file)).pages[0], first);
-  assert.deepEqual((await readJson(file)).pages[1], config.pages[1]);
+  const { prompt: firstPrompt, ...firstOption } = first;
+  assert.deepEqual(Object.keys(config.pages), [firstPrompt, prompt]);
+  assert.deepEqual((await readJson(file)).pages[firstPrompt], [firstOption]);
+  assert.deepEqual((await readJson(file)).pages[prompt], config.pages[prompt]);
   assert.equal(await readFile(path.join(f.output, ".attempt-count"), "utf8"), "1");
   assert.equal(requests(), 1);
 });
@@ -281,7 +284,7 @@ test("Next.js source with no export stays generated but unvalidated; supplying o
   assert.equal(await readFile(path.join(f.output, ".attempt-count"), "utf8"), "1");
 });
 
-test("registration does not migrate or overwrite version 2 publication configuration", async (t) => {
+test("registration rejects an array-shaped version 2 config without overwriting it", async (t) => {
   const f = await fixture(t);
   await service(t, f.workspace);
   const file = path.join(f.workspace, "deploy", "config.json");
@@ -289,7 +292,7 @@ test("registration does not migrate or overwrite version 2 publication configura
   await save(file, config);
   const report = await renderPromptPages(f.workspace, ["local"], f.options());
   assert.equal(report.summary.failed, 1);
-  assert.match(report.items[0].reason, /version 1/);
+  assert.match(report.items[0].reason, /version 2.*pages object/);
   assert.deepEqual(await readJson(file), config);
   assert.equal((await readJson(path.join(f.output, "metadata.json"))).generated, true);
 });
