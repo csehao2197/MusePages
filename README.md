@@ -47,21 +47,57 @@ npm deploy
 ## 工作流
 
 ### 页面生成工作流
-ai model的调用uri设置在/config.json
-此命令调用config.json 配置的 uri提供的ai 模型 运行src/workflows/render-prompt-pages.mjs
-以对每一个prompt生成对应的webpage
+
+页面生成工作流以用户指定的 `<ai model>` 为输入，读取根目录 `config.json` 中的模型服务配置，由 `src\workflows\render-prompt-pages.mjs` 遍历原始 prompt，按需生成该模型对应的网站代码与静态首页。
+
+流程依次完成模型配置校验、已有结果检查、缺失页面生成、静态产物准备和发布选项登记，不自动部署目标网站。脚本的目录结构、执行步骤和状态处理见[源码结构与说明](#源码结构与说明)。
+
 ### deploy工作流
 根据 /deloy/config 生成对应的目标网站的页面资源 /MusePages/data/
 
 ## 源码结构与说明
-```text
-src
-  workflows
-    render-prompt-pages.mjs
 
-src/workflows/render-prompt-pages.mjs
-   此脚本对于当前配置的ai 模型 <ai model> 遍历data\prompts里的每一个prompt 检查对应的 out\pages\<prompt>\<ai model>\metadata.json是否存在以及是否完整生成
-   如果没有完整生成 调用codex -c 命令使用prompt生成对应的站点 并且产生静态页面于out\pages\<prompt>\<ai model>\out
+页面生成脚本的输入、执行入口和输出按以下结构组织：
+
+```text
+config.json                         # 模型服务配置
+DESIGN.md                           # 通用设计指引
+data\
+  prompts\                          # 原始 Markdown 需求
+src\
+  workflows\
+    render-prompt-pages.mjs          # 页面生成编排入口
+out\
+  pages\
+    <prompt>\
+      <ai model>\
+        metadata.json               # 模型身份、生成与验证等状态
+        ...                         # 生成的网站源码
+        out\
+          index.html                # 用于发布的静态首页
+          ...                       # 静态资源
+deploy\
+  config.json                       # 模型结果的发布选择
+```
+
+`<prompt>` 是原始 Markdown 文件名去除 `.md` 后的名称，保留内部编号；`<ai model>` 是模型对应的稳定目录名，真实模型 ID 记录在元数据中。不同 prompt、不同模型的源码与静态产物互不覆盖。
+
+### 页面生成脚本
+
+`src\workflows\render-prompt-pages.mjs` 负责遍历需求、调用指定模型、检查生成结果并登记发布选项，按以下顺序执行：
+
+1. **校验模型配置**：根据输入的模型名称读取根目录 `config.json`，取得调用 URI、接口类型与实际模型 ID，验证连接及模型身份。配置名称不能代替真实模型标识；认证信息仅从本地环境读取。
+2. **读取需求与设计指引**：遍历 `data\prompts\` 中各项目的原始 Markdown，结合根目录 `DESIGN.md` 准备生成输入，不修改原始需求。
+3. **判断是否需要生成**：对照 `metadata.json`、实际代码和当前需求判断完成情况。有效结果跳过；已有代码但记录不可信、生成不完整或输入已变化的，列为待确认或获准重试项，不直接覆盖。仅缺少静态导出时，保留源码，只补后续静态产物。
+4. **调用 Codex 生成源码**：对获准生成的缺失项，再次检查结果并加锁，以对应模型目录为子进程工作目录调用 `codex exec`。通过 `-c` 配置模型服务连接、通过 `--model` 选择实际模型；原始 prompt、设计指引和输出要求通过位置参数或标准输入传入，不把 `-c` 当作提示词参数。
+5. **准备并检查静态首页**：源码保存在模型目录，用于发布的首页及资源放在其 `out\` 子目录。页面须可独立静态运行，资源引用适用于最终发布子路径；不能用项目源码、`.next` 或截图代替静态首页。
+6. **更新记录与发布选项**：核验实际结果后更新元数据，将该 prompt／模型组合登记到 `deploy\config.json`。新选项默认关闭，已有选项不重复添加、不改变开关；登记失败时保留生成代码，下次仅补登记。
+
+### 结果记录与恢复
+
+`out\pages\<prompt>\<ai model>\metadata.json` 保存当前模型结果的身份、静态产物位置及执行状态。生成、配置登记、静态验证和部署分别记录，不能因为目录存在、Codex 退出成功或配置已登记就将全部阶段标为完成。
+
+脚本应设置超时和有限重试，失败时保留原因与已有有效结果；中断后依据元数据和实际文件继续处理。结束时输出生成、跳过、待确认和失败列表，部署由独立工作流执行。
 
 ## 项目状态
 
