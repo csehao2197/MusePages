@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { createServer } from "node:http";
 import { spawnSync } from "node:child_process";
-import { copyFile, mkdir, mkdtemp, readFile, readdir, rm, symlink, writeFile } from "node:fs/promises";
+import { copyFile, mkdir, mkdtemp, readFile, readdir, rm, stat, symlink, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import {
@@ -69,11 +69,11 @@ process.stdin.on("end", () => {
   fs.writeFileSync("index.html", '<!doctype html><html><head><link rel="stylesheet" href="style.css"></head><body><main>Travel<button>Explore</button></main><script src="client.js"></script></body></html>');
   fs.writeFileSync("style.css", "body{background-image:url(images/logo.svg)}");
   fs.mkdirSync("images", { recursive: true });
-  fs.writeFileSync("images/logo.svg", "<svg></svg>");
+  fs.writeFileSync("images/logo.svg", '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><rect width="20" height="20" fill="teal"/></svg>');
   fs.writeFileSync("client.js", 'document.querySelector("button").onclick=()=>alert("Travel");');
   if (mode === "bad-static") {
     fs.mkdirSync("out", { recursive: true });
-    fs.writeFileSync("out/index.html", '<html><body><img src="missing.png"></body></html>');
+    fs.writeFileSync("out/index.html", '<html><body><main>Travel</main><img src="missing.svg"></body></html>');
   }
   const model = process.argv[process.argv.indexOf("--model") + 1];
   console.log(JSON.stringify({ type: "turn.completed", model: mode === "wrong-model" ? "other-model" : model }));
@@ -108,7 +108,7 @@ async function readJson(file) {
 }
 
 function metadata(changes = {}) {
-  return { modelId, tags: [], staticDir: "out", generated: true, config_added: false, validated: false, deployed: false, ...changes };
+  return { modelId, tags: [], staticDir: "out", generated: true, preview: false, config_added: false, validated: false, deployed: false, ...changes };
 }
 
 async function snapshot(folder) {
@@ -126,9 +126,14 @@ test("generates through a child process with stdin, real model selection, static
   await save(path.join(f.workspace, "deploy", "MusePages", "index.html"), "existing website");
   const report = await renderPromptPages(f.workspace, ["local"], f.options());
   assert.equal(report.summary.generated, 1, JSON.stringify(report));
+  assert.equal(report.items[0].preview, "generated");
+  const preview = await readFile(path.join(f.output, "out", "preview.png"));
+  assert.equal(preview.subarray(0, 8).toString("hex"), "89504e470d0a1a0a");
+  assert.equal(preview.readUInt32BE(16), 1200);
+  assert.equal(preview.readUInt32BE(20), 900);
   assert.deepEqual(report.remainingMissing, []);
   const state = await readJson(path.join(f.output, "metadata.json"));
-  assert.deepEqual(state, metadata({ generated: true, validated: true, config_added: true }));
+  assert.deepEqual(state, metadata({ generated: true, preview: true, validated: true, config_added: true }));
   const config = await readJson(path.join(f.workspace, "deploy", "config.json"));
   assert.equal(config.version, 2);
   assert.deepEqual(config.pages, { [prompt]: [{
@@ -151,7 +156,7 @@ test("generates through a child process with stdin, real model selection, static
   const log = await readFile(path.join(f.output, logs[0]), "utf8");
   assert.ok(log.includes("[REDACTED]"));
   assert.ok(!log.includes(secret));
-  assert.deepEqual((await readdir(path.join(f.output, "out"))).sort(), ["client.js", "images", "index.html", "style.css"]);
+  assert.deepEqual((await readdir(path.join(f.output, "out"))).sort(), ["client.js", "images", "index.html", "preview.png", "style.css"]);
   assert.equal(await readFile(path.join(f.workspace, "deploy", "MusePages", "index.html"), "utf8"), "existing website");
   assert.deepEqual(await readdir(path.join(f.workspace, "out", ".generation-locks")), []);
   assert.equal(requests(), 1);
@@ -166,12 +171,18 @@ test("completed results repair registration without a model call and preserve ex
   assert.equal(failed.items[0].generated, true);
   assert.match(failed.items[0].reason, /registration failed/);
   assert.equal((await readJson(path.join(f.output, "metadata.json"))).generated, true);
+  assert.equal((await readJson(path.join(f.output, "metadata.json"))).preview, true);
   assert.equal((await readJson(path.join(f.output, "metadata.json"))).config_added, false);
+  const previewFile = path.join(f.output, "out", "preview.png");
+  await rm(previewFile);
   const first = { prompt: "002-food", model: "model-b", enabled: true, slug: "food", title: "Food", tags: ["Keep"], staticDir: "." };
   await save(path.join(f.workspace, "deploy", "config.json"), { version: 1, pages: [first] });
   const noModel = { ...f.options(), command: { executable: "must-not-run", args: [] } };
   const repaired = await renderPromptPages(f.workspace, ["local"], noModel);
   assert.equal(repaired.summary.registered, 1, JSON.stringify(repaired));
+  assert.equal(repaired.items[0].preview, "generated");
+  const preview = await readFile(previewFile);
+  const modified = (await stat(previewFile)).mtimeMs;
   const file = path.join(f.workspace, "deploy", "config.json");
   const config = await readJson(file);
   config.pages[prompt][0].enabled = true;
@@ -179,12 +190,131 @@ test("completed results repair registration without a model call and preserve ex
   await save(file, config);
   const skipped = await renderPromptPages(f.workspace, ["local"], noModel);
   assert.equal(skipped.summary.skipped, 1);
+  assert.equal(skipped.items[0].preview, "preserved");
+  assert.deepEqual(await readFile(previewFile), preview);
+  assert.equal((await stat(previewFile)).mtimeMs, modified);
+  assert.equal((await readJson(path.join(f.output, "metadata.json"))).preview, true);
   const { prompt: firstPrompt, ...firstOption } = first;
   assert.deepEqual(Object.keys(config.pages), [firstPrompt, prompt]);
   assert.deepEqual((await readJson(file)).pages[firstPrompt], [firstOption]);
   assert.deepEqual((await readJson(file)).pages[prompt], config.pages[prompt]);
   assert.equal(await readFile(path.join(f.output, ".attempt-count"), "utf8"), "1");
   assert.equal(requests(), 1);
+});
+
+test("changed exports and corrupt previews refresh screenshots without regenerating source or changing publication switches", async (t) => {
+  const f = await fixture(t);
+  const requests = await service(t, f.workspace);
+  assert.equal((await renderPromptPages(f.workspace, ["local"], f.options())).summary.generated, 1);
+  const preview = path.join(f.output, "out", "preview.png");
+  const original = await readFile(preview);
+  const source = await readFile(path.join(f.output, "style.css"), "utf8");
+  const file = path.join(f.workspace, "deploy", "config.json");
+  const config = await readJson(file);
+  config.pages[prompt][0].enabled = true;
+  config.pages[prompt][0].title = "Keep my title";
+  await save(file, config);
+  const noModel = { ...f.options(), command: { executable: "must-not-run", args: [] } };
+  await save(path.join(f.output, "out", "style.css"), "body{background:rgb(17,34,51);color:white}");
+  const refreshed = await renderPromptPages(f.workspace, ["local"], noModel);
+  assert.equal(refreshed.items[0].preview, "generated", JSON.stringify(refreshed));
+  assert.notDeepEqual(await readFile(preview), original);
+  assert.equal(await readFile(path.join(f.output, "style.css"), "utf8"), source);
+  await writeFile(preview, "corrupt preview");
+  const repaired = await renderPromptPages(f.workspace, ["local"], noModel);
+  assert.equal(repaired.items[0].preview, "generated", JSON.stringify(repaired));
+  assert.equal((await readFile(preview)).subarray(0, 8).toString("hex"), "89504e470d0a1a0a");
+  assert.equal((await readJson(path.join(f.output, "metadata.json"))).preview, true);
+  const image = await readFile(preview);
+  const stylesheet = path.join(f.output, "out", "style.css");
+  const style = await readFile(stylesheet, "utf8");
+  await save(stylesheet, 'body{background:url("missing.svg")}');
+  const invalid = await renderPromptPages(f.workspace, ["local"], noModel);
+  assert.equal(invalid.summary.pending, 1, JSON.stringify(invalid));
+  assert.equal((await readJson(path.join(f.output, "metadata.json"))).preview, false);
+  assert.deepEqual(await readFile(preview), image);
+  await save(stylesheet, style);
+  const recovered = await renderPromptPages(f.workspace, ["local"], noModel);
+  assert.equal(recovered.items[0].preview, "generated", JSON.stringify(recovered));
+  assert.equal((await readJson(path.join(f.output, "metadata.json"))).preview, true);
+  assert.deepEqual(await readJson(file), config);
+  assert.equal(requests(), 1);
+  assert.equal(await readFile(path.join(f.output, ".attempt-count"), "utf8"), "1");
+});
+
+test("false and legacy preview flags require capture while read-only checks never migrate metadata", async (t) => {
+  const f = await fixture(t);
+  const requests = await service(t, f.workspace);
+  assert.equal((await renderPromptPages(f.workspace, ["local"], f.options())).summary.generated, 1);
+  const file = path.join(f.output, "metadata.json");
+  const noModel = { ...f.options(), command: { executable: "must-not-run", args: [] } };
+  for (const legacy of [false, true]) {
+    const state = await readJson(file);
+    state.preview = false;
+    if (legacy) delete state.preview;
+    await save(file, state);
+    const before = await snapshot(f.workspace);
+    const checked = await renderPromptPages(f.workspace, ["local"], { check: true, env: {} });
+    assert.equal(checked.summary.skipped, 1, JSON.stringify(checked));
+    assert.deepEqual(await snapshot(f.workspace), before);
+    const resumed = await renderPromptPages(f.workspace, ["local"], noModel);
+    assert.equal(resumed.items[0].preview, "generated", JSON.stringify(resumed));
+    assert.equal((await readJson(file)).preview, true);
+  }
+  assert.equal(requests(), 1);
+  assert.equal(await readFile(path.join(f.output, ".attempt-count"), "utf8"), "1");
+});
+
+test("preview failure retains source and the old image, reports pending and resumes without another model call", async (t) => {
+  const f = await fixture(t);
+  const requests = await service(t, f.workspace);
+  await save(path.join(f.workspace, "deploy", "config.json"), "{bad JSON");
+  const first = await renderPromptPages(f.workspace, ["local"], f.options());
+  assert.equal(first.summary.failed, 1, JSON.stringify(first));
+  const file = path.join(f.workspace, "deploy", "config.json");
+  await rm(file);
+  const preview = path.join(f.output, "out", "preview.png");
+  const original = await readFile(preview);
+  const source = await readFile(path.join(f.output, "client.js"), "utf8");
+  const noModel = { ...f.options(), command: { executable: "must-not-run", args: [] } };
+  await save(path.join(f.output, "out", "client.js"), 'throw new Error("Cannot render this homepage");');
+  const pending = await renderPromptPages(f.workspace, ["local"], noModel);
+  assert.equal(pending.summary.pending, 1, JSON.stringify(pending));
+  assert.match(pending.items[0].reason, /preview needs preparation.*Cannot render this homepage/s);
+  assert.equal(pending.items[0].generated, true);
+  assert.deepEqual(await readJson(path.join(f.output, "metadata.json")), metadata());
+  assert.deepEqual(await readFile(preview), original);
+  assert.equal(await readFile(path.join(f.output, "client.js"), "utf8"), source);
+  await assert.rejects(readFile(file), { code: "ENOENT" });
+  assert.ok(!(await readdir(path.join(f.output, "out"))).some((name) => name.startsWith(".preview")));
+  await save(path.join(f.output, "out", "client.js"), source + "\n");
+  const resumed = await renderPromptPages(f.workspace, ["local"], noModel);
+  assert.equal(resumed.summary.registered, 1, JSON.stringify(resumed));
+  assert.equal(resumed.items[0].preview, "generated");
+  assert.equal((await readJson(path.join(f.output, "metadata.json"))).preview, true);
+  assert.equal((await readJson(path.join(f.output, "metadata.json"))).validated, true);
+  assert.equal(requests(), 1);
+  assert.equal(await readFile(path.join(f.output, ".attempt-count"), "utf8"), "1");
+});
+
+test("cancelling preview preparation releases browser and generation locks without model calls or registration", async (t) => {
+  const f = await fixture(t);
+  await save(path.join(f.output, "metadata.json"), metadata({ preview: true, validated: true }));
+  await save(path.join(f.output, "README.md"), "Static HTML homepage.");
+  const html = "<html><body><main>Travel</main><script>for (;;) {}</script></body></html>";
+  await save(path.join(f.output, "index.html"), html);
+  await save(path.join(f.output, "out", "index.html"), html);
+  const report = await renderPromptPages(f.workspace, ["local"], {
+    env: {}, command: { executable: "must-not-run", args: [] }, signal: AbortSignal.timeout(1500),
+  });
+  assert.equal(report.summary.pending, 1, JSON.stringify(report));
+  assert.match(report.items[0].reason, /preview needs preparation/);
+  assert.deepEqual(await readJson(path.join(f.output, "metadata.json")), metadata());
+  assert.equal(await readFile(path.join(f.output, "index.html"), "utf8"), html);
+  assert.deepEqual(await readdir(path.join(f.output, "out")), ["index.html"]);
+  assert.deepEqual(await readdir(path.join(f.workspace, "out", ".generation-locks")), []);
+  await assert.rejects(readFile(path.join(f.output, ".generation-preview.sha256")), { code: "ENOENT" });
+  await assert.rejects(readFile(path.join(f.workspace, "deploy", "config.json")), { code: "ENOENT" });
 });
 
 test("read-only coverage spans explicit models and ignores validation/publication without touching files or service", async (t) => {
@@ -218,6 +348,8 @@ test("missing, malformed and mismatched metadata never authorize overwriting exi
     { value: null, reason: /no model metadata/ },
     { value: "{bad JSON", reason: /JSON|property|token/i },
     { value: metadata({ modelId: "wrong-model" }), reason: /identity/ },
+    { value: metadata({ preview: "true" }), reason: /Incomplete/ },
+    { value: metadata({ preview: null }), reason: /Incomplete/ },
     { value: { modelId }, reason: /Incomplete/ },
   ];
   for (const { value, reason } of cases) {
@@ -304,7 +436,7 @@ test("broken static resources preserve generated code; changed inputs never sile
   assert.equal(pending.summary.pending, 1);
   assert.match(pending.items[0].reason, /Missing static resource/);
   assert.equal((await readJson(path.join(f.output, "metadata.json"))).generated, true);
-  await save(path.join(f.output, "out", "missing.png"), "fixture");
+  await save(path.join(f.output, "out", "missing.svg"), '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><rect width="20" height="20" fill="teal"/></svg>');
   assert.equal((await renderPromptPages(f.workspace, ["local"], f.options("fail"))).summary.registered, 1);
   await save(path.join(f.workspace, "DESIGN.md"), "Changed design");
   const changed = await renderPromptPages(f.workspace, ["local"], f.options("success", { retry: true }));

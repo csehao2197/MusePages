@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
 import { registerGeneratedPage } from "./deploy-site.mjs";
 
 const root = fileURLToPath(new URL("../../", import.meta.url));
-const states = ["generated", "config_added", "validated", "deployed"];
+const states = ["generated", "preview", "config_added", "validated", "deployed"];
 const assets = new Set([
   ".html", ".css", ".js", ".mjs", ".json", ".png", ".jpg", ".jpeg", ".gif",
   ".svg", ".webp", ".avif", ".ico", ".woff", ".woff2", ".ttf", ".otf",
@@ -146,6 +146,7 @@ async function prompts(workspace, selected) {
 
 function validateMetadata(metadata, model) {
   if (!metadata || metadata.modelId !== model.modelId) throw Error("Model metadata identity does not match modelId");
+  if (metadata.preview === undefined) metadata.preview = false;
   if (states.some((key) => typeof metadata[key] !== "boolean")
     || !Array.isArray(metadata.tags) || metadata.tags.some((tag) => typeof tag !== "string")
     || typeof metadata.staticDir !== "string" || !metadata.staticDir
@@ -407,6 +408,7 @@ async function copyHtml(source, destination) {
 
 export async function validateStaticOutput(folder, slug, model) {
   if (!/<(?:html|body|main)\b/i.test(await text(path.join(folder, "index.html")))) throw Error("Static homepage is missing or invalid");
+  const digest = createHash("sha256").update(JSON.stringify([slug, model]));
   const prefix = `/pages/${encodeURIComponent(slug)}/${encodeURIComponent(model)}/`;
   const base = new URL(prefix, "https://musepages.invalid");
   async function reference(file, value) {
@@ -430,7 +432,7 @@ export async function validateStaticOutput(folder, slug, model) {
     throw Error(`Missing static resource: ${value}`);
   }
   async function walk(directory) {
-    for (const entry of await readdir(directory, { withFileTypes: true })) {
+    for (const entry of (await readdir(directory, { withFileTypes: true })).sort((a, b) => a.name.localeCompare(b.name))) {
       const file = path.join(directory, entry.name);
       await info(file);
       if (entry.name.startsWith(".") || excluded.test(entry.name)) throw Error(`Non-public file in static output: ${entry.name}`);
@@ -438,8 +440,12 @@ export async function validateStaticOutput(folder, slug, model) {
         await walk(file);
       } else {
         if (!entry.isFile() || !publicAsset(entry.name)) throw Error(`Unsupported static file: ${entry.name}`);
+        const content = await readFile(file);
+        if (file !== path.join(folder, "preview.png")) {
+          digest.update(JSON.stringify([path.relative(folder, file), createHash("sha256").update(content).digest("hex")]));
+        }
         if (/\.(html|css)$/i.test(entry.name)) {
-          const contents = await text(file);
+          const contents = content.toString("utf8");
           if (!contents.trim()) throw Error(`Empty static file: ${entry.name}`);
           const links = [...contents.matchAll(/url\(\s*(['"]?)(.*?)\1\s*\)|@import\s+(['"])(.*?)\3/gi)]
             .map((match) => match[2] ?? match[4]);
@@ -457,6 +463,24 @@ export async function validateStaticOutput(folder, slug, model) {
     }
   }
   await walk(folder);
+  return digest.digest("hex");
+}
+
+async function ensurePreview(workspace, current, exported, digest, signal, ready) {
+  const file = await inside(exported, "preview.png");
+  const fingerprint = await inside(current.folder, ".generation-preview.sha256");
+  const image = (await info(file))?.isFile() ? await readFile(file) : null;
+  const imageDigest = image && createHash("sha256").update(image).digest("hex");
+  if (ready && image && image.length > 24 && image.subarray(0, 8).toString("hex") === "89504e470d0a1a0a"
+    && image.readUInt32BE(16) === 1200 && image.readUInt32BE(20) === 900
+    && await info(fingerprint) && (await text(fingerprint)).trim() === `${digest} ${imageDigest}`) {
+    return "preserved";
+  }
+  const { generatePreview } = await import("./generate-preview.mjs");
+  await generatePreview(exported, { workspace, signal });
+  const captured = createHash("sha256").update(await readFile(file)).digest("hex");
+  await saveText(fingerprint, `${digest} ${captured}\n`);
+  return "generated";
 }
 
 async function withPromptLock(workspace, id, action) {
@@ -503,7 +527,7 @@ async function processItem(workspace, prompt, model, shared, options, getCommand
       if (!await info(sharedFile)) await saveJson(sharedFile, shared);
       metadata = {
         modelId: model.modelId, tags: [], staticDir: "out",
-        generated: false, config_added: metadata?.config_added ?? false, validated: false, deployed: false,
+        generated: false, preview: false, config_added: metadata?.config_added ?? false, validated: false, deployed: false,
       };
       await saveJson(current.file, metadata);
       for (let attempt = 1; attempt <= options.retries + 1; attempt++) {
@@ -532,13 +556,25 @@ async function processItem(workspace, prompt, model, shared, options, getCommand
     if (!await info(exported) && type === "html" && metadata.staticDir === "out") {
       await copyHtml(current.folder, exported);
     }
+    let staticDigest;
     try {
-      await validateStaticOutput(exported, shared.slug, model.directory);
+      staticDigest = await validateStaticOutput(exported, shared.slug, model.directory);
     } catch (error) {
+      metadata.preview = false;
       metadata.validated = false;
       await saveJson(current.file, metadata);
       return { status: "pending", generated: true, reason: `Source retained; static output needs preparation: ${error.message}` };
     }
+    let preview;
+    try {
+      preview = await ensurePreview(workspace, current, exported, staticDigest, options.signal, metadata.preview);
+    } catch (error) {
+      metadata.preview = false;
+      metadata.validated = false;
+      await saveJson(current.file, metadata);
+      return { status: "pending", generated: true, reason: `Source retained; preview needs preparation: ${error.message}` };
+    }
+    metadata.preview = true;
     metadata.validated = true;
     await saveJson(current.file, metadata);
     try {
@@ -549,7 +585,7 @@ async function processItem(workspace, prompt, model, shared, options, getCommand
       });
       metadata.config_added = true;
       await saveJson(current.file, metadata);
-      return { status: generated ? "generated" : added ? "registered" : "skipped", generated: true };
+      return { status: generated ? "generated" : added ? "registered" : "skipped", generated: true, preview };
     } catch (error) {
       metadata.config_added = false;
       await saveJson(current.file, metadata);

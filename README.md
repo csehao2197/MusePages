@@ -82,13 +82,25 @@ deploy\MusePages\
 
 ### 首页预览截图
 
+由 `src\workflows\generate-preview.mjs` 生成预览，接收 `out\pages\<prompt>\<ai model>\out\` 静态目录作为输入。脚本内置仅绑定 `127.0.0.1` 随机端口的临时 HTTP 服务，无需 `npm start` 或修改模型项目的启动配置。服务只托管输入目录中的静态资源，不启动 Next.js 运行时、不执行构建，也不重新生成页面源码。
+
+```powershell
+node src\workflows\generate-preview.mjs out\pages\006-travel-agency-homepage\model-a\out
+```
+
 每个新生成的页面都须从对应模型的 `out\index.html` 实际浏览器渲染结果取得 `preview.png`，作为集合面板的预览。截图须来自该 prompt／模型的真实静态首页，不使用设计稿、其他模型的截图或占位图片冒充；页面视觉内容更新后同步更新截图。
 
-通过本地静态 HTTP 服务访问导出的首页，使用 Playwright Chromium 等浏览器等待页面、图片及字体加载完成后截图，并核对没有加载失败、空白或错误页面。建议统一使用 **1200 × 900 CSS 像素、deviceScaleFactor 为 1** 的桌面视口，截取首屏而非整个长页面，保持集合卡片中的预览比例一致。截图用于展示，不能代替静态资源、交互和移动端验证。
+脚本使用已有的 Playwright Chromium，等待页面网络空闲、字体及首屏图片加载完成，检查 HTTP 错误、资源加载失败、JavaScript 异常及明显空白页面后截图。统一使用 **1200 × 900 CSS 像素、deviceScaleFactor 为 1** 的桌面视口，截取首屏而非整个长页面，保持集合卡片中的预览比例一致。仍须人工打开图片核对视觉效果，自动检查无法识别所有业务错误页面；截图不能代替静态资源、交互和移动端验证。
 
 新结果将截图保存为 `out\pages\<prompt>\<ai model>\out\preview.png`，与 `out\index.html` 同目录。历史结果若使用 `staticDir: "."`，则截取该静态目录中的 `index.html`，将 `preview.png` 保存在模型目录根部；始终以实际配置的 `staticDir` 为准，不修改导出路径来迁就截图。
 
-已有发布器会自动识别静态目录中的 `preview.png`，在执行 `npm run deploy` 时复制到 `deploy\MusePages\pages\<prompt_slug>\<ai model>\preview.png` 并显示，无需新增配置字段。`deploy:sync` 和 `deploy:watch` 只同步发布选项，不生成截图或刷新网站。当前通用生成脚本尚未自动截图，发布器也不强制检查预览是否存在；截图需在生成交付流程中另行完成，缺失时仍显示 `No preview provided`，不能据此认为已满足新页面的预览要求。
+输入须位于当前仓库的 `out\pages\<prompt>\<ai model>\` 内，不接受符号链接。截图以公开的 `pages\<prompt_slug>\<ai model>\` 子路径访问静态首页；slug 优先读取 prompt 的 `metadata.json`，缺失时使用去编号的文件名，不依赖 `file://` 协议。默认总超时为 60 秒，可用 `--timeout-ms=120000` 调整，最大 300 秒。缺少 Chromium 时明确报错，不自动安装依赖。
+
+核验截图 PNG 格式与尺寸后，先关闭浏览器和临时服务，再原子替换 `preview.png`；失败、超时或 Ctrl+C 取消时保留旧预览，清理本次临时文件与服务，不终止其他已有服务。同一目录通过 `.preview.lock` 避免并发截图，中断后确认没有活动进程再处理遗留锁。
+
+已有发布器会自动识别静态目录中的 `preview.png`，在执行 `npm run deploy` 时复制到 `deploy\MusePages\pages\<prompt_slug>\<ai model>\preview.png` 并显示，无需新增配置字段。`deploy:sync` 和 `deploy:watch` 只同步发布选项，不生成截图或刷新网站。页面生成脚本已在静态检查通过后、发布登记前自动调用此截图入口；只读 `--check` 不截图。发布器仍不强制检查预览是否存在，缺失时显示 `No preview provided`，不能据此认为已满足新页面的预览要求。单独执行截图脚本不修改模型元数据、发布选择或已发布网站。
+
+生成流程在模型源码目录的隐藏文件 `.generation-preview.sha256` 中保存静态产物与截图的 SHA-256 摘要，不增加发布字段，也不将记录纳入静态导出。静态摘要包括公开 slug、模型目录及除根部 `preview.png` 外的所有静态文件。模型元数据 `preview: true`、摘要一致且预览 PNG 格式、尺寸正确时复用；`preview: false`、没有记录、截图缺失、内容不符或静态文件变化时重新截图，核验通过后设置 `preview: true`。静态检查或截图失败时设置 `preview: false`、`validated: false`，保留源码和旧预览并报告待处理，不继续发布登记；修复后重跑只补后续步骤，不重新生成 `generated: true` 的源码。
 
 ## 工作流
 
@@ -136,7 +148,7 @@ deploy 工作流以 `deploy\config.json` 中的发布选择为输入，由 `src\
 
 生成覆盖情况与模型归属统一以 `out\pages\<prompt>\<ai model>\metadata.json` 为唯一状态来源，字段含义见[元数据与状态](#元数据与状态)。目录存在、发布选项、执行日志或 Agent 返回成功都不能代替元数据记录。
 
-覆盖检查按原始 prompt 与目标模型清单逐项读取元数据：`generated: true` 表示该组合已完成生成，`generated: false` 表示尚未完成；记录缺失、无法解析或必需字段不完整时，列为缺失或异常，不推断为成功，也不直接覆盖已有代码。`validated`、`deployed` 分别描述后续验证和发布情况，未验证或未发布不等于需要重新生成。
+覆盖检查按原始 prompt 与目标模型清单逐项读取元数据：`generated: true` 表示该组合已完成生成，`generated: false` 表示尚未完成；记录缺失、无法解析或必需字段不完整时，列为缺失或异常，不推断为成功，也不直接覆盖已有代码。`preview`、`validated`、`deployed` 分别描述后续预览、验证和发布情况，缺少预览、未验证或未发布不等于需要重新生成。
 
 模型匹配以 `modelId` 与目标真实模型 ID 或明确配置的别名为准，不能用目录名、CLI 名称或服务地址代替。模型标识缺失或不匹配时报告异常，不擅自改名、补写身份或将结果归入其他模型。
 
@@ -210,7 +222,8 @@ task\
 3. **判断是否需要生成**：对照元数据、实际代码和当前需求，按[覆盖检查规则](#生成覆盖检查与模型匹配)筛选；有效结果跳过，仅缺静态导出时保留源码，只补后续产物。
 4. **调用 Codex 生成源码**：对获准生成的缺失项，再次检查并加锁，以对应模型目录为子进程工作目录，非交互调用 `codex exec`。`-c` 覆盖服务配置，`--model` 选择实际模型；需求、设计指引和输出要求通过位置参数或标准输入传入，不拼接 shell 命令，Windows 下适配 CLI 包装器。
 5. **准备并检查静态首页**：保留源码，将发布用首页及资源放入其 `out\` 子目录，按[静态产物边界](#静态产物边界)核验，不用 `.next` 或截图代替静态网页。
-6. **更新记录与发布选项**：核验实际结果后更新元数据并登记发布选项；配置登记失败时保留代码，下次仅补登记，不重复生成。结束时报告生成、跳过、待确认、失败及剩余缺失项。
+6. **准备首页预览**：调用 `generate-preview.mjs` 补齐或刷新 `preview.png`，摘要一致的已有预览复用；失败保留源码和旧预览并报告待处理，不把缺少截图当作需要重新生成源码。
+7. **更新记录与发布选项**：静态检查及预览准备通过后更新元数据并登记发布选项；配置登记失败时保留代码，下次仅补登记，不重复生成。结束时报告生成、跳过、待确认、失败及剩余缺失项。
 
 已实现的使用方式：
 
@@ -230,7 +243,7 @@ npm run generate -- local --prompts=006-travel-agency-homepage --retry
 
 脚本通过标准输入传递需求，以独立临时 `CODEX_HOME` 和显式 provider/model 配置调用 Codex；Windows 支持原生 `codex.exe` 或官方 npm 的 `codex.cmd` 包装器，不将需求拼入 shell 命令。代码核验通过后才写入 `generated: true`；HTML 源码缺少导出目录时，复制可公开文件到 `out\`，已有导出不覆盖。Next.js 缺少静态导出时保留源码并报告待准备，不自动构建、安装依赖或重新调用模型。
 
-静态核验检查首页、HTML/CSS 引用、子路径适配及非公开文件；通过后更新 `validated`，但不代表已经完成人工交互、视觉或外部资源可用性验收。生成与登记不修改 `deployed` 为成功。新增结果保存需求与设计摘要到隐藏的 `.generation-input.sha256`；后续发现输入变化时报告待确认，不自动重写源码；历史结果没有摘要时，不推断其输入版本。
+静态核验检查首页、HTML/CSS 引用、子路径适配及非公开文件；静态检查及预览准备通过后设置模型元数据 `preview: true`、`validated: true`，但不代表已经完成人工交互、视觉或外部资源可用性验收。成功项的 `preview` 报告字段区分本次截图（`generated`）与复用（`preserved`），与元数据中的布尔状态不同。生成与登记不修改 `deployed` 为成功。新增结果保存需求与设计摘要到隐藏的 `.generation-input.sha256`；后续发现输入变化时报告待确认，不自动重写源码；历史结果没有摘要时，不推断其输入版本。
 
 结果以 JSON 报告输出，包含生成、补登记、跳过、缺失、待确认、失败及剩余未生成组合。异常、待确认或检查发现缺失时退出码非零，取消时退出码为 130。已有源码缺少元数据、记录损坏、身份不匹配或路径冲突时需要人工核实；`--retry` 不能绕过这些保护，也不会重新生成 `generated: true` 的结果。登记失败或静态文件待准备的结果可在修复后直接重跑，只补后续步骤。
 
@@ -278,6 +291,7 @@ node --test src\workflows\render-prompt-pages.test.mjs src\workflows\deploy-site
   "tags": ["Travel"],
   "staticDir": "out",
   "generated": false,
+  "preview": false,
   "config_added": false,
   "validated": false,
   "deployed": false
@@ -293,11 +307,14 @@ node --test src\workflows\render-prompt-pages.test.mjs src\workflows\deploy-site
 | 状态 | 何时成立 |
 | --- | --- |
 | `generated` | 当前版本代码已实际生成并核验，不以目录存在或 Agent 退出成功为准 |
+| `preview` | 对应模型静态首页的预览截图已生成并核验；新结果或未验证的历史结果为 `false` |
 | `config_added` | 配置保存成功，且对应 prompt／模型项已核验存在，与发布开关无关 |
 | `validated` | 当前版本静态首页及资源已通过实际验证 |
 | `deployed` | 当前版本已成功纳入本地目标网站并核验，不代表已上传 Cloudflare |
 
-各流程只在核验实际结果后更新自身负责的状态。管理员切换发布开关不直接修改执行状态；重新生成后重置验证与发布状态，配置项移除后不能保留过时的登记成功标记。
+所有模型级记录均使用布尔字段 `preview`，prompt 级共享元数据不加该字段。旧模型记录仅缺少 `preview` 时按 `false` 兼容，非检查运行在核验后保存该字段，`--check` 不迁移文件；字符串、数字或 `null` 等非布尔值会被拒绝。
+
+各流程只在核验实际结果后更新自身负责的状态。管理员切换发布开关不直接修改执行状态；重新生成后重置预览、验证与发布状态，配置项移除后不能保留过时的登记成功标记。
 
 记录缺失、损坏或与实际结果不一致时报告异常，由对应流程核验并纠正，不影响其他模型的记录，不擅自补写成功或引入不兼容字段。元数据不得包含凭据；集合可使用其中可公开的展示信息，但不将元数据文件作为网站资源发布。
 
