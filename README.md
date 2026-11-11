@@ -120,7 +120,13 @@ deploy 工作流以 `deploy\config.json` 中的发布选择为输入，由 `src\
 
 ### 生成覆盖检查与模型匹配
 
-由metadata.json中的状态记录并且为唯一标准
+生成覆盖情况与模型归属统一以 `out\pages\<prompt>\<ai model>\metadata.json` 为唯一状态来源，字段含义见[元数据与状态](#元数据与状态)。目录存在、发布选项、执行日志或 Agent 返回成功都不能代替元数据记录。
+
+覆盖检查按原始 prompt 与目标模型清单逐项读取元数据：`generated: true` 表示该组合已完成生成，`generated: false` 表示尚未完成；记录缺失、无法解析或必需字段不完整时，列为缺失或异常，不推断为成功，也不直接覆盖已有代码。`validated`、`deployed` 分别描述后续验证和发布情况，未验证或未发布不等于需要重新生成。
+
+模型匹配以 `modelId` 与目标真实模型 ID 或明确配置的别名为准，不能用目录名、CLI 名称或服务地址代替。模型标识缺失或不匹配时报告异常，不擅自改名、补写身份或将结果归入其他模型。
+
+检查过程只读取并汇总已生成、未完成及异常项，不调用模型、不修改元数据或发布配置。元数据由对应执行流程核验实际结果后更新；记录与实际结果不一致时，先报告异常，再由负责该阶段的流程核验并纠正。
 
 ### 发布安全
 
@@ -196,15 +202,53 @@ task\
 
 `src\workflows\render-prompt-pages.md` 是 AI agent 的任务指引入口，引用与页面生成脚本相同的需求、目录、模型身份、验证和状态约定，说明执行顺序、输出要求与失败恢复方式，不另外维护一套生成规则。
 
-### 静态产物边界
+### 项目状态元数据
 
-只发布首页、必要的 CSS、浏览器 JavaScript、图片、字体、prompt 展示页及必要许可证。Next.js 结果须先取得有效静态导出，并保留 `_next\static\` 等浏览器资源；导出不得覆盖源码。首页必须脱离 Next.js 服务端、API 路由、数据库和本地生成进程运行，必要时在批准范围内静态适配或 Mock 并重新验证，无法导出时记录阻塞。
+项目按 prompt 与模型两级维护 `metadata.json`，供生成、覆盖检查与发布流程共同使用。模型级元数据是对应 prompt／模型组合的唯一状态来源；`deploy\config.json` 只决定哪些结果公开，不记录或代替执行状态。
 
-禁止整体复制源码项目或 `out\pages\`，排除 `package.json`、`app\`、组件源码、`node_modules\`、`.next\`、服务端产物、缓存、内部元数据、原始 Markdown、配置、任务文件、报告、日志和凭据。生成与发布脚本不能混入网站，但不能误删网页运行所需的浏览器脚本或其他 JSON 资源。
+#### prompt 共享信息
 
-资源与导航须适用于最终 `pages\<prompt_slug>\<ai model>\` 子路径，不能依赖开发机绝对路径或假定 `/_next/...` 位于站点根目录。
+`out\pages\<prompt>\metadata.json` 保存同一 prompt 共享的公开标题与 slug，不记录某个模型的执行状态：
 
-## 配置与状态
+```json
+{
+  "slug": "travel-agency-homepage",
+  "title": "旅行社首页"
+}
+```
+
+#### 模型结果信息
+
+`out\pages\<prompt>\<ai model>\metadata.json` 保存该模型结果的身份、展示信息、静态产物位置及执行状态：
+
+```json
+{
+  "modelId": "actual-model-id",
+  "tags": ["Travel"],
+  "staticDir": "out",
+  "generated": false,
+  "config_added": false,
+  "validated": false,
+  "deployed": false
+}
+```
+
+`modelId` 记录真实生成模型，不能用目录名或 CLI 名称冒充；`tags` 描述该模型结果的风格。`staticDir` 相对于模型源码目录，新生成结果统一准备到 `out\`，历史结果迁移前以核验过的实际目录为准。
+
+#### 元数据与状态
+
+以下状态分别描述当前版本的执行结果，不能相互代替，也不能根据目录存在或命令退出成功一次性标为完成：
+
+| 状态 | 何时成立 |
+| --- | --- |
+| `generated` | 当前版本代码已实际生成并核验，不以目录存在或 Agent 退出成功为准 |
+| `config_added` | 配置保存成功，且对应 prompt／模型项已核验存在，与发布开关无关 |
+| `validated` | 当前版本静态首页及资源已通过实际验证 |
+| `deployed` | 当前版本已成功纳入本地目标网站并核验，不代表已上传 Cloudflare |
+
+各流程只在核验实际结果后更新自身负责的状态。管理员切换发布开关不直接修改执行状态；重新生成后重置验证与发布状态，配置项移除后不能保留过时的登记成功标记。
+
+记录缺失、损坏或与实际结果不一致时报告异常，由对应流程核验并纠正，不影响其他模型的记录，不擅自补写成功或引入不兼容字段。元数据不得包含凭据；集合可使用其中可公开的展示信息，但不将元数据文件作为网站资源发布。
 
 ### 模型与发布配置
 
@@ -231,61 +275,14 @@ task\
 
 **此 version 2 示例不能直接交给现有 version 1 发布脚本。** 迁移时保留每个组合的开关与顺序，将旧配置中的 `slug`、`title`、`tags` 和 `staticDir` 移入对应元数据；核验实际导出位置，不直接把旧路径改成 `out` 冒充准备完成。字段冲突、输入缺失或元数据不一致时停止，不静默覆盖或丢弃记录。
 
-### 元数据与状态
 
-prompt 共享信息保存到 `out\pages\<prompt>\metadata.json`：
+### 静态产物边界
 
-```json
-{
-  "slug": "travel-agency-homepage",
-  "title": "旅行社首页"
-}
-```
+只发布首页、必要的 CSS、浏览器 JavaScript、图片、字体、prompt 展示页及必要许可证。Next.js 结果须先取得有效静态导出，并保留 `_next\static\` 等浏览器资源；导出不得覆盖源码。首页必须脱离 Next.js 服务端、API 路由、数据库和本地生成进程运行，必要时在批准范围内静态适配或 Mock 并重新验证，无法导出时记录阻塞。
 
-模型信息保存到 `out\pages\<prompt>\<ai model>\metadata.json`：
+禁止整体复制源码项目或 `out\pages\`，排除 `package.json`、`app\`、组件源码、`node_modules\`、`.next\`、服务端产物、缓存、内部元数据、原始 Markdown、配置、任务文件、报告、日志和凭据。生成与发布脚本不能混入网站，但不能误删网页运行所需的浏览器脚本或其他 JSON 资源。
 
-```json
-{
-  "modelId": "actual-model-id",
-  "tags": ["Travel"],
-  "staticDir": "out",
-  "generated": false,
-  "config_added": false,
-  "validated": false,
-  "deployed": false
-}
-```
-
-`modelId` 记录真实生成模型，`tags` 描述该模型结果的风格，`staticDir` 相对于模型源码目录；新生成结果统一准备到 `out\`，历史结果迁移前以核验过的实际目录为准。
-
-| 状态 | 何时成立 |
-| --- | --- |
-| `generated` | 当前版本代码已实际生成并核验，不以目录存在或 Agent 退出成功为准 |
-| `config_added` | 配置保存成功，且对应 prompt／模型项已核验存在，与发布开关无关 |
-| `validated` | 当前版本静态首页及资源已通过实际验证 |
-| `deployed` | 当前版本已成功纳入本地目标网站并核验，不代表已上传 Cloudflare |
-
-各阶段只维护自身状态。管理员切换开关不直接修改执行状态；重新生成后重置验证与发布状态，配置项移除后不能保留过时的登记成功标记。记录与实际文件不一致时先核验并纠正，不编造成功，也不写入不兼容字段或状态。
-
-## 验证与恢复
-
-### 验证与完成标准
-
-生成、静态验证与本地发布须按每个 prompt／模型组合独立确认：首页及资源在最终子路径下可访问，必要交互有效，桌面和移动端无明显溢出，公开展示无内部编号，输入、模型、源码与发布路径映射一致。轮播还需验证 slide 与圆点数量、信息联动、取消模型、单／零模型、键盘及触摸行为。
-
-作品 README 应说明原始 prompt、真实模型、实现类型、源码位置、主要功能、运行与验证命令、静态导出与发布路径、Mock、环境变量及限制。不得把源码构建成功当作网页可用，也不得用历史测试结果证明新功能已完成。
-
-已有检查入口如下，仅供获准执行时参考，本轮文档整理不执行这些命令：
-
-```powershell
-# 工作流回归测试，不执行 Next.js 构建
-node --test src\workflows\deploy-site.test.mjs src\workflows\generate-sample.test.mjs
-
-# 历史示例验证：包含构建、类型与交互检查，须获准构建后再运行
-npm run validate -- --ids=1
-```
-
-`validate` 检查共享 workspace 中的 `data\prompts\` 示例，不是 out 多模型覆盖检查器；省略 ID 参数会检查全部项目。沿用 `src\GENERATION_PROGRESS.json`、`src\BUILD_REPORT.json` 和验证日志的现有结构记录实际结果，失败项不能标为完成，也不能影响其他组合的真实状态。
+资源与导航须适用于最终 `pages\<prompt_slug>\<ai model>\` 子路径，不能依赖开发机绝对路径或假定 `/_next/...` 位于站点根目录。
 
 ### 协作与中断恢复
 
