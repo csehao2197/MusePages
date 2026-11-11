@@ -24,7 +24,7 @@ export default defineConfig({
     { name: "mobile", testMatch: /listing\.spec\.ts/, use: { ...devices["iPhone 13"], defaultBrowserType: "chromium", viewport: { width: 390, height: 844 } } },
   ],
   webServer: {
-    command: 'node "..\\node_modules\\next\\dist\\bin\\next" start --hostname 127.0.0.1 --port 3109',
+    command: 'node "..\\..\\..\\node_modules\\next\\dist\\bin\\next" start --hostname 127.0.0.1 --port 3109',
     url: "http://127.0.0.1:3109",
     reuseExistingServer: false,
     timeout: 60_000,

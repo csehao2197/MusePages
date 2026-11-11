@@ -2,18 +2,15 @@ import { copyFile, mkdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium } from "@playwright/test";
+import { syncDeployConfig } from "./deploy-site.mjs";
 
 const root = fileURLToPath(new URL("../../", import.meta.url));
 
-export async function generateSample(output = path.join(root, "out")) {
-  const page = path.join(output, "pages", "001-destination-guide");
+export async function generateSample(workspace = root) {
+  const page = path.join(workspace, "out", "pages", "001-destination-guide", "unspecified");
   await mkdir(page, { recursive: true });
-  await copyFile(path.join(root, "src", "gallery", "index.html"), path.join(output, "index.html"));
-  await copyFile(path.join(root, "src", "gallery", "sample-destination.html"), path.join(page, "index.html"));
-  await copyFile(
-    path.join(root, "data", "prompts", "001-destination-guide", "001-destination-guide.md"),
-    path.join(page, "001-destination-guide.md"),
-  );
+  await copyFile(path.join(workspace, "src", "gallery", "sample-destination.html"), path.join(page, "index.html"));
+  await syncDeployConfig(workspace);
   const html = await readFile(path.join(page, "index.html"), "utf8");
   const browser = await chromium.launch({ headless: true });
   try {
@@ -29,9 +26,11 @@ export async function generateSample(output = path.join(root, "out")) {
   } finally {
     await browser.close();
   }
+  await syncDeployConfig(workspace);
+  return page;
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   await generateSample();
-  console.log("Generated out\\index.html and out\\pages\\001-destination-guide\\index.html");
+  console.log("Generated out\\pages\\001-destination-guide\\unspecified and synchronized deploy\\config.json; no website was published.");
 }

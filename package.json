@@ -4,6 +4,9 @@
   "workspaces": ["data/prompts/[0-9]*-*"],
   "scripts": {
     "generate:sample": "node src/workflows/generate-sample.mjs",
+    "deploy": "node src/workflows/deploy-site.mjs publish",
+    "deploy:sync": "node src/workflows/deploy-site.mjs sync",
+    "deploy:watch": "node src/workflows/deploy-site.mjs watch",
     "validate": "node src/tools/validate.mjs"
   },
   "dependencies": {

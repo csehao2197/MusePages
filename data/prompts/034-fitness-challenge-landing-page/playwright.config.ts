@@ -19,7 +19,7 @@ export default defineConfig({
     { name: "mobile", use: { ...devices["Pixel 7"], reducedMotion: "reduce" } },
   ],
   webServer: {
-    command: "node ..\\node_modules\\next\\dist\\bin\\next start --hostname 127.0.0.1 --port 3134",
+    command: "node ..\\..\\..\\node_modules\\next\\dist\\bin\\next start --hostname 127.0.0.1 --port 3134",
     url: "http://127.0.0.1:3134",
     reuseExistingServer: false,
     timeout: 30_000,

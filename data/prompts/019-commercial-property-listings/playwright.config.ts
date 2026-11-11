@@ -16,7 +16,7 @@ export default defineConfig({
     { name: "mobile", testMatch: "browser.spec.ts", use: { browserName: "chromium", viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true } },
   ],
   webServer: {
-    command: 'node "..\\node_modules\\next\\dist\\bin\\next" start --hostname 127.0.0.1 --port 3119',
+    command: 'node "..\\..\\..\\node_modules\\next\\dist\\bin\\next" start --hostname 127.0.0.1 --port 3119',
     url: "http://127.0.0.1:3119",
     reuseExistingServer: false,
     timeout: 30_000,

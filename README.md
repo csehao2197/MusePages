@@ -4,13 +4,10 @@
 
 MusePages 收集由 AI 根据原始需求生成的网站首页。同一个 prompt 可以交给不同模型，生成代码彼此隔离，最终将可独立访问的静态首页汇入同一个作品集，通过 Cloudflare 托管。
 
-项目关注首页的视觉效果和必要交互，不要求将每个作品扩展成完整的生产级网站。生成时以 [data/prompts/](./data/prompts/) 的原始 Markdown 为需求来源，以 [DESIGN.md](./DESIGN.md) 为通用设计指引。
-
-**当前仅允许修改 Markdown 文档，不运行生成、构建或发布，不改写代码、配置、网站产物和日志。** 下文的使用说明供获准执行时参考；“待实现方案”不是现有功能。
+**当前仅允许修改 Markdown 文档，不运行生成、构建或发布，不改写代码、配置、网站产物和日志。当前更新markdown文档是对项目经行设计 不需要关系项目现有状况** 下文的使用说明供获准执行时参考；“待实现方案”不是现有功能。
 
 ## 导航
 
-- [项目现状](#项目现状)
 - [使用现有工具](#使用现有工具)
 - [目录结构](#目录结构)
 - [内容与路径约定](#内容与路径约定)
@@ -20,19 +17,46 @@ MusePages 收集由 AI 根据原始需求生成的网站首页。同一个 promp
 - [协作与中断恢复](#协作与中断恢复)
 - [来源与许可](#来源与许可)
 
-## 项目现状
+## 项目使用说明
 
-| 能力 | 状态与边界 |
-| --- | --- |
-| 固定静态示例与预览图生成 | 已有脚本，不调用 AI，不代表真实模型生成 |
-| 发布选项同步、目录监听、本地网站重建 | 已有脚本，使用 version 1 配置；不构建 Next.js，不上传 Cloudflare |
-| Prompt 展示 | 已有静态 `prompt.html`，以转义后的只读文本展示原文 |
-| 多模型展示 | 当前按模型结果分别生成卡片；按 prompt 聚合的 Carousel 与详情页待实现 |
-| version 2 配置与 out 元数据 | 待实现，包括格式迁移、状态维护和发布读取 |
-| 覆盖检查、匹配模型补全、增量部署 | 待实现，计划接口见下文 |
-| 周期调度、通用 AI 接入、Next.js 静态导出自动化 | 待实现与验证 |
+npm generate <ai model> 
+运行 ### 页面生成工作流
 
-工具存在不代表全部作品已完成。历史构建报告仅说明当时执行的检查，不能证明当前静态集合已经通过验证。
+npm deploy
+运行 ### deploy工作流
+
+## 目标网站设计
+
+### 目标网站结构
+
+    目标网站是展示AI模型生成的网页主页的合计 
+    每一个panel以carousel的方式展示对与某一个prompt 不同AI模型生成的结果
+    每一个panel
+    目标网站的设计以deploy\MusePages\README.md为标准
+
+## 工作流
+
+### 页面生成工作流
+ai model的调用uri设置在/config.json
+此命令调用config.json 配置的 uri提供的ai 模型 运行src/workflows/render-prompt-pages.mjs
+以对每一个prompt生成对应的webpage
+### deploy工作流
+根据 /deloy/config 生成对应的目标网站的页面资源 /MusePages/data/
+
+## 源码结构与说明
+```text
+src
+  workflows
+    render-prompt-pages.mjs
+
+src/workflows/render-prompt-pages.mjs
+   此脚本对于当前配置的ai 模型 <ai model> 遍历data\prompts里的每一个prompt 检查对应的 out\pages\<prompt>\<ai model>\metadata.json是否存在以及是否完整生成
+   如果没有完整生成 调用codex -c 命令使用prompt生成对应的站点 并且产生静态页面于out\pages\<prompt>\<ai model>\out
+
+## 项目状态
+
+   项目状态由于不同目录下的config.json和metadata.json定义
+    out\pages\<prompt>\<ai model>\metadata.json
 
 ## 使用现有工具
 
