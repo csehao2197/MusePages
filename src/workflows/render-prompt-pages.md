@@ -25,44 +25,53 @@
 
 ## 3. 目标输出
 
-### 静态网页源码
+### 交付目录与文件
 
 目标网站采用 HTML 静态网站或 Next.js 项目形式，源码与静态产物只写入 `out\pages\<prompt_name>\<model_name>\`，不改动原始需求、其他模型的结果或最终发布目录。
 
 `<prompt_name>` 为原始需求 Markdown 文件名去掉 `.md` 后的名称，保留内部编号；`<model_name>` 沿用本文约定的模型目录名，用于隔离输出，不能代替元数据中记录的真实 `modelId`。
 
-发布登记使用 `deploy\config.json` 的 version 2 格式：`pages` 是以 `<prompt_name>` 为 key 的对象，`pages[<prompt_name>]` 为模型选项数组，选项中的 `model` 对应模型目录，不重复保存 `prompt`。使用现有登记函数兼容迁移旧版数组配置，保留已有选择及组内顺序；新增模型默认 `enabled: false`，仅登记不发布。
-
-每个结果应保留网站源码、运行说明与独立的静态首页：
+每个模型结果分别保留源码、说明、元数据与静态交付物：
 
 ```text
-out\pages\<prompt_name>\<model_name>\
-  README.md          # 功能、运行方式、Mock、实际验证与已知限制
-  metadata.json      # 真实模型、静态产物位置及各阶段状态
-  ...                # HTML 或 Next.js 源码
-  out\
-    index.html       # 发布用静态首页
-    preview.png      # 静态首页预览图
-    ...              # 首页所需的 CSS、浏览器脚本、图片和字体等资源
+out\pages\<prompt_name>\
+  metadata.json                    # prompt 共享的公开标题与 slug
+  <model_name>\
+    README.md                      # 功能、运行方式、Mock、实际验证与已知限制
+    metadata.json                  # 真实模型、静态产物位置及各阶段状态
+    .generation-preview.sha256     # 生成流程维护的预览摘要，不发布
+    ...                            # HTML 或 Next.js 源码
+    out\
+      index.html                   # 发布用静态首页
+      preview.png                  # 对应首页的真实首屏截图
+      ...                          # 首页所需的样式、脚本、图片和字体等资源
 ```
 
-静态首页须适用于最终公开子路径，不依赖开发服务器、运行时 API 或数据库，不能用 `.next` 或截图代替。缺少静态导出时保留源码并报告待准备，不自动构建，也不将源码目录冒充可发布产物。
+### 静态首页
 
-### 预览图
+新结果将可独立部署的首页及必要资源放入模型目录的 `out\`；历史结果以模型元数据中的实际 `staticDir` 为准，不修改导出路径来迁就截图。
 
-`preview.png` 必须来自对应模型静态首页的实际浏览器渲染，不使用占位图、设计稿或其他模型的截图。`src\workflows\render-prompt-pages.mjs` 在静态检查通过后、发布登记前调用 `src\workflows\generate-preview.mjs`，接收 `out\pages\<prompt_name>\<model_name>\out\` 静态目录作为输入。历史结果以元数据中的实际 `staticDir` 为准，截图与该目录的 `index.html` 同级保存。
+首页须适用于最终公开子路径，不依赖开发服务器、运行时 API 或数据库。Next.js 源码、`.next` 或截图均不能代替静态导出；缺少导出时保留源码并报告待准备，不自动构建，也不将源码目录冒充可发布产物。
 
-截图脚本内置仅绑定 `127.0.0.1` 随机端口的临时 HTTP 服务，无需 `npm start` 或修改模型项目的启动配置；不启动 Next.js 运行时、不执行构建，也不重新生成页面源码。等待资源、字体和首屏图片加载后，以 Playwright Chromium 截取 **1200 × 900** 首屏 PNG，并检查资源错误、JavaScript 异常及明显空白页面；仍需人工核对视觉效果。
+### 首页预览截图
+
+`preview.png` 必须来自对应模型静态首页的实际浏览器渲染，与实际 `staticDir` 中的 `index.html` 同级保存，不使用占位图、设计稿或其他模型的截图。
+
+`src\workflows\render-prompt-pages.mjs` 在静态检查通过后、发布登记前调用 `src\workflows\generate-preview.mjs`。截图脚本接收静态目录，也可单独执行：
 
 ```powershell
 node src\workflows\generate-preview.mjs out\pages\006-travel-agency-homepage\model-a\out
 ```
 
-生成流程通过模型源码目录中的 `.generation-preview.sha256` 核对静态产物与截图。只有 `preview: true`、PNG 格式与尺寸正确且摘要一致时复用；`preview: false`、记录缺失、图片损坏或产物变化时重新截图。失败或取消保留源码和旧预览，设置 `preview: false`、`validated: false` 并报告待处理，不继续发布登记；修复后只补后续步骤。`--check` 不截图、不写文件；单独运行截图命令只生成图片，元数据状态由生成流程核验后更新。
+截图使用内置的临时 HTTP 服务，仅绑定 `127.0.0.1` 随机端口，无需 `npm start`。不启动 Next.js 运行时、不执行构建，也不重新生成源码。Playwright Chromium 等待资源、字体及首屏图片加载后，截取 **1200 × 900** 首屏 PNG，检查资源错误、JavaScript 异常及明显空白页面；仍需人工核对视觉效果。
 
-### 模型级 metadata.json
+单独运行截图命令只生成图片，元数据状态由生成流程核验后更新。生成脚本的 `--check` 不截图、不写文件。
 
-`out\pages\<prompt_name>\<model_name>\metadata.json` 保存模型身份及独立执行状态，所有模型结果均包含布尔字段 `preview`，新结果默认 `false`：
+### 元数据与续跑规则
+
+prompt 级 `out\pages\<prompt_name>\metadata.json` 只保存公开标题与 slug，不记录模型执行状态，也不加入 `preview`。
+
+模型级 `out\pages\<prompt_name>\<model_name>\metadata.json` 保存真实模型身份及各阶段状态。所有模型结果均包含布尔字段 `preview`，新结果默认 `false`：
 
 ```json
 {
@@ -77,18 +86,29 @@ node src\workflows\generate-preview.mjs out\pages\006-travel-agency-homepage\mod
 }
 ```
 
-`preview: true` 只表示对应静态首页的预览已生成并核验，不代表源码、静态交互或发布阶段均已完成。prompt 级共享文件 `out\pages\<prompt_name>\metadata.json` 仍只保存公开标题与 slug，不加入 `preview`。旧模型记录仅缺少 `preview` 时兼容为 `false`，非检查运行核验后保存；`--check` 不改写旧记录。显式字段不是布尔值时报告异常，不以真值转换掩盖损坏数据。
+各状态独立判断，不能相互代替；`preview: true` 不代表源码、静态交互或发布阶段均已完成。完整含义见 [README 的元数据与状态](../../README.md#元数据与状态)。
 
-生成前读取模型元数据，按[生成覆盖检查与模型匹配](../../README.md#生成覆盖检查与模型匹配)判断是否需要生成：
+生成前读取模型元数据，核对模型身份，再按[生成覆盖检查与模型匹配](../../README.md#生成覆盖检查与模型匹配)分别判断源码与预览是否需要处理：
 
 | 已有情况 | 处理方式 |
 | --- | --- |
 | 无结果或仅有空目录 | 作为缺失项，在已获准范围内生成 |
 | 元数据有效、模型匹配且 `generated: true` | 保留源码并跳过重复生成；仅缺静态准备、预览、验证或登记时，只补获准的后续步骤 |
 | 元数据有效、模型匹配且 `generated: false` | 视为未完成，保留已有产物，仅在明确 `--retry` 授权后重试，不自动清空目录 |
-| 元数据有效、模型匹配且 `preview: true` | 核对实际截图与当前产物摘要，一致时复用；图片缺失、损坏或过期时重新截图并更新状态 |
+| 元数据有效、模型匹配且 `preview: true` | PNG 格式、尺寸正确且静态产物与截图摘要一致时复用；否则重新截图并更新状态 |
 | 元数据有效、模型匹配且 `preview: false` | 静态导出准备就绪后生成预览，不重复生成已完成的源码或自动构建 |
+| 旧模型记录仅缺少 `preview` | 按 `false` 兼容，非检查运行核验后保存；`--check` 不改写旧记录 |
 | 已有代码但元数据缺失、损坏、字段不完整或模型不匹配 | 报告待确认，不根据目录存在推断成功，也不直接覆盖已有代码 |
+
+预览摘要由生成流程保存在模型源码目录的 `.generation-preview.sha256` 中。记录缺失、截图损坏或静态产物变化时重新截图；核验通过后设置 `preview: true`。显式 `preview` 字段不是布尔值时报告异常，不做真值转换。
+
+生成流程在静态检查或截图失败、取消时保留源码和旧预览，设置 `preview: false`、`validated: false` 并报告待处理，不继续发布登记；修复后只补后续步骤。
+
+### 发布登记
+
+静态检查及预览准备通过后，使用现有登记函数写入 `deploy\config.json`。该文件采用 version 2 格式：`pages` 以 `<prompt_name>` 为 key，`pages[<prompt_name>]` 为模型选项数组；选项中的 `model` 对应模型目录，不重复保存 `prompt`。
+
+兼容迁移旧版数组配置时保留已有选择及组内顺序；新增模型默认 `enabled: false`，仅登记不发布。登记失败保留已有代码和截图，修复后只补登记，不重复生成源码。
 
 ### 执行日志
 
