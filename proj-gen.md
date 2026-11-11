@@ -7,7 +7,7 @@ Create MusePages (https://musepages.com), a static gallery showcasing the front 
 
 ## Requirements
 
-1. Keep all project source code, prompt Markdown files, gallery metadata, and generation workflows under `src`. The `out` folder is generated build output, not a source folder; do not maintain its files manually.
+1. Keep website source code, prompt Markdown files, gallery metadata, and generation workflows under `src`. Keep deployment scripts and configuration under the root `deploy` folder, and local SSH keys under the Git-ignored root `key` folder. The `out` folder is generated build output, not a source folder; do not maintain its files manually.
 2. Keep the complete deployment in the root `out` folder. When source code, prompts, metadata, or assets change, regenerate the affected pages, screenshots, and gallery together. The complete regeneration workflow is still to be implemented; the existing sample command does not regenerate the whole website.
 3. Generate the overall gallery at `out\index.html`, not at the repository root or inside an individual project's export folder. Use a responsive collection of square tiles, one per generated result. Each tile must display a screenshot image of its generated front page, a link to the actual front page, and a separate link to its original prompt. Show its title, inherited style tags, and AI model without overwhelming the image. Use static preview images, not embedded live pages.
 4. Keep all exported pages under `out\pages`, organized by prompt. The current deployment has one front page per prompt, directly in its prompt folder. Preserve these working URLs. When a prompt gains multiple results, give additional results unique subfolders and their own gallery tiles without overwriting existing results.
@@ -45,6 +45,12 @@ The current source and deployment layout is:
 ```text
 MusePages\
   package.json
+  deploy\
+    config.json                       Default SSH server and login ID
+    deploy.ps1                        Backup-first SSH/SCP deployment
+  key\                                Local only; Git-ignored; never deployed
+    musepages                         SSH private key
+    musepages.pub                     SSH public key
   src\
     gallery\
       index.html                      Sample gallery template
@@ -108,7 +114,7 @@ The existing focused regression tests run with `node --test src\workflows\genera
 
 ## Deployment SSH Key Setup
 
-From `C:\Code\MusePages` in PowerShell, create an Ed25519 key pair:
+From `C:\Code\MusePages` in PowerShell, create an Ed25519 key pair if one is not already available:
 
 ```powershell
 New-Item -ItemType Directory -Path .\key -Force | Out-Null
@@ -146,16 +152,63 @@ Keep the existing server session open while testing key-only login from PowerShe
 ssh -i .\key\musepages -o IdentitiesOnly=yes -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no root@YOUR_SERVER_IP "echo 'Key authentication succeeded'"
 ```
 
-After successful authentication, set `server` and `loginId` in `deploy\config.json`. The script reads those defaults and uses `key\musepages` as its default private key:
+## Deployment Configuration and Commands
+
+The current `deploy\config.json` contains:
+
+```json
+{
+  "server": "45.76.249.37",
+  "loginId": "root"
+}
+```
+
+`deploy\deploy.ps1` combines those values into `root@45.76.249.37` and uses `key\musepages` as its default private key. The remote website folder is `/var/www/mywebsite.com/html`, currently set in the script rather than the JSON configuration. The existing remote website folder must be present before deployment.
+
+Requires Windows OpenSSH (`ssh` and `scp`), a Debian-compatible remote shell and utilities, and a remote account with write access to `/var/www/mywebsite.com`. Install the matching public key in the remote account's `authorized_keys` before deploying. Only the contents of `out` belong on the website; keys, deployment configuration, and project source are not uploaded.
+
+From the repository root, preview the operation, then deploy:
 
 ```powershell
 .\deploy\deploy.ps1 -WhatIf
 .\deploy\deploy.ps1
 ```
 
-Pass `-Server user@host` to override the configured destination for a single deployment.
+`-WhatIf` describes the operation without connecting to the server or changing remote files. The script resolves its default source, key, and configuration paths relative to its own location, not the current working directory.
 
-The script first moves the existing `/var/www/mywebsite.com/html` folder to a timestamped backup, then uploads the local `out` folder directly as the new remote `html` folder, without an extra nested `out` directory. The website is briefly unavailable during upload. If upload or final permission setup fails, it attempts to restore the backup and preserve any incomplete upload in a separate failed-deployment folder. It does not generate keys or rebuild the website.
+Override the destination or private key for a single deployment when necessary:
+
+```powershell
+.\deploy\deploy.ps1 -Server root@YOUR_SERVER_IP -PrivateKey C:\Keys\musepages -WhatIf
+```
+
+### Backup-First Deployment Behavior
+
+1. Check that the local `out\index.html` and private key exist and SSH/SCP commands are available.
+2. Connect over SSH and move the existing remote `html` folder to `/var/www/mywebsite.com/html-backup-<timestamp>-<unique-id>`. If backup fails, stop without starting the upload.
+3. Upload the local `out` folder over SCP directly as the new remote `html` folder, without an extra nested `out` directory. This replaces the complete website rather than merging with stale files.
+4. Confirm remote `html/index.html` exists and set static-file permissions so the web server can read the deployment.
+5. If upload or final permission setup fails, attempt to move any incomplete upload to `/var/www/mywebsite.com/html-failed-<unique-id>` and restore the backup as `html`. Report a separate error if automatic restoration also fails.
+
+The website is briefly unavailable between moving the live folder and completing the upload. Backups remain on the server after successful deployment; the script does not automatically delete them. If rollback is needed, the backup folder is moved back into place rather than retained as an additional copy. Do not run overlapping deployments.
+
+The script does not generate keys, rebuild the website, reload Nginx, or change its configuration. Nginx does not need a reload when only the website files change.
+
+### Post-Deployment Verification
+
+Open `http://45.76.249.37/index.html` and verify the four gallery tiles, screenshots, page links, and prompt links. The expected remote layout is:
+
+```text
+/var/www/mywebsite.com/html/
+  index.html
+  pages/
+    001-destination-guide/
+    002-eco-tourism-landing-page/
+    003-flight-search-and-booking-page/
+    004-group-travel-booking/
+```
+
+A successful dry run or mocked SSH/SCP check is not proof of a live deployment. Confirm the remote files and served pages after an actual upload; do not infer that domain routing or HTTPS for musepages.com is configured from the deployment script alone.
 
 ## Others
 

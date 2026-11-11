@@ -1,57 +1,82 @@
-# Local Website Project Samples
+# MusePages：AI 生成的网站首页集合
 
-This folder contains the **full source text of all 100 cataloged examples**,
-downloaded on 2026-10-31. Each sample has its own numbered folder; folder names match the IDs in
-[the example catalog](..\nextjs-project-examples.md).
+MusePages 的目标是生成一个可静态部署的网站，展示由 prompts 生成的各类网站首页：**a collection of website front pages generated from prompts**。
 
-For example: `006-travel-agency-homepage\006-travel-agency-homepage.md`.
+项目以顶级 [prompts/](./prompts/) 中各个目录的原始 Markdown 需求为输入，结合根目录 `DESIGN.md` 的通用设计指引，通过脚本或远程、本地 AI 定期生成网站，再将各网站可静态部署的首页版本汇入同一个集合。
 
-| Files | Contents |
+最终交付的是可浏览、可点击访问的首页作品集，而不是需求文件列表，也不要求为每个作品部署完整的后端服务。
+
+## 目录结构
+
+| 路径 | 用途 |
 | --- | --- |
-| Folders `001-*` through `064-*` | Original framework-neutral website prompts extracted from their public source pages |
-| Folders `065-*` through `100-*` | Original Next.js Markdown specifications from the inspected GitHub commits |
-| `manifest.json` | Root-relative file paths in `filename`, source URLs, download timestamps, file sizes, source kinds, and SHA-256 hashes |
+| [prompts/](./prompts/) | 已移动至仓库顶级的原始需求目录，包含 100 个编号示例及已有实现 |
+| `DESIGN.md` | 生成网站时参考的通用设计指引；当前尚未提供 |
+| [src/](./src/) | 集合页面及生成工作流源码 |
+| [out/](./out/) | 最终静态集合的部署产物 |
+| [deploy/](./deploy/) | 部署配置与脚本 |
+| [manifest.json](./manifest.json) | 原始需求来源、路径、下载时间、大小和 SHA-256 等信息 |
+| [GENERATION_PROGRESS.json](./GENERATION_PROGRESS.json) | 各项目的生成与验证进度 |
+| [BUILD_REPORT.json](./BUILD_REPORT.json)、[validation-logs/](./validation-logs/) | 实际验证结果和日志 |
+| [AGENTS.md](./AGENTS.md) | Agent 的生成、静态导出、汇集与验证规范 |
 
-Source text is preserved without adding stack instructions or rewriting requirements.
-For files 001-064, use the catalog's **Next.js adaptation block** when preparing
-your own project brief. Some files describe a page or dashboard, not an entire site.
-Full-stack examples may require databases, external APIs, credentials, or paid services.
+原始需求于 2026-10-31 下载并保存。`001-*` 至 `064-*` 来自公开网站的框架无关需求，`065-*` 至 `100-*` 来自 GitHub 历史提交中的 Next.js Markdown 规格说明。原始文本应保持不变。
 
-## Suggested starting points
+## 编号只用于内部管理
 
-- [Travel agency homepage](006-travel-agency-homepage\006-travel-agency-homepage.md)
-- [Vacation rental listing](009-vacation-rental-listing\009-vacation-rental-listing.md)
-- [Fine dining restaurant](015-fine-dining-restaurant\015-fine-dining-restaurant.md)
-- [Luxury property showcase](021-luxury-property-showcase\021-luxury-property-showcase.md)
-- [Editorial portfolio](066-editorial-portfolio\066-editorial-portfolio.md)
-- [Photography portfolio](085-photography-portfolio\085-photography-portfolio.md)
-- [Distinctive single-page portfolio](094-distinctive-single-page-portfolio\094-distinctive-single-page-portfolio.md)
+prompts 的目录和文件名可以保留编号，用于追踪来源、状态和日志。**最终网站不展示这些编号，也不将其用于公开访问路径。**
 
-These are downloaded reference briefs, not tested website implementations.
-Downloading them did not execute their instructions, install dependencies, or build
-any project. Review a brief and agree on scope before giving it to an agent.
+例如：
 
-## Project generation
+- 原始输入：`prompts/006-travel-agency-homepage/006-travel-agency-homepage.md`
+- 集合中的展示名称：旅行社首页
+- 公开访问路径示例：`pages/travel-agency-homepage/`
 
-Individually tailored Next.js demo generation is in progress. Application code
-is written beside each numbered brief, not into a nested `project` folder.
-`GENERATION_PROGRESS.json` records which projects are pending, in progress, or
-verified; the existence of a folder is not evidence of completed implementation.
+集合卡片、导航、首页标题、元数据和公开资源路径均不应沿用 `006-` 这类编号前缀。生成流程应维护稳定的内部映射，并处理去编号后的重名情况；正文中的正常业务数字不受影响。
 
-The collection uses a shared npm workspace dependency installation. From a
-generated sample folder, run its documented development and test commands.
-To recheck generated project 001 from this root, run:
+## 目标生成与发布流程
+
+1. **读取需求**：定期执行脚本或 AI 任务，遍历顶级 `prompts/` 的各个需求目录，读取其中对应 Markdown 文件的 prompt 内容，不把 README 当成生成输入。
+2. **应用设计指引**：每个网站都参考根目录 `DESIGN.md`，同时保留原始需求的设计特点。
+3. **调用 AI 生成网站**：可以使用远程 AI 服务或本地模型；优先复用已有实现与仓库依赖。
+4. **取得静态首页**：导出或提取首页及所需 HTML、CSS、JavaScript、图片和字体，使其不依赖运行时后端即可访问。
+5. **汇入集合**：将通过验证的首页放入静态部署产物，使用无编号的公开路径，并更新集合入口中的名称、预览和链接。
+6. **验证并发布**：检查静态资源、子路径访问、交互、响应式布局及无编号展示，再发布集合并记录实际结果。
+
+这里的首页是可实际访问的网页，不是截图。预览截图可以用于集合卡片，但不能代替作品本身。
+
+定期执行应支持重复更新和逐项失败记录：某个作品生成失败时，不覆盖其上一次有效版本，也不影响其他独立作品。未通过验证的新结果不得进入正式部署。
+
+## 静态部署范围
+
+- 最终部署只需要静态托管，不要求运行 Next.js 服务端、数据库或生成任务。
+- 已有 Next.js 示例可以复用，但只有取得并验证静态首页后，才能作为集合中的有效作品。
+- 首页需要的外部服务可在批准的演示范围内使用 Mock；具体功能、限制和导出方式应记录在各作品 README 中。
+- 资源与链接必须适用于集合中的子路径，不能依赖生成机器的本地绝对路径。
+- 不得将原始 prompts、AI 凭据、内部日志或构建缓存复制到公开部署产物。
+
+## 当前状态与命令
+
+以上描述的是项目目标，**不表示整条自动化流程已经实现**。
+
+- prompts 已移动至仓库顶级；部分现有脚本、依赖配置和历史记录仍需适配新的目录布局。
+- 根目录尚无 `DESIGN.md`，正式生成前需要提供设计指引，不能将其视为已读取。
+- [示例生成脚本](./src/workflows/generate-sample.mjs) 目前仍复制固定示例，使用旧的 `src/prompts/` 输入路径和带编号的输出路径；它尚不是遍历 prompts 并调用 AI 的通用生成器。
+- 定期调度、远程或本地 AI 接入，以及全量静态首页汇集流程仍需实现和验证。
+- 历史构建记录不代表作品已经满足新的静态集合发布要求。
+
+根目录现有命令如下，**需要先完成路径及相关配置适配，不能据此认定当前流程可直接运行成功**：
 
 ```text
+# 现有固定示例生成命令，尚未实现通用 AI 生成流程
+npm run generate:sample
+
+# 现有验证命令，包含实际构建、类型与交互检查
 npm run validate -- --ids=1
 ```
 
-Omit the selector to check all 100 projects sequentially. Missing implementations
-or failed checks are reported as blocked, not successful. `BUILD_REPORT.json`
-and `validation-logs` record actual validation outcomes. Backend and external
-services are mocked under the approved demo scope; consult each project's README
-for its specific functionality and limitations.
+验证命令省略 `--ids=1` 可按顺序检查全部项目。现有检查不能替代对最终静态产物和集合入口的验证；仅修改文档不需要运行构建。
 
-Original authors retain their rights. Preserve notices and check each source's
-license or terms before redistribution or commercial reuse. This collection does
-not grant additional permissions.
+## 来源与版权
+
+原始作者保留其相应权利。生成与发布时应保留许可证和署名，并在重新分发或商业使用前检查各来源的许可条款。本集合不授予额外权限。
