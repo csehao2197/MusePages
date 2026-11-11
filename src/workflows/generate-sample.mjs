@@ -11,7 +11,7 @@ export async function generateSample(output = path.join(root, "out")) {
   await copyFile(path.join(root, "src", "gallery", "index.html"), path.join(output, "index.html"));
   await copyFile(path.join(root, "src", "gallery", "sample-destination.html"), path.join(page, "index.html"));
   await copyFile(
-    path.join(root, "src", "prompts", "001-destination-guide", "001-destination-guide.md"),
+    path.join(root, "data", "prompts", "001-destination-guide", "001-destination-guide.md"),
     path.join(page, "001-destination-guide.md"),
   );
   const html = await readFile(path.join(page, "index.html"), "utf8");

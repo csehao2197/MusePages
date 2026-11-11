@@ -19,7 +19,7 @@ test("generates a linked gallery, nested sample, and unchanged original prompt",
     const screenshot = await readFile(path.join(page, "preview.png"));
     assert.equal(screenshot.subarray(0, 8).toString("hex"), "89504e470d0a1a0a");
     assert.match(await readFile(path.join(page, "index.html"), "utf8"), /href="\.\.\/\.\.\/index\.html"/);
-    const source = new URL("../prompts/001-destination-guide/001-destination-guide.md", import.meta.url);
+    const source = new URL("../../data/prompts/001-destination-guide/001-destination-guide.md", import.meta.url);
     assert.deepEqual(await readFile(path.join(page, "001-destination-guide.md")), await readFile(source));
     await writeFile(path.join(output, "index.html"), "stale gallery");
     await writeFile(path.join(output, "unrelated.txt"), "preserve");

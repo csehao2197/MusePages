@@ -2,7 +2,7 @@
 
 MusePages 的目标是生成一个可静态部署的网站，展示由 prompts 生成的各类网站首页：**a collection of website front pages generated from prompts**。
 
-项目以顶级 [prompts/](./prompts/) 中各个目录的原始 Markdown 需求为输入，结合根目录 `DESIGN.md` 的通用设计指引，通过脚本或远程、本地 AI 定期生成网站，再将各网站可静态部署的首页版本汇入同一个集合。
+项目以 [data/prompts/](./data/prompts/) 中各个目录的原始 Markdown 需求为输入，结合根目录 [DESIGN.md](./DESIGN.md) 的通用设计指引，通过脚本或远程、本地 AI 定期生成网站，再将各网站可静态部署的首页版本汇入同一个集合。
 
 最终交付的是可浏览、可点击访问的首页作品集，而不是需求文件列表，也不要求为每个作品部署完整的后端服务。
 
@@ -10,14 +10,15 @@ MusePages 的目标是生成一个可静态部署的网站，展示由 prompts �
 
 | 路径 | 用途 |
 | --- | --- |
-| [prompts/](./prompts/) | 已移动至仓库顶级的原始需求目录，包含 100 个编号示例及已有实现 |
-| `DESIGN.md` | 生成网站时参考的通用设计指引；当前尚未提供 |
-| [src/](./src/) | 集合页面及生成工作流源码 |
+| [data/prompts/](./data/prompts/) | 原始需求目录，包含 100 个编号示例及已有实现 |
+| [DESIGN.md](./DESIGN.md) | 生成网站时参考的通用设计指引 |
+| [src/](./src/) | 集合页面、生成工作流、辅助文档与生成记录 |
 | [out/](./out/) | 最终静态集合的部署产物 |
-| [deploy/](./deploy/) | 部署配置与脚本 |
-| [manifest.json](./manifest.json) | 原始需求来源、路径、下载时间、大小和 SHA-256 等信息 |
-| [GENERATION_PROGRESS.json](./GENERATION_PROGRESS.json) | 各项目的生成与验证进度 |
-| [BUILD_REPORT.json](./BUILD_REPORT.json)、[validation-logs/](./validation-logs/) | 实际验证结果和日志 |
+| [src/tools/](./src/tools/) | 验证等辅助工具 |
+| [src/manifest.json](./src/manifest.json) | 原始需求来源、相对于 `data/prompts/` 的路径、下载时间、大小和 SHA-256 等信息 |
+| [src/GENERATION_PROGRESS.json](./src/GENERATION_PROGRESS.json) | 各项目的生成与验证进度 |
+| [src/BUILD_REPORT.json](./src/BUILD_REPORT.json)、[src/validation-logs/](./src/validation-logs/) | 实际验证结果和日志 |
+| [src/proj-gen.md](./src/proj-gen.md) | 历史项目草案，不作为当前执行规范 |
 | [AGENTS.md](./AGENTS.md) | Agent 的生成、静态导出、汇集与验证规范 |
 
 原始需求于 2026-10-31 下载并保存。`001-*` 至 `064-*` 来自公开网站的框架无关需求，`065-*` 至 `100-*` 来自 GitHub 历史提交中的 Next.js Markdown 规格说明。原始文本应保持不变。
@@ -28,7 +29,7 @@ prompts 的目录和文件名可以保留编号，用于追踪来源、状态和
 
 例如：
 
-- 原始输入：`prompts/006-travel-agency-homepage/006-travel-agency-homepage.md`
+- 原始输入：`data/prompts/006-travel-agency-homepage/006-travel-agency-homepage.md`
 - 集合中的展示名称：旅行社首页
 - 公开访问路径示例：`pages/travel-agency-homepage/`
 
@@ -36,7 +37,7 @@ prompts 的目录和文件名可以保留编号，用于追踪来源、状态和
 
 ## 目标生成与发布流程
 
-1. **读取需求**：定期执行脚本或 AI 任务，遍历顶级 `prompts/` 的各个需求目录，读取其中对应 Markdown 文件的 prompt 内容，不把 README 当成生成输入。
+1. **读取需求**：定期执行脚本或 AI 任务，遍历 `data/prompts/` 的各个需求目录，读取其中对应 Markdown 文件的 prompt 内容，不把 README 当成生成输入。
 2. **应用设计指引**：每个网站都参考根目录 `DESIGN.md`，同时保留原始需求的设计特点。
 3. **调用 AI 生成网站**：可以使用远程 AI 服务或本地模型；优先复用已有实现与仓库依赖。
 4. **取得静态首页**：导出或提取首页及所需 HTML、CSS、JavaScript、图片和字体，使其不依赖运行时后端即可访问。
@@ -54,18 +55,19 @@ prompts 的目录和文件名可以保留编号，用于追踪来源、状态和
 - 首页需要的外部服务可在批准的演示范围内使用 Mock；具体功能、限制和导出方式应记录在各作品 README 中。
 - 资源与链接必须适用于集合中的子路径，不能依赖生成机器的本地绝对路径。
 - 不得将原始 prompts、AI 凭据、内部日志或构建缓存复制到公开部署产物。
+- 最终静态产物通过 Cloudflare 托管，部署目录为根目录 `out/`。旧 `deploy/` 目录与 SSH 部署脚本已删除；本次整理不配置或触发 Cloudflare 发布，也不处理本地密钥。
 
 ## 当前状态与命令
 
 以上描述的是项目目标，**不表示整条自动化流程已经实现**。
 
-- prompts 已移动至仓库顶级；部分现有脚本、依赖配置和历史记录仍需适配新的目录布局。
-- 根目录尚无 `DESIGN.md`，正式生成前需要提供设计指引，不能将其视为已读取。
-- [示例生成脚本](./src/workflows/generate-sample.mjs) 目前仍复制固定示例，使用旧的 `src/prompts/` 输入路径和带编号的输出路径；它尚不是遍历 prompts 并调用 AI 的通用生成器。
+- prompts 已移动至 `data/prompts/`；辅助文档、清单、进度、报告、验证工具和日志集中在 `src/`，相关脚本及 npm workspace 已同步调整。
+- 根目录已提供 [DESIGN.md](./DESIGN.md)，生成时必须读取。
+- [示例生成脚本](./src/workflows/generate-sample.mjs) 从 `data/prompts/` 读取输入，但仍复制固定示例并使用带编号的输出路径；它尚不是遍历 prompts 并调用 AI 的通用生成器。
 - 定期调度、远程或本地 AI 接入，以及全量静态首页汇集流程仍需实现和验证。
 - 历史构建记录不代表作品已经满足新的静态集合发布要求。
 
-根目录现有命令如下，**需要先完成路径及相关配置适配，不能据此认定当前流程可直接运行成功**：
+根目录现有命令如下，**它们不代表完整静态集合生成流程已经实现或通过验证**：
 
 ```text
 # 现有固定示例生成命令，尚未实现通用 AI 生成流程

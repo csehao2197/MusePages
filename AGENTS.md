@@ -4,7 +4,7 @@
 
 MusePages 的目标是生成一个可静态部署的网站，收集由 prompts 生成的各类网站首页（a collection of website front pages generated from prompts）。
 
-- 顶级 `prompts/` 目录保存原始需求，每个子目录中的需求 Markdown 是对应网站的生成输入。
+- `data/prompts/` 目录保存原始需求，每个子目录中的需求 Markdown 是对应网站的生成输入。
 - 项目将定期通过脚本或 AI 执行生成任务；AI 可以使用远程服务，也可以在本地运行。
 - 每次生成都应结合原始 prompt 与根目录 `DESIGN.md` 中的通用设计指引。
 - 从生成的网站中取得可独立静态部署的首页版本，将其及所需资源纳入最终集合，成为一个可访问的作品。
@@ -16,20 +16,23 @@ MusePages 的目标是生成一个可静态部署的网站，收集由 prompts �
 
 | 路径 | 用途 |
 | --- | --- |
-| `prompts/` | 原始需求及已有示例实现；已从旧位置移至仓库顶级 |
+| `data/prompts/` | 原始需求及已有示例实现 |
 | `DESIGN.md` | 网站生成时必须参考的通用设计指引 |
-| `src/` | 集合页面及生成工作流源码 |
+| `src/` | 集合页面、生成工作流、辅助文档与生成记录 |
 | `out/` | 最终集合的静态部署产物 |
-| `deploy/` | 部署配置与脚本 |
-| `manifest.json` | 原始来源、路径、下载时间、大小及 SHA-256 等追踪信息 |
-| `GENERATION_PROGRESS.json` | 各项目的生成与验证进度 |
-| `BUILD_REPORT.json`、`validation-logs/` | 实际验证结果及日志 |
+| `src/tools/` | 验证等辅助工具 |
+| `src/manifest.json` | 原始来源、相对于 `data/prompts/` 的路径、下载时间、大小及 SHA-256 等追踪信息 |
+| `src/GENERATION_PROGRESS.json` | 各项目的生成与验证进度 |
+| `src/BUILD_REPORT.json`、`src/validation-logs/` | 实际验证结果及日志 |
+| `src/proj-gen.md` | 历史项目草案，不作为当前执行规范 |
 
 - 先检查已有实现，避免重复生成或覆盖有效结果。
 - 原始 prompt 是输入，不得覆盖、改写或移动以适配生成器。
-- 已有示例代码可保留在对应 `prompts/<编号目录>/` 中；不得因此把整个源码目录复制到部署产物。
-- 修改生成或验证脚本时，必须使用顶级 `prompts/`，不得继续依赖旧的 `src/prompts/` 路径；同时检查相关清单、workspace 和报告中的路径引用。
-- 当前仓库尚无 `DESIGN.md`。生成任务应明确报告缺少设计输入，不得假装已经读取，也不得未经要求自行编造其内容。
+- 已有示例代码可保留在对应 `data/prompts/<编号目录>/` 中；不得因此把整个源码目录复制到部署产物。
+- 修改生成或验证脚本时，必须使用 `data/prompts/`，不得继续依赖旧的根目录 `prompts/` 或 `src/prompts/` 路径；同时检查相关清单、workspace 和报告中的路径引用。
+- 根目录保留项目说明、Agent 规范、设计指引与 npm 配置；辅助工具、记录和文档放在 `src/`。
+- 通过 Cloudflare 托管最终静态集合，部署产物为根目录 `out/`；旧的 `deploy/` 目录已删除，不再使用 SSH 部署脚本。未经明确要求，不重建旧部署流程，也不删除或读取本地密钥。
+- 生成前必须读取 `DESIGN.md`；若缺失，应明确报告缺少设计输入，不得假装已经读取或自行编造其内容。
 
 ## 3. 编号只用于内部追踪
 
@@ -37,7 +40,7 @@ prompts 子目录及需求文件中的编号必须保留，用于关联输入、
 
 - 集合卡片、标题、导航、页面正文、浏览器标题及面向用户的元数据，不得使用 prompt 编号作为展示前缀。
 - 公开 URL、首页目录名、资源路径及下载名称不得沿用编号前缀。
-- 例如，`prompts/006-travel-agency-homepage/006-travel-agency-homepage.md` 对应的公开路径可使用 `pages/travel-agency-homepage/`，展示名称为“旅行社首页”，而不是“006 旅行社首页”。
+- 例如，`data/prompts/006-travel-agency-homepage/006-travel-agency-homepage.md` 对应的公开路径可使用 `pages/travel-agency-homepage/`，展示名称为“旅行社首页”，而不是“006 旅行社首页”。
 - 仅移除源目录或文件名的编号前缀，不要误删正文中的价格、日期或其他业务数字。
 - 内部维护“原始 prompt → 无编号 slug → 静态首页”的稳定映射；去编号后如有重名，使用有意义的语义后缀区分，不得静默覆盖其他作品。
 
@@ -45,7 +48,7 @@ prompts 子目录及需求文件中的编号必须保留，用于关联输入、
 
 ### Step 1：读取输入
 
-1. 枚举顶级 `prompts/` 下的各个需求目录，读取其中对应的原始需求 Markdown；不要将 README 或生成记录误当成 prompt。
+1. 枚举 `data/prompts/` 下的各个需求目录，读取其中对应的原始需求 Markdown；不要将 README 或生成记录误当成 prompt。
 2. 读取根目录 `DESIGN.md`，作为通用视觉与设计指引。
 3. 检查已有实现、内部编号映射与生成状态。
 4. 保留原始需求的来源和版权声明，不得擅自扩大需求范围。
@@ -85,7 +88,7 @@ prompts 子目录及需求文件中的编号必须保留，用于关联输入、
 
 ## 5. 状态与周期执行
 
-- 沿用 `GENERATION_PROGRESS.json` 现有结构和状态值，不自行添加不兼容字段或状态。
+- 沿用 `src/GENERATION_PROGRESS.json` 现有结构和状态值，不自行添加不兼容字段或状态。
 - 保留每个 prompt 的独立结果，不得根据其他作品成功推断当前作品成功。
 - 明确区分源码已实现、静态首页已验证、已纳入集合与已部署，不得把这些阶段混为一谈。
 - 旧报告中的 verified 仅代表当时执行的检查，不自动证明新的静态集合要求已经满足。

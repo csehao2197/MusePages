@@ -4,15 +4,16 @@ import { spawn, execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import crypto from "node:crypto";
 
-const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const manifest = JSON.parse(fs.readFileSync(path.join(root, "manifest.json"), "utf8").replace(/^\uFEFF/, ""));
+const root = fileURLToPath(new URL("../../", import.meta.url));
+const source = path.join(root, "src");
+const manifest = JSON.parse(fs.readFileSync(path.join(source, "manifest.json"), "utf8").replace(/^\uFEFF/, ""));
 const selector = process.argv.find((arg) => arg.startsWith("--ids="));
 const ids = selector ? new Set(selector.slice(6).split(",").map(Number)) : null;
 if (ids && [...ids].some((id) => !Number.isInteger(id) || id < 1 || id > 100)) throw Error("Invalid --ids selector");
-const reportPath = path.join(root, "BUILD_REPORT.json");
+const reportPath = path.join(source, "BUILD_REPORT.json");
 const prior = fs.existsSync(reportPath) ? JSON.parse(fs.readFileSync(reportPath, "utf8").replace(/^\uFEFF/, "")) : [];
 const results = new Map(prior.map((item) => [item.id, item]));
-const logs = path.join(root, "validation-logs");
+const logs = path.join(source, "validation-logs");
 fs.mkdirSync(logs, { recursive: true });
 let unsafeShutdown = false;
 const persist = () => {
@@ -89,7 +90,7 @@ async function run(entry, label, args, cwd) {
 let failed = false;
 for (const entry of manifest) {
   if (ids && !ids.has(entry.id)) continue;
-  const brief = path.join(root, entry.filename);
+  const brief = path.join(root, "data", "prompts", entry.filename);
   const folder = path.dirname(brief);
   const result = { id: entry.id, title: entry.title, checkedAt: new Date().toISOString(), status: "verifying", checks: [] };
   results.set(entry.id, result);
