@@ -4,7 +4,7 @@
 
 MusePages 收集由 AI 根据原始需求生成的网站首页。同一个 prompt 可以交给不同模型，生成代码彼此隔离，最终将可独立访问的静态首页汇入同一个作品集，通过 Cloudflare 托管。
 
-**本文同时记录已实现入口与目标设计。页面生成脚本已实现；AI Markdown 编排、增量发布和目标集合 UI 等未落地部分仍属于设计，不能视为已完成。**
+**本文同时记录已实现入口与目标设计。页面生成脚本和 AI 编排指引已提供；`ai-generate` 自动命令入口、增量发布和目标集合 UI 等未落地部分仍属于设计，不能视为已完成。**
 
 ## 导航
 
@@ -100,7 +100,7 @@ deploy\MusePages\
 
 ### AI页面生成工作流
 
-AI 页面生成工作流以用户指定的 `<ai model>` 为输入，由 AI agent 读取 `src\workflows\render-prompt-pages.md`，按照其中的指引组织执行页面生成任务。它与页面生成工作流的目标一致，区别在于由 agent 根据 Markdown 指令编排，而非由 `.mjs` 脚本编排。
+AI 页面生成工作流以用户指定的 `<ai model>` 为输入，由 AI agent 读取 [src\workflows\render-prompt-pages.md](./src/workflows/render-prompt-pages.md)，按照其中的指引组织执行页面生成任务。它与页面生成工作流的目标一致，区别在于由 agent 根据 Markdown 指令安排范围、执行与恢复；具体生成操作可复用现有 `.mjs` 脚本，不重复实现安全与状态规则。
 
 两种入口遵循相同的目录、模型身份、结果检查和状态规则，不维护两套标准。编排 agent 的模型身份不能代替实际生成页面的模型身份。
 
