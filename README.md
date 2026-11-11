@@ -4,7 +4,7 @@
 
 MusePages 收集由 AI 根据原始需求生成的网站首页。同一个 prompt 可以交给不同模型，生成代码彼此隔离，最终将可独立访问的静态首页汇入同一个作品集，通过 Cloudflare 托管。
 
-**本文用于项目设计，目标流程不代表功能已经实现。当前仅修改 Markdown 文档，不运行生成、构建或发布，不改写代码、配置、网站产物和日志。**
+**本文同时记录已实现入口与目标设计。页面生成脚本已实现；AI Markdown 编排、增量发布和目标集合 UI 等未落地部分仍属于设计，不能视为已完成。**
 
 ## 导航
 
@@ -18,7 +18,7 @@ MusePages 收集由 AI 根据原始需求生成的网站首页。同一个 promp
 
 ## 项目使用说明
 
-所有命令从仓库根目录执行。目标使用接口如下：
+所有命令从仓库根目录执行：
 
 | 命令 | 用途 |
 | --- | --- |
@@ -26,7 +26,7 @@ MusePages 收集由 AI 根据原始需求生成的网站首页。同一个 promp
 | `npm run ai-generate -- <ai model>` | 执行[AI页面生成工作流](#ai页面生成工作流) |
 | `npm run deploy` | 按发布选择执行[deploy工作流](#deploy工作流) |
 
-`generate`、`ai-generate` 是待实现接口；现有 `deploy` 仅支持 version 1 配置下的完整本地发布，不代表下文的增量处理、元数据和轮播设计已实现。
+`generate` 已实现，配置与限制见[模型与发布配置](#模型与发布配置)。`ai-generate` 仍是待实现接口；现有 `deploy` 仅支持 version 1 配置下的完整本地发布，不代表下文的增量处理、发布状态回写和轮播设计已实现。
 
 生成前，由管理员配置并启动模型服务，提供调用 URI、API 类型、认证方式和真实模型 ID。`<ai model>` 用于选择服务配置，不等于真实模型 ID；凭据仅从本地环境读取。脚本不管理模型服务器，也不能在服务不兼容时自动换模型。
 
@@ -202,6 +202,34 @@ task\
 5. **准备并检查静态首页**：保留源码，将发布用首页及资源放入其 `out\` 子目录，按[静态产物边界](#静态产物边界)核验，不用 `.next` 或截图代替静态网页。
 6. **更新记录与发布选项**：核验实际结果后更新元数据并登记发布选项；配置登记失败时保留代码，下次仅补登记，不重复生成。结束时报告生成、跳过、待确认、失败及剩余缺失项。
 
+已实现的使用方式：
+
+```powershell
+# 仅查看明确指定模型的覆盖情况，不连接服务或修改文件
+npm run generate -- local --check
+npm run generate -- local another-model --check
+
+# 仅生成指定原始文件名对应的页面；省略 --prompts 时遍历全部原始需求
+npm run generate -- local --prompts=006-travel-agency-homepage
+
+# 明确授权重试元数据中 generated=false 的结果；不覆盖已完成结果
+npm run generate -- local --prompts=006-travel-agency-homepage --retry
+```
+
+每次 Codex 调用默认限时 30 分钟、不自动重试；`--timeout-ms=600000` 可调整超时，`--retries=1` 或 `2` 明确授权当次调用的有限重试。每个 prompt 共用生成锁，防止不同模型并发改写共享信息；中断或超时会终止当前子进程树，保留代码和隐藏的尝试日志，不自动删除其他进程留下的锁。
+
+脚本通过标准输入传递需求，以独立临时 `CODEX_HOME` 和显式 provider/model 配置调用 Codex；Windows 支持原生 `codex.exe` 或官方 npm 的 `codex.cmd` 包装器，不将需求拼入 shell 命令。代码核验通过后才写入 `generated: true`；HTML 源码缺少导出目录时，复制可公开文件到 `out\`，已有导出不覆盖。Next.js 缺少静态导出时保留源码并报告待准备，不自动构建、安装依赖或重新调用模型。
+
+静态核验检查首页、HTML/CSS 引用、子路径适配及非公开文件；通过后更新 `validated`，但不代表已经完成人工交互、视觉或外部资源可用性验收。生成与登记不修改 `deployed` 为成功。新增结果保存需求与设计摘要到隐藏的 `.generation-input.sha256`；后续发现输入变化时报告待确认，不自动重写源码；历史结果没有摘要时，不推断其输入版本。
+
+结果以 JSON 报告输出，包含生成、补登记、跳过、缺失、待确认、失败及剩余未生成组合。异常、待确认或检查发现缺失时退出码非零，取消时退出码为 130。已有源码缺少元数据、记录损坏、身份不匹配或路径冲突时需要人工核实；`--retry` 不能绕过这些保护，也不会重新生成 `generated: true` 的结果。登记失败或静态文件待准备的结果可在修复后直接重跑，只补后续步骤。
+
+隔离测试使用临时目录、模拟 Responses 模型目录接口和模拟 Codex 子进程，不调用真实 AI 服务、不运行网站构建或发布到真实目标目录：
+
+```powershell
+node --test src\workflows\render-prompt-pages.test.mjs src\workflows\deploy-site.test.mjs src\workflows\generate-sample.test.mjs
+```
+
 ### 页面生成 Markdown
 
 `src\workflows\render-prompt-pages.md` 是[AI页面生成工作流](#ai页面生成工作流)的编排指引，由 AI agent 读取并执行。它描述如何完成生成任务，不是网站的原始需求，也不以编写或运行生成脚本本身作为交付结果。
@@ -267,7 +295,30 @@ task\
 
 根目录 `config.json` 保存模型服务选择，包括调用 URI、接口类型、真实模型 ID 与稳定目录名；认证值从环境读取。它与 `deploy\config.json` 的发布选择职责不同，不能混用。
 
-目标发布配置按 prompt 聚合模型，仅保存发布选择；展示与导出信息存入 out 元数据：
+当前生成脚本使用以下模型配置结构。按实际服务创建根目录 `config.json`；示例不包含认证值，也不会自动启动服务器：
+
+```json
+{
+  "version": 1,
+  "models": {
+    "local": {
+      "apiType": "openai-responses",
+      "baseUrl": "http://127.0.0.1:8000/v1",
+      "modelId": "actual-model-id",
+      "directory": "model-a",
+      "apiKeyEnv": "MUSEPAGES_MODEL_API_KEY"
+    }
+  }
+}
+```
+
+`local` 是命令行选择名，`modelId` 是请求的真实模型 ID，`directory` 是唯一、稳定的小写输出目录名；不能让多个配置占用同一目录。`baseUrl` 指向 OpenAI 兼容 API 根路径，必须使用 HTTPS，只有 loopback 地址允许 HTTP；不允许在 URL 中放认证信息、查询参数或 fragment。`apiKeyEnv` 只保存环境变量名，无认证的本地服务可以省略该字段。
+
+当前只支持 Responses 接口，并要求同一 API 根路径下的 `GET /models` 返回 `data[].id`，且包含精确匹配的 `modelId`。仅在需要调用模型时连接服务并读取认证环境；覆盖检查和已有结果的补登记不需要在线服务或 Codex。配置不兼容、连接失败或模型未被列出时明确失败，不切换服务或模型。该检查证明服务声明提供该 ID，不独立证明服务内部使用的模型权重；Codex 事件若报告不同模型 ID，会拒绝结果。实际调用还需安装兼容的 Codex CLI；隔离测试不能代替真实服务联调。
+
+生成脚本只登记现有发布器支持的 **version 1** 配置，新选项保持 `enabled: false`，已有选项的开关、顺序及用户展示信息不覆盖；已有 slug 或导出路径与元数据冲突时报告登记失败。遇到 version 2 时不自动迁移、不覆盖配置，保留已生成代码及独立的登记失败状态。
+
+以下 **目标** 发布配置按 prompt 聚合模型，仅保存发布选择；展示与导出信息存入 out 元数据：
 
 ```json
 {

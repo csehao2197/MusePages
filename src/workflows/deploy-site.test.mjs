@@ -114,6 +114,7 @@ test("Next.js publishes exported static files and app-router browser chunks, nev
   await writeFile(path.join(exported, "index.html"), '<h1>Next export</h1><script src="_next/static/chunks/app/page.js"></script>');
   await writeFile(path.join(exported, ".env"), "private");
   await writeFile(path.join(exported, "package.json"), "{}");
+  await writeFile(path.join(exported, "metadata.json"), '{"modelId":"private-state"}');
   await writeFile(path.join(exported, "original.md"), "raw prompt");
   await writeFile(path.join(exported, "LICENSE.md"), "Keep license notice");
   const config = await syncDeployConfig(workspace);
@@ -123,7 +124,7 @@ test("Next.js publishes exported static files and app-router browser chunks, nev
   const target = path.join(workspace, "deploy", "MusePages", "pages", "travel", "model-a");
   assert.equal(await readFile(path.join(target, "_next", "static", "chunks", "app", "page.js"), "utf8"), "browser chunk");
   assert.equal(await readFile(path.join(target, "LICENSE.md"), "utf8"), "Keep license notice");
-  for (const name of [".env", "package.json", "original.md", "app", "node_modules", ".next"]) {
+  for (const name of [".env", "package.json", "metadata.json", "original.md", "app", "node_modules", ".next"]) {
     await assert.rejects(lstat(path.join(target, name)), { code: "ENOENT" });
   }
   const prompt = await readFile(path.join(target, "prompt.html"), "utf8");

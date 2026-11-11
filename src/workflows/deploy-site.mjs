@@ -1,4 +1,5 @@
 import { watch } from "node:fs";
+import { randomUUID } from "node:crypto";
 import { copyFile, lstat, mkdir, mkdtemp, open, readFile, readdir, rename, rm, unlink, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -92,9 +93,9 @@ async function writeConfig(workspace, config) {
   const file = path.join(workspace, "deploy", "config.json");
   const contents = JSON.stringify(config, null, 2) + "\n";
   if (await exists(file) && await readFile(file, "utf8") === contents) return;
-  const temporary = `${file}.tmp`;
+  const temporary = `${file}.${randomUUID()}.tmp`;
   try {
-    await writeFile(temporary, contents, "utf8");
+    await writeFile(temporary, contents, { encoding: "utf8", flag: "wx" });
     await rename(temporary, file);
   } finally {
     await rm(temporary, { force: true });
@@ -169,6 +170,44 @@ export async function syncDeployConfig(workspace = root) {
   return withLock(workspace, async () => (await synchronize(workspace)).config);
 }
 
+export async function registerGeneratedPage(workspace, page) {
+  return withLock(workspace, async () => {
+    const file = path.join(workspace, "deploy", "config.json");
+    if (await exists(file) && (await lstat(file)).isSymbolicLink()) {
+      throw Error("Deployment config cannot be a symbolic link");
+    }
+    const config = await exists(file) ? JSON.parse(await readFile(file, "utf8")) : { version: 1, pages: [] };
+    validateConfig(config);
+    const option = { ...page, enabled: false };
+    validateConfig({ version: 1, pages: [option] });
+    if (config.pages.some((entry) => entry.prompt.toLowerCase() !== page.prompt.toLowerCase()
+      && entry.slug.toLowerCase() === page.slug.toLowerCase())) {
+      throw Error(`Conflicting public slug: ${page.slug}`);
+    }
+    if (config.pages.some((entry) => entry.prompt.toLowerCase() === page.prompt.toLowerCase() && entry.slug !== page.slug)) {
+      throw Error(`Prompt has a different public slug: ${page.prompt}`);
+    }
+    const existing = config.pages.find((entry) =>
+      entry.prompt.toLowerCase() === page.prompt.toLowerCase() && entry.model.toLowerCase() === page.model.toLowerCase());
+    if (existing) {
+      if (existing.prompt !== page.prompt || existing.model !== page.model
+        || existing.slug !== page.slug || existing.staticDir !== page.staticDir) {
+        throw Error(`Deployment mapping conflicts with metadata: ${page.prompt}/${page.model}`);
+      }
+      return false;
+    }
+    config.pages.push(option);
+    validateConfig(config);
+    await writeConfig(workspace, config);
+    const saved = JSON.parse(await readFile(file, "utf8"));
+    validateConfig(saved);
+    if (!saved.pages.some((entry) => entry.prompt === page.prompt && entry.model === page.model)) {
+      throw Error("Deployment registration was not saved");
+    }
+    return true;
+  });
+}
+
 async function staticDirectory(source, relative) {
   await directory(source);
   let current = source;
@@ -194,7 +233,7 @@ async function copyStatic(source, destination) {
       if (name.startsWith(".") || excludedDirectories.has(name)) continue;
       await copyStatic(input, path.join(destination, entry.name));
     } else if (entry.isFile() && !name.startsWith(".") && name !== "package.json"
-      && name !== "package-lock.json" && name !== "result.json"
+      && name !== "package-lock.json" && name !== "result.json" && name !== "metadata.json"
       && !/^(?:next|postcss|tailwind|playwright)\.config\./.test(name)
       && (staticExtensions.has(path.extname(name)) || /^(?:licen[cs]e|notice)(?:\.md)?$/.test(name))) {
       await copyFile(input, path.join(destination, entry.name));
