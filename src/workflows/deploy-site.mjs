@@ -294,18 +294,36 @@ async function copyStatic(source, destination) {
 }
 
 function gallery(template, pages) {
-  const cards = pages.map((page) => {
-    const href = `pages/${encodeURIComponent(page.slug)}/${encodeURIComponent(page.model)}`;
-    const title = escapeHtml(page.title);
-    const preview = page.preview
-      ? `<img src="${href}/preview.png" alt="Preview of ${title}" width="1200" height="900" loading="lazy">`
-      : '<span class="preview-label">No preview provided</span>';
-    return `<article class="card">
-      <a class="preview" href="${href}/index.html" aria-label="Open ${title}">${preview}</a>
+  const prompts = new Map();
+  for (const page of pages) {
+    if (!prompts.has(page.prompt)) prompts.set(page.prompt, []);
+    prompts.get(page.prompt).push(page);
+  }
+  const cards = [...prompts.values()].map((models) => {
+    const slides = models.map((page, index) => {
+      const href = `pages/${encodeURIComponent(page.slug)}/${encodeURIComponent(page.model)}`;
+      const title = escapeHtml(page.title);
+      const preview = page.preview
+        ? `<img src="${href}/preview.png" alt="Preview of ${title}" width="1200" height="900" loading="lazy">`
+        : '<span class="preview-label">No preview provided</span>';
+      return `<div class="slide" role="group" aria-roledescription="slide" aria-label="${index + 1} of ${models.length}: ${escapeHtml(page.model)}"${index ? " hidden inert" : ""}>
+      <a class="preview" href="${href}/index.html" aria-label="Open ${title}" draggable="false">${preview}</a>
       <div class="details"><h3><a href="${href}/index.html">${title}</a></h3>
         <div class="tags">${page.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}<span class="tag model">Model: ${escapeHtml(page.model)}</span></div>
         <div class="actions"><a class="open" href="${href}/index.html">View page &rarr;</a><a class="prompt" href="${href}/prompt.html">Read prompt &nearr;</a></div>
       </div>
+    </div>`;
+    }).join("\n");
+    const dots = models.map((page, index) =>
+      `<button class="dot" type="button" data-index="${index}" aria-label="Show model ${escapeHtml(page.model)}" aria-current="${index === 0}"><span></span></button>`).join("");
+    return `<article class="card" data-carousel role="region" aria-roledescription="carousel" aria-label="${escapeHtml(models[0].title)} model previews">
+      <div class="slides">${slides}</div>
+      <div class="carousel-controls">
+        <button type="button" data-step="-1" aria-label="Previous model"${models.length === 1 ? " disabled" : ""}>&larr;</button>
+        <div class="dots" role="group" aria-label="Choose model">${dots}</div>
+        <button type="button" data-step="1" aria-label="Next model"${models.length === 1 ? " disabled" : ""}>&rarr;</button>
+      </div>
+      <p class="carousel-status" role="status" aria-atomic="true">${escapeHtml(models[0].model)} &middot; 1 of ${models.length}</p>
     </article>`;
   }).join("\n");
   for (const marker of ["<!-- RESULT_COUNT -->", "<!-- RESULT_CARDS -->"]) {

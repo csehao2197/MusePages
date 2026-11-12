@@ -153,6 +153,162 @@ test("prompt codebox preserves text, escapes markup, and fits desktop and mobile
   }
 });
 
+test("gallery groups models into stable, accessible carousels with synchronized links and touch controls", async () => {
+  const workspace = await sampleWorkspace();
+  const output = path.join(workspace, "deploy", "MusePages");
+  const server = createStaticServer(output);
+  let browser;
+  try {
+    const prompt = "001-destination-guide";
+    const models = ["model-z", "model-a", "model-b", "disabled-model"];
+    const png = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aL1sAAAAASUVORK5CYII=", "base64");
+    for (const [name, variants] of [[prompt, models], ["002-single", ["only-model"]]]) {
+      const input = path.join(workspace, "data", "prompts", name);
+      await mkdir(input, { recursive: true });
+      await writeFile(path.join(input, `${name}.md`), "# Original prompt\n<literal text>");
+      for (const model of variants) {
+        const folder = path.join(workspace, "out", "pages", name, model);
+        await mkdir(folder, { recursive: true });
+        await writeFile(path.join(folder, "index.html"), `<h1>${model}</h1>`);
+        if (model !== "model-a") await writeFile(path.join(folder, "preview.png"), png);
+      }
+    }
+    const config = await syncDeployConfig(workspace);
+    config.pages[prompt].sort((a, b) => models.indexOf(a.model) - models.indexOf(b.model));
+    for (const option of Object.values(config.pages).flat()) {
+      option.enabled = option.model !== "disabled-model";
+      option.title = option.model === "model-a"
+        ? 'A much longer title with <literal markup> & "quotes" to test layout stability'
+        : `Title for ${option.model}`;
+      option.tags = [`Style for ${option.model}`];
+    }
+    const configPath = path.join(workspace, "deploy", "config.json");
+    await writeFile(configPath, JSON.stringify(config));
+    await publishSite(workspace);
+    await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
+    const base = `http://127.0.0.1:${server.address().port}`;
+    browser = await chromium.launch({ headless: true });
+    const context = await browser.newContext({ hasTouch: true });
+    const page = await context.newPage();
+    const errors = [];
+    page.on("pageerror", (error) => errors.push(error.message));
+    const card = page.locator("[data-carousel]").first();
+    const active = card.locator(".slide:not([hidden])");
+    const check = async (index) => {
+      const model = models[index];
+      assert.equal(await active.count(), 1);
+      assert.equal(await active.locator(".model").textContent(), `Model: ${model}`);
+      assert.equal(await active.locator(".tag").first().textContent(), `Style for ${model}`);
+      assert.equal(await active.locator("h3").textContent(), config.pages[prompt][index].title);
+      for (const link of [".preview", "h3 a", ".open", ".prompt"]) {
+        assert.equal(await active.locator(link).getAttribute("href"),
+          `pages/destination-guide/${model}/${link === ".prompt" ? "prompt" : "index"}.html`);
+      }
+      assert.equal(await card.locator('.dot[aria-current="true"]').getAttribute("data-index"), String(index));
+      assert.equal(await card.getByRole("status").textContent(), `${model} \u00b7 ${index + 1} of 3`);
+      assert.equal(await card.locator(".slide[hidden]").evaluateAll((slides) =>
+        slides.every((slide) => slide.inert && getComputedStyle(slide).visibility === "hidden")), true);
+      if (model === "model-a") {
+        assert.equal(await active.locator("img").count(), 0);
+        assert.equal(await active.locator(".preview-label").textContent(), "No preview provided");
+      } else {
+        assert.equal(await active.locator("img").getAttribute("src"), `pages/destination-guide/${model}/preview.png`);
+        assert.equal(await active.locator("img").evaluate((image) => image.complete && image.naturalWidth > 0), true);
+      }
+    };
+    for (const width of [1280, 375, 320]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(`${base}/index.html`);
+      assert.equal(await page.locator("[data-carousel]").count(), 2);
+      assert.equal(await card.getByRole("button", { name: /^Show model/ }).count(), 3);
+      assert.equal(await page.locator(".count").textContent(), "2 prompts / 4 pages");
+      assert.equal(await page.locator('[aria-label="Show model disabled-model"]').count(), 0);
+      const single = page.locator("[data-carousel]").nth(1);
+      assert.equal(await single.locator(".dot").count(), 1);
+      assert.equal(await single.getByRole("button", { name: "Previous model" }).isDisabled(), true);
+      assert.equal(await single.getByRole("button", { name: "Next model" }).isDisabled(), true);
+      await check(0);
+      const height = (await card.boundingBox()).height;
+      await card.getByRole("button", { name: "Next model" }).click();
+      await check(1);
+      assert.equal((await card.boundingBox()).height, height);
+      await card.getByRole("button", { name: "Show model model-b", exact: true }).click();
+      await check(2);
+      await card.getByRole("button", { name: "Next model" }).click();
+      await check(0);
+      await card.getByRole("button", { name: "Previous model" }).click();
+      await check(2);
+      await page.keyboard.press("Home");
+      await check(0);
+      await page.keyboard.press("ArrowRight");
+      await check(1);
+      assert.equal(await card.locator('.dot[aria-current="true"]').evaluate((button) => button === document.activeElement), true);
+      await page.keyboard.press("End");
+      await check(2);
+      await page.keyboard.press("ArrowLeft");
+      await check(1);
+      assert.equal((await card.boundingBox()).height, height);
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+      assert.equal(await single.locator(".slide:not([hidden]) .model").textContent(), "Model: only-model");
+    }
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto(`${base}/index.html`);
+    const session = await context.newCDPSession(page);
+    const swipe = async (dx, dy = 0) => {
+      await active.locator(".preview").scrollIntoViewIfNeeded();
+      const box = await active.locator(".preview").boundingBox();
+      const x = box.x + box.width / 2;
+      const y = box.y + box.height / 2;
+      await session.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x, y }] });
+      await session.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: x + dx, y: y + dy }] });
+      await session.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+    };
+    await swipe(-85);
+    await check(1);
+    assert.equal(page.url(), `${base}/index.html`);
+    await swipe(85);
+    await check(0);
+    await swipe(-10);
+    await check(0);
+    await swipe(0, -70);
+    await check(0);
+    await card.getByRole("button", { name: "Show model model-b", exact: true }).click();
+    await active.locator(".open").click();
+    await page.waitForURL(`${base}/pages/destination-guide/model-b/index.html`);
+    assert.equal(await page.locator("h1").textContent(), "model-b");
+    await page.goto(`${base}/index.html`);
+    await card.getByRole("button", { name: "Show model model-a", exact: true }).click();
+    await active.locator(".prompt").click();
+    await page.waitForURL(`${base}/pages/destination-guide/model-a/prompt.html`);
+    assert.equal(await page.locator("pre code").textContent(), "# Original prompt\n<literal text>");
+    config.pages[prompt][0].enabled = false;
+    config.pages[prompt][1].enabled = false;
+    await writeFile(configPath, JSON.stringify(config));
+    await publishSite(workspace);
+    await page.goto(`${base}/index.html`);
+    assert.equal(await card.locator(".dot").count(), 1);
+    assert.equal(await active.locator(".model").textContent(), "Model: model-b");
+    assert.equal(await card.getByRole("button", { name: "Next model" }).isDisabled(), true);
+    config.pages[prompt][2].enabled = false;
+    await writeFile(configPath, JSON.stringify(config));
+    await publishSite(workspace);
+    await page.goto(`${base}/index.html`);
+    assert.equal(await page.locator("[data-carousel]").count(), 1);
+    assert.equal(await page.locator('a[href*="destination-guide"]').count(), 0);
+    config.pages["002-single"][0].enabled = false;
+    await writeFile(configPath, JSON.stringify(config));
+    await publishSite(workspace);
+    await page.goto(`${base}/index.html`);
+    assert.equal(await page.locator("[data-carousel]").count(), 0);
+    assert.equal(await page.getByText("No published pages yet.").count(), 1);
+    assert.deepEqual(errors, []);
+  } finally {
+    if (browser) await browser.close();
+    await new Promise((resolve) => server.close(resolve));
+    await rm(workspace, { recursive: true, force: true });
+  }
+});
+
 test("four selected prompt pages show original text and return to the collection", async () => {
   const workspace = await sampleWorkspace();
   const names = ["001-destination-guide", "002-eco-tourism-landing-page", "003-flight-search-and-booking-page", "004-group-travel-booking"];
