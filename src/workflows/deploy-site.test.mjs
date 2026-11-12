@@ -201,7 +201,9 @@ test("group keys use the prompt filename rather than its parent directory or pub
   assert.deepEqual(Object.keys(config.pages), ["001-travel"]);
   config.pages["001-travel"][0].enabled = true;
   await saveConfig(workspace, config);
-  assert.deepEqual(await publishSite(workspace), { pages: 1, prompts: 1, changed: true });
+  assert.deepEqual(await publishSite(workspace), {
+    pages: 1, prompts: 1, changed: true, changes: { added: 1, updated: 0, removed: 0, unchanged: 0 },
+  });
   assert.match(await readFile(path.join(workspace, "deploy", "MusePages", "pages", "travel", "model-a", "prompt.html"), "utf8"),
     /&lt;literal prompt&gt;/);
 });
@@ -265,7 +267,9 @@ test("publishing copies only selected variants and removing the last selected mo
   const config = await syncDeployConfig(workspace);
   options(config).forEach((page) => { page.enabled = true; });
   await saveConfig(workspace, config);
-  assert.deepEqual(await publishSite(workspace), { pages: 3, prompts: 2, changed: true });
+  assert.deepEqual(await publishSite(workspace), {
+    pages: 3, prompts: 2, changed: true, changes: { added: 3, updated: 0, removed: 0, unchanged: 0 },
+  });
   const target = path.join(workspace, "deploy", "MusePages");
   await writeFile(path.join(target, "obsolete.txt"), "old");
   config.pages["001-travel"][0].enabled = false;
@@ -292,7 +296,9 @@ test("no selected models produces a valid empty collection and keeps config and 
   await writeFile(path.join(target, ".git", "sentinel"), "keep repository metadata");
   await writeFile(path.join(target, ".gitignore"), "local-only");
   await writeFile(path.join(target, "index.html"), "previous website");
-  assert.deepEqual(await publishSite(workspace), { pages: 0, prompts: 0, changed: true });
+  assert.deepEqual(await publishSite(workspace), {
+    pages: 0, prompts: 0, changed: true, changes: { added: 0, updated: 0, removed: 0, unchanged: 0 },
+  });
   assert.deepEqual(await readdir(path.join(target, "pages")), []);
   assert.match(await readFile(path.join(target, "index.html"), "utf8"), /No published pages yet/);
   assert.equal(await readFile(path.join(target, ".git", "sentinel"), "utf8"), "keep repository metadata");
@@ -321,7 +327,9 @@ test("unchanged publication preserves target files and directories while reconci
   const stale = await configFile(workspace);
   stale.pages["001-travel"][0].deployed = false;
   await saveConfig(workspace, stale);
-  assert.deepEqual(await publishSite(workspace), { pages: 1, prompts: 1, changed: false });
+  assert.deepEqual(await publishSite(workspace), {
+    pages: 1, prompts: 1, changed: false, changes: { added: 0, updated: 0, removed: 0, unchanged: 1 },
+  });
   assert.equal((await configFile(workspace)).pages["001-travel"][0].deployed, true);
   assert.deepEqual(await Promise.all(files.map(async (file) => (await lstat(file)).mtimeMs)), timestamps);
   assert.equal(await readFile(path.join(target, ".git", "sentinel"), "utf8"), "keep");
@@ -332,6 +340,37 @@ test("unchanged publication preserves target files and directories while reconci
   assert.equal((await publishSite(workspace)).changed, false);
   assert.equal((await lstat(configPath)).mtimeMs, configTime);
   assert.deepEqual((await readdir(path.join(workspace, "deploy"))).sort(), ["MusePages", "config.json"]);
+});
+
+test("enabling a seventh page reports one addition separately from the total and unchanged pages", async (t) => {
+  const workspace = await fixture(t);
+  for (let number = 1; number <= 7; number++) {
+    await result(workspace, `${String(number).padStart(3, "0")}-travel`, "model-a");
+  }
+  const config = await syncDeployConfig(workspace);
+  options(config).forEach((page, index) => {
+    page.enabled = index < 6;
+    page.slug = `travel-${index + 1}`;
+  });
+  await saveConfig(workspace, config);
+  await publishSite(workspace);
+  config.pages["007-travel"][0].enabled = true;
+  config.pages["007-travel"][0].deployed = true;
+  await saveConfig(workspace, config);
+  const added = await publishSite(workspace);
+  assert.equal(added.pages, 7);
+  assert.deepEqual(added.changes, { added: 1, updated: 0, removed: 0, unchanged: 6 });
+  await writeFile(path.join(workspace, "out", "pages", "001-travel", "model-a", "index.html"), "<h1>Updated story</h1>");
+  assert.deepEqual((await publishSite(workspace)).changes, { added: 0, updated: 1, removed: 0, unchanged: 6 });
+  const edited = await configFile(workspace);
+  edited.pages["001-travel"][0].tags = ["New gallery tag"];
+  await saveConfig(workspace, edited);
+  const galleryOnly = await publishSite(workspace);
+  assert.equal(galleryOnly.changed, true);
+  assert.deepEqual(galleryOnly.changes, { added: 0, updated: 0, removed: 0, unchanged: 7 });
+  edited.pages["007-travel"][0].enabled = false;
+  await saveConfig(workspace, edited);
+  assert.deepEqual((await publishSite(workspace)).changes, { added: 0, updated: 0, removed: 1, unchanged: 6 });
 });
 
 test("content comparison detects changed assets, prompts, gallery inputs and target drift", async (t) => {
@@ -426,7 +465,9 @@ test("publish synchronizes a newly discovered result but does not publish it wit
   await result(workspace, "001-travel", "model-a");
   await syncDeployConfig(workspace);
   await result(workspace, "001-travel", "model-b");
-  assert.deepEqual(await publishSite(workspace), { pages: 0, prompts: 0, changed: true });
+  assert.deepEqual(await publishSite(workspace), {
+    pages: 0, prompts: 0, changed: true, changes: { added: 0, updated: 0, removed: 0, unchanged: 0 },
+  });
   assert.equal(options(await configFile(workspace)).length, 2);
 });
 
@@ -464,7 +505,9 @@ test("link validation ignores inline code and text but still validates actual im
   const config = await syncDeployConfig(workspace);
   config.pages["001-travel"][0].enabled = true;
   await saveConfig(workspace, config);
-  assert.deepEqual(await publishSite(workspace), { pages: 1, prompts: 1, changed: true });
+  assert.deepEqual(await publishSite(workspace), {
+    pages: 1, prompts: 1, changed: true, changes: { added: 1, updated: 0, removed: 0, unchanged: 0 },
+  });
   const target = path.join(workspace, "deploy", "MusePages", "pages", "travel", "model-a", "index.html");
   assert.equal(await readFile(target, "utf8"), html);
   for (const invalid of ['<img src="missing.png">', '<script src="missing.js"></script>', '<img src=missing.png>']) {
@@ -533,7 +576,9 @@ test("different prompts cannot share a public slug even when their models differ
   await assert.rejects(publishSite(workspace), /Conflicting public path/);
   config.pages["002-travel"][0].slug = "travel-adventures";
   await saveConfig(workspace, config);
-  assert.deepEqual(await publishSite(workspace), { pages: 2, prompts: 2, changed: true });
+  assert.deepEqual(await publishSite(workspace), {
+    pages: 2, prompts: 2, changed: true, changes: { added: 2, updated: 0, removed: 0, unchanged: 0 },
+  });
 });
 
 test("watching adds an externally generated result to config without publishing it", async (t) => {
@@ -587,16 +632,26 @@ test("the JavaScript CLI synchronizes options and rebuilds the exact configured 
   const config = await configFile(workspace);
   config.pages["001-travel"][0].enabled = true;
   await saveConfig(workspace, config);
-  assert.match(cli("publish"), /Updated local static site: 1 pages from 1 prompts/);
+  const first = cli("publish");
+  assert.match(first, /Updated local static site: 1 added, 0 updated, 0 removed, 0 unchanged/);
+  assert.match(first, /Total: 1 pages from 1 prompts/);
   const unchanged = cli("publish");
   assert.match(unchanged, /No changes: local static site is up to date \(1 pages from 1 prompts\)/);
   assert.match(unchanged, /No remote deployment was performed/);
   assert.doesNotMatch(unchanged, /Published|Updated local static site/);
   const target = path.join(workspace, "deploy", "MusePages", "pages", "travel");
   assert.deepEqual(await readdir(target), ["model-a"]);
-  config.pages["001-travel"][0].enabled = false;
+  config.pages["001-travel"][1].enabled = true;
   await saveConfig(workspace, config);
-  assert.match(cli("publish"), /Updated local static site: 0 pages from 0 prompts/);
+  const added = cli("publish");
+  assert.match(added, /Updated local static site: 1 added, 0 updated, 0 removed, 1 unchanged/);
+  assert.match(added, /Total: 2 pages from 1 prompts/);
+  config.pages["001-travel"][0].enabled = false;
+  config.pages["001-travel"][1].enabled = false;
+  await saveConfig(workspace, config);
+  const removed = cli("publish");
+  assert.match(removed, /Updated local static site: 0 added, 0 updated, 2 removed, 0 unchanged/);
+  assert.match(removed, /Total: 0 pages from 0 prompts/);
   await assert.rejects(lstat(target), { code: "ENOENT" });
   assert.equal(options(await configFile(workspace)).length, 2);
 });

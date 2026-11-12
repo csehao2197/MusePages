@@ -374,6 +374,39 @@ async function sameWebsite(staging, target, topLevel = true) {
   return true;
 }
 
+async function publishedPages(site) {
+  const pages = new Map();
+  const folder = path.join(site, "pages");
+  if (!await exists(folder)) return pages;
+  const info = await lstat(folder);
+  if (info.isSymbolicLink() || !info.isDirectory()) return pages;
+  for (const slug of await readdir(folder, { withFileTypes: true })) {
+    if (!slug.isDirectory() || slug.isSymbolicLink()) continue;
+    const variants = path.join(folder, slug.name);
+    for (const model of await readdir(variants, { withFileTypes: true })) {
+      if (model.isDirectory() && !model.isSymbolicLink()) {
+        pages.set(`${slug.name}/${model.name}`, path.join(variants, model.name));
+      }
+    }
+  }
+  return pages;
+}
+
+async function publicationChanges(staging, target) {
+  const before = await publishedPages(target);
+  const after = await publishedPages(staging);
+  const changes = { added: 0, updated: 0, removed: 0, unchanged: 0 };
+  for (const [key, folder] of after) {
+    if (!before.has(key)) changes.added++;
+    else if (await sameWebsite(folder, before.get(key), false)) changes.unchanged++;
+    else changes.updated++;
+  }
+  for (const key of before.keys()) {
+    if (!after.has(key)) changes.removed++;
+  }
+  return changes;
+}
+
 async function replaceWebsite(target, staging, commit) {
   if (await exists(target)) await directory(target);
   else await mkdir(target);
@@ -453,6 +486,7 @@ export async function publishSite(workspace = root) {
       }
       const target = path.join(workspace, "deploy", "MusePages");
       const changed = !await sameWebsite(staging, target);
+      const changes = await publicationChanges(staging, target);
       try {
         if (changed) await replaceWebsite(target, staging, () => writeConfig(workspace, config));
         else await writeConfig(workspace, config);
@@ -460,7 +494,7 @@ export async function publishSite(workspace = root) {
         if (error instanceof AggregateError) keepRecovery = true;
         throw error;
       }
-      return { pages: selected.length, prompts: new Set(selected.map((page) => page.prompt)).size, changed };
+      return { pages: selected.length, prompts: new Set(selected.map((page) => page.prompt)).size, changed, changes };
     } finally {
       if (!keepRecovery) await rm(staging, { recursive: true });
     }
@@ -511,8 +545,9 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     } else if (command === "publish") {
       const result = await publishSite();
       console.log(result.changed
-        ? `Updated local static site: ${result.pages} pages from ${result.prompts} prompts in deploy\\MusePages.`
+        ? `Updated local static site: ${result.changes.added} added, ${result.changes.updated} updated, ${result.changes.removed} removed, ${result.changes.unchanged} unchanged.`
         : `No changes: local static site is up to date (${result.pages} pages from ${result.prompts} prompts).`);
+      if (result.changed) console.log(`Total: ${result.pages} pages from ${result.prompts} prompts in deploy\\MusePages.`);
       console.log("No remote deployment was performed.");
     } else {
       throw Error(`Unknown command: ${command}. Use publish, sync, or watch.`);

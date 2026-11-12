@@ -130,7 +130,7 @@ AI 页面生成工作流以用户指定的 `<ai model>` 为输入，由 AI agent
 
 deploy 工作流以 `deploy\config.json` 中的发布选择为输入，由 `src\workflows\deploy-site.mjs` 组装本地目标网站，输出到 `deploy\MusePages\`，作为 Cloudflare 的静态发布根目录。
 
-当前命令核验候选站点后比较完整文件树与文件内容：一致时保留目标文件并提示 `No changes`，有变化时提示 `Updated local static site`；两种结果都明确说明仅处理本地站点。此整站去重独立于下文的逐作品增量发布设计。
+当前命令核验候选站点后比较完整文件树与文件内容：一致时保留目标文件并提示 `No changes`，有变化时提示 `Updated local static site`，分别统计新增、更新、移除、未变的模型首页，总数单独显示。两种结果都明确说明仅处理本地站点；变化时仍使用整站安全切换，未变计数表示内容一致，逐作品增量发布仍是下文的目标设计。
 
 流程检查所有已启用的 prompt／模型结果，不限于本轮新生成项，从 `out\pages\<prompt>\<ai model>\out\` 读取准备好的静态首页及必要资源，按[目标网站结构](#目标网站结构)组织集合页面。
 
