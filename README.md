@@ -67,7 +67,7 @@ MusePages 收集由 AI 根据原始需求生成的网站首页。同一个 promp
 作品详情页同样支持模型轮播，各模型首页保留独立地址：
 
 ```text
-deploy\dist\
+deploy\dist\MusePages\
   index.html
   pages\
     <prompt_slug>\
@@ -101,7 +101,7 @@ node src\workflows\generate-preview.mjs out\pages\006-travel-agency-homepage\mod
 
 核验截图 PNG 格式与尺寸后，先关闭浏览器和临时服务，再原子替换 `preview.png`；失败、超时或 Ctrl+C 取消时保留旧预览，清理本次临时文件与服务，不终止其他已有服务。同一目录通过 `.preview.lock` 避免并发截图，中断后确认没有活动进程再处理遗留锁。
 
-已有发布器会自动识别静态目录中的 `preview.png`，在执行 `npm run deploy` 时复制到 `deploy\dist\pages\<prompt_slug>\<ai model>\preview.png` 并显示，无需新增配置字段。`deploy:sync` 和 `deploy:watch` 只同步发布选项，不生成截图或刷新网站。页面生成脚本已在静态检查通过后、发布登记前自动调用此截图入口；只读 `--check` 不截图。发布器仍不强制检查预览是否存在，缺失时显示 `No preview provided`，不能据此认为已满足新页面的预览要求。单独执行截图脚本不修改模型元数据、发布选择或已发布网站。
+已有发布器会自动识别静态目录中的 `preview.png`，在执行 `npm run deploy` 时复制到 `deploy\dist\MusePages\pages\<prompt_slug>\<ai model>\preview.png` 并显示，无需新增配置字段。`deploy:sync` 和 `deploy:watch` 只同步发布选项，不生成截图或刷新网站。页面生成脚本已在静态检查通过后、发布登记前自动调用此截图入口；只读 `--check` 不截图。发布器仍不强制检查预览是否存在，缺失时显示 `No preview provided`，不能据此认为已满足新页面的预览要求。单独执行截图脚本不修改模型元数据、发布选择或已发布网站。
 
 生成流程在模型源码目录的隐藏文件 `.generation-preview.sha256` 中保存静态产物与截图的 SHA-256 摘要，不增加发布字段，也不将记录纳入静态导出。静态摘要包括公开 slug、模型目录及除根部 `preview.png` 外的所有静态文件。模型元数据 `preview: true`、摘要一致且预览 PNG 格式、尺寸正确时复用；`preview: false`、没有记录、截图缺失、内容不符或静态文件变化时重新截图，核验通过后设置 `preview: true`。静态检查或截图失败时设置 `preview: false`、`validated: false`，保留源码和旧预览并报告待处理，不继续发布登记；修复后重跑只补后续步骤，不重新生成 `generated: true` 的源码。
 
@@ -131,7 +131,7 @@ AI 页面生成工作流以用户指定的 `<ai model>` 为输入，由 AI agent
 
 ### deploy工作流
 
-deploy 工作流以 `deploy\config.json` 中的发布选择为输入，由 `src\workflows\deploy-site.mjs` 组装本地目标网站，输出到 `deploy\dist\`，作为 Cloudflare 的静态发布根目录。
+deploy 工作流以 `deploy\config.json` 中的发布选择为输入，由 `src\workflows\deploy-site.mjs` 组装本地目标网站，输出到 `deploy\dist\MusePages\`。`deploy\dist\` 与 `deploy\site\` 使用相同的站点目录结构。
 
 当前命令核验候选站点后比较完整文件树与文件内容：一致时保留目标文件并提示 `No changes`，有变化时提示 `Updated local static site`，分别统计新增、更新、移除、未变的模型首页，总数单独显示。两种结果都明确说明仅处理本地站点；变化时仍使用整站安全切换，未变计数表示内容一致，逐作品增量发布仍是下文的目标设计。
 
@@ -151,7 +151,7 @@ deploy 工作流以 `deploy\config.json` 中的发布选择为输入，由 `src\
 
 ### publish工作流
 
-`npm run publish` 执行 `src\workflows\publish-site.mjs`：确认 `deploy\dist\` 存在后，清空 `deploy\site\MusePages\` 的全部内容（含隐藏项及 `.git`），将 `deploy\dist\` 的内容直接复制到该目录。目标目录缺失时自动创建；命令仅复制本地文件，源目录保持不变。
+`npm run publish` 执行 `src\workflows\publish-site.mjs`，将 `deploy\dist\` 严格同步到 `deploy\site\`：确认源目录有效后清空目标目录内容（含隐藏项及 `.git`），复制包括 `MusePages\` 在内的完整目录树。目标目录缺失时自动创建；逐项路径、目录类型与文件 SHA-256 完全一致才报告成功。命令仅处理本地文件，源目录保持不变。
 
 ### 生成覆盖检查与模型匹配
 
@@ -207,9 +207,10 @@ out\
         out\                        # 统一的静态首页及资源
 deploy\
   config.json                       # 发布选择，位于网站目录之外
-  dist\                             # Cloudflare 静态发布根目录
+  dist\                             # 静态集合输出根目录
+    MusePages\                      # npm run deploy 生成的网站
   site\
-    MusePages\                      # npm run publish 的复制目标
+    MusePages\                      # npm run publish 严格镜像 dist
 task\
   TASK.md                           # 用户维护的本轮目标
   progress.log                      # 已忽略的执行与恢复记录

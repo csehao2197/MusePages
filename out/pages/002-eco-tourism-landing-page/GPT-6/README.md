@@ -7,7 +7,7 @@ Authored directly by GPT-6 using actual model **gpt-6.1-sol**. Type: dependency-
 
 Source: this directory's `index.html` and `assets\`. Static delivery: `out\index.html`, `out\assets\`, and the actual rendered `out\preview.png` (1200 × 900). Open through a static HTTP server; the repository preview workflow starts its own temporary loopback server without `npm start`.
 
-The future publication target is `deploy\dist\pages\eco-tourism-landing-page\GPT-6\`; registration defaults to disabled. This task does not publish it.
+The future publication target is `deploy\dist\MusePages\pages\eco-tourism-landing-page\GPT-6\`; registration defaults to disabled. This task does not publish it.
 
 ## Features
 

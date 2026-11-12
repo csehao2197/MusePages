@@ -500,7 +500,10 @@ export async function publishSite(workspace = root) {
       for (const models of Object.values(config.pages)) {
         for (const page of models) page.deployed = page.enabled;
       }
-      const target = path.join(workspace, "deploy", "dist");
+      const output = path.join(workspace, "deploy", "dist");
+      if (!await exists(output)) await mkdir(output);
+      await directory(output);
+      const target = path.join(output, "MusePages");
       const changed = !await sameWebsite(staging, target);
       const changes = await publicationChanges(staging, target);
       try {
@@ -563,7 +566,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
       console.log(result.changed
         ? `Updated local static site: ${result.changes.added} added, ${result.changes.updated} updated, ${result.changes.removed} removed, ${result.changes.unchanged} unchanged.`
         : `No changes: local static site is up to date (${result.pages} pages from ${result.prompts} prompts).`);
-      if (result.changed) console.log(`Total: ${result.pages} pages from ${result.prompts} prompts in deploy\\dist.`);
+      if (result.changed) console.log(`Total: ${result.pages} pages from ${result.prompts} prompts in deploy\\dist\\MusePages.`);
       console.log("No remote deployment was performed.");
     } else {
       throw Error(`Unknown command: ${command}. Use publish, sync, or watch.`);

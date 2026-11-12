@@ -34,7 +34,7 @@ async function selectSample(workspace) {
 
 test("generates a linked gallery, nested sample, and plain-text prompt page", async () => {
   const workspace = await sampleWorkspace();
-  const output = path.join(workspace, "deploy", "dist");
+  const output = path.join(workspace, "deploy", "dist", "MusePages");
   try {
     await generateSample(workspace);
     const config = JSON.parse(await readFile(path.join(workspace, "deploy", "config.json"), "utf8"));
@@ -91,7 +91,7 @@ function createStaticServer(output) {
 
 test("page and return links work when the host lists directories instead of serving index.html", async () => {
   const workspace = await sampleWorkspace();
-  const output = path.join(workspace, "deploy", "dist");
+  const output = path.join(workspace, "deploy", "dist", "MusePages");
   const server = createStaticServer(output);
   let browser;
   try {
@@ -155,7 +155,7 @@ test("prompt codebox preserves text, escapes markup, and fits desktop and mobile
 
 test("gallery groups models into stable, accessible carousels with synchronized links and touch controls", async () => {
   const workspace = await sampleWorkspace();
-  const output = path.join(workspace, "deploy", "dist");
+  const output = path.join(workspace, "deploy", "dist", "MusePages");
   const server = createStaticServer(output);
   let browser;
   try {
@@ -342,7 +342,7 @@ test("four selected prompt pages show original text and return to the collection
   Object.values(config.pages).flat().forEach((entry) => { entry.enabled = true; });
   await writeFile(path.join(workspace, "deploy", "config.json"), JSON.stringify(config));
   await publishSite(workspace);
-  const server = createStaticServer(path.join(workspace, "deploy", "dist"));
+  const server = createStaticServer(path.join(workspace, "deploy", "dist", "MusePages"));
   let browser;
   try {
     await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));

@@ -20,7 +20,7 @@
 ## 生成代码与静态发布
 - 每个 prompt 和模型的生成代码保存在 `out/pages/<prompt_file_name>/<ai_model_name>/`；prompt 文件名不含 `.md`，内部编号可保留。
 - HTML 网站选取首页及所需静态资源；Next.js 项目必须取得对应的静态导出或首页提取结果，不能直接部署项目本身。
-- 最终只将验证通过的静态首页和资源放入 `deploy/dist/pages/<prompt_slug>/<ai_model_name>/`，公开 prompt slug 不含编号。
+- 最终只将验证通过的静态首页和资源放入 `deploy/dist/MusePages/pages/<prompt_slug>/<ai_model_name>/`，公开 prompt slug 不含编号。
 - 静态版本应保留首页视觉效果和必要的浏览器端交互，不能依赖 Next.js 服务端或用截图代替页面。
 
 ## 集合中的多模型 Carousel

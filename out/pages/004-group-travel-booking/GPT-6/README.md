@@ -2,7 +2,7 @@
 
 Original: `data\prompts\004-group-travel-booking\004-group-travel-booking.md`; design guidance: root `DESIGN.md`. Authored directly by GPT-6 using **gpt-6.1-sol**. Static HTML/CSS/JavaScript, not a Next.js project.
 
-Source is `index.html` and `assets\`. Static delivery is `out\index.html`, `out\assets\`, and the actual rendered `out\preview.png` (1200 × 900). No build, installation, environment variables or backend is needed. The preview workflow provides its own temporary loopback HTTP server. Future publication path: `deploy\dist\pages\group-travel-booking\GPT-6\`, registered disabled, not deployed.
+Source is `index.html` and `assets\`. Static delivery is `out\index.html`, `out\assets\`, and the actual rendered `out\preview.png` (1200 × 900). No build, installation, environment variables or backend is needed. The preview workflow provides its own temporary loopback HTTP server. Future publication path: `deploy\dist\MusePages\pages\group-travel-booking\GPT-6\`, registered disabled, not deployed.
 
 ## Features
 

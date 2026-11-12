@@ -123,7 +123,7 @@ async function snapshot(folder) {
 test("generates through a child process with stdin, real model selection, static checks and disabled grouped registration", async (t) => {
   const f = await fixture(t);
   const requests = await service(t, f.workspace);
-  await save(path.join(f.workspace, "deploy", "dist", "index.html"), "existing website");
+  await save(path.join(f.workspace, "deploy", "dist", "MusePages", "index.html"), "existing website");
   const report = await renderPromptPages(f.workspace, ["local"], f.options());
   assert.equal(report.summary.generated, 1, JSON.stringify(report));
   assert.equal(report.items[0].preview, "generated");
@@ -157,7 +157,7 @@ test("generates through a child process with stdin, real model selection, static
   assert.ok(log.includes("[REDACTED]"));
   assert.ok(!log.includes(secret));
   assert.deepEqual((await readdir(path.join(f.output, "out"))).sort(), ["client.js", "images", "index.html", "preview.png", "style.css"]);
-  assert.equal(await readFile(path.join(f.workspace, "deploy", "dist", "index.html"), "utf8"), "existing website");
+  assert.equal(await readFile(path.join(f.workspace, "deploy", "dist", "MusePages", "index.html"), "utf8"), "existing website");
   assert.deepEqual(await readdir(path.join(f.workspace, "out", ".generation-locks")), []);
   assert.equal(requests(), 1);
 });
