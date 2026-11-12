@@ -37,7 +37,6 @@
 
 ```text
 out\pages\<prompt_name>\
-  metadata.json                    # prompt 共享的公开标题与 slug
   <model_name>\
     README.md                      # 功能、运行方式、Mock、实际验证与已知限制
     metadata.json                  # 真实模型、静态产物位置及各阶段状态
@@ -71,7 +70,7 @@ node src\workflows\generate-preview.mjs out\pages\006-travel-agency-homepage\mod
 
 ### 元数据与续跑规则
 
-prompt 级 `out\pages\<prompt_name>\metadata.json` 只保存公开标题与 slug，不记录模型执行状态，也不加入 `preview`。
+prompt 目录仅容纳模型结果目录；`metadata.json` 仅在模型目录维护。公开标题与 slug 随模型选项保存在 `deploy\config.json`，同一 prompt 的各模型使用相同 slug；新结果默认从去编号的文件名派生，已有展示信息保持原样。
 
 模型级 `out\pages\<prompt_name>\<model_name>\metadata.json` 保存真实模型身份及各阶段状态。所有模型结果均包含布尔字段 `preview`，新结果默认 `false`：
 

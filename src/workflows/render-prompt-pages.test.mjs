@@ -134,6 +134,7 @@ test("generates through a child process with stdin, real model selection, static
   assert.deepEqual(report.remainingMissing, []);
   const state = await readJson(path.join(f.output, "metadata.json"));
   assert.deepEqual(state, metadata({ generated: true, preview: true, validated: true, config_added: true }));
+  await assert.rejects(readFile(path.join(f.output, "..", "metadata.json")), { code: "ENOENT" });
   const config = await readJson(path.join(f.workspace, "deploy", "config.json"));
   assert.equal(config.version, 2);
   assert.deepEqual(config.pages, { [prompt]: { weight: 1, pages: [{
@@ -201,6 +202,7 @@ test("completed results repair registration without a model call and preserve ex
   assert.deepEqual((await readJson(file)).pages[prompt], config.pages[prompt]);
   assert.equal(await readFile(path.join(f.output, ".attempt-count"), "utf8"), "1");
   assert.equal(requests(), 1);
+  await assert.rejects(readFile(path.join(f.output, "..", "metadata.json")), { code: "ENOENT" });
 });
 
 test("changed exports and corrupt previews refresh screenshots without regenerating source or changing publication switches", async (t) => {

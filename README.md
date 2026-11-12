@@ -98,7 +98,7 @@ node src\workflows\generate-preview.mjs out\pages\006-travel-agency-homepage\mod
 
 新结果将截图保存为 `out\pages\<prompt>\<ai model>\out\preview.png`，与 `out\index.html` 同目录。历史结果若使用 `staticDir: "."`，则截取该静态目录中的 `index.html`，将 `preview.png` 保存在模型目录根部；始终以实际配置的 `staticDir` 为准，不修改导出路径来迁就截图。
 
-输入须位于当前仓库的 `out\pages\<prompt>\<ai model>\` 内，不接受符号链接。截图以公开的 `pages\<prompt_slug>\<ai model>\` 子路径访问静态首页；slug 优先读取 prompt 的 `metadata.json`，缺失时使用去编号的文件名，不依赖 `file://` 协议。默认总超时为 60 秒，可用 `--timeout-ms=120000` 调整，最大 300 秒。缺少 Chromium 时明确报错，不自动安装依赖。
+输入须位于当前仓库的 `out\pages\<prompt>\<ai model>\` 内，不接受符号链接。截图以公开的 `pages\<prompt_slug>\<ai model>\` 子路径访问静态首页；slug 默认使用去编号的文件名，兼容读取历史 prompt 级记录，不依赖 `file://` 协议。默认总超时为 60 秒，可用 `--timeout-ms=120000` 调整，最大 300 秒。缺少 Chromium 时明确报错，不自动安装依赖。
 
 核验截图 PNG 格式与尺寸后，先关闭浏览器和临时服务，再原子替换 `preview.png`；失败、超时或 Ctrl+C 取消时保留旧预览，清理本次临时文件与服务，不终止其他已有服务。同一目录通过 `.preview.lock` 避免并发截图，中断后确认没有活动进程再处理遗留锁。
 
@@ -120,7 +120,7 @@ node src\workflows\generate-preview.mjs out\pages\006-travel-agency-homepage\mod
 
 流程依次完成模型配置校验、已有结果检查、缺失页面生成和静态产物准备。已有结果按[覆盖检查规则](#生成覆盖检查与模型匹配)判断，不因未验证、未发布或配置未登记而重复生成源码。
 
-对于新生成的结果，创建或更新对应的[项目状态元数据](#项目状态元数据)：首次处理某个 prompt 时维护共享标题与 slug，为该 prompt／模型组合记录真实模型、静态产物位置和实际执行状态，不覆盖其他模型的记录。同时将该组合登记到 `deploy\config.json`，新选项默认关闭，已有选项不重复添加、不改变开关和顺序。
+对于新生成的结果，仅在模型目录创建或更新对应的[项目状态元数据](#项目状态元数据)，记录真实模型、静态产物位置和实际执行状态。同时将该组合及公开标题、slug 登记到 `deploy\config.json`，新选项默认关闭，已有选项不重复添加、不改变开关和顺序。
 
 生成与配置登记分别记录成功或失败；登记失败时保留生成代码及真实状态，下次只补登记，不重复生成。结束后报告生成、跳过、待确认及失败项，不自动部署目标网站。具体执行步骤见[页面生成脚本](#页面生成脚本)。
 
@@ -205,7 +205,6 @@ logs\
 out\
   pages\
     <prompt>\
-      metadata.json                 # prompt 的公开标题和路径
       <ai model>\
         metadata.json               # 模型身份、导出位置与执行状态
         ...                         # HTML 或 Next.js 源码
@@ -286,18 +285,11 @@ node --test src\workflows\render-prompt-pages.test.mjs src\workflows\deploy-site
 
 ### 项目状态元数据
 
-项目按 prompt 与模型两级维护 `metadata.json`，供生成、覆盖检查与发布流程共同使用。模型级元数据记录生成、预览、验证和登记状态；发布选择与发布状态由 `deploy\config.json` 的对应模型选项单独记录。
+项目仅在模型目录维护 `metadata.json`，供生成、覆盖检查与发布流程共同使用，记录生成、预览、验证和登记状态；公开标题、slug、发布选择与发布状态由 `deploy\config.json` 的对应模型选项记录。
 
 #### prompt 共享信息
 
-`out\pages\<prompt>\metadata.json` 保存同一 prompt 共享的公开标题与 slug，不记录某个模型的执行状态：
-
-```json
-{
-  "slug": "travel-agency-homepage",
-  "title": "旅行社首页"
-}
-```
+prompt 目录仅容纳模型结果目录。公开标题与 slug 保存在 `deploy\config.json` 的模型选项中，同一 prompt 的各模型使用相同 slug。新结果默认从去编号的文件名派生 slug 与标题，登记保留已有展示信息；历史 prompt 级记录仅兼容读取，生成与续跑均只写模型级元数据。
 
 #### 模型结果信息
 
@@ -333,7 +325,7 @@ node --test src\workflows\render-prompt-pages.test.mjs src\workflows\deploy-site
 | `validated` | 当前版本静态首页及资源已通过实际验证 |
 | `deployed`（发布配置） | 对应模型已纳入最近一次成功组装的本地目标网站；不代表最新源码已同步，也不代表已上传 Cloudflare |
 
-所有模型级记录均使用布尔字段 `preview`，prompt 级共享元数据不加该字段。旧模型记录仅缺少 `preview` 时按 `false` 兼容，非检查运行在核验后保存该字段，`--check` 不迁移文件；字符串、数字或 `null` 等非布尔值会被拒绝。
+所有模型级记录均使用布尔字段 `preview`。旧模型记录仅缺少 `preview` 时按 `false` 兼容，非检查运行在核验后保存该字段，`--check` 不迁移文件；字符串、数字或 `null` 等非布尔值会被拒绝。
 
 模型元数据不再保存 `deployed`；生成流程兼容旧记录中的该字段，但在后续非检查写入时移除，`--check` 不改写文件。各流程只在核验实际结果后更新自身负责的状态。管理员切换发布开关不直接修改发布状态；重新生成后重置预览与验证状态，但不改变仍在本地网站中的旧版本发布记录，配置项移除后不能保留过时的登记成功标记。
 

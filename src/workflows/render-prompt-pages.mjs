@@ -525,7 +525,6 @@ async function processItem(workspace, prompt, model, shared, options, getCommand
       await verifyService(model);
       const command = await getCommand();
       await ensureDirectory(workspace, "out", "pages", prompt.id, model.directory);
-      if (!await info(sharedFile)) await saveJson(sharedFile, shared);
       metadata = {
         modelId: model.modelId, tags: [], staticDir: "out",
         generated: false, preview: false, config_added: metadata?.config_added ?? false, validated: false,
@@ -551,7 +550,6 @@ async function processItem(workspace, prompt, model, shared, options, getCommand
       generated = true;
     }
     const type = await checkSource(current.folder);
-    if (!await info(sharedFile)) await saveJson(sharedFile, shared);
     const exported = await inside(current.folder, ...metadata.staticDir.split("/"));
     if (exported === current.folder && type === "next") throw Error("Next.js source is not a static export");
     if (!await info(exported) && type === "html" && metadata.staticDir === "out") {
