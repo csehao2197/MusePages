@@ -1,0 +1,119 @@
+Create a modern, polished portfolio website for a UX/UI designer named "Ava Chen" who specializes in product design for SaaS and mobile apps. The design should feel clean, intentional, and design-system-aware — demonstrating the designer's own craft through the site itself.
+
+1. NAVIGATION BAR
+- Logo: "Ava Chen" in medium-weight sans-serif (DM Sans), with a small dot accent in #6366F1 (indigo)
+- Links: Work, About, Process, Contact
+- Right side: "Let's Talk" button — outlined with 1px #6366F1 border, hover fills solid
+- Sticky on scroll with subtle backdrop blur (background: rgba(255,255,255,0.85))
+- Mobile: hamburger icon, slide-in drawer from right with full links
+
+2. HERO SECTION
+- Two-column layout: left text, right visual
+- Left side:
+  - Small label above headline: "UX/UI Designer · San Francisco" in uppercase tracking-wide #6366F1
+  - Headline: "I design digital products that people actually enjoy using."
+  - Subheadline: "Currently a Senior Product Designer at Notion. Previously at Figma and Stripe. I focus on turning complex workflows into intuitive, delightful experiences."
+  - Two CTAs: "View My Work" (solid #6366F1, white text) and "Download Resume" (text link with arrow icon)
+- Right side: a stylized mockup composition showing 2-3 overlapping app screens (phone + tablet) with subtle shadow and 12° rotation
+- Background: #FAFAFA light gray with a faint grid pattern (4px dots at 40px intervals, #E5E7EB)
+- Subtle entrance animation: text slides up, mockups fade in with slight parallax
+
+3. SELECTED WORK (project showcase — 4 case studies)
+- Section heading: "Selected Work" with a horizontal rule and project count "4 Projects"
+- Projects displayed as large cards stacked vertically, alternating image side (left/right)
+
+- Project 1: "Notion Calendar Redesign"
+  - Tag: "Product Design · Mobile · 2025"
+  - Preview: large screenshot of calendar app on mobile device
+  - Description: "Redesigned Notion's mobile calendar to support multi-workspace scheduling. Reduced task creation time by 34%."
+  - Metrics row: "34% faster task creation" · "4.8★ App Store rating" · "2M+ daily users"
+  - CTA: "View Case Study →"
+
+- Project 2: "Stripe Dashboard Analytics"
+  - Tag: "Data Visualization · Web App · 2024"
+  - Preview: dashboard screenshot with charts and data tables
+  - Description: "Designed a unified analytics dashboard for Stripe merchants, consolidating 6 separate reporting views into one."
+  - Metrics row: "60% reduction in page switching" · "89% merchant satisfaction" · "$2.4B processed through new views"
+  - CTA: "View Case Study →"
+
+- Project 3: "Figma Plugin Manager"
+  - Tag: "UX Design · Desktop · 2024"
+  - Preview: Figma plugin management interface screenshot
+  - Description: "Reimagined how designers discover, install, and manage plugins. Introduced categories, reviews, and one-click updates."
+  - Metrics row: "3x plugin install rate" · "52% fewer support tickets" · "Used by 800K+ designers"
+  - CTA: "View Case Study →"
+
+- Project 4: "HealthTrack Patient Portal"
+  - Tag: "Healthcare UX · Web + Mobile · 2023"
+  - Preview: patient portal interface on laptop and phone
+  - Description: "Designed an accessible patient portal for a healthcare startup, enabling appointment booking, lab results, and messaging."
+  - Metrics row: "WCAG 2.1 AA compliant" · "4.6★ patient rating" · "40% fewer missed appointments"
+  - CTA: "View Case Study →"
+
+- Cards: white background, 24px border-radius, subtle shadow (0 4px 24px rgba(0,0,0,0.06))
+- On hover: card lifts slightly (translateY -4px), shadow deepens
+- Images have 16px border-radius and #F3F4F6 background frame
+
+4. DESIGN PROCESS SECTION
+- Section heading: "How I Work"
+- 4-step horizontal process flow with connecting lines between steps:
+  - Step 1: "Discover" — "User research, competitive analysis, stakeholder interviews" — magnifying glass icon
+  - Step 2: "Define" — "Problem framing, user personas, journey mapping" — target icon
+  - Step 3: "Design" — "Wireframes, prototypes, visual design, usability testing" — pen tool icon
+  - Step 4: "Deliver" — "Design specs, developer handoff, iteration based on metrics" — rocket icon
+- Each step: circle with icon (48px, #EEF2FF indigo-50 background, #6366F1 icon), title below, description beneath
+- Connecting line: dashed 2px #D1D5DB between circles
+- Below the process: a quote block — "Great design isn't about making things pretty — it's about making things work for real people." — with a subtle left border in #6366F1
+
+5. SKILLS & TOOLS (compact grid)
+- Section heading: "Tools & Skills"
+- Two rows:
+  - Row 1 — Design: Figma, Sketch, Adobe XD, Framer, Principle, Whimsical
+  - Row 2 — Research & Dev: Maze, Hotjar, UserTesting, HTML/CSS, React basics, Design Systems
+- Each tool shown as a pill/chip: #F3F4F6 background, 8px border-radius, small icon + name
+- Hover: background shifts to #EEF2FF, border appears in #6366F1
+
+6. ABOUT SECTION (two-column)
+- Left: professional headshot photo — friendly, approachable, natural lighting, neutral background
+- Right content:
+  - Headline: "A Bit About Me"
+  - Bio: "I'm a product designer with 7 years of experience shipping digital products used by millions. I started my career in graphic design, transitioned to UX through a bootcamp, and have been obsessed with interaction design ever since. When I'm not pushing pixels, you'll find me hiking in Marin, collecting vinyl records, or volunteering as a design mentor for underrepresented students."
+  - 3 fun facts in a row:
+    - "☕ 3 cups of coffee/day"
+    - "📚 Currently reading: 'Thinking in Systems'"
+    - "🎵 Design soundtrack: lo-fi hip hop"
+  - CTA: "Connect on LinkedIn →" text link
+- Background: white
+
+7. TESTIMONIALS (2-column grid)
+- Testimonial 1: "Ava has a rare ability to translate ambiguous requirements into clear, elegant designs. She elevated our entire product experience." — James Liu, VP Product at Notion
+- Testimonial 2: "Working with Ava felt like working with someone who genuinely cared about our users. Her research-driven approach changed how we think about design." — Priya Sharma, Engineering Lead at Stripe
+- Testimonial 3: "She doesn't just design screens — she designs systems. Ava's component library saved us hundreds of engineering hours." — Marcus Rivera, CTO at HealthTrack
+- Testimonial 4: "The best designer I've ever collaborated with. Period." — Elena Park, Product Manager at Figma
+- Cards: #FAFAFA background, 16px border-radius, left border 3px solid #6366F1
+- Quote marks: large decorative " in #E0E7FF at top-left
+
+8. CONTACT SECTION
+- Headline: "Let's Work Together"
+- Subheadline: "I'm currently open to freelance projects and full-time opportunities. Drop me a line and I'll get back to you within 24 hours."
+- Contact form:
+  - Name (text input)
+  - Email (text input)
+  - Project type (dropdown: "Product Design", "UX Audit", "Design System", "Other")
+  - Message (textarea, 4 rows)
+  - "Send Message" button — solid #6366F1, full-width on mobile
+- Form fields: #F9FAFB background, 12px border-radius, 1px #E5E7EB border, focus ring #6366F1
+- Below form: "Or reach me directly: ava@avachen.design" with email icon
+- Social row: LinkedIn, Dribbble, Twitter/X, Read.cv — icon buttons with hover color fill
+
+9. FOOTER
+- Two columns:
+  - Left: "Ava Chen · Product Designer" with a small dot accent
+  - Right: "Designed and built with Figma + code"
+- Social icons repeated
+- "© 2026 Ava Chen. All rights reserved."
+- Background: #111827 (dark charcoal), text: #9CA3AF
+
+Design: Clean, modern, design-system-aware aesthetic. Primary color: #6366F1 (indigo-500), secondary: #111827 (charcoal), background: #FFFFFF and #FAFAFA alternating sections, accent surfaces: #EEF2FF (indigo-50). Typography: DM Sans for headings (500/700 weight), Inter for body text (400/500). Cards with generous 24px border-radius and soft shadows. Generous whitespace — 80px section padding, 32px element spacing. Subtle micro-interactions: hover lifts, focus rings, smooth transitions (200ms ease).
+
+Responsive: On mobile, hero stacks vertically (text above mockups). Project cards stack to single column with image always on top. Process steps stack vertically with vertical connecting line. Skills grid wraps to 3 per row. Testimonials stack to single column. Contact form goes full-width. Footer stacks centered. Minimum touch targets: 44px.
