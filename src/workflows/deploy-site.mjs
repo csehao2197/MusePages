@@ -94,7 +94,8 @@ function validateConfig(config) {
     checkName(page.model, "model");
     checkName(page.slug, "public prompt slug");
     if (/^\d+-/.test(page.slug)) throw Error(`Public slug must not contain the prompt number: ${page.slug}`);
-    if (typeof page.enabled !== "boolean" || typeof page.title !== "string" || !page.title.trim()
+    if (typeof page.enabled !== "boolean" || (Object.hasOwn(page, "deployed") && typeof page.deployed !== "boolean")
+      || typeof page.title !== "string" || !page.title.trim()
       || typeof page.staticDir !== "string" || !page.staticDir
       || !Array.isArray(page.tags) || page.tags.some((tag) => typeof tag !== "string")) {
       throw Error(`Invalid deployment settings for ${page.prompt}/${page.model}`);
@@ -123,6 +124,11 @@ async function readConfig(file) {
     config.pages = Object.fromEntries(pages);
   }
   validateConfig(config);
+  for (const models of Object.values(config.pages)) {
+    for (const page of models) {
+      if (!Object.hasOwn(page, "deployed")) page.deployed = false;
+    }
+  }
   return config;
 }
 
@@ -170,7 +176,7 @@ async function synchronize(workspace) {
         Object.defineProperty(config.pages, promptKey, { value: [], enumerable: true, writable: true, configurable: true });
       }
       config.pages[promptKey].push({
-        model, enabled: false, slug, title: slug.replaceAll("-", " "),
+        model, enabled: false, deployed: false, slug, title: slug.replaceAll("-", " "),
         tags: [], staticDir: next ? "out" : ".",
       });
       known.add(key);
@@ -217,7 +223,7 @@ export async function registerGeneratedPage(workspace, page) {
       throw Error("Deployment config cannot be a symbolic link");
     }
     const config = await readConfig(file);
-    const { prompt, ...option } = { ...page, enabled: false };
+    const { prompt, ...option } = { ...page, enabled: false, deployed: false };
     validateConfig({ version: 2, pages: { [prompt]: [option] } });
     const options = pageOptions(config);
     if (options.some((entry) => entry.prompt.toLowerCase() !== page.prompt.toLowerCase()
@@ -347,7 +353,7 @@ async function validateLinks(staging, folder = staging) {
   }
 }
 
-async function replaceWebsite(target, staging) {
+async function replaceWebsite(target, staging, commit) {
   if (await exists(target)) await directory(target);
   else await mkdir(target);
   const backup = await mkdtemp(path.join(path.dirname(target), ".site-backup-"));
@@ -364,6 +370,7 @@ async function replaceWebsite(target, staging) {
       await rename(path.join(staging, name), path.join(target, name));
       installed.push(name);
     }
+    await commit();
     cleanBackup = true;
   } catch (error) {
     try {
@@ -420,8 +427,11 @@ export async function publishSite(workspace = root) {
       const template = await readFile(path.join(workspace, "src", "gallery", "index.html"), "utf8");
       await writeFile(path.join(staging, "index.html"), gallery(template, selected), "utf8");
       await validateLinks(staging);
+      for (const models of Object.values(config.pages)) {
+        for (const page of models) page.deployed = page.enabled;
+      }
       try {
-        await replaceWebsite(path.join(workspace, "deploy", "MusePages"), staging);
+        await replaceWebsite(path.join(workspace, "deploy", "MusePages"), staging, () => writeConfig(workspace, config));
       } catch (error) {
         if (error instanceof AggregateError) keepRecovery = true;
         throw error;

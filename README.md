@@ -134,7 +134,7 @@ deploy 工作流以 `deploy\config.json` 中的发布选择为输入，由 `src\
 
 执行前逐项读取模型的 `metadata.json`，核对生成、静态验证和发布状态，并检查实际静态产物及目标页面，按以下规则处理：
 
-1. **已完成发布**：当前版本的静态首页及资源有效，目标页面完整且版本一致时，跳过重复部署；元数据状态未同步的，仅核验后补写状态，不能只凭 `deployed: true` 判断完成。
+1. **已完成发布**：当前版本的静态首页及资源有效，目标页面完整且版本一致时，跳过重复部署；发布配置状态未同步的，仅核验后补写状态，不能只凭 `deploy\config.json` 中的 `deployed: true` 判断当前源码版本已发布。
 2. **待部署**：静态产物有效，但目标页面缺失、不完整或版本过旧时，纠正过时的发布标记，将该结果列入本次待部署清单，不重新生成或构建源码。
 3. **异常**：必需元数据缺失、模型归属或路径冲突、静态产物缺失或验证失败时，记录对应 prompt、模型及原因，中止本次发布并保留旧站，不静默跳过选中项或标记成功。
 
@@ -148,7 +148,7 @@ deploy 工作流以 `deploy\config.json` 中的发布选择为输入，由 `src\
 
 生成覆盖情况与模型归属统一以 `out\pages\<prompt>\<ai model>\metadata.json` 为唯一状态来源，字段含义见[元数据与状态](#元数据与状态)。目录存在、发布选项、执行日志或 Agent 返回成功都不能代替元数据记录。
 
-覆盖检查按原始 prompt 与目标模型清单逐项读取元数据：`generated: true` 表示该组合已完成生成，`generated: false` 表示尚未完成；记录缺失、无法解析或必需字段不完整时，列为缺失或异常，不推断为成功，也不直接覆盖已有代码。`preview`、`validated`、`deployed` 分别描述后续预览、验证和发布情况，缺少预览、未验证或未发布不等于需要重新生成。
+覆盖检查按原始 prompt 与目标模型清单逐项读取元数据：`generated: true` 表示该组合已完成生成，`generated: false` 表示尚未完成；记录缺失、无法解析或必需字段不完整时，列为缺失或异常，不推断为成功，也不直接覆盖已有代码。元数据中的 `preview`、`validated` 分别描述预览和验证情况，发布状态 `deployed` 则保存在 `deploy\config.json` 的对应模型选项中；缺少预览、未验证或未发布不等于需要重新生成。
 
 模型匹配以 `modelId` 与目标真实模型 ID 或明确配置的别名为准，不能用目录名、CLI 名称或服务地址代替。模型标识缺失或不匹配时报告异常，不擅自改名、补写身份或将结果归入其他模型。
 
@@ -268,7 +268,7 @@ node --test src\workflows\render-prompt-pages.test.mjs src\workflows\deploy-site
 
 ### 项目状态元数据
 
-项目按 prompt 与模型两级维护 `metadata.json`，供生成、覆盖检查与发布流程共同使用。模型级元数据是对应 prompt／模型组合的唯一状态来源；`deploy\config.json` 只决定哪些结果公开，不记录或代替执行状态。
+项目按 prompt 与模型两级维护 `metadata.json`，供生成、覆盖检查与发布流程共同使用。模型级元数据记录生成、预览、验证和登记状态；发布选择与发布状态由 `deploy\config.json` 的对应模型选项单独记录。
 
 #### prompt 共享信息
 
@@ -293,8 +293,7 @@ node --test src\workflows\render-prompt-pages.test.mjs src\workflows\deploy-site
   "generated": false,
   "preview": false,
   "config_added": false,
-  "validated": false,
-  "deployed": false
+  "validated": false
 }
 ```
 
@@ -310,11 +309,11 @@ node --test src\workflows\render-prompt-pages.test.mjs src\workflows\deploy-site
 | `preview` | 对应模型静态首页的预览截图已生成并核验；新结果或未验证的历史结果为 `false` |
 | `config_added` | 配置保存成功，且对应 prompt／模型项已核验存在，与发布开关无关 |
 | `validated` | 当前版本静态首页及资源已通过实际验证 |
-| `deployed` | 当前版本已成功纳入本地目标网站并核验，不代表已上传 Cloudflare |
+| `deployed`（发布配置） | 对应模型已纳入最近一次成功组装的本地目标网站；不代表最新源码已同步，也不代表已上传 Cloudflare |
 
 所有模型级记录均使用布尔字段 `preview`，prompt 级共享元数据不加该字段。旧模型记录仅缺少 `preview` 时按 `false` 兼容，非检查运行在核验后保存该字段，`--check` 不迁移文件；字符串、数字或 `null` 等非布尔值会被拒绝。
 
-各流程只在核验实际结果后更新自身负责的状态。管理员切换发布开关不直接修改执行状态；重新生成后重置预览、验证与发布状态，配置项移除后不能保留过时的登记成功标记。
+模型元数据不再保存 `deployed`；生成流程兼容旧记录中的该字段，但在后续非检查写入时移除，`--check` 不改写文件。各流程只在核验实际结果后更新自身负责的状态。管理员切换发布开关不直接修改发布状态；重新生成后重置预览与验证状态，但不改变仍在本地网站中的旧版本发布记录，配置项移除后不能保留过时的登记成功标记。
 
 记录缺失、损坏或与实际结果不一致时报告异常，由对应流程核验并纠正，不影响其他模型的记录，不擅自补写成功或引入不兼容字段。元数据不得包含凭据；集合可使用其中可公开的展示信息，但不将元数据文件作为网站资源发布。
 
@@ -343,9 +342,9 @@ node --test src\workflows\render-prompt-pages.test.mjs src\workflows\deploy-site
 
 当前只支持 Responses 接口，并要求同一 API 根路径下的 `GET /models` 返回 `data[].id`，且包含精确匹配的 `modelId`。仅在需要调用模型时连接服务并读取认证环境；覆盖检查和已有结果的补登记不需要在线服务或 Codex。配置不兼容、连接失败或模型未被列出时明确失败，不切换服务或模型。该检查证明服务声明提供该 ID，不独立证明服务内部使用的模型权重；Codex 事件若报告不同模型 ID，会拒绝结果。实际调用还需安装兼容的 Codex CLI；隔离测试不能代替真实服务联调。
 
-生成脚本与发布器使用 **version 2** 发布配置。`pages` 是以原始 prompt Markdown 文件名（不含 `.md`，保留内部编号）为 key 的对象，每个值为该 prompt 的模型选项数组；模型选项不再重复保存 `prompt` 字段。新选项保持 `enabled: false`，已有选项的开关、组内模型顺序及用户展示信息不覆盖；已有 slug 或导出路径与元数据冲突时报告登记失败。
+生成脚本与发布器使用 **version 2** 发布配置。`pages` 是以原始 prompt Markdown 文件名（不含 `.md`，保留内部编号）为 key 的对象，每个值为该 prompt 的模型选项数组；模型选项不再重复保存 `prompt` 字段。新选项保持 `enabled: false`、`deployed: false`，已有选项的开关、发布状态、组内模型顺序及用户展示信息不覆盖；已有 slug 或导出路径与元数据冲突时报告登记失败。
 
-以下是可直接使用的 `deploy\config.json` 示例。它保存发布选择及发布器所需的展示、导出设置，不代替 out 元数据中的执行状态：
+以下是可直接使用的 `deploy\config.json` 示例。它保存发布选择、发布状态及发布器所需的展示、导出设置，不代替 out 元数据中的生成与验证状态：
 
 ```json
 {
@@ -355,6 +354,7 @@ node --test src\workflows\render-prompt-pages.test.mjs src\workflows\deploy-site
       {
         "model": "model-a",
         "enabled": true,
+        "deployed": false,
         "slug": "travel-agency-homepage",
         "title": "旅行社首页",
         "tags": ["Travel"],
@@ -363,6 +363,7 @@ node --test src\workflows\render-prompt-pages.test.mjs src\workflows\deploy-site
       {
         "model": "model-b",
         "enabled": false,
+        "deployed": false,
         "slug": "travel-agency-homepage",
         "title": "旅行社首页",
         "tags": [],
@@ -374,6 +375,8 @@ node --test src\workflows\render-prompt-pages.test.mjs src\workflows\deploy-site
 ```
 
 每个 prompt 对应一个 key，不能用公开 slug 或需求父目录名代替文件名。组内 `model` 对应实际模型目录，同一 prompt 下不能重复（忽略大小写）；prompt key 也不能仅大小写不同。对象中 prompt 的顺序及组内数组顺序决定集合卡片排列；当前仍为每个已选模型独立显示卡片，并未实现轮播。新选项默认关闭，同步保留已有开关和顺序，不因重新生成而重复登记，也不因源码临时缺失而删除旧配置。`slug` 不含编号，`staticDir` 相对于模型源码目录，必须指向实际静态产物。
+
+`deployed` 是布尔字段，旧配置缺少时补为 `false`，非布尔值会被拒绝。`deploy:sync`、`deploy:watch` 和生成登记不会将其标记成功，也不会覆盖已有状态。`npm run deploy` 完成静态校验并成功替换本地网站后，将本次已纳入集合的模型选项设为 `deployed: true`，未选中并已从集合移除的项设为 `false`，再原子保存配置。发布失败保留旧状态；配置保存失败时尝试回滚网站，回滚失败则报告恢复路径。修改源码或开关不会自动改变该记录，仍须实际发布并核验版本。
 
 `npm run deploy:sync`、生成结果登记和 `npm run deploy` 均兼容原 version 1 的 `pages` 数组，读取后按 prompt 首次出现顺序分组，并在成功同步或登记时原子写回 version 2；保留每个组合的开关、组内顺序、`slug`、`title`、`tags`、`staticDir` 及其他已有字段，不修改模型元数据或实际产物。原数组中交错排列的不同 prompt 会归并到各自分组。旧文档中以数组表示的 version 2 草案并非受支持格式，遇到它或其他无效配置时明确报错，不覆盖原文件。仅同步或登记配置不会发布网站；实际组装本地集合仍须运行 `npm run deploy`。
 

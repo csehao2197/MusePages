@@ -99,6 +99,99 @@ test("legacy arrays migrate once by first prompt appearance, preserving model or
   await assert.rejects(lstat(path.join(workspace, "deploy", "MusePages")), { code: "ENOENT" });
 });
 
+test("legacy deployment options default missing deployed flags to false without publishing", async (t) => {
+  const workspace = await fixture(t);
+  await result(workspace, "001-travel", "model-a");
+  await result(workspace, "001-travel", "model-b");
+  const base = await syncDeployConfig(workspace);
+  const [first, second] = base.pages["001-travel"];
+  first.enabled = true;
+  delete first.deployed;
+  second.deployed = true;
+  for (const version of [1, 2]) {
+    await saveConfig(workspace, version === 1
+      ? { version, pages: [first, second].map((page) => ({ prompt: "001-travel", ...page })) }
+      : { version, pages: { "001-travel": [first, second] } });
+    const config = await syncDeployConfig(workspace);
+    assert.deepEqual(config.pages["001-travel"].map((p) => [p.enabled, p.deployed]), [[true, false], [false, true]]);
+    assert.deepEqual(await configFile(workspace), config);
+    await assert.rejects(lstat(path.join(workspace, "deploy", "MusePages")), { code: "ENOENT" });
+  }
+});
+
+test("deployed flags follow successful publication, not switches, sync, registration or failed publication", async (t) => {
+  const workspace = await fixture(t);
+  await result(workspace, "001-travel", "model-a");
+  const { exported } = await result(workspace, "001-travel", "model-b");
+  let config = await syncDeployConfig(workspace);
+  assert.deepEqual(options(config).map((p) => p.deployed), [false, false]);
+  config.pages["001-travel"][0].enabled = true;
+  await saveConfig(workspace, config);
+  await publishSite(workspace);
+  config = await syncDeployConfig(workspace);
+  assert.deepEqual(options(config).map((p) => p.deployed), [true, false]);
+  await registerGeneratedPage(workspace, { prompt: "001-travel", ...config.pages["001-travel"][0], deployed: false });
+  assert.equal((await configFile(workspace)).pages["001-travel"][0].deployed, true);
+  config.pages["001-travel"][0].enabled = false;
+  config.pages["001-travel"][1].enabled = true;
+  await saveConfig(workspace, config);
+  const html = await readFile(path.join(exported, "index.html"), "utf8");
+  await writeFile(path.join(exported, "index.html"), html + '<img src="missing.png">');
+  await assert.rejects(publishSite(workspace), /Missing static link/);
+  assert.deepEqual(await configFile(workspace), config);
+  const target = path.join(workspace, "deploy", "MusePages", "pages", "travel");
+  assert.deepEqual(await readdir(target), ["model-a"]);
+  await writeFile(path.join(exported, "index.html"), html);
+  await publishSite(workspace);
+  config = await configFile(workspace);
+  assert.deepEqual(options(config).map((p) => p.deployed), [false, true]);
+  config.pages["001-travel"][1].enabled = false;
+  await saveConfig(workspace, config);
+  await publishSite(workspace);
+  assert.deepEqual(options(await configFile(workspace)).map((p) => p.deployed), [false, false]);
+});
+
+test("failure to save deployed flags rolls back the website and preserves the previous config", async (t) => {
+  const workspace = await fixture(t);
+  const { exported } = await result(workspace, "001-travel", "model-a");
+  await result(workspace, "001-travel", "model-b");
+  let config = await syncDeployConfig(workspace);
+  config.pages["001-travel"][0].enabled = true;
+  await saveConfig(workspace, config);
+  await publishSite(workspace);
+  config = await configFile(workspace);
+  config.pages["001-travel"][1].enabled = true;
+  await saveConfig(workspace, config);
+  await syncDeployConfig(workspace);
+  const configPath = path.join(workspace, "deploy", "config.json");
+  const before = await readFile(configPath, "utf8");
+  const target = path.join(workspace, "deploy", "MusePages", "pages", "travel");
+  const oldPage = await readFile(path.join(target, "model-a", "index.html"), "utf8");
+  await writeFile(path.join(exported, "index.html"), "<h1>Updated page</h1>");
+  const execution = spawnSync(process.execPath, ["--input-type=module", "--eval", `
+    import assert from "node:assert/strict";
+    import fs from "node:fs/promises";
+    import path from "node:path";
+    import { syncBuiltinESMExports } from "node:module";
+    const configPath = path.join(process.argv[1], "deploy", "config.json");
+    const rename = fs.rename;
+    fs.rename = async (source, destination) => {
+      if (destination === configPath) throw Error("Simulated deployed-state write failure");
+      return rename(source, destination);
+    };
+    syncBuiltinESMExports();
+    const { publishSite } = await import(process.argv[2]);
+    await assert.rejects(publishSite(process.argv[1]), /Simulated deployed-state write failure/);
+  `, workspace, new URL("./deploy-site.mjs", import.meta.url).href], {
+    encoding: "utf8", timeout: 15000,
+  });
+  assert.equal(execution.status, 0, execution.stderr);
+  assert.equal(await readFile(configPath, "utf8"), before);
+  assert.deepEqual(await readdir(target), ["model-a"]);
+  assert.equal(await readFile(path.join(target, "model-a", "index.html"), "utf8"), oldPage);
+  assert.deepEqual((await readdir(path.join(workspace, "deploy"))).sort(), ["MusePages", "config.json"]);
+});
+
 test("group keys use the prompt filename rather than its parent directory or public slug", async (t) => {
   const workspace = await fixture(t);
   await result(workspace, "001-travel", "model-a");
@@ -329,7 +422,7 @@ test("malformed config, traversal paths, duplicates and public path collisions f
   await result(workspace, "001-travel", "model-a");
   await result(workspace, "002-travel", "model-a");
   const base = await syncDeployConfig(workspace);
-  for (const [field, value] of [["prompt", "../escape"], ["model", ".."], ["slug", "001-numbered"], ["staticDir", "../outside"], ["enabled", "true"]]) {
+  for (const [field, value] of [["prompt", "../escape"], ["model", ".."], ["slug", "001-numbered"], ["staticDir", "../outside"], ["enabled", "true"], ["deployed", "true"], ["deployed", null]]) {
     const config = structuredClone(base);
     config.pages["001-travel"][0][field] = value;
     await saveConfig(workspace, config);

@@ -108,7 +108,7 @@ async function readJson(file) {
 }
 
 function metadata(changes = {}) {
-  return { modelId, tags: [], staticDir: "out", generated: true, preview: false, config_added: false, validated: false, deployed: false, ...changes };
+  return { modelId, tags: [], staticDir: "out", generated: true, preview: false, config_added: false, validated: false, ...changes };
 }
 
 async function snapshot(folder) {
@@ -137,7 +137,7 @@ test("generates through a child process with stdin, real model selection, static
   const config = await readJson(path.join(f.workspace, "deploy", "config.json"));
   assert.equal(config.version, 2);
   assert.deepEqual(config.pages, { [prompt]: [{
-    model: "model-a", enabled: false, slug: "travel", title: "travel", tags: [], staticDir: "out",
+    model: "model-a", enabled: false, deployed: false, slug: "travel", title: "travel", tags: [], staticDir: "out",
   }] });
   const invocation = await readJson(path.join(f.output, ".invocation.json"));
   assert.equal(invocation.cwd, f.output);
@@ -175,7 +175,7 @@ test("completed results repair registration without a model call and preserve ex
   assert.equal((await readJson(path.join(f.output, "metadata.json"))).config_added, false);
   const previewFile = path.join(f.output, "out", "preview.png");
   await rm(previewFile);
-  const first = { prompt: "002-food", model: "model-b", enabled: true, slug: "food", title: "Food", tags: ["Keep"], staticDir: "." };
+  const first = { prompt: "002-food", model: "model-b", enabled: true, deployed: false, slug: "food", title: "Food", tags: ["Keep"], staticDir: "." };
   await save(path.join(f.workspace, "deploy", "config.json"), { version: 1, pages: [first] });
   const noModel = { ...f.options(), command: { executable: "must-not-run", args: [] } };
   const repaired = await renderPromptPages(f.workspace, ["local"], noModel);
@@ -186,6 +186,7 @@ test("completed results repair registration without a model call and preserve ex
   const file = path.join(f.workspace, "deploy", "config.json");
   const config = await readJson(file);
   config.pages[prompt][0].enabled = true;
+  config.pages[prompt][0].deployed = true;
   config.pages[prompt][0].title = "Keep my title";
   await save(file, config);
   const skipped = await renderPromptPages(f.workspace, ["local"], noModel);
@@ -242,7 +243,7 @@ test("changed exports and corrupt previews refresh screenshots without regenerat
   assert.equal(await readFile(path.join(f.output, ".attempt-count"), "utf8"), "1");
 });
 
-test("false and legacy preview flags require capture while read-only checks never migrate metadata", async (t) => {
+test("legacy metadata migrates preview and removes deployed only during non-check writes", async (t) => {
   const f = await fixture(t);
   const requests = await service(t, f.workspace);
   assert.equal((await renderPromptPages(f.workspace, ["local"], f.options())).summary.generated, 1);
@@ -250,6 +251,7 @@ test("false and legacy preview flags require capture while read-only checks neve
   const noModel = { ...f.options(), command: { executable: "must-not-run", args: [] } };
   for (const legacy of [false, true]) {
     const state = await readJson(file);
+    state.deployed = legacy;
     state.preview = false;
     if (legacy) delete state.preview;
     await save(file, state);
@@ -260,6 +262,7 @@ test("false and legacy preview flags require capture while read-only checks neve
     const resumed = await renderPromptPages(f.workspace, ["local"], noModel);
     assert.equal(resumed.items[0].preview, "generated", JSON.stringify(resumed));
     assert.equal((await readJson(file)).preview, true);
+    assert.equal(Object.hasOwn(await readJson(file), "deployed"), false);
   }
   assert.equal(requests(), 1);
   assert.equal(await readFile(path.join(f.output, ".attempt-count"), "utf8"), "1");

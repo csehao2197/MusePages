@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
 import { registerGeneratedPage } from "./deploy-site.mjs";
 
 const root = fileURLToPath(new URL("../../", import.meta.url));
-const states = ["generated", "preview", "config_added", "validated", "deployed"];
+const states = ["generated", "preview", "config_added", "validated"];
 const assets = new Set([
   ".html", ".css", ".js", ".mjs", ".json", ".png", ".jpg", ".jpeg", ".gif",
   ".svg", ".webp", ".avif", ".ico", ".woff", ".woff2", ".ttf", ".otf",
@@ -154,6 +154,7 @@ function validateMetadata(metadata, model) {
     || metadata.staticDir.split("/").some((part) => !part || part === "..")) {
     throw Error("Incomplete or unsafe model metadata");
   }
+  delete metadata.deployed;
 }
 
 async function inspect(workspace, prompt, model) {
@@ -527,7 +528,7 @@ async function processItem(workspace, prompt, model, shared, options, getCommand
       if (!await info(sharedFile)) await saveJson(sharedFile, shared);
       metadata = {
         modelId: model.modelId, tags: [], staticDir: "out",
-        generated: false, preview: false, config_added: metadata?.config_added ?? false, validated: false, deployed: false,
+        generated: false, preview: false, config_added: metadata?.config_added ?? false, validated: false,
       };
       await saveJson(current.file, metadata);
       for (let attempt = 1; attempt <= options.retries + 1; attempt++) {

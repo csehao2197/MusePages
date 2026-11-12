@@ -29,7 +29,7 @@ test("captures rendered modules and public-subpath assets as a 1200x900 first vi
     </head><body><h1>Loading</h1><img src="picture.svg" width="40" height="40">
     <script type="module" src="client.mjs"></script></body></html>`);
   await writeFile(path.join(f.model, "..", "metadata.json"), JSON.stringify({ slug: "custom-travel", title: "Travel" }));
-  await writeFile(path.join(f.model, "metadata.json"), '{"generated":true,"deployed":false}');
+  await writeFile(path.join(f.model, "metadata.json"), '{"generated":true,"preview":false}');
   await writeFile(path.join(f.directory, "style.css"), "body{margin:0;min-height:1800px;background:rgb(17,34,51);color:white}");
   await writeFile(path.join(f.directory, "client.mjs"), 'import {title} from "./title.mjs";document.querySelector("h1").textContent=title;location.hash="home";');
   await writeFile(path.join(f.directory, "title.mjs"), 'export const title="Travel";');
@@ -62,7 +62,7 @@ test("captures rendered modules and public-subpath assets as a 1200x900 first vi
     await browser.close();
   }
   assert.equal(await readFile(path.join(f.directory, "index.html"), "utf8"), original);
-  assert.equal(await readFile(path.join(f.model, "metadata.json"), "utf8"), '{"generated":true,"deployed":false}');
+  assert.equal(await readFile(path.join(f.model, "metadata.json"), "utf8"), '{"generated":true,"preview":false}');
   await assertClean(f.directory);
 });
 

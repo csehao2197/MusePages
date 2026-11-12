@@ -81,12 +81,13 @@ prompt 级 `out\pages\<prompt_name>\metadata.json` 只保存公开标题与 slug
   "generated": false,
   "preview": false,
   "config_added": false,
-  "validated": false,
-  "deployed": false
+  "validated": false
 }
 ```
 
 各状态独立判断，不能相互代替；`preview: true` 不代表源码、静态交互或发布阶段均已完成。完整含义见 [README 的元数据与状态](../../README.md#元数据与状态)。
+
+`deployed` 不属于模型元数据，而是 `deploy\config.json` 中对应模型选项的布尔字段。旧模型记录中的该字段在非检查写入时移除；本生成流程不将发布配置中的 `deployed` 标记成功。
 
 生成前读取模型元数据，核对模型身份，再按[生成覆盖检查与模型匹配](../../README.md#生成覆盖检查与模型匹配)分别判断源码与预览是否需要处理：
 
@@ -108,7 +109,7 @@ prompt 级 `out\pages\<prompt_name>\metadata.json` 只保存公开标题与 slug
 
 静态检查及预览准备通过后，使用现有登记函数写入 `deploy\config.json`。该文件采用 version 2 格式：`pages` 以 `<prompt_name>` 为 key，`pages[<prompt_name>]` 为模型选项数组；选项中的 `model` 对应模型目录，不重复保存 `prompt`。
 
-兼容迁移旧版数组配置时保留已有选择及组内顺序；新增模型默认 `enabled: false`，仅登记不发布。登记失败保留已有代码和截图，修复后只补登记，不重复生成源码。
+兼容迁移旧版数组配置时保留已有选择、发布状态及组内顺序；新增模型默认 `enabled: false`、`deployed: false`，仅登记不发布。旧发布选项缺少 `deployed` 时补为 `false`；只有实际发布成功才将已纳入集合的项设为 `true`。登记失败保留已有代码和截图，修复后只补登记，不重复生成源码。
 
 ### 执行日志
 
@@ -117,6 +118,6 @@ prompt 级 `out\pages\<prompt_name>\metadata.json` 只保存公开标题与 slug
 每个 prompt 处理结束后（包括跳过、失败或阻塞），追加一条汇总记录，仅包含以下内容：
 
 - **时间与关联信息**：使用带时区的 ISO 8601 时间，记录本轮执行标识；涉及具体结果时，记录原始 prompt 名称、真实 `modelId` 与输出路径。模型身份尚未确认时明确标注，不用目录名代替。
-- **处理结果汇总**：记录本项实际执行的操作、生成或跳过的结果，以及 `metadata.json` 中的 `generated`、`preview`、`validated`、`config_added`、`deployed` 状态；元数据缺失或不可读时明确说明，不推断状态。简述实际验证方式与结论，未执行的检查标注“未执行”；如有失败、阻塞或未完成事项，说明原因、保留的产物及下一步，不将已生成或已登记等同于已验证或已部署。
+- **处理结果汇总**：记录本项实际执行的操作、生成或跳过的结果，以及 `metadata.json` 中的 `generated`、`preview`、`validated`、`config_added` 状态；需要报告发布状态时读取 `deploy\config.json` 对应模型选项中的 `deployed`。记录缺失或不可读时明确说明，不推断状态。简述实际验证方式与结论，未执行的检查标注“未执行”；如有失败、阻塞或未完成事项，说明原因、保留的产物及下一步，不将已生成或已登记等同于已验证或已部署。
 
 汇总不包含密钥、令牌或其他敏感信息，不替代 `metadata.json` 与实际产物核验；中断后缺少汇总记录不能作为成功依据。
