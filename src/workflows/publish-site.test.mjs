@@ -46,16 +46,37 @@ test("publishing clears and copies only MusePages, preserving source and sibling
   await writeFile(path.join(deploy, "site", "OtherSite", "index.html"), "keep sibling");
   await writeFile(path.join(deploy, "config.json"), "keep config");
   const before = await tree(source);
+  const gitMetadata = { config: Buffer.from("old metadata") };
 
   assert.equal(await publishToSite(workspace), destination);
-  assert.deepEqual(await tree(destination), before);
+  assert.deepEqual(await tree(destination), { ...before, ".git": gitMetadata });
   assert.deepEqual(await tree(source), before);
   assert.equal(await readFile(path.join(deploy, "site", "OtherSite", "index.html"), "utf8"), "keep sibling");
   assert.equal(await readFile(path.join(deploy, "config.json"), "utf8"), "keep config");
   await rm(path.join(source, "pages"), { recursive: true });
   await writeFile(path.join(source, "index.html"), "updated index");
   await publishToSite(workspace);
-  assert.deepEqual(await tree(destination), await tree(source));
+  assert.deepEqual(await tree(destination), { ...await tree(source), ".git": gitMetadata });
+});
+
+test("publishing preserves root Google verification files while removing unrelated stale HTML", async (t) => {
+  const workspace = await fixture(t);
+  const source = path.join(workspace, "deploy", "dist", "MusePages");
+  const destination = path.join(workspace, "deploy", "site", "MusePages");
+  const verification = "google-site-verification: google1234abcd.html\n";
+  await mkdir(destination, { recursive: true });
+  await writeFile(path.join(destination, "google1234abcd.html"), verification);
+  await writeFile(path.join(destination, "obsolete.html"), "stale page");
+  await writeFile(path.join(source, "index.html"), "new index");
+  await writeFile(path.join(source, "google5678abcd.html"), "source verification");
+  for (let attempt = 0; attempt < 2; attempt++) {
+    await publishToSite(workspace);
+    assert.deepEqual(await tree(destination), {
+      "google1234abcd.html": Buffer.from(verification),
+      "google5678abcd.html": Buffer.from("source verification"),
+      "index.html": Buffer.from("new index"),
+    });
+  }
 });
 
 test("publishing preserves destination .ssh and excludes source .ssh even on repeated copies", async (t) => {
