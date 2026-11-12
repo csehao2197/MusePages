@@ -279,6 +279,36 @@ test("broken subpath exports fail before replacing the old website", async (t) =
   assert.equal(await readFile(path.join(target, "index.html"), "utf8"), "keep the old website");
 });
 
+test("link validation ignores inline code and text but still validates actual image and script attributes", async (t) => {
+  const workspace = await fixture(t);
+  const { exported } = await result(workspace, "001-travel", "model-a", true);
+  await writeFile(path.join(exported, "app.js"), "console.log('static script');");
+  const html = `<link rel="stylesheet" href="style.css">
+    <script src="app.js">
+      img.src = 'assets/' + filename;
+      const template = '<img src="template-only.png">';
+    </script>
+    <SCRIPT>const href = "not-a-link";</SCRIPT>
+    <style>/* src="not-a-style-link" */</style>
+    <textarea><img src="example-only.png"></textarea>
+    <!-- <img src="comment-only.png"> -->
+    <p data-src="not-an-image.png">src="plain-text.png"</p>
+    <a title="Example href='not-an-attribute'" href="#local">Local</a>
+    <h1 id="local">Static page</h1>`;
+  await writeFile(path.join(exported, "index.html"), html);
+  const config = await syncDeployConfig(workspace);
+  config.pages["001-travel"][0].enabled = true;
+  await saveConfig(workspace, config);
+  assert.deepEqual(await publishSite(workspace), { pages: 1, prompts: 1 });
+  const target = path.join(workspace, "deploy", "MusePages", "pages", "travel", "model-a", "index.html");
+  assert.equal(await readFile(target, "utf8"), html);
+  for (const invalid of ['<img src="missing.png">', '<script src="missing.js"></script>', '<img src=missing.png>']) {
+    await writeFile(path.join(exported, "index.html"), html + invalid);
+    await assert.rejects(publishSite(workspace), /Missing static link/);
+    assert.equal(await readFile(target, "utf8"), html);
+  }
+});
+
 test("gallery keeps literal replacement characters and escapes user-edited titles and tags", async (t) => {
   const workspace = await fixture(t);
   await result(workspace, "001-travel", "model-a");

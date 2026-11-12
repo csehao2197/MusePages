@@ -318,23 +318,30 @@ async function validateLinks(staging, folder = staging) {
       const html = await readFile(file, "utf8");
       if (!html.trim()) throw Error(`Static page is empty: ${file}`);
       const base = new URL(path.relative(staging, file).split(path.sep).map(encodeURIComponent).join("/"), "https://musepages.invalid/");
-      for (const match of html.matchAll(/\b(?:src|href)\s*=\s*(["'])(.*?)\1/gi)) {
-        const reference = match[2].replaceAll("&amp;", "&");
-        if (!reference || reference.startsWith("#")) continue;
-        const url = new URL(reference, base);
-        if (url.origin !== base.origin) continue;
-        const target = path.resolve(staging, decodeURIComponent(url.pathname).replace(/^\/+/, ""));
-        const relative = path.relative(staging, target);
-        if (relative.startsWith("..") || path.isAbsolute(relative)) throw Error(`Static link escapes the website: ${reference}`);
-        const candidates = [target, `${target}.html`, path.join(target, "index.html")];
-        let found = false;
-        for (const candidate of candidates) {
-          if (await exists(candidate) && (await lstat(candidate)).isFile()) {
-            found = true;
-            break;
+      // Raw-text bodies can contain assignments and HTML templates, not document links.
+      const markup = html.replace(/<!--[\s\S]*?-->|(<(script|style|textarea|title)\b(?:[^"'<>]|"[^"]*"|'[^']*')*>)[\s\S]*?(?:<\/\2\s*>|$)/gi,
+        (_match, opening) => opening ?? "");
+      const tags = markup.matchAll(/<[a-z][a-z0-9:-]*\b(?:[^"'<>]|"[^"]*"|'[^']*')*>/gi);
+      for (const tag of tags) {
+        for (const match of tag[0].matchAll(/\s([^\s"'<>/=]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/g)) {
+          if (!/^(src|href)$/i.test(match[1])) continue;
+          const reference = (match[2] ?? match[3] ?? match[4] ?? "").replaceAll("&amp;", "&");
+          if (!reference || reference.startsWith("#")) continue;
+          const url = new URL(reference, base);
+          if (url.origin !== base.origin) continue;
+          const target = path.resolve(staging, decodeURIComponent(url.pathname).replace(/^\/+/, ""));
+          const relative = path.relative(staging, target);
+          if (relative.startsWith("..") || path.isAbsolute(relative)) throw Error(`Static link escapes the website: ${reference}`);
+          const candidates = [target, `${target}.html`, path.join(target, "index.html")];
+          let found = false;
+          for (const candidate of candidates) {
+            if (await exists(candidate) && (await lstat(candidate)).isFile()) {
+              found = true;
+              break;
+            }
           }
+          if (!found) throw Error(`Missing static link in ${path.relative(staging, file)}: ${reference}. Check export base paths and copied assets.`);
         }
-        if (!found) throw Error(`Missing static link in ${path.relative(staging, file)}: ${reference}. Check export base paths and copied assets.`);
       }
     }
   }
