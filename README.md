@@ -151,7 +151,7 @@ deploy 工作流以 `deploy\config.json` 中的发布选择为输入，由 `src\
 
 ### publish工作流
 
-`npm run publish` 执行 `src\workflows\publish-site.mjs`，将 `deploy\dist\` 严格同步到 `deploy\site\`：确认源目录有效后清空目标目录内容（含隐藏项及 `.git`），复制包括 `MusePages\` 在内的完整目录树。目标目录缺失时自动创建；逐项路径、目录类型与文件 SHA-256 完全一致才报告成功。命令仅处理本地文件，源目录保持不变。
+`npm run publish` 执行 `src\workflows\publish-site.mjs`：清空 `deploy\site\MusePages\` 的内容（含隐藏项及 `.git`），再复制 `deploy\dist\MusePages\` 的全部内容。目标目录缺失时自动创建；直接删除、复制，其他站点和源目录保持不变。
 
 ### 生成覆盖检查与模型匹配
 
@@ -210,7 +210,7 @@ deploy\
   dist\                             # 静态集合输出根目录
     MusePages\                      # npm run deploy 生成的网站
   site\
-    MusePages\                      # npm run publish 严格镜像 dist
+    MusePages\                      # npm run publish 清空后复制
 task\
   TASK.md                           # 用户维护的本轮目标
   progress.log                      # 已忽略的执行与恢复记录

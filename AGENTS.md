@@ -20,7 +20,7 @@ MusePages 的目标是生成一个可静态部署的网站，收集由 prompts �
 - 原始输入固定为 `data/prompts/` 中的需求 Markdown；不得覆盖、改写或移动原始需求，不得将已有示例实现当作新结果覆盖。
 - 生成前必须读取 `DESIGN.md`；缺失时明确报告，不得假装已读取或编造其内容。
 - 新生成代码只写入 `out/pages/<prompt_file_name>/<ai_model_name>/`，按 prompt 和模型隔离，不得写入原始需求或最终发布目录。
-- 静态集合生成到 `deploy/dist/MusePages/`，`npm run publish` 将 `deploy/dist/` 严格同步到 `deploy/site/`；Next.js 项目必须先取得静态导出，禁止将项目源码、`.next`、配置、脚本、密钥或 Git 元数据作为网站资源发布。
+- 静态集合生成到 `deploy/dist/MusePages/`，`npm run publish` 清空 `deploy/site/MusePages/` 的内容后复制该集合；Next.js 项目必须先取得静态导出，禁止将项目源码、`.next`、配置、脚本、密钥或 Git 元数据作为网站资源发布。
 - 辅助工具、记录和文档放在 `src/`；发布使用 `src/workflows/deploy-site.mjs` 和目录外的 `deploy/config.json`，不要重建旧 SSH 部署流程，也不得擅自读取或删除本地密钥。
 
 ### 本轮任务与进度记录

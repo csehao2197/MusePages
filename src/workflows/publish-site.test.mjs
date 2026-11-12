@@ -1,10 +1,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { copyFile, lstat, mkdir, mkdtemp, readFile, readdir, rm, symlink, writeFile } from "node:fs/promises";
+import { copyFile, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import os from "node:os";
 import { spawnSync } from "node:child_process";
-import { publishToSite, verifySite } from "./publish-site.mjs";
+import { publishToSite } from "./publish-site.mjs";
 
 async function fixture(t) {
   const workspace = await mkdtemp(path.join(os.tmpdir(), "musepages-copy-site-"));
@@ -22,39 +22,38 @@ async function tree(folder) {
   return files;
 }
 
-test("publishing strictly mirrors dist to site, removing stale root and nested entries", async (t) => {
+test("publishing clears and copies only MusePages, preserving source and sibling sites", async (t) => {
   const workspace = await fixture(t);
   const deploy = path.join(workspace, "deploy");
-  const source = path.join(deploy, "dist");
-  const destination = path.join(deploy, "site");
-  const sourceSite = path.join(source, "MusePages");
-  const targetSite = path.join(destination, "MusePages");
-  await mkdir(path.join(sourceSite, "pages", "example"), { recursive: true });
-  await mkdir(path.join(sourceSite, ".well-known"));
-  await writeFile(path.join(sourceSite, "index.html"), "<h1>Gallery</h1>");
-  await writeFile(path.join(sourceSite, "pages", "example", "index.html"), "<h1>Example</h1>");
-  await writeFile(path.join(sourceSite, ".well-known", "asset"), Buffer.from([0, 255, 1, 128]));
-  await writeFile(path.join(source, "robots.txt"), "User-agent: *");
-  await mkdir(path.join(targetSite, ".git"), { recursive: true });
+  const source = path.join(deploy, "dist", "MusePages");
+  const destination = path.join(deploy, "site", "MusePages");
+  await mkdir(path.join(source, "pages", "example"), { recursive: true });
+  await mkdir(path.join(source, ".well-known"));
+  await writeFile(path.join(source, "index.html"), "<h1>Gallery</h1>");
+  await writeFile(path.join(source, "pages", "example", "index.html"), "<h1>Example</h1>");
+  await writeFile(path.join(source, ".well-known", "asset"), Buffer.from([0, 255, 1, 128]));
+  await writeFile(path.join(deploy, "dist", "robots.txt"), "outside MusePages");
+  await mkdir(path.join(destination, ".git"), { recursive: true });
   await mkdir(path.join(destination, "obsolete"));
-  await mkdir(path.join(targetSite, "pages", "example", "stale-empty"), { recursive: true });
-  await writeFile(path.join(targetSite, ".git", "config"), "old metadata");
+  await mkdir(path.join(destination, "pages", "example", "stale-empty"), { recursive: true });
+  await writeFile(path.join(destination, ".git", "config"), "old metadata");
   await writeFile(path.join(destination, "obsolete", "old.html"), "obsolete");
-  await writeFile(path.join(targetSite, "pages", "example", "removed.html"), "stale nested file");
-  await writeFile(path.join(targetSite, ".well-known"), "replaced by a directory");
-  await mkdir(path.join(targetSite, "index.html"));
-  await writeFile(path.join(targetSite, "index.html", "old.txt"), "replaced by a file");
-  await writeFile(path.join(deploy, "sibling.txt"), "keep sibling");
+  await writeFile(path.join(destination, "pages", "example", "removed.html"), "stale nested file");
+  await writeFile(path.join(destination, ".well-known"), "replaced by a directory");
+  await mkdir(path.join(destination, "index.html"));
+  await writeFile(path.join(destination, "index.html", "old.txt"), "replaced by a file");
+  await mkdir(path.join(deploy, "site", "OtherSite"));
+  await writeFile(path.join(deploy, "site", "OtherSite", "index.html"), "keep sibling");
   await writeFile(path.join(deploy, "config.json"), "keep config");
   const before = await tree(source);
 
   assert.equal(await publishToSite(workspace), destination);
   assert.deepEqual(await tree(destination), before);
   assert.deepEqual(await tree(source), before);
-  assert.equal(await readFile(path.join(deploy, "sibling.txt"), "utf8"), "keep sibling");
+  assert.equal(await readFile(path.join(deploy, "site", "OtherSite", "index.html"), "utf8"), "keep sibling");
   assert.equal(await readFile(path.join(deploy, "config.json"), "utf8"), "keep config");
-  await rm(path.join(sourceSite, "pages"), { recursive: true });
-  await writeFile(path.join(sourceSite, "index.html"), "updated index");
+  await rm(path.join(source, "pages"), { recursive: true });
+  await writeFile(path.join(source, "index.html"), "updated index");
   await publishToSite(workspace);
   assert.deepEqual(await tree(destination), await tree(source));
 });
@@ -70,85 +69,9 @@ test("npm run publish creates a missing destination and copies contents without 
   const args = process.platform === "win32" ? ["/d", "/s", "/c", "npm run publish"] : ["run", "publish"];
   const result = spawnSync(command, args, { cwd: workspace, encoding: "utf8", timeout: 30000 });
   assert.equal(result.status, 0, `${result.error ?? ""}\n${result.stdout}\n${result.stderr}`);
-  assert.match(result.stdout, /Strictly synced/);
-  assert.match(result.stdout, /Exact paths and file contents verified/);
+  assert.match(result.stdout, /Copied deploy\\dist\\MusePages contents/);
   assert.match(result.stdout, /Local files only/);
   assert.deepEqual(await tree(path.join(workspace, "deploy", "site")), {
     MusePages: { "index.html": Buffer.from("new index") },
   });
-});
-
-test("strict verification rejects extra paths, missing files, changed bytes and type mismatches", async (t) => {
-  for (const mismatch of ["extra-file", "extra-directory", "missing-file", "changed-bytes", "file-to-directory"]) {
-    await t.test(mismatch, async (t) => {
-      const workspace = await fixture(t);
-      const source = path.join(workspace, "deploy", "dist", "MusePages");
-      const destination = path.join(workspace, "deploy", "site", "MusePages");
-      await mkdir(path.join(source, "pages", "example"), { recursive: true });
-      await writeFile(path.join(source, "pages", "example", "index.html"), "original");
-      await publishToSite(workspace);
-      const file = path.join(destination, "pages", "example", "index.html");
-      if (mismatch === "extra-file") await writeFile(path.join(destination, "pages", "example", "stale.html"), "stale");
-      if (mismatch === "extra-directory") await mkdir(path.join(destination, "pages", "example", "empty"));
-      if (mismatch === "missing-file") await rm(file);
-      if (mismatch === "changed-bytes") await writeFile(file, "modified");
-      if (mismatch === "file-to-directory") {
-        await rm(file);
-        await mkdir(file);
-      }
-      await assert.rejects(verifySite(source, destination), /Strict sync verification failed/);
-      await publishToSite(workspace);
-      await verifySite(source, destination);
-      assert.deepEqual(await tree(destination), await tree(source));
-    });
-  }
-});
-
-test("a missing or invalid source leaves the existing destination untouched", async (t) => {
-  for (const invalid of ["missing", "file"]) {
-    await t.test(invalid, async (t) => {
-      const workspace = await fixture(t);
-      const source = path.join(workspace, "deploy", "dist");
-      const destination = path.join(workspace, "deploy", "site", "MusePages");
-      await mkdir(destination, { recursive: true });
-      await writeFile(path.join(destination, "index.html"), "keep old site");
-      await rm(source, { recursive: true });
-      if (invalid === "file") await writeFile(source, "not a directory");
-      await assert.rejects(publishToSite(workspace));
-      assert.equal(await readFile(path.join(destination, "index.html"), "utf8"), "keep old site");
-    });
-  }
-});
-
-test("symbolic roots are rejected and stale destination links are removed without following them", async (t) => {
-  for (const redirected of ["dist", "source-child", "site", "destination-child"]) {
-    await t.test(redirected, async (t) => {
-      const workspace = await fixture(t);
-      const deploy = path.join(workspace, "deploy");
-      const outside = path.join(workspace, "unrelated");
-      await mkdir(outside);
-      await writeFile(path.join(outside, "keep.txt"), "untouched");
-      let linked;
-      if (redirected === "dist") {
-        linked = path.join(deploy, "dist");
-        await rm(linked, { recursive: true });
-      } else if (redirected === "source-child") {
-        linked = path.join(deploy, "dist", "linked");
-      } else if (redirected === "site") {
-        linked = path.join(deploy, "site");
-      } else {
-        await mkdir(path.join(deploy, "site"));
-        linked = path.join(deploy, "site", "MusePages");
-      }
-      await symlink(outside, linked, process.platform === "win32" ? "junction" : "dir");
-      if (redirected === "destination-child") {
-        await publishToSite(workspace);
-        assert.ok(!(await lstat(linked)).isSymbolicLink());
-      } else {
-        await assert.rejects(publishToSite(workspace));
-        assert.ok((await lstat(linked)).isSymbolicLink());
-      }
-      assert.equal(await readFile(path.join(outside, "keep.txt"), "utf8"), "untouched");
-    });
-  }
 });
