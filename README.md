@@ -422,4 +422,4 @@ node --test src\workflows\render-prompt-pages.test.mjs src\workflows\deploy-site
 原始作者保留相应权利，本集合不授予额外权限。重新分发或商业使用前，须单独核查需求与静态资源的许可条款；所有 Mock、未知模型归属和功能限制必须如实说明。
 
 # Version
-0.0.1
+0.0.2
