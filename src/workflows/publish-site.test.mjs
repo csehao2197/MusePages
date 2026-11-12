@@ -66,6 +66,7 @@ test("publishing preserves root Google verification files while removing unrelat
   const verification = "google-site-verification: google1234abcd.html\n";
   await mkdir(destination, { recursive: true });
   await writeFile(path.join(destination, "google1234abcd.html"), verification);
+  await writeFile(path.join(destination, "google.custom-token.html"), "custom verification");
   await writeFile(path.join(destination, "obsolete.html"), "stale page");
   await writeFile(path.join(source, "index.html"), "new index");
   await writeFile(path.join(source, "google5678abcd.html"), "source verification");
@@ -73,9 +74,33 @@ test("publishing preserves root Google verification files while removing unrelat
     await publishToSite(workspace);
     assert.deepEqual(await tree(destination), {
       "google1234abcd.html": Buffer.from(verification),
+      "google.custom-token.html": Buffer.from("custom verification"),
       "google5678abcd.html": Buffer.from("source verification"),
       "index.html": Buffer.from("new index"),
     });
+  }
+});
+
+test("publishing preserves robots.txt absent from dist and refreshes it when dist provides one", async (t) => {
+  for (const name of ["robots.txt", "ROBOTS.TXT"]) {
+    const workspace = await fixture(t);
+    const source = path.join(workspace, "deploy", "dist", "MusePages");
+    const destination = path.join(workspace, "deploy", "site", "MusePages");
+    const original = "User-agent: *\nDisallow: /private/\n";
+    const updated = "User-agent: *\nAllow: /\nSitemap: https://example.com/sitemap.xml\n";
+    await mkdir(destination, { recursive: true });
+    await writeFile(path.join(destination, name), original);
+    await writeFile(path.join(source, "index.html"), "new index");
+    for (let attempt = 0; attempt < 2; attempt++) {
+      await publishToSite(workspace);
+      assert.equal(await readFile(path.join(destination, name), "utf8"), original);
+    }
+    await writeFile(path.join(source, name), updated);
+    await publishToSite(workspace);
+    assert.equal(await readFile(path.join(destination, name), "utf8"), updated);
+    await rm(path.join(source, name));
+    await publishToSite(workspace);
+    assert.equal(await readFile(path.join(destination, name), "utf8"), updated);
   }
 });
 

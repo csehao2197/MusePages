@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("../../", import.meta.url));
 const protectedNames = new Set([".git", ".ssh"]);
+const preservedFiles = /^(?:google.*\.html|robots\.txt)$/i;
 
 export async function publishToSite(workspace = root) {
   const source = path.join(workspace, "deploy", "dist", "MusePages");
@@ -12,7 +13,7 @@ export async function publishToSite(workspace = root) {
 
   await mkdir(destination, { recursive: true });
   for (const name of await readdir(destination)) {
-    if (protectedNames.has(name.toLowerCase()) || /^google[a-f0-9]+\.html$/i.test(name)) continue;
+    if (protectedNames.has(name.toLowerCase()) || preservedFiles.test(name)) continue;
     await rm(path.join(destination, name), { recursive: true, force: true });
   }
   for (const name of names) {

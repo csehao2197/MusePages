@@ -154,7 +154,7 @@ dist 工作流以 `deploy\config.json` 中的发布选择为输入，由 `node s
 
 ### publish工作流
 
-`npm run publish` 执行 `src\workflows\publish-site.mjs`：保留 `deploy\site\MusePages\` 根目录的 `.git`、`.ssh` 和 Google 验证文件 `google<十六进制标识>.html`，清空其余内容，再复制 `deploy\dist\MusePages\` 中除根目录 `.git`、`.ssh` 外的内容。目标目录缺失时自动创建；其他站点和源目录保持不变。
+`npm run publish` 执行 `src\workflows\publish-site.mjs`：保留 `deploy\site\MusePages\` 根目录的 `.git`、`.ssh`、`google*.html` 和 `robots.txt`，清空其余内容，再复制 `deploy\dist\MusePages\` 中除根目录 `.git`、`.ssh` 外的内容。同名静态文件随源内容更新，源中缺少时保留已有验证文件和 `robots.txt`。目标目录缺失时自动创建；其他站点和源目录保持不变。
 
 ### 生成覆盖检查与模型匹配
 
