@@ -8,7 +8,7 @@
 
 运行与验证：通过本地静态 HTTP 服务访问 `out/`，或复用 `src/workflows/generate-preview.mjs`。`checks.mjs` 已通过 320–1440px 七种视口共 577 项浏览器检查，运行时与资源错误为零；实际截图及结果保存在 `.checks/`。已审查桌面、手机截图与真实 1200×900 集合预览 `out/preview.png`。
 
-公开路径为 `pages/travel-deals-page/GPT-6/`；本次只登记禁用、未部署选项。用户选择启用并另行执行发布后，对应位置为 `deploy/MusePages/pages/travel-deals-page/GPT-6/`。
+公开路径为 `pages/travel-deals-page/GPT-6/`；本次只登记禁用、未部署选项。用户选择启用并另行执行发布后，对应位置为 `deploy/dist/pages/travel-deals-page/GPT-6/`。
 
 所有价格、折扣、库存、评分、评论、销售时间、分类数量和用户规模均为明确标注的演示样本。提醒与订阅不会发送或存储邮箱；预订按钮仅展示演示确认，没有真实订单、付款、供应商条款、客服或价格保证。收藏、历史与活动开始时间保存在当前浏览器；存储被禁用时退回当前标签页内存。推荐为简单本地匹配。照片是示意库存图片，部分并非对应目的地实景。
 

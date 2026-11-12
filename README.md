@@ -55,10 +55,10 @@ MusePages 收集由 AI 根据原始需求生成的网站首页。同一个 promp
 
 - **作品名称**：使用易读的标题，不展示 prompt 的内部编号。
 - **首页预览**：每个新生成的 prompt／模型结果都须提供实际渲染的首页截图，每张 slide 展示对应模型的截图，并标注真实模型名称和风格标签。历史结果缺少截图时明确显示缺少预览，不用截图替代网页，也不使用实时 iframe 作为轮播预览。
-- **轮播控件**：每个参与发布的模型结果对应一个圆点，按发布配置排序；支持圆点选择、前后切换、键盘操作和移动端滑动。切换时，预览、模型信息与访问链接同步更新。
+- **轮播控件**：每个参与发布的模型结果对应一个居中圆点，按发布配置排序；支持圆点选择、键盘操作和移动端滑动。切换时，预览、模型信息与访问链接同步更新。
 - **访问入口**：提供作品详情页、当前模型生成页面及“Read prompt”入口。原始需求在只读文字展示页中呈现，不直接下载 Markdown。
 
-只有一个模型时保留一个圆点，隐藏或禁用前后按钮；没有选中模型时不展示该作品面板、详情页和模型目录。取消某个模型后同步调整 slide、圆点和当前项。默认手动切换，不强制自动播放，当前项须有可访问性标识，并遵守减少动态效果设置。
+只有一个模型时保留一个圆点；没有选中模型时不展示该作品面板、详情页和模型目录。取消某个模型后同步调整 slide、圆点和当前项。默认手动切换，不强制自动播放，当前项须有可访问性标识，并遵守减少动态效果设置。
 
 集合采用暖白背景、深绿文字与操作、衬线标题和响应式卡片；各模型作品保留自身视觉特色。当前首页实现位于 `src\gallery\index.html`，发布器据此生成本地集合；作品详情页仍为目标设计。
 
@@ -67,7 +67,7 @@ MusePages 收集由 AI 根据原始需求生成的网站首页。同一个 promp
 作品详情页同样支持模型轮播，各模型首页保留独立地址：
 
 ```text
-deploy\MusePages\
+deploy\dist\
   index.html
   pages\
     <prompt_slug>\
@@ -101,7 +101,7 @@ node src\workflows\generate-preview.mjs out\pages\006-travel-agency-homepage\mod
 
 核验截图 PNG 格式与尺寸后，先关闭浏览器和临时服务，再原子替换 `preview.png`；失败、超时或 Ctrl+C 取消时保留旧预览，清理本次临时文件与服务，不终止其他已有服务。同一目录通过 `.preview.lock` 避免并发截图，中断后确认没有活动进程再处理遗留锁。
 
-已有发布器会自动识别静态目录中的 `preview.png`，在执行 `npm run deploy` 时复制到 `deploy\MusePages\pages\<prompt_slug>\<ai model>\preview.png` 并显示，无需新增配置字段。`deploy:sync` 和 `deploy:watch` 只同步发布选项，不生成截图或刷新网站。页面生成脚本已在静态检查通过后、发布登记前自动调用此截图入口；只读 `--check` 不截图。发布器仍不强制检查预览是否存在，缺失时显示 `No preview provided`，不能据此认为已满足新页面的预览要求。单独执行截图脚本不修改模型元数据、发布选择或已发布网站。
+已有发布器会自动识别静态目录中的 `preview.png`，在执行 `npm run deploy` 时复制到 `deploy\dist\pages\<prompt_slug>\<ai model>\preview.png` 并显示，无需新增配置字段。`deploy:sync` 和 `deploy:watch` 只同步发布选项，不生成截图或刷新网站。页面生成脚本已在静态检查通过后、发布登记前自动调用此截图入口；只读 `--check` 不截图。发布器仍不强制检查预览是否存在，缺失时显示 `No preview provided`，不能据此认为已满足新页面的预览要求。单独执行截图脚本不修改模型元数据、发布选择或已发布网站。
 
 生成流程在模型源码目录的隐藏文件 `.generation-preview.sha256` 中保存静态产物与截图的 SHA-256 摘要，不增加发布字段，也不将记录纳入静态导出。静态摘要包括公开 slug、模型目录及除根部 `preview.png` 外的所有静态文件。模型元数据 `preview: true`、摘要一致且预览 PNG 格式、尺寸正确时复用；`preview: false`、没有记录、截图缺失、内容不符或静态文件变化时重新截图，核验通过后设置 `preview: true`。静态检查或截图失败时设置 `preview: false`、`validated: false`，保留源码和旧预览并报告待处理，不继续发布登记；修复后重跑只补后续步骤，不重新生成 `generated: true` 的源码。
 
@@ -131,7 +131,7 @@ AI 页面生成工作流以用户指定的 `<ai model>` 为输入，由 AI agent
 
 ### deploy工作流
 
-deploy 工作流以 `deploy\config.json` 中的发布选择为输入，由 `src\workflows\deploy-site.mjs` 组装本地目标网站，输出到 `deploy\MusePages\`，作为 Cloudflare 的静态发布根目录。
+deploy 工作流以 `deploy\config.json` 中的发布选择为输入，由 `src\workflows\deploy-site.mjs` 组装本地目标网站，输出到 `deploy\dist\`，作为 Cloudflare 的静态发布根目录。
 
 当前命令核验候选站点后比较完整文件树与文件内容：一致时保留目标文件并提示 `No changes`，有变化时提示 `Updated local static site`，分别统计新增、更新、移除、未变的模型首页，总数单独显示。两种结果都明确说明仅处理本地站点；变化时仍使用整站安全切换，未变计数表示内容一致，逐作品增量发布仍是下文的目标设计。
 
@@ -202,7 +202,7 @@ out\
         out\                        # 统一的静态首页及资源
 deploy\
   config.json                       # 发布选择，位于网站目录之外
-  MusePages\                        # Cloudflare 静态发布根目录
+  dist\                             # Cloudflare 静态发布根目录
 task\
   TASK.md                           # 用户维护的本轮目标
   progress.log                      # 已忽略的执行与恢复记录

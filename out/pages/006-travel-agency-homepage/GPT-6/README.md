@@ -2,7 +2,7 @@
 
 Original: `data\prompts\006-travel-agency-homepage\006-travel-agency-homepage.md`; combined with root `DESIGN.md`. Authored directly by GPT-6 using actual model **gpt-6.1-sol**. Plain HTML/CSS/JavaScript, not a framework project.
 
-Source: `index.html` plus `assets\`. Delivery: `out\index.html`, `out\assets\`, and the actual rendered `out\preview.png` at 1200 × 900. Preview capture uses the repository's temporary loopback HTTP server; no `npm start`, build, package installation, backend or environment variables. Future publication target: `deploy\MusePages\pages\travel-agency-homepage\GPT-6\`. Registered disabled, not deployed.
+Source: `index.html` plus `assets\`. Delivery: `out\index.html`, `out\assets\`, and the actual rendered `out\preview.png` at 1200 × 900. Preview capture uses the repository's temporary loopback HTTP server; no `npm start`, build, package installation, backend or environment variables. Future publication target: `deploy\dist\pages\travel-agency-homepage\GPT-6\`. Registered disabled, not deployed.
 
 ## Features
 

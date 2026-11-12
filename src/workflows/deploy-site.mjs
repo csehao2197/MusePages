@@ -319,11 +319,9 @@ function gallery(template, pages) {
     return `<article class="card" data-carousel role="region" aria-roledescription="carousel" aria-label="${escapeHtml(models[0].title)} model previews">
       <div class="slides">${slides}</div>
       <div class="carousel-controls">
-        <button type="button" data-step="-1" aria-label="Previous model"${models.length === 1 ? " disabled" : ""}>&larr;</button>
         <div class="dots" role="group" aria-label="Choose model">${dots}</div>
-        <button type="button" data-step="1" aria-label="Next model"${models.length === 1 ? " disabled" : ""}>&rarr;</button>
       </div>
-      <p class="carousel-status" role="status" aria-atomic="true">${escapeHtml(models[0].model)} &middot; 1 of ${models.length}</p>
+      <p class="carousel-status" role="status" aria-atomic="true">${escapeHtml(models[0].model)}</p>
     </article>`;
   }).join("\n");
   for (const marker of ["<!-- RESULT_COUNT -->", "<!-- RESULT_CARDS -->"]) {
@@ -502,7 +500,7 @@ export async function publishSite(workspace = root) {
       for (const models of Object.values(config.pages)) {
         for (const page of models) page.deployed = page.enabled;
       }
-      const target = path.join(workspace, "deploy", "MusePages");
+      const target = path.join(workspace, "deploy", "dist");
       const changed = !await sameWebsite(staging, target);
       const changes = await publicationChanges(staging, target);
       try {
@@ -565,7 +563,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
       console.log(result.changed
         ? `Updated local static site: ${result.changes.added} added, ${result.changes.updated} updated, ${result.changes.removed} removed, ${result.changes.unchanged} unchanged.`
         : `No changes: local static site is up to date (${result.pages} pages from ${result.prompts} prompts).`);
-      if (result.changed) console.log(`Total: ${result.pages} pages from ${result.prompts} prompts in deploy\\MusePages.`);
+      if (result.changed) console.log(`Total: ${result.pages} pages from ${result.prompts} prompts in deploy\\dist.`);
       console.log("No remote deployment was performed.");
     } else {
       throw Error(`Unknown command: ${command}. Use publish, sync, or watch.`);

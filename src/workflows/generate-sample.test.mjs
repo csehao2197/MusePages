@@ -34,7 +34,7 @@ async function selectSample(workspace) {
 
 test("generates a linked gallery, nested sample, and plain-text prompt page", async () => {
   const workspace = await sampleWorkspace();
-  const output = path.join(workspace, "deploy", "MusePages");
+  const output = path.join(workspace, "deploy", "dist");
   try {
     await generateSample(workspace);
     const config = JSON.parse(await readFile(path.join(workspace, "deploy", "config.json"), "utf8"));
@@ -91,7 +91,7 @@ function createStaticServer(output) {
 
 test("page and return links work when the host lists directories instead of serving index.html", async () => {
   const workspace = await sampleWorkspace();
-  const output = path.join(workspace, "deploy", "MusePages");
+  const output = path.join(workspace, "deploy", "dist");
   const server = createStaticServer(output);
   let browser;
   try {
@@ -155,7 +155,7 @@ test("prompt codebox preserves text, escapes markup, and fits desktop and mobile
 
 test("gallery groups models into stable, accessible carousels with synchronized links and touch controls", async () => {
   const workspace = await sampleWorkspace();
-  const output = path.join(workspace, "deploy", "MusePages");
+  const output = path.join(workspace, "deploy", "dist");
   const server = createStaticServer(output);
   let browser;
   try {
@@ -205,7 +205,7 @@ test("gallery groups models into stable, accessible carousels with synchronized 
           `pages/destination-guide/${model}/${link === ".prompt" ? "prompt" : "index"}.html`);
       }
       assert.equal(await card.locator('.dot[aria-current="true"]').getAttribute("data-index"), String(index));
-      assert.equal(await card.getByRole("status").textContent(), `${model} \u00b7 ${index + 1} of 3`);
+      assert.equal(await card.getByRole("status").textContent(), model);
       assert.equal(await card.locator(".slide[hidden]").evaluateAll((slides) =>
         slides.every((slide) => slide.inert && getComputedStyle(slide).visibility === "hidden")), true);
       if (model === "model-a") {
@@ -216,27 +216,45 @@ test("gallery groups models into stable, accessible carousels with synchronized 
         assert.equal(await active.locator("img").evaluate((image) => image.complete && image.naturalWidth > 0), true);
       }
     };
-    for (const width of [1280, 375, 320]) {
+    for (const width of [1280, 800, 375, 320]) {
       await page.setViewportSize({ width, height: 900 });
       await page.goto(`${base}/index.html`);
       assert.equal(await page.locator("[data-carousel]").count(), 2);
+      const panels = await page.locator("[data-carousel]").evaluateAll((cards) => cards.map((card) => {
+        const bounds = card.getBoundingClientRect();
+        return { height: bounds.height, controls: card.querySelector(".carousel-controls").getBoundingClientRect().top - bounds.top };
+      }));
+      assert.ok(panels.every((panel) => Math.abs(panel.height - panels[0].height) < 1),
+        "short and multiline titles keep panels equal in height across rows");
+      assert.ok(panels.every((panel) => Math.abs(panel.controls - panels[0].controls) < 1),
+        "carousel controls align within equally sized panels");
       assert.equal(await card.getByRole("button", { name: /^Show model/ }).count(), 3);
+      const dots = await card.locator(".dot").evaluateAll((buttons) => buttons.map((button) => {
+        const bounds = button.getBoundingClientRect();
+        return { center: bounds.x + bounds.width / 2, width: bounds.width, height: bounds.height };
+      }));
+      assert.ok(dots.every((dot) => dot.width >= 24 && dot.height >= 24), "dots retain usable touch targets");
+      assert.ok(dots.slice(1).every((dot, index) => dot.center - dots[index].center <= 24),
+        "dot centers stay compact on desktop and mobile");
+      const controls = await card.locator(".carousel-controls").boundingBox();
+      assert.ok(Math.abs((dots[0].center + dots.at(-1).center) / 2 - (controls.x + controls.width / 2)) < 1,
+        "dots remain centered without arrow buttons");
+      assert.equal(await page.getByRole("button", { name: /^(Previous|Next) model$/ }).count(), 0);
       assert.equal(await page.locator(".count").textContent(), "2 prompts / 4 pages");
       assert.equal(await page.locator('[aria-label="Show model disabled-model"]').count(), 0);
       const single = page.locator("[data-carousel]").nth(1);
       assert.equal(await single.locator(".dot").count(), 1);
-      assert.equal(await single.getByRole("button", { name: "Previous model" }).isDisabled(), true);
-      assert.equal(await single.getByRole("button", { name: "Next model" }).isDisabled(), true);
+      assert.equal(await single.getByRole("button").count(), 1);
       await check(0);
       const height = (await card.boundingBox()).height;
-      await card.getByRole("button", { name: "Next model" }).click();
+      await card.getByRole("button", { name: "Show model model-a", exact: true }).click();
       await check(1);
       assert.equal((await card.boundingBox()).height, height);
       await card.getByRole("button", { name: "Show model model-b", exact: true }).click();
       await check(2);
-      await card.getByRole("button", { name: "Next model" }).click();
+      await page.keyboard.press("ArrowRight");
       await check(0);
-      await card.getByRole("button", { name: "Previous model" }).click();
+      await page.keyboard.press("ArrowLeft");
       await check(2);
       await page.keyboard.press("Home");
       await check(0);
@@ -288,7 +306,7 @@ test("gallery groups models into stable, accessible carousels with synchronized 
     await page.goto(`${base}/index.html`);
     assert.equal(await card.locator(".dot").count(), 1);
     assert.equal(await active.locator(".model").textContent(), "Model: model-b");
-    assert.equal(await card.getByRole("button", { name: "Next model" }).isDisabled(), true);
+    assert.equal(await card.getByRole("button").count(), 1);
     config.pages[prompt][2].enabled = false;
     await writeFile(configPath, JSON.stringify(config));
     await publishSite(workspace);
@@ -324,7 +342,7 @@ test("four selected prompt pages show original text and return to the collection
   Object.values(config.pages).flat().forEach((entry) => { entry.enabled = true; });
   await writeFile(path.join(workspace, "deploy", "config.json"), JSON.stringify(config));
   await publishSite(workspace);
-  const server = createStaticServer(path.join(workspace, "deploy", "MusePages"));
+  const server = createStaticServer(path.join(workspace, "deploy", "dist"));
   let browser;
   try {
     await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));

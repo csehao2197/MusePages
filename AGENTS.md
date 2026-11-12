@@ -20,7 +20,7 @@ MusePages 的目标是生成一个可静态部署的网站，收集由 prompts �
 - 原始输入固定为 `data/prompts/` 中的需求 Markdown；不得覆盖、改写或移动原始需求，不得将已有示例实现当作新结果覆盖。
 - 生成前必须读取 `DESIGN.md`；缺失时明确报告，不得假装已读取或编造其内容。
 - 新生成代码只写入 `out/pages/<prompt_file_name>/<ai_model_name>/`，按 prompt 和模型隔离，不得写入原始需求或最终发布目录。
-- 最终静态网站只发布到 `deploy/MusePages/`；Next.js 项目必须先取得静态导出，禁止将项目源码、`.next`、配置、脚本、密钥或 Git 元数据作为网站资源发布。
+- 最终静态网站只发布到 `deploy/dist/`；Next.js 项目必须先取得静态导出，禁止将项目源码、`.next`、配置、脚本、密钥或 Git 元数据作为网站资源发布。
 - 辅助工具、记录和文档放在 `src/`；发布使用 `src/workflows/deploy-site.mjs` 和目录外的 `deploy/config.json`，不要重建旧 SSH 部署流程，也不得擅自读取或删除本地密钥。
 
 ### 本轮任务与进度记录
@@ -58,7 +58,7 @@ prompts 子目录及需求文件中的编号必须保留，用于关联输入、
 - 同一 prompt 的不同模型各有独立目录。若多个输入文件同名，应在生成前解决映射冲突，不得静默合并。
 - 每个模型目录保存一个 HTML 静态网站或 Next.js 项目的代码；不能假定其中一定已有可部署的 `index.html`。
 - 目录存在不代表生成成功。每个 prompt／模型组合必须独立记录生成和验证结果，失败项不能用占位页面冒充完成。
-- 发布目录使用 `deploy/MusePages/pages/<prompt_slug>/<ai_model_name>/`，其中 `<prompt_slug>` 去除 prompt 编号；只发布对应的静态首页及必要资源，不得整体复制模型源码目录。
+- 发布目录使用 `deploy/dist/pages/<prompt_slug>/<ai_model_name>/`，其中 `<prompt_slug>` 去除 prompt 编号；只发布对应的静态首页及必要资源，不得整体复制模型源码目录。
 
 ## 4. 执行流程入口
 

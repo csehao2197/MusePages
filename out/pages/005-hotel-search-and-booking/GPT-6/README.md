@@ -2,7 +2,7 @@
 
 Original: `data\prompts\005-hotel-search-and-booking\005-hotel-search-and-booking.md`; combined with root `DESIGN.md`. Directly authored by GPT-6 using actual model **gpt-6.1-sol**. Plain HTML/CSS/JavaScript with no backend, build or runtime dependencies.
 
-Source is `index.html` plus `assets\`. Delivery is `out\index.html`, `out\assets\`, and the actual rendered `out\preview.png` (1200 × 900). The repository preview workflow serves it temporarily over loopback HTTP. Future publication target: `deploy\MusePages\pages\hotel-search-and-booking\GPT-6\`. Registration is disabled; not deployed. No environment variables or installation.
+Source is `index.html` plus `assets\`. Delivery is `out\index.html`, `out\assets\`, and the actual rendered `out\preview.png` (1200 × 900). The repository preview workflow serves it temporarily over loopback HTTP. Future publication target: `deploy\dist\pages\hotel-search-and-booking\GPT-6\`. Registration is disabled; not deployed. No environment variables or installation.
 
 ## Features
 
