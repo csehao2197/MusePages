@@ -364,7 +364,7 @@ node --test src\workflows\render-prompt-pages.test.mjs src\workflows\deploy-site
 
 当前只支持 Responses 接口，并要求同一 API 根路径下的 `GET /models` 返回 `data[].id`，且包含精确匹配的 `modelId`。仅在需要调用模型时连接服务并读取认证环境；覆盖检查和已有结果的补登记不需要在线服务或 Codex。配置不兼容、连接失败或模型未被列出时明确失败，不切换服务或模型。该检查证明服务声明提供该 ID，不独立证明服务内部使用的模型权重；Codex 事件若报告不同模型 ID，会拒绝结果。实际调用还需安装兼容的 Codex CLI；隔离测试不能代替真实服务联调。
 
-生成脚本与发布器使用 **version 2** 发布配置。`pages` 是以原始 prompt Markdown 文件名（不含 `.md`，保留内部编号）为 key 的对象，每个值为该 prompt 的模型选项数组；模型选项不再重复保存 `prompt` 字段。新选项保持 `enabled: false`、`deployed: false`，已有选项的开关、发布状态、组内模型顺序及用户展示信息不覆盖；已有 slug 或导出路径与元数据冲突时报告登记失败。
+生成脚本与发布器使用 **version 2** 发布配置。`pages` 以原始 prompt Markdown 文件名（不含 `.md`，保留内部编号）为 key，每个值为 prompt 对象，其 `pages` 字段保存模型页面数组。新选项保持 `enabled: false`、`deployed: false`，同步保留已有开关、发布状态、模型顺序及用户展示信息；已有 slug 或导出路径与元数据冲突时报告登记失败。
 
 以下是可直接使用的 `deploy\config.json` 示例。它保存发布选择、发布状态及发布器所需的展示、导出设置，不代替 out 元数据中的生成与验证状态：
 
@@ -373,35 +373,37 @@ node --test src\workflows\render-prompt-pages.test.mjs src\workflows\deploy-site
   "version": 2,
   "siteUrl": "https://musepages.pages.dev/",
   "pages": {
-    "006-travel-agency-homepage": [
-      {
-        "model": "model-a",
-        "enabled": true,
-        "deployed": false,
-        "slug": "travel-agency-homepage",
-        "title": "旅行社首页",
-        "tags": ["Travel"],
-        "staticDir": "out"
-      },
-      {
-        "model": "model-b",
-        "enabled": false,
-        "deployed": false,
-        "slug": "travel-agency-homepage",
-        "title": "旅行社首页",
-        "tags": [],
-        "staticDir": "."
-      }
-    ]
+    "006-travel-agency-homepage": {
+      "pages": [
+        {
+          "model": "model-a",
+          "enabled": true,
+          "deployed": false,
+          "slug": "travel-agency-homepage",
+          "title": "旅行社首页",
+          "tags": ["Travel"],
+          "staticDir": "out"
+        },
+        {
+          "model": "model-b",
+          "enabled": false,
+          "deployed": false,
+          "slug": "travel-agency-homepage",
+          "title": "旅行社首页",
+          "tags": [],
+          "staticDir": "."
+        }
+      ]
+    }
   }
 }
 ```
 
-每个 prompt 对应一个 key，不能用公开 slug 或需求父目录名代替文件名。组内 `model` 对应实际模型目录，同一 prompt 下不能重复（忽略大小写）；prompt key 也不能仅大小写不同。对象中 prompt 的顺序决定面板排列，组内数组顺序决定已选模型的轮播顺序。新选项默认关闭，同步保留已有开关和顺序，不因重新生成而重复登记，也不因源码临时缺失而删除旧配置。`slug` 不含编号，`staticDir` 相对于模型源码目录，必须指向实际静态产物。
+每个 prompt 对应一个 key，使用原始文件名。`pages[<prompt>].pages` 中的 `model` 对应实际模型目录，prompt key 及组内模型名忽略大小写后保持唯一。prompt 顺序决定面板排列，页面数组顺序决定已选模型的轮播顺序；prompt 对象可保留其他自定义字段。新选项默认关闭，同步保留已有开关和顺序，重复登记复用原项，源码临时缺失时保留旧配置。`slug` 使用去编号的公开名称，`staticDir` 相对于模型源码目录，指向实际静态产物。
 
 `deployed` 是布尔字段，旧配置缺少时补为 `false`，非布尔值会被拒绝。`deploy:sync`、`deploy:watch` 和生成登记不会将其标记成功，也不会覆盖已有状态。`npm run dist` 完成静态校验并成功替换本地网站后，将本次已纳入集合的模型选项设为 `deployed: true`，未选中并已从集合移除的项设为 `false`，再原子保存配置。发布失败保留旧状态；配置保存失败时尝试回滚网站，回滚失败则报告恢复路径。修改源码或开关不会自动改变该记录，仍须实际发布并核验版本。
 
-`npm run deploy:sync`、生成结果登记和 `npm run dist` 均兼容原 version 1 的 `pages` 数组，读取后按 prompt 首次出现顺序分组，并在成功同步或登记时原子写回 version 2；保留每个组合的开关、组内顺序、`slug`、`title`、`tags`、`staticDir` 及其他已有字段，不修改模型元数据或实际产物。原数组中交错排列的不同 prompt 会归并到各自分组。旧文档中以数组表示的 version 2 草案并非受支持格式，遇到它或其他无效配置时明确报错，不覆盖原文件。仅同步或登记配置不会发布网站；实际组装本地集合仍须运行 `npm run dist`。
+`npm run deploy:sync`、生成登记和 `npm run dist` 兼容 version 1 的顶层页面数组及旧 version 2 的 prompt 数组值，成功写入时统一为上述 prompt 对象结构，保留开关、顺序及已有字段。选择器兼容旧 version 2，实际保存选择时采用新结构。同步或登记仅更新配置；本地集合由 `npm run dist` 组装。
 
 
 ### 静态产物边界

@@ -26,8 +26,8 @@ async function sampleWorkspace() {
 async function selectSample(workspace) {
   const file = path.join(workspace, "deploy", "config.json");
   const config = JSON.parse(await readFile(file, "utf8"));
-  config.pages["001-destination-guide"][0].enabled = true;
-  config.pages["001-destination-guide"][0].title = "Tokyo destination guide";
+  config.pages["001-destination-guide"].pages[0].enabled = true;
+  config.pages["001-destination-guide"].pages[0].title = "Tokyo destination guide";
   await writeFile(file, JSON.stringify(config));
   await publishSite(workspace);
 }
@@ -39,7 +39,7 @@ test("generates a linked gallery, nested sample, and plain-text prompt page", as
     await generateSample(workspace);
     const config = JSON.parse(await readFile(path.join(workspace, "deploy", "config.json"), "utf8"));
     assert.deepEqual(Object.keys(config.pages), ["001-destination-guide"]);
-    assert.equal(config.pages["001-destination-guide"][0].enabled, false);
+    assert.equal(config.pages["001-destination-guide"].pages[0].enabled, false);
     await selectSample(workspace);
     const gallery = await readFile(path.join(output, "index.html"), "utf8");
     const page = path.join(output, "pages", "destination-guide", "unspecified");
@@ -174,8 +174,8 @@ test("gallery groups models into stable, accessible carousels with synchronized 
       }
     }
     const config = await syncDeployConfig(workspace);
-    config.pages[prompt].sort((a, b) => models.indexOf(a.model) - models.indexOf(b.model));
-    for (const option of Object.values(config.pages).flat()) {
+    config.pages[prompt].pages.sort((a, b) => models.indexOf(a.model) - models.indexOf(b.model));
+    for (const option of Object.values(config.pages).flatMap((group) => group.pages)) {
       option.enabled = option.model !== "disabled-model";
       option.title = option.model === "model-a"
         ? 'A much longer title with <literal markup> & "quotes" to test layout stability'
@@ -199,7 +199,7 @@ test("gallery groups models into stable, accessible carousels with synchronized 
       assert.equal(await active.count(), 1);
       assert.equal(await active.locator(".model").textContent(), `Model: ${model}`);
       assert.equal(await active.locator(".tag").first().textContent(), `Style for ${model}`);
-      assert.equal(await active.locator("h3").textContent(), config.pages[prompt][index].title);
+      assert.equal(await active.locator("h3").textContent(), config.pages[prompt].pages[index].title);
       for (const link of [".preview", "h3 a", ".open", ".prompt"]) {
         assert.equal(await active.locator(link).getAttribute("href"),
           `pages/destination-guide/${model}/${link === ".prompt" ? "prompt" : "index"}.html`);
@@ -324,21 +324,21 @@ test("gallery groups models into stable, accessible carousels with synchronized 
     await active.locator(".prompt").click();
     await page.waitForURL(`${base}/pages/destination-guide/model-a/prompt.html`);
     assert.equal(await page.locator("pre code").textContent(), "# Original prompt\n<literal text>");
-    config.pages[prompt][0].enabled = false;
-    config.pages[prompt][1].enabled = false;
+    config.pages[prompt].pages[0].enabled = false;
+    config.pages[prompt].pages[1].enabled = false;
     await writeFile(configPath, JSON.stringify(config));
     await publishSite(workspace);
     await page.goto(`${base}/index.html`);
     assert.equal(await card.locator(".dot").count(), 1);
     assert.equal(await active.locator(".model").textContent(), "Model: model-b");
     assert.equal(await card.getByRole("button").count(), 1);
-    config.pages[prompt][2].enabled = false;
+    config.pages[prompt].pages[2].enabled = false;
     await writeFile(configPath, JSON.stringify(config));
     await publishSite(workspace);
     await page.goto(`${base}/index.html`);
     assert.equal(await page.locator("[data-carousel]").count(), 1);
     assert.equal(await page.locator('a[href*="destination-guide"]').count(), 0);
-    config.pages["002-single"][0].enabled = false;
+    config.pages["002-single"].pages[0].enabled = false;
     await writeFile(configPath, JSON.stringify(config));
     await publishSite(workspace);
     await page.goto(`${base}/index.html`);
@@ -364,7 +364,7 @@ test("four selected prompt pages show original text and return to the collection
     await writeFile(path.join(output, "index.html"), "<h1>Static result</h1>");
   }
   const config = await syncDeployConfig(workspace);
-  Object.values(config.pages).flat().forEach((entry) => { entry.enabled = true; });
+  Object.values(config.pages).flatMap((group) => group.pages).forEach((entry) => { entry.enabled = true; });
   await writeFile(path.join(workspace, "deploy", "config.json"), JSON.stringify(config));
   await publishSite(workspace);
   const server = createStaticServer(path.join(workspace, "deploy", "dist", "MusePages"));
@@ -379,7 +379,7 @@ test("four selected prompt pages show original text and return to the collection
     assert.equal(prompts.length, 4);
     for (const href of prompts) {
       assert.ok(href.endsWith("/prompt.html"));
-      const folder = Object.keys(config.pages).find((key) => config.pages[key].some((entry) => entry.slug === href.split("/")[1]));
+      const folder = Object.keys(config.pages).find((key) => config.pages[key].pages.some((entry) => entry.slug === href.split("/")[1]));
       const prompt = await readFile(new URL(`../../data/prompts/${folder}/${folder}.md`, import.meta.url), "utf8");
       for (const width of [1280, 375]) {
         await page.setViewportSize({ width, height: 800 });

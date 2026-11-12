@@ -112,7 +112,7 @@ prompt 级 `out\pages\<prompt_name>\metadata.json` 只保存公开标题与 slug
 
 ### 发布登记
 
-静态检查及预览准备通过后，使用现有登记函数写入 `deploy\config.json`。该文件采用 version 2 格式：`pages` 以 `<prompt_name>` 为 key，`pages[<prompt_name>]` 为模型选项数组；选项中的 `model` 对应模型目录，不重复保存 `prompt`。
+静态检查及预览准备通过后，使用现有登记函数写入 `deploy\config.json`。该文件采用 version 2 格式：`pages` 以 `<prompt_name>` 为 key，每项为对象，其 `pages` 字段保存模型页面数组；选项中的 `model` 对应模型目录。
 
 兼容迁移旧版数组配置时保留已有选择、发布状态及组内顺序；新增模型默认 `enabled: false`、`deployed: false`，仅登记不发布。旧发布选项缺少 `deployed` 时补为 `false`；只有实际发布成功才将已纳入集合的项设为 `true`。登记失败保留已有代码和截图，修复后只补登记，不重复生成源码。
 

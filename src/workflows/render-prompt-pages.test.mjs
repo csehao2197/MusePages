@@ -136,9 +136,9 @@ test("generates through a child process with stdin, real model selection, static
   assert.deepEqual(state, metadata({ generated: true, preview: true, validated: true, config_added: true }));
   const config = await readJson(path.join(f.workspace, "deploy", "config.json"));
   assert.equal(config.version, 2);
-  assert.deepEqual(config.pages, { [prompt]: [{
+  assert.deepEqual(config.pages, { [prompt]: { pages: [{
     model: "model-a", enabled: false, deployed: false, slug: "travel", title: "travel", tags: [], staticDir: "out",
-  }] });
+  }] } });
   const invocation = await readJson(path.join(f.output, ".invocation.json"));
   assert.equal(invocation.cwd, f.output);
   assert.equal(invocation.args.at(-1), "-");
@@ -185,9 +185,9 @@ test("completed results repair registration without a model call and preserve ex
   const modified = (await stat(previewFile)).mtimeMs;
   const file = path.join(f.workspace, "deploy", "config.json");
   const config = await readJson(file);
-  config.pages[prompt][0].enabled = true;
-  config.pages[prompt][0].deployed = true;
-  config.pages[prompt][0].title = "Keep my title";
+  config.pages[prompt].pages[0].enabled = true;
+  config.pages[prompt].pages[0].deployed = true;
+  config.pages[prompt].pages[0].title = "Keep my title";
   await save(file, config);
   const skipped = await renderPromptPages(f.workspace, ["local"], noModel);
   assert.equal(skipped.summary.skipped, 1);
@@ -197,7 +197,7 @@ test("completed results repair registration without a model call and preserve ex
   assert.equal((await readJson(path.join(f.output, "metadata.json"))).preview, true);
   const { prompt: firstPrompt, ...firstOption } = first;
   assert.deepEqual(Object.keys(config.pages), [firstPrompt, prompt]);
-  assert.deepEqual((await readJson(file)).pages[firstPrompt], [firstOption]);
+  assert.deepEqual((await readJson(file)).pages[firstPrompt], { pages: [firstOption] });
   assert.deepEqual((await readJson(file)).pages[prompt], config.pages[prompt]);
   assert.equal(await readFile(path.join(f.output, ".attempt-count"), "utf8"), "1");
   assert.equal(requests(), 1);
@@ -212,8 +212,8 @@ test("changed exports and corrupt previews refresh screenshots without regenerat
   const source = await readFile(path.join(f.output, "style.css"), "utf8");
   const file = path.join(f.workspace, "deploy", "config.json");
   const config = await readJson(file);
-  config.pages[prompt][0].enabled = true;
-  config.pages[prompt][0].title = "Keep my title";
+  config.pages[prompt].pages[0].enabled = true;
+  config.pages[prompt].pages[0].title = "Keep my title";
   await save(file, config);
   const noModel = { ...f.options(), command: { executable: "must-not-run", args: [] } };
   await save(path.join(f.output, "out", "style.css"), "body{background:rgb(17,34,51);color:white}");

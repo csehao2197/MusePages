@@ -20,16 +20,16 @@ class SelectorTests(unittest.TestCase):
             "version": 2,
             "extra": {"preserved": True},
             "pages": {
-                "001-guide": [
+                "001-guide": {"description": "Preserve prompt metadata", "pages": [
                     {"model": "GPT-6", "title": "Tokyo", "enabled": True,
                      "deployed": True, "tags": ["Travel"], "staticDir": "out", "slug": "guide"},
                     {"model": "other-model", "title": "Another guide", "enabled": False,
                      "deployed": False, "tags": [], "staticDir": ".", "slug": "guide"},
-                ],
-                "002-deals": [
+                ]},
+                "002-deals": {"pages": [
                     {"model": "GPT-6", "title": "旅行优惠", "enabled": False,
                      "deployed": False, "tags": ["Travel"], "staticDir": "out", "slug": "deals"},
-                ],
+                ]},
             },
         }
         self.file.write_bytes((json.dumps(self.config, ensure_ascii=False, indent=2) + "\n").encode())
@@ -78,9 +78,9 @@ class SelectorTests(unittest.TestCase):
         original, config, _ = selector.load_config(self.file)
         changed = selector.save_selection(self.file, original, config, [False, True, True])
         expected = copy.deepcopy(self.config)
-        expected["pages"]["001-guide"][0]["enabled"] = False
-        expected["pages"]["001-guide"][1]["enabled"] = True
-        expected["pages"]["002-deals"][0]["enabled"] = True
+        expected["pages"]["001-guide"]["pages"][0]["enabled"] = False
+        expected["pages"]["001-guide"]["pages"][1]["enabled"] = True
+        expected["pages"]["002-deals"]["pages"][0]["enabled"] = True
         self.assertEqual(changed, 3)
         self.assertEqual(json.loads(self.file.read_bytes()), expected)
         self.assertEqual(config, self.config)
@@ -94,6 +94,23 @@ class SelectorTests(unittest.TestCase):
         self.assertEqual(selector.save_selection(self.file, original, config, [True, False, False]), 0)
         self.assertEqual(self.file.read_bytes(), original)
         self.assertEqual(self.file.stat().st_mtime_ns, timestamp)
+
+    def test_legacy_arrays_load_without_writing_and_save_as_prompt_objects(self):
+        legacy = copy.deepcopy(self.config)
+        legacy["pages"]["001-guide"] = legacy["pages"]["001-guide"]["pages"]
+        self.file.write_text(json.dumps(legacy), encoding="utf-8")
+        original, config, options = selector.load_config(self.file)
+        self.assertEqual(len(options), 3)
+        self.assertEqual(self.file.read_bytes(), original)
+        self.assertEqual(selector.save_selection(self.file, original, config, [True, False, False]), 0)
+        self.assertEqual(self.file.read_bytes(), original)
+        self.assertEqual(selector.save_selection(self.file, original, config, [False, True, True]), 3)
+        saved = json.loads(self.file.read_bytes())
+        self.assertEqual(saved["pages"]["001-guide"], {"pages": [
+            {**legacy["pages"]["001-guide"][0], "enabled": False},
+            {**legacy["pages"]["001-guide"][1], "enabled": True},
+        ]})
+        self.assertEqual(saved["pages"]["002-deals"]["pages"][0]["enabled"], True)
 
     def test_external_changes_are_not_overwritten(self):
         original, config, _ = selector.load_config(self.file)
@@ -130,12 +147,14 @@ class SelectorTests(unittest.TestCase):
         self.assertIn("旅行优惠", result.decode())
 
     def test_invalid_configs_fail_before_writing(self):
-        cases = [[], {"version": 1, "pages": []}, {"version": 2, "pages": {"p": {}}}]
+        cases = [[], {"version": 1, "pages": []}, {"version": 2, "pages": {"p": {}}},
+                 {"version": 2, "pages": {"p": {"pages": {}}}},
+                 {"version": 2, "pages": {"p": {"pages": [None]}}}]
         invalid = copy.deepcopy(self.config)
-        invalid["pages"]["001-guide"][0]["enabled"] = 1
+        invalid["pages"]["001-guide"]["pages"][0]["enabled"] = 1
         cases.append(invalid)
         duplicate = copy.deepcopy(self.config)
-        duplicate["pages"]["001-guide"][1]["model"] = "gpt-6"
+        duplicate["pages"]["001-guide"]["pages"][1]["model"] = "gpt-6"
         cases.append(duplicate)
         for config in cases:
             with self.subTest(config=config):

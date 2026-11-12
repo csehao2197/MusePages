@@ -26,10 +26,12 @@ def load_config(file):
         raise ValueError("Expected config version 2 with a pages object.")
     options = []
     identities = set()
-    for prompt, models in config["pages"].items():
-        if not prompt.strip() or not isinstance(models, list):
-            raise ValueError("Each prompt must have a model options array.")
-        for model in models:
+    for prompt, group in config["pages"].items():
+        if isinstance(group, list):
+            group = config["pages"][prompt] = {"pages": group}
+        if not prompt.strip() or not isinstance(group, dict) or not isinstance(group.get("pages"), list):
+            raise ValueError("Each prompt must be an object with a pages array.")
+        for model in group["pages"]:
             if (not isinstance(model, dict)
                     or not isinstance(model.get("model"), str) or not model["model"].strip()
                     or not isinstance(model.get("title"), str) or not model["title"].strip()
@@ -60,7 +62,7 @@ def deployment_lock(file):
 
 def save_selection(file, original, config, selected):
     updated = copy.deepcopy(config)
-    options = [model for models in updated["pages"].values() for model in models]
+    options = [model for group in updated["pages"].values() for model in group["pages"]]
     if len(options) != len(selected) or any(type(value) is not bool for value in selected):
         raise ValueError("Selection does not match the model options.")
     changed = sum(model["enabled"] != enabled for model, enabled in zip(options, selected))

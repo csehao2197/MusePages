@@ -68,8 +68,8 @@ async function inputPrompts(workspace) {
 }
 
 function pageOptions(config) {
-  return Object.entries(config.pages).flatMap(([prompt, models]) =>
-    models.map((page) => ({ ...page, prompt })));
+  return Object.entries(config.pages).flatMap(([prompt, group]) =>
+    group.pages.map((page) => ({ ...page, prompt })));
 }
 
 function siteBaseUrl(value) {
@@ -93,12 +93,14 @@ function validateConfig(config) {
   }
   if (Object.hasOwn(config, "siteUrl")) siteBaseUrl(config.siteUrl);
   const prompts = new Set();
-  for (const [prompt, models] of Object.entries(config.pages)) {
+  for (const [prompt, group] of Object.entries(config.pages)) {
     checkName(prompt, "prompt filename");
     if (prompts.has(prompt.toLowerCase())) throw Error(`Duplicate prompt key: ${prompt}`);
     prompts.add(prompt.toLowerCase());
-    if (!Array.isArray(models)) throw Error(`Expected a model options array for ${prompt}`);
-    for (const page of models) {
+    if (!group || typeof group !== "object" || Array.isArray(group) || !Array.isArray(group.pages)) {
+      throw Error(`Expected a prompt object with a pages array for ${prompt}`);
+    }
+    for (const page of group.pages) {
       if (!page || typeof page !== "object" || Array.isArray(page) || Object.hasOwn(page, "prompt")) {
         throw Error(`Invalid model option for ${prompt}; prompt belongs in the pages key`);
       }
@@ -139,9 +141,14 @@ async function readConfig(file) {
     config.version = 2;
     config.pages = Object.fromEntries(pages);
   }
+  if (config?.version === 2 && config.pages && typeof config.pages === "object" && !Array.isArray(config.pages)) {
+    for (const [prompt, group] of Object.entries(config.pages)) {
+      if (Array.isArray(group)) config.pages[prompt] = { pages: group };
+    }
+  }
   validateConfig(config);
-  for (const models of Object.values(config.pages)) {
-    for (const page of models) {
+  for (const group of Object.values(config.pages)) {
+    for (const page of group.pages) {
       if (!Object.hasOwn(page, "deployed")) page.deployed = false;
     }
   }
@@ -189,9 +196,9 @@ async function synchronize(workspace) {
       const slug = prompt.replace(/^\d+-/, "");
       const promptKey = Object.keys(config.pages).find((key) => key.toLowerCase() === prompt.toLowerCase()) ?? prompt;
       if (!Object.hasOwn(config.pages, promptKey)) {
-        Object.defineProperty(config.pages, promptKey, { value: [], enumerable: true, writable: true, configurable: true });
+        Object.defineProperty(config.pages, promptKey, { value: { pages: [] }, enumerable: true, writable: true, configurable: true });
       }
-      config.pages[promptKey].push({
+      config.pages[promptKey].pages.push({
         model, enabled: false, deployed: false, slug, title: slug.replaceAll("-", " "),
         tags: [], staticDir: next ? "out" : ".",
       });
@@ -240,7 +247,7 @@ export async function registerGeneratedPage(workspace, page) {
     }
     const config = await readConfig(file);
     const { prompt, ...option } = { ...page, enabled: false, deployed: false };
-    validateConfig({ version: 2, pages: { [prompt]: [option] } });
+    validateConfig({ version: 2, pages: { [prompt]: { pages: [option] } } });
     const options = pageOptions(config);
     if (options.some((entry) => entry.prompt.toLowerCase() !== page.prompt.toLowerCase()
       && entry.slug.toLowerCase() === page.slug.toLowerCase())) {
@@ -262,9 +269,9 @@ export async function registerGeneratedPage(workspace, page) {
     const promptKey = Object.keys(config.pages).find((key) => key.toLowerCase() === prompt.toLowerCase());
     if (promptKey && promptKey !== prompt) throw Error(`Deployment prompt casing conflicts with metadata: ${prompt}`);
     if (!Object.hasOwn(config.pages, prompt)) {
-      Object.defineProperty(config.pages, prompt, { value: [], enumerable: true, writable: true, configurable: true });
+      Object.defineProperty(config.pages, prompt, { value: { pages: [] }, enumerable: true, writable: true, configurable: true });
     }
-    config.pages[prompt].push(option);
+    config.pages[prompt].pages.push(option);
     validateConfig(config);
     await writeConfig(workspace, config);
     const saved = JSON.parse(await readFile(file, "utf8"));
@@ -523,8 +530,8 @@ export async function publishSite(workspace = root) {
           `User-agent: *\nAllow: /\n\nSitemap: ${new URL("sitemap.xml", base).href}\n`, "utf8");
       }
       await validateLinks(staging);
-      for (const models of Object.values(config.pages)) {
-        for (const page of models) page.deployed = page.enabled;
+      for (const group of Object.values(config.pages)) {
+        for (const page of group.pages) page.deployed = page.enabled;
       }
       const output = path.join(workspace, "deploy", "dist");
       if (!await exists(output)) await mkdir(output);
