@@ -69,8 +69,7 @@ test("npm run publish creates a missing destination and copies contents without 
   const args = process.platform === "win32" ? ["/d", "/s", "/c", "npm run publish"] : ["run", "publish"];
   const result = spawnSync(command, args, { cwd: workspace, encoding: "utf8", timeout: 30000 });
   assert.equal(result.status, 0, `${result.error ?? ""}\n${result.stdout}\n${result.stderr}`);
-  assert.match(result.stdout, /Copied deploy\\dist\\MusePages contents/);
-  assert.match(result.stdout, /Local files only/);
+  assert.match(result.stdout, /Copied deploy\\dist\\MusePages contents to deploy[\\/]site[\\/]MusePages\. Local files only\./);
   assert.deepEqual(await tree(path.join(workspace, "deploy", "site")), {
     MusePages: { "index.html": Buffer.from("new index") },
   });

@@ -20,7 +20,7 @@ export async function publishToSite(workspace = root) {
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   try {
     const destination = await publishToSite();
-    console.log(`Copied deploy\\dist\\MusePages contents to ${destination}. Local files only.`);
+    console.log(`Copied deploy\\dist\\MusePages contents to ${path.relative(root, destination)}. Local files only.`);
   } catch (error) {
     console.error(error.message);
     process.exitCode = 1;
