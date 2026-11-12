@@ -58,6 +58,35 @@ test("publishing clears and copies only MusePages, preserving source and sibling
   assert.deepEqual(await tree(destination), await tree(source));
 });
 
+test("publishing preserves destination .ssh and excludes source .ssh even on repeated copies", async (t) => {
+  for (const protectedName of [".ssh", ".SSH", null]) {
+    const workspace = await fixture(t);
+    const source = path.join(workspace, "deploy", "dist", "MusePages");
+    const destination = path.join(workspace, "deploy", "site", "MusePages");
+    await mkdir(path.join(source, ".SSH"));
+    await writeFile(path.join(source, ".SSH", "marker.txt"), "source test marker");
+    await writeFile(path.join(source, "index.html"), "new index");
+    if (protectedName) {
+      await mkdir(path.join(destination, protectedName, "nested"), { recursive: true });
+      await writeFile(path.join(destination, protectedName, "marker.txt"), "destination test marker");
+      await writeFile(path.join(destination, protectedName, "nested", "keep.txt"), "nested test marker");
+    }
+    for (let attempt = 0; attempt < 2; attempt++) {
+      await publishToSite(workspace);
+      assert.deepEqual(await tree(destination), {
+        ...(protectedName ? {
+          [protectedName]: {
+            "marker.txt": Buffer.from("destination test marker"),
+            nested: { "keep.txt": Buffer.from("nested test marker") },
+          },
+        } : {}),
+        "index.html": Buffer.from("new index"),
+      });
+    }
+    assert.equal(await readFile(path.join(source, ".SSH", "marker.txt"), "utf8"), "source test marker");
+  }
+});
+
 test("npm run publish creates a missing destination and copies contents without an extra dist directory", async (t) => {
   const workspace = await fixture(t);
   await writeFile(path.join(workspace, "deploy", "dist", "MusePages", "index.html"), "new index");

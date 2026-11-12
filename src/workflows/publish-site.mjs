@@ -5,24 +5,27 @@ import { fileURLToPath } from "node:url";
 const root = fileURLToPath(new URL("../../", import.meta.url));
 
 export async function publishToSite(workspace = root) {
-  const deploy = path.join(workspace, "deploy");
-  const source = path.join(deploy, "dist", "MusePages");
-  const destination = path.join(deploy, "site", "MusePages");
+  const source = path.join(workspace, "deploy", "dist", "MusePages");
+  const destination = path.join(workspace, "deploy", "site", "MusePages");
+  const names = await readdir(source);
 
   await mkdir(destination, { recursive: true });
   for (const name of await readdir(destination)) {
+    if (name.toLowerCase() === ".git") continue;
     await rm(path.join(destination, name), { recursive: true, force: true });
   }
-  await cp(source, destination, { recursive: true });
+  for (const name of names) {
+    if (name.toLowerCase() === ".git") continue;
+    await cp(path.join(source, name), path.join(destination, name), { recursive: true });
+  }
   return destination;
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  try {
-    const destination = await publishToSite();
+  publishToSite().then((destination) => {
     console.log(`Copied deploy\\dist\\MusePages contents to ${path.relative(root, destination)}. Local files only.`);
-  } catch (error) {
-    console.error(error.message);
+  }).catch((error) => {
+    console.error(`Publish failed: ${error.message}`);
     process.exitCode = 1;
-  }
+  });
 }

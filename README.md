@@ -152,7 +152,7 @@ dist 工作流以 `deploy\config.json` 中的发布选择为输入，由 `src\wo
 
 ### publish工作流
 
-`npm run publish` 执行 `src\workflows\publish-site.mjs`：清空 `deploy\site\MusePages\` 的内容（含隐藏项及 `.git`），再复制 `deploy\dist\MusePages\` 的全部内容。目标目录缺失时自动创建；直接删除、复制，其他站点和源目录保持不变。
+`npm run publish` 执行 `src\workflows\publish-site.mjs`：保留 `deploy\site\MusePages\` 根目录的 `.ssh`，清空其余内容（含其他隐藏项及 `.git`），再复制 `deploy\dist\MusePages\` 中除根目录 `.ssh` 外的内容。目标目录缺失时自动创建；其他站点和源目录保持不变。
 
 ### 生成覆盖检查与模型匹配
 
