@@ -691,7 +691,7 @@ test("concurrent sync operations preserve one option and leave no lock behind", 
   await assert.rejects(lstat(path.join(workspace, "deploy", ".publish.lock")), { code: "ENOENT" });
 });
 
-test("the JavaScript dist CLI and npm run dist assemble the exact configured website", async (t) => {
+test("the JavaScript dist CLI and npm run dist assemble the exact configured website and refresh its sitemap", async (t) => {
   const workspace = await fixture(t);
   const workflows = path.join(workspace, "src", "workflows");
   await mkdir(workflows);
@@ -719,13 +719,21 @@ test("the JavaScript dist CLI and npm run dist assemble the exact configured web
   assert.match(obsolete.stderr, /Unknown command: publish\. Use dist, sync, or watch\./);
   assert.match(cli("sync"), /options synchronized: 2/);
   const config = await configFile(workspace);
+  config.siteUrl = "https://musepages.pages.dev/";
   config.pages["001-travel"][0].enabled = true;
   await saveConfig(workspace, config);
+  const sitemapFile = path.join(workspace, "deploy", "dist", "MusePages", "sitemap.xml");
+  const sitemapUrls = async () => [...(await readFile(sitemapFile, "utf8")).matchAll(/<loc>(.*?)<\/loc>/g)]
+    .map((match) => match[1]);
   const first = cli("dist");
   assert.match(first, /Updated local static site: 1 added, 0 updated, 0 removed, 0 unchanged/);
   assert.match(first, /Total: 1 pages from 1 prompts/);
   assert.match(first, /in deploy\\dist\\MusePages\./);
   assert.deepEqual(await readdir(path.join(workspace, "deploy", "dist")), ["MusePages"]);
+  const expectedUrls = ["https://musepages.pages.dev/",
+    "https://musepages.pages.dev/pages/travel/model-a/index.html"];
+  assert.deepEqual(await sitemapUrls(), expectedUrls);
+  const originalSitemap = await readFile(sitemapFile, "utf8");
   await assert.rejects(lstat(path.join(workspace, "deploy", "site")), { code: "ENOENT" });
   await assert.rejects(lstat(path.join(workspace, "deploy", "MusePages")), { code: "ENOENT" });
   const unchanged = cli("npm-dist");
@@ -733,6 +741,12 @@ test("the JavaScript dist CLI and npm run dist assemble the exact configured web
   assert.match(unchanged, /No remote deployment was performed/);
   assert.doesNotMatch(unchanged, /Published|Updated local static site/);
   assert.match(cli(), /No changes: local static site is up to date/);
+  for (const stale of ["outdated sitemap", null]) {
+    if (stale === null) await unlink(sitemapFile);
+    else await writeFile(sitemapFile, stale);
+    assert.match(cli("npm-dist"), /Updated local static site: 0 added, 0 updated, 0 removed, 1 unchanged/);
+    assert.equal(await readFile(sitemapFile, "utf8"), originalSitemap);
+  }
   const target = path.join(workspace, "deploy", "dist", "MusePages", "pages", "travel");
   assert.deepEqual(await readdir(target), ["model-a"]);
   config.pages["001-travel"][1].enabled = true;
@@ -740,12 +754,15 @@ test("the JavaScript dist CLI and npm run dist assemble the exact configured web
   const added = cli("npm-dist");
   assert.match(added, /Updated local static site: 1 added, 0 updated, 0 removed, 1 unchanged/);
   assert.match(added, /Total: 2 pages from 1 prompts/);
+  assert.deepEqual(await sitemapUrls(), [...expectedUrls,
+    "https://musepages.pages.dev/pages/travel/model-b/index.html"]);
   config.pages["001-travel"][0].enabled = false;
   config.pages["001-travel"][1].enabled = false;
   await saveConfig(workspace, config);
   const removed = cli("npm-dist");
   assert.match(removed, /Updated local static site: 0 added, 0 updated, 2 removed, 0 unchanged/);
   assert.match(removed, /Total: 0 pages from 0 prompts/);
+  assert.deepEqual(await sitemapUrls(), ["https://musepages.pages.dev/"]);
   await assert.rejects(lstat(target), { code: "ENOENT" });
   assert.equal(options(await configFile(workspace)).length, 2);
 });
