@@ -612,17 +612,22 @@ test("concurrent sync operations preserve one option and leave no lock behind", 
   await assert.rejects(lstat(path.join(workspace, "deploy", ".publish.lock")), { code: "ENOENT" });
 });
 
-test("the JavaScript CLI synchronizes options and rebuilds the exact configured website", async (t) => {
+test("the JavaScript CLI synchronizes options and npm run dist rebuilds the exact configured website", async (t) => {
   const workspace = await fixture(t);
   const workflows = path.join(workspace, "src", "workflows");
   await mkdir(workflows);
   for (const file of ["deploy-site.mjs", "render-prompt-page.mjs"]) {
     await copyFile(new URL(`./${file}`, import.meta.url), path.join(workflows, file));
   }
+  await copyFile(new URL("../../package.json", import.meta.url), path.join(workspace, "package.json"));
   await result(workspace, "001-travel", "model-a");
   await result(workspace, "001-travel", "model-b");
   const cli = (command) => {
-    const execution = spawnSync(process.execPath, [path.join(workflows, "deploy-site.mjs"), command], {
+    const executable = command === "publish" ? (process.platform === "win32" ? process.env.ComSpec : "npm") : process.execPath;
+    const args = command === "publish"
+      ? (process.platform === "win32" ? ["/d", "/s", "/c", "npm run dist"] : ["run", "dist"])
+      : [path.join(workflows, "deploy-site.mjs"), command];
+    const execution = spawnSync(executable, args, {
       cwd: workspace, encoding: "utf8", timeout: 15000,
     });
     assert.equal(execution.status, 0, execution.stderr);
@@ -637,6 +642,7 @@ test("the JavaScript CLI synchronizes options and rebuilds the exact configured 
   assert.match(first, /Total: 1 pages from 1 prompts/);
   assert.match(first, /in deploy\\dist\\MusePages\./);
   assert.deepEqual(await readdir(path.join(workspace, "deploy", "dist")), ["MusePages"]);
+  await assert.rejects(lstat(path.join(workspace, "deploy", "site")), { code: "ENOENT" });
   await assert.rejects(lstat(path.join(workspace, "deploy", "MusePages")), { code: "ENOENT" });
   const unchanged = cli("publish");
   assert.match(unchanged, /No changes: local static site is up to date \(1 pages from 1 prompts\)/);

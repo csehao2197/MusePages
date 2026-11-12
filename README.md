@@ -24,10 +24,10 @@ MusePages 收集由 AI 根据原始需求生成的网站首页。同一个 promp
 | --- | --- |
 | `npm run generate -- <ai model>` | 执行[页面生成工作流](#页面生成工作流) |
 | `npm run ai-generate -- <ai model>` | 执行[AI页面生成工作流](#ai页面生成工作流) |
-| `npm run deploy` | 按发布选择执行[deploy工作流](#deploy工作流) |
-| `npm run distribute` | 将静态集合复制到 `deploy\site\MusePages` |
+| `npm run dist` | 按发布选择执行[dist工作流](#dist工作流)，生成 `deploy\dist\MusePages` |
+| `npm run publish` | 将静态集合复制到 `deploy\site\MusePages` |
 
-`generate` 已实现，配置与限制见[模型与发布配置](#模型与发布配置)。`ai-generate` 仍是待实现接口；现有 `deploy` 使用按 prompt 文件名分组的 version 2 配置执行完整本地发布，兼容迁移旧版数组配置，生成每个 prompt 一个轮播面板，按配置顺序展示选中模型；增量处理和作品详情页尚待实现。
+`generate` 已实现，配置与限制见[模型与发布配置](#模型与发布配置)。`ai-generate` 仍是待实现接口；现有 `dist` 使用按 prompt 文件名分组的 version 2 配置执行完整本地汇集，兼容迁移旧版数组配置，生成每个 prompt 一个轮播面板，按配置顺序展示选中模型；增量处理和作品详情页尚待实现。
 
 生成前，由管理员配置并启动模型服务，提供调用 URI、API 类型、认证方式和真实模型 ID。`<ai model>` 用于选择服务配置，不等于真实模型 ID；凭据仅从本地环境读取。脚本不管理模型服务器，也不能在服务不兼容时自动换模型。
 
@@ -40,7 +40,7 @@ MusePages 收集由 AI 根据原始需求生成的网站首页。同一个 promp
 | `npm run deploy:watch` | 持续监听生成结果并登记选项，按 Ctrl+C 停止 |
 | `python src\tools\select_deploy_pages.py` | Windows 终端交互勾选发布选项，仅保存配置 |
 
-交互选择使用 Python 标准库：↑↓ 移动、空格勾选、Enter 保存、Esc 或 Ctrl+C 取消，Home/End 跳到首尾。保存仅更新 `deploy\config.json` 的 `enabled`，保留 `deployed` 及其他字段；发布仍单独运行 `npm run deploy`。脚本与发布器共享写锁，并在保存时核对配置是否被其他进程修改。
+交互选择使用 Python 标准库：↑↓ 移动、空格勾选、Enter 保存、Esc 或 Ctrl+C 取消，Home/End 跳到首尾。保存仅更新 `deploy\config.json` 的 `enabled`，保留 `deployed` 及其他字段；集合生成与复制分别运行 `npm run dist`、`npm run publish`。脚本与发布器共享写锁，并在保存时核对配置是否被其他进程修改。
 
 固定示例写入 `out\pages\001-destination-guide\unspecified\`；`unspecified` 表示模型未知，不能改名冒充已知模型。同步只登记含 HTML `index.html` 或声明 Next.js 依赖的 `package.json` 的目录，不证明其已完成或可发布。优先复用共享 npm workspace 依赖，缺少依赖时再安装；截图需要 Playwright Chromium。
 
@@ -102,7 +102,7 @@ node src\workflows\generate-preview.mjs out\pages\006-travel-agency-homepage\mod
 
 核验截图 PNG 格式与尺寸后，先关闭浏览器和临时服务，再原子替换 `preview.png`；失败、超时或 Ctrl+C 取消时保留旧预览，清理本次临时文件与服务，不终止其他已有服务。同一目录通过 `.preview.lock` 避免并发截图，中断后确认没有活动进程再处理遗留锁。
 
-已有发布器会自动识别静态目录中的 `preview.png`，在执行 `npm run deploy` 时复制到 `deploy\dist\MusePages\pages\<prompt_slug>\<ai model>\preview.png` 并显示，无需新增配置字段。`deploy:sync` 和 `deploy:watch` 只同步发布选项，不生成截图或刷新网站。页面生成脚本已在静态检查通过后、发布登记前自动调用此截图入口；只读 `--check` 不截图。发布器仍不强制检查预览是否存在，缺失时显示 `No preview provided`，不能据此认为已满足新页面的预览要求。单独执行截图脚本不修改模型元数据、发布选择或已发布网站。
+已有发布器会自动识别静态目录中的 `preview.png`，在执行 `npm run dist` 时复制到 `deploy\dist\MusePages\pages\<prompt_slug>\<ai model>\preview.png` 并显示，无需新增配置字段。`deploy:sync` 和 `deploy:watch` 只同步发布选项，不生成截图或刷新网站。页面生成脚本已在静态检查通过后、发布登记前自动调用此截图入口；只读 `--check` 不截图。发布器仍不强制检查预览是否存在，缺失时显示 `No preview provided`，不能据此认为已满足新页面的预览要求。单独执行截图脚本不修改模型元数据、发布选择或已发布网站。
 
 生成流程在模型源码目录的隐藏文件 `.generation-preview.sha256` 中保存静态产物与截图的 SHA-256 摘要，不增加发布字段，也不将记录纳入静态导出。静态摘要包括公开 slug、模型目录及除根部 `preview.png` 外的所有静态文件。模型元数据 `preview: true`、摘要一致且预览 PNG 格式、尺寸正确时复用；`preview: false`、没有记录、截图缺失、内容不符或静态文件变化时重新截图，核验通过后设置 `preview: true`。静态检查或截图失败时设置 `preview: false`、`validated: false`，保留源码和旧预览并报告待处理，不继续发布登记；修复后重跑只补后续步骤，不重新生成 `generated: true` 的源码。
 
@@ -130,9 +130,9 @@ AI 页面生成工作流以用户指定的 `<ai model>` 为输入，由 AI agent
 
 两种入口遵循相同的目录、模型身份、结果检查和状态规则，不维护两套标准。编排 agent 的模型身份不能代替实际生成页面的模型身份。
 
-### deploy工作流
+### dist工作流
 
-deploy 工作流以 `deploy\config.json` 中的发布选择为输入，由 `src\workflows\deploy-site.mjs` 组装本地目标网站，输出到 `deploy\dist\MusePages\`。`deploy\dist\` 与 `deploy\site\` 使用相同的站点目录结构。
+dist 工作流以 `deploy\config.json` 中的发布选择为输入，由 `src\workflows\deploy-site.mjs` 组装本地目标网站，输出到 `deploy\dist\MusePages\`。`deploy\dist\` 与 `deploy\site\` 使用相同的站点目录结构。
 
 当前命令核验候选站点后比较完整文件树与文件内容：一致时保留目标文件并提示 `No changes`，有变化时提示 `Updated local static site`，分别统计新增、更新、移除、未变的模型首页，总数单独显示。两种结果都明确说明仅处理本地站点；变化时仍使用整站安全切换，未变计数表示内容一致，逐作品增量发布仍是下文的目标设计。
 
@@ -150,9 +150,9 @@ deploy 工作流以 `deploy\config.json` 中的发布选择为输入，由 `src\
 
 该工作流不调用 AI、不构建作品源码，也不直接上传 Cloudflare。结束后报告本次部署、已部署跳过、状态补写及异常清单；本地汇集成功不代表已完成线上部署。
 
-### distribute工作流
+### publish工作流
 
-`npm run distribute` 执行 `src\workflows\publish-site.mjs`：清空 `deploy\site\MusePages\` 的内容（含隐藏项及 `.git`），再复制 `deploy\dist\MusePages\` 的全部内容。目标目录缺失时自动创建；直接删除、复制，其他站点和源目录保持不变。
+`npm run publish` 执行 `src\workflows\publish-site.mjs`：清空 `deploy\site\MusePages\` 的内容（含隐藏项及 `.git`），再复制 `deploy\dist\MusePages\` 的全部内容。目标目录缺失时自动创建；直接删除、复制，其他站点和源目录保持不变。
 
 ### 生成覆盖检查与模型匹配
 
@@ -209,9 +209,9 @@ out\
 deploy\
   config.json                       # 发布选择，位于网站目录之外
   dist\                             # 静态集合输出根目录
-    MusePages\                      # npm run deploy 生成的网站
+    MusePages\                      # npm run dist 生成的网站
   site\
-    MusePages\                      # npm run distribute 清空后复制
+    MusePages\                      # npm run publish 清空后复制
 task\
   TASK.md                           # 用户维护的本轮目标
   progress.log                      # 已忽略的执行与恢复记录
@@ -394,9 +394,9 @@ node --test src\workflows\render-prompt-pages.test.mjs src\workflows\deploy-site
 
 每个 prompt 对应一个 key，不能用公开 slug 或需求父目录名代替文件名。组内 `model` 对应实际模型目录，同一 prompt 下不能重复（忽略大小写）；prompt key 也不能仅大小写不同。对象中 prompt 的顺序决定面板排列，组内数组顺序决定已选模型的轮播顺序。新选项默认关闭，同步保留已有开关和顺序，不因重新生成而重复登记，也不因源码临时缺失而删除旧配置。`slug` 不含编号，`staticDir` 相对于模型源码目录，必须指向实际静态产物。
 
-`deployed` 是布尔字段，旧配置缺少时补为 `false`，非布尔值会被拒绝。`deploy:sync`、`deploy:watch` 和生成登记不会将其标记成功，也不会覆盖已有状态。`npm run deploy` 完成静态校验并成功替换本地网站后，将本次已纳入集合的模型选项设为 `deployed: true`，未选中并已从集合移除的项设为 `false`，再原子保存配置。发布失败保留旧状态；配置保存失败时尝试回滚网站，回滚失败则报告恢复路径。修改源码或开关不会自动改变该记录，仍须实际发布并核验版本。
+`deployed` 是布尔字段，旧配置缺少时补为 `false`，非布尔值会被拒绝。`deploy:sync`、`deploy:watch` 和生成登记不会将其标记成功，也不会覆盖已有状态。`npm run dist` 完成静态校验并成功替换本地网站后，将本次已纳入集合的模型选项设为 `deployed: true`，未选中并已从集合移除的项设为 `false`，再原子保存配置。发布失败保留旧状态；配置保存失败时尝试回滚网站，回滚失败则报告恢复路径。修改源码或开关不会自动改变该记录，仍须实际发布并核验版本。
 
-`npm run deploy:sync`、生成结果登记和 `npm run deploy` 均兼容原 version 1 的 `pages` 数组，读取后按 prompt 首次出现顺序分组，并在成功同步或登记时原子写回 version 2；保留每个组合的开关、组内顺序、`slug`、`title`、`tags`、`staticDir` 及其他已有字段，不修改模型元数据或实际产物。原数组中交错排列的不同 prompt 会归并到各自分组。旧文档中以数组表示的 version 2 草案并非受支持格式，遇到它或其他无效配置时明确报错，不覆盖原文件。仅同步或登记配置不会发布网站；实际组装本地集合仍须运行 `npm run deploy`。
+`npm run deploy:sync`、生成结果登记和 `npm run dist` 均兼容原 version 1 的 `pages` 数组，读取后按 prompt 首次出现顺序分组，并在成功同步或登记时原子写回 version 2；保留每个组合的开关、组内顺序、`slug`、`title`、`tags`、`staticDir` 及其他已有字段，不修改模型元数据或实际产物。原数组中交错排列的不同 prompt 会归并到各自分组。旧文档中以数组表示的 version 2 草案并非受支持格式，遇到它或其他无效配置时明确报错，不覆盖原文件。仅同步或登记配置不会发布网站；实际组装本地集合仍须运行 `npm run dist`。
 
 
 ### 静态产物边界
