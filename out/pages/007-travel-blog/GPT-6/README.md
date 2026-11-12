@@ -1,6 +1,6 @@
 # Wanderlust Chronicles
 
-Input: `data\prompts\007-travel-blog\007-travel-blog.md` with root `DESIGN.md`. Model label: `GPT-6`; actual generating model: `gpt-6.1-sol`, used directly in the current session.
+Input: `data\prompts\007-travel-blog\007-travel-blog.md` with `src\workflows\AI Agent\DESIGN.md`. Model label: `GPT-6`; actual generating model: `gpt-6.1-sol`, used directly in the current session.
 
 Standalone HTML/CSS/JavaScript. Source: `index.html`, `styles.css`, `app.js`, and `assets\`. Independent static export: `out\`; no build, dependencies at runtime, environment variables or backend. Serve the export through any static HTTP server. Intended public path: `pages\travel-blog\GPT-6\index.html`.
 

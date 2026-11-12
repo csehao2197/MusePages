@@ -1,6 +1,6 @@
 # Verdant Journeys
 
-Original input: `data\prompts\002-eco-tourism-landing-page\002-eco-tourism-landing-page.md`, combined with root `DESIGN.md`.
+Original input: `data\prompts\002-eco-tourism-landing-page\002-eco-tourism-landing-page.md`, combined with `src\workflows\AI Agent\DESIGN.md`.
 Authored directly by GPT-6 using actual model **gpt-6.1-sol**. Type: dependency-free HTML/CSS/JavaScript; no build or runtime backend.
 
 ## Files and operation

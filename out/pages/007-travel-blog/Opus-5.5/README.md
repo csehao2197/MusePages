@@ -1,6 +1,6 @@
 # Wanderlust Chronicles travel blog
 
-- **Original prompt**: `data/prompts/007-travel-blog/007-travel-blog.md`, combined with root `DESIGN.md`
+- **Original prompt**: `data/prompts/007-travel-blog/007-travel-blog.md`, combined with `src\workflows\AI Agent\DESIGN.md`
 - **Model**: Claude Opus 5.5 (`claude-opus-5-5`), directory `Opus-5.5`
 - **Type**: Static HTML/CSS/browser JavaScript (no framework, no build)
 - **Source**: `index.html`, `styles.css`, `app.js`, `assets/scenes.js`

@@ -126,7 +126,7 @@ node src\workflows\generate-preview.mjs out\pages\006-travel-agency-homepage\mod
 
 ### AI页面生成工作流
 
-AI 页面生成工作流以用户指定的 `<ai model>` 为输入，由 AI agent 读取 [src\workflows\render-prompt-pages.md](./src/workflows/render-prompt-pages.md)，按照其中的指引组织执行页面生成任务。它与页面生成工作流的目标一致，区别在于由 agent 根据 Markdown 指令安排范围、执行与恢复；具体生成操作可复用现有 `.mjs` 脚本，不重复实现安全与状态规则。
+AI 页面生成工作流以用户指定的 `<ai model>` 为输入，由 AI agent 读取 [src\workflows\AI Agent\render-prompt-pages.md](./src/workflows/AI%20Agent/render-prompt-pages.md)，按照其中的指引组织执行页面生成任务。它与页面生成工作流的目标一致，区别在于由 agent 根据 Markdown 指令安排范围、执行与恢复；具体生成操作可复用现有 `.mjs` 脚本，不重复实现安全与状态规则。
 
 两种入口遵循相同的目录、模型身份、结果检查和状态规则，不维护两套标准。编排 agent 的模型身份不能代替实际生成页面的模型身份。
 
@@ -180,7 +180,6 @@ dist 工作流以 `deploy\config.json` 中的发布选择为输入，由 `src\wo
 
 ```text
 AGENTS.md                           # Agent 执行规则
-DESIGN.md                           # 通用设计指引
 config.json                         # 目标模型服务配置
 package.json                        # 共享依赖和 npm 入口
 data\
@@ -188,8 +187,10 @@ data\
 src\
   gallery\                          # 集合页面模板
   workflows\
+    AI Agent\
+      DESIGN.md                     # 通用设计指引
+      render-prompt-pages.md        # 目标 Agent 编排指引
     render-prompt-pages.mjs          # 目标页面生成脚本
-    render-prompt-pages.md           # 目标 Agent 编排指引
     deploy-site.mjs                 # 本地发布入口
     publish-site.mjs                # 清空并复制静态集合到站点目录
     ...                             # 示例生成与回归测试
@@ -197,6 +198,7 @@ src\
   manifest.json                     # 原始需求来源、路径和 SHA-256
   GENERATION_PROGRESS.json          # 生成与验证进度
   BUILD_REPORT.json                 # 实际验证结果
+logs\
   validation-logs\                  # 验证日志
 out\
   pages\
@@ -217,7 +219,7 @@ task\
   progress.log                      # 已忽略的执行与恢复记录
 ```
 
-根目录保留项目说明、规则、设计及 npm 配置；工具与报告集中于 `src\`。原始需求不可改写，已有参考实现不可覆盖。旧 `prompts\`、`src\prompts\` 和 `out\MusePages\` 不作为新流程的输入或输出。
+根目录保留项目说明、规则及 npm 配置；设计指引、工具与报告集中于 `src\`。原始需求不可改写，已有参考实现不可覆盖。旧 `prompts\`、`src\prompts\` 和 `out\MusePages\` 不作为新流程的输入或输出。
 
 ### 路径与模型身份
 
@@ -232,7 +234,7 @@ task\
 `src\workflows\render-prompt-pages.mjs` 按以下顺序编排：
 
 1. **校验模型配置**：读取指定服务的 URI、接口类型和实际模型 ID，验证连接与身份，不把服务配置名称当作真实模型。
-2. **读取需求与设计指引**：遍历原始需求 Markdown，结合 `DESIGN.md` 准备输入，不把 README、生成记录或已有代码当作原始 prompt，不擅自扩展需求。
+2. **读取需求与设计指引**：遍历原始需求 Markdown，结合 `src\workflows\AI Agent\DESIGN.md` 准备输入，不把 README、生成记录或已有代码当作原始 prompt，不擅自扩展需求。
 3. **判断是否需要生成**：对照元数据、实际代码和当前需求，按[覆盖检查规则](#生成覆盖检查与模型匹配)筛选；有效结果跳过，仅缺静态导出时保留源码，只补后续产物。
 4. **调用 Codex 生成源码**：对获准生成的缺失项，再次检查并加锁，以对应模型目录为子进程工作目录，非交互调用 `codex exec`。`-c` 覆盖服务配置，`--model` 选择实际模型；需求、设计指引和输出要求通过位置参数或标准输入传入，不拼接 shell 命令，Windows 下适配 CLI 包装器。
 5. **准备并检查静态首页**：保留源码，将发布用首页及资源放入其 `out\` 子目录，按[静态产物边界](#静态产物边界)核验，不用 `.next` 或截图代替静态网页。
@@ -269,11 +271,11 @@ node --test src\workflows\render-prompt-pages.test.mjs src\workflows\deploy-site
 
 ### 页面生成 Markdown
 
-`src\workflows\render-prompt-pages.md` 是[AI页面生成工作流](#ai页面生成工作流)的编排指引，由 AI agent 读取并执行。它描述如何完成生成任务，不是网站的原始需求，也不以编写或运行生成脚本本身作为交付结果。
+`src\workflows\AI Agent\render-prompt-pages.md` 是[AI页面生成工作流](#ai页面生成工作流)的编排指引，由 AI agent 读取并执行。它描述如何完成生成任务，不是网站的原始需求，也不以编写或运行生成脚本本身作为交付结果。
 
 文档应明确以下内容：
 
-1. **输入与范围**：接收用户指定的 `<ai model>` 和本轮授权范围，读取根目录 `config.json`、原始 prompt 与 `DESIGN.md`，明确目标模型及允许写入的位置，不修改原始需求。
+1. **输入与范围**：接收用户指定的 `<ai model>` 和本轮授权范围，读取根目录 `config.json`、原始 prompt 与 `src\workflows\AI Agent\DESIGN.md`，明确目标模型及允许写入的位置，不修改原始需求。
 2. **执行依据**：沿用[页面生成脚本](#页面生成脚本)的步骤与[覆盖检查规则](#生成覆盖检查与模型匹配)，不另设判断标准。模型身份无法核实或不匹配时报告阻塞；已有有效结果跳过，需要覆盖或重试时先取得授权。
 3. **输出要求**：源码写入 `out\pages\<prompt>\<ai model>\`，静态首页及资源写入其 `out\` 子目录；每次生成必须为该模型结果生成非空 `tags` 并写入模型元数据，按[项目状态元数据](#项目状态元数据)核验并记录结果，登记默认关闭的发布选项，不把 Agent 返回成功当作生成完成。
 4. **恢复与交付**：约定超时、有限重试和中断恢复方式，保留已有有效产物；结束时汇总生成、跳过、待确认、失败及剩余缺失项，说明原因和后续步骤，不自动部署目标网站。

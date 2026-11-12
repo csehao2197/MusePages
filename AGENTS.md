@@ -6,7 +6,7 @@ MusePages 的目标是生成一个可静态部署的网站，收集由 prompts �
 
 - `data/prompts/` 目录保存原始需求，每个子目录中的需求 Markdown 是对应网站的生成输入。
 - 项目将定期通过脚本或 AI 执行生成任务；AI 可以使用远程服务，也可以在本地运行。
-- 每次生成都应结合原始 prompt 与根目录 `DESIGN.md` 中的通用设计指引。
+- 每次生成都应结合原始 prompt 与 `src\workflows\AI Agent\DESIGN.md` 中的通用设计指引。
 - 从生成的网站中取得可独立静态部署的首页版本，将其及所需资源纳入最终集合，成为一个可访问的作品。
 - 最终交付物是首页集合静态站点，不是仅包含 prompts 的目录，也不要求将每个网站扩展成完整的生产级全栈应用。
 
@@ -18,7 +18,7 @@ MusePages 的目标是生成一个可静态部署的网站，收集由 prompts �
 
 - 先检查已有实现，避免重复生成或覆盖有效结果。
 - 原始输入固定为 `data/prompts/` 中的需求 Markdown；不得覆盖、改写或移动原始需求，不得将已有示例实现当作新结果覆盖。
-- 生成前必须读取 `DESIGN.md`；缺失时明确报告，不得假装已读取或编造其内容。
+- 生成前必须读取 `src\workflows\AI Agent\DESIGN.md`；缺失时明确报告，不得假装已读取或编造其内容。
 - 新生成代码只写入 `out/pages/<prompt_file_name>/<ai_model_name>/`，按 prompt 和模型隔离，不得写入原始需求或最终发布目录。
 - `npm run dist` 将静态集合生成到 `deploy/dist/MusePages/`，`npm run publish` 保留 `deploy/site/MusePages/` 根目录的 `.ssh`，清空其余内容后复制该集合，复制时同样排除源根目录 `.ssh`；Next.js 项目必须先取得静态导出，禁止将项目源码、`.next`、配置、脚本、密钥或 Git 元数据作为网站资源发布。
 - 辅助工具、记录和文档放在 `src/`；发布使用 `src/workflows/deploy-site.mjs` 和目录外的 `deploy/config.json`，不要重建旧 SSH 部署流程，也不得擅自读取或删除本地密钥。
@@ -86,7 +86,7 @@ prompts 子目录及需求文件中的编号必须保留，用于关联输入、
 
 一个作品只有同时满足以下条件，才算完成本项目要求：
 
-1. 已使用对应原始 prompt 和 `DESIGN.md`，实现符合需求的首页。
+1. 已使用对应原始 prompt 和 `src\workflows\AI Agent\DESIGN.md`，实现符合需求的首页。
 2. 已将 HTML 或 Next.js 代码保存到对应的 prompt／模型目录，并取得完整、可静态部署的首页及资源，且不依赖运行时后端。
 3. 面向用户的名称、内容、URL 和资源路径不含 prompt 编号前缀。
 4. 已通过适用检查，并实际验证静态首页、资源、交互及集合入口。

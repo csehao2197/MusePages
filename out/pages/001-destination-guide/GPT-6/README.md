@@ -1,6 +1,6 @@
 # Wanderly Tokyo destination guide
 
-Original input: `data\prompts\001-destination-guide\001-destination-guide.md`, with root `DESIGN.md`.
+Original input: `data\prompts\001-destination-guide\001-destination-guide.md`, with `src\workflows\AI Agent\DESIGN.md`.
 Actual generating model: `gpt-6.1-sol`, directly through the current GPT-6 session (not an external model service). Directory label: `GPT-6`.
 
 Type: standalone HTML, inline CSS and browser JavaScript, local JPEG assets. Source: this directory's `index.html` and `assets\`. No dependencies, environment variables, build or backend required. Typography uses locally available Inter / DM Serif Display with Arial / Georgia fallbacks; webfont files are not bundled.

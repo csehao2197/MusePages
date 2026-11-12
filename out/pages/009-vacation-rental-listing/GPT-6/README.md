@@ -1,6 +1,6 @@
 # StayDirect · Casa Azul
 
-- 输入：`data\prompts\009-vacation-rental-listing\009-vacation-rental-listing.md` 与根目录 `DESIGN.md`。
+- 输入：`data\prompts\009-vacation-rental-listing\009-vacation-rental-listing.md` 与 `src\workflows\AI Agent\DESIGN.md`。
 - 模型目录：`GPT-6`；实际模型：`gpt-6.1-sol`。类型：独立 HTML/CSS/JavaScript。
 - 源码：当前目录；静态首页：`out\index.html`。预期公开位置：`pages/vacation-rental-listing/GPT-6/index.html`，登记后由用户选择发布。
 - 功能：42 张独立本地照片、键盘/触摸图库、28 项设施筛选、日期与人数限制、含税费用估算、三币种、收藏、六条评论检索排序、分享、房源预览与演示表单。

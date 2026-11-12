@@ -1,6 +1,6 @@
 # TrekTribe group travel booking page
 
-- **Original prompt**: `data/prompts/004-group-travel-booking/004-group-travel-booking.md`, combined with root `DESIGN.md`
+- **Original prompt**: `data/prompts/004-group-travel-booking/004-group-travel-booking.md`, combined with `src\workflows\AI Agent\DESIGN.md`
 - **Model**: Claude Opus 5.5 (`claude-opus-5-5`), directory `Opus-5.5`
 - **Type**: Static HTML/CSS/browser JavaScript (no framework, no build)
 - **Source**: `index.html`, `styles.css`, `app.js`, `assets/scenes.js`

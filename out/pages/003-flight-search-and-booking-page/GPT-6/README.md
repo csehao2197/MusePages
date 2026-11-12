@@ -1,6 +1,6 @@
 # FlyFair flight comparison
 
-Original: `data\prompts\003-flight-search-and-booking-page\003-flight-search-and-booking-page.md`, combined with root `DESIGN.md`. Directly authored by GPT-6, actual model **gpt-6.1-sol**. Plain HTML/CSS/JavaScript with no build, dependencies at runtime, external requests or environment variables.
+Original: `data\prompts\003-flight-search-and-booking-page\003-flight-search-and-booking-page.md`, combined with `src\workflows\AI Agent\DESIGN.md`. Directly authored by GPT-6, actual model **gpt-6.1-sol**. Plain HTML/CSS/JavaScript with no build, dependencies at runtime, external requests or environment variables.
 
 Source is `index.html` plus `assets\`. Delivery is `out\index.html`, `out\assets\`, and the actual rendered `out\preview.png` (1200 × 900). The future public destination is `deploy\dist\MusePages\pages\flight-search-and-booking-page\GPT-6\`. It is only registered disabled, not deployed.
 

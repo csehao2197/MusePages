@@ -23,7 +23,7 @@ async function save(file, value) {
 async function fixture(t) {
   const workspace = await mkdtemp(path.join(os.tmpdir(), "musepages generation "));
   t.after(() => rm(workspace, { recursive: true, force: true }));
-  await save(path.join(workspace, "DESIGN.md"), "Use responsive, accessible UI. Preserve source licenses.");
+  await save(path.join(workspace, "src", "workflows", "AI Agent", "DESIGN.md"), "Use responsive, accessible UI. Preserve source licenses.");
   await save(path.join(workspace, "data", "prompts", prompt, `${prompt}.md`), "# Travel\nBuild a travel homepage.\n& echo unsafe; $(not-a-command)\n中文");
   await save(path.join(workspace, "data", "prompts", prompt, "README.md"), "# Not an original prompt");
   await save(path.join(workspace, "config.json"), { version: 1, models: { local: model } });
@@ -441,7 +441,7 @@ test("broken static resources preserve generated code; changed inputs never sile
   assert.equal((await readJson(path.join(f.output, "metadata.json"))).generated, true);
   await save(path.join(f.output, "out", "missing.svg"), '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><rect width="20" height="20" fill="teal"/></svg>');
   assert.equal((await renderPromptPages(f.workspace, ["local"], f.options("fail"))).summary.registered, 1);
-  await save(path.join(f.workspace, "DESIGN.md"), "Changed design");
+  await save(path.join(f.workspace, "src", "workflows", "AI Agent", "DESIGN.md"), "Changed design");
   const changed = await renderPromptPages(f.workspace, ["local"], f.options("success", { retry: true }));
   assert.equal(changed.summary.pending, 1);
   assert.match(changed.items[0].reason, /changed/);

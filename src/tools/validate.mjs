@@ -13,7 +13,7 @@ if (ids && [...ids].some((id) => !Number.isInteger(id) || id < 1 || id > 100)) t
 const reportPath = path.join(source, "BUILD_REPORT.json");
 const prior = fs.existsSync(reportPath) ? JSON.parse(fs.readFileSync(reportPath, "utf8").replace(/^\uFEFF/, "")) : [];
 const results = new Map(prior.map((item) => [item.id, item]));
-const logs = path.join(source, "validation-logs");
+const logs = path.join(root, "logs", "validation-logs");
 fs.mkdirSync(logs, { recursive: true });
 let unsafeShutdown = false;
 const persist = () => {

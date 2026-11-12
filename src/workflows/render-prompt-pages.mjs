@@ -605,7 +605,7 @@ export async function renderPromptPages(workspace = root, selections = [], optio
   const models = await loadModels(workspace, selections);
   const inputs = await prompts(workspace, settings.prompts);
   const shared = settings.check ? null : await sharedMetadata(workspace, inputs);
-  if (!settings.check) settings.design = await text(await inside(workspace, "DESIGN.md"));
+  if (!settings.check) settings.design = await text(await inside(workspace, "src", "workflows", "AI Agent", "DESIGN.md"));
   if (!settings.check && !settings.design.trim()) throw Error("DESIGN.md is empty");
   let command;
   const getCommand = async () => command ??= settings.command ?? await resolveCodex({ env: settings.env });

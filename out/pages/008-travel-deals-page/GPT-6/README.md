@@ -1,6 +1,6 @@
 # FareFinder
 
-原始需求：`data/prompts/008-travel-deals-page/008-travel-deals-page.md`；同时使用根 `DESIGN.md`。标记模型为 **GPT-6**，实际模型为 `gpt-6.1-sol`，由当前会话直接生成。
+原始需求：`data/prompts/008-travel-deals-page/008-travel-deals-page.md`；同时使用 `src\workflows\AI Agent\DESIGN.md`。标记模型为 **GPT-6**，实际模型为 `gpt-6.1-sol`，由当前会话直接生成。
 
 类型：独立 HTML/CSS/JavaScript。源码：`out/pages/008-travel-deals-page/GPT-6/`；可静态部署版本：同目录 `out/`。沿用本地资源，无依赖安装、生产构建、环境变量或运行时后端。
 

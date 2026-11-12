@@ -1,6 +1,6 @@
 # Ember & Bloom
 
-- 输入：`data\prompts\010-artisan-coffee-shop\010-artisan-coffee-shop.md` 与根 `DESIGN.md`。
+- 输入：`data\prompts\010-artisan-coffee-shop\010-artisan-coffee-shop.md` 与 `src\workflows\AI Agent\DESIGN.md`。
 - 模型目录标签：`GPT-6`；实际生成模型：`gpt-6.1-sol`。
 - 类型：独立 HTML/CSS/JavaScript；源码为本目录 `index.html`、`styles.css`、`script.js` 与 `assets\`。
 - 功能：响应式导航、饮品滑动与键盘切换、完整菜单 PDF、门店路线、购物车增减与本地保存、取餐预览、订阅及积分演示。
