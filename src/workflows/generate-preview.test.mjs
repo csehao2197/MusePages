@@ -71,6 +71,7 @@ test("the server serves only the chosen static directory and closes its loopback
   await writeFile(path.join(f.directory, "metadata.json"), '{"private":"state"}');
   await writeFile(path.join(f.directory, "package.json"), '{"private":true}');
   await writeFile(path.join(f.directory, ".env"), "not public");
+  await writeFile(path.join(f.directory, "menu.pdf"), "%PDF-1.4\npublic menu");
   const outside = path.join(f.workspace, "outside");
   await mkdir(outside);
   await writeFile(path.join(outside, "private.txt"), "not public");
@@ -83,6 +84,10 @@ test("the server serves only the chosen static directory and closes its loopback
     assert.match(response.headers.get("content-type"), /text\/html/);
     assert.equal(await response.text(), "<h1>Legacy HTML</h1>");
     assert.equal((await fetch(service.url, { method: "HEAD" })).headers.get("content-length"), "20");
+    const menu = await fetch(new URL("menu.pdf", service.url));
+    assert.equal(menu.status, 200);
+    assert.equal(menu.headers.get("content-type"), "application/pdf");
+    assert.equal(await menu.text(), "%PDF-1.4\npublic menu");
     for (const relative of ["metadata.json", "package.json", ".env", "linked/private.txt", "%2e%2e%5cprivate.txt"]) {
       assert.equal((await fetch(new URL(relative, service.url))).status, 404, relative);
     }

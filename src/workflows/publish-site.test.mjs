@@ -58,7 +58,7 @@ test("publishing clears and copies only MusePages, preserving source and sibling
   assert.deepEqual(await tree(destination), await tree(source));
 });
 
-test("npm run publish creates a missing destination and copies contents without an extra dist directory", async (t) => {
+test("npm run distribute creates a missing destination and copies contents without an extra dist directory", async (t) => {
   const workspace = await fixture(t);
   await writeFile(path.join(workspace, "deploy", "dist", "MusePages", "index.html"), "new index");
   const scripts = path.join(workspace, "src", "workflows");
@@ -66,7 +66,7 @@ test("npm run publish creates a missing destination and copies contents without 
   await copyFile(new URL("./publish-site.mjs", import.meta.url), path.join(scripts, "publish-site.mjs"));
   await copyFile(new URL("../../package.json", import.meta.url), path.join(workspace, "package.json"));
   const command = process.platform === "win32" ? process.env.ComSpec : "npm";
-  const args = process.platform === "win32" ? ["/d", "/s", "/c", "npm run publish"] : ["run", "publish"];
+  const args = process.platform === "win32" ? ["/d", "/s", "/c", "npm run distribute"] : ["run", "distribute"];
   const result = spawnSync(command, args, { cwd: workspace, encoding: "utf8", timeout: 30000 });
   assert.equal(result.status, 0, `${result.error ?? ""}\n${result.stdout}\n${result.stderr}`);
   assert.match(result.stdout, /Copied deploy\\dist\\MusePages contents to deploy[\\/]site[\\/]MusePages\. Local files only\./);

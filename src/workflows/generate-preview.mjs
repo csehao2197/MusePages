@@ -18,6 +18,7 @@ const types = new Map(Object.entries({
   ".ttf": "font/ttf", ".otf": "font/otf", ".mp4": "video/mp4", ".webm": "video/webm",
   ".mp3": "audio/mpeg", ".wav": "audio/wav", ".wasm": "application/wasm",
   ".txt": "text/plain; charset=utf-8", ".xml": "application/xml", ".webmanifest": "application/manifest+json",
+  ".pdf": "application/pdf",
 }));
 const privateNames = new Set(["node_modules", "package.json", "package-lock.json", "metadata.json", "result.json"]);
 

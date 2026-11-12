@@ -25,6 +25,7 @@ MusePages 收集由 AI 根据原始需求生成的网站首页。同一个 promp
 | `npm run generate -- <ai model>` | 执行[页面生成工作流](#页面生成工作流) |
 | `npm run ai-generate -- <ai model>` | 执行[AI页面生成工作流](#ai页面生成工作流) |
 | `npm run deploy` | 按发布选择执行[deploy工作流](#deploy工作流) |
+| `npm run distribute` | 将静态集合复制到 `deploy\site\MusePages` |
 
 `generate` 已实现，配置与限制见[模型与发布配置](#模型与发布配置)。`ai-generate` 仍是待实现接口；现有 `deploy` 使用按 prompt 文件名分组的 version 2 配置执行完整本地发布，兼容迁移旧版数组配置，生成每个 prompt 一个轮播面板，按配置顺序展示选中模型；增量处理和作品详情页尚待实现。
 
@@ -149,9 +150,9 @@ deploy 工作流以 `deploy\config.json` 中的发布选择为输入，由 `src\
 
 该工作流不调用 AI、不构建作品源码，也不直接上传 Cloudflare。结束后报告本次部署、已部署跳过、状态补写及异常清单；本地汇集成功不代表已完成线上部署。
 
-### publish工作流
+### distribute工作流
 
-`npm run publish` 执行 `src\workflows\publish-site.mjs`：清空 `deploy\site\MusePages\` 的内容（含隐藏项及 `.git`），再复制 `deploy\dist\MusePages\` 的全部内容。目标目录缺失时自动创建；直接删除、复制，其他站点和源目录保持不变。
+`npm run distribute` 执行 `src\workflows\publish-site.mjs`：清空 `deploy\site\MusePages\` 的内容（含隐藏项及 `.git`），再复制 `deploy\dist\MusePages\` 的全部内容。目标目录缺失时自动创建；直接删除、复制，其他站点和源目录保持不变。
 
 ### 生成覆盖检查与模型匹配
 
@@ -210,7 +211,7 @@ deploy\
   dist\                             # 静态集合输出根目录
     MusePages\                      # npm run deploy 生成的网站
   site\
-    MusePages\                      # npm run publish 清空后复制
+    MusePages\                      # npm run distribute 清空后复制
 task\
   TASK.md                           # 用户维护的本轮目标
   progress.log                      # 已忽略的执行与恢复记录
