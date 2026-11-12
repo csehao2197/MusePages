@@ -100,6 +100,9 @@ function validateConfig(config) {
     if (!group || typeof group !== "object" || Array.isArray(group) || !Array.isArray(group.pages)) {
       throw Error(`Expected a prompt object with a pages array for ${prompt}`);
     }
+    if (Object.hasOwn(group, "weight") && !Number.isFinite(group.weight)) {
+      throw Error(`Expected a finite numeric weight for ${prompt}`);
+    }
     for (const page of group.pages) {
       if (!page || typeof page !== "object" || Array.isArray(page) || Object.hasOwn(page, "prompt")) {
         throw Error(`Invalid model option for ${prompt}; prompt belongs in the pages key`);
@@ -148,6 +151,7 @@ async function readConfig(file) {
   }
   validateConfig(config);
   for (const group of Object.values(config.pages)) {
+    if (!Object.hasOwn(group, "weight")) group.weight = 1;
     for (const page of group.pages) {
       if (!Object.hasOwn(page, "deployed")) page.deployed = false;
     }
@@ -196,7 +200,7 @@ async function synchronize(workspace) {
       const slug = prompt.replace(/^\d+-/, "");
       const promptKey = Object.keys(config.pages).find((key) => key.toLowerCase() === prompt.toLowerCase()) ?? prompt;
       if (!Object.hasOwn(config.pages, promptKey)) {
-        Object.defineProperty(config.pages, promptKey, { value: { pages: [] }, enumerable: true, writable: true, configurable: true });
+        Object.defineProperty(config.pages, promptKey, { value: { weight: 1, pages: [] }, enumerable: true, writable: true, configurable: true });
       }
       config.pages[promptKey].pages.push({
         model, enabled: false, deployed: false, slug, title: slug.replaceAll("-", " "),
@@ -269,7 +273,7 @@ export async function registerGeneratedPage(workspace, page) {
     const promptKey = Object.keys(config.pages).find((key) => key.toLowerCase() === prompt.toLowerCase());
     if (promptKey && promptKey !== prompt) throw Error(`Deployment prompt casing conflicts with metadata: ${prompt}`);
     if (!Object.hasOwn(config.pages, prompt)) {
-      Object.defineProperty(config.pages, prompt, { value: { pages: [] }, enumerable: true, writable: true, configurable: true });
+      Object.defineProperty(config.pages, prompt, { value: { weight: 1, pages: [] }, enumerable: true, writable: true, configurable: true });
     }
     config.pages[prompt].pages.push(option);
     validateConfig(config);
@@ -482,7 +486,8 @@ async function replaceWebsite(target, staging, commit) {
 export async function publishSite(workspace = root) {
   return withLock(workspace, async () => {
     const { config, inputs } = await synchronize(workspace);
-    const selected = pageOptions(config).filter((page) => page.enabled);
+    const selected = pageOptions(config).filter((page) => page.enabled)
+      .sort((a, b) => config.pages[b.prompt].weight - config.pages[a.prompt].weight);
     const destinations = new Set();
     const slugOwners = new Map();
     const promptSlugs = new Map();

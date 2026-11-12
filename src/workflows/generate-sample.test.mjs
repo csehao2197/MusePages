@@ -174,6 +174,8 @@ test("gallery groups models into stable, accessible carousels with synchronized 
       }
     }
     const config = await syncDeployConfig(workspace);
+    config.pages[prompt].weight = 2;
+    config.pages = { "002-single": config.pages["002-single"], [prompt]: config.pages[prompt] };
     config.pages[prompt].pages.sort((a, b) => models.indexOf(a.model) - models.indexOf(b.model));
     for (const option of Object.values(config.pages).flatMap((group) => group.pages)) {
       option.enabled = option.model !== "disabled-model";

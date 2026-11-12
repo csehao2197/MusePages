@@ -136,7 +136,7 @@ test("generates through a child process with stdin, real model selection, static
   assert.deepEqual(state, metadata({ generated: true, preview: true, validated: true, config_added: true }));
   const config = await readJson(path.join(f.workspace, "deploy", "config.json"));
   assert.equal(config.version, 2);
-  assert.deepEqual(config.pages, { [prompt]: { pages: [{
+  assert.deepEqual(config.pages, { [prompt]: { weight: 1, pages: [{
     model: "model-a", enabled: false, deployed: false, slug: "travel", title: "travel", tags: [], staticDir: "out",
   }] } });
   const invocation = await readJson(path.join(f.output, ".invocation.json"));
@@ -197,7 +197,7 @@ test("completed results repair registration without a model call and preserve ex
   assert.equal((await readJson(path.join(f.output, "metadata.json"))).preview, true);
   const { prompt: firstPrompt, ...firstOption } = first;
   assert.deepEqual(Object.keys(config.pages), [firstPrompt, prompt]);
-  assert.deepEqual((await readJson(file)).pages[firstPrompt], { pages: [firstOption] });
+  assert.deepEqual((await readJson(file)).pages[firstPrompt], { weight: 1, pages: [firstOption] });
   assert.deepEqual((await readJson(file)).pages[prompt], config.pages[prompt]);
   assert.equal(await readFile(path.join(f.output, ".attempt-count"), "utf8"), "1");
   assert.equal(requests(), 1);

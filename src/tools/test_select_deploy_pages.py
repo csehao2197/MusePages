@@ -20,13 +20,13 @@ class SelectorTests(unittest.TestCase):
             "version": 2,
             "extra": {"preserved": True},
             "pages": {
-                "001-guide": {"description": "Preserve prompt metadata", "pages": [
+                "001-guide": {"weight": 4.5, "description": "Preserve prompt metadata", "pages": [
                     {"model": "GPT-6", "title": "Tokyo", "enabled": True,
                      "deployed": True, "tags": ["Travel"], "staticDir": "out", "slug": "guide"},
                     {"model": "other-model", "title": "Another guide", "enabled": False,
                      "deployed": False, "tags": [], "staticDir": ".", "slug": "guide"},
                 ]},
-                "002-deals": {"pages": [
+                "002-deals": {"weight": 1, "pages": [
                     {"model": "GPT-6", "title": "旅行优惠", "enabled": False,
                      "deployed": False, "tags": ["Travel"], "staticDir": "out", "slug": "deals"},
                 ]},
@@ -106,11 +106,23 @@ class SelectorTests(unittest.TestCase):
         self.assertEqual(self.file.read_bytes(), original)
         self.assertEqual(selector.save_selection(self.file, original, config, [False, True, True]), 3)
         saved = json.loads(self.file.read_bytes())
-        self.assertEqual(saved["pages"]["001-guide"], {"pages": [
+        self.assertEqual(saved["pages"]["001-guide"], {"weight": 1, "pages": [
             {**legacy["pages"]["001-guide"][0], "enabled": False},
             {**legacy["pages"]["001-guide"][1], "enabled": True},
         ]})
         self.assertEqual(saved["pages"]["002-deals"]["pages"][0]["enabled"], True)
+
+    def test_missing_weight_defaults_to_one_without_writing_until_selection_changes(self):
+        config = copy.deepcopy(self.config)
+        del config["pages"]["002-deals"]["weight"]
+        self.file.write_text(json.dumps(config), encoding="utf-8")
+        original, loaded, _ = selector.load_config(self.file)
+        self.assertEqual(loaded["pages"]["002-deals"]["weight"], 1)
+        self.assertEqual(self.file.read_bytes(), original)
+        selector.save_selection(self.file, original, loaded, [False, True, True])
+        saved = json.loads(self.file.read_bytes())
+        self.assertEqual(saved["pages"]["001-guide"]["weight"], 4.5)
+        self.assertEqual(saved["pages"]["002-deals"]["weight"], 1)
 
     def test_external_changes_are_not_overwritten(self):
         original, config, _ = selector.load_config(self.file)
@@ -156,6 +168,10 @@ class SelectorTests(unittest.TestCase):
         duplicate = copy.deepcopy(self.config)
         duplicate["pages"]["001-guide"]["pages"][1]["model"] = "gpt-6"
         cases.append(duplicate)
+        for weight in [None, True, "2", [], {}, float("inf"), float("nan"), 10 ** 400]:
+            invalid_weight = copy.deepcopy(self.config)
+            invalid_weight["pages"]["001-guide"]["weight"] = weight
+            cases.append(invalid_weight)
         for config in cases:
             with self.subTest(config=config):
                 self.file.write_text(json.dumps(config), encoding="utf-8")

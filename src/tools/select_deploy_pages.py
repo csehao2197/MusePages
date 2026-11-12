@@ -31,6 +31,9 @@ def load_config(file):
             group = config["pages"][prompt] = {"pages": group}
         if not prompt.strip() or not isinstance(group, dict) or not isinstance(group.get("pages"), list):
             raise ValueError("Each prompt must be an object with a pages array.")
+        weight = group.setdefault("weight", 1)
+        if type(weight) not in (int, float) or not (-sys.float_info.max <= weight <= sys.float_info.max):
+            raise ValueError(f"Expected a finite numeric weight for {prompt}.")
         for model in group["pages"]:
             if (not isinstance(model, dict)
                     or not isinstance(model.get("model"), str) or not model["model"].strip()

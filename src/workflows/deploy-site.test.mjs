@@ -90,7 +90,7 @@ test("legacy arrays migrate once by first prompt appearance, preserving model or
   const migrated = await syncDeployConfig(workspace);
   assert.deepEqual(migrated, {
     version: 2, custom: legacy.custom,
-    pages: { "001-travel": { pages: [travel[1], travel[0]] }, "002-food": initial.pages["002-food"] },
+    pages: { "001-travel": { weight: 1, pages: [travel[1], travel[0]] }, "002-food": initial.pages["002-food"] },
   });
   assert.deepEqual(await configFile(workspace), migrated);
   const contents = await readFile(path.join(workspace, "deploy", "config.json"), "utf8");
@@ -113,12 +113,15 @@ test("version 2 model arrays migrate to prompt objects while preserving mixed gr
     ...initial, custom: "preserve",
     pages: {
       "001-travel": travel,
-      "002-food": { ...initial.pages["002-food"], description: "Preserved prompt field" },
+      "002-food": { ...initial.pages["002-food"], weight: 3.5, description: "Preserved prompt field" },
       "003-empty": { pages: [], description: "Reserved prompt" },
     },
   };
   await saveConfig(workspace, legacy);
-  const expected = { ...legacy, pages: { ...legacy.pages, "001-travel": { pages: travel } } };
+  const expected = { ...legacy, pages: {
+    ...legacy.pages, "001-travel": { weight: 1, pages: travel },
+    "003-empty": { ...legacy.pages["003-empty"], weight: 1 },
+  } };
   assert.deepEqual(await syncDeployConfig(workspace), expected);
   assert.deepEqual(await configFile(workspace), expected);
   assert.equal(await registerGeneratedPage(workspace, {
@@ -126,11 +129,68 @@ test("version 2 model arrays migrate to prompt objects while preserving mixed gr
   }), true);
   const saved = await configFile(workspace);
   assert.equal(saved.pages["002-food"].description, "Preserved prompt field");
+  assert.equal(saved.pages["002-food"].weight, 3.5);
   assert.deepEqual(saved.pages["002-food"].pages.map((page) => page.model), ["model-c", "model-d"]);
   assert.deepEqual(saved.pages["001-travel"], expected.pages["001-travel"]);
   assert.deepEqual(saved.pages["003-empty"], expected.pages["003-empty"]);
   assert.deepEqual(await syncDeployConfig(workspace), saved);
   await assert.rejects(lstat(path.join(workspace, "deploy", "dist")), { code: "ENOENT" });
+});
+
+test("panel weights sort descending with stable ties, default 1 and unchanged model and config order", async (t) => {
+  const workspace = await fixture(t);
+  const groups = [
+    ["001-low", -3, 2], ["002-equal-first", 2.5, 1], ["003-high", 9, 2],
+    ["004-default", undefined, 1], ["005-equal-last", 2.5, 1], ["006-disabled", 100, 1],
+  ];
+  for (const [prompt, , count] of groups) {
+    for (let index = 0; index < count; index++) await result(workspace, prompt, `model-${index}`);
+  }
+  const config = await syncDeployConfig(workspace);
+  for (const [prompt, weight] of groups) {
+    if (weight === undefined) delete config.pages[prompt].weight;
+    else config.pages[prompt].weight = weight;
+    for (const page of config.pages[prompt].pages) page.enabled = prompt !== "006-disabled";
+  }
+  config.pages["003-high"].pages.reverse();
+  await saveConfig(workspace, config);
+  const target = path.join(workspace, "deploy", "dist", "MusePages", "index.html");
+  const panelOrder = async () => [...(await readFile(target, "utf8"))
+    .matchAll(/<article class="card"[^>]*aria-label="([^"]+) model previews"/g)].map((match) => match[1]);
+  await publishSite(workspace);
+  assert.deepEqual(await panelOrder(), ["high", "equal first", "equal last", "default", "low"]);
+  const html = await readFile(target, "utf8");
+  assert.ok(html.indexOf("pages/high/model-1/index.html") < html.indexOf("pages/high/model-0/index.html"));
+  const saved = await configFile(workspace);
+  assert.deepEqual(Object.keys(saved.pages), groups.map(([prompt]) => prompt));
+  assert.equal(saved.pages["004-default"].weight, 1);
+  for (const [prompt, weight] of groups) {
+    if (weight !== undefined) assert.equal(saved.pages[prompt].weight, weight);
+    assert.deepEqual(saved.pages[prompt].pages.map((page) => page.model), config.pages[prompt].pages.map((page) => page.model));
+  }
+  saved.pages["001-low"].weight = 10;
+  await saveConfig(workspace, saved);
+  assert.equal((await publishSite(workspace)).changed, true);
+  assert.deepEqual(await panelOrder(), ["low", "high", "equal first", "equal last", "default"]);
+});
+
+test("invalid prompt weights preserve the previous website and config", async (t) => {
+  const workspace = await fixture(t);
+  await result(workspace, "001-travel", "model-a");
+  const config = await syncDeployConfig(workspace);
+  config.pages["001-travel"].pages[0].enabled = true;
+  await saveConfig(workspace, config);
+  await publishSite(workspace);
+  const target = path.join(workspace, "deploy", "dist", "MusePages", "index.html");
+  const previous = await readFile(target, "utf8");
+  for (const weight of [null, true, "2", [], {}, Infinity]) {
+    config.pages["001-travel"].weight = weight;
+    await saveConfig(workspace, config);
+    const original = await readFile(path.join(workspace, "deploy", "config.json"), "utf8");
+    await assert.rejects(publishSite(workspace), /finite numeric weight/);
+    assert.equal(await readFile(path.join(workspace, "deploy", "config.json"), "utf8"), original);
+    assert.equal(await readFile(target, "utf8"), previous);
+  }
 });
 
 test("legacy deployment options default missing deployed flags to false without publishing", async (t) => {

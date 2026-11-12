@@ -374,6 +374,7 @@ node --test src\workflows\render-prompt-pages.test.mjs src\workflows\deploy-site
   "siteUrl": "https://musepages.pages.dev/",
   "pages": {
     "006-travel-agency-homepage": {
+      "weight": 1,
       "pages": [
         {
           "model": "model-a",
@@ -399,7 +400,7 @@ node --test src\workflows\render-prompt-pages.test.mjs src\workflows\deploy-site
 }
 ```
 
-每个 prompt 对应一个 key，使用原始文件名。`pages[<prompt>].pages` 中的 `model` 对应实际模型目录，prompt key 及组内模型名忽略大小写后保持唯一。prompt 顺序决定面板排列，页面数组顺序决定已选模型的轮播顺序；prompt 对象可保留其他自定义字段。新选项默认关闭，同步保留已有开关和顺序，重复登记复用原项，源码临时缺失时保留旧配置。`slug` 使用去编号的公开名称，`staticDir` 相对于模型源码目录，指向实际静态产物。
+每个 prompt 对应一个 key，使用原始文件名。`pages[<prompt>].pages` 中的 `model` 对应实际模型目录，prompt key 及组内模型名忽略大小写后保持唯一。`weight` 为有限数值，默认 `1`；首页面板按权重降序排列，同权重沿用配置顺序，页面数组顺序决定面板内模型的轮播顺序。prompt 对象可保留其他自定义字段。新选项默认关闭，同步保留已有开关、权重和顺序，重复登记复用原项，源码临时缺失时保留旧配置。`slug` 使用去编号的公开名称，`staticDir` 相对于模型源码目录，指向实际静态产物。
 
 `deployed` 是布尔字段，旧配置缺少时补为 `false`，非布尔值会被拒绝。`deploy:sync`、`deploy:watch` 和生成登记不会将其标记成功，也不会覆盖已有状态。`npm run dist` 完成静态校验并成功替换本地网站后，将本次已纳入集合的模型选项设为 `deployed: true`，未选中并已从集合移除的项设为 `false`，再原子保存配置。发布失败保留旧状态；配置保存失败时尝试回滚网站，回滚失败则报告恢复路径。修改源码或开关不会自动改变该记录，仍须实际发布并核验版本。
 
