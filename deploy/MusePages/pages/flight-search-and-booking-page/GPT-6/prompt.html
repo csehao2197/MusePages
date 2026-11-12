@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FlyFair | New York to Tokyo Flights | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>FlyFair | New York to Tokyo Flights</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code>Build a polished, conversion-optimized flight search results and booking page for a travel platform called &quot;FlyFair&quot; — a flight comparison site that aggregates fares from multiple airlines. The page shows results for a round-trip search from New York (JFK) to Tokyo (NRT), departing April 15 and returning April 29, 2026, for 2 adults. The design should feel fast, trustworthy, and data-dense without overwhelming the user.
+
+1. NAVIGATION BAR
+- Logo: &quot;FlyFair&quot; in bold sans-serif, navy blue (#1E3A5F), with a minimal paper-airplane icon
+- Links: Flights, Hotels, Car Rental, Packages, Travel Guides
+- Right side: currency dropdown (USD), &quot;My Trips&quot; link, user avatar or &quot;Sign In&quot; button
+- White background, thin bottom border (#E2E8F0), sticky on scroll
+- Mobile: logo + hamburger + &quot;My Trips&quot; icon
+
+2. SEARCH MODIFICATION BAR (sticky below nav)
+- Compact horizontal bar on light gray (#F8FAFC) background
+- Fields inline: From (JFK - New York) | To (NRT - Tokyo Narita) | Depart (Apr 15) | Return (Apr 29) | Travelers (2 Adults) | Class (Economy)
+- Swap origin/destination button between From and To fields
+- &quot;Search&quot; CTA button on right (solid #2563EB blue-600, white text)
+- Trip type tabs above: Round Trip (active), One Way, Multi-City
+- Each field: white input box, icon prefix, click to open dropdown/calendar
+- Mobile: collapsed to &quot;JFK → NRT · Apr 15-29 · 2 Adults&quot; summary bar with &quot;Modify&quot; button that expands full search form
+
+3. RESULTS SUMMARY BAR
+- Left: &quot;247 flights found · JFK → NRT · Round trip · Apr 15 – Apr 29&quot;
+- Right: Sort dropdown — &quot;Best&quot; (default), &quot;Cheapest&quot;, &quot;Fastest&quot;, &quot;Earliest Departure&quot;, &quot;Latest Departure&quot;
+- &quot;Best&quot; combines price and duration factors with a small info tooltip explaining the ranking
+
+4. FILTER SIDEBAR (left column, 280px)
+- Price Range: dual-handle slider $650–$4,200, with histogram showing fare distribution
+- Stops: checkboxes — Nonstop (3 results), 1 Stop (89 results), 2+ Stops (155 results), result count in gray
+- Airlines: checkboxes with airline logos (24px):
+  - All Nippon Airways (ANA) — 42 results
+  - Japan Airlines (JAL) — 38 results
+  - Delta Air Lines — 35 results
+  - United Airlines — 31 results
+  - American Airlines — 28 results
+  - Korean Air — 22 results
+  - Others (show more expand)
+- Departure Time: 4-slot grid buttons — Morning (6AM-12PM), Afternoon (12PM-6PM), Evening (6PM-12AM), Red-Eye (12AM-6AM)
+- Arrival Time: same 4-slot grid
+- Duration: slider 13h–36h
+- Layover Airport: multi-select (LAX, SFO, ORD, ICN, etc.)
+- Alliance: checkboxes — Star Alliance, SkyTeam, Oneworld
+- &quot;Reset All Filters&quot; text link at bottom
+- Mobile: filters collapse into a &quot;Filters&quot; button that opens a bottom sheet modal with all options
+
+5. FLIGHT RESULT CARDS (main content area)
+- Each card: white background, 12px border-radius, 1px #E2E8F0 border, 16px padding
+- Card layout (single row, left to right):
+
+  A. AIRLINE INFO (120px):
+  - Airline logo (40px)
+  - Airline name: &quot;ANA&quot; (bold)
+  - Flight number: &quot;NH 9&quot; (gray, small)
+
+  B. OUTBOUND FLIGHT (flex, largest section):
+  - Departure: &quot;10:55 AM&quot; (large, bold) · &quot;JFK&quot; (gray)
+  - Arrow/line with duration: &quot;14h 10m&quot; and stop info (e.g., &quot;Nonstop&quot; in green or &quot;1 stop · LAX&quot; with dot indicator)
+  - Arrival: &quot;2:05 PM+1&quot; (large, bold) · &quot;NRT&quot; (gray), +1 day indicator in orange
+  - Below: &quot;Boeing 777-300ER · Economy&quot; in small gray
+
+  C. RETURN FLIGHT (same layout):
+  - Departure: &quot;5:30 PM&quot; · &quot;NRT&quot;
+  - Arrow line: &quot;12h 45m · Nonstop&quot;
+  - Arrival: &quot;4:15 PM&quot; · &quot;JFK&quot; (same day)
+
+  D. PRICE &amp; CTA (right-aligned, 160px):
+  - Price: &quot;$892&quot; (large, bold, #1E3A5F navy)
+  - Per person label: &quot;/person&quot; (small gray)
+  - Total: &quot;$1,784 total&quot; (small)
+  - &quot;Select&quot; button (solid #2563EB, white text, full width, 8px radius)
+  - Below button: &quot;Price lock available&quot; green text link (optional badge)
+
+- CARD VARIATIONS:
+  - &quot;Best Value&quot; badge (amber #F59E0B outline) on top card
+  - &quot;Cheapest&quot; badge (green #10B981 outline) on lowest-price card
+  - &quot;Fastest&quot; badge (blue #3B82F6 outline) on shortest-duration card
+  - Hover: subtle shadow increase, slight lift transform
+
+- EXPANDED CARD (click to expand any card):
+  - Full leg-by-leg breakdown with timeline visual:
+    - Departure gate, terminal info
+    - In-flight amenities: WiFi, meal service, entertainment, power outlet icons
+    - Seat pitch: &quot;31 inches&quot; | Seat width: &quot;17.2 inches&quot;
+    - Aircraft type and age
+  - Layover details (if connecting): layover city, duration, terminal change indicator
+  - Fare class options (3 columns):
+    - Basic Economy ($892): no seat selection, no changes, 1 personal item
+    - Economy ($958): seat selection included, $200 change fee, 1 carry-on + 1 checked bag
+    - Premium Economy ($1,340): extra legroom, free changes, 2 checked bags, priority boarding
+  - Baggage policy summary with weight limits
+  - &quot;Select This Fare&quot; CTA for each fare class
+
+6. SPONSORED RESULT (after 3rd result)
+- Slightly different card: very subtle blue-tinted background (#F0F7FF)
+- &quot;Sponsored&quot; label (small, gray, top-right)
+- Airline-specific upsell: &quot;Fly ANA Premium Economy — Extra legroom, lounge access, 2 bags included. From $1,190/person&quot;
+- &quot;View Deal&quot; button
+
+7. PRICE CALENDAR WIDGET (collapsible section above results)
+- Headline: &quot;Flexible dates? See the cheapest fares&quot;
+- 7-day horizontal bar chart centered on selected date:
+  - Apr 12: $945, Apr 13: $892, Apr 14: $1,102, **Apr 15: $892** (highlighted, selected), Apr 16: $934, Apr 17: $1,245, Apr 18: $876
+- Cheapest date highlighted in green
+- &quot;Show full month view&quot; expands to calendar grid with prices in each cell
+- Green/amber/red color coding for cheap/mid/expensive
+
+8. TRUST &amp; INFO BAR (after first few results)
+- Horizontal banner: light green background (#F0FDF4)
+- &quot;✓ No hidden fees · ✓ Price match guarantee · ✓ Free cancellation within 24 hours · ✓ 24/7 support&quot;
+- Small FlyFair logo
+
+9. PAGINATION &amp; LOAD MORE
+- &quot;Show 20 more flights&quot; button (outline style) after initial 10 results
+- Infinite scroll option with loading skeleton cards
+- Bottom summary: &quot;Showing 10 of 247 flights&quot;
+
+10. SIDEBAR WIDGETS (below filters)
+- &quot;Price Alert&quot; widget: &quot;Get notified when prices drop for JFK → NRT&quot; — email input + &quot;Set Alert&quot; button
+- &quot;Similar Routes&quot; links: JFK→HND, EWR→NRT, JFK→KIX
+- &quot;FlyFair Tip&quot; card: &quot;Booking 3-6 weeks in advance typically saves 15-25% on transpacific flights&quot;
+
+11. FOOTER
+- 4 columns on #F8FAFC background:
+  - Explore: Top Destinations, Flight Deals, Airline Reviews, Airport Guides
+  - Company: About FlyFair, How We Rank, Press, Careers
+  - Support: Help Center, Contact, Refund Policy, Accessibility
+  - Legal: Privacy Policy, Terms of Service, Cookie Settings
+- Trust badges: Norton Secured, IATA member, BBB A+ rating
+- &quot;© 2026 FlyFair Inc. All rights reserved.&quot;
+
+Design: Data-dense but breathable. Primary: #2563EB (blue-600 for CTAs and interactive elements), secondary: #1E3A5F (navy for headings and prices), accent: #F59E0B (amber for badges and deals). Success green: #10B981 for nonstop/savings indicators. Backgrounds: white for cards, #F8FAFC for page background. Typography: Inter for all text — weights 400 (body), 500 (labels), 600 (prices, CTAs), 700 (headings). Cards with 12px border-radius, subtle 1px borders, hover shadows. Flight route lines rendered as SVG or CSS with airplane icon midway. Time displayed in departure city local timezone with arrival timezone noted.
+
+Responsive: Mobile-first. Search bar collapses to summary strip. Filter sidebar becomes bottom sheet modal triggered by &quot;Filters&quot; floating button. Flight cards stack vertically — airline info on top, outbound and return legs stacked, price/CTA at bottom full-width. Price calendar becomes horizontal scroll. Expanded fare comparison becomes vertical cards. All touch targets 44px minimum. Sticky bottom bar on mobile showing &quot;247 flights from $876&quot; with &quot;Sort&quot; and &quot;Filter&quot; action buttons.</code></pre>
+    </section>
+  </main>
+</body>
+</html>

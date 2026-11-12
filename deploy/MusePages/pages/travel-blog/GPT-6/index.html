@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en" id="top">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0f766e">
+  <meta name="description" content="Wanderlust Chronicles: thoughtful stories, unexpected places, and a little inspiration for your next chapter. An independent travel magazine concept.">
+  <title>Wanderlust Chronicles | For the beautifully curious</title>
+  <link rel="icon" href="assets/icons.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/playfair-display-400.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="assets/inter-400.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#stories">Skip to stories</a>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Wanderlust Chronicles home">
+      <svg class="icon brand-mark" aria-hidden="true"><use href="assets/icons.svg#Compass"></use></svg>
+      <span>Wanderlust<span class="brand-second">Chronicles<span class="brand-dot">.</span></span></span>
+    </a>
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <a href="#stories" data-category="Destinations">Destinations</a>
+      <a href="#stories" data-category="Adventure">Adventure</a>
+      <a href="#stories" data-category="Culture">Culture</a>
+      <a href="#stories" data-category="Food &amp; Drink">Food &amp; Drink</a>
+      <a href="#stories" data-category="Budget Travel">Budget Travel</a>
+      <a href="#stories" data-category="Travel Tips">Tips</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-button" id="search-open" aria-label="Search stories"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#Search"></use></svg></button>
+      <button class="icon-button saved-button" id="saved-open" aria-label="Show saved stories"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#Bookmark"></use></svg><span id="saved-count" hidden>0</span></button>
+      <a class="button button-teal header-subscribe" href="#newsletter">Subscribe <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#ArrowUpRight"></use></svg></a>
+      <button class="icon-button menu-button" id="menu-open" aria-label="Open navigation" aria-haspopup="dialog"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#Menu"></use></svg></button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <img class="hero-image" src="assets/santorini.jpg" alt="Whitewashed Santorini buildings and blue domes overlooking the Aegean Sea" fetchpriority="high" width="1600" height="1067">
+      <div class="hero-shade"></div>
+      <div class="hero-inner">
+        <p class="hero-kicker">For the beautifully curious</p>
+        <span class="category-label">Destinations</span>
+        <h1 id="hero-title">48 Hours in Santorini:<br><em>Beyond the</em><br>Instagram Spots</h1>
+        <div class="byline hero-byline"><img src="assets/elena.jpg" alt="" width="34" height="34"><span>By Elena Vasquez <span class="byline-dot">·</span> March 8, 2026 <span class="byline-dot">·</span> 12 min read</span></div>
+        <p class="hero-excerpt">We skipped the crowded caldera viewpoints and found hidden cliff-side tavernas, volcanic hot springs, and a winery that's been family-run since 1947.</p>
+        <button class="text-link hero-read" data-post="santorini">Read Article <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#ArrowRight"></use></svg></button>
+      </div>
+      <a class="hero-scroll" href="#stories" aria-label="Scroll to latest stories"><span>A little further, a little deeper.</span><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#ArrowDown"></use></svg></a>
+      <span class="hero-location"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#MapPin"></use></svg> Santorini, Greece</span>
+    </section>
+
+    <nav class="category-bar" aria-label="Filter stories by category">
+      <div class="category-inner">
+        <button class="category-chip active" data-filter="All" aria-pressed="true">All stories</button>
+        <button class="category-chip" data-filter="Destinations" aria-pressed="false">Destinations <span>42</span></button>
+        <button class="category-chip" data-filter="Adventure" aria-pressed="false">Adventure <span>28</span></button>
+        <button class="category-chip" data-filter="Culture" aria-pressed="false">Culture <span>19</span></button>
+        <button class="category-chip" data-filter="Food &amp; Drink" aria-pressed="false">Food &amp; Drink <span>24</span></button>
+        <button class="category-chip" data-filter="Budget Travel" aria-pressed="false">Budget Travel <span>16</span></button>
+        <button class="category-chip" data-filter="Travel Tips" aria-pressed="false">Travel Tips <span>31</span></button>
+      </div>
+    </nav>
+
+    <section class="stories-section section-wrap" id="stories" aria-labelledby="stories-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">Good stories take you places</p><h2 id="stories-title">Latest Stories<span class="accent-dot">.</span></h2></div>
+        <div class="sort-toggle" role="group" aria-label="Story order"><button data-sort="popular" aria-pressed="false">Most Popular</button><button class="active" data-sort="recent" aria-pressed="true">Recent</button></div>
+      </div>
+      <div class="story-status-row"><p id="story-status" role="status">Nine stories. A world of possibility.</p><button class="small-link" id="clear-filters" hidden>Clear filters <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#X"></use></svg></button></div>
+      <div class="story-layout">
+        <div class="story-main">
+          <div class="story-grid" id="story-grid"></div>
+          <div class="empty-state" id="empty-state" hidden><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#Compass"></use></svg><h3>A detour, not a dead end.</h3><p>No sample stories match this view. Try another category or explore all stories.</p><button class="button button-teal" id="empty-reset">Explore all stories</button></div>
+          <div class="load-more-wrap"><button class="button button-outline" id="load-more">Load More Stories <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#Plus"></use></svg></button><span id="load-note">A little more inspiration, just around the corner.</span></div>
+        </div>
+        <aside class="trending" aria-labelledby="trending-title">
+          <div class="trending-heading"><p class="eyebrow">The conversation starters</p><h3 id="trending-title">Trending<br>This Week</h3></div>
+          <div class="trending-list" id="trending-list"></div>
+          <a class="sidebar-letter" href="#newsletter"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#Mail"></use></svg><span>A postcard for<br>your inbox.</span><span class="small-link">Join the Thursday letter <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#ArrowRight"></use></svg></span></a>
+        </aside>
+      </div>
+      <p class="concept-note">An independent magazine concept. Archive counts, readership, dates and author profiles are illustrative; this edition contains 12 original sample previews, plus the featured story and Portugal notes.</p>
+    </section>
+
+    <section class="spotlight" id="portugal" aria-labelledby="spotlight-title">
+      <div class="section-wrap">
+        <div class="section-heading"><div><p class="eyebrow">One place. A thousand stories.</p><h2 id="spotlight-title">Destination Deep Dive</h2></div><p class="month-note">This month <span>Portugal</span></p></div>
+        <div class="spotlight-layout">
+          <div class="spotlight-photo"><img src="assets/lisbon.jpg" alt="Lisbon's sunlit hillside, terracotta rooftops and historic streets" loading="lazy" width="1500" height="1000"><div class="photo-caption"><span class="eyebrow">The slow way is the right way</span><p>Fall a little<br><em>for Portugal.</em></p><span><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#MapPin"></use></svg> Lisbon, Portugal</span></div></div>
+          <div class="spotlight-copy">
+            <p class="eyebrow">A love letter to the everyday</p><h3>Why Portugal,<br><em>why now?</em></h3>
+            <p>Some places ask you to slow down. Portugal makes it feel like your idea. Follow the Atlantic light from tiled Lisbon lanes to the Douro's terraces, with room for a long lunch in between.</p><p>Our 2026 notebook is about looking closer: small workshops, quieter trails, and the people who make a place feel like itself.</p>
+            <div class="portugal-links">
+              <button data-post="miradores"><img src="assets/lisbon.jpg" alt="" loading="lazy" width="68" height="68"><span>Lisbon's Hidden Miradores: 8 Viewpoints the Guidebooks Miss</span><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#ArrowUpRight"></use></svg></button>
+              <button data-post="douro"><img src="assets/coast.jpg" alt="" loading="lazy" width="68" height="68"><span>Porto Wine Tasting: A Route Through the Douro Valley</span><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#ArrowUpRight"></use></svg></button>
+              <button data-post="algarve"><img src="assets/surf.jpg" alt="" loading="lazy" width="68" height="68"><span>Algarve Coast on a Budget: Camping, Hiking &amp; Beach Life</span><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#ArrowUpRight"></use></svg></button>
+              <button data-post="ceramics"><img src="assets/ceramics.jpg" alt="" loading="lazy" width="68" height="68"><span>The Ceramics Villages of Portugal Nobody Talks About</span><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#ArrowUpRight"></use></svg></button>
+            </div>
+            <button class="text-link teal-link" id="portugal-all">Explore All Portugal Posts <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#ArrowRight"></use></svg></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="writers-section section-wrap" id="writers" aria-labelledby="writers-title">
+      <div class="section-heading"><div><p class="eyebrow">Real curiosity. Different perspectives.</p><h2 id="writers-title">Meet the Writers</h2></div><p class="section-aside">Four perspectives.<br>One beautifully big world.</p></div>
+      <div class="writers-grid" id="writers-grid"></div>
+    </section>
+
+    <section class="newsletter" id="newsletter" aria-labelledby="newsletter-title">
+      <div class="newsletter-inner">
+        <div class="newsletter-copy"><p class="eyebrow">A postcard from somewhere</p><h2 id="newsletter-title">Get stories<br><em>worth reading.</em></h2><p>Every Thursday — one destination deep-dive, one travel hack, and one story that'll make you book a flight. No spam, no fluff.</p><span class="newsletter-proof">28,000+ curious readers. One shared love of the road.</span></div>
+        <div class="newsletter-form-wrap"><form id="newsletter-form"><label for="newsletter-email">Your next adventure starts in your inbox.</label><div class="email-row"><input id="newsletter-email" name="email" type="email" autocomplete="email" placeholder="Your email address" required maxlength="254"><button class="button button-amber" type="submit">Subscribe <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#ArrowRight"></use></svg></button></div><p class="newsletter-trust"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#Check"></use></svg> Trusted by readers in 120+ countries · Unsubscribe anytime</p><p class="form-status" id="newsletter-status" role="status">Demo signup: no email is stored or sent.</p></form><div class="press"><span>As featured in · concept only</span><div><span>Condé Nast<br><strong>TRAVELER</strong></span><span class="lonely">lonely planet</span><span class="bbc">BBC <small>TRAVEL</small></span></div></div></div>
+      </div>
+    </section>
+
+    <section class="photo-section section-wrap" aria-labelledby="photos-title">
+      <div class="section-heading"><div><p class="eyebrow">Little moments, far from ordinary</p><h2 id="photos-title">@WanderlustChron</h2><p class="photo-subtitle">Follow the journey, one frame at a time.</p></div><button class="text-link teal-link" data-info="instagram"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#Camera"></use></svg> Follow on Instagram <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#ArrowUpRight"></use></svg></button></div>
+      <div class="photo-grid" id="photo-grid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner section-wrap">
+      <div class="footer-intro"><a class="brand" href="#top"><svg class="icon brand-mark" aria-hidden="true"><use href="assets/icons.svg#Compass"></use></svg><span>Wanderlust<span class="brand-second">Chronicles<span class="brand-dot">.</span></span></span></a><p>For the places you haven't been.<br>And the person you'll become.</p><span class="footer-note">An independent travel magazine concept.</span></div>
+      <div class="footer-links"><h3>Explore</h3><a href="#stories" data-category="Destinations">Destinations</a><a href="#stories" data-category="Adventure">Adventure</a><a href="#stories" data-category="Culture">Culture</a><a href="#stories" data-category="Food &amp; Drink">Food &amp; Drink</a><a href="#stories" data-category="Budget Travel">Budget Travel</a><a href="#stories" data-category="Travel Tips">Travel Tips</a></div>
+      <div class="footer-links"><h3>About</h3><button data-info="story">Our Story</button><button data-info="write">Write for Us</button><button data-info="guidelines">Editorial Guidelines</button><button data-info="press">Press Kit</button><button data-info="advertise">Advertise</button></div>
+      <div class="footer-links"><h3>Resources</h3><button data-info="packing">Packing Lists</button><button data-info="budget">Budget Calculators</button><button data-info="insurance">Travel Insurance Guide</button><button data-info="visa">Visa Information</button><button data-info="flights">Flight Deals</button></div>
+      <div class="footer-links"><h3>Connect</h3><a href="#newsletter">Newsletter</a><button data-info="instagram">Instagram</button><button data-info="social">YouTube</button><button data-info="social">Twitter/X</button><button data-info="social">Pinterest</button><button data-info="rss">RSS Feed</button></div>
+    </div>
+    <div class="footer-bottom section-wrap"><span>© 2026 Wanderlust Chronicles. All rights reserved.</span><div><button data-info="privacy">Privacy Policy</button><button data-info="terms">Terms</button><button data-info="cookies">Cookie Settings</button></div></div>
+    <p class="affiliate-note section-wrap">We independently select everything we recommend. When you buy through our links, we may earn a commission. This concept has no affiliate links, commercial partnerships or connected services. Photography is illustrative.</p>
+  </footer>
+  <button class="back-top icon-button" id="back-top" aria-label="Back to top" hidden><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#ArrowUp"></use></svg></button>
+  <div class="toast" id="toast" role="status"></div>
+
+  <dialog class="menu-dialog" id="menu-dialog" aria-label="Navigation">
+    <div class="menu-top"><span class="menu-wordmark">Wanderlust Chronicles.</span><button class="icon-button" id="menu-close" aria-label="Close navigation" autofocus><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#X"></use></svg></button></div>
+    <p class="eyebrow">Where would you like to go?</p>
+    <nav aria-label="Mobile navigation"><a href="#stories" data-category="Destinations">Destinations <span>42</span></a><a href="#stories" data-category="Adventure">Adventure <span>28</span></a><a href="#stories" data-category="Culture">Culture <span>19</span></a><a href="#stories" data-category="Food &amp; Drink">Food &amp; Drink <span>24</span></a><a href="#stories" data-category="Budget Travel">Budget Travel <span>16</span></a><a href="#stories" data-category="Travel Tips">Travel Tips <span>31</span></a></nav>
+    <a class="button button-teal" id="mobile-subscribe" href="#newsletter">Get the Thursday letter <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#ArrowRight"></use></svg></a>
+    <p class="concept-note">Archive counts are illustrative.</p>
+  </dialog>
+  <dialog class="content-dialog" id="content-dialog" aria-labelledby="dialog-title">
+    <button class="dialog-close icon-button" id="dialog-close" aria-label="Close dialog" autofocus><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#X"></use></svg></button>
+    <div id="dialog-content"></div>
+  </dialog>
+  <noscript><p class="noscript">Enable JavaScript to explore sample stories, filters, saved articles and reading previews. The featured story, Portugal feature and newsletter information remain available on this page.</p></noscript>
+</body>
+</html>

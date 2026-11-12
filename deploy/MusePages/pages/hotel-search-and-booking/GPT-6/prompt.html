@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>StayFinder | A Better Stay in Tokyo | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>StayFinder | A Better Stay in Tokyo</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code>Create a hotel search results and booking page for a travel platform called &quot;StayFinder&quot; that helps travelers compare and book accommodations. The design should feel trustworthy, easy to scan, and conversion-optimized.
+
+1. NAVIGATION BAR
+- Logo: &quot;StayFinder&quot; with a bed/house icon
+- Links: Hotels, Vacation Rentals, Experiences, Deals
+- Right side: currency selector (USD ▾), &quot;List Your Property&quot; text link, heart icon (saved), user avatar with &quot;Sign In&quot;
+- Search bar integrated into nav on scroll (compact version)
+- White background with bottom border (#E5E7EB)
+
+2. SEARCH BAR (prominent, full-width card below nav)
+- White card with soft shadow, 16px border-radius
+- Fields in a row:
+  - 📍 Destination: &quot;Tokyo, Japan&quot; (pre-filled, with autocomplete dropdown)
+  - 📅 Check-in: &quot;Apr 14, 2026&quot; (date picker)
+  - 📅 Check-out: &quot;Apr 21, 2026&quot; (date picker)
+  - 👥 Guests: &quot;2 Adults, 0 Children&quot; (dropdown stepper)
+  - Rooms: &quot;1 Room&quot; (dropdown)
+- &quot;Search&quot; button (solid #2563EB blue, large)
+- Below search: &quot;7 nights · 245 hotels found · Prices include taxes &amp; fees&quot;
+
+3. FILTER SIDEBAR (left column, 280px wide)
+- Sticky on scroll, scrollable if content overflows
+- Map toggle: &quot;Show Map&quot; button with mini-map preview
+- Price Range: dual-handle slider $50–$800/night, with histogram showing distribution
+- Star Rating: checkboxes — ★★★★★ (42), ★★★★ (89), ★★★ (67), ★★ (31), ★ (16)
+- Guest Rating: &quot;9+ Exceptional&quot; (28), &quot;8+ Excellent&quot; (64), &quot;7+ Very Good&quot; (112)
+- Property Type: Hotel (156), Ryokan (34), Hostel (28), Apartment (18), Capsule Hotel (9)
+- Neighborhood: Shinjuku (52), Shibuya (41), Ginza (38), Asakusa (29), Roppongi (22), Akihabara (15), more...
+- Amenities: Free WiFi, Breakfast Included, Pool, Gym, Free Cancellation, Airport Shuttle, Onsen/Hot Spring
+- &quot;Clear All Filters&quot; link at top
+- Each filter shows result count in parentheses
+
+4. SORT BAR (above results)
+- Sort dropdown: &quot;Recommended&quot; (default), &quot;Price: Low to High&quot;, &quot;Price: High to Low&quot;, &quot;Guest Rating&quot;, &quot;Distance to Center&quot;
+- View toggle: list view (default) / grid view icons
+- Results count: &quot;245 hotels found&quot;
+- Active filter chips with X to remove: &quot;Shinjuku ✕&quot;, &quot;Free Cancellation ✕&quot;, &quot;4+ Stars ✕&quot;
+
+5. HOTEL RESULT CARDS (list view — horizontal cards)
+- Card 1: &quot;Park Hyatt Tokyo&quot;
+  - Photo carousel (4 images, dots indicator, arrow navigation)
+  - ★★★★★ · Shinjuku
+  - Guest rating: 9.4/10 &quot;Exceptional&quot; (1,284 reviews)
+  - Key amenities icons: WiFi, Pool, Gym, Spa, Restaurant
+  - &quot;Lost in Translation&quot; filming location&quot; badge
+  - Room: &quot;Deluxe King — City View&quot; · 45m²
+  - Price: ~~$580~~ &quot;$412/night&quot; (29% off) · &quot;$2,884 total for 7 nights&quot;
+  - &quot;Free cancellation until Apr 7&quot; in green
+  - &quot;Only 3 rooms left!&quot; urgency text in red
+  - &quot;Book Now&quot; button (solid blue) + heart save icon
+
+- Card 2: &quot;MUJI HOTEL GINZA&quot;
+  - Photo carousel
+  - ★★★★ · Ginza
+  - Guest rating: 9.1/10 &quot;Excellent&quot; (876 reviews)
+  - Key amenities: WiFi, Restaurant, Laundry
+  - &quot;Minimalist Design&quot; style badge
+  - Room: &quot;Type E — Double&quot; · 32m²
+  - Price: &quot;$198/night&quot; · &quot;$1,386 total&quot;
+  - &quot;Free cancellation until Apr 10&quot;
+  - &quot;Book Now&quot; button
+
+- Card 3: &quot;Hoshinoya Tokyo&quot;
+  - Photo carousel
+  - ★★★★★ · Otemachi
+  - Guest rating: 9.6/10 &quot;Exceptional&quot; (542 reviews)
+  - Key amenities: WiFi, Onsen, Spa, Restaurant, Room Service
+  - &quot;Traditional Ryokan&quot; style badge
+  - Room: &quot;Sakura Suite — Garden View&quot; · 56m²
+  - Price: ~~$720~~ &quot;$549/night&quot; · &quot;$3,843 total&quot;
+  - &quot;Includes breakfast &amp; onsen access&quot;
+  - &quot;Book Now&quot; button
+
+- Card 4: &quot;Capsule Hotel Anshin Oyado&quot;
+  - Photo carousel
+  - ★★★ · Shinjuku
+  - Guest rating: 8.2/10 &quot;Very Good&quot; (2,105 reviews)
+  - Key amenities: WiFi, Sauna, Laundry, Lounge
+  - &quot;Budget Pick&quot; badge
+  - Room: &quot;Premium Capsule — Male Floor&quot;
+  - Price: &quot;$38/night&quot; · &quot;$266 total&quot;
+  - &quot;Pay at property&quot;
+  - &quot;Book Now&quot; button
+
+- Each card: 12px border-radius, hover shadow lift, photo left (40%), details right (60%)
+- Sponsored result label on first result (subtle &quot;Ad&quot; badge)
+
+6. MAP VIEW (toggleable overlay or split-screen)
+- Interactive map with price bubble markers ($38, $198, $412, $549)
+- Markers color-coded: blue for available, gray for sold out
+- Click marker to show mini card with photo, name, rating, price
+- Cluster markers for dense areas
+- Map controls: zoom, satellite toggle, &quot;Search this area&quot; button
+
+7. PAGINATION
+- &quot;Showing 1–20 of 245 results&quot;
+- Page numbers: 1, 2, 3, ... 13 with Previous/Next arrows
+- &quot;Load More&quot; alternative button
+
+8. HOTEL DETAIL MODAL (opens on card click — or separate detail section)
+- Large photo gallery: 5+ photos in grid layout (main large image + 4 thumbnails), &quot;View all 32 photos&quot; link
+- Hotel name, star rating, address with map pin link
+- Guest rating breakdown: Cleanliness 9.6, Location 9.8, Service 9.2, Value 8.9, Facilities 9.0
+- Description: 2-3 paragraph overview of the hotel
+- Room types comparison table:
+  - Standard King: 30m², city view, $350/night
+  - Deluxe King: 45m², city view, $412/night — &quot;Most Popular&quot;
+  - Suite: 72m², park view, $680/night
+  - Each row: room photo, size, bed type, view, max guests, price, &quot;Select&quot; button
+- Amenities grid (3 columns): Full list with icons
+- Location section: embedded map, nearby attractions with walking distances
+  - Shinjuku Station: 8 min walk
+  - Shinjuku Gyoen: 12 min walk
+  - Meiji Shrine: 20 min by train
+- House Rules: Check-in 3:00 PM, Check-out 11:00 AM, No smoking, Pets not allowed
+- Reviews section: 3 featured reviews with response from hotel, &quot;Read all 1,284 reviews&quot; link
+- Sticky booking bar at bottom: selected room, dates, total price, &quot;Reserve Now&quot; button
+
+9. TRUST &amp; SOCIAL PROOF ELEMENTS
+- &quot;Price Match Guarantee&quot; badge with shield icon
+- &quot;Verified Reviews&quot; badge
+- &quot;Secure Booking&quot; with lock icon
+- &quot;24/7 Customer Support&quot; with headset icon
+- Payment method logos: Visa, Mastercard, Amex, PayPal, Apple Pay
+- &quot;Over 2 million bookings made through StayFinder&quot;
+
+10. RECENTLY VIEWED (horizontal scroll section at bottom)
+- &quot;Your Recently Viewed Hotels&quot;
+- 4-5 compact cards showing photo, name, rating, price
+- Each card links back to full listing
+
+11. FOOTER
+- 4 columns: Popular Destinations, Property Types, Company, Support
+- Popular Destinations: Tokyo, Paris, New York, Bali, London, Barcelona
+- Property Types: Hotels, Vacation Rentals, Hostels, Resorts, Apartments
+- Company: About, Careers, Press, Affiliate Program, Blog
+- Support: Help Center, Contact Us, Cancellation Policy, COVID-19 Info
+- Currency &amp; language selectors
+- © 2026 StayFinder Inc.
+
+Design: Clean, functional, trust-building. Primary: #2563EB (blue), secondary: #1E40AF (dark blue), success: #16A34A (green for free cancellation), warning: #DC2626 (red for urgency), neutral backgrounds: white and #F8FAFC. Typography: Inter for all text. Cards with 12px border-radius, clear visual hierarchy, generous whitespace. Price always prominent and right-aligned. Shadows subtle (0 1px 3px rgba(0,0,0,0.1)).
+
+Responsive: On mobile, filter sidebar becomes a bottom sheet modal triggered by &quot;Filters&quot; button. Search bar fields stack vertically in collapsible panel. Hotel cards switch to vertical layout (photo on top). Map view becomes full-screen overlay. Sort bar becomes horizontal scroll of chips. Sticky bottom bar shows lowest price + &quot;View Deal&quot; on card scroll. Photo gallery becomes horizontal swipe carousel.</code></pre>
+    </section>
+  </main>
+</body>
+</html>
