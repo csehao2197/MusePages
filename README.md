@@ -132,7 +132,7 @@ AI 页面生成工作流以用户指定的 `<ai model>` 为输入，由 AI agent
 
 ### dist工作流
 
-dist 工作流以 `deploy\config.json` 中的发布选择为输入，由 `src\workflows\deploy-site.mjs` 组装本地目标网站，输出到 `deploy\dist\MusePages\`。`deploy\dist\` 与 `deploy\site\` 使用相同的站点目录结构。
+dist 工作流以 `deploy\config.json` 中的发布选择为输入，由 `node src/workflows/deploy-site.mjs dist` 组装本地目标网站，输出到 `deploy\dist\MusePages\`。`deploy\dist\` 与 `deploy\site\` 使用相同的站点目录结构。
 
 当前命令核验候选站点后比较完整文件树与文件内容：一致时保留目标文件并提示 `No changes`，有变化时提示 `Updated local static site`，分别统计新增、更新、移除、未变的模型首页，总数单独显示。两种结果都明确说明仅处理本地站点；变化时仍使用整站安全切换，未变计数表示内容一致，逐作品增量发布仍是下文的目标设计。
 

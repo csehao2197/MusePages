@@ -612,7 +612,7 @@ test("concurrent sync operations preserve one option and leave no lock behind", 
   await assert.rejects(lstat(path.join(workspace, "deploy", ".publish.lock")), { code: "ENOENT" });
 });
 
-test("the JavaScript CLI synchronizes options and npm run dist rebuilds the exact configured website", async (t) => {
+test("the JavaScript dist CLI and npm run dist assemble the exact configured website", async (t) => {
   const workspace = await fixture(t);
   const workflows = path.join(workspace, "src", "workflows");
   await mkdir(workflows);
@@ -623,42 +623,48 @@ test("the JavaScript CLI synchronizes options and npm run dist rebuilds the exac
   await result(workspace, "001-travel", "model-a");
   await result(workspace, "001-travel", "model-b");
   const cli = (command) => {
-    const executable = command === "publish" ? (process.platform === "win32" ? process.env.ComSpec : "npm") : process.execPath;
-    const args = command === "publish"
+    const executable = command === "npm-dist" ? (process.platform === "win32" ? process.env.ComSpec : "npm") : process.execPath;
+    const args = command === "npm-dist"
       ? (process.platform === "win32" ? ["/d", "/s", "/c", "npm run dist"] : ["run", "dist"])
-      : [path.join(workflows, "deploy-site.mjs"), command];
+      : [path.join(workflows, "deploy-site.mjs"), ...(command ? [command] : [])];
     const execution = spawnSync(executable, args, {
       cwd: workspace, encoding: "utf8", timeout: 15000,
     });
     assert.equal(execution.status, 0, execution.stderr);
     return execution.stdout;
   };
+  const obsolete = spawnSync(process.execPath, [path.join(workflows, "deploy-site.mjs"), "publish"], {
+    cwd: workspace, encoding: "utf8", timeout: 15000,
+  });
+  assert.equal(obsolete.status, 1);
+  assert.match(obsolete.stderr, /Unknown command: publish\. Use dist, sync, or watch\./);
   assert.match(cli("sync"), /options synchronized: 2/);
   const config = await configFile(workspace);
   config.pages["001-travel"][0].enabled = true;
   await saveConfig(workspace, config);
-  const first = cli("publish");
+  const first = cli("dist");
   assert.match(first, /Updated local static site: 1 added, 0 updated, 0 removed, 0 unchanged/);
   assert.match(first, /Total: 1 pages from 1 prompts/);
   assert.match(first, /in deploy\\dist\\MusePages\./);
   assert.deepEqual(await readdir(path.join(workspace, "deploy", "dist")), ["MusePages"]);
   await assert.rejects(lstat(path.join(workspace, "deploy", "site")), { code: "ENOENT" });
   await assert.rejects(lstat(path.join(workspace, "deploy", "MusePages")), { code: "ENOENT" });
-  const unchanged = cli("publish");
+  const unchanged = cli("npm-dist");
   assert.match(unchanged, /No changes: local static site is up to date \(1 pages from 1 prompts\)/);
   assert.match(unchanged, /No remote deployment was performed/);
   assert.doesNotMatch(unchanged, /Published|Updated local static site/);
+  assert.match(cli(), /No changes: local static site is up to date/);
   const target = path.join(workspace, "deploy", "dist", "MusePages", "pages", "travel");
   assert.deepEqual(await readdir(target), ["model-a"]);
   config.pages["001-travel"][1].enabled = true;
   await saveConfig(workspace, config);
-  const added = cli("publish");
+  const added = cli("npm-dist");
   assert.match(added, /Updated local static site: 1 added, 0 updated, 0 removed, 1 unchanged/);
   assert.match(added, /Total: 2 pages from 1 prompts/);
   config.pages["001-travel"][0].enabled = false;
   config.pages["001-travel"][1].enabled = false;
   await saveConfig(workspace, config);
-  const removed = cli("publish");
+  const removed = cli("npm-dist");
   assert.match(removed, /Updated local static site: 0 added, 0 updated, 2 removed, 0 unchanged/);
   assert.match(removed, /Total: 0 pages from 0 prompts/);
   await assert.rejects(lstat(target), { code: "ENOENT" });

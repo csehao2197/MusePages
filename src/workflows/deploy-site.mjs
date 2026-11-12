@@ -553,7 +553,7 @@ export async function watchDeployConfig(workspace = root) {
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   try {
-    const command = process.argv[2] ?? "publish";
+    const command = process.argv[2] ?? "dist";
     if (command === "sync") {
       const config = await syncDeployConfig();
       console.log(`Deployment options synchronized: ${pageOptions(config).length}`);
@@ -561,7 +561,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
       const watcher = await watchDeployConfig();
       console.log("Watching out\\pages for new deployment options. Press Ctrl+C to stop.");
       for (const signal of ["SIGINT", "SIGTERM"]) process.once(signal, () => { void watcher.close(); });
-    } else if (command === "publish") {
+    } else if (command === "dist") {
       const result = await publishSite();
       console.log(result.changed
         ? `Updated local static site: ${result.changes.added} added, ${result.changes.updated} updated, ${result.changes.removed} removed, ${result.changes.unchanged} unchanged.`
@@ -569,7 +569,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
       if (result.changed) console.log(`Total: ${result.pages} pages from ${result.prompts} prompts in deploy\\dist\\MusePages.`);
       console.log("No remote deployment was performed.");
     } else {
-      throw Error(`Unknown command: ${command}. Use publish, sync, or watch.`);
+      throw Error(`Unknown command: ${command}. Use dist, sync, or watch.`);
     }
   } catch (error) {
     console.error("Deployment failed:", error);
