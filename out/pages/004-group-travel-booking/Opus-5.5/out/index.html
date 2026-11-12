@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TrekTribe | Better Together</title>
+<meta name="description" content="Plan group trips for 6-50 people with shared itineraries, split payments, and zero hassle.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-mount" viewBox="0 0 24 24"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20M2 12h20"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-puzzle" viewBox="0 0 24 24"><path d="M15.39 4.39a1 1 0 0 0 1.68-.47 2.5 2.5 0 1 1 3.01 3.01 1 1 0 0 0-.47 1.68l1.68 1.68a2.4 2.4 0 0 1 0 3.42l-1.61 1.61a1 1 0 0 1-1.68-.47 2.5 2.5 0 1 0-3.01 3.01 1 1 0 0 1 .47 1.68l-1.61 1.61a2.4 2.4 0 0 1-3.42 0l-1.68-1.68a1 1 0 0 0-1.68.47 2.5 2.5 0 1 1-3.01-3.01 1 1 0 0 0 .47-1.68l-1.68-1.68a2.4 2.4 0 0 1 0-3.42l1.61-1.61a1 1 0 0 1 1.68.47 2.5 2.5 0 1 0 3.01-3.01 1 1 0 0 1-.47-1.68l1.61-1.61a2.4 2.4 0 0 1 3.42 0z"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  <symbol id="i-vote" viewBox="0 0 24 24"><path d="m9 12 2 2 4-4M5 7c0-1.1.9-2 2-2h10a2 2 0 0 1 2 2v12H5V7ZM22 19H2"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v16a2 2 0 0 0 2 2h16M18 17V9M13 17V5M8 17v-3"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M10.27 21a2 2 0 0 0 3.46 0M3.26 15.33A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.67C19.41 13.96 18 12.5 18 8A6 6 0 0 0 6 8c0 4.5-1.41 5.96-2.74 7.33"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M11.5 2.3a.5.5 0 0 1 1 0l2.3 4.7a2 2 0 0 0 1.5 1.1l5.2.8a.5.5 0 0 1 .3.9l-3.8 3.7a2 2 0 0 0-.6 1.8l.9 5.2a.5.5 0 0 1-.8.6l-4.6-2.5a2 2 0 0 0-1.9 0l-4.6 2.5a.5.5 0 0 1-.8-.6l.9-5.2a2 2 0 0 0-.6-1.8L1.7 9.8a.5.5 0 0 1 .3-.9l5.2-.8a2 2 0 0 0 1.5-1.1z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 4.99-5.54 10.19-7.4 11.8a1 1 0 0 1-1.2 0C9.54 20.19 4 14.99 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+  <symbol id="i-chev-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-chev-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-refund" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8M3 3v5h5"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+  <symbol id="i-monitor" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="3" rx="2"/><path d="M8 21h8M12 17v4"/></symbol>
+  <symbol id="i-headset" viewBox="0 0 24 24"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></symbol>
+  <symbol id="i-award" viewBox="0 0 24 24"><path d="m15.48 12.89 1.51 8.53a.5.5 0 0 1-.81.47l-3.58-2.69a1 1 0 0 0-1.2 0l-3.59 2.69a.5.5 0 0 1-.81-.47l1.51-8.53"/><circle cx="12" cy="8" r="6"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-instagram" viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37M17.5 6.5h.01"/></symbol>
+  <symbol id="i-facebook" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></symbol>
+  <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></symbol>
+  <symbol id="i-youtube" viewBox="0 0 24 24"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></symbol>
+  <symbol id="i-pinterest" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M11 8.5c2.5-1 5 .3 5 2.8 0 2.2-1.5 3.7-3.2 3.7-1 0-1.8-.6-1.8-1.6M12 10l-2.5 10"/></symbol>
+</defs></svg>
+
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="top">
+  <div class="wrap nav-row">
+    <a class="logo" href="#top"><span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M2 26 12 9l5 8 4-6 9 15Z" fill="#E85D04"/><circle cx="11" cy="22" r="2.2" fill="#1A1A2E"/><circle cx="16" cy="21" r="2.2" fill="#1A1A2E"/><circle cx="21" cy="22" r="2.2" fill="#1A1A2E"/></svg></span>TrekTribe</a>
+    <nav class="links" id="links" aria-label="Primary"><a href="#packages">Destinations</a><a href="#packages" aria-current="page">Group Trips</a><a href="#corporate">Corporate Retreats</a><a href="#how">About</a><a href="#faq">Blog</a></nav>
+    <a class="btn btn-orange nav-cta" href="#quote">Start a Group Trip</a>
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="links" aria-label="Open menu"><svg class="ic"><use href="#i-menu"/></svg></button>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="heroTitle">
+    <div class="hero-bg" data-scene="hero"></div>
+    <div class="hero-shade"></div>
+    <div class="wrap hero-in">
+      <h1 id="heroTitle">Adventure Is<br>Better <span>Together</span></h1>
+      <p class="hero-sub">Plan group trips for 6-50 people with shared itineraries, split payments, and zero hassle</p>
+      <div class="hero-ctas"><a class="btn btn-orange btn-lg" href="#packages">Browse Group Packages</a><a class="btn btn-outline-white btn-lg" href="#planning">Build Custom Trip</a></div>
+      <ul class="proof"><li><strong>12,400+</strong> groups served</li><li><strong>4.9<svg class="ic star"><use href="#i-star"/></svg></strong> average rating</li><li><strong>98%</strong> would book again</li></ul>
+    </div>
+  </section>
+
+  <section class="section" id="how" aria-labelledby="howTitle">
+    <div class="wrap">
+      <header class="head center"><p class="eyebrow">How it works</p><h2 id="howTitle">From group chat to group trip in four steps</h2></header>
+      <ol class="steps">
+        <li><span class="step-ic"><svg class="ic"><use href="#i-globe"/></svg></span><span class="step-n">Step 1</span><h3>Choose a Destination</h3><p>Pick from 80+ curated group destinations</p></li>
+        <li><span class="step-ic"><svg class="ic"><use href="#i-users"/></svg></span><span class="step-n">Step 2</span><h3>Set Your Group Size</h3><p>6 to 50 travelers, we handle the logistics</p></li>
+        <li><span class="step-ic"><svg class="ic"><use href="#i-puzzle"/></svg></span><span class="step-n">Step 3</span><h3>Customize Together</h3><p>Share a planning link — everyone votes on activities</p></li>
+        <li><span class="step-ic"><svg class="ic"><use href="#i-card"/></svg></span><span class="step-n">Step 4</span><h3>Book &amp; Split</h3><p>Each member pays their share directly</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section warm" id="calculator" aria-labelledby="calcTitle">
+    <div class="wrap calc">
+      <div class="calc-in">
+        <p class="eyebrow">Group cost calculator</p>
+        <h2 id="calcTitle">Estimate Your Group Trip Cost</h2>
+        <div class="ctrl">
+          <div class="ctrl-row"><label for="size">Group size</label><output id="sizeOut" for="size">12 people</output></div>
+          <div class="size-wrap"><button type="button" class="sq" id="sizeMinus" aria-label="Fewer people"><svg class="ic"><use href="#i-minus"/></svg></button><input type="range" id="size" min="6" max="50" value="12"><button type="button" class="sq" id="sizePlus" aria-label="More people"><svg class="ic"><use href="#i-plus"/></svg></button></div>
+        </div>
+        <div class="ctrl"><label for="dest">Destination</label><select id="dest"><option>Bali</option><option>Costa Rica</option><option>Iceland</option><option>Japan</option><option>Morocco</option><option>Portugal</option><option>Thailand</option><option>Peru</option></select></div>
+        <div class="ctrl"><span class="lab" id="lenLbl">Trip length</span><div class="seg" role="radiogroup" aria-labelledby="lenLbl">
+          <label><input type="radio" name="len" value="5"><span>5 days</span></label><label><input type="radio" name="len" value="7" checked><span>7 days</span></label><label><input type="radio" name="len" value="10"><span>10 days</span></label><label><input type="radio" name="len" value="custom"><span>Custom</span></label></div>
+          <div class="custom" id="customWrap" hidden><label for="customDays">Number of days</label><input type="number" id="customDays" min="3" max="21" value="12"><small>3–21 days</small></div></div>
+        <div class="ctrl"><span class="lab" id="tierLbl">Accommodation tier</span><div class="seg" role="radiogroup" aria-labelledby="tierLbl">
+          <label><input type="radio" name="tier" value="budget"><span>Budget</span></label><label><input type="radio" name="tier" value="mid" checked><span>Mid-Range</span></label><label><input type="radio" name="tier" value="premium"><span>Premium</span></label></div></div>
+      </div>
+      <aside class="calc-out" aria-live="polite" aria-labelledby="estTitle">
+        <h3 id="estTitle" class="vh">Live estimate</h3>
+        <p class="o-label">Per person</p><p class="o-pp" id="pp">$1,240</p>
+        <div class="o-row"><span>Total group cost</span><strong id="total">$14,880 <small>(12 people)</small></strong></div>
+        <p class="save" id="save"><svg class="ic"><use href="#i-check"/></svg>You save $3,720 vs booking individually</p>
+        <ul class="incl"><li><svg class="ic"><use href="#i-check"/></svg>Accommodation &amp; ground transport</li><li><svg class="ic"><use href="#i-check"/></svg>Daily breakfast &amp; 3 group dinners</li><li><svg class="ic"><use href="#i-check"/></svg>Local guide &amp; 24/7 trip support</li></ul>
+        <a class="btn btn-orange btn-block" href="#quote" id="detailQuote">Get Detailed Quote</a>
+        <p class="fine">Estimate excludes flights. Final price depends on dates and availability.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section" id="packages" aria-labelledby="pkgTitle">
+    <div class="wrap">
+      <header class="head split"><div><p class="eyebrow">Featured group packages</p><h2 id="pkgTitle">Most Popular Group Trips</h2></div>
+        <div class="tabs" role="group" aria-label="Filter packages">
+          <button class="tab on" data-f="all" aria-pressed="true">All</button><button class="tab" data-f="adventure" aria-pressed="false">Adventure</button><button class="tab" data-f="beach" aria-pressed="false">Beach &amp; Relax</button><button class="tab" data-f="cultural" aria-pressed="false">Cultural</button><button class="tab" data-f="corporate" aria-pressed="false">Corporate</button></div></header>
+      <div class="pkgs" id="pkgs"></div>
+      <p class="pkg-empty" id="pkgEmpty" hidden>No packages in this category yet — <a href="#corporate">see Corporate Retreats</a>.</p>
+      <div class="pkgs-more"><a class="link" href="#quote" data-toast="The full catalog of 40+ packages is a demo.">View All 40+ Packages <svg class="ic"><use href="#i-arrow"/></svg></a></div>
+    </div>
+  </section>
+
+  <section class="section warm" id="planning" aria-labelledby="planTitle">
+    <div class="wrap plan">
+      <div class="devices" aria-label="Preview of the shared planning dashboard">
+        <div class="laptop"><div class="screen">
+          <div class="dash-top"><strong>Costa Rica · Jun 12–19</strong><span class="avs"><i style="--c:#E85D04">M</i><i style="--c:#059669">A</i><i style="--c:#7C3AED">J</i><i style="--c:#0EA5E9">K</i><b>+10</b></span></div>
+          <div class="dash-grid">
+            <div class="dash-card"><p class="dc-t">Vote: Day 3 activity</p><div id="votes"></div><p class="dc-s" id="voteNote">Tap to cast your vote</p></div>
+            <div class="dash-card"><p class="dc-t">Who's confirmed</p><div class="ring"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.9" fill="none" stroke="#FED7AA" stroke-width="4"/><circle id="confRing" cx="18" cy="18" r="15.9" fill="none" stroke="#059669" stroke-width="4" stroke-dasharray="71 100" transform="rotate(-90 18 18)"/></svg><span id="confTxt">10/14</span></div><p class="dc-s">4 pending · reminders on</p></div>
+            <div class="dash-card wide"><p class="dc-t">Shared itinerary</p><ul class="mini-it"><li><b>Jun 12</b>Arrive San José · Welcome dinner</li><li><b>Jun 13</b>Arenal volcano hike</li><li><b>Jun 15</b>Monteverde canopy zipline</li></ul></div>
+          </div>
+        </div><div class="base"></div></div>
+        <div class="phone"><div class="ph-screen"><p class="ph-t">Group chat</p><p class="bub in">Who's in for the night tour?</p><p class="bub out">Me! Just voted for it</p><p class="bub in">Booked for 9 of us</p><div class="ph-in">Message…</div></div></div>
+      </div>
+      <div class="plan-copy">
+        <p class="eyebrow">Collaborative planning</p>
+        <h2 id="planTitle">Plan it together, without the 200-message group chat</h2>
+        <ul class="feats">
+          <li><span><svg class="ic"><use href="#i-link"/></svg></span>Share a planning link — no app download needed</li>
+          <li><span><svg class="ic"><use href="#i-vote"/></svg></span>Vote on activities, restaurants, and excursions as a group</li>
+          <li><span><svg class="ic"><use href="#i-calendar"/></svg></span>Real-time shared itinerary synced across all devices</li>
+          <li><span><svg class="ic"><use href="#i-chat"/></svg></span>Built-in group chat for trip discussions</li>
+          <li><span><svg class="ic"><use href="#i-chart"/></svg></span>Dashboard showing who's confirmed, who's pending</li>
+          <li><span><svg class="ic"><use href="#i-bell"/></svg></span>Automated reminders for payments, passports, and packing</li>
+        </ul>
+        <a class="btn btn-outline-orange" href="#planning" data-toast="Planning tool preview — try voting in the dashboard on this page.">Try the Planning Tool</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="payments" aria-labelledby="payTitle">
+    <div class="wrap pay">
+      <div class="pay-copy">
+        <p class="eyebrow">Split payments</p>
+        <h2 id="payTitle">Everyone Pays Their Own Way</h2>
+        <ul class="checks">
+          <li><svg class="ic"><use href="#i-link"/></svg>Individual payment links for each group member</li>
+          <li><svg class="ic"><use href="#i-calendar"/></svg>Flexible payment plans: 3 installments or pay in full</li>
+          <li><svg class="ic"><use href="#i-chart"/></svg>Track who has paid and who hasn't (dashboard preview)</li>
+          <li><svg class="ic"><use href="#i-refund"/></svg>Automatic refund policy for cancellations</li>
+        </ul>
+        <ul class="trust"><li><svg class="ic"><use href="#i-lock"/></svg>Stripe secured</li><li><svg class="ic"><use href="#i-shield"/></svg>256-bit encryption</li><li><svg class="ic"><use href="#i-refund"/></svg>Refund guarantee</li></ul>
+      </div>
+      <div class="paycard" aria-labelledby="splitTitle">
+        <div class="split-head"><div><p id="splitTitle" class="s-t">Costa Rica group trip</p><p class="s-total">$12,000 <small>÷ 8 travelers</small></p></div>
+          <div class="plan-toggle" role="radiogroup" aria-label="Payment plan"><label><input type="radio" name="plan" value="full" checked><span>Pay in full</span></label><label><input type="radio" name="plan" value="3"><span>3 installments</span></label></div></div>
+        <div class="progress"><span id="payBar"></span></div>
+        <p class="p-meta"><strong id="paidAmt">$7,500</strong> collected · <span id="paidCnt">5 of 8 paid</span></p>
+        <ul class="people" id="people"></ul>
+        <p class="fine">Tap a traveler to simulate a payment. Demo only.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="corp" id="corporate" aria-labelledby="corpTitle">
+    <div class="wrap">
+      <header class="head"><p class="eyebrow light">Corporate retreats</p><h2 id="corpTitle">Team Retreats That Actually <span>Build Teams</span></h2><p class="sub">Offsite planning for companies of 10-50 people</p></header>
+      <div class="corp-cards">
+        <article><span class="cc-ic"><svg class="ic"><use href="#i-target"/></svg></span><h3>Team Building Activities</h3><p>Curated experiences from cooking classes to adventure sports</p></article>
+        <article><span class="cc-ic"><svg class="ic"><use href="#i-monitor"/></svg></span><h3>Meeting Spaces Included</h3><p>Conference rooms and WiFi at every destination</p></article>
+        <article><span class="cc-ic"><svg class="ic"><use href="#i-headset"/></svg></span><h3>Dedicated Trip Coordinator</h3><p>Your own planner handles every detail</p></article>
+      </div>
+      <div class="logos"><p>Trusted by teams from 200+ companies</p><ul><li>Northwind</li><li>Lumenco</li><li>BRIGHTLY</li><li>Paperfolk</li><li>Cobalt&amp;Co</li><li>Fieldnote</li></ul></div>
+      <a class="btn btn-orange" href="#quote" id="corpCta">Plan a Corporate Retreat</a>
+    </div>
+  </section>
+
+  <section class="section" id="stories" aria-labelledby="tTitle">
+    <div class="wrap">
+      <header class="head split"><div><p class="eyebrow">Testimonials</p><h2 id="tTitle">Groups who went before you</h2></div>
+        <div class="arrows"><button class="sq" id="tPrev" aria-label="Previous testimonial"><svg class="ic"><use href="#i-chev-left"/></svg></button><button class="sq" id="tNext" aria-label="Next testimonial"><svg class="ic"><use href="#i-chev-right"/></svg></button></div></header>
+      <div class="t-track" id="tTrack" tabindex="0" aria-label="Testimonials">
+        <figure class="tcard"><div class="t-top"><span class="face" style="--c:#059669">M</span><div><strong>Marcus &amp; friends</strong><span>Friends trip · 14 travelers · Costa Rica</span></div></div><div class="stars" aria-label="5 out of 5 stars">★★★★★</div><blockquote>“We took 14 friends to Costa Rica and TrekTribe handled everything. The group voting feature was a game-changer.”</blockquote></figure>
+        <figure class="tcard"><div class="t-top"><span class="face" style="--c:#7C3AED">SK</span><div><strong>Sarah K., VP People</strong><span>Company retreat · 28 travelers · Portugal</span></div></div><div class="stars" aria-label="5 out of 5 stars">★★★★★</div><blockquote>“Our company retreat in Portugal was the best team event we've ever done. Worth every penny.”</blockquote></figure>
+        <figure class="tcard"><div class="t-top"><span class="face" style="--c:#E85D04">JT</span><div><strong>Jess T.</strong><span>Bachelorette · 12 travelers · Bali</span></div></div><div class="stars" aria-label="5 out of 5 stars">★★★★★</div><blockquote>“Planning a bachelorette for 12 girls used to be a nightmare. This made it fun.”</blockquote></figure>
+      </div>
+      <div class="t-dots" id="tDots" role="group" aria-label="Choose testimonial"></div>
+    </div>
+  </section>
+
+  <section class="section warm" id="faq" aria-labelledby="faqTitle">
+    <div class="wrap faq-wrap">
+      <header class="head"><p class="eyebrow">FAQ</p><h2 id="faqTitle">Questions groups ask us</h2><p class="sub">Still unsure? Our group specialists answer 7 days a week.</p></header>
+      <div class="faq" id="faqList">
+        <details><summary>What's the minimum group size?</summary><p>6 travelers for standard packages, 10 for corporate retreats</p></details>
+        <details><summary>Can we customize the itinerary?</summary><p>Absolutely, every package is fully customizable after booking</p></details>
+        <details><summary>How does split payment work?</summary><p>Each member gets a unique payment link and can pay in installments</p></details>
+        <details><summary>What if someone drops out?</summary><p>Flexible cancellation up to 30 days before departure with full refund</p></details>
+        <details><summary>Do you handle flights?</summary><p>We can include flights or you can book your own</p></details>
+        <details><summary>Is travel insurance included?</summary><p>Optional travel insurance available at checkout</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="quote" aria-labelledby="ctaTitle">
+    <div class="wrap">
+      <h2 id="ctaTitle">Your Next Group Adventure Starts Here</h2>
+      <p class="sub">Tell us your dream destination and group size — we'll handle the rest</p>
+      <form class="qform" id="qform" novalidate>
+        <label><span class="vh">Destination</span><input id="qDest" placeholder="Destination, e.g. Bali" autocomplete="off"></label>
+        <label><span class="vh">Group size</span><select id="qSize"><option value="">Group size</option><option>6–10 people</option><option>11–20 people</option><option>21–35 people</option><option>36–50 people</option></select></label>
+        <label><span class="vh">Email</span><input id="qEmail" type="email" placeholder="Email address" autocomplete="email"></label>
+        <button class="btn btn-white" type="submit">Get Free Quote</button>
+      </form>
+      <p class="q-msg" id="qMsg" role="status"></p>
+      <p class="call"><svg class="ic"><use href="#i-phone"/></svg>Or call us: <a href="tel:5552345678">(555) 234-5678</a> — Group travel specialists available 7 days a week</p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap foot">
+    <div class="f-brand"><a class="logo logo-light" href="#top"><span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M2 26 12 9l5 8 4-6 9 15Z" fill="#E85D04"/><circle cx="11" cy="22" r="2.2" fill="#fff"/><circle cx="16" cy="21" r="2.2" fill="#fff"/><circle cx="21" cy="22" r="2.2" fill="#fff"/></svg></span>TrekTribe</a>
+      <div class="social"><a href="#top" aria-label="Instagram"><svg class="ic"><use href="#i-instagram"/></svg></a><a href="#top" aria-label="Facebook"><svg class="ic"><use href="#i-facebook"/></svg></a><a href="#top" aria-label="TikTok"><svg class="ic"><use href="#i-music"/></svg></a><a href="#top" aria-label="YouTube"><svg class="ic"><use href="#i-youtube"/></svg></a><a href="#top" aria-label="Pinterest"><svg class="ic"><use href="#i-pinterest"/></svg></a></div>
+      <ul class="f-badges"><li><svg class="ic"><use href="#i-award"/></svg>B Corp Certified</li><li><svg class="ic"><use href="#i-leaf"/></svg>Carbon Neutral Trips</li></ul></div>
+    <nav aria-label="Destinations"><h3>Destinations</h3><a href="#packages">Bali</a><a href="#packages">Iceland</a><a href="#packages">Costa Rica</a><a href="#packages">Japan</a></nav>
+    <nav aria-label="Trip types"><h3>Trip Types</h3><a href="#packages">Friends</a><a href="#packages">Families</a><a href="#corporate">Corporate</a><a href="#packages">Celebrations</a></nav>
+    <nav aria-label="Company"><h3>Company</h3><a href="#how">About</a><a href="#faq">Blog</a><a href="#top">Careers</a><a href="#top">Press</a></nav>
+    <nav aria-label="Support"><h3>Support</h3><a href="#faq">FAQ</a><a href="#quote">Contact</a><a href="#faq">Cancellations</a><a href="#faq">Insurance</a></nav>
+    <nav aria-label="Legal"><h3>Legal</h3><a href="#top">Terms</a><a href="#top">Privacy</a><a href="#top">Cookies</a></nav>
+  </div>
+  <div class="wrap f-base">© 2026 TrekTribe Adventures</div>
+</footer>
+
+<div class="mbar"><span><small>Groups of 6–50</small><strong>From $1,100/person</strong></span><a class="btn btn-orange" href="#quote">Get Quote</a></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="assets/scenes.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
