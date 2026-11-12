@@ -1,0 +1,38 @@
+export async function exercise(page, assert) {
+  const first = await page.locator("#group-total").innerText();
+  await page.getByLabel("Your group size").fill("24");
+  assert.notEqual(await page.locator("#group-total").innerText(), first);
+  await page.locator("#length").selectOption("custom");
+  assert.ok(await page.locator("#custom-length").isVisible());
+  await page.getByLabel("Custom days", { exact: true }).fill("12");
+  await page.getByRole("button", { name: "Get Detailed Quote" }).click();
+  await page.getByLabel("Your name", { exact: true }).fill("Demo Traveler");
+  await page.getByLabel("Email address", { exact: true }).fill("test@example.invalid");
+  await page.getByRole("button", { name: "Request demo quote" }).click();
+  assert.match(await page.locator("#detail-status").innerText(), /No request was sent/);
+  await page.getByRole("button", { name: "Close dialog" }).click();
+  await page.getByRole("button", { name: "Cultural", exact: true }).click();
+  assert.equal(await page.locator(".package").count(), 4);
+  await page.getByRole("button", { name: "Corporate", exact: true }).click();
+  assert.equal(await page.locator(".package").count(), 1);
+  await page.getByRole("button", { name: "View Trip" }).click();
+  assert.match(await page.locator("dialog").innerText(), /Portugal Coast/);
+  await page.getByRole("button", { name: "Close dialog" }).click();
+  await page.getByRole("button", { name: "All trips", exact: true }).click();
+  await page.locator('[data-vote="hike"]').click();
+  assert.match(await page.locator('[data-vote="hike"]').innerText(), /9/);
+  await page.getByRole("button", { name: "Try the Planning Tool" }).click();
+  await page.getByLabel("Your demo message").fill("<b>Beach day?</b>");
+  await page.getByRole("button", { name: "Send demo message" }).click();
+  assert.match(await page.locator("#chat-log").innerText(), /<b>Beach day\?<\/b>/);
+  assert.equal(await page.locator("#chat-log p").last().locator("b").count(), 0);
+  await page.getByRole("button", { name: "Close dialog" }).click();
+  await page.getByRole("button", { name: "3 installments", exact: true }).click();
+  assert.equal(await page.locator(".split-person b").first().innerText(), "$500");
+  await page.getByText("What's the minimum group size?", { exact: true }).click();
+  assert.ok(await page.locator(".faq details").first().getAttribute("open") !== null);
+  await page.getByRole("textbox", { name: "Quote destination", exact: true }).fill("Bali");
+  await page.getByRole("textbox", { name: "Quote email", exact: true }).fill("test@example.invalid");
+  await page.getByRole("button", { name: "Get Free Quote", exact: true }).click();
+  assert.match(await page.locator("#quote-status").innerText(), /Nothing was sent/);
+}
