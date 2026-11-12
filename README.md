@@ -149,6 +149,10 @@ deploy 工作流以 `deploy\config.json` 中的发布选择为输入，由 `src\
 
 该工作流不调用 AI、不构建作品源码，也不直接上传 Cloudflare。结束后报告本次部署、已部署跳过、状态补写及异常清单；本地汇集成功不代表已完成线上部署。
 
+### publish工作流
+
+`npm run publish` 执行 `src\workflows\publish-site.mjs`：确认 `deploy\dist\` 存在后，清空 `deploy\site\MusePages\` 的全部内容（含隐藏项及 `.git`），将 `deploy\dist\` 的内容直接复制到该目录。目标目录缺失时自动创建；命令仅复制本地文件，源目录保持不变。
+
 ### 生成覆盖检查与模型匹配
 
 生成覆盖情况与模型归属统一以 `out\pages\<prompt>\<ai model>\metadata.json` 为唯一状态来源，字段含义见[元数据与状态](#元数据与状态)。目录存在、发布选项、执行日志或 Agent 返回成功都不能代替元数据记录。
@@ -186,6 +190,7 @@ src\
     render-prompt-pages.mjs          # 目标页面生成脚本
     render-prompt-pages.md           # 目标 Agent 编排指引
     deploy-site.mjs                 # 本地发布入口
+    publish-site.mjs                # 清空并复制静态集合到站点目录
     ...                             # 示例生成与回归测试
   tools\                            # 历史示例验证等辅助工具
   manifest.json                     # 原始需求来源、路径和 SHA-256
@@ -203,6 +208,8 @@ out\
 deploy\
   config.json                       # 发布选择，位于网站目录之外
   dist\                             # Cloudflare 静态发布根目录
+  site\
+    MusePages\                      # npm run publish 的复制目标
 task\
   TASK.md                           # 用户维护的本轮目标
   progress.log                      # 已忽略的执行与恢复记录
