@@ -397,3 +397,6 @@ node --test src\workflows\render-prompt-pages.test.mjs src\workflows\deploy-site
 原始需求于 2026-10-31 下载并保存：`001–064` 来自公开网站的框架无关需求，生成时须参考对应 Next.js adaptation block；`065–100` 来自 GitHub 历史提交中的 Next.js Markdown 规格说明。来源路径、下载信息和 SHA-256 由 `src\manifest.json` 追踪，原始文本、许可证和署名保持不变。
 
 原始作者保留相应权利，本集合不授予额外权限。重新分发或商业使用前，须单独核查需求与静态资源的许可条款；所有 Mock、未知模型归属和功能限制必须如实说明。
+
+# Version
+0.0.1
