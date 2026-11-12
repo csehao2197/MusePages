@@ -1,0 +1,12 @@
+# IGNITE 30 / PulseUp
+
+- Original: `data\prompts\034-fitness-challenge-landing-page\034-fitness-challenge-landing-page.md`; design: `src\workflows\AI Agent\DESIGN.md` (root `DESIGN.md` is absent).
+- Actual selected model: `gpt-6.1-sol`; `GPT-6` is the output directory label. Type: standalone HTML/CSS/JavaScript.
+- Source: this directory. Static export: `out\`. Future public URL: `/pages/fitness-challenge-landing-page/GPT-6/index.html`. Registered, assembled and deployed are separate stages.
+- Completed: generated, previewed, validated and registered. Registration is `enabled: false`, `deployed: false`, weight `1`; collection assembly and deployment were not executed.
+- Features: responsive navigation, seven workout previews, anonymous plan/unlock, exercise check-offs, practice timer, sample nutrition download, story expansion, scoring explanation and keyboard-accessible FAQs/dialogs.
+- Run: use the repository's static preview server; no installation, build, environment variables or backend.
+- Validate from root: `node --check out\pages\034-fitness-challenge-landing-page\GPT-6\app.js` and `node --test out\pages\034-fitness-challenge-landing-page\GPT-6\page.test.mjs`. Actual results and inspected screenshots are recorded in `.checks\`.
+- Actual validation: syntax passed; 8/8 Node/Chromium tests passed, including nested static serving, export equality, all main interactions, unsafe/whitespace input, downloads, keyboard/touch, reduced motion, 48px mobile controls and widths 1440/1024/768/390/320. No request errors, external runtime requests, POST or persisted data. Inspected desktop/mobile full pages, hero, workouts, pricing and the actual 1200×900 preview; details in `.checks\visual-review.txt`.
+- Artwork: original locally authored SVG athlete; story panels and avatar initials intentionally represent fictional scenarios rather than real photos. Lucide icons use the included ISC license; generic camera/video symbols represent concept social channels. System typography, no remote assets.
+- All brands, members, quotes, counts, rankings, prices, rewards and coaches are fictional. April 1, 2026 is archived with a zero countdown. Weight-loss claims are replaced by disclosed habit scenarios. No health outcomes, real enrollment, payments, videos, coaching, macro calculator, photo upload, chat, individual nutrition advice or refund service. Plans/check-offs are in-memory and reset on reload; personal data is not requested or persisted.

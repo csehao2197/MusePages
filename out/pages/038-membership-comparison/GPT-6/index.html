@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#153d32">
+  <meta name="description" content="Explore FORM Athletic Club's fictional fitness memberships. Compare plans, classes and spaces, and build a local-only membership estimate.">
+  <title>Find Your Perfect Membership — FORM Athletic Club</title>
+  <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="demo-strip">A fictional athletic club. Real possibilities, demo prices. <a href="#demo-note">About this experience <span aria-hidden="true">↗</span></a></div>
+  <header class="site-header wrap">
+    <a class="brand" href="#main" aria-label="FORM Athletic Club home"><svg class="brand-mark" viewBox="0 0 36 36" aria-hidden="true"><path d="M5 6h27v7H12v5h16v7H12v7H5z" fill="currentColor"/><path d="m22 27 10-10v15H17z" fill="currentColor" opacity=".45"/></svg><span>FORM<small>ATHLETIC CLUB</small></span></a>
+    <nav aria-label="Main navigation"><a href="#plans">Memberships</a><a href="#classes">Classes</a><a href="#spaces">Our spaces</a><a href="#locations">Locations</a></nav>
+    <a class="button small header-cta" href="#plans">Find your fit <svg class="icon"><use href="assets/icons.svg#ArrowUpRight"/></svg></a>
+  </header>
+  <main id="main">
+    <section class="intro wrap" aria-labelledby="hero-title">
+      <div class="eyebrow"><span class="live-dot"></span> A LITTLE MORE MOVEMENT. A LOT MORE YOU.</div>
+      <div class="hero-layout">
+        <h1 id="hero-title">Find Your Perfect<br><span>Membership.</span></h1>
+        <div class="hero-right"><p>Flexible plans to fit your fitness<br class="desktop-break"> goals and lifestyle.</p><div class="billing" role="group" aria-label="Billing period"><button type="button" data-billing="monthly" aria-pressed="true">Monthly</button><button type="button" data-billing="annual" aria-pressed="false">Annual <span>Save 16–20%</span></button></div><p class="billing-note" id="billing-note">One month at a time. Find your rhythm.</p></div>
+      </div>
+      <div class="promo"><span><svg class="icon"><use href="assets/icons.svg#Sparkles"/></svg> <strong>Join today, get your first month FREE</strong></span><span>Demo offer · first base month credited <a href="#terms">See terms <span aria-hidden="true">↗</span></a></span></div>
+    </section>
+
+    <section class="plans wrap" id="plans" aria-label="Membership plans">
+      <article class="plan" data-plan-card="basic">
+        <div class="plan-top"><span class="tier-no">01 / YOUR STARTING LINE</span><svg class="icon"><use href="assets/icons.svg#Dumbbell"/></svg></div>
+        <h2>Basic</h2><p class="plan-desc">Perfect for getting started.</p>
+        <p class="price"><span class="amount" data-price="basic">$29</span><span>/ month</span></p><p class="bill-detail" data-bill="basic">Monthly billing</p>
+        <button class="button outline plan-choose" data-choose="basic">Start Basic <svg class="icon"><use href="assets/icons.svg#ArrowUpRight"/></svg></button>
+        <p class="features-label">THE ESSENTIALS, DONE RIGHT</p>
+        <ul class="feature-list"><li>Gym access, 6am–10pm</li><li>Cardio equipment</li><li>Weight machines</li><li>Locker room access</li><li>Free parking</li></ul>
+      </article>
+      <article class="plan recommended" data-plan-card="standard">
+        <div class="popular"><svg class="icon"><use href="assets/icons.svg#Sparkles"/></svg> MOST POPULAR <span>THE SWEET SPOT</span></div>
+        <div class="plan-top"><span class="tier-no">02 / BUILD YOUR RHYTHM</span><svg class="icon"><use href="assets/icons.svg#HeartPulse"/></svg></div>
+        <h2>Standard</h2><p class="plan-desc">Our best value for regular gym-goers.</p>
+        <p class="price"><span class="amount" data-price="standard">$49</span><span>/ month</span></p><p class="bill-detail" data-bill="standard">Monthly billing</p>
+        <button class="button plan-choose" data-choose="standard">Start Standard <svg class="icon"><use href="assets/icons.svg#ArrowUpRight"/></svg></button>
+        <p class="features-label">EVERYTHING IN BASIC, PLUS</p>
+        <ul class="feature-list"><li>24/7 gym access</li><li>Free weights area</li><li>5 group classes / month</li><li>Fitness assessment</li><li>Mobile app access*</li></ul>
+      </article>
+      <article class="plan" data-plan-card="premium">
+        <div class="plan-top"><span class="tier-no">03 / GO A LITTLE FURTHER</span><svg class="icon"><use href="assets/icons.svg#Waves"/></svg></div>
+        <h2>Premium</h2><p class="plan-desc">For serious fitness enthusiasts.</p>
+        <p class="price"><span class="amount" data-price="premium">$79</span><span>/ month</span></p><p class="bill-detail" data-bill="premium">Monthly billing</p>
+        <button class="button outline plan-choose" data-choose="premium">Start Premium <svg class="icon"><use href="assets/icons.svg#ArrowUpRight"/></svg></button>
+        <p class="features-label">EVERYTHING IN STANDARD, PLUS</p>
+        <ul class="feature-list"><li>Unlimited group classes</li><li>Pool & sauna access</li><li>2 PT sessions / month</li><li>Towel service</li><li>2 guest passes / month</li><li>Priority class booking</li></ul>
+      </article>
+      <article class="plan" data-plan-card="elite">
+        <div class="plan-top"><span class="tier-no">04 / YOUR FULL POTENTIAL</span><svg class="icon"><use href="assets/icons.svg#Sparkles"/></svg></div>
+        <h2>Elite</h2><p class="plan-desc">The ultimate fitness experience.</p>
+        <p class="price"><span class="amount" data-price="elite">$149</span><span>/ month</span></p><p class="bill-detail" data-bill="elite">Monthly billing</p>
+        <button class="button outline plan-choose" data-choose="elite">Start Elite <svg class="icon"><use href="assets/icons.svg#ArrowUpRight"/></svg></button>
+        <p class="features-label">EVERYTHING IN PREMIUM, PLUS</p>
+        <ul class="feature-list"><li>Unlimited PT sessions</li><li>2 spa treatments / month</li><li>Nutrition coaching</li><li>Recovery suite access</li><li>Exclusive member events</li><li>4 guest passes / month</li><li>No contract, cancel anytime</li></ul>
+      </article>
+    </section>
+    <div class="plan-foot wrap"><p>All prices in USD. *App access is a fictional benefit; no app is supplied.</p><a href="#compare">The details make the difference. Compare all features <svg class="icon"><use href="assets/icons.svg#ArrowRight"/></svg></a></div>
+    <div class="trust wrap"><span><svg class="icon"><use href="assets/icons.svg#ShieldCheck"/></svg> 30-day money-back promise*</span><span><svg class="icon"><use href="assets/icons.svg#Check"/></svg> No joining fee*</span><span><svg class="icon"><use href="assets/icons.svg#CalendarDays"/></svg> Freeze for up to 3 months*</span><small>*Illustrative club policies, not real guarantees.</small></div>
+
+    <section class="section wrap" id="compare">
+      <div class="section-heading"><div><p class="eyebrow">YOUR GOALS. YOUR NON-NEGOTIABLES.</p><h2>A closer look at your fit.</h2></div><p>From the first rep to the last lap.<br>See exactly what comes with your plan.</p></div>
+      <p class="scroll-hint">On smaller screens, swipe the table to compare every plan.</p>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Scrollable membership feature comparison">
+        <table><caption class="sr-only">Full membership comparison. Prices reflect the selected billing period.</caption><thead><tr><th scope="col">What’s included</th><th scope="col">Basic <span data-table-price="basic">$29/mo</span></th><th scope="col" class="standard-col">Standard <span data-table-price="standard">$49/mo</span></th><th scope="col">Premium <span data-table-price="premium">$79/mo</span></th><th scope="col">Elite <span data-table-price="elite">$149/mo</span></th></tr></thead><tbody id="comparison-body"></tbody></table>
+      </div>
+      <p class="fineprint">Personal training and spa appointments are subject to a fictional schedule. “Unlimited” has no session cap in this demo, with one active booking at a time.</p>
+    </section>
+
+    <section class="classes-section" id="classes"><div class="wrap section">
+      <div class="section-heading"><div><p class="eyebrow">GOOD ENERGY IS CONTAGIOUS</p><h2>Find your kind of movement.</h2></div><a class="text-link" href="#schedule" id="full-schedule">View full schedule <svg class="icon"><use href="assets/icons.svg#ArrowUpRight"/></svg></a></div>
+      <div class="class-layout"><div class="class-story"><img src="assets/studio.jpg" width="900" height="600" alt="Stock illustration of a group movement and yoga studio" loading="lazy"><div class="photo-caption"><span>ROOM TO RESET.</span><span>Stock imagery · illustrative space</span></div></div><div class="class-content"><div class="tier-tabs" role="group" aria-label="Class inclusion by membership"><button data-tier="basic" aria-pressed="false">Basic</button><button data-tier="standard" aria-pressed="true">Standard</button><button data-tier="premium" aria-pressed="false">Premium</button><button data-tier="elite" aria-pressed="false">Elite</button></div><p id="class-inclusion" class="inclusion" aria-live="polite"></p><p class="eyebrow schedule-label">A LITTLE TASTE OF YOUR WEEK · DEMO SCHEDULE</p><div id="class-preview"></div><p class="fineprint">Basic includes no group classes. Standard includes any 5 per month. Premium and Elite include all classes, with priority booking. This schedule is illustrative; booking is unavailable.</p></div></div>
+    </div></section>
+
+    <section class="section wrap" id="spaces">
+      <div class="section-heading"><div><p class="eyebrow">MORE THAN A PLACE TO WORK OUT</p><h2>Space for every version of you.</h2></div><div><label class="select-label" for="facility-tier">Show access for</label><select id="facility-tier"><option value="basic">Basic</option><option value="standard" selected>Standard</option><option value="premium">Premium</option><option value="elite">Elite</option></select></div></div>
+      <div class="spaces-grid">
+        <article class="space" data-access="basic"><img src="assets/gym.jpg" width="900" height="600" alt="Stock photo of a spacious gym with cardio and strength equipment" loading="lazy"><div><svg class="icon"><use href="assets/icons.svg#Dumbbell"/></svg><h3>The training floor</h3><span data-access-label></span></div><p>Cardio, machines, lockers & parking · all plans</p></article>
+        <article class="space" data-access="standard"><img src="assets/weights.jpg" width="900" height="600" alt="Stock fitness photo illustrating free-weight training" loading="lazy"><div><svg class="icon"><use href="assets/icons.svg#HeartPulse"/></svg><h3>The strength zone</h3><span data-access-label></span></div><p>Free weights & class studios · Standard and up</p></article>
+        <article class="space" data-access="premium"><img src="assets/pool.jpg" width="900" height="600" alt="Stock photo of an indoor swimming pool" loading="lazy"><div><svg class="icon"><use href="assets/icons.svg#Waves"/></svg><h3>The reset circuit</h3><span data-access-label></span></div><p>Pool & sauna · Premium and Elite</p></article>
+      </div>
+      <div class="recovery-note"><svg class="icon"><use href="assets/icons.svg#Sparkles"/></svg><div><strong>A little extra room to recover.</strong><p>Elite adds the recovery suite, spa and nutrition coaching.</p></div><span id="recovery-access">Elite only</span></div>
+      <p class="fineprint">All facility photography is stock illustration, not a photograph of an actual FORM location.</p>
+    </section>
+
+    <section class="extras-section"><div class="wrap section extras-layout">
+      <div><p class="eyebrow">MAKE IT YOUR OWN</p><h2>A little extra.<br>A lot of possibility.</h2><p>Enhance any membership. Pick what works for you and see it in your local estimate.</p><label class="select-label" for="quote-plan">Build an estimate for</label><select id="quote-plan"><option value="basic">Basic</option><option value="standard" selected>Standard</option><option value="premium">Premium</option><option value="elite">Elite</option></select><p class="estimate"><strong id="estimate-price">$49</strong><span id="estimate-period">/ month before offers</span></p><button class="button" id="review-estimate">Review my estimate <svg class="icon"><use href="assets/icons.svg#ArrowRight"/></svg></button><p class="fineprint" id="estimate-note" aria-live="polite">First month of the base plan is credited. Add-ons are extra.</p></div>
+      <fieldset class="addons"><legend>Choose your add-ons</legend><label><input type="checkbox" value="training"><span><strong>Personal Training Pack</strong><small>4 sessions · one-time pack</small></span><b>$150</b></label><label><input type="checkbox" value="nutrition"><span><strong>Nutrition Consultation</strong><small>One consultation · one-time</small></span><b>$75</b></label><label><input type="checkbox" value="guests"><span><strong>Additional Guest Passes</strong><small>5 passes · one-time pack</small></span><b>$25</b></label><label><input type="checkbox" value="locker"><span><strong>Your own locker</strong><small>Locker rental · monthly</small></span><b>$15<small>/mo</small></b></label><label><input type="checkbox" value="towels"><span><strong>Towel service</strong><small id="towel-note">For Basic & Standard · monthly</small></span><b>$10<small>/mo</small></b></label></fieldset>
+    </div></section>
+
+    <section class="section wrap" aria-labelledby="voices-title">
+      <div class="section-heading"><div><p class="eyebrow">DIFFERENT ROUTINES. SAME GOOD FEELING.</p><h2 id="voices-title">A plan for every pace.</h2></div><p>Illustrative member stories.<br>These quotes are fictional, not endorsements.</p></div>
+      <div class="voices"><figure><span class="quote-mark">“</span><blockquote>Great for my lunch workouts.</blockquote><figcaption><span class="avatar">JT</span><span>Jordan T.<small>BASIC · FICTIONAL MEMBER</small></span></figcaption></figure><figure><span class="quote-mark">“</span><blockquote>The classes changed everything.</blockquote><figcaption><span class="avatar">AL</span><span>Alex L.<small>PREMIUM · FICTIONAL MEMBER</small></span></figcaption></figure><figure><span class="quote-mark">“</span><blockquote>Worth every penny for the PT.</blockquote><figcaption><span class="avatar">SK</span><span>Sam K.<small>ELITE · FICTIONAL MEMBER</small></span></figcaption></figure></div>
+    </section>
+
+    <section class="section wrap location-section" id="locations">
+      <div><p class="eyebrow">MAKE YOURSELF AT HOME</p><h2>Your neighborhood.<br>Your starting point.</h2><label class="select-label" for="home-gym">Select your home gym</label><select id="home-gym"><option value="river">Riverfront</option><option value="central">Central Yard</option><option value="park">Parkside</option></select><p id="location-description" aria-live="polite"></p><p id="location-access"></p><p class="fineprint">Three fictional locations. Schematic map, not navigation. Basic and Standard use one home club; Premium and Elite include all three.</p></div>
+      <div class="map" role="img" aria-label="Illustrative map of three fictional clubs: Riverfront near the river, Central Yard in the center and Parkside beside the park"><svg viewBox="0 0 620 330" aria-hidden="true"><rect width="620" height="330" fill="#e9eee5"/><path d="M0 265Q150 160 185 330M-20 240Q145 145 210 340" fill="none" stroke="#b9d7d4" stroke-width="26"/><g stroke="#fff" stroke-width="16" fill="none"><path d="M0 80h620M0 185h620M320 0v330M480 0v330M80 0v180M0 305h620"/><path d="m170 0 80 330"/></g><rect x="499" y="15" width="105" height="152" rx="8" fill="#c6d6bc"/><text x="517" y="48" class="map-small">THE PARK</text><g data-map="river" transform="translate(134 195)"><circle r="19"/><text y="5" text-anchor="middle" class="map-letter">F</text><text x="-46" y="40" class="map-label">RIVERFRONT</text></g><g data-map="central" transform="translate(350 105)"><circle r="19"/><text y="5" text-anchor="middle" class="map-letter">F</text><text x="-49" y="40" class="map-label">CENTRAL YARD</text></g><g data-map="park" transform="translate(480 245)"><circle r="19"/><text y="5" text-anchor="middle" class="map-letter">F</text><text x="-32" y="40" class="map-label">PARKSIDE</text></g></svg><span>ILLUSTRATIVE LOCATIONS · NOT TO SCALE</span></div>
+    </section>
+
+    <section class="offers wrap" id="offers"><div><p class="eyebrow">MOVEMENT IS FOR EVERYONE</p><h2>A little help getting started.</h2></div><div class="offer-items"><span><b>20%</b> Student</span><span><b>15%</b> Senior 65+</span><span><b>15%</b> Military / first responder</span><span><b>Let’s talk</b> Corporate & family rates</span></div><p>Fictional offers. Choose student, senior or service pricing in your estimate. One eligibility discount per plan; no eligibility documents collected. Corporate and family pricing is available as a local advisor inquiry only.</p></section>
+
+    <section class="section wrap faq-layout" id="faq"><div><p class="eyebrow">LET’S CLEAR THINGS UP</p><h2>Good questions.<br>Straight answers.</h2><p>Everything you need for your next step.</p><button class="text-link" data-inquiry="Membership advisor">Ask a membership advisor <svg class="icon"><use href="assets/icons.svg#ArrowUpRight"/></svg></button></div><div class="faqs">
+      <details><summary>Can I upgrade my membership?</summary><p>In this fictional club, upgrades take effect at the start of your next billing month. Try any plan in the estimate here; this does not change a real membership.</p></details>
+      <details><summary>Is there a joining fee?</summary><p>The demo joining fee is $0. Add-ons are itemized separately. Estimates exclude any applicable taxes, which this static experience cannot calculate.</p></details>
+      <details><summary>What’s the contract length?</summary><p>Basic, Standard and Premium monthly plans have an illustrative 3-month initial term, then roll monthly. Annual plans prepay 12 months. Elite has no minimum term and may be canceled anytime; annual Elite refunds unused full months at the annual rate.</p></details>
+      <details><summary>Can I freeze my membership?</summary><p>The illustrative policy allows up to 3 months of freeze per year with 7 days’ notice. Billing and access pause; prepaid annual terms extend by the frozen period.</p></details>
+      <details><summary>Do you offer student/senior discounts?</summary><p>Yes, the demo offers students 20%, seniors aged 65+ 15%, and military or first responders 15% off base dues. Choose one in your estimate. Discounts combine with annual rates and the first-month credit; add-ons are not discounted. No documents are collected.</p></details>
+      <details><summary>Can I try before I join?</summary><p>Explore a free-day-pass or tour request preview below. This is a local demonstration; it issues no pass, reserves no visit and contacts no staff.</p></details>
+    </div></section>
+
+    <section class="promises wrap" id="terms"><div><svg class="icon"><use href="assets/icons.svg#ShieldCheck"/></svg><h3>30-Day Money Back Guarantee</h3><p>Illustrative base-dues refund within 30 days. Used add-ons excluded.</p></div><div><svg class="icon"><use href="assets/icons.svg#Check"/></svg><h3>No hidden fees, ever</h3><p>$0 joining fee. Add-ons listed; applicable tax is not calculated.</p></div><div><svg class="icon"><use href="assets/icons.svg#CalendarDays"/></svg><h3>Life happens. Hit pause.</h3><p>Freeze anytime for up to 3 months with 7 days’ notice.</p></div><div><svg class="icon"><use href="assets/icons.svg#ArrowUpRight"/></svg><h3>Easy cancellation process</h3><p>Illustrative written notice before renewal; initial terms apply except Elite.</p></div></section>
+    <div class="terms-note wrap"><p>Demo pricing terms: first month FREE means a credit of one discounted base month; monthly base dues resume in month two, annual plans pay 11 discounted months upfront for 12 months of access. Add-ons remain chargeable. Annual rates are $24 / $39 / $65 / $125 per month, prepaid; savings versus monthly rates are 17.2% / 20.4% / 17.7% / 16.1% respectively, rather than a flat 20%. All benefits, policies and promotions are fictional and carry no enforceable purchase offer.</p></div>
+    <section class="steps wrap" aria-label="Sign-up flow preview"><p class="eyebrow">YOUR NEXT CHAPTER, IN FOUR STEPS</p><div><p><b>01</b><span>Choose your plan<small>Find what moves you</small></span></p><p><b>02</b><span>Pick your start date<small>Make room for yourself</small></span></p><p><b>03</b><span>Complete payment<small>Preview only · no payment collected</small></span></p><p><b>04</b><span>Schedule orientation<small>Choose an illustrative time</small></span></p></div></section>
+    <section class="final-cta"><div class="wrap"><p class="eyebrow">YOU DON’T HAVE TO HAVE IT ALL FIGURED OUT.</p><h2>Just take the first step.</h2><p>Still not sure? Get a free day pass.</p><div class="cta-row"><button class="button" data-inquiry="Free day pass">Try a day on us <svg class="icon"><use href="assets/icons.svg#ArrowUpRight"/></svg></button><button class="button light-outline" data-inquiry="Gym tour">Schedule a tour</button><button class="text-link" data-inquiry="Membership advisor">Talk to an advisor <svg class="icon"><use href="assets/icons.svg#MessageCircle"/></svg></button></div><p class="demo-contact"><svg class="icon"><use href="assets/icons.svg#Phone"/></svg> Demo phone: (202) 555-0148 · not a staffed line. All requests stay in this browser.</p></div></section>
+  </main>
+  <footer class="wrap" id="demo-note"><a class="brand" href="#main">FORM<small>ATHLETIC CLUB</small></a><p>An original fictional fitness concept. Stock imagery, illustrative member stories.<br>No real memberships, ratings, awards, payments, bookings, accounts or messages. Nothing is stored or sent.</p><a href="assets/credits.txt">Image & icon credits</a></footer>
+  <div class="mobile-join"><span><strong id="mobile-plan">Standard · $49/mo</strong><small>Local estimate · no purchase</small></span><button class="button" id="mobile-join">Join now <svg class="icon"><use href="assets/icons.svg#ArrowUpRight"/></svg></button></div>
+
+  <dialog id="enroll-dialog" aria-labelledby="enroll-title"><div class="dialog-top"><span class="eyebrow">YOUR NEXT CHAPTER · LOCAL PREVIEW</span><button type="button" class="icon-button close-dialog" aria-label="Close membership preview"><svg class="icon"><use href="assets/icons.svg#X"/></svg></button></div><h2 id="enroll-title">Make room for you.</h2><p class="dialog-lead">Build an estimate. No account, payment or enrollment is created.</p><form id="enroll-form">
+    <div class="form-grid"><label>Membership<select id="enroll-plan" name="plan"><option value="basic">Basic</option><option value="standard">Standard</option><option value="premium">Premium</option><option value="elite">Elite</option></select></label><label>Billing<select id="enroll-billing" name="billing"><option value="monthly">Monthly</option><option value="annual">Annual · prepaid</option></select></label><label>Start date<input id="start-date" name="date" type="date" required></label><label>Home gym<select id="enroll-location"><option value="river">Riverfront</option><option value="central">Central Yard</option><option value="park">Parkside</option></select></label></div>
+    <label>Eligibility offer<select id="discount"><option value="none">Standard pricing</option><option value="student">Student · 20% off base dues</option><option value="senior">Senior 65+ · 15% off base dues</option><option value="service">Military / first responder · 15% off base dues</option></select></label>
+    <label>Illustrative orientation<select id="orientation" required><option value="">Choose a time</option value="Morning · 8:00">Morning · 8:00</option><option value="Lunchtime · 12:00">Lunchtime · 12:00</option><option value="Evening · 18:00">Evening · 18:00</option></select></label>
+    <div class="quote-summary" id="quote-summary" aria-live="polite"></div><p class="form-error" id="enroll-error" role="alert"></p><button class="button full" type="submit">Preview enrollment <svg class="icon"><use href="assets/icons.svg#ArrowRight"/></svg></button>
+  </form><div id="enroll-result" hidden><div class="result-check"><svg class="icon"><use href="assets/icons.svg#Check"/></svg></div><h3>Local preview ready.</h3><p id="enroll-result-text"></p><p>This is not a membership, payment receipt or reservation. Your information stays in memory and disappears when you reload.</p><button class="button full" id="download-quote">Download estimate (.txt)</button><button class="text-link" id="edit-estimate">Edit estimate</button><p class="fineprint">The downloaded file contains only your plan, options, start date and estimate. Keep it only if you want to.</p></div></dialog>
+  <dialog id="inquiry-dialog" aria-labelledby="inquiry-title"><div class="dialog-top"><span class="eyebrow">LOCAL REQUEST PREVIEW</span><button class="icon-button close-dialog" aria-label="Close request preview"><svg class="icon"><use href="assets/icons.svg#X"/></svg></button></div><h2 id="inquiry-title">Free day pass</h2><p>No pass, tour or message is issued. This form only previews your request; please use sample text, not personal information.</p><form id="inquiry-form"><label>What would you like to explore?<textarea id="inquiry-message" required minlength="10" maxlength="240" rows="4" placeholder="Example: I would like to explore the strength area."></textarea></label><p class="form-error" id="inquiry-error" role="alert"></p><button class="button full">Preview request</button></form><div id="inquiry-result" role="status" hidden><h3>Your local request preview</h3><p id="inquiry-output"></p><p>Not sent. Reloading clears this preview.</p></div></dialog>
+  <dialog id="schedule-dialog" aria-labelledby="schedule-title"><div class="dialog-top"><span class="eyebrow">MOVE WITH GOOD COMPANY</span><button class="icon-button close-dialog" aria-label="Close class schedule"><svg class="icon"><use href="assets/icons.svg#X"/></svg></button></div><h2 id="schedule-title">Your week in motion.</h2><p>Illustrative weekly schedule · all times local to the fictional club. No live booking.</p><label>Filter by day<select id="schedule-day"><option value="all">All days</option><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option></select></label><div id="schedule-list" aria-live="polite"></div></dialog>
+  <noscript><p class="noscript">Enable JavaScript for price toggles, the detailed comparison, estimates and local previews. The monthly plan details above remain readable.</p></noscript>
+</body>
+</html>
