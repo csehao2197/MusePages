@@ -37,6 +37,9 @@ MusePages 收集由 AI 根据原始需求生成的网站首页。同一个 promp
 | `npm run generate:sample` | 生成固定示例及截图，登记发布选项，不改当前网站 |
 | `npm run deploy:sync` | 扫描已有结果并补充发布选项，不发布 |
 | `npm run deploy:watch` | 持续监听生成结果并登记选项，按 Ctrl+C 停止 |
+| `python src\tools\select_deploy_pages.py` | Windows 终端交互勾选发布选项，仅保存配置 |
+
+交互选择使用 Python 标准库：↑↓ 移动、空格勾选、Enter 保存、Esc 或 Ctrl+C 取消，Home/End 跳到首尾。保存仅更新 `deploy\config.json` 的 `enabled`，保留 `deployed` 及其他字段；发布仍单独运行 `npm run deploy`。脚本与发布器共享写锁，并在保存时核对配置是否被其他进程修改。
 
 固定示例写入 `out\pages\001-destination-guide\unspecified\`；`unspecified` 表示模型未知，不能改名冒充已知模型。同步只登记含 HTML `index.html` 或声明 Next.js 依赖的 `package.json` 的目录，不证明其已完成或可发布。优先复用共享 npm workspace 依赖，缺少依赖时再安装；截图需要 Playwright Chromium。
 
