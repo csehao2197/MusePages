@@ -287,6 +287,85 @@ test("publishing copies only selected variants and removing the last selected mo
   assert.match(html, /1 prompts \/ 1 pages/);
 });
 
+test("sitemap includes only the gallery and selected model homepages and stays synchronized", async (t) => {
+  const workspace = await fixture(t);
+  await result(workspace, "001-travel", "model-a");
+  await result(workspace, "001-travel", "model-b");
+  const { exported } = await result(workspace, "002-food", "GPT-6");
+  await writeFile(path.join(exported, "404.html"), "<h1>Not found</h1>");
+  const config = await syncDeployConfig(workspace);
+  config.siteUrl = "https://musepages.pages.dev/";
+  config.pages["001-travel"][0].enabled = true;
+  config.pages["002-food"][0].enabled = true;
+  await saveConfig(workspace, config);
+  await publishSite(workspace);
+  const target = path.join(workspace, "deploy", "dist", "MusePages");
+  const sitemap = await readFile(path.join(target, "sitemap.xml"), "utf8");
+  assert.equal(sitemap, `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://musepages.pages.dev/</loc></url>
+  <url><loc>https://musepages.pages.dev/pages/travel/model-a/index.html</loc></url>
+  <url><loc>https://musepages.pages.dev/pages/food/GPT-6/index.html</loc></url>
+</urlset>
+`);
+  for (const [, location] of sitemap.matchAll(/<loc>(.*?)<\/loc>/g)) {
+    const relative = new URL(location).pathname.slice(1) || "index.html";
+    assert.ok((await lstat(path.join(target, relative))).isFile());
+  }
+  assert.equal(await readFile(path.join(target, "robots.txt"), "utf8"),
+    "User-agent: *\nAllow: /\n\nSitemap: https://musepages.pages.dev/sitemap.xml\n");
+  assert.equal((await publishSite(workspace)).changed, false);
+  config.pages["001-travel"][0].enabled = false;
+  await saveConfig(workspace, config);
+  await publishSite(workspace);
+  assert.doesNotMatch(await readFile(path.join(target, "sitemap.xml"), "utf8"), /pages\/travel\//);
+  config.pages["002-food"][0].enabled = false;
+  await saveConfig(workspace, config);
+  await publishSite(workspace);
+  assert.deepEqual([...((await readFile(path.join(target, "sitemap.xml"), "utf8")).matchAll(/<loc>(.*?)<\/loc>/g))]
+    .map((match) => match[1]), ["https://musepages.pages.dev/"]);
+});
+
+test("sitemap supports deployment subpaths and XML escaping while configs without siteUrl remain compatible", async (t) => {
+  const workspace = await fixture(t);
+  await result(workspace, "001-travel", "model-a");
+  const config = await syncDeployConfig(workspace);
+  config.pages["001-travel"][0].enabled = true;
+  config.siteUrl = "https://example.com/Muse&Pages";
+  await saveConfig(workspace, config);
+  await publishSite(workspace);
+  const target = path.join(workspace, "deploy", "dist", "MusePages");
+  const sitemap = await readFile(path.join(target, "sitemap.xml"), "utf8");
+  assert.match(sitemap, /<loc>https:\/\/example\.com\/Muse&amp;Pages\/<\/loc>/);
+  assert.match(sitemap, /<loc>https:\/\/example\.com\/Muse&amp;Pages\/pages\/travel\/model-a\/index\.html<\/loc>/);
+  assert.match(await readFile(path.join(target, "robots.txt"), "utf8"),
+    /Sitemap: https:\/\/example\.com\/Muse&Pages\/sitemap\.xml\n$/);
+  delete config.siteUrl;
+  await saveConfig(workspace, config);
+  await publishSite(workspace);
+  await assert.rejects(lstat(path.join(target, "sitemap.xml")), { code: "ENOENT" });
+  await assert.rejects(lstat(path.join(target, "robots.txt")), { code: "ENOENT" });
+});
+
+test("invalid sitemap siteUrl preserves the previous website and config", async (t) => {
+  const workspace = await fixture(t);
+  const config = await syncDeployConfig(workspace);
+  config.siteUrl = "https://musepages.pages.dev/";
+  await saveConfig(workspace, config);
+  await publishSite(workspace);
+  const target = path.join(workspace, "deploy", "dist", "MusePages");
+  const before = await readFile(path.join(target, "sitemap.xml"), "utf8");
+  for (const siteUrl of ["", null, "/MusePages/", "ftp://example.com/", "https://user:pass@example.com/",
+    "https://example.com/?q=test", "https://example.com/#fragment"]) {
+    config.siteUrl = siteUrl;
+    await saveConfig(workspace, config);
+    const contents = await readFile(path.join(workspace, "deploy", "config.json"), "utf8");
+    await assert.rejects(publishSite(workspace), /siteUrl must be an absolute HTTP\(S\) URL/);
+    assert.equal(await readFile(path.join(target, "sitemap.xml"), "utf8"), before);
+    assert.equal(await readFile(path.join(workspace, "deploy", "config.json"), "utf8"), contents);
+  }
+});
+
 test("no selected models produces a valid empty collection and keeps config and Git metadata", async (t) => {
   const workspace = await fixture(t);
   await result(workspace, "001-travel", "model-a");

@@ -50,6 +50,9 @@
         const model = slides[current].querySelector(".model").textContent.replace(/^Model: /, "");
         status.textContent = model;
       };
+      dots.forEach((dot) => dot.addEventListener("pointerenter", (event) => {
+        if (event.pointerType === "mouse" && !dot.disabled) show(Number(dot.dataset.index));
+      }));
       carousel.addEventListener("click", (event) => {
         const button = event.target.closest("button");
         if (!button || button.disabled) return;

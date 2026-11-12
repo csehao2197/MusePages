@@ -134,6 +134,8 @@ AI 页面生成工作流以用户指定的 `<ai model>` 为输入，由 AI agent
 
 dist 工作流以 `deploy\config.json` 中的发布选择为输入，由 `node src/workflows/deploy-site.mjs dist` 组装本地目标网站，输出到 `deploy\dist\MusePages\`。`deploy\dist\` 与 `deploy\site\` 使用相同的站点目录结构。
 
+配置 `siteUrl` 后同时生成 `sitemap.xml` 和 `robots.txt`，收录集合首页及已启用模型首页，随发布选择同步更新。当前公开地址为 `https://musepages.pages.dev/`；运行 `npm run dist`、`npm run publish` 并上传后，可在 Google Search Console 提交 `https://musepages.pages.dev/sitemap.xml`。
+
 当前命令核验候选站点后比较完整文件树与文件内容：一致时保留目标文件并提示 `No changes`，有变化时提示 `Updated local static site`，分别统计新增、更新、移除、未变的模型首页，总数单独显示。两种结果都明确说明仅处理本地站点；变化时仍使用整站安全切换，未变计数表示内容一致，逐作品增量发布仍是下文的目标设计。
 
 流程检查所有已启用的 prompt／模型结果，不限于本轮新生成项，从 `out\pages\<prompt>\<ai model>\out\` 读取准备好的静态首页及必要资源，按[目标网站结构](#目标网站结构)组织集合页面。
@@ -369,6 +371,7 @@ node --test src\workflows\render-prompt-pages.test.mjs src\workflows\deploy-site
 ```json
 {
   "version": 2,
+  "siteUrl": "https://musepages.pages.dev/",
   "pages": {
     "006-travel-agency-homepage": [
       {

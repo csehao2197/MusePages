@@ -213,11 +213,13 @@ test("gallery groups models into stable, accessible carousels with synchronized 
         assert.equal(await active.locator(".preview-label").textContent(), "No preview provided");
       } else {
         assert.equal(await active.locator("img").getAttribute("src"), `pages/destination-guide/${model}/preview.png`);
+        await active.locator("img").evaluate((image) => image.decode());
         assert.equal(await active.locator("img").evaluate((image) => image.complete && image.naturalWidth > 0), true);
       }
     };
     for (const width of [1280, 800, 375, 320]) {
       await page.setViewportSize({ width, height: 900 });
+      await page.mouse.move(0, 0);
       await page.goto(`${base}/index.html`);
       assert.equal(await page.locator("[data-carousel]").count(), 2);
       const panels = await page.locator("[data-carousel]").evaluateAll((cards) => cards.map((card) => {
@@ -247,6 +249,22 @@ test("gallery groups models into stable, accessible carousels with synchronized 
       assert.equal(await single.getByRole("button").count(), 1);
       await check(0);
       const height = (await card.boundingBox()).height;
+      const firstDot = card.getByRole("button", { name: "Show model model-z", exact: true });
+      await firstDot.focus();
+      await card.getByRole("button", { name: "Show model model-a", exact: true }).locator("span").hover();
+      await check(1);
+      assert.equal(await firstDot.evaluate((button) => button === document.activeElement), true,
+        "hover changes the model without moving keyboard focus");
+      await card.getByRole("button", { name: "Show model model-b", exact: true }).hover();
+      await check(2);
+      await page.mouse.move(0, 0);
+      await check(2);
+      await single.locator(".dot").hover();
+      await check(2);
+      await firstDot.dispatchEvent("pointerenter", { pointerType: "touch" });
+      await check(2);
+      await firstDot.hover();
+      await check(0);
       await card.getByRole("button", { name: "Show model model-a", exact: true }).click();
       await check(1);
       assert.equal((await card.boundingBox()).height, height);
@@ -265,11 +283,14 @@ test("gallery groups models into stable, accessible carousels with synchronized 
       await check(2);
       await page.keyboard.press("ArrowLeft");
       await check(1);
+      await card.getByRole("button", { name: "Show model model-b", exact: true }).tap();
+      await check(2);
       assert.equal((await card.boundingBox()).height, height);
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
       assert.equal(await single.locator(".slide:not([hidden]) .model").textContent(), "Model: only-model");
     }
     await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.mouse.move(0, 0);
     await page.goto(`${base}/index.html`);
     const session = await context.newCDPSession(page);
     const swipe = async (dx, dy = 0) => {

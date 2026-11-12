@@ -72,10 +72,26 @@ function pageOptions(config) {
     models.map((page) => ({ ...page, prompt })));
 }
 
+function siteBaseUrl(value) {
+  let url;
+  try {
+    if (typeof value !== "string") throw Error();
+    url = new URL(value);
+    if (!["http:", "https:"].includes(url.protocol) || url.username || url.password || url.search || url.hash) {
+      throw Error();
+    }
+  } catch {
+    throw Error("siteUrl must be an absolute HTTP(S) URL without credentials, query, or fragment");
+  }
+  if (!url.pathname.endsWith("/")) url.pathname += "/";
+  return url;
+}
+
 function validateConfig(config) {
   if (config?.version !== 2 || !config.pages || typeof config.pages !== "object" || Array.isArray(config.pages)) {
     throw Error("Expected config version 2 and a pages object keyed by prompt filename");
   }
+  if (Object.hasOwn(config, "siteUrl")) siteBaseUrl(config.siteUrl);
   const prompts = new Set();
   for (const [prompt, models] of Object.entries(config.pages)) {
     checkName(prompt, "prompt filename");
@@ -496,6 +512,16 @@ export async function publishSite(workspace = root) {
       }
       const template = await readFile(path.join(workspace, "src", "gallery", "index.html"), "utf8");
       await writeFile(path.join(staging, "index.html"), gallery(template, selected), "utf8");
+      if (config.siteUrl) {
+        const base = siteBaseUrl(config.siteUrl);
+        const urls = [base.href, ...selected.map((page) =>
+          new URL(`pages/${encodeURIComponent(page.slug)}/${encodeURIComponent(page.model)}/index.html`, base).href)];
+        await writeFile(path.join(staging, "sitemap.xml"),
+          '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+          + urls.map((url) => `  <url><loc>${escapeHtml(url)}</loc></url>`).join("\n") + "\n</urlset>\n", "utf8");
+        await writeFile(path.join(staging, "robots.txt"),
+          `User-agent: *\nAllow: /\n\nSitemap: ${new URL("sitemap.xml", base).href}\n`, "utf8");
+      }
       await validateLinks(staging);
       for (const models of Object.values(config.pages)) {
         for (const page of models) page.deployed = page.enabled;
