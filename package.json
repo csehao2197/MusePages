@@ -3,6 +3,7 @@
   "private": true,
   "workspaces": ["data/prompts/[0-9]*-*"],
   "scripts": {
+    "config": "python3 .\\src\\tools\\select_deploy_pages.py",
     "generate": "node src/workflows/render-prompt-pages.mjs",
     "generate:sample": "node src/workflows/generate-sample.mjs",
     "dist": "node src/workflows/deploy-site.mjs dist",
