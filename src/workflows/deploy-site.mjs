@@ -353,6 +353,27 @@ async function validateLinks(staging, folder = staging) {
   }
 }
 
+async function sameWebsite(staging, target, topLevel = true) {
+  if (!await exists(target)) return false;
+  await directory(target);
+  const expected = (await readdir(staging)).sort();
+  const actual = (await readdir(target)).filter((name) => !topLevel || !gitFiles.has(name)).sort();
+  if (expected.length !== actual.length || expected.some((name, index) => name !== actual[index])) return false;
+  for (const name of expected) {
+    const source = path.join(staging, name);
+    const destination = path.join(target, name);
+    const sourceInfo = await lstat(source);
+    const targetInfo = await lstat(destination);
+    if (targetInfo.isSymbolicLink()) return false;
+    if (sourceInfo.isDirectory()) {
+      if (!targetInfo.isDirectory() || !await sameWebsite(source, destination, false)) return false;
+    } else if (!targetInfo.isFile() || !(await readFile(source)).equals(await readFile(destination))) {
+      return false;
+    }
+  }
+  return true;
+}
+
 async function replaceWebsite(target, staging, commit) {
   if (await exists(target)) await directory(target);
   else await mkdir(target);
@@ -430,13 +451,16 @@ export async function publishSite(workspace = root) {
       for (const models of Object.values(config.pages)) {
         for (const page of models) page.deployed = page.enabled;
       }
+      const target = path.join(workspace, "deploy", "MusePages");
+      const changed = !await sameWebsite(staging, target);
       try {
-        await replaceWebsite(path.join(workspace, "deploy", "MusePages"), staging, () => writeConfig(workspace, config));
+        if (changed) await replaceWebsite(target, staging, () => writeConfig(workspace, config));
+        else await writeConfig(workspace, config);
       } catch (error) {
         if (error instanceof AggregateError) keepRecovery = true;
         throw error;
       }
-      return { pages: selected.length, prompts: new Set(selected.map((page) => page.prompt)).size };
+      return { pages: selected.length, prompts: new Set(selected.map((page) => page.prompt)).size, changed };
     } finally {
       if (!keepRecovery) await rm(staging, { recursive: true });
     }
@@ -486,7 +510,10 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
       for (const signal of ["SIGINT", "SIGTERM"]) process.once(signal, () => { void watcher.close(); });
     } else if (command === "publish") {
       const result = await publishSite();
-      console.log(`Published ${result.pages} pages from ${result.prompts} prompts to deploy\\MusePages`);
+      console.log(result.changed
+        ? `Updated local static site: ${result.pages} pages from ${result.prompts} prompts in deploy\\MusePages.`
+        : `No changes: local static site is up to date (${result.pages} pages from ${result.prompts} prompts).`);
+      console.log("No remote deployment was performed.");
     } else {
       throw Error(`Unknown command: ${command}. Use publish, sync, or watch.`);
     }
