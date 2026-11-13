@@ -124,7 +124,7 @@ node src\workflows\generate-preview.mjs out\pages\006-travel-agency-homepage\mod
 
 ### 页面生成工作流
 
-页面生成工作流以用户指定的 `<ai model>` 为输入，可附带 prompt 编号限定单一需求；读取根目录 `config.json` 中的模型服务配置，由 `src\workflows\render-prompt-pages.mjs` 按需生成该模型对应的网站代码与静态首页。
+页面生成工作流以用户指定的 `<ai model>` 为输入，可附带 prompt 编号限定单一需求；由 `src\workflows\render-prompt-pages.mjs` 读取其专用配置 `src\workflows\config.json`，按需生成该模型对应的网站代码与静态首页。
 
 流程依次完成模型配置校验、已有结果检查、缺失页面生成和静态产物准备。已有结果按[覆盖检查规则](#生成覆盖检查与模型匹配)判断，不因未验证、未发布或配置未登记而重复生成源码。
 
@@ -190,7 +190,6 @@ dist 工作流以 `deploy\config.json` 中的发布选择为输入，由 `node s
 
 ```text
 AGENTS.md                           # Agent 执行规则
-config.json                         # 目标模型服务配置
 package.json                        # 共享依赖和 npm 入口
 data\
   prompts\                          # 编号需求及已有参考实现
@@ -202,6 +201,7 @@ src\
       DESIGN.md                     # 通用设计指引
       render-prompt-pages.md        # 目标 Agent 编排指引
     render-prompt-pages.mjs          # 目标页面生成脚本
+    config.json                     # render-prompt-pages.mjs 专用模型服务配置
     deploy-site.mjs                 # 本地发布入口
     publish-site.mjs                # 清空并复制静态集合到站点目录
     ...                             # 示例生成与回归测试
@@ -261,7 +261,7 @@ task\
 npm run generate -- local --check
 npm run generate -- local another-model --check
 
-# 按编号处理单一需求；3 与 003 等价，Qwen3.8 对应 config.json 的 models 配置键
+# 按编号处理单一需求；3 与 003 等价，Qwen3.8 对应 src\workflows\config.json 的 models 配置键
 npm run generate -- 003 Qwen3.8
 npm run generate -- 3 Qwen3.8 --check
 
@@ -296,7 +296,7 @@ node --test src\workflows\render-prompt-pages.test.mjs src\workflows\deploy-site
 
 文档应明确以下内容：
 
-1. **输入与范围**：接收用户指定的 `<ai model>` 和本轮授权范围，读取根目录 `config.json`、原始 prompt 与 `src\workflows\AI Agent\DESIGN.md`，明确目标模型及允许写入的位置，不修改原始需求。
+1. **输入与范围**：接收用户指定的 `<ai model>` 和本轮授权范围，读取原始 prompt 与 `src\workflows\AI Agent\DESIGN.md`，明确真实生成模型及允许写入的位置；调用 `.mjs` 生成脚本时，由该脚本读取其专用配置。
 2. **执行依据**：沿用[页面生成脚本](#页面生成脚本)的步骤与[覆盖检查规则](#生成覆盖检查与模型匹配)，不另设判断标准。模型身份无法核实或不匹配时报告阻塞；已有有效结果跳过，需要覆盖或重试时先取得授权。
 3. **输出要求**：源码写入 `out\pages\<prompt>\<ai model>\`，静态首页及资源写入其 `out\` 子目录；每次生成必须为该模型结果生成非空 `tags` 并写入模型元数据，按[项目状态元数据](#项目状态元数据)核验并记录结果，登记默认关闭的发布选项，不把 Agent 返回成功当作生成完成。
 4. **恢复与交付**：约定超时、有限重试和中断恢复方式，保留已有有效产物；结束时汇总生成、跳过、待确认、失败及剩余缺失项，说明原因和后续步骤，不自动部署目标网站。
@@ -353,9 +353,9 @@ prompt 目录仅容纳模型结果目录。公开标题与 slug 保存在 `deplo
 
 ### 模型与发布配置
 
-根目录 `config.json` 保存模型服务选择，包括调用 URI、接口类型、真实模型 ID 与稳定目录名；可选认证值从环境读取。它与 `deploy\config.json` 的发布选择职责不同，不能混用。
+`src\workflows\config.json` 专用于 `src\workflows\render-prompt-pages.mjs`，保存调用 URI、接口类型、真实模型 ID 与稳定目录名；可选认证值从环境读取。AI Agent 的模型与范围由本轮任务约定，发布选择独立保存在 `deploy\config.json`。
 
-当前生成脚本使用以下模型配置结构。按实际服务创建根目录 `config.json`；以下为无认证本地服务示例，服务由管理员启动：
+当前生成脚本使用以下模型配置结构。按实际服务创建 `src\workflows\config.json`；以下为无认证本地服务示例，服务由管理员启动：
 
 ```json
 {

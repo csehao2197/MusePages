@@ -8,6 +8,8 @@
 
 ## 0. 变量定义
 
+本指引的模型与范围以本轮任务约定为准；`src\workflows\config.json` 的作用域仅为 `render-prompt-pages.mjs`。
+
 <model_name>=GPT-6
 "modelId"=<model_name>
 

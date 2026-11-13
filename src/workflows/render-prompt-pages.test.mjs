@@ -16,6 +16,10 @@ const secret = "synthetic-test-secret";
 const model = { apiType: "openai-responses", baseUrl: "http://127.0.0.1:1/v1", modelId, directory: "model-a", apiKeyEnv: "MUSE_TEST_KEY" };
 const env = { ...process.env, MUSE_TEST_KEY: secret };
 
+function modelConfig(workspace) {
+  return path.join(workspace, "src", "workflows", "config.json");
+}
+
 async function save(file, value) {
   await mkdir(path.dirname(file), { recursive: true });
   await writeFile(file, typeof value === "string" ? value : JSON.stringify(value, null, 2));
@@ -27,7 +31,7 @@ async function fixture(t) {
   await save(path.join(workspace, "src", "workflows", "AI Agent", "DESIGN.md"), "Use responsive, accessible UI. Preserve source licenses.");
   await save(path.join(workspace, "data", "prompts", prompt, `${prompt}.md`), "# Travel\nBuild a travel homepage.\n& echo unsafe; $(not-a-command)\n中文");
   await save(path.join(workspace, "data", "prompts", prompt, "README.md"), "# Not an original prompt");
-  await save(path.join(workspace, "config.json"), { version: 1, models: { local: model } });
+  await save(modelConfig(workspace), { version: 1, models: { local: model } });
   const script = path.join(workspace, "mock-codex.cjs");
   await save(script, `
 const fs = require("node:fs");
@@ -98,9 +102,9 @@ async function service(t, workspace, { advertised = modelId, status = 200, authe
   });
   await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
   t.after(() => new Promise((resolve) => server.close(resolve)));
-  const config = await readJson(path.join(workspace, "config.json"));
+  const config = await readJson(modelConfig(workspace));
   config.models.local.baseUrl = `http://127.0.0.1:${server.address().port}/v1`;
-  await save(path.join(workspace, "config.json"), config);
+  await save(modelConfig(workspace), config);
   return () => requests;
 }
 
@@ -120,6 +124,24 @@ async function snapshot(folder) {
   }
   return result;
 }
+
+test("the render script exclusively reads its workflow-local configuration without a root fallback", async (t) => {
+  const f = await fixture(t);
+  const rootConfig = path.join(f.workspace, "config.json");
+  await save(rootConfig, { version: 1, models: { local: { ...model, modelId: "unrelated-root-model" } } });
+  await save(path.join(f.workspace, "deploy", "config.json"), { version: 2, pages: {} });
+  const before = await snapshot(f.workspace);
+  const [configured] = await loadModels(f.workspace, ["local"]);
+  assert.equal(configured.modelId, modelId);
+  const report = await renderPromptPages(f.workspace, ["local"], { check: true });
+  assert.equal(report.summary.missing, 1);
+  assert.deepEqual(await snapshot(f.workspace), before);
+  await rm(modelConfig(f.workspace));
+  await assert.rejects(loadModels(f.workspace, ["local"]), {
+    message: `Required file is missing: ${modelConfig(f.workspace)}`,
+  });
+  assert.equal((await readJson(rootConfig)).models.local.modelId, "unrelated-root-model");
+});
 
 test("generates through a child process with stdin, real model selection, static checks and disabled grouped registration", async (t) => {
   const f = await fixture(t);
@@ -206,9 +228,9 @@ test("Codex command logging precedes execution and quotes arguments while redact
 test("generation works without API-key settings or environment variables", async (t) => {
   const f = await fixture(t);
   const requests = await service(t, f.workspace, { authenticated: false });
-  const config = await readJson(path.join(f.workspace, "config.json"));
+  const config = await readJson(modelConfig(f.workspace));
   delete config.models.local.apiKeyEnv;
-  await save(path.join(f.workspace, "config.json"), config);
+  await save(modelConfig(f.workspace), config);
   const keylessEnv = { ...process.env };
   for (const key of ["MUSE_TEST_KEY", "MUSEPAGES_MODEL_API_KEY", "OPENAI_API_KEY", "CODEX_API_KEY"]) delete keylessEnv[key];
   const report = await renderPromptPages(f.workspace, ["local"], f.options("success", { env: keylessEnv }));
@@ -380,9 +402,9 @@ test("cancelling preview preparation releases browser and generation locks witho
 
 test("read-only coverage spans explicit models and ignores validation/publication without touching files or service", async (t) => {
   const f = await fixture(t);
-  const config = await readJson(path.join(f.workspace, "config.json"));
+  const config = await readJson(modelConfig(f.workspace));
   config.models.second = { ...model, modelId: "second-id", directory: "model-b" };
-  await save(path.join(f.workspace, "config.json"), config);
+  await save(modelConfig(f.workspace), config);
   await save(path.join(f.output, "metadata.json"), metadata());
   const before = await snapshot(f.workspace);
   const report = await renderPromptPages(f.workspace, ["local", "second"], { check: true, env: {} });
@@ -394,9 +416,9 @@ test("read-only coverage spans explicit models and ignores validation/publicatio
 
 test("service failures report the stage, URL and nested network causes without leaking credentials", async (t) => {
   const f = await fixture(t);
-  const config = await readJson(path.join(f.workspace, "config.json"));
+  const config = await readJson(modelConfig(f.workspace));
   config.models.local.baseUrl = "http://127.0.0.1:8000/v1";
-  await save(path.join(f.workspace, "config.json"), config);
+  await save(modelConfig(f.workspace), config);
   const logs = [];
   t.mock.method(globalThis, "fetch", async () => {
     const cause = Object.assign(new Error(`connect ECONNREFUSED ${secret}`), {
@@ -575,16 +597,16 @@ test("static validation checks CSS resources, nested public paths and forbidden 
 
 test("model directories, input names and public slug collisions stop before any model call", async (t) => {
   const f = await fixture(t);
-  const config = await readJson(path.join(f.workspace, "config.json"));
+  const config = await readJson(modelConfig(f.workspace));
   config.models.duplicate = { ...model };
-  await save(path.join(f.workspace, "config.json"), config);
+  await save(modelConfig(f.workspace), config);
   await assert.rejects(loadModels(f.workspace, ["local"]), /directory collision/);
   delete config.models.duplicate;
   config.models.local.directory = "../escape";
-  await save(path.join(f.workspace, "config.json"), config);
+  await save(modelConfig(f.workspace), config);
   await assert.rejects(loadModels(f.workspace, ["local"]), /Invalid model directory/);
   config.models.local = model;
-  await save(path.join(f.workspace, "config.json"), config);
+  await save(modelConfig(f.workspace), config);
   await save(path.join(f.workspace, "data", "prompts", "another-folder", `${prompt}.md`), "Duplicate");
   await assert.rejects(renderPromptPages(f.workspace, ["local"], f.options()), /Duplicate prompt/);
   await rm(path.join(f.workspace, "data", "prompts", "another-folder", `${prompt}.md`));
@@ -777,8 +799,8 @@ test("prompt ranges reject missing or ambiguous numbers before generation withou
 test("numeric selection generates only the matching prompt and rejects missing or ambiguous numbers", async (t) => {
   const f = await fixture(t);
   const requests = await service(t, f.workspace);
-  const config = await readJson(path.join(f.workspace, "config.json"));
-  await save(path.join(f.workspace, "config.json"), {
+  const config = await readJson(modelConfig(f.workspace));
+  await save(modelConfig(f.workspace), {
     version: 1, models: { "Qwen3.8": { ...config.models.local, directory: "qwen3.8" } },
   });
   const selected = "003-selected";
@@ -825,14 +847,15 @@ test("the actual CLI returns coverage JSON and an appropriate exit code without 
   assert.equal(missing.status, 1, missing.stderr);
   assert.equal(JSON.parse(missing.stdout).summary.missing, 1);
   assert.match(missing.stderr, /Loading model configuration:/);
+  assert.ok(missing.stderr.includes(modelConfig(f.workspace)));
   assert.match(missing.stderr, /\[001-travel\/local\] missing/);
   assert.deepEqual(await snapshot(f.workspace), before);
   await save(path.join(f.output, "metadata.json"), metadata());
   const complete = run();
   assert.equal(complete.status, 0, complete.stderr);
   assert.equal(JSON.parse(complete.stdout).summary.skipped, 1);
-  const config = await readJson(path.join(f.workspace, "config.json"));
-  await save(path.join(f.workspace, "config.json"), { version: 1, models: { "Qwen3.8": config.models.local } });
+  const config = await readJson(modelConfig(f.workspace));
+  await save(modelConfig(f.workspace), { version: 1, models: { "Qwen3.8": config.models.local } });
   await save(path.join(f.workspace, "data", "prompts", "2-middle", "2-middle.md"), "# Middle requirement\n");
   await save(path.join(f.workspace, "data", "prompts", "003-selected", "003-selected.md"), "# Selected requirement\n");
   await save(path.join(f.workspace, "data", "prompts", "030-other", "030-other.md"), "# Unselected requirement\n");
@@ -863,10 +886,10 @@ test("the actual CLI prints detailed network failures to stderr and keeps stdout
   for (const filename of ["render-prompt-pages.mjs", "deploy-site.mjs", "render-prompt-page.mjs"]) {
     await copyFile(new URL(filename, import.meta.url), path.join(directory, filename));
   }
-  const config = await readJson(path.join(f.workspace, "config.json"));
+  const config = await readJson(modelConfig(f.workspace));
   delete config.models.local.apiKeyEnv;
   config.models.local.baseUrl = "http://127.0.0.1:8000/v1";
-  await save(path.join(f.workspace, "config.json"), config);
+  await save(modelConfig(f.workspace), config);
   const network = path.join(f.workspace, "mock-network.cjs");
   await save(network, `
 globalThis.fetch = async () => {

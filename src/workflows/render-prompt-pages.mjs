@@ -114,7 +114,7 @@ async function saveText(file, value) {
 }
 
 export async function loadModels(workspace, selections) {
-  const config = await json(await inside(workspace, "config.json"));
+  const config = await json(await inside(workspace, "src", "workflows", "config.json"));
   if (config.version !== 1 || !config.models || Array.isArray(config.models) || typeof config.models !== "object") {
     throw Error("Expected model config version 1 with a models object");
   }
@@ -695,7 +695,7 @@ export async function renderPromptPages(workspace = root, selections = [], optio
     return key ? value.replaceAll(key, "[REDACTED]") : value;
   }, String(message));
   const log = (message) => settings.onLog?.(redact(message));
-  log(`Loading model configuration: ${path.join(workspace, "config.json")}`);
+  log(`Loading model configuration: ${path.join(workspace, "src", "workflows", "config.json")}`);
   models = await loadModels(workspace, selections);
   log("Reading original prompts");
   const inputs = await prompts(workspace, settings.prompts);
