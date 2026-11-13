@@ -2,11 +2,12 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { createServer } from "node:http";
 import { spawnSync } from "node:child_process";
+import { existsSync } from "node:fs";
 import { copyFile, mkdir, mkdtemp, readFile, readdir, rm, stat, symlink, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import {
-  loadModels, parseArguments, renderPromptPages, resolveCodex, validateStaticOutput, verifyModelService,
+  loadModels, parseArguments, renderPromptPages, resolveCodex, runCodex, validateStaticOutput, verifyModelService,
 } from "./render-prompt-pages.mjs";
 
 const prompt = "001-travel";
@@ -124,7 +125,8 @@ test("generates through a child process with stdin, real model selection, static
   const f = await fixture(t);
   const requests = await service(t, f.workspace);
   await save(path.join(f.workspace, "deploy", "dist", "MusePages", "index.html"), "existing website");
-  const report = await renderPromptPages(f.workspace, ["local"], f.options());
+  const diagnostics = [];
+  const report = await renderPromptPages(f.workspace, ["local"], f.options("success", { onLog: (message) => diagnostics.push(message) }));
   assert.equal(report.summary.generated, 1, JSON.stringify(report));
   assert.equal(report.items[0].preview, "generated");
   const preview = await readFile(path.join(f.output, "out", "preview.png"));
@@ -144,6 +146,12 @@ test("generates through a child process with stdin, real model selection, static
   assert.equal(invocation.cwd, f.output);
   assert.equal(invocation.args.at(-1), "-");
   assert.equal(invocation.args[invocation.args.indexOf("--model") + 1], modelId);
+  const command = diagnostics.find((message) => message.includes("Codex command:"));
+  assert.ok(command?.includes(process.execPath));
+  assert.ok(command.includes(`--model ${modelId}`));
+  assert.ok(command.includes('model_providers.musepages.wire_api="responses"'));
+  assert.ok(!diagnostics.join("\n").includes(secret));
+  assert.ok(!diagnostics.join("\n").includes("# Travel"));
   assert.ok(invocation.args.includes('model_provider="musepages"'));
   assert.ok(invocation.args.includes('model_providers.musepages.wire_api="responses"'));
   assert.ok(invocation.args.includes('model_providers.musepages.env_key="MUSE_TEST_KEY"'));
@@ -161,6 +169,38 @@ test("generates through a child process with stdin, real model selection, static
   assert.equal(await readFile(path.join(f.workspace, "deploy", "dist", "MusePages", "index.html"), "utf8"), "existing website");
   assert.deepEqual(await readdir(path.join(f.workspace, "out", ".generation-locks")), []);
   assert.equal(requests(), 1);
+});
+
+test("Codex command logging precedes execution and quotes arguments while redacting before quoting", async (t) => {
+  const f = await fixture(t);
+  await mkdir(f.output, { recursive: true });
+  const key = "synthetic'quoted\"secret";
+  const note = "note with spaces and 'quotes'";
+  const options = f.options();
+  const messages = [];
+  await runCodex({
+    folder: f.output, prompt: "Private requirement sent only through stdin", model,
+    command: { ...options.command, args: [...options.command.args, note, key] },
+    timeoutMs: options.timeoutMs, attempt: 1, env: { ...env, MUSE_TEST_KEY: key },
+    onLog: (message) => {
+      if (message.startsWith("Codex command:")) {
+        assert.equal(existsSync(path.join(f.output, ".invocation.json")), false);
+      }
+      messages.push(message);
+    },
+  });
+  const command = messages.find((message) => message.startsWith("Codex command:"));
+  assert.ok(command?.includes(process.execPath));
+  assert.ok(command.includes(`--model ${modelId}`));
+  assert.ok(command.includes(process.platform === "win32"
+    ? "'note with spaces and ''quotes'''" : "'note with spaces and '\\''quotes'\\'''"));
+  assert.ok(command.includes("[REDACTED]"));
+  assert.ok(!messages.join("\n").includes(key));
+  assert.ok(!messages.join("\n").includes("Private requirement"));
+  const invocation = await readJson(path.join(f.output, ".invocation.json"));
+  assert.ok(invocation.args.includes(note));
+  assert.ok(invocation.args.includes(key));
+  assert.equal(invocation.input, "Private requirement sent only through stdin");
 });
 
 test("generation works without API-key settings or environment variables", async (t) => {
@@ -657,6 +697,83 @@ test("CLI arguments accept a leading prompt number while preserving existing mod
   }
 });
 
+test("CLI arguments accept inclusive prompt ranges and reject invalid bounds or conflicting selectors", () => {
+  for (const range of ["001-010", "1-10", "003-003"]) {
+    assert.deepEqual(parseArguments([range, "Qwen3.8", "--check", "--retry"]), {
+      selections: ["Qwen3.8"], options: { check: true, retry: true, prompts: [range] },
+    });
+  }
+  assert.throws(() => parseArguments(["010-001", "Qwen3.8"]), /range start must not exceed its end/);
+  for (const range of ["000-010", "001-000", "1-9007199254740992"]) {
+    assert.throws(() => parseArguments([range, "Qwen3.8"]), /positive safe integer/);
+  }
+  assert.throws(() => parseArguments(["001-010"]), /range must be followed by a model selection/);
+  for (const args of [
+    ["001-010", "Qwen3.8", "--prompts=001-travel"],
+    ["--prompts=001-travel", "001-010", "Qwen3.8"],
+  ]) assert.throws(() => parseArguments(args), /either a positional prompt range or --prompts/);
+});
+
+test("prompt ranges generate sequentially in numeric order and only select inclusive bounds", async (t) => {
+  const f = await fixture(t);
+  const requests = await service(t, f.workspace);
+  const ids = [prompt, "2-middle", "003-last"];
+  for (const id of [...ids.slice(1), "004-unselected"]) {
+    await save(path.join(f.workspace, "data", "prompts", id, `${id}.md`), `# Requirement ${id}\n`);
+  }
+  const logs = [];
+  const { selections, options } = parseArguments(["001-003", "local"]);
+  const report = await renderPromptPages(f.workspace, selections, f.options("success", {
+    ...options, onLog: (message) => logs.push(message),
+  }));
+  assert.equal(report.summary.generated, 3, JSON.stringify(report));
+  assert.deepEqual(report.items.map((item) => item.prompt), ids);
+  assert.deepEqual((await readdir(path.join(f.workspace, "out", "pages"))).sort(), [...ids].sort());
+  for (const [index, id] of ids.entries()) {
+    const output = path.join(f.workspace, "out", "pages", id, "model-a");
+    const invocation = await readJson(path.join(output, ".invocation.json"));
+    assert.equal(invocation.cwd, output);
+    assert.ok(invocation.input.includes(index ? `# Requirement ${id}` : "# Travel"));
+    assert.equal(await readFile(path.join(output, ".attempt-count"), "utf8"), "1");
+    const generation = logs.findIndex((message) => message.startsWith(`[${id}/local] generate: Attempt 1/1;`));
+    assert.ok(generation >= 0);
+    if (index) {
+      const previous = logs.indexOf(`[${ids[index - 1]}/local] generated`);
+      assert.ok(previous >= 0 && previous < generation, "Finish the previous prompt before starting the next Codex process");
+    }
+  }
+  const before = await snapshot(f.workspace);
+  const checked = await renderPromptPages(f.workspace, ["local"], { prompts: ["001-003"], check: true });
+  assert.equal(checked.summary.skipped, 3);
+  assert.deepEqual(checked.items.map((item) => item.prompt), ids);
+  assert.deepEqual(await snapshot(f.workspace), before);
+  assert.equal(requests(), 1);
+});
+
+test("prompt ranges reject missing or ambiguous numbers before generation without expanding huge ranges", async (t) => {
+  const f = await fixture(t);
+  const requests = await service(t, f.workspace);
+  await save(path.join(f.workspace, "data", "prompts", "003-last", "003-last.md"), "# Third requirement\n");
+  const before = await snapshot(f.workspace);
+  for (const range of ["001-003", "1-9007199254740991"]) {
+    await assert.rejects(renderPromptPages(f.workspace, ["local"], f.options("success", {
+      prompts: [range],
+    })), /Unknown prompt number: 2/);
+  }
+  assert.deepEqual(await snapshot(f.workspace), before);
+  for (const id of ["002-second", "2-duplicate"]) {
+    await save(path.join(f.workspace, "data", "prompts", id, `${id}.md`), "# Duplicate number\n");
+  }
+  const ambiguous = await snapshot(f.workspace);
+  await assert.rejects(renderPromptPages(f.workspace, ["local"], f.options("success", {
+    prompts: ["001-003"],
+  })), /Ambiguous prompt number: 2/);
+  assert.deepEqual(await snapshot(f.workspace), ambiguous);
+  const single = await renderPromptPages(f.workspace, ["local"], { prompts: ["001-001"], check: true });
+  assert.deepEqual(single.items.map((item) => item.prompt), [prompt]);
+  assert.equal(requests(), 0);
+});
+
 test("numeric selection generates only the matching prompt and rejects missing or ambiguous numbers", async (t) => {
   const f = await fixture(t);
   const requests = await service(t, f.workspace);
@@ -716,6 +833,7 @@ test("the actual CLI returns coverage JSON and an appropriate exit code without 
   assert.equal(JSON.parse(complete.stdout).summary.skipped, 1);
   const config = await readJson(path.join(f.workspace, "config.json"));
   await save(path.join(f.workspace, "config.json"), { version: 1, models: { "Qwen3.8": config.models.local } });
+  await save(path.join(f.workspace, "data", "prompts", "2-middle", "2-middle.md"), "# Middle requirement\n");
   await save(path.join(f.workspace, "data", "prompts", "003-selected", "003-selected.md"), "# Selected requirement\n");
   await save(path.join(f.workspace, "data", "prompts", "030-other", "030-other.md"), "# Unselected requirement\n");
   const numericBefore = await snapshot(f.workspace);
@@ -726,6 +844,12 @@ test("the actual CLI returns coverage JSON and an appropriate exit code without 
     assert.equal(report.summary.missing, 1);
     assert.deepEqual(report.items.map(({ prompt, model }) => ({ prompt, model })), [{ prompt: "003-selected", model: "Qwen3.8" }]);
   }
+  const ranged = run(["001-003", "Qwen3.8", "--check"]);
+  assert.equal(ranged.status, 1, ranged.stderr);
+  const rangeReport = JSON.parse(ranged.stdout);
+  assert.equal(rangeReport.summary.skipped, 1);
+  assert.equal(rangeReport.summary.missing, 2);
+  assert.deepEqual(rangeReport.items.map((item) => item.prompt), [prompt, "2-middle", "003-selected"]);
   const unknown = run(["999", "Qwen3.8", "--check"]);
   assert.equal(unknown.status, 1);
   assert.match(unknown.stderr, /Unknown prompt number: 999/);

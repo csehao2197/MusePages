@@ -30,6 +30,15 @@ function promptNumber(value) {
   return number;
 }
 
+function promptRange(value) {
+  const match = /^(\d+)-(\d+)$/.exec(value);
+  if (!match) return null;
+  const start = promptNumber(match[1]);
+  const end = promptNumber(match[2]);
+  if (start > end) throw Error("Prompt range start must not exceed its end");
+  return [start, end];
+}
+
 function errorDetails(error, seen = new Set()) {
   if (!error || seen.has(error) || seen.size >= 10) return "";
   seen.add(error);
@@ -159,10 +168,27 @@ async function prompts(workspace, selected) {
   if (!found.length) throw Error("No original Markdown prompts found");
   if (selected) {
     const ids = new Set();
+    let hasRange = false;
+    const numberOf = (prompt) => Number(prompt.id.match(/^(\d+)-/)?.[1]);
     for (const selection of selected) {
-      if (/^\d+$/.test(selection)) {
+      const range = promptRange(selection);
+      if (range) {
+        hasRange = true;
+        const [start, end] = range;
+        const matches = found.filter((prompt) => numberOf(prompt) >= start && numberOf(prompt) <= end)
+          .sort((a, b) => numberOf(a) - numberOf(b));
+        let next = start;
+        for (const prompt of matches) {
+          const number = numberOf(prompt);
+          if (number < next) throw Error(`Ambiguous prompt number: ${number}`);
+          if (number !== next) throw Error(`Unknown prompt number: ${next}`);
+          ids.add(prompt.id);
+          next++;
+        }
+        if (next <= end) throw Error(`Unknown prompt number: ${next}`);
+      } else if (/^\d+$/.test(selection)) {
         const number = promptNumber(selection);
-        const matches = found.filter((prompt) => Number(prompt.id.match(/^(\d+)-/)?.[1]) === number);
+        const matches = found.filter((prompt) => numberOf(prompt) === number);
         if (!matches.length) throw Error(`Unknown prompt number: ${selection}`);
         if (matches.length > 1) throw Error(`Ambiguous prompt number: ${selection}`);
         ids.add(matches[0].id);
@@ -171,7 +197,8 @@ async function prompts(workspace, selected) {
         ids.add(selection);
       }
     }
-    return found.filter((prompt) => ids.has(prompt.id));
+    const result = found.filter((prompt) => ids.has(prompt.id));
+    return hasRange ? result.sort((a, b) => numberOf(a) - numberOf(b) || a.id.localeCompare(b.id)) : result;
   }
   return found;
 }
@@ -354,6 +381,11 @@ export async function runCodex({ folder, prompt, model, command, timeoutMs, atte
     if (event.type === "turn.failed" || event.type === "error") throw Error("Codex reported an unsuccessful turn; see attempt log");
   };
   try {
+    const key = model.apiKeyEnv && env[model.apiKeyEnv];
+    const quote = (arg) => /^[a-z0-9_./:=@,+-]+$/i.test(arg) ? arg
+      : process.platform === "win32" ? `'${arg.replaceAll("'", "''")}'` : `'${arg.replaceAll("'", "'\\''")}'`;
+    const displayed = [command.executable, ...args].map((arg) => quote(key ? arg.replaceAll(key, "[REDACTED]") : arg)).join(" ");
+    onLog?.(`Codex command: ${process.platform === "win32" ? "& " : ""}${displayed}`);
     await new Promise((resolve, reject) => {
       const child = spawn(command.executable, args, {
         cwd: folder, env: { ...env, CODEX_HOME: home }, shell: false,
@@ -730,11 +762,13 @@ export function parseArguments(args) {
     } else if (arg.startsWith("-")) throw Error(`Unknown option: ${arg}`);
     else selections.push(name(arg, "model selection"));
   }
-  if (/^\d+$/.test(selections[0])) {
+  if (/^\d+(?:-\d+)?$/.test(selections[0])) {
     const selection = selections.shift();
-    promptNumber(selection);
-    if (!selections.length) throw Error("A prompt number must be followed by a model selection");
-    if (options.prompts) throw Error("Use either a positional prompt number or --prompts");
+    const range = promptRange(selection);
+    if (!range) promptNumber(selection);
+    const label = range ? "range" : "number";
+    if (!selections.length) throw Error(`A prompt ${label} must be followed by a model selection`);
+    if (options.prompts) throw Error(`Use either a positional prompt ${label} or --prompts`);
     options.prompts = [selection];
   }
   return { selections, options };
