@@ -349,9 +349,9 @@ prompt 目录仅容纳模型结果目录。公开标题与 slug 保存在 `deplo
 
 ### 模型与发布配置
 
-根目录 `config.json` 保存模型服务选择，包括调用 URI、接口类型、真实模型 ID 与稳定目录名；认证值从环境读取。它与 `deploy\config.json` 的发布选择职责不同，不能混用。
+根目录 `config.json` 保存模型服务选择，包括调用 URI、接口类型、真实模型 ID 与稳定目录名；可选认证值从环境读取。它与 `deploy\config.json` 的发布选择职责不同，不能混用。
 
-当前生成脚本使用以下模型配置结构。按实际服务创建根目录 `config.json`；示例不包含认证值，也不会自动启动服务器：
+当前生成脚本使用以下模型配置结构。按实际服务创建根目录 `config.json`；以下为无认证本地服务示例，服务由管理员启动：
 
 ```json
 {
@@ -361,8 +361,7 @@ prompt 目录仅容纳模型结果目录。公开标题与 slug 保存在 `deplo
       "apiType": "openai-responses",
       "baseUrl": "http://127.0.0.1:8000/v1",
       "modelId": "actual-model-id",
-      "directory": "model-a",
-      "apiKeyEnv": "MUSEPAGES_MODEL_API_KEY"
+      "directory": "model-a"
     }
   }
 }

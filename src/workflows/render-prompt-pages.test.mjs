@@ -86,12 +86,12 @@ process.stdin.on("end", () => {
   };
 }
 
-async function service(t, workspace, { advertised = modelId, status = 200 } = {}) {
+async function service(t, workspace, { advertised = modelId, status = 200, authenticated = true } = {}) {
   let requests = 0;
   const server = createServer((request, response) => {
     requests++;
     assert.equal(request.url, "/v1/models");
-    assert.equal(request.headers.authorization, `Bearer ${secret}`);
+    assert.equal(request.headers.authorization, authenticated ? `Bearer ${secret}` : undefined);
     response.writeHead(status, { "Content-Type": "application/json" });
     response.end(JSON.stringify({ data: [{ id: advertised }] }));
   });
@@ -161,6 +161,22 @@ test("generates through a child process with stdin, real model selection, static
   assert.equal(await readFile(path.join(f.workspace, "deploy", "dist", "MusePages", "index.html"), "utf8"), "existing website");
   assert.deepEqual(await readdir(path.join(f.workspace, "out", ".generation-locks")), []);
   assert.equal(requests(), 1);
+});
+
+test("generation works without API-key settings or environment variables", async (t) => {
+  const f = await fixture(t);
+  const requests = await service(t, f.workspace, { authenticated: false });
+  const config = await readJson(path.join(f.workspace, "config.json"));
+  delete config.models.local.apiKeyEnv;
+  await save(path.join(f.workspace, "config.json"), config);
+  const keylessEnv = { ...process.env };
+  for (const key of ["MUSE_TEST_KEY", "MUSEPAGES_MODEL_API_KEY", "OPENAI_API_KEY", "CODEX_API_KEY"]) delete keylessEnv[key];
+  const report = await renderPromptPages(f.workspace, ["local"], f.options("success", { env: keylessEnv }));
+  assert.equal(report.summary.generated, 1, JSON.stringify(report));
+  assert.equal(requests(), 1);
+  const invocation = await readJson(path.join(f.output, ".invocation.json"));
+  assert.ok(invocation.args.includes("model_providers.musepages.requires_openai_auth=false"));
+  assert.ok(!invocation.args.some((arg) => arg.startsWith("model_providers.musepages.env_key=")));
 });
 
 test("completed results repair registration without a model call and preserve existing switches and order", async (t) => {
