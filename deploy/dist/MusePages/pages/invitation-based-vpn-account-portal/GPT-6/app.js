@@ -1,15 +1,15 @@
 import {initial,register,login,requireUser,addDevice,ownDevice,regenerate,disableUser,inviteCode,resetPassword,sampleText,reference,PLATFORMS} from "./assets/engine.js";
-import {en,fa} from "./assets/i18n.js";
+import {en} from "./assets/i18n.js";
 import {qrSvg} from "./assets/qr.js";
 const $=(id)=>document.getElementById(id),icon=(id)=>`<svg class="icon" aria-hidden="true"><use href="assets/icons.svg#${id}"></use></svg>`,esc=(s)=>String(s).replace(/[&<>"']/g,(c)=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])),platformNames={windows:"Windows",macos:"macOS",ios:"iOS",android:"Android",linux:"Linux"};
-let state=await initial(),language="en",platform="windows",authMode="login",modalDevice=null,pendingAction=null,toastTimer,working=false;
-const t=(key)=>(language==="fa"?fa:en)[key]??key,err=(e)=>t(e.code||"unexpected"),deviceIcon=(p)=>["android","ios"].includes(p)?"phone":p==="windows"||p==="linux"?"monitor":"laptop";
+let state=await initial(),platform="windows",authMode="login",modalDevice=null,pendingAction=null,toastTimer,working=false;
+const t=(key)=>en[key]??key,err=(e)=>t(e.code||"unexpected"),deviceIcon=(p)=>["android","ios"].includes(p)?"phone":p==="windows"||p==="linux"?"monitor":"laptop";
 function toast(message){$("toast").textContent=message;$("toast").hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$("toast").hidden=true,3500);}
 function shell(){
-  document.documentElement.lang=language;document.documentElement.dir="ltr";document.title=language==="fa"?"LeiaGuard — نمونه محلی مدیریت دستگاه":"LeiaGuard — Your private corner, imagined";
+  document.documentElement.lang="en";document.documentElement.dir="ltr";document.title="LeiaGuard — Your private corner, imagined";
   $("strip").textContent=t("strip");const route=location.hash||"#home";
   $("nav").innerHTML=[["#devices","devices"],["#guides","guides"],["#admin","admin"]].map(([href,key])=>`<a href="${href}" class="${route===href?"active":""}">${t(key)}</a>`).join("");
-  $("header-actions").innerHTML=`<button class="lang" id="language" lang="${language==="en"?"fa":"en"}">${language==="en"?"فارسی":"English"}</button>${state.session?`<button class="primary" id="logout">${t("logout")} ${icon("logout")}</button>`:`<button class="primary" data-auth="login">${t("login")}</button>`}`;
+  $("header-actions").innerHTML=`${state.session?`<button class="primary" id="logout">${t("logout")} ${icon("logout")}</button>`:`<button class="primary" data-auth="login">${t("login")}</button>`}`;
   $("footer").innerHTML=`<a class="brand" href="#home">leia<span>guard</span><i></i></a><span>${t("footer")}</span><div><a href="#scope">${t("scope")}</a><button id="reset-all">${t("resetAll")}</button></div><small>${t("ram")} ${t("noLogs")}</small>`;
 }
 function home(){return `<section class="hero"><div class="hero-copy"><p class="eyebrow">${t("eyebrow")}</p><h1>${t("hero1")}<span>${t("hero2")}</span></h1><p>${t("heroCopy")}</p><div class="hero-actions"><button class="primary" data-auth="login">${t("enter")} ${icon("right")}</button><button class="quiet" data-auth="register">${t("haveInvite")} ${icon("external")}</button></div><div class="invite-inline">${t("sampleInvite")}<code>JOINDEMO</code><button class="copy" data-copy="JOINDEMO" aria-label="${t("copy")} JOINDEMO">${icon("copy")}</button></div></div><div class="portal-art"><div class="mock-window"><div class="window-top"><span class="mini-brand">leiaguard</span><span class="dots"><i></i><i></i><i></i></span></div><p class="eyebrow">${t("sample")}</p><h2>${t("access")}</h2>${[["laptop","laptop","macOS"],["phone","phone","iOS"]].map(([ic,key,p])=>`<div class="mock-device">${icon(ic)}<div><strong>${t(key)}</strong><small>${p} · ${t("sampleReady")}</small></div><span>${icon("check")}</span></div>`).join("")}<div class="mock-note">${icon("help")}${t("sampleOnly")}</div></div><div class="floating-label">${icon("ticket")}${t("invitation")}</div></div></section><div class="benefits"><span>${icon("ticket")}${t("invitation")}</span><span>${icon("mail-x")}${t("noEmail")}</span><span>${icon("laptop")}${t("multi")}</span></div><section class="how"><p class="eyebrow">${t("scope")}</p><h2>${t("howTitle")}</h2><div class="steps">${[1,2,3].map((n)=>`<article><div class="step-number">0${n}</div><h3>${t(`step${n}`)}</h3><p>${t(`step${n}Copy`)}</p></article>`).join("")}</div></section><section class="scope-band"><div><h3>${t("sampleOnly")}</h3><p>${t("ram")}</p></div><a class="secondary" href="#guides">${t("guides")} ${icon("right")}</a></section>`;}
@@ -24,7 +24,6 @@ function download(name,text,type){const link=document.createElement("a"),url=URL
 document.addEventListener("click",async(event)=>{
   const button=event.target.closest("button");if(!button)return;
   try{
-    if(button.id==="language"){language=language==="en"?"fa":"en";render();$("language").focus();return;}
     if(button.dataset.auth){auth(button.dataset.auth);return;}
     if(button.id==="close-dialog"||button.id==="keep"){$("dialog").close();return;}
     if(button.id==="logout"){state.session=null;location.hash="#home";render();return;}
