@@ -248,7 +248,8 @@ test("gallery groups models into stable, accessible carousels with synchronized 
       assert.ok(Math.abs((dots[0].center + dots.at(-1).center) / 2 - (controls.x + controls.width / 2)) < 1,
         "dots remain centered without arrow buttons");
       assert.equal(await page.getByRole("button", { name: /^(Previous|Next) model$/ }).count(), 0);
-      assert.equal(await page.locator(".count").textContent(), "2 prompts / 4 pages");
+      assert.equal(await page.locator(".count").count(), 0);
+      assert.doesNotMatch(await page.locator("body").innerText(), /\d+ prompts \/ \d+ pages/);
       assert.equal(await page.locator('[aria-label="Show model disabled-model"]').count(), 0);
       const single = page.locator("[data-carousel]").nth(1);
       assert.equal(await single.locator(".dot").count(), 1);

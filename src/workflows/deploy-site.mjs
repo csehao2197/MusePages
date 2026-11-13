@@ -351,11 +351,9 @@ function gallery(template, pages) {
       <p class="carousel-status" role="status" aria-atomic="true">${escapeHtml(models[0].model)}</p>
     </article>`;
   }).join("\n");
-  for (const marker of ["<!-- RESULT_COUNT -->", "<!-- RESULT_CARDS -->"]) {
-    if (template.split(marker).length !== 2) throw Error(`Gallery template must contain exactly one ${marker}`);
-  }
-  return template.replace("<!-- RESULT_COUNT -->", () => `${new Set(pages.map((page) => page.prompt)).size} prompts / ${pages.length} pages`)
-    .replace("<!-- RESULT_CARDS -->", () => cards || '<p class="sample-note">No published pages yet.</p>');
+  const marker = "<!-- RESULT_CARDS -->";
+  if (template.split(marker).length !== 2) throw Error(`Gallery template must contain exactly one ${marker}`);
+  return template.replace(marker, () => cards || '<p class="sample-note">No published pages yet.</p>');
 }
 
 async function validateLinks(staging, folder = staging) {

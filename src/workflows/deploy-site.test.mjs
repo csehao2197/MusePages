@@ -382,7 +382,7 @@ test("publishing copies only selected variants and removing the last selected mo
   const html = await readFile(path.join(target, "index.html"), "utf8");
   assert.doesNotMatch(html, /pages\/travel/);
   assert.match(html, /pages\/food\/model-c\/index\.html/);
-  assert.match(html, /1 prompts \/ 1 pages/);
+  assert.doesNotMatch(html, /class="count"|\d+ prompts \/ \d+ pages/);
 });
 
 test("sitemap includes only the gallery and selected model homepages and stays synchronized", async (t) => {

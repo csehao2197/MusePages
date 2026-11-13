@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Historic Atlas — A release you can name | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Historic Atlas — A release you can name</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># SPEC: Releases
+
+Status: draft. Part of [SPEC.md](../SPEC.md).
+
+## Purpose
+
+Mark named releases in the source tree, so that a host runs a known,
+reproducible version of the application instead of whatever happens to be
+checked out.
+
+## Requirements
+
+- A release is an annotated git tag on a commit of `main`.
+- Every release has a version and notes saying what changed since the
+  previous release.
+- A release is created by one script, `tools/release.sh`, which refuses to
+  create a release that is not reproducible: the working tree must be clean,
+  the branch `main` and in sync with its remote, and the work item check
+  must pass.
+- A host can tell which release it runs.
+
+## Decisions
+
+- **Version scheme:** semantic versioning, `MAJOR.MINOR.PATCH`. While
+  there is no public version, `MAJOR` is 0 and a breaking change raises
+  `MINOR`. The first release is `0.1.0`.
+- **Tag name:** the version with a leading `v`, for example `v0.1.0`. Only
+  tags of this form are releases; the script compares them with a version
+  sort and accepts only a version greater than the latest one.
+- **Notes:** the message of the annotated tag lists the subjects of the
+  commits since the previous release, one per line, which already carry the
+  work item IDs (see [SPEC-work-tracking.md](SPEC-work-tracking.md)). There
+  is no separate changelog file.
+- **Signing:** the tag is signed (`git tag -s`) when `user.signingkey` is
+  configured, and only annotated otherwise.
+- **Creating a release:** `tools/release.sh &lt;version&gt;` creates the tag
+  locally and prints it; `tools/release.sh &lt;version&gt; --push` also pushes the
+  tag. Without the push option nothing leaves the machine.
+- **Which release a host runs:** a host runs the checkout from which
+  `deploy/deploy.sh` was run (see
+  [SPEC-deployment.md](SPEC-deployment.md)). Deploying a release means
+  checking out its tag there first.
+- **Images:** introduced in [AVARC-31](../tasks/finished/TASK-image-builds.md),
+  split by module in [AVARC-52](../tasks/finished/TASK-per-module-builds.md). One
+  GitHub Actions workflow per module (`ci-backend.yml`, `ci-frontend.yml`,
+  `ci-ingress.yml`, `ci-keycloak.yml`) builds and tests that module
+  (`./mvnw -Pwith-docker -pl avarc-server-&lt;module&gt; verify`, which builds its
+  image) on pushes to `main` and on pull requests that change its directory
+  or the shared build files (the root `pom.xml`, the Maven wrapper,
+  `tools/publish-images.sh` and the workflow files involved), except
+  changes of Markdown files only. The modules do not depend on each other.
+  All of them call the reusable workflow `build-module.yml`, which holds the
+  steps. A push publishes only the image of the module it built; pull
+  requests only build. A release tag is built by the workflow `ci-release.yml`,
+  which runs the same steps for all four modules, so a release names a
+  consistent set. The publishing logic is the script
+  `tools/publish-images.sh`, not the workflow.
+  - **Notification:** after a successful build and publishing of a push to
+    `main` of this repository (not a pull request, fork or release tag), a
+    separate job of the module workflow posts one message with the commit
+    and the module name to a chat
+    channel through an incoming webhook, the only thing it needs being one
+    secret. A listener of the deployment side reads the message as a hint
+    only: it checks the registry for new `snapshot` images before it updates
+    stage, so a forged message cannot deploy anything that was not
+    published. The notification is best effort: without the secret it is
+    skipped, and a failure only shows as a warning, so it never fails the
+    workflow. The chat server, the listener and how stage is updated are
+    not part of this repository.
+  - **Registry:** the GitHub Container Registry, namespace
+    `ghcr.io/avarcorg`, images `avarc-backend`,
+    `avarc-frontend`, `avarc-ingress` and `avarc-keycloak`. The packages are public (the source is), so a host
+    pulls without logging in. The workflow logs in
+    with its own token, which only pushes may use. The images carry the `org.opencontainers.image.source`
+    label of the repository, which links the packages to it.
+  - **Tags:** a push to `main` publishes the moving tag `snapshot` and the
+    tag `sha-&lt;first seven characters of the commit&gt;` of the images built
+    from that commit; the others keep their own latest `snapshot`. A release
+    tag `vX.Y.Z` publishes `X.Y.Z` and `latest` of all four. The version in the POMs is not
+    the published version: the build tags the images with it locally and
+    the script retags them.
+  - **Versions and caches:** the Java and Node versions are constants in
+    the reusable workflow&#39;s `env`; a step fails the build when they differ from the
+    POMs. Cached between runs: the Maven repository and the wrapper&#39;s Maven
+    distribution (by `actions/setup-java`) and npm&#39;s downloads (the Node
+    container keeps them in a host directory, see `docker-node.sh`). The
+    Docker images that the build pulls (the buildpack builders, the Node
+    image, the Keycloak base image) and the downloads inside a `pack` build (JRE, Node) are not
+    cached: the cache action for Docker images that was tried no longer
+    works with GitHub&#39;s cache service.
+  - **Cleaning images:** introduced in [AVARC-40](../tasks/finished/TASK-clean-images.md).
+    The workflow &quot;Clean images&quot; (`.github/workflows/clean-images.yml`) runs
+    weekly and on demand with the permission `packages: write` only (the
+    four packages are linked to the repository). For each of the four
+    images it deletes the versions that carry only `sha-&lt;commit&gt;` tags and
+    are older than 30 days, and the untagged versions older than one day
+    that no remaining version references (the platform manifests of a
+    multi-platform image are found by reading the manifest of each remaining
+    version). The newest 5 versions of each image are never deleted. A
+    version tagged `snapshot`, `latest` or `X.Y.Z` is never deleted, so
+    every release stays pullable. Hosts name `snapshot` or a release tag in
+    their secrets file, never a bare `sha-` tag. The days, the number of
+    versions to keep and a dry run (lists, deletes nothing) are inputs of
+    the manual run.
+  - **Cleaning workflow runs:** introduced in [AVARC-39](../tasks/finished/TASK-clean-action-runs.md).
+    The workflow &quot;Clean workflow runs&quot; (`.github/workflows/clean-runs.yml`)
+    runs weekly and on demand with the permission `actions: write` only. It
+    deletes finished runs older than 30 days, but keeps the latest 5 runs of
+    every workflow; queued and running runs are never touched. Both values
+    and a dry run (lists, deletes nothing) are inputs of the manual run.
+    Images, releases and tags are not workflow runs and are not affected.
+  - **Using them:** the Compose project runs a published image when
+    `IMAGE_NAMESPACE=ghcr.io/avarcorg` and `BACKEND_VERSION`,
+    `FRONTEND_VERSION`, `INGRESS_VERSION` and `KEYCLOAK_VERSION` name a tag (see
+    [SPEC-deployment.md](SPEC-deployment.md)). Without a registry
+    namespace, a host runs images built on itself (`-Pwith-docker`) under the
+    default names and versions. Stage runs the published `snapshot` images;
+    prod runs release tags only, once it exists. Deploying a host from the
+    published images automatically is not decided yet.
+
+## Open questions
+
+- None at the moment.
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

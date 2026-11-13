@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Historic Atlas — Dependency update policy | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Historic Atlas — Dependency update policy</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># SPEC: Dependency updates with Renovate
+
+Status: accepted. Part of [SPEC.md](../SPEC.md).
+
+## Purpose
+
+Keep dependencies of all partial applications, container images and CI
+workflows up to date through automated pull requests from Renovate.
+
+## Requirements
+
+- Renovate is the only tool opening dependency update pull requests.
+  Dependabot version updates are disabled.
+- Renovate is the hosted Renovate app, enabled for this repository; nobody
+  operates it. It is configured by a `renovate.json` in the repository root,
+  based on `config:recommended`, with the Compose templates
+  `deploy/docker-compose.template` and `deploy/docker-compose.&lt;feature&gt;.template`
+  added to the files it scans.
+- The Node version, which no standard manager recognises, is tracked by a
+  custom manager in `node.version` of the frontend POM and `NODE_VERSION` of
+  the CI workflow, and updated in one grouped pull request so the CI check
+  between them keeps passing. The Paketo builder images are untagged and
+  need no tracking.
+- Renovate takes the changelog of an image from the source repository named
+  in the image&#39;s labels. The Keycloak image names a release mirror there, so
+  the source of `quay.io/keycloak/keycloak` is set to
+  `https://github.com/keycloak/keycloak`, whose releases carry the notes.
+- Pull requests are neither grouped beyond the recommended presets nor
+  scheduled or rate limited: they open as soon as an update appears.
+- Nothing is merged automatically; every update pull request is reviewed.
+- Major updates get their own pull request, labeled `major`. Security updates
+  are raised at once, like all others.
+- Renovate only operates on the default branch (`main`). It must not use any
+  other branch as a base branch.
+- Pre-existing branches that must be ignored by Renovate:
+  - historic development branches: `first-attempt`, `main-pre-ory`,
+    `main-second-attempt`, `build-nginx-oci-image`,
+    `improved-workflow-security`
+  - leftover update branches from earlier tooling: `dependabot/**` and
+    `renovate/**`
+- Renovate must not be reconfigured to pick up its own or other tools&#39;
+  update branches. The stale `dependabot/**` branches are deleted from the
+  remote; `renovate/**` branches belong to Renovate, which manages them.
+- Update pull requests follow the contribution rules in
+  `AI_POLICY.md` and the sign-off rule from `AGENTS.md` where the Renovate
+  deployment allows it.
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

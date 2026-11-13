@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Historical Atlas Architecture Explorer | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Historical Atlas Architecture Explorer</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># SPEC: Architecture diagram
+
+Status: draft. Part of [SPEC.md](../SPEC.md).
+
+## Purpose
+
+Provide a diagram of the system architecture that stays in step with the
+specs.
+
+## Requirements
+
+- The diagram shows the browser, the web server in front of the partial
+  applications, the frontend, the backend, Keycloak and the database, and the
+  connections between them. Planned later additions, such as the MCP server,
+  are shown and marked as such.
+- Components and decisions that are not yet made are marked as undecided in
+  the diagram.
+- The diagram is stored in the repository as text, so changes are reviewable
+  in git. A rendered form may be generated from it.
+- It is referenced from the architecture overview in [SPEC.md](../SPEC.md).
+- The diagram is recreated on every major architecture decision (for
+  example choosing the ingress product, the identity provider, the backend
+  stack or the database), in the same change set as the decision. Whenever
+  a spec otherwise changes the architecture, the diagram is updated too.
+- A component or decision that becomes decided loses its undecided marking
+  in the same update.
+
+## Decisions
+
+- Format: Mermaid, stored in [architecture-diagram.md](architecture-diagram.md)
+  as a fenced `mermaid` block, which GitHub renders directly.
+- Only the text source is committed; no rendered image.
+- A single system-level overview diagram, laid out top to bottom so it
+  stays readable as elements are added.
+- Each sub-application may have its own, more detailed architecture diagram;
+  the overview then stays at system level and does not duplicate it.
+- Undecided components are drawn with dashed borders and labelled
+  &quot;(undecided)&quot;.
+- Components planned for after the MVP are drawn in a muted style with a
+  dotted border and labelled &quot;(post-MVP)&quot;; they are a separate marking from
+  &quot;undecided&quot;.
+
+## Open questions
+
+- None at the moment.
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

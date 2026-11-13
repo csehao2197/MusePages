@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AVARC — Legacy Import Fieldbook | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>AVARC — Legacy Import Fieldbook</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Legacy data model diagram
+
+The tables of the schema `legacy`, loaded from the Access export with
+`deploy/import-sql.sh` (see [SPEC-deployment.md](SPEC-deployment.md)); the
+subject of [AVARC-50](../tasks/TASK-legacy-import.md). The current model of
+the application is in [datamodel-diagram.md](datamodel-diagram.md).
+
+The export has primary keys only, no foreign keys. The relations drawn here
+are inferred from column names and checked against the data of the stage
+database (no orphan rows for the relations of `poh`, `payload_poh`,
+`sources_poh`, `poh2keyword` and `timelinecluster`; the rest are by name only). Row counts are those of that
+database. Tables that hold personal data are marked and shown without their
+columns&#39; content; the import reads only the contributor link.
+
+Findings that matter for the import:
+
+- `poh.pohType_ID` refers to `pohtype.identifier`, not to `pohtype.ID`.
+- Every place has exactly one `georeference_poh` row (3,516 of 3,518; two
+  coordinate rows are unused). All `srid` are 4326. Latitude and longitude
+  are text, and 8 rows are not plain decimals.
+- `payload_poh` has `DE` for every place and `GB` for 2; the code for English
+  is `GB`, not `EN`. 57 places have an empty `poh.description`.
+- `poh.maincategory` is empty for 3,511 places; the other values include URLs
+  and `ToDo`, so it is not a clean category. `pohcategory` holds only `ToDo`.
+- Two distinct contributors appear in `poh`; `contributor` has 5 rows.
+- The timeline tables hold one row each (one place), the evaluation tables
+  are lookup data with 30 evaluations, and `address`, `person`, `poh2person`
+  and `sources_tl`/`sources_ts` are empty.
+
+```mermaid
+erDiagram
+    poh {
+        int ID PK
+        varchar code
+        varchar name
+        text description
+        int georeference_poh_ID FK
+        int contributor_ID FK
+        int pohType_ID FK &quot;refers to pohtype.identifier&quot;
+        text avarc_notes
+        varchar maincategory &quot;mostly empty&quot;
+        varchar secondarycategory
+        varchar CountryPresent &quot;2 letters&quot;
+        varchar city
+        varchar street
+        varchar street_addon
+        int zip
+        int ID_old
+        int georeference_ID_old
+    }
+
+    georeference_poh {
+        int ID PK
+        int ID_old
+        varchar name
+        varchar longitude &quot;text&quot;
+        varchar latitude &quot;text&quot;
+        int tmpPohType
+        varchar tmpDescription
+        varchar country
+        varchar source
+        timestamp creation
+        varchar srid &quot;all 4326&quot;
+    }
+
+    payload_poh {
+        int ID PK
+        int poh_ID FK
+        varchar language &quot;DE, GB&quot;
+        varchar name
+        text description
+        text briefing
+        varchar avarc_name
+        varchar avarc_webname
+        varchar avarc_notes
+        varchar info1
+        varchar info2
+        varchar info3
+    }
+
+    pohtype {
+        int ID PK
+        int identifier &quot;referenced by poh&quot;
+        varchar description &quot;21 rows&quot;
+    }
+
+    pohcategory {
+        varchar pohcategory &quot;only ToDo&quot;
+    }
+
+    contributor {
+        int ID PK
+        varchar Name &quot;personal data&quot;
+        varchar code
+    }
+
+    address {
+        int ID PK
+        int contributor_ID FK &quot;personal data, empty&quot;
+    }
+
+    sources_poh {
+        int ID PK
+        int poi_id FK
+        varchar source_type FK
+        text source
+        text description
+    }
+
+    source_type {
+        varchar sourcetype
+    }
+
+    keywords {
+        varchar keyword
+    }
+
+    poh2keyword {
+        varchar keyword FK
+        int poh_ID FK
+    }
+
+    timelinecluster {
+        int ID PK
+        int poh_ID FK
+        timestamp begin
+        timestamp end
+        varchar begin_aux
+        varchar end_aux
+        text notes
+    }
+
+    timeline {
+        int ID PK
+        int timelinecluster_ID FK
+        int position
+        int type
+        timestamp begin
+        timestamp end
+        varchar begin_aux
+        varchar end_aux
+        text notes
+    }
+
+    timesegment {
+        int ID PK
+        int timeline_ID FK
+        int position
+        timestamp duration
+        timestamp begin
+        timestamp end
+        varchar begin_aux
+        varchar end_aux
+        int timesegment_id FK &quot;self reference&quot;
+        varchar predecessors
+        text notes
+    }
+
+    payload_tc {
+        int ID PK
+        int timelinecluster_id FK
+        varchar title
+        varchar description
+        varchar language
+    }
+
+    payload_tl {
+        int ID PK
+        int timeline_id FK
+        varchar title
+        varchar description
+        varchar language
+    }
+
+    payload_ts {
+        int ID PK
+        int timesegment_id FK
+        varchar title
+        varchar description
+        varchar language
+    }
+
+    sources_tl {
+        int ID PK
+        int poi_id FK &quot;timeline, empty&quot;
+        varchar source_type
+        text source
+        text description
+    }
+
+    sources_ts {
+        int ID PK
+        int poi_id FK &quot;timesegment, empty&quot;
+        varchar source_type
+        text source
+        text description
+    }
+
+    evaluation {
+        int ID PK
+        int poh_id FK
+        smallint evaluations_Type_ID FK
+        smallint grade
+    }
+
+    evaluation_Type {
+        int ID PK
+        varchar type
+        varchar description
+    }
+
+    evaluations {
+        int ID PK
+        int evaluation_type_id FK
+        int grade
+        varchar tag
+        varchar description
+    }
+
+    poh_evalAccess {
+        int evalAccess_ID FK
+        int poh_ID FK
+    }
+
+    evalAccess {
+        smallint ID PK
+        varchar Tag
+        varchar Description
+    }
+
+    collection {
+        int ID PK
+        varchar title
+        text description
+        int contributor_id FK
+        varchar notes
+    }
+
+    collectionItem {
+        int ID PK
+        int collection_ID FK
+        int poh_id FK
+        int contributor_poh_id
+        int index
+        varchar info
+    }
+
+    poh2author {
+        int ID PK
+        int poh_id FK
+        int author_id FK
+        varchar change
+        timestamp changedate
+    }
+
+    author {
+        int ID PK
+        varchar Name1 &quot;personal data&quot;
+        varchar Name2
+        varchar Name3
+        varchar description
+        varchar country
+    }
+
+    poh2person {
+        int ID PK
+        int poh_id FK
+        int person_id FK
+        varchar person_role FK
+        varchar role_info
+    }
+
+    person {
+        int ID PK
+        varchar Name1 &quot;personal data, empty&quot;
+    }
+
+    person_role {
+        varchar relation
+    }
+
+    poh2attribute {
+        int ID PK
+        int poh_id FK
+        int attribute_id FK
+    }
+
+    attribute {
+        int ID PK
+        varchar attribute
+        varchar type FK
+        varchar data
+        int subordinateTo
+    }
+
+    attributes {
+        varchar attribute
+        varchar type
+    }
+
+    attributeTypes {
+        varchar attributeType
+    }
+
+    user {
+        int ID PK
+        varchar username &quot;personal data&quot;
+        varchar password &quot;credential, never read&quot;
+    }
+
+    mapzero {
+        int id PK
+        varchar name
+        varchar latitude
+        varchar longitude
+    }
+
+    sphere {
+        int ID PK
+        varchar name
+        text abstract
+    }
+
+    iso_3166_1 {
+        varchar Alpha2 &quot;table iso-3166-1, 249 rows&quot;
+        varchar Alpha3
+        varchar englishName
+    }
+
+    poh }o--|| georeference_poh : &quot;georeference_poh_ID&quot;
+    poh }o--|| contributor : &quot;contributor_ID&quot;
+    poh }o--|| pohtype : &quot;pohType_ID = identifier&quot;
+    payload_poh }o--|| poh : &quot;poh_ID&quot;
+    sources_poh }o--|| poh : &quot;poi_id&quot;
+    sources_poh }o--o| source_type : &quot;source_type&quot;
+    poh2keyword }o--|| poh : &quot;poh_ID&quot;
+    poh2keyword }o--|| keywords : &quot;keyword&quot;
+    address }o--|| contributor : &quot;contributor-ID&quot;
+    timelinecluster }o--|| poh : &quot;poh_ID&quot;
+    timeline }o--|| timelinecluster : &quot;timelinecluster_ID&quot;
+    timesegment }o--|| timeline : &quot;timeline_ID&quot;
+    payload_tc }o--|| timelinecluster : &quot;timelinecluster_id&quot;
+    payload_tl }o--|| timeline : &quot;timeline_id&quot;
+    payload_ts }o--|| timesegment : &quot;timesegment_id&quot;
+    sources_tl }o--|| timeline : &quot;poi_id&quot;
+    sources_ts }o--|| timesegment : &quot;poi_id&quot;
+    evaluation }o--|| poh : &quot;poh_id&quot;
+    evaluation }o--|| evaluation_Type : &quot;evaluations_Type_ID&quot;
+    evaluations }o--|| evaluation_Type : &quot;evaluation_type_id&quot;
+    poh_evalAccess }o--|| poh : &quot;poh_ID&quot;
+    poh_evalAccess }o--|| evalAccess : &quot;evalAccess_ID&quot;
+    collection }o--|| contributor : &quot;contributor_id&quot;
+    collectionItem }o--|| collection : &quot;collection_ID&quot;
+    collectionItem }o--|| poh : &quot;poh_id&quot;
+    poh2author }o--|| poh : &quot;poh_id&quot;
+    poh2author }o--|| author : &quot;author_id&quot;
+    poh2person }o--|| poh : &quot;poh_id&quot;
+    poh2person }o--|| person : &quot;person_id&quot;
+    poh2person }o--o| person_role : &quot;person_role&quot;
+    poh2attribute }o--|| poh : &quot;poh_id&quot;
+    poh2attribute }o--|| attribute : &quot;attribute_id&quot;
+    attribute }o--o| attributeTypes : &quot;type&quot;
+```
+
+The lookup tables `evalInfoQuality`, `evalInfoQuantity`, `evalPosition`,
+`evalProcessing`, `evalSphere`, `evalVisibility`, `evalAvarcInfo` (each `ID`,
+`Tag`, `Description`, 5 rows) and the empty `BEG` (only `ID`) are not drawn:
+nothing refers to them in the export. The import does not need the evaluation, collection, author and attribute
+tables.
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

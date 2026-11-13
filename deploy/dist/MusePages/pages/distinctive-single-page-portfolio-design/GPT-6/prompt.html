@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Morgan Byte — An Unusually Useful Engineer | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Morgan Byte — An Unusually Useful Engineer</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># DESIGN.md: Architecture &amp; Design System
+
+## 1. Core Philosophy: &quot;Corporate Weirdcore&quot;
+This project blends professional software engineering with early-internet, surrealist RPG aesthetics (inspired by the late-90s web and ENA). It relies on thick borders, harsh contrasts, unpolished digital textures, and a deliberate juxtaposition between elegant print typography and raw terminal text. It must feel like an interactive, slightly eccentric digital dossier.
+
+**MANDATORY DIRECTIVES:**
+* **Tactile &amp; Clunky:** UI elements should look like physical, slightly crude OS windows or dialogue boxes.
+* **Harsh, Not Soft:** No smooth, floating elements. Everything is grounded with thick lines and hard, unblurred shadows.
+* **Intentional Juxtaposition:** Mix high-end editorial layouts with low-res digital UI tropes.
+
+## 2. Prohibited Elements (FORBIDDEN)
+Under NO circumstances may you use any of the following CSS or Tailwind properties:
+* `shadow-md`, `shadow-lg`, etc. (No soft drop shadows. Only hard, offset block shadows).
+* `bg-gradient-*` (No gradients whatsoever. Solid colors only).
+* `backdrop-blur-*` (No glassmorphism).
+* `rounded-md`, `rounded-lg`, `rounded-full` (Corners must be absolutely sharp. NO rounded corners).
+* Smooth, slow `ease-in-out` opacity fades.
+
+## 3. Color Palette
+Colors must be strictly limited, highly contrasting, and unapologetically bold.
+
+* **Background (Global):** Warm Paper / Off-White (`#F4F3ED` or Tailwind `bg-stone-100`).
+* **Ink &amp; Architecture:** Pure, harsh black (`#0C0C0C` or Tailwind `bg-neutral-950`). Used for all borders, text, and hard shadows.
+* **Accent Colors:** Digital Royal Blue (`#2945FF`) or pure Warning Yellow (`#FFD700`). Use ONLY for hover states, active links, or specific highlighted data tags.
+
+## 4. Typography
+The identity relies on the clash between classic print and raw digital output.
+
+* **Primary Font (Display/Headers/Body):** A classic, elegant Serif (e.g., `Times New Roman`, `Playfair Display`, or `Instrument Serif`). Headers should be massive and tightly tracked.
+* **Secondary Font (UI/Metadata/Tags/Nav):** A strict Terminal Monospace (e.g., `Courier New`, `JetBrains Mono`, or `VT323`). Keep it uppercase, small, and widely tracked (`tracking-widest`).
+
+## 5. UI Components &amp; &quot;The Inventory&quot; System
+All content lives inside distinct &quot;Windows&quot; mimicking old OS dialogue boxes.
+
+* **The &quot;Window&quot; Container:**
+    * **Borders:** 3px or 4px solid black (`border-4 border-black`).
+    * **Shadow:** A hard, unblurred black offset shadow (e.g., `box-shadow: 8px 8px 0px #0C0C0C`).
+    * **Background:** Solid white (`bg-white`).
+* **Hover States:**
+    * When hovered, the window physically depresses: `translate-x-[2px] translate-y-[2px]`.
+    * The hard shadow shrinks slightly to match the translation.
+    * Borders or shadows snap to an Accent Color (e.g., Digital Blue).
+* **Profile Picture Container:**
+    * Must use the exact same thick border and hard shadow as the windows.
+    * Optional: Apply a high-contrast or grayscale CSS filter (`grayscale contrast-125`) to match the surreal vibe.
+
+## 6. Layout Architecture (The 8-Point Flow)
+The page layout abandons the full-page Bento Grid for a flowing, narrative structure:
+1. **Header:** Clunky, bordered nav bar. Toggle switch for EN/ID.
+2. **Hero:** Massive serif typography. Includes the Profile Picture container.
+3. **Education &amp; 4. Short Profile:** Uses a mini-grid (The &quot;Inventory&quot;), featuring weird/clunky stat blocks and tech-stack tags.
+5. **Projects:** Massive, text-heavy dialogue boxes acting as &quot;Realms&quot; or &quot;Levels.&quot;
+6. **Experience:** An interactive accordion or zig-zag timeline with harsh border UI.
+7. **Contact:** Screen-filling call-to-action with a massive, pill-shaped or blocky email button.
+8. **Footer:** Retro web badges, links, and a randomized quote generator.
+
+## 7. The Modal Carousel (Image_Viewer.exe)
+Clicking a project does NOT navigate to a new page. It opens a retro image viewer overlay.
+* **Overlay Backdrop:** Harsh, unblurred background (e.g., `bg-black/90` or a CSS halftone dot pattern).
+* **Container:** A centered `.window` element with the standard thick border and hard shadow.
+* **Controls:** Navigation buttons (Next/Prev) must be rigid, interactive squares containing raw text `[ &lt; ]` and `[ &gt; ]`.
+* **Motion:** The modal snaps into view instantly or scales harshly. No slow fades.</code></pre>
+    </section>
+  </main>
+</body>
+</html>

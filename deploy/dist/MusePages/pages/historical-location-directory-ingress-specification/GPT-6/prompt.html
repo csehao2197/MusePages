@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Historic Atlas — One origin, clear routes | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Historic Atlas — One origin, clear routes</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># SPEC: Ingress web server
+
+Status: draft. Part of [SPEC.md](../SPEC.md).
+
+## Purpose
+
+Define the web server that sits in front of the partial applications.
+
+## Requirements
+
+- Clients reach the frontend, the backend API and the Keycloak endpoints only
+  through this web server.
+- It routes requests to the right partial application.
+- TLS is terminated in front of it (see
+  [SPEC-deployment.md](SPEC-deployment.md)).
+
+## Decisions
+
+Decided in [AVARC-8](../tasks/finished/TASK-ingress-decision.md).
+
+- **Product:** nginx, changed from Caddy in
+  [AVARC-33](../tasks/finished/TASK-ingress-image.md) (which first chose Caddy,
+  [AVARC-8](../tasks/finished/TASK-ingress-decision.md)). nginx is a web
+  server of the Paketo buildpacks, so the ingress image is built with
+  `pack` like the backend and the frontend, through the shared build
+  configuration, from the configuration file `nginx.conf` alone; Caddy has
+  no buildpack. The configuration is in the module `avarc-server-ingress`
+  and is part of the image; the nginx version is the one the buildpack
+  selects. The image listens on port 8080 and runs as the unprivileged user
+  of the buildpack run image. The upstreams (`backend`, `frontend`,
+  `keycloak`) are looked up per request through Docker&#39;s resolver, so a
+  restarted service is found again and the ingress starts before they do.
+- **URL layout:** one host with path prefixes, so the browser sees a single
+  origin (no CORS, simple cookie sessions):
+  - `/api/` routes to the backend.
+  - `/actuator/` routes to the backend&#39;s actuator, which is on a port of its
+    own (see [SPEC-backend.md](SPEC-backend.md)), but only where the
+    variable `ACTUATOR_ENABLED` of the ingress is `true` (development and
+    stage, where `run.sh` sets it with the developer links); elsewhere the
+    ingress answers 404. The nginx configuration reads it when the container
+    starts, so the image is the same everywhere.
+  - `/auth/` routes to the public endpoints of Keycloak (login, logout,
+    token and account pages), without prefix stripping; which of its paths
+    are routed is defined in [SPEC-auth.md](SPEC-auth.md).
+  - everything else routes to the frontend, including its `/health` (status
+    only).
+  - The prefixes are reserved and are not used by frontend pages. A
+    post-MVP MCP server gets its own prefix when it is taken up.
+- **Authentication:** the ingress only routes and forwards requests,
+  including the session credentials, unchanged. It does not enforce
+  authentication; the backend validates the session or identity of every
+  non-public request, as required by [SPEC-auth.md](SPEC-auth.md). This
+  keeps a single enforcement point. AVARC-13 confirmed this.
+
+- **Forwarded headers:** TLS is terminated before the ingress (see
+  [SPEC-deployment.md](SPEC-deployment.md)), so the ingress trusts the
+  forwarded headers of private-range hops and passes them on unchanged;
+  the upstreams see the original scheme and host, which Keycloak needs for
+  secure cookies. For a hop that is not trusted, the headers are replaced by
+  the values of the connection.
+
+- **Request ID and access log** ([AVARC-24](../tasks/TASK-observability-ingress-database.md),
+  conventions in [SPEC-observability.md](SPEC-observability.md)): every
+  request gets an ID, sent to the upstreams and back to the client in the
+  header `X-Request-Id`. A valid value (8 to 64 characters of letters,
+  digits, `.`, `_`, `-`) from a trusted hop is kept; from anywhere else it is
+  replaced. The access log is one JSON object per line on standard output
+  with the shared fields, the path without the query string (it can carry
+  login codes), the status, the sizes and the durations, and never cookies or
+  authorization headers. nginx&#39;s own error log stays plain text on standard
+  error.
+- **Metrics:** a second listener on port 8081 serves nginx&#39;s `stub_status`
+  to the metrics exporter of the Compose project. The port is not
+  published, and the public listener does not route to it.
+
+## Open questions
+
+- Caching, compression and rate limiting.
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>
