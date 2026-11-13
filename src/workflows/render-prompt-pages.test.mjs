@@ -508,6 +508,23 @@ test("model directories, input names and public slug collisions stop before any 
   await assert.rejects(renderPromptPages(f.workspace, ["local"], f.options()), /Conflicting public slug/);
 });
 
+test("shared metadata discovery ignores output-root files and still checks directory slug collisions", async (t) => {
+  const f = await fixture(t);
+  const requests = await service(t, f.workspace);
+  const pages = path.join(f.workspace, "out", "pages");
+  await save(path.join(pages, ".DS_Store"), "Finder metadata");
+  await save(path.join(pages, "notes.txt"), "Keep this file");
+  const other = path.join(pages, "002-other", "metadata.json");
+  await save(other, { slug: "other", title: "Other" });
+  const report = await renderPromptPages(f.workspace, ["local"], f.options());
+  assert.equal(report.summary.generated, 1, JSON.stringify(report));
+  assert.equal(await readFile(path.join(pages, ".DS_Store"), "utf8"), "Finder metadata");
+  assert.equal(await readFile(path.join(pages, "notes.txt"), "utf8"), "Keep this file");
+  await save(other, { slug: "travel", title: "Another travel page" });
+  await assert.rejects(renderPromptPages(f.workspace, ["local"], f.options()), /Conflicting public slug/);
+  assert.equal(requests(), 1);
+});
+
 test("locks and symbolic-link output parents cannot redirect or overwrite results", async (t) => {
   const f = await fixture(t);
   const lock = path.join(f.workspace, "out", ".generation-locks", `${prompt}.lock`);

@@ -196,6 +196,7 @@ async function sharedMetadata(workspace, inputs) {
   const owners = new Map();
   if (await info(pages)) {
     for (const entry of await readdir(pages)) {
+      if (!(await info(path.join(pages, entry)))?.isDirectory()) continue;
       const file = await inside(workspace, "out", "pages", entry, "metadata.json");
       if (await info(file)) {
         const value = await json(file);
