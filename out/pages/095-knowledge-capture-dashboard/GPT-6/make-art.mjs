@@ -1,0 +1,10 @@
+import {writeFile,copyFile} from "node:fs/promises";
+import {createRequire} from "node:module";
+const require=createRequire(new URL("../../../../package.json",import.meta.url));
+const React=require("react"),{renderToStaticMarkup}=require("react-dom/server"),lucide=require("lucide-react");
+const icons={ChevronsUpDown:"chevrons-up-down",Network:"network",Layers:"layers",Sparkles:"sparkles",Plus:"plus",ShieldCheck:"shield-check",Settings2:"settings-2",Menu:"menu",ChevronRight:"chevron-right",ChevronLeft:"chevron-left",Download:"download",HardDrive:"hard-drive",ArrowUpRight:"arrow-up-right",Search:"search",ListFilter:"list-filter",RotateCcw:"rotate-ccw",X:"x",Inbox:"inbox",GitFork:"git-fork",Minus:"minus",Maximize:"maximize",Lightbulb:"lightbulb",Combine:"combine",MessagesSquare:"messages-square",ArrowUp:"arrow-up",BookmarkPlus:"bookmark-plus",Info:"info",KeyRound:"key-round",Bookmark:"bookmark",Video:"video",FileText:"file-text",SearchX:"search-x",ExternalLink:"external-link",Trash2:"trash-2",CircleCheck:"circle-check",EyeOff:"eye-off"};
+const symbols=Object.entries(icons).map(([name,id])=>renderToStaticMarkup(React.createElement(lucide[name])).replace(/<svg[^>]*>/,`<symbol id="${id}" viewBox="0 0 24 24">`).replace("</svg>","</symbol>"));
+await writeFile(new URL("assets/icons.svg",import.meta.url),`<svg xmlns="http://www.w3.org/2000/svg"><defs>${symbols.join("")}</defs></svg>`);
+for(const file of ["inter.woff2","inter-OFL.txt","lucide-LICENSE.txt"])await copyFile(new URL(`../../081-file-upload-saas/GPT-6/assets/${file}`,import.meta.url),new URL(`assets/${file}`,import.meta.url));
+await writeFile(new URL("assets/mark.svg",import.meta.url),'<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path d="m20 3 6 11 11 6-11 6-6 11-6-11L3 20l11-6Z" fill="#8970cc"/><path d="m20 12 3 5 5 3-5 3-3 5-3-5-5-3 5-3Z" fill="#f3effb"/><circle cx="20" cy="20" r="2" fill="#8970cc"/></svg>');
+console.log("Prepared original Nexus mark and local licensed font/icons.");

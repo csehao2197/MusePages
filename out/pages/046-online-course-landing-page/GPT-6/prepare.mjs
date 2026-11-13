@@ -1,0 +1,21 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import {fileURLToPath,pathToFileURL} from 'node:url';
+const folder=path.dirname(fileURLToPath(import.meta.url)),root=path.resolve(folder,'..','..','..','..'),assets=path.join(folder,'assets');
+for(const name of ['inter.ttf','INTER-OFL.txt'])await fs.copyFile(path.join(root,'out','pages','035-crossfit-gym','GPT-6','assets',name),path.join(assets,name));
+for(const [source,target]of [['portrait-marcus.jpg','alex.jpg'],['portrait-rachel.jpg','maria.jpg'],['portrait-david.jpg','david.jpg'],['portrait-priya.jpg','aisha.jpg']])await fs.copyFile(path.join(root,'out','pages','033-creative-agency-team','GPT-6','assets',source),path.join(assets,target));
+const names=['blocks','menu','x','arrow-up-right','arrow-right','star','play','users','check','code-xml','download','chevron-down','circle-play','plus','minus','quote','message-circle','briefcase-business','video','shield-check','lock-keyhole','triangle'];
+const symbols=[];
+for(const name of names){const module=await import(pathToFileURL(path.join(root,'node_modules','lucide-react','dist','esm','icons',`${name}.mjs`)));const data=module.__iconData;if(!data)throw Error(`Missing Lucide geometry: ${name}`);symbols.push(`<symbol id="${name}" viewBox="0 0 24 24">${data.node.map(([tag,attrs])=>`<${tag} ${Object.entries(attrs).filter(([key])=>key!=='key').map(([key,value])=>`${key}="${value}"`).join(' ')}/>`).join('')}</symbol>`);}
+await fs.writeFile(path.join(assets,'icons.svg'),`<svg xmlns="http://www.w3.org/2000/svg"><defs>${symbols.join('')}</defs></svg>\n`);
+await fs.copyFile(path.join(root,'node_modules','lucide-react','LICENSE'),path.join(assets,'LUCIDE-LICENSE.txt'));
+const prompt=await fs.readFile(path.join(root,'data','prompts','046-online-course-landing-page','046-online-course-landing-page.md'),'utf8'),design=await fs.readFile(path.join(root,'src','workflows','AI Agent','DESIGN.md'),'utf8');
+await fs.writeFile(path.join(folder,'.generation-input.sha256'),crypto.createHash('sha256').update(JSON.stringify([prompt,design])).digest('hex')+'\n');
+const source=await fs.readFile(path.join(folder,'app.js'),'utf8'),moduleText=source.slice(source.indexOf('const modules=')+'const modules='.length,source.indexOf('\nlet activeModule')).replace(/;\s*$/,'');
+const modules=Function(`"use strict"; return (${moduleText});`)();
+const outline=['LearnCraft Academy — FICTIONAL COURSE OUTLINE','Actual generator: gpt-6.1-sol','No actual enrollment, certification, AI tutor, live teaching or job guarantee.','54 planned lessons; 12 guided projects; 1 separate capstone.','Project accounting: 11 module practice projects + 1 portfolio lab.','Only six short original mini lessons are interactive in the static demo.','Illustrative cohort: April 14, 2027, 7 PM U.S. Eastern.',...modules.flatMap((m,i)=>['',`Module ${i+1}: ${m.name} — weeks ${m.weeks}`,m.focus,...m.lessons.map((title,n)=>`${n+1}. ${title}`),...m.projectNames.map(title=>'Guided project: '+title)]),'','Separate capstone: a scoped full-stack application, with tested user journeys,','deployment documentation, trade-offs and clearly described limitations.','','Illustrative live sessions: Tue/Thu, 7 PM Eastern local time; April uses EDT.','Suggested work: 15–20 hours weekly, including 3 live hours in the concept.','One-time: $599; split: 3 x $219 = $657 ($58 more overall).','All services, credentials and refund language are concepts, not contracts.'];
+await fs.writeFile(path.join(assets,'course-outline.txt'),outline.join('\n')+'\n');
+const exported=path.join(folder,'out');await fs.mkdir(exported,{recursive:true});
+for(const name of ['index.html','style.css','app.js'])await fs.copyFile(path.join(folder,name),path.join(exported,name));
+await fs.cp(assets,path.join(exported,'assets'),{recursive:true});console.log('Prepared clean LearnCraft static export.');

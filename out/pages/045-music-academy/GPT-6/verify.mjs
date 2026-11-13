@@ -1,0 +1,77 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import {fileURLToPath,pathToFileURL} from 'node:url';
+import {createHash} from 'node:crypto';
+import {chromium} from '@playwright/test';
+const folder=path.dirname(fileURLToPath(import.meta.url)),root=path.resolve(folder,'..','..','..','..'),exported=path.join(folder,'out'),slug='music-academy';
+const {startPreviewServer,generatePreview}=await import(pathToFileURL(path.join(root,'src','workflows','generate-preview.mjs')));
+const {validateStaticOutput}=await import(pathToFileURL(path.join(root,'src','workflows','render-prompt-pages.mjs')));
+const staticDigest=await validateStaticOutput(exported,slug,'GPT-6'),server=await startPreviewServer(exported,{workspace:root}),browser=await chromium.launch();
+let checks=0;const errors=[],requests=[],check=(condition,message)=>{assert.ok(condition,message);checks++;};
+try{
+ const context=await browser.newContext({viewport:{width:1440,height:1000},reducedMotion:'reduce',permissions:['clipboard-read','clipboard-write']}),page=await context.newPage();page.setDefaultTimeout(6500);
+ page.on('pageerror',error=>errors.push(String(error)));page.on('response',response=>{if(response.status()>=400)errors.push(`${response.status()} ${response.url()}`);});page.on('request',request=>requests.push({url:request.url(),method:request.method()}));
+ const response=await page.goto(server.url,{waitUntil:'networkidle',timeout:20000});await page.evaluate(()=>document.fonts.ready);
+ check(response.status()===200,'Static music academy responds');check(new URL(server.url).pathname.includes('/pages/music-academy/GPT-6/'),'True numberless nested mount');
+ check(await page.evaluate(()=>document.fonts.check('16px Inter')&&document.fonts.check('60px Cormorant')),'Local editorial and UI fonts load');
+ await page.locator('.program-card [data-program="Piano & Keyboard"]').click();await page.locator('#program-level').selectOption('3');
+ check((await page.locator('#level-description').textContent()).includes('audition'),'Piano advanced pathway changes actual content');check((await page.locator('#level-description').textContent()).includes('No admissions outcome'),'No false admission guarantee');
+ await page.locator('#program-trial').click();check(await page.locator('#trial-form [name=instrument]').inputValue()==='Piano','Program trial prefills instrument');check(!await page.locator('#dialog').isVisible(),'Program trial closes dialog');
+ await page.locator('[data-all-programs]').click();check(await page.locator('dialog .dialog-item').count()===12,'All core and additional program areas');await page.keyboard.press('Escape');
+ await page.locator('[data-faculty="2"]').click();check((await page.locator('#dialog-content').textContent()).includes('Fictional biography'),'Faculty provenance visible');
+ await page.locator('#teacher-trial').click();check(await page.locator('#trial-form [name=instrument]').inputValue()==='Voice','Faculty trial selects correct instrument');check((await page.locator('#trial-choice').textContent()).includes('Amara Johnson'),'Teacher choice honestly reflected');
+ await page.locator('#trial-form button[type=submit]').click();check(!await page.locator('#dialog').isVisible(),'Required fields prevent incomplete trial preview');
+ await page.locator('#trial-form [name=student]').fill('Avery');await page.locator('#trial-form [name=email]').fill('not-an-email');await page.locator('#trial-form [name=phone]').fill('(615) 555-0100');await page.locator('#trial-form [name=age]').selectOption('6–12');await page.locator('#trial-form input[type=checkbox]').check();await page.locator('#trial-form button[type=submit]').click();
+ check(!await page.locator('#dialog').isVisible(),'Native email validation blocks malformed address');
+ await page.locator('#trial-form [name=email]').fill('adult@example.com');await page.locator('#trial-form button[type=submit]').click();check((await page.locator('#trial-receipt').textContent()).includes('Avery · Voice'),'Trial receipt reflects local selection');check((await page.locator('#trial-receipt').textContent()).includes('Amara Johnson'),'Trial keeps selected fictional teacher');
+ check((await page.locator('#dialog-content').textContent()).includes('No information was transmitted or stored'),'Trial confirms no actual booking');await page.keyboard.press('Escape');check(await page.locator('#trial-form [name=email]').inputValue()==='','Contact data clears after preview');
+ await page.locator('[data-all-faculty]').click();check(await page.locator('dialog .dialog-item').count()===18,'Full fictional roster has 18 actual profiles');await page.keyboard.press('Escape');
+ await page.locator('.header [data-schedule]').click();check(await page.locator('#schedule-results .dialog-item').count()===6,'Actual six sample lesson slots');
+ await page.locator('#schedule-day').selectOption('Monday');check(await page.locator('#schedule-results .dialog-item').count()===2,'Day filter applies');
+ await page.locator('#schedule-area').selectOption('Voice');check(await page.locator('#schedule-results .dialog-item').count()===1,'Combined day and instrument filters');
+ await page.locator('#schedule-day').selectOption('Tuesday');check((await page.locator('#schedule-results').textContent()).includes('No samples'),'Empty filter state is truthful');
+ await page.locator('#schedule-clear').click();check(await page.locator('#schedule-results .dialog-item').count()===6,'Schedule filters clear');
+ await page.locator('#schedule-results [data-try-other=Violin]').click();check(await page.locator('#trial-form [name=instrument]').inputValue()==='Violin','Sample strings slot maps to violin inquiry');
+ await page.locator('footer [data-pricing]').click();check((await page.locator('#tuition-total').textContent()).includes('$180'),'Four piano lessons subtotal');
+ await page.locator('#tuition-program').selectOption('2');check((await page.locator('#tuition-total').textContent()).includes('$192'),'Voice rate changes subtotal');await page.locator('#tuition-count').fill('5');check((await page.locator('#tuition-total').textContent()).includes('$240'),'Lesson count changes subtotal');
+ await page.locator('#tuition-count').fill('0');check((await page.locator('#tuition-total').textContent()).includes('1 to 12'),'Invalid count yields explanation, not misleading price');await page.keyboard.press('Escape');
+ for(const id of ['spring','jazz']){
+  await page.locator(`#event-grid [data-event=${id}]`).click();check((await page.locator('#dialog-content').textContent()).includes('This date is past'),`${id} RSVP discloses archived state`);
+  const download=page.waitForEvent('download');await page.locator('dialog a[download]').click();check((await download).suggestedFilename()===`${id}-recital-example.ics`,`${id} calendar download`);
+  await page.locator('#event-form [name=name]').fill('Sample Adult');await page.locator('#event-form [name=email]').fill('adult@example.com');await page.locator('#event-form [name=guests]').selectOption('2');await page.locator('#event-form input[type=checkbox]').check();await page.locator('#event-form button[type=submit]').click();check((await page.locator('dialog [role=status]').textContent()).includes('2 sample guest(s)'),`${id} archived RSVP uses chosen count`);await page.keyboard.press('Escape');
+ }
+ await page.locator('#event-grid [data-event=summer]').click();await page.locator('#event-form [name=name]').fill('Sample Guardian');await page.locator('#event-form [name=email]').fill('adult@example.com');await page.locator('#event-form [name=age]').fill('11');await page.locator('#event-form input[type=checkbox]').check();await page.locator('#event-form button[type=submit]').click();check(await page.locator('#event-form').isVisible(),'Summer age eligibility validation');
+ await page.locator('#event-form [name=age]').fill('15');await page.locator('#event-form button[type=submit]').click();check((await page.locator('dialog [role=status]').textContent()).includes('Age 15'),'Summer application local preview');check((await page.locator('dialog [role=status]').textContent()).includes('Nothing was sent or saved'),'No real archived enrollment');await page.keyboard.press('Escape');
+ await page.locator('.recital-section [data-calendar]').click();check(await page.locator('dialog .dialog-item').count()===3,'Full calendar includes all three events');await page.keyboard.press('Escape');
+ await page.locator('.location [data-directions]').click();await page.locator('#copy-address').click();await page.waitForFunction(()=>document.querySelector('#copy-status').textContent.includes('copied'));check((await page.evaluate(()=>navigator.clipboard.readText())).startsWith('FICTIONAL ACADEMY ADDRESS — UNVERIFIED'),'Clipboard includes necessary location warning');await page.keyboard.press('Escape');
+ await page.locator('footer [data-newsletter]').click();await page.locator('#newsletter-form [name=email]').fill('bad');await page.locator('#newsletter-form input[type=checkbox]').check();await page.locator('#newsletter-form button').click();check(await page.locator('#newsletter-status').textContent()==='','Invalid newsletter email is blocked');await page.locator('#newsletter-form [name=email]').fill('adult@example.com');await page.locator('#newsletter-form button').click();check((await page.locator('#newsletter-status').textContent()).includes('No subscription'),'Newsletter is an honest local preview');await page.keyboard.press('Escape');
+ await page.locator('footer [data-faq]').click();await page.locator('dialog summary').first().click();check(await page.locator('dialog details').first().getAttribute('open')!==null,'FAQ expands natively');await page.keyboard.press('Escape');
+ await page.locator('footer [data-info=Affiliations]').first().click();check((await page.locator('#dialog-content').textContent()).includes('No membership, accreditation'),'Affiliations not falsely claimed');await page.keyboard.press('Escape');
+ await page.reload({waitUntil:'networkidle'});await page.evaluate(()=>document.fonts.ready);
+ check(await page.evaluate(()=>Promise.all([...document.images].map(image=>image.decode().then(()=>image.naturalWidth>0)))).then(values=>values.every(Boolean)),'Every local photo decodes');
+ for(const width of [1440,1024,768,390,320]){
+  await page.setViewportSize({width,height:1000});await page.evaluate(()=>scrollTo(0,0));
+  check(await page.evaluate(w=>innerWidth===w&&document.documentElement.scrollWidth<=w,width),`No expansion or horizontal overflow ${width}px`);
+  const small=await page.evaluate(()=>[...document.querySelectorAll('button,a,input,select,summary')].filter(el=>el.getClientRects().length&&getComputedStyle(el).visibility!=='hidden'&&!el.closest('dialog:not([open])')).map(el=>({el,box:(el.matches('input[type=checkbox]')?el.closest('label'):el).getBoundingClientRect()})).filter(({box})=>box.width<43.5||box.height<43.5).map(({el,box})=>`${el.outerHTML.slice(0,100)} ${box.width}x${box.height}`));
+  check(!small.length,`44px touch targets ${width}px: ${small.join('; ')}`);
+ }
+ await page.setViewportSize({width:390,height:844});await page.locator('.menu').click();check(await page.locator('.menu').getAttribute('aria-expanded')==='true','Mobile drawer opens');check(await page.locator('main').evaluate(el=>el.inert),'Mobile drawer makes background inert');
+ await page.keyboard.press('Shift+Tab');check(await page.locator('#navigation a[href="#trial"]').evaluate(el=>el===document.activeElement),'Drawer reverse focus trap');
+ await page.keyboard.press('Tab');check(await page.locator('.drawer-close').evaluate(el=>el===document.activeElement),'Drawer forward focus trap');await page.keyboard.press('Escape');check(await page.locator('.menu').evaluate(el=>el===document.activeElement),'Escape restores menu focus');
+ await page.locator('.menu').click();await page.locator('#navigation a[href="#programs"]').click();check(await page.locator('.menu').getAttribute('aria-expanded')==='false','Navigation closes after selection');check(!await page.locator('main').evaluate(el=>el.inert),'Content restored after drawer closes');
+ await page.locator('[data-story="2"]').click();await page.waitForFunction(()=>document.querySelector('#story-rail').scrollLeft>500);check(await page.locator('[data-story="2"]').getAttribute('aria-current')==='true','Story dot actually moves mobile carousel');
+ await page.locator('[data-story="0"]').click();await page.waitForFunction(()=>document.querySelector('#story-rail').scrollLeft<2);check(await page.locator('[data-story="0"]').getAttribute('aria-current')==='true','Stories can return to first');
+ await page.evaluate(()=>scrollTo(0,0));await page.screenshot({path:path.join(folder,'mobile.png')});await page.screenshot({path:path.join(folder,'mobile-full.png'),fullPage:true});
+ await page.setViewportSize({width:1440,height:1000});await page.evaluate(()=>scrollTo(0,0));await page.screenshot({path:path.join(folder,'desktop.png')});await page.screenshot({path:path.join(folder,'desktop-full.png'),fullPage:true});
+ check(!errors.length,`No JS or resource failures: ${errors}`);check(requests.every(r=>new URL(r.url).origin===new URL(server.url).origin),'No external runtime requests');check(requests.every(r=>r.method==='GET'),'No backend or form submissions');check(await page.evaluate(()=>!localStorage.length&&!sessionStorage.length&&!document.cookie),'No persistence or cookies');
+ for(const name of ['index.html','style.css','app.js'])check((await fs.readFile(path.join(folder,name))).equals(await fs.readFile(path.join(exported,name))),`Source/export match: ${name}`);
+ for(const name of await fs.readdir(path.join(folder,'assets')))check((await fs.readFile(path.join(folder,'assets',name))).equals(await fs.readFile(path.join(exported,'assets',name))),`Asset bytes match: ${name}`);
+ const spring=await fs.readFile(path.join(exported,'assets','spring-event.txt'),'utf8'),summer=await fs.readFile(path.join(exported,'assets','summer-event.txt'),'utf8');
+ check(spring.includes('DTSTART:20260418T200000Z'),'Spring 3PM Nashville daylight time exported correctly');check(summer.includes('RRULE:FREQ=DAILY;UNTIL=20260627T140000Z'),'Summer daily recurrence includes last date');check(spring.includes('STATUS:CANCELLED'),'Archived example cannot appear as confirmed event');
+ await context.close();
+}finally{await browser.close();await server.close();}
+await generatePreview(exported,{workspace:root,timeoutMs:60000});
+const preview=await fs.readFile(path.join(exported,'preview.png'));await fs.writeFile(path.join(folder,'.generation-preview.sha256'),`${staticDigest} ${createHash('sha256').update(preview).digest('hex')}\n`);
+const report={passed:true,checks,staticDigest,visualReview:'pending',viewports:[1440,1024,768,390,320],nestedMount:'/pages/music-academy/GPT-6/index.html',screenshots:['desktop.png','desktop-full.png','mobile.png','mobile-full.png','out/preview.png'],errors,date:new Date().toISOString()};
+await fs.writeFile(path.join(folder,'verification.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));

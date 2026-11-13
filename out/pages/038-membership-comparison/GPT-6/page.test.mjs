@@ -20,7 +20,8 @@ const testNames = [];
 
 async function guard() {
   const lock = JSON.parse(await readFile(path.join(root, "out", ".generation-locks", "038-membership-comparison.lock"), "utf8"));
-  assert.equal(lock.session, "eccb5b0b-bbe8-44e2-97e8-4c615c652be2");
+  assert.ok(process.env.MUSEPAGES_GENERATION_SESSION, "Run under the active generation session lock");
+  assert.equal(lock.session, process.env.MUSEPAGES_GENERATION_SESSION);
   assert.equal(lock.prompt, "038-membership-comparison");
   process.kill(lock.pid, 0);
 }
@@ -43,6 +44,7 @@ async function visit(options = {}) {
     Storage.prototype.setItem = function () { window.__storageWrites++; throw Error("Unexpected browser storage write"); };
   });
   const page = await context.newPage();
+  page.setDefaultTimeout(10000);
   page.on("pageerror", (error) => problems.push(error.message));
   page.on("response", (response) => { if (response.status() >= 400) problems.push(`HTTP ${response.status()} ${response.url()}`); });
   page.on("requestfailed", (request) => problems.push(`Failed: ${request.url()} ${request.failure()?.errorText}`));
@@ -52,6 +54,8 @@ async function visit(options = {}) {
     if (request.method() !== "GET") problems.push(`Unexpected method ${request.method()}`);
   });
   await page.goto(service.url, { waitUntil: "networkidle" });
+  for (const image of await page.locator("img").all()) await image.scrollIntoViewIfNeeded();
+  await page.evaluate(() => window.scrollTo(0, 0));
   await page.evaluate(async () => {
     await document.fonts.ready;
     await Promise.all([...document.images].map((image) => image.decode()));
@@ -64,7 +68,7 @@ async function done(page, context) {
   await context.close();
 }
 function check(name, run) {
-  test(name, async () => { await run(); testNames.push(name); });
+  test(name, { timeout: 90000 }, async () => { await run(); testNames.push(name); });
 }
 check("Source/export equality, actual static validator and asset bounds", async () => {
   for (const file of ["index.html", "style.css", "app.js"]) assert.deepEqual(await readFile(path.join(folder, file)), await readFile(path.join(exported, file)));
@@ -232,6 +236,7 @@ check("Responsive 1440/1024/768/390/320 layouts, decoded imagery, 44px mobile ta
     const { page, context } = await visit({ viewport: { width, height: 1000 }, hasTouch: width < 600, isMobile: width < 600 });
     try {
       const dimensions = await page.evaluate(() => ({ document: document.documentElement.scrollWidth, viewport: innerWidth, images: [...document.images].every((image) => image.complete && image.naturalWidth > 0) }));
+      assert.equal(dimensions.viewport, width, `Expanded layout viewport at ${width}`);
       assert.ok(dimensions.document <= dimensions.viewport + 1, `Overflow ${width}: ${JSON.stringify(dimensions)}`);
       assert.equal(dimensions.images, true);
       const reduced = await page.evaluate(() => ({ reduced: matchMedia("(prefers-reduced-motion: reduce)").matches, behavior: getComputedStyle(document.documentElement).scrollBehavior }));

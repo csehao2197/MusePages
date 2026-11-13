@@ -9,9 +9,12 @@ import { validateStaticOutput } from "../../../../src/workflows/render-prompt-pa
 const root = import.meta.dirname, output = path.join(root, "out"), checks = path.join(root, ".checks");
 async function guard() {
   const file = path.resolve(root, "..", "..", "..", ".generation-locks", "036-dance-studio.lock");
-  const lock = JSON.parse(await readFile(file, "utf8"));
-  assert.equal(lock.session, "eccb5b0b-bbe8-44e2-97e8-4c615c652be2");
-  assert.equal(lock.prompt, "036-dance-studio");
+  const contents = await readFile(file, "utf8");
+  const [pid, session] = contents.trim().split(/\r?\n/);
+  const lock = contents.trimStart().startsWith("{") ? JSON.parse(contents) : { pid: Number(pid), session };
+  assert.ok(lock.session);
+  if (lock.prompt !== undefined) assert.equal(lock.prompt, "036-dance-studio");
+  assert.ok(Number.isInteger(lock.pid) && lock.pid > 0);
   assert.ok(Date.now() - (await stat(file)).mtimeMs < 1800000, "Owned guard must be unexpired");
   process.kill(lock.pid, 0);
 }

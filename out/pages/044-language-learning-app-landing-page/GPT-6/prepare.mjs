@@ -1,0 +1,22 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import {fileURLToPath,pathToFileURL} from 'node:url';
+const folder=path.dirname(fileURLToPath(import.meta.url)),root=path.resolve(folder,'..','..','..','..'),assets=path.join(folder,'assets');
+await fs.mkdir(assets,{recursive:true});
+for(const name of ['jakarta.ttf','JAKARTA-OFL.txt'])await fs.copyFile(path.join(root,'out','pages','032-agency-process-page','GPT-6','assets',name),path.join(assets,name));
+for(const name of ['inter.ttf','INTER-OFL.txt'])await fs.copyFile(path.join(root,'out','pages','035-crossfit-gym','GPT-6','assets',name),path.join(assets,name));
+for(const [source,target]of [['portrait-rachel.jpg','emma.jpg'],['portrait-david.jpg','kenji.jpg'],['portrait-priya.jpg','sarah.jpg']])await fs.copyFile(path.join(root,'out','pages','033-creative-agency-team','GPT-6','assets',source),path.join(assets,target));
+const names=['globe-2','arrow-up-right','arrow-right','menu','x','star','sparkles','circle-play','flame','coffee','zap','messages-square','pause','play','check','audio-lines','rotate-ccw','mic','brain','download','calendar-days','book-open','video','ellipsis','smartphone','message-circle','camera','music'];
+const symbols=[];
+for(const name of names){const filename=({'globe-2':'earth',music:'eighth-notes'})[name]||name;const module=await import(pathToFileURL(path.join(root,'node_modules','lucide-react','dist','esm','icons',`${filename}.mjs`)));const data=module.__iconData;if(!data)throw Error(`Missing Lucide geometry: ${name}`);symbols.push(`<symbol id="${name}" viewBox="0 0 24 24">${data.node.map(([tag,attrs])=>`<${tag} ${Object.entries(attrs).filter(([key])=>key!=='key').map(([key,value])=>`${key}="${value}"`).join(' ')}/>`).join('')}</symbol>`);}
+await fs.writeFile(path.join(assets,'icons.svg'),`<svg xmlns="http://www.w3.org/2000/svg"><defs>${symbols.join('')}</defs></svg>\n`);
+await fs.copyFile(path.join(root,'node_modules','lucide-react','LICENSE'),path.join(assets,'LUCIDE-LICENSE.txt'));
+const flagBodies={es:'<path fill="#b32938" d="M0 0h60v40H0z"/><path fill="#eac65c" d="M0 10h60v20H0z"/>',fr:'<path fill="#476095" d="M0 0h20v40H0z"/><path fill="#fff" d="M20 0h20v40H20z"/><path fill="#c2676c" d="M40 0h20v40H40z"/>',ja:'<path fill="#fff" d="M0 0h60v40H0z"/><circle cx="30" cy="20" r="10" fill="#c56c76"/>',de:'<path fill="#43434d" d="M0 0h60v40H0z"/><path fill="#b86669" d="M0 13.33h60v13.34H0z"/><path fill="#e5c46e" d="M0 26.67h60V40H0z"/>',zh:'<path fill="#bc6569" d="M0 0h60v40H0z"/><path fill="#efd182" d="m13 7 2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6Z"/>'};
+for(const [id,body]of Object.entries(flagBodies))await fs.writeFile(path.join(assets,`flag-${id}.svg`),`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40">${body}</svg>\n`);
+const prompt=await fs.readFile(path.join(root,'data','prompts','044-language-learning-app-landing-page','044-language-learning-app-landing-page.md'),'utf8'),design=await fs.readFile(path.join(root,'src','workflows','AI Agent','DESIGN.md'),'utf8');
+await fs.writeFile(path.join(folder,'.generation-input.sha256'),crypto.createHash('sha256').update(JSON.stringify([prompt,design])).digest('hex')+'\n');
+const exported=path.join(folder,'out');await fs.mkdir(exported,{recursive:true});
+for(const name of ['index.html','style.css','app.js'])await fs.copyFile(path.join(folder,name),path.join(exported,name));
+await fs.cp(assets,path.join(exported,'assets'),{recursive:true});
+console.log('Prepared clean static LinguaLeap export.');

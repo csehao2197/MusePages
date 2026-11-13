@@ -1,0 +1,167 @@
+import {readFile} from 'node:fs/promises';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+
+export async function verify(page,assert){
+  let checks=0;
+  const check=(actual,expected,message='') => {assert.deepEqual(actual,expected,message);checks++;};
+  const ok=(actual,message='') => {assert.ok(actual,message);checks++;};
+  const base=new URL(page.url()),folder=path.dirname(fileURLToPath(import.meta.url)),shots=path.join(folder,'.checks');
+  const external=[],errors=[];
+  page.on('request',(request) => {if(/^https?:/.test(request.url()) && new URL(request.url()).origin!==base.origin) external.push(request.url());});
+  check(await page.locator('.project').count(),3);
+  check(await page.locator('.project[open]').count(),0);
+  check(await page.locator('#skills-list .skill-group').count(),4);
+  check(await page.locator('#experience-list .timeline-item').count(),3);
+  check(await page.locator('.masthead').evaluate((element) => getComputedStyle(element).position),'sticky');
+  for(const id of ['commons','margin','signal']){
+    const project=page.locator(`#project-${id}`);
+    await project.locator('summary').click();
+    await page.waitForFunction((id) => document.querySelector(`#project-${id}>summary`).getAttribute('aria-expanded')==='true',id);
+    check(await page.locator('.project[open]').count(),1,'Exclusive inline expansion');
+    check(await project.getAttribute('open'),'');
+    check(new URL(page.url()).hash,`#project-${id}`);
+    check(await project.locator('.case-content').isVisible(),true);
+    check(await project.locator('.case-grid h4').allTextContents(),['THE CONTEXT','ROLE & APPROACH','THE OUTCOME / WHAT I LEARNED','THE STACK']);
+    check(await project.locator('.case-grid p').first().innerText(),await page.evaluate((id) => window.editorialProfile.projects.find((project) => project.id===id).context,id),'Case study displays its complete context');
+    check(await page.locator('dialog[open]').count(),0,'Case studies expand inline, not in a modal');
+    const downloading=page.waitForEvent('download');await project.locator('a[download]').click();
+    const source=await downloading;
+    check(source.suggestedFilename(),`${id}-prototype.html`);
+    check(await readFile(await source.path(),'utf8'),await readFile(path.join(folder,'assets','demos',`${id}.html`),'utf8'),'Actual editable prototype source is downloaded');
+    if(id==='commons'){await project.scrollIntoViewIfNeeded();await page.screenshot({path:path.join(shots,'case-desktop.png')});}
+  }
+  await page.locator('#project-signal .collapse-case').click();
+  await page.waitForFunction(() => document.querySelectorAll('.project[open]').length===0 && location.hash==='#projects');
+  check(new URL(page.url()).hash,'#projects');
+  check(await page.locator('#project-signal>summary').evaluate((element) => element===document.activeElement),true,'Collapse returns focus');
+  await page.locator('#project-margin>summary').focus();await page.keyboard.press('Enter');
+  await page.waitForFunction(() => document.querySelector('#project-margin').open);
+  check(await page.locator('.project[open]').count(),1,'Keyboard opens a case study');
+  await page.keyboard.press('Enter');await page.waitForFunction(() => !document.querySelector('#project-margin').open);
+  check(await page.locator('.project[open]').count(),0);
+  await page.goto(base.href+'#project-commons');
+  await page.waitForFunction(() => document.querySelector('#project-commons').open);
+  check(await page.locator('.project[open]').getAttribute('data-id'),'commons','Initial case-study deep link');
+  await page.evaluate(() => location.hash='project-margin');
+  await page.waitForFunction(() => document.querySelector('#project-margin').open);
+  check(await page.locator('.project[open]').getAttribute('data-id'),'margin','Hash-only case-study navigation');
+  await page.evaluate(() => location.hash='about');
+  await page.waitForFunction(() => !document.querySelector('.project[open]'));
+  check(await page.locator('.project[open]').count(),0,'Navigating to a normal section closes the case study');
+
+  await page.goto(base.href);
+  await page.evaluate(() => scrollTo(0,0));
+  const rect=await page.locator('.hero').boundingBox();
+  await page.mouse.move(rect.x+rect.width*.8,rect.y+Math.min(rect.height*.3,400));
+  await page.waitForFunction(() => document.querySelector('#hero-figure').style.transform.includes('translate3d'));
+  ok((await page.locator('#hero-figure').evaluate((element) => element.style.transform)).includes('rotate'),'Cursor really transforms the hero layer');
+  await page.mouse.move(5,5);
+  await page.waitForFunction(() => document.querySelector('#hero-figure').style.transform==='');
+  check(await page.locator('#hero-figure').evaluate((element) => element.style.transform),'','Leaving hero resets parallax');
+  await page.emulateMedia({reducedMotion:'reduce'});
+  await page.mouse.move(rect.x+rect.width*.75,rect.y+200);
+  check(await page.locator('#hero-figure').evaluate((element) => getComputedStyle(element).transform),'none');
+  check(await page.locator('.scroll-cue svg').evaluate((element) => getComputedStyle(element).animationName),'none');
+  check(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior),'auto');
+  await page.emulateMedia({reducedMotion:'no-preference'});
+
+  const pdfPath=path.join(folder,'assets','morgan-ellis-resume.pdf'),pdf=await readFile(pdfPath);
+  check(pdf.subarray(0,5).toString(),'%PDF-','Actual PDF signature');
+  check((pdf.toString('latin1').match(/\/Type\s*\/Page\b/g)||[]).length,1,'Resume is genuinely one page');
+  const png=await readFile(path.join(folder,'assets','resume-preview.png'));
+  check([png.readUInt32BE(16),png.readUInt32BE(20)],[794,1123]);
+  const pdfDownloading=page.waitForEvent('download');await page.locator('.resume .section-heading a[download]').click();const downloadedPdf=await pdfDownloading;
+  check(downloadedPdf.suggestedFilename(),'morgan-ellis-resume.pdf');
+  check(await readFile(await downloadedPdf.path()),pdf,'Download contains the real resume PDF');
+  await page.locator('.resume-transcript>summary').click();
+  check(await page.locator('#resume-text').isVisible(),true);
+  const transcript=await page.locator('#resume-text').innerText();
+  for(const text of ['Morgan Ellis','Northline Studio','Good Company','Independent practice','Common Ground','Margin','Signal','DEMONSTRATION RESUME']) ok(transcript.includes(text),'HTML resume has the same profile and project entries');
+  await page.locator('.resume-transcript>summary').click();
+  check(await page.locator('#resume-text').isVisible(),false);
+  const context=await page.context().browser().newContext();
+  const demo=await context.newPage();
+  demo.on('pageerror',(error) => errors.push(error.message));
+  demo.on('response',(response) => {if(response.status()>=400) errors.push(`${response.status()} ${response.url()}`);});
+  demo.on('request',(request) => {if(/^https?:/.test(request.url()) && new URL(request.url()).origin!==base.origin) external.push(request.url());});
+  const demoUrl=(id) => new URL(`./assets/demos/${id}.html`,base).href;
+  await demo.goto(demoUrl('commons'));
+  check(await demo.locator('.card:not([hidden])').count(),3);
+  await demo.locator('[data-filter=Reading]').click();
+  check(await demo.locator('.card:not([hidden])').getAttribute('data-category'),'Reading');
+  await demo.locator('.card:not([hidden]) .join').click();
+  check(await demo.locator('.card:not([hidden]) .join').getAttribute('aria-pressed'),'true');
+  ok((await demo.locator('#join-status').innerText()).includes('1 gathering(s)'));
+  await demo.locator('.card:not([hidden]) .join').click();
+  ok((await demo.locator('#join-status').innerText()).includes('0 gathering(s)'));
+  await demo.locator('[data-filter=All]').click();check(await demo.locator('.card:not([hidden])').count(),3);
+  await demo.goto(demoUrl('margin'));
+  const essay=await demo.locator('#essay').innerText();
+  await demo.locator('#typeface').selectOption('sans');
+  ok((await demo.locator('#essay').evaluate((element) => getComputedStyle(element).fontFamily)).includes('Arial'));
+  await demo.locator('#measure').selectOption('wide');
+  check(await demo.locator('#essay').evaluate((element) => element.classList.contains('wide')),true);
+  await demo.locator('#size').fill('22');
+  check(await demo.locator('#essay').evaluate((element) => getComputedStyle(element).fontSize),'22px');
+  check(await demo.locator('#essay').innerText(),essay,'Reading preferences preserve the full essay');
+  await demo.locator('#reset').click();check(await demo.locator('#size').inputValue(),'18');
+  check(await demo.locator('#typeface').inputValue(),'serif');
+  await demo.goto(demoUrl('signal'));
+  check(await demo.locator('#total').innerText(),'231');
+  check(await demo.locator('#average').innerText(),'33.0 per day, across 7 days');
+  check(await demo.locator('.bar').count(),7);
+  await demo.locator('#range').selectOption('30');
+  check(await demo.locator('#total').innerText(),'743');
+  check(await demo.locator('#average').innerText(),'24.8 per day, across 30 days');
+  check(await demo.locator('.bar').count(),30);
+  await demo.locator('details>summary').click();
+  check(await demo.locator('#rows tr').count(),30);
+  check(await demo.locator('#rows tr').first().innerText(),'1 Sep 2026\t12');
+  check(await demo.locator('#rows tr').last().innerText(),'30 Sep 2026\t36');
+  for(const id of ['commons','margin','signal']){
+    await demo.setViewportSize({width:320,height:900});await demo.goto(demoUrl(id));
+    check(await demo.evaluate(() => document.documentElement.scrollWidth<=innerWidth+1),true,`${id} prototype fits narrow screen`);
+  }
+  await context.close();
+  await page.locator('#schedule-button').click();
+  check(await page.locator('#slots input').count(),9);
+  await page.locator('#schedule-form button').click();
+  check(await page.locator('#slots input').first().evaluate((input) => input.validity.valueMissing),true,'A slot is required');
+  check(await page.locator('#schedule-status').innerText(),'');
+  await page.locator('#slots input[value="2026-11-17T14:00:00Z"]').check();
+  const icsDownloading=page.waitForEvent('download');await page.locator('#schedule-form button').click();const ics=await icsDownloading;
+  check(ics.suggestedFilename(),'intro-call-preview.ics');
+  const calendar=await readFile(await ics.path(),'utf8');
+  ok(calendar.startsWith('BEGIN:VCALENDAR\r\n') && calendar.endsWith('END:VCALENDAR\r\n'),'Calendar uses genuine CRLF iCalendar content');
+  ok(calendar.includes('DTSTART:20261117T140000Z\r\n') && calendar.includes('DTEND:20261117T143000Z\r\n'),'Calendar slot lasts exactly 30 minutes in UTC');
+  ok(calendar.includes('STATUS:TENTATIVE\r\n') && calendar.includes('TRANSP:TRANSPARENT\r\n') && calendar.includes('METHOD:PUBLISH\r\n'));
+  check(/(?:ATTENDEE|ORGANIZER|METHOD:REQUEST)/.test(calendar),false,'Calendar does not pretend to send a meeting invitation');
+  ok((await page.locator('#schedule-status').innerText()).includes('No call is booked'));
+  await page.keyboard.press('Escape');
+  await page.waitForFunction(() => !document.querySelector('#schedule-dialog').open && document.querySelectorAll('#slots input:checked').length===0);
+  check(await page.locator('#schedule-button').evaluate((element) => element===document.activeElement),true);
+  for(const width of [768,390,320]){
+    await page.setViewportSize({width,height:900});
+    for(const id of ['commons','margin','signal']){
+      const project=page.locator(`#project-${id}`);
+      await project.locator('summary').click();await page.waitForFunction((id) => document.querySelector(`#project-${id}`).open,id);
+      check(await page.evaluate(() => document.documentElement.scrollWidth<=innerWidth+1),true,`Inline ${id} fits ${width}px`);
+      if(width===390 && id==='margin'){await project.locator('.case-content').scrollIntoViewIfNeeded();await page.screenshot({path:path.join(shots,'case-mobile.png')});}
+      await project.locator('.collapse-case').click();
+    }
+    await page.locator('#schedule-button').click();
+    check(await page.locator('#schedule-dialog').evaluate((dialog) => dialog.scrollWidth<=dialog.clientWidth+1),true,`Scheduling fits ${width}px`);
+    if(width===390) await page.screenshot({path:path.join(shots,'schedule-mobile.png')});
+    await page.keyboard.press('Escape');await page.waitForFunction(() => !document.querySelector('#schedule-dialog').open);
+  }
+  await page.locator('#menu-button').click();check(await page.locator('#menu-button').getAttribute('aria-expanded'),'true');
+  await page.locator('#navigation a[href="#resume"]').click();check(await page.locator('#menu-button').getAttribute('aria-expanded'),'false');
+  check(new URL(page.url()).hash,'#resume');
+  await page.locator('#menu-button').click();await page.keyboard.press('Escape');check(await page.locator('#menu-button').getAttribute('aria-expanded'),'false');
+  check(await page.locator('#hero-figure').evaluate((element) => getComputedStyle(element).transform),'none','Mobile parallax has a static fallback');
+  check(await page.evaluate(() => [localStorage.length,sessionStorage.length,document.cookie]),[0,0,'']);
+  check(external,[],'No automatically loaded external services, fonts or images');
+  check(errors,[],'All three independent prototypes run without browser errors');
+  return checks;
+}

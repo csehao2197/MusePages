@@ -1,0 +1,12 @@
+# LearnCraft Academy
+
+- Input: `data\prompts\046-online-course-landing-page\046-online-course-landing-page.md` and `src\workflows\AI Agent\DESIGN.md`.
+- Actual model: `gpt-6.1-sol`; directory label: `GPT-6`. Type: independent static HTML/CSS/JavaScript.
+- Source: this directory. Clean public homepage: `out\index.html` and `out\assets\`.
+- Features: interactive classroom illustration, six original read/quiz mini lessons with in-memory progress, 54 planned lesson titles, curriculum accordions, original syllabus download, project map, Eastern/Pacific/London/Tokyo conversion, truthful payment totals, local enrollment preview, FAQ and accessible mobile drawer.
+- Run/test from the repository root: `node --check out\pages\046-online-course-landing-page\GPT-6\app.js`, then `node out\pages\046-online-course-landing-page\GPT-6\prepare.mjs`, then `node out\pages\046-online-course-landing-page\GPT-6\verify.mjs`. Existing Playwright/Chromium required; environment variables: none.
+- Verification: 92 browser/export assertions at 1440/1024/768/390/320px, six quizzes, retake/reload, tuition math, required fields, daylight/date-rollover conversion, expired countdown, keyboard drawer/dialogs, 44px targets, image/font loading, local-only GETs, no storage, byte-matched assets and true nested mount. Desktop/mobile/full-page captures and real 1200×900 preview actually reviewed.
+- Collection mapping: `/pages/online-course-landing-page/GPT-6/index.html`, `staticDir: out`; registered disabled/undeployed. Collection assembly and publication remain separate authorized steps.
+- Mock scope: fictional academy, teacher, graduate stories, credentials, affiliations, employers, ratings, completion/graduate numbers, outcome claims, 35-seat capacity, services, certificates, payments and 30-day guarantee. No backend, account, checkout, Stripe connection, real session, support, enrollment, charge, recording or refund contract.
+- Date choice: April 14 has no year in the input; the illustration explicitly uses April 14, 2027, 7 PM Eastern. Sessions use Eastern local time (EDT in April). The countdown stops after the chosen date. Twelve guided projects means eleven module exercises plus one portfolio lab; the capstone is separate. Only six mini lessons are implemented, not the entire course.
+- Licensed local Sora/Inter fonts, Lucide icons, original laptop/mark and illustrative stock portraits; sources and licensing are in `assets\credits.txt`. Stock models are not instructors, graduates or endorsers.

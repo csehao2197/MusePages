@@ -1,0 +1,65 @@
+import {readFile} from "node:fs/promises";
+import path from "node:path";
+import {fileURLToPath} from "node:url";
+export async function verify(page,assert){
+  let count=0;const same=(a,b,message="")=>{assert.equal(a,b,message);count++;},ok=(a,message="")=>{assert.ok(a,message);count++;},text=selector=>page.locator(selector).textContent(),click=selector=>page.locator(selector+":visible").click(),fill=(name,value)=>page.locator(`#dialog [name="${name}"]`).fill(value),save=()=>click("#dialog .form-actions .button:first-child");
+  const folder=path.dirname(fileURLToPath(import.meta.url)),screens=path.join(folder,".checks"),external=[];
+  page.on("request",r=>{if(new URL(r.url()).origin!==new URL(page.url()).origin)external.push(r.url());});
+  const reset=async()=>{await click('[data-action="reset"]');await click('[data-action="confirm-reset"]');};
+  same(await text("#finance-income"),"$7,300.00");same(await text("#finance-expenses"),"$6,240.00");same(await text("#finance-net"),"$1,060.00");same(await text("#finance-score"),"81 / 100");same(await page.locator(".transaction-row").count(),8);
+  same(await page.locator(".hero-week").count(),4);ok((await page.locator("#hero-chart").getAttribute("aria-label")).includes("group 1, income $6,500.00"));
+  same(await page.locator('[role="tabpanel"]').count(),4);
+  await click('[data-action="transaction"][data-id="consulting"]');await fill("amount","950.25");await save();same(await text("#finance-income"),"$7,450.25");same(await text("#hero-net"),"$1,210.25");
+  await click('[data-action="transaction"]:not([data-id])');await fill("name",'<img src=x onerror=alert(1)>');await fill("amount","1.001");await save();ok((await text("#form-error")).includes("two decimal"));same(await page.locator(".transaction-row").count(),8);
+  await fill("amount","100.25");await page.locator('#dialog [name="type"]').selectOption("income");await fill("date","2026-11-18");await save();same(await text("#finance-income"),"$7,550.50");
+  same(await page.locator(".transaction-row").count(),9);same(await page.locator('.transaction-row img').count(),0);ok((await text(".transaction-list")).includes("<img src=x onerror=alert(1)>"));
+  await page.locator('.transaction-row').filter({hasText:"<img src=x onerror=alert(1)>"}).getByRole("button").click();
+  await click('[data-action="delete-transaction"]');await click('[data-action="close"]');same(await page.locator(".transaction-row").count(),9);
+  await page.locator('.transaction-row').filter({hasText:"<img src=x onerror=alert(1)>"}).getByRole("button").click();
+  await click('[data-action="delete-transaction"]');await click('[data-action="confirm-delete-transaction"]');same(await page.locator(".transaction-row").count(),8);
+  await page.locator("#selected-month").fill("2027-01");await page.locator("#selected-month").dispatchEvent("change");same(await text("#finance-score"),"N/A");same(await text("#finance-net"),"$0.00");ok((await text('[data-budget-category="Housing"]')).includes("not set"));
+  await click('[data-action="transaction"]:not([data-id])');await fill("name","January rent");await fill("amount","650.50");await page.locator('#dialog [name="category"]').selectOption("Housing");await fill("date","2027-01-15");await save();
+  same(await text("#finance-expenses"),"$650.50");same(await text("#finance-net"),"-$650.50");same(await text("#finance-score"),"N/A");same(await text("#hero-net"),"-$650.50");
+  await click('[data-action="budget"]');await fill("Housing","500");await save();ok(await page.locator('[data-budget-category="Housing"]').evaluate(e=>e.classList.contains("over")));
+  ok((await text('[data-budget-category="Housing"]')).includes("$650.50 / $500.00"));
+  await page.locator("#selected-month").fill("2026-11");await page.locator("#selected-month").dispatchEvent("change");ok((await text('[data-budget-category="Housing"]')).includes("$2,400.00"));
+  await click('[data-action="budget"]');await fill("Housing","0");await save();ok((await text("#form-error")).includes("0.01"));await fill("Housing","");await save();ok((await text('[data-budget-category="Housing"]')).includes("not set"));
+  await reset();same(await text("#finance-income"),"$7,300.00");
+  await click("#tab-portfolio");same(await text("#class-index"),"65 / 100");same(await text("#concentration"),"4350");same(await text("#allocation-total"),"100.00%");ok((await page.locator(".donut").getAttribute("style")).includes("conic-gradient"));
+  await click('[data-action="asset"][data-id="broad"]');await fill("weight","59.99");await save();same(await text("#allocation-total"),"99.99%");same(await text("#class-index"),"—");same(await text("#concentration"),"—");same(await page.locator(".donut").getAttribute("style"),null);ok((await text("#allocation-warning")).includes("No automatic normalization"));
+  await click('[data-action="asset"][data-id="broad"]');await fill("weight","60");await fill("name"," cash sample ");await save();ok((await text("#form-error")).includes("already exists"));await fill("name","Broad equity sample");await save();same(await text("#class-index"),"65 / 100");same(await page.locator("#allocation-warning").count(),0);
+  await click('[data-action="asset"]:not([data-id])');await fill("name","Learning-only label");await fill("weight","1.01");await save();same(await page.locator(".asset-row").count(),5);same(await text("#allocation-total"),"101.01%");same(await text("#class-index"),"—");
+  await page.locator(".asset-row").filter({hasText:"Learning-only label"}).getByRole("button").click();await click('[data-action="delete-asset"]');await click('[data-action="confirm-delete-asset"]');same(await text("#allocation-total"),"100.00%");same(await text("#concentration"),"4350");
+  await page.screenshot({path:path.join(screens,"allocation.png"),fullPage:true});
+  await click("#tab-book");same(await text("#book-spread"),"$1.00");same(await page.locator(".book-side.asks .level").count(),2);ok((await text(".book-side.asks")).includes("$100.00"));
+  await page.locator('#order-form [name="price"]').fill("101.00");await page.locator('#order-form [name="quantity"]').fill("25");await page.locator("#order-form .button").click();
+  same(await page.locator(".book-history tbody tr").count(),3);same(await text("#order-message"),"L0006 filled: 25 of 25 units filled locally. Nothing was sent.");same(await text("#book-spread"),"$2.00");
+  const fills=await page.locator(".book-history tbody tr").allTextContents();ok(fills[0].includes("$100.00")&&fills[0].includes("12")&&fills[0].includes("L0001"));ok(fills[1].includes("$100.00")&&fills[1].includes("8")&&fills[1].includes("L0002"));ok(fills[2].includes("$101.00")&&fills[2].includes("5")&&fills[2].includes("L0003"));
+  await page.locator(".order-history summary").click();same(await page.locator(".order-history tbody tr").count(),6);
+  await click('[data-action="cancel-order"][data-id="L0003"]');same(await text("#book-spread"),"N/A · one or both sides empty");same(await page.locator(".book-history tbody tr").count(),3);same(await page.locator('[data-action="cancel-order"][data-id="L0003"]').count(),0);
+  await page.locator('#order-form [name="price"]').fill("1.001");await page.locator("#order-form .button").click();ok((await text("#order-message")).includes("two decimal"));same(await page.locator(".book-history tbody tr").count(),3);
+  const download=page.waitForEvent("download");await click('[data-action="snapshot"]');const file=await download;same(file.suggestedFilename(),"folio-local-lab-snapshot.json");const data=JSON.parse(await readFile(await file.path(),"utf8"));
+  same(data.transactions.length,8);same(data.assets.length,4);same(data.orderBook.trades.length,3);same(data.orderBook.orders.find(o=>o.id==="L0003").status,"canceled");same(data.portfolioAnalysis.hhi,4350);same(data.selectedMonth,"2026-11");ok(!Object.hasOwn(data,"messages"));ok(data.disclaimer.includes("Not financial"));
+  await click('[data-action="reset-book"]');await click('[data-action="close"]');same(await page.locator(".book-history tbody tr").count(),3);
+  await click('[data-action="reset-book"]');await click('[data-action="confirm-reset-book"]');same(await page.locator(".book-history tbody tr").count(),0);same(await text("#book-spread"),"$1.00");
+  await page.locator('#order-form [name="side"]').selectOption("sell");await page.locator('#order-form [name="price"]').fill("98.00");await page.locator('#order-form [name="quantity"]').fill("15");await page.locator("#order-form .button").click();
+  same(await page.locator(".book-history tbody tr").count(),2);ok((await text(".book-history tbody tr:first-child")).includes("$99.00"));ok((await text(".book-history tbody tr:last-child")).includes("$98.00"));
+  await page.screenshot({path:path.join(screens,"matching.png"),fullPage:true});
+  await click("#tab-notes");await click('[data-question="Explain my spending"]');ok((await text(".chat-message")).includes("$7,300.00"));ok((await text(".chat-message")).includes("Not financial, investment or tax advice."));ok((await text(".chat-message small")).includes("2026-11"));
+  await click('[data-question="Explain portfolio concentration"]');ok((await text(".chat-message:last-child")).includes("4350/10000"));
+  await page.locator('#notes-form input').fill("Tell me exactly which stock to buy.");await page.locator("#notes-form .button").click();ok((await text(".chat-message:last-child")).includes("not an AI model or adviser"));
+  for(let i=0;i<9;i++){await page.locator('#notes-form input').fill("Explain order book");await page.locator("#notes-form .button").click();}same(await page.locator(".chat-message").count(),10);ok((await text(".chat-message:last-child")).includes("2 simulated fills"));
+  await page.locator("#tab-notes").focus();await page.keyboard.press("Home");same(await page.locator("#tab-cashflow").getAttribute("aria-selected"),"true");await page.keyboard.press("ArrowRight");same(await page.locator("#tab-portfolio").getAttribute("aria-selected"),"true");await page.keyboard.press("End");same(await page.locator("#tab-notes").getAttribute("aria-selected"),"true");
+  await page.goBack();await page.waitForFunction(()=>document.querySelector("#tab-portfolio").getAttribute("aria-selected")==="true");same(await page.locator("#lab-portfolio").isVisible(),true);
+  await page.evaluate(()=>location.hash="lab-book");await page.waitForFunction(()=>document.querySelector("#tab-book").getAttribute("aria-selected")==="true");same(await page.locator("#lab-book").isVisible(),true);
+  await click('.hero-actions [data-action="method"]');ok((await text("#dialog-body")).includes("70 × clamp"));ok((await text("#dialog-body")).includes("anti-self-trade"));await page.keyboard.press("Escape");same(await page.locator("#dialog").isVisible(),false);
+  for(const width of [1440,1024,768,390,320]){
+    await page.setViewportSize({width,height:900});
+    for(const name of ["cashflow","portfolio","book","notes"]){await click(`#tab-${name}`);ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`${name} overflow at ${width}`);}
+  }
+  await click("#tab-cashflow");await click('[data-action="transaction"]:not([data-id])');ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));await page.screenshot({path:path.join(screens,"mobile-entry.png")});await page.keyboard.press("Escape");
+  await page.locator(".mobile-toggle").click();same(await page.locator(".mobile-toggle").getAttribute("aria-expanded"),"true");await page.locator("#navigation a").first().click();same(await page.locator(".mobile-toggle").getAttribute("aria-expanded"),"false");
+  const origin=page.url().split("#")[0];await page.goto(origin+"?fresh=1#lab-portfolio");await page.waitForFunction(()=>document.querySelector("#tab-portfolio").getAttribute("aria-selected")==="true");same(await text("#allocation-total"),"100.00%");
+  await click("#tab-book");same(await text("#book-spread"),"$1.00");same(await page.locator(".book-history tbody tr").count(),0);same(await page.evaluate(()=>localStorage.length),0);same(await page.evaluate(()=>sessionStorage.length),0);same(await page.evaluate(()=>document.cookie),"");same(external.length,0);
+  return count;
+}

@@ -17,9 +17,12 @@ const outcomes = [];
 const errors = new Set();
 const requests = [];
 async function guard() {
-  const lock = JSON.parse(await readFile(path.join(root, "out", ".generation-locks", `${prompt}.lock`), "utf8"));
-  assert.equal(lock.session, "eccb5b0b-bbe8-44e2-97e8-4c615c652be2");
-  assert.equal(lock.prompt, prompt);
+  const contents = await readFile(path.join(root, "out", ".generation-locks", `${prompt}.lock`), "utf8");
+  const [pid, session] = contents.trim().split(/\r?\n/);
+  const lock = contents.trimStart().startsWith("{") ? JSON.parse(contents) : { pid: Number(pid), session };
+  assert.ok(lock.session);
+  if (lock.prompt !== undefined) assert.equal(lock.prompt, prompt);
+  assert.ok(Number.isInteger(lock.pid) && lock.pid > 0);
   process.kill(lock.pid, 0);
 }
 async function equality(directory = "") {

@@ -1,0 +1,10 @@
+import {writeFile,copyFile,mkdir} from "node:fs/promises";
+import {createRequire} from "node:module";
+const require=createRequire(new URL("../../../../package.json",import.meta.url));
+const React=require("react"),{renderToStaticMarkup}=require("react-dom/server"),lucide=require("lucide-react");
+await mkdir(new URL("assets/",import.meta.url),{recursive:true});
+const icons={Play:"play",Pause:"pause",RotateCcw:"reset",SkipForward:"skip",Maximize:"expand",Minimize:"minimize",Settings2:"settings",ArrowRight:"right",RefreshCw:"refresh",X:"x",Check:"check",Download:"download",CircleHelp:"help",Leaf:"leaf",Sun:"sun"};
+await writeFile(new URL("assets/icons.js",import.meta.url),`export const ICONS=${JSON.stringify(Object.fromEntries(Object.entries(icons).map(([name,id])=>[id,renderToStaticMarkup(React.createElement(lucide[name])).replace(/<svg[^>]*>/,"").replace("</svg>","")])))};\n`);
+await writeFile(new URL("assets/icons.svg",import.meta.url),`<svg xmlns="http://www.w3.org/2000/svg"><defs>${Object.entries(icons).map(([name,id])=>renderToStaticMarkup(React.createElement(lucide[name])).replace(/<svg[^>]*>/,`<symbol id="${id}" viewBox="0 0 24 24">`).replace("</svg>","</symbol>")).join("")}</defs></svg>`);
+for(const file of ["inter.woff2","inter-OFL.txt","lucide-LICENSE.txt"])await copyFile(new URL(`../../081-file-upload-saas/GPT-6/assets/${file}`,import.meta.url),new URL(`assets/${file}`,import.meta.url));
+await writeFile(new URL("assets/mark.svg",import.meta.url),'<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M24 24C1 25 3 2 17 7c7 3 7 11 7 17C23 1 46 3 41 17c-3 7-11 7-17 7 23-1 21 22 7 17-7-3-7-11-7-17 1 23-22 21-17 7 3-7 11-7 17-7Z" fill="#ad4837"/></svg>');

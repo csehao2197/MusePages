@@ -1,0 +1,82 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import {fileURLToPath,pathToFileURL} from 'node:url';
+import {createHash} from 'node:crypto';
+import {chromium} from '@playwright/test';
+const folder=path.dirname(fileURLToPath(import.meta.url)),root=path.resolve(folder,'..','..','..','..'),exported=path.join(folder,'out'),slug='language-learning-app-landing-page';
+const {startPreviewServer,generatePreview}=await import(pathToFileURL(path.join(root,'src','workflows','generate-preview.mjs')));
+const {validateStaticOutput}=await import(pathToFileURL(path.join(root,'src','workflows','render-prompt-pages.mjs')));
+const staticDigest=await validateStaticOutput(exported,slug,'GPT-6'),server=await startPreviewServer(exported,{workspace:root}),browser=await chromium.launch();
+let checks=0;const errors=[],requests=[],check=(condition,message)=>{assert.ok(condition,message);checks++;};
+try{
+ const context=await browser.newContext({viewport:{width:1440,height:1000},reducedMotion:'reduce'}),page=await context.newPage();page.setDefaultTimeout(6500);
+ page.on('pageerror',error=>errors.push(String(error)));page.on('response',response=>{if(response.status()>=400)errors.push(`${response.status()} ${response.url()}`);});page.on('request',request=>requests.push({url:request.url(),method:request.method()}));
+ const response=await page.goto(server.url,{waitUntil:'networkidle',timeout:20000});await page.evaluate(()=>document.fonts.ready);
+ check(response.status()===200,'Static landing page responds');check(new URL(server.url).pathname.includes('/pages/language-learning-app-landing-page/GPT-6/'),'True numberless nested mount');
+ check(await page.evaluate(()=>document.fonts.check('16px Inter')&&document.fonts.check('40px Jakarta')),'Local UI fonts load');
+ await page.locator('#phone-answer').click();check((await page.locator('.phone-feedback').textContent()).includes('Scripted feedback'),'Phone reply gives honest local feedback');
+ for(const [id,phrase,answer]of [['fr','Bonjour','Un café'],['ja','こんにちは','コーヒー'],['de','Hallo','Einen Kaffee'],['zh','你好','请给我']]){
+  await page.locator(`[data-language="${id}"]`).click();await page.evaluate(()=>document.fonts.ready);
+  check((await page.locator('#preview-phrase').textContent()).includes(phrase),`${id} phrase selection`);
+  check((await page.locator('#phone-answer').textContent()).includes(answer),`${id} matching phone screen`);
+  check(await page.locator(`[data-language="${id}"]`).getAttribute('aria-pressed')==='true',`${id} accessible selection`);
+ }
+ check(await page.evaluate(()=>document.fonts.check('16px Japanese','こんにちは')&&document.fonts.check('16px Mandarin','你好')),'Actual local CJK font subsets decode');
+ await page.locator('#preview-lesson').click();await page.locator('#say-hello').click();check((await page.locator('#conversation-status').textContent()).includes('other reply'),'Alternate greeting feedback');
+ await page.locator('#order-coffee').click();check(await page.locator('#conversation-reply').isVisible(),'Scripted coffee response appears');check((await page.locator('#conversation-reply').textContent()).includes('Here you are'),'Response translation appears');
+ await page.keyboard.press('Escape');check(!await page.locator('#dialog').isVisible(),'Native dialog escapes');await page.locator('[data-language=es]').click();
+ await page.locator('#watch-how').click();await page.locator('#walk-next').click();check(await page.locator('#walk-position').textContent()==='2 / 3','Walkthrough advances');
+ await page.locator('#walk-back').click();check(await page.locator('#walk-position').textContent()==='1 / 3','Walkthrough reverses');
+ await page.locator('#walk-play').click();check(await page.locator('#walk-play').textContent()==='Pause slides','Silent walkthrough plays');
+ await page.locator('#walk-play').click();check(await page.locator('#walk-play').textContent()==='Play slides','Silent walkthrough pauses');await page.keyboard.press('Escape');
+ await page.locator('[data-translation="0"]').click();check((await page.locator('#match-status').textContent()).includes('Spanish word first'),'Match game explains order');
+ await page.locator('[data-word="0"]').focus();await page.keyboard.press('Enter');await page.locator('[data-translation="2"]').click();check((await page.locator('#match-status').textContent()).includes('Not quite'),'Incorrect match feedback');
+ check(await page.locator('#match-count').textContent()==='0 / 4','Wrong answer does not progress');
+ for(let index=0;index<4;index++){await page.locator(`[data-word="${index}"]`).focus();await page.keyboard.press('Enter');await page.locator(`[data-translation="${index}"]`).focus();await page.keyboard.press('Space');}
+ check(await page.locator('#match-count').textContent()==='4 / 4','Keyboard completes all four pairs');check((await page.locator('#match-status').textContent()).includes('Lesson complete'),'Completion status announces sample XP');check(await page.locator('.matched:disabled').count()===8,'Completed choices cannot be replayed accidentally');
+ await page.locator('#reset-match').click();check(await page.locator('#match-count').textContent()==='0 / 4','Matching lesson restarts');
+ await page.locator('[data-feature="AI speech recognition"]').first().click();check((await page.locator('#dialog-content').textContent()).includes('No microphone permission'),'Speech concept avoids fabricated assessment');await page.keyboard.press('Escape');
+ await page.locator('[data-feature="Offline mode"]').click();const download=page.waitForEvent('download');await page.locator('dialog .download-link').click();check((await download).suggestedFilename()==='language-practice-sheet.txt','Original practice-sheet download');await page.keyboard.press('Escape');
+ await page.locator('#billing').click();check(await page.locator('#billing').getAttribute('aria-checked')==='true','Annual billing switch announced');
+ check((await page.locator('.price-card.pro .price').textContent()).includes('5.99'),'Pro monthly equivalent');
+ check((await page.locator('.price-card.pro .billed').textContent()).includes('71.93'),'Pro annual total rounds correctly');
+ check((await page.locator('.price-card[data-plan=Family] .price').textContent()).includes('8.99'),'Family monthly equivalent');
+ check((await page.locator('.price-card[data-plan=Family] .billed').textContent()).includes('107.93'),'Family annual total rounds correctly');
+ await page.locator('.price-card.pro button').click();check((await page.locator('#dialog-content').textContent()).includes('$71.93 per year'),'Trial preview reflects chosen billing');
+ await page.locator('#start-form button[type=submit]').click();check(await page.locator('#start-form').isVisible(),'Required acknowledgement prevents false signup');
+ await page.locator('#start-form [name=language]').selectOption('fr');await page.locator('#start-form [name=minutes]').selectOption('15');await page.locator('#start-form input').check();await page.locator('#start-form button[type=submit]').click();
+ check((await page.locator('#dialog-title').textContent()).includes('French'),'Local learning path uses chosen language');check((await page.locator('dialog [role=status]').textContent()).includes('Nothing was sent or saved'),'No real signup claimed');
+ await page.locator('#begin-conversation').click();check((await page.locator('#dialog-title').textContent()).includes('coffee'),'Learning path opens working conversation');await page.keyboard.press('Escape');
+ await page.locator('#billing').click();check((await page.locator('.price-card.pro .price').textContent()).includes('9.99'),'Monthly pricing restored');
+ await page.locator('#locale').selectOption('es');check(await page.locator('#navigation a[href="#languages"]').textContent()==='Idiomas','Spanish navigation preview');
+ await page.locator('#locale').selectOption('fr');check(await page.locator('#navigation a[href="#languages"]').textContent()==='Langues','French navigation preview');
+ check((await page.locator('#locale-note').textContent()).includes('rest of the page remains in English'),'Partial localization disclosed');await page.locator('#locale').selectOption('en');
+ await page.locator('#pause-press').click();check(await page.locator('#pause-press').getAttribute('aria-pressed')==='true','Press carousel pauses');await page.locator('#pause-press').click();check(await page.locator('#pause-press').getAttribute('aria-pressed')==='false','Press carousel resumes');
+ await page.locator('details summary').first().click();check(await page.locator('details').first().getAttribute('open')!==null,'Native FAQ expands');
+ await page.locator('footer [data-info=Privacy]').click();check((await page.locator('#dialog-content').textContent()).includes('No cookies'),'Privacy action opens actual information');await page.keyboard.press('Escape');
+ await page.reload({waitUntil:'networkidle'});await page.evaluate(()=>document.fonts.ready);check(await page.locator('[data-language=es]').getAttribute('aria-pressed')==='true','Learning selections reset on reload');
+ check(await page.evaluate(()=>Promise.all([...document.images].map(image=>image.decode().then(()=>image.naturalWidth>0)))).then(values=>values.every(Boolean)),'Every local image decodes');
+ for(const width of [1440,1024,768,390,320]){
+  await page.setViewportSize({width,height:1000});await page.evaluate(()=>scrollTo(0,0));
+  check(await page.evaluate(w=>innerWidth===w&&document.documentElement.scrollWidth<=w,width),`No expansion or overflow ${width}px`);
+  const undersized=await page.evaluate(()=>[...document.querySelectorAll('button,a,input,select,summary')].filter(el=>el.getClientRects().length&&getComputedStyle(el).visibility!=='hidden'&&!el.closest('dialog:not([open])')).map(el=>({el,box:(el.matches('input[type=checkbox]')?el.closest('label'):el).getBoundingClientRect()})).filter(({box})=>box.width<43.5||box.height<43.5).map(({el,box})=>`${el.outerHTML.slice(0,110)} ${box.width}x${box.height}`));
+  check(!undersized.length,`44px touch targets ${width}px: ${undersized.join('; ')}`);
+ }
+ await page.setViewportSize({width:390,height:844});await page.locator('.menu').click();check(await page.locator('.menu').getAttribute('aria-expanded')==='true','Mobile navigation opens');
+ await page.keyboard.press('Tab');check(await page.locator('#navigation a').first().evaluate(el=>document.activeElement===el),'Mobile menu traps forward focus');
+ await page.keyboard.press('Shift+Tab');check(await page.locator('.menu').evaluate(el=>document.activeElement===el),'Mobile menu traps reverse focus');await page.keyboard.press('Escape');check(await page.locator('.menu').getAttribute('aria-expanded')==='false','Mobile drawer escapes');
+ await page.locator('.menu').click();await page.locator('#navigation a[href="#languages"]').click();check(await page.locator('.menu').getAttribute('aria-expanded')==='false','Mobile selection closes drawer');
+ const order=await page.locator('.price-card').evaluateAll(cards=>cards.map(card=>({plan:card.dataset.plan,top:card.getBoundingClientRect().top})));check(order.find(p=>p.plan==='Pro').top<order.find(p=>p.plan==='Free').top,'Pro plan presented first on mobile');
+ await page.evaluate(()=>scrollTo(0,0));await page.screenshot({path:path.join(folder,'mobile.png')});await page.screenshot({path:path.join(folder,'mobile-full.png'),fullPage:true});
+ await page.setViewportSize({width:1440,height:1000});await page.evaluate(()=>scrollTo(0,0));await page.screenshot({path:path.join(folder,'desktop.png')});await page.screenshot({path:path.join(folder,'desktop-full.png'),fullPage:true});
+ check(!errors.length,`No JS or resource failures: ${errors}`);check(requests.every(r=>new URL(r.url).origin===new URL(server.url).origin),'No external runtime requests');check(requests.every(r=>r.method==='GET'),'No backend submissions');
+ check(await page.evaluate(()=>!localStorage.length&&!sessionStorage.length&&!document.cookie),'No persistence or cookies');
+ for(const name of ['index.html','style.css','app.js'])check((await fs.readFile(path.join(folder,name))).equals(await fs.readFile(path.join(exported,name))),`Source/export match: ${name}`);
+ for(const name of await fs.readdir(path.join(folder,'assets')))check((await fs.readFile(path.join(folder,'assets',name))).equals(await fs.readFile(path.join(exported,'assets',name))),`Asset bytes match: ${name}`);
+ await context.close();
+}finally{await browser.close();await server.close();}
+await generatePreview(exported,{workspace:root,timeoutMs:60000});
+const preview=await fs.readFile(path.join(exported,'preview.png'));await fs.writeFile(path.join(folder,'.generation-preview.sha256'),`${staticDigest} ${createHash('sha256').update(preview).digest('hex')}\n`);
+const report={passed:true,checks,staticDigest,visualReview:'pending',viewports:[1440,1024,768,390,320],nestedMount:'/pages/language-learning-app-landing-page/GPT-6/index.html',screenshots:['desktop.png','desktop-full.png','mobile.png','mobile-full.png','out/preview.png'],errors,date:new Date().toISOString()};
+await fs.writeFile(path.join(folder,'verification.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));

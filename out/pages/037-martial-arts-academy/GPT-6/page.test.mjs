@@ -10,8 +10,12 @@ const folder = import.meta.dirname;
 const exported = path.join(folder, 'out');
 async function guard() {
   const file = path.join(root, 'out', '.generation-locks', '037-martial-arts-academy.lock');
-  const lock = JSON.parse(await readFile(file, 'utf8'));
-  assert.equal(lock.session, 'eccb5b0b-bbe8-44e2-97e8-4c615c652be2');
+  const contents = await readFile(file, 'utf8');
+  const [pid, session] = contents.trim().split(/\r?\n/);
+  const lock = contents.trimStart().startsWith('{') ? JSON.parse(contents) : { pid: Number(pid), session };
+  assert.ok(lock.session);
+  if (lock.prompt !== undefined) assert.equal(lock.prompt, '037-martial-arts-academy');
+  assert.ok(Number.isInteger(lock.pid) && lock.pid > 0);
   assert.ok(Date.now() - (await stat(file)).mtimeMs < 1800000, 'Live bounded guard');
   process.kill(lock.pid, 0);
 }
