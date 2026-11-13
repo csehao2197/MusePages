@@ -1,0 +1,1 @@
+Design a SaaS dashboard for [product]. Include a sidebar, top bar, metric cards, chart area, data table, filters, command/search input, empty state, and settings preview. Use shadcn/ui components and a polished B2B SaaS visual style.

@@ -22,12 +22,15 @@ MusePages 收集由 AI 根据原始需求生成的网站首页。同一个 promp
 
 | 命令 | 用途 |
 | --- | --- |
+| `node src\tools\download-prompts.mjs` | 下载网站公开英文 prompt 和清单所关联 GitHub 仓库的需求文档 |
 | `npm run generate -- <ai model>` | 执行[页面生成工作流](#页面生成工作流) |
 | `npm run ai-generate -- <ai model>` | 执行[AI页面生成工作流](#ai页面生成工作流) |
 | `npm run dist` | 按发布选择执行[dist工作流](#dist工作流)，生成 `deploy\dist\MusePages` |
 | `npm run publish` | 将静态集合复制到 `deploy\site\MusePages` |
 
 `generate` 已实现，配置与限制见[模型与发布配置](#模型与发布配置)。`ai-generate` 仍是待实现接口；现有 `dist` 使用按 prompt 文件名分组的 version 2 配置执行完整本地汇集，兼容迁移旧版数组配置，生成每个 prompt 一个轮播面板，按配置顺序展示选中模型；增量处理和作品详情页尚待实现。
+
+下载器按内容去重并保留已有需求，将新输入追加到 `data\prompts` 和 `src\manifest.json`；原文快照与可取得的许可证保存于 `data\downloads`，覆盖与来源记录位于 `src\downloads\manifest.json`。加 `--resume` 可复用已完成的网站扫描和仓库快照，补充遗漏或失败项；报告记录不可访问来源和空文档。
 
 生成前，由管理员配置并启动模型服务，提供调用 URI、API 类型、认证方式和真实模型 ID。`<ai model>` 用于选择服务配置，不等于真实模型 ID；凭据仅从本地环境读取。脚本不管理模型服务器，也不能在服务不兼容时自动换模型。
 
@@ -187,7 +190,8 @@ AGENTS.md                           # Agent 执行规则
 config.json                         # 目标模型服务配置
 package.json                        # 共享依赖和 npm 入口
 data\
-  prompts\                          # 100 个原始需求及已有参考实现
+  prompts\                          # 编号需求及已有参考实现
+  downloads\                        # 下载原文快照与可取得的来源许可证
 src\
   gallery\                          # 集合页面模板
   workflows\
@@ -199,6 +203,7 @@ src\
     publish-site.mjs                # 清空并复制静态集合到站点目录
     ...                             # 示例生成与回归测试
   tools\                            # 历史示例验证等辅助工具
+  downloads\manifest.json           # 下载覆盖、来源映射与异常记录
   manifest.json                     # 原始需求来源、路径和 SHA-256
   GENERATION_PROGRESS.json          # 生成与验证进度
   BUILD_REPORT.json                 # 实际验证结果

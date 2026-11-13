@@ -1,0 +1,1 @@
+Build a responsive SaaS landing page for [product name], a tool that helps [audience] solve [problem]. Include a hero with a clear promise, social proof, 6 feature cards, how it works, pricing, testimonials, FAQ, and a final CTA. Use a clean startup design with strong whitespace, concise copy, and a modern component system.

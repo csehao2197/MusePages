@@ -1,0 +1,1 @@
+Build a landing page for [product] targeting [audience]. Include hero, problem section, benefits, feature grid, product screenshot placeholder, pricing, testimonials, FAQ, and final CTA. Use crisp copy, strong visual hierarchy, and Tailwind CSS.

@@ -1,0 +1,1 @@
+Act as a website strategist. Based on this business: [business], audience: [audience], and goal: [goal], recommend the best website type, required pages, homepage sections, and first prompt to generate the site in [AI tool].

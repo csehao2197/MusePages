@@ -1,0 +1,117 @@
+Create a luxury real estate showcase page for a high-end property listing at "The Meridian Penthouse" — a $4.2M penthouse in a major metropolitan skyline. The design should feel editorial, cinematic, and exclusive.
+
+1. HERO SECTION (full-viewport height)
+- Full-bleed hero image of the penthouse living room with floor-to-ceiling windows and city skyline at dusk
+- Minimal overlay text in light serif typography:
+  - "The Meridian Penthouse"
+  - "Crown Jewel of Downtown Living"
+- Price: "$4,200,000" in elegant type
+- Scroll-down arrow animation at bottom
+- Optional: slow Ken Burns zoom effect on the hero image
+
+2. KEY DETAILS BAR (sticky horizontal strip)
+- Property stats in a clean row:
+  - 4 Bedrooms | 3.5 Bathrooms | 3,800 sq ft | 42nd Floor | 2 Parking Spaces
+- "Schedule Private Viewing" button on the right side
+- Sticks to top of page on scroll (below nav)
+
+3. PROPERTY OVERVIEW (2-column layout)
+- Left: large photo of the open-concept kitchen/dining area
+- Right column content:
+  - Headline: "Unparalleled Urban Living"
+  - Description (3-4 sentences): "Perched on the 42nd floor of The Meridian, this full-floor penthouse offers 270-degree panoramic views of the city skyline, harbor, and mountains beyond. Designed by award-winning architect Elena Vasquez, every detail reflects meticulous craftsmanship — from the Italian marble floors to the custom walnut cabinetry. Floor-to-ceiling windows flood 3,800 sq ft of living space with natural light from sunrise to sunset."
+  - MLS #: 2026-MER-4201
+  - Listed by: "Alexandra Sterling, Sterling Luxury Group"
+  - Agent photo thumbnail + "Contact Agent" link
+
+4. PHOTO GALLERY (immersive grid)
+- 12-16 high-quality photos in a cinematic masonry grid
+- Rooms: living room (2 angles), kitchen, primary suite, primary bathroom with soaking tub, guest bedrooms, home office, wine cellar, private terrace (2 angles), building lobby, pool deck, gym
+- Lightbox on click with left/right navigation
+- Photo counter: "3 of 16"
+- Subtle fade-in animation as photos enter viewport
+
+5. FLOOR PLAN SECTION
+- Interactive floor plan image (high-res)
+- Room labels with dimensions:
+  - Primary Suite: 18' × 22'
+  - Living Room: 24' × 30'
+  - Kitchen: 16' × 20'
+  - Home Office: 12' × 14'
+  - Guest Bedroom 1: 14' × 16'
+  - Guest Bedroom 2: 12' × 14'
+  - Guest Bedroom 3: 12' × 12'
+- Total living area callout: 3,800 sq ft
+- "Download Floor Plan PDF" button
+
+6. FEATURES & FINISHES (3-column icon grid)
+- Kitchen: Sub-Zero refrigerator, Wolf range, Miele dishwasher, waterfall quartzite island
+- Bathrooms: Heated floors, rain shower, freestanding soaking tub, Toto fixtures
+- Living: Wide-plank European oak floors, 11-ft ceilings, gas fireplace, automated shades
+- Technology: Savant smart home system, integrated Sonos, keyless entry, EV charging
+- Outdoor: 600 sq ft private terrace, built-in BBQ, plunge pool, panoramic views
+- Security: 24/7 concierge, private elevator access, biometric entry, video intercom
+- Each feature group has a relevant icon and 4-5 bullet points
+
+7. BUILDING AMENITIES (horizontal scroll cards)
+- Infinity Pool & Spa (rooftop)
+- State-of-the-Art Fitness Center
+- Private Wine Storage
+- Residents' Lounge & Bar
+- Screening Room
+- Children's Playroom
+- Pet Spa & Dog Run
+- Valet Parking
+- Each card: photo, amenity name, brief description (1 sentence)
+
+8. NEIGHBORHOOD MAP & HIGHLIGHTS
+- Embedded interactive map centered on property location
+- Nearby highlights with walking/driving times:
+  - "Harbor Walk — 3 min walk"
+  - "Michelin-starred dining — 5 min walk"
+  - "Financial District — 8 min drive"
+  - "International Airport — 22 min drive"
+  - "Central Park — 10 min walk"
+- Walk Score: 96, Transit Score: 92, Bike Score: 88 (displayed as circular gauges)
+
+9. VIRTUAL TOUR EMBED
+- Embedded Matterport-style 3D tour placeholder (16:9 aspect ratio)
+- "Take the Virtual Tour" headline
+- Full-screen toggle button
+- Fallback: video walkthrough embed
+
+10. MORTGAGE ESTIMATE WIDGET
+- Simple calculator inline:
+  - Purchase price: $4,200,000 (pre-filled)
+  - Down payment: 20% ($840,000)
+  - Interest rate: 6.75%
+  - Loan term: 30 years
+  - Estimated monthly payment: ~$21,800/mo
+- "Get Pre-Approved" CTA button
+- Disclaimer: "Estimates for informational purposes only"
+
+11. SCHEDULE A VIEWING (form section)
+- Headline: "Experience This Property in Person"
+- Form fields: Full Name, Email, Phone, Preferred Date (date picker), Preferred Time (dropdown), Message (optional)
+- "Request Private Viewing" submit button
+- Agent info sidebar: Photo of Alexandra Sterling, phone, email, "Sterling Luxury Group" branding
+- Note: "All viewings are private and by appointment only"
+
+12. SIMILAR PROPERTIES (3-card row)
+- 3 comparable luxury listings with photo, price, beds/baths/sqft, address
+- Property 1: "$3,800,000 — 3 bed / 3 bath — 3,200 sq ft — The Apex, Unit 38A"
+- Property 2: "$4,500,000 — 4 bed / 4 bath — 4,100 sq ft — Harborview Tower, PH2"
+- Property 3: "$3,950,000 — 3 bed / 3.5 bath — 3,500 sq ft — One Park Place, Unit 52B"
+- "View All Luxury Listings" link
+
+13. FOOTER
+- Agent contact info repeated
+- Brokerage: "Sterling Luxury Group — Licensed in State of New York"
+- Fair Housing logo and Equal Opportunity disclaimer
+- MLS disclaimer text
+- Social links: Instagram, LinkedIn
+- Privacy Policy, Terms of Service
+
+Design: Editorial luxury aesthetic. Background: #FAFAF8 (warm white), cards: #FFFFFF, text: #1C1917, accent: #92764A (muted gold), secondary accent: #374151. Typography: Playfair Display for headings, Source Sans 3 for body. Thin 1px borders (#E5E2DB), large imagery with generous padding (80px sections). No rounded corners on images — sharp edges for editorial feel.
+
+Responsive: On mobile, details bar becomes collapsible, photo gallery switches to horizontal swipe carousel, floor plan is zoomable, feature grid becomes single column accordion, mortgage calculator stacks vertically. Floating "Schedule Viewing" button fixed at bottom on mobile.
