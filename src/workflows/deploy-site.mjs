@@ -320,7 +320,14 @@ async function copyStatic(source, destination) {
   }
 }
 
-function gallery(template, pages) {
+export function renderGallery(template, pages) {
+  const categories = [
+    ["portfolio", /portfolio|photograph|designer|architect|artist/i],
+    ["saas", /saas|software|dashboard|platform|subscription|cloud/i],
+    ["editorial", /editorial|blog|magazine|journal|newsletter|publication|author|writer/i],
+    ["developer", /developer|development|\bapi\b|documentation|programming|code|engineering|devops/i],
+  ];
+  const arrow = '<svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>';
   const prompts = new Map();
   for (const page of pages) {
     if (!prompts.has(page.prompt)) prompts.set(page.prompt, []);
@@ -333,22 +340,27 @@ function gallery(template, pages) {
       const preview = page.preview
         ? `<img src="${href}/preview.png" alt="Preview of ${title}" width="1200" height="900" loading="lazy">`
         : '<span class="preview-label">No preview provided</span>';
-      return `<div class="slide" role="group" aria-roledescription="slide" aria-label="${index + 1} of ${models.length}: ${escapeHtml(page.model)}"${index ? " hidden inert" : ""}>
-      <a class="preview" href="${href}/index.html" aria-label="Open ${title}" draggable="false">${preview}</a>
-      <div class="details"><h3><a href="${href}/index.html">${title}</a></h3>
-        <div class="tags">${page.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}<span class="tag model">Model: ${escapeHtml(page.model)}</span></div>
-        <div class="actions"><a class="open" href="${href}/index.html">View page &rarr;</a><a class="prompt" href="${href}/prompt.html">Read prompt &nearr;</a></div>
+      const topics = `${page.title} ${page.tags.join(" ")}`;
+      const groups = categories.filter(([, pattern]) => pattern.test(topics)).map(([name]) => name).join(" ");
+      return `<div class="slide" role="group" aria-roledescription="slide" aria-label="${index + 1} of ${models.length}: ${escapeHtml(page.model)}" data-tags="${escapeHtml(JSON.stringify(page.tags))}" data-categories="${groups}"${index ? " hidden inert" : ""}>
+      <a class="preview" href="${href}/index.html" aria-label="Open ${title}" draggable="false">${preview}<span class="preview-arrow">${arrow}</span></a>
+      <div class="details"><h3><a href="${href}/index.html" title="${title}">${title}</a></h3>
+        <div class="tags">${page.tags.slice(0, 2).map((tag) => `<button class="tag" type="button" data-tag="${escapeHtml(tag)}">${escapeHtml(tag)}</button>`).join("")}</div>
+        <div class="card-footer"><span class="model" aria-label="Model: ${escapeHtml(page.model)}" title="${escapeHtml(page.model)}">${escapeHtml(page.model)}</span><a class="prompt" href="${href}/prompt.html">View prompt ${arrow}</a></div>
       </div>
     </div>`;
     }).join("\n");
     const dots = models.map((page, index) =>
-      `<button class="dot" type="button" data-index="${index}" aria-label="Show model ${escapeHtml(page.model)}" aria-current="${index === 0}"><span></span></button>`).join("");
-    return `<article class="card" data-carousel role="region" aria-roledescription="carousel" aria-label="${escapeHtml(models[0].title)} model previews">
+      `<button class="dot" type="button" data-index="${index}" aria-label="Show model ${escapeHtml(page.model)}" title="${escapeHtml(page.model)}" aria-current="${index === 0}"><span></span></button>`).join("");
+    const sizing = models.length > 1
+      ? ` style="--carousel-width:${Math.min(models.length, 3) * 24}px;--carousel-height:${Math.ceil(models.length / 3) * 24}px"`
+      : "";
+    return `<article class="card" data-carousel role="region" aria-roledescription="carousel" aria-label="${escapeHtml(models[0].title)} model previews"${sizing}>
       <div class="slides">${slides}</div>
-      <div class="carousel-controls">
+${models.length > 1 ? `      <div class="carousel-controls">
         <div class="dots" role="group" aria-label="Choose model">${dots}</div>
-      </div>
-      <p class="carousel-status" role="status" aria-atomic="true">${escapeHtml(models[0].model)}</p>
+      </div>` : ""}
+      <p class="carousel-status sr-only" role="status" aria-atomic="true">${escapeHtml(models[0].model)}</p>
     </article>`;
   }).join("\n");
   const marker = "<!-- RESULT_CARDS -->";
@@ -521,7 +533,7 @@ export async function publishSite(workspace = root) {
         page.preview = await exists(path.join(destination, "preview.png"));
       }
       const template = await readFile(path.join(workspace, "src", "gallery", "index.html"), "utf8");
-      await writeFile(path.join(staging, "index.html"), gallery(template, selected), "utf8");
+      await writeFile(path.join(staging, "index.html"), renderGallery(template, selected), "utf8");
       if (config.siteUrl) {
         const base = siteBaseUrl(config.siteUrl);
         const urls = [base.href, ...selected.map((page) =>
