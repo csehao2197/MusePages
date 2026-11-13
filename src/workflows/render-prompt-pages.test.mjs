@@ -660,25 +660,35 @@ test("CLI arguments accept a leading prompt number while preserving existing mod
 test("numeric selection generates only the matching prompt and rejects missing or ambiguous numbers", async (t) => {
   const f = await fixture(t);
   const requests = await service(t, f.workspace);
+  const config = await readJson(path.join(f.workspace, "config.json"));
+  await save(path.join(f.workspace, "config.json"), {
+    version: 1, models: { "Qwen3.8": { ...config.models.local, directory: "qwen3.8" } },
+  });
   const selected = "003-selected";
   await save(path.join(f.workspace, "data", "prompts", selected, `${selected}.md`), "# Selected requirement\n");
   await save(path.join(f.workspace, "data", "prompts", "030-other", "030-other.md"), "# Unselected requirement\n");
-  const { selections, options } = parseArguments(["003", "local"]);
+  const { selections, options } = parseArguments(["003", "Qwen3.8"]);
   const report = await renderPromptPages(f.workspace, selections, f.options("success", options));
   assert.equal(report.summary.generated, 1, JSON.stringify(report));
   assert.deepEqual(report.items.map((item) => item.prompt), [selected]);
+  assert.equal(report.items[0].model, "Qwen3.8");
+  assert.equal(report.items[0].directory, "qwen3.8");
   assert.deepEqual(await readdir(path.join(f.workspace, "out", "pages")), [selected]);
   assert.equal(requests(), 1);
-  const invocation = await readJson(path.join(f.workspace, "out", "pages", selected, "model-a", ".invocation.json"));
+  const output = path.join(f.workspace, "out", "pages", selected, "qwen3.8");
+  const invocation = await readJson(path.join(output, ".invocation.json"));
+  assert.equal(invocation.args[invocation.args.indexOf("--model") + 1], modelId);
+  assert.notEqual(modelId, "Qwen3.8");
+  assert.equal((await readJson(path.join(output, "metadata.json"))).modelId, modelId);
   assert.ok(invocation.input.includes("# Selected requirement"));
   assert.ok(!invocation.input.includes("# Unselected requirement"));
   assert.ok(!invocation.input.includes("# Travel"));
   const before = await snapshot(f.workspace);
-  await assert.rejects(renderPromptPages(f.workspace, ["local"], { prompts: ["999"], check: true }), /Unknown prompt number/);
+  await assert.rejects(renderPromptPages(f.workspace, ["Qwen3.8"], { prompts: ["999"], check: true }), /Unknown prompt number/);
   assert.deepEqual(await snapshot(f.workspace), before);
   await save(path.join(f.workspace, "data", "prompts", "003-duplicate", "003-duplicate.md"), "# Duplicate number\n");
   const ambiguous = await snapshot(f.workspace);
-  await assert.rejects(renderPromptPages(f.workspace, ["local"], { prompts: ["3"], check: true }), /Ambiguous prompt number/);
+  await assert.rejects(renderPromptPages(f.workspace, ["Qwen3.8"], { prompts: ["3"], check: true }), /Ambiguous prompt number/);
   assert.deepEqual(await snapshot(f.workspace), ambiguous);
   assert.equal(requests(), 1);
 });

@@ -367,7 +367,7 @@ prompt 目录仅容纳模型结果目录。公开标题与 slug 保存在 `deplo
 }
 ```
 
-`local` 是命令行选择名，`modelId` 是请求的真实模型 ID，`directory` 是唯一、稳定的小写输出目录名；不能让多个配置占用同一目录。`baseUrl` 指向 OpenAI 兼容 API 根路径，必须使用 HTTPS，只有 loopback 地址允许 HTTP；不允许在 URL 中放认证信息、查询参数或 fragment。`apiKeyEnv` 只保存环境变量名，无认证的本地服务可以省略该字段。
+`local` 是命令行选择名，`modelId` 是请求的真实模型 ID，`directory` 是唯一、稳定的小写输出目录名；不能让多个配置占用同一目录。例如选择名 `Qwen3.8` 可使用目录 `qwen3.8`，Codex 的 `--model` 和服务身份检查使用配置中的 `modelId`（如 `qwen3.8-flash-next-iq3_s`）。`baseUrl` 指向 OpenAI 兼容 API 根路径，必须使用 HTTPS，只有 loopback 地址允许 HTTP；不允许在 URL 中放认证信息、查询参数或 fragment。`apiKeyEnv` 只保存环境变量名，无认证的本地服务可以省略该字段。
 
 当前只支持 Responses 接口，并要求同一 API 根路径下的 `GET /models` 返回 `data[].id`，且包含精确匹配的 `modelId`。仅在需要调用模型时连接服务并读取认证环境；覆盖检查和已有结果的补登记不需要在线服务或 Codex。配置不兼容、连接失败或模型未被列出时明确失败，不切换服务或模型。该检查证明服务声明提供该 ID，不独立证明服务内部使用的模型权重；Codex 事件若报告不同模型 ID，会拒绝结果。实际调用还需安装兼容的 Codex CLI；隔离测试不能代替真实服务联调。
 
