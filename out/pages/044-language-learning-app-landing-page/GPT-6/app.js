@@ -2,19 +2,19 @@ const $=(selector,root=document)=>root.querySelector(selector);
 const $$=(selector,root=document)=>[...root.querySelectorAll(selector)];
 const icon=name=>`<svg class="icon" aria-hidden="true"><use href="assets/icons.svg#${name}"/></svg>`;
 const languages=[
- {id:'es',name:'Spanish',lessons:240,learners:'48M',phrase:'Hola, ¿cómo estás?',translation:'Hello, how are you?',prompt:'¡Hola! ¿Qué te gustaría pedir?',answer:'Un café, por favor.',reply:'¡Claro! Aquí tienes tu café.',replyMeaning:'Of course! Here is your coffee.',greeting:'Hola',greetingMeaning:'Hello'},
- {id:'fr',name:'French',lessons:210,learners:'32M',phrase:'Bonjour, comment ça va ?',translation:'Hello, how are you?',prompt:'Bonjour ! Que souhaitez-vous ?',answer:'Un café, s’il vous plaît.',reply:'Bien sûr ! Voici votre café.',replyMeaning:'Of course! Here is your coffee.',greeting:'Bonjour',greetingMeaning:'Hello'},
- {id:'ja',name:'Japanese',lessons:180,learners:'18M',phrase:'こんにちは',translation:'Hello · konnichiwa',prompt:'ご注文は何ですか',answer:'コーヒーをください',reply:'どうぞ',replyMeaning:'Here you are.',greeting:'こんにちは',greetingMeaning:'Hello'},
- {id:'de',name:'German',lessons:195,learners:'22M',phrase:'Hallo, wie geht es dir?',translation:'Hello, how are you?',prompt:'Hallo! Was möchten Sie bestellen?',answer:'Einen Kaffee, bitte.',reply:'Gerne! Hier ist Ihr Kaffee.',replyMeaning:'Of course! Here is your coffee.',greeting:'Hallo',greetingMeaning:'Hello'},
- {id:'zh',name:'Mandarin',lessons:200,learners:'28M',phrase:'你好',translation:'Hello · nǐ hǎo',prompt:'你想点什么',answer:'请给我一杯咖啡',reply:'给你',replyMeaning:'Here you are.',greeting:'你好',greetingMeaning:'Hello'}
-];
+ {id:'es',name:'Spanish',lessons:240,learners:'48M',phrase:'Hello, how are you?'},
+ {id:'fr',name:'French',lessons:210,learners:'32M',phrase:'Hello, how are you?'},
+ {id:'ja',name:'Japanese',lessons:180,learners:'18M',phrase:'Good afternoon.'},
+ {id:'de',name:'German',lessons:195,learners:'22M',phrase:'Hello, how are you?'},
+ {id:'zh',name:'Mandarin',lessons:200,learners:'28M',phrase:'Hello there.'}
+].map(language=>({...language,translation:'English translation preview',prompt:'Hello! What would you like to order?',answer:'A coffee, please.',reply:'Here you are. Enjoy your coffee!',replyMeaning:'Scripted reply, not a pronunciation assessment.',greeting:'Hello',greetingMeaning:'A friendly greeting'}));
 let selectedLanguage='es',annual=false,walkTimer=null;
 function selectLanguage(id,scroll=false){
  selectedLanguage=id;const language=languages.find(l=>l.id===id);
  $('#language-cards').innerHTML=languages.map(l=>`<button class="language-card" data-language="${l.id}" aria-pressed="${l.id===id}"><img class="flag" src="assets/flag-${l.id}.svg" alt="">${l.id===id?`<span class="selected-check">${icon('check')}</span>`:''}<h3>${l.name}</h3><p>${l.lessons}+ sample lessons<span>${l.learners} sample learners</span></p></button>`).join('');
- $('#preview-flag').innerHTML=`<img src="assets/flag-${id}.svg" alt="">`;$('#preview-label').textContent=`YOUR FIRST ${language.name.toUpperCase()} MOMENT`;$('#preview-phrase').textContent=language.phrase;$('#preview-phrase').lang=id;$('#preview-translation').textContent=language.translation;
- $('.phone-label').textContent=`${language.name.toUpperCase()} · EVERYDAY MOMENTS`;$('.chat-bubble').textContent=language.prompt;$('.chat-bubble').lang=id;$('.chat-translation').textContent=language.name==='Japanese'?'What would you like to order?':language.name==='Mandarin'?'What would you like to order?':'Hello! What would you like to order?';
- $('#phone-answer').replaceChildren(document.createTextNode(language.answer+' '));$('#phone-answer').insertAdjacentHTML('beforeend',icon('arrow-right'));$('#phone-answer').lang=id;$('.phone-feedback').textContent='';$('#language-status').textContent=`${language.name} preview selected.`;
+ $('#preview-flag').innerHTML=`<img src="assets/flag-${id}.svg" alt="">`;$('#preview-label').textContent=`${language.name.toUpperCase()} LESSON · IN ENGLISH`;$('#preview-phrase').textContent=language.phrase;$('#preview-phrase').lang='en';$('#preview-translation').textContent=language.translation;
+ $('.phone-label').textContent=`${language.name.toUpperCase()} · ENGLISH TRANSLATION`;$('.chat-bubble').textContent=language.prompt;$('.chat-bubble').lang='en';$('.chat-translation').textContent=language.name==='Japanese'?'What would you like to order?':language.name==='Mandarin'?'What would you like to order?':'Hello! What would you like to order?';
+ $('#phone-answer').replaceChildren(document.createTextNode(language.answer+' '));$('#phone-answer').insertAdjacentHTML('beforeend',icon('arrow-right'));$('#phone-answer').lang='en';$('.phone-feedback').textContent='';$('#language-status').textContent=`${language.name} preview selected.`;
  if(scroll)$('#languages').scrollIntoView();
 }
 $('#language-cards').addEventListener('click',event=>{const button=event.target.closest('[data-language]');if(!button)return;const id=button.dataset.language;selectLanguage(id);$(`[data-language="${id}"]`).focus({preventScroll:true});});
@@ -28,8 +28,8 @@ dialog.addEventListener('close',()=>{stopWalk();content.innerHTML='';});
 dialog.addEventListener('click',event=>{if(event.target===dialog){const b=dialog.getBoundingClientRect();if(event.clientX<b.left||event.clientX>b.right||event.clientY<b.top||event.clientY>b.bottom)dialog.close();}});
 function showConversation(){
  const l=languages.find(l=>l.id===selectedLanguage);
- openDialog(`${heading(`${l.name.toUpperCase()} · SCRIPTED LOCAL PREVIEW`,'A coffee. A little confidence.')}<p>Fixed sample dialogue, not AI or speech recognition. Choose a reply to see its meaning. No audio, microphone or network service is used.</p><div class="scripted-chat"><p lang="${l.id}">${l.prompt}</p><p>What would you like to order?</p></div><div class="scripted-choices"><button class="button outline" id="order-coffee" lang="${l.id}">${l.answer}</button><button class="button outline" id="say-hello" lang="${l.id}">${l.greeting}</button></div><p role="status" id="conversation-status"></p><div id="conversation-reply" class="scripted-chat" hidden></div>`);
- $('#order-coffee').addEventListener('click',()=>{$('#conversation-status').textContent='“Coffee, please.” A polite way to place an order. This response is scripted, not assessed.';const reply=$('#conversation-reply');reply.hidden=false;reply.replaceChildren();const original=document.createElement('p');original.lang=l.id;original.textContent=l.reply;const translation=document.createElement('p');translation.textContent=l.replyMeaning;reply.append(original,translation);});
+ openDialog(`${heading(`${l.name.toUpperCase()} · SCRIPTED LOCAL PREVIEW`,'A coffee. A little confidence.')}<p>English translation of a fixed sample dialogue, not AI or speech recognition. Choose a reply to explore the conversation. No audio, microphone or network service is used.</p><div class="scripted-chat"><p lang="en">${l.prompt}</p><p>What would you like to order?</p></div><div class="scripted-choices"><button class="button outline" id="order-coffee" lang="en">${l.answer}</button><button class="button outline" id="say-hello" lang="en">${l.greeting}</button></div><p role="status" id="conversation-status"></p><div id="conversation-reply" class="scripted-chat" hidden></div>`);
+ $('#order-coffee').addEventListener('click',()=>{$('#conversation-status').textContent='“Coffee, please.” A polite way to place an order. This response is scripted, not assessed.';const reply=$('#conversation-reply');reply.hidden=false;reply.replaceChildren();const original=document.createElement('p');original.lang='en';original.textContent=l.reply;const translation=document.createElement('p');translation.textContent=l.replyMeaning;reply.append(original,translation);});
  $('#say-hello').addEventListener('click',()=>{$('#conversation-status').textContent='“Hello.” A friendly greeting. For the coffee order, try the other reply.';$('#conversation-reply').hidden=true;});
 }
 $('#preview-lesson').addEventListener('click',showConversation);
@@ -40,31 +40,31 @@ function showStart(plan='Free'){
  $('#start-form').addEventListener('submit',event=>{event.preventDefault();const form=event.currentTarget,language=languages.find(language=>language.id===form.elements.language.value),minutes=form.elements.minutes.value,goal=form.elements.goal.value;selectLanguage(language.id);openDialog(`${heading('YOUR LOCAL PATH PREVIEW',`A little ${language.name}, every day.`)}<p role="status">Your ${minutes}-minute practice idea is ready. Nothing was sent or saved; no account or trial was created.</p><p>Goal: ${goal}. The proposed Free plan is limited to five minutes a day; longer targets are ideas for the illustrative paid plans, not active access.</p><div class="dialog-actions"><button class="button primary" id="begin-conversation">Try the scripted conversation ${icon('arrow-right')}</button><a class="button outline" href="assets/practice-sheet.txt" download="language-practice-sheet.txt">Download practice sheet</a></div>`);$('#begin-conversation').addEventListener('click',showConversation);});
 }
 function showWalk(){
- const slides=[{icon:'messages-square',title:'Start with something you want to say.',text:'Choose a language and explore a fixed café conversation. The imagined app would adapt through AI; this static preview uses scripted choices.'},{icon:'sparkles',title:'Make room for a small win.',text:'Try four Spanish word matches, get immediate answer feedback and complete a local lesson. No leaderboard, account or stored streak is connected.'},{icon:'audio-lines',title:'Find your voice, at your pace.',text:'Pronunciation feedback is a planned feature, not a working accent assessment. This demo never asks for a microphone or records audio.'}];
+ const slides=[{icon:'messages-square',title:'Start with something you want to say.',text:'Choose a language and explore a fixed café conversation. The imagined app would adapt through AI; this static preview uses scripted choices.'},{icon:'sparkles',title:'Make room for a small win.',text:'Try four English word-and-meaning matches, get immediate answer feedback and complete a local lesson. No leaderboard, account or stored streak is connected.'},{icon:'audio-lines',title:'Find your voice, at your pace.',text:'Pronunciation feedback is a planned feature, not a working accent assessment. This demo never asks for a microphone or records audio.'}];
  openDialog(`${heading('SILENT INTERACTIVE WALKTHROUGH','A little look inside.')}<p>Three original visual slides, not a recorded product video.</p><div class="walkthrough"><div id="walk-icon"></div><h3 id="walk-title"></h3><p id="walk-text"></p></div><div class="walkthrough-controls"><button class="button outline" id="walk-back">Previous</button><button class="button outline" id="walk-play">Play slides</button><button class="button outline" id="walk-next">Next</button><span id="walk-position" role="status"></span></div>`);
  let index=0,playing=false;const paint=()=>{$('#walk-icon').innerHTML=icon(slides[index].icon);$('#walk-title').textContent=slides[index].title;$('#walk-text').textContent=slides[index].text;$('#walk-position').textContent=`${index+1} / ${slides.length}`;};
  $('#walk-back').addEventListener('click',()=>{index=(index+slides.length-1)%slides.length;paint();});$('#walk-next').addEventListener('click',()=>{index=(index+1)%slides.length;paint();});
  $('#walk-play').addEventListener('click',()=>{playing=!playing;$('#walk-play').textContent=playing?'Pause slides':'Play slides';if(playing)walkTimer=setInterval(()=>{index=(index+1)%slides.length;paint();},5000);else stopWalk();});paint();
 }
 $('#watch-how').addEventListener('click',showWalk);
-const pairs=[['Hola','Hello'],['Gracias','Thank You'],['Amigo','Friend'],['Libro','Book']];
+const pairs=[['Hello','A greeting'],['Thanks','Gratitude'],['Friend','A companion'],['Book','Something to read']];
 let selectedWord=null,matched=new Set();
 function renderMatch(){
- $('#source-words').innerHTML=pairs.map(([word],index)=>`<button data-word="${index}" aria-pressed="${selectedWord===index}" ${matched.has(index)?'disabled class="matched"':''} lang="es">${word}${matched.has(index)?' ✓':''}</button>`).join('');
+ $('#source-words').innerHTML=pairs.map(([word],index)=>`<button data-word="${index}" aria-pressed="${selectedWord===index}" ${matched.has(index)?'disabled class="matched"':''} lang="en">${word}${matched.has(index)?' ✓':''}</button>`).join('');
  $('#target-words').innerHTML=[2,0,3,1].map(index=>`<button data-translation="${index}" ${matched.has(index)?'disabled class="matched"':''}>${pairs[index][1]}${matched.has(index)?' ✓':''}</button>`).join('');
  $('#match-count').textContent=`${matched.size} / 4`;
 }
 $('#source-words').addEventListener('click',event=>{const button=event.target.closest('[data-word]');if(!button||button.disabled)return;selectedWord=Number(button.dataset.word);renderMatch();$(`[data-word="${selectedWord}"]`).focus();$('#match-status').textContent=`Now choose the English meaning of “${pairs[selectedWord][0]}”.`;});
 $('#target-words').addEventListener('click',event=>{
  const button=event.target.closest('[data-translation]');if(!button||button.disabled)return;
- if(selectedWord===null){$('#match-status').textContent='Choose a Spanish word first, then its English meaning.';return;}
+ if(selectedWord===null){$('#match-status').textContent='Choose a English word first, then its English meaning.';return;}
  if(selectedWord!==Number(button.dataset.translation)){$('#match-status').textContent='Not quite. Try another meaning — mistakes are part of practice.';return;}
  const completeWord=pairs[selectedWord][0];matched.add(selectedWord);selectedWord=null;renderMatch();
  $('#match-status').textContent=matched.size===4?'Four words, one little leap! +25 sample XP. Lesson complete in this tab.':`Nice! “${completeWord}” matched. Keep going.`;
  if(matched.size===4){$('#reset-match').focus({preventScroll:true});$('#confetti').innerHTML=Array.from({length:24},(_,index)=>`<i style="--x:${(index*37)%100}%;--color:${['#c4a0e8','#91d7e1','#e9c774','#c5dfac'][index%4]};--delay:${index%5*.05}s"></i>`).join('');setTimeout(()=>{$('#confetti').innerHTML='';},2100);}
  else $('#source-words button:not(:disabled)')?.focus({preventScroll:true});
 });
-$('#reset-match').addEventListener('click',()=>{selectedWord=null;matched.clear();renderMatch();$('#match-status').textContent='A fresh start. Choose a Spanish word first.';$('#confetti').innerHTML='';});
+$('#reset-match').addEventListener('click',()=>{selectedWord=null;matched.clear();renderMatch();$('#match-status').textContent='A fresh start. Choose a English word first.';$('#confetti').innerHTML='';});
 const features=[
  ['AI speech recognition','mic','Get a proposed pronunciation score with phoneme-level feedback.','Pronunciation scoring is a planned feature. The waveform and 92 score are illustrations, not measured audio. No microphone permission, recording, browser speech service or accent analysis is used.'],
  ['Adaptive difficulty','brain','Practice that could adapt around your strengths and mistakes.','A future app could select practice based on demonstrated skill and uncertainty. This demo checks the four exact vocabulary matches; it does not model proficiency or infer personal attributes.'],
@@ -87,22 +87,20 @@ function renderPricing(){
 }
 $('#billing').addEventListener('click',()=>{annual=!annual;$('#billing').setAttribute('aria-checked',String(annual));renderPricing();});
 const info={
- 'About LinguaLeap':'LinguaLeap is a fictional learning-app landing page with five scripted conversations, a local matching game and an illustrative pricing interface. The imagined product is not an operating learning platform, AI tutor, school or app-store listing.',
+ 'About LinguaLeap':'LinguaLeap is a fictional learning-app landing page with five English-translated scripted conversations, a local matching game and an illustrative pricing interface. The imagined product is not an operating learning platform, AI tutor, school or app-store listing.',
  'For schools':'This is a fictional schools offering. No classroom, student roster, child account, administrator dashboard, data processing agreement or actual school integration is provided.',
  'For business':'No business plan or enterprise service is available. The concept could support workplace language practice, but there are no live accounts, employee data integrations or contracts.',
  'Careers':'No roles are open. This fictional app has no recruiting service or verified employment opportunities.',
  'Press':'TechCrunch, WIRED, The Verge, Forbes and EdSurge are illustrative plain-text names, not verified coverage or endorsements. No official media logos are reproduced.',
  'Community':'There is no connected forum, public profile, direct messaging, leaderboard or live community. Matching-game progress stays only in this browser session.',
  'API docs':'No API endpoint, token or developer account exists. All lessons and feedback shown here are predefined local data.',
- 'Help center':'Choose a language to update the sample screen; try the four-word Spanish matching lesson; switch billing to compare illustrative prices. Start buttons open a local learning-path preview. Nothing creates a real account or subscription.',
+ 'Help center':'Choose a language to update the sample screen; try the four-word English matching lesson; switch billing to compare illustrative prices. Start buttons open a local learning-path preview. Nothing creates a real account or subscription.',
  'Privacy':'No cookies, local storage, analytics, backend, network form submissions or microphone requests are used. Selections, progress and form choices live only in memory and reset on reload. Static hosting may retain access logs.',
  'Terms':'All product capabilities, ratings, users, press references, reviews, progress and outcomes are fictional. No learning result, certification, AI service, subscription, renewal or refund arrangement is offered. Asset sources and licenses are listed separately.',
  'Blog':'Original short read: Make your next practice specific. Instead of “learn Spanish,” try “practice one polite café order.” Say it from memory, check a reliable pronunciation source, and return tomorrow. This is general educational editorial, not a measured outcome or fluency promise.'
 };
 function showInfo(title){openDialog(`${heading('FICTIONAL APP · CLEAR EXPECTATIONS',title)}<p>${info[title]||`There is no official ${title} account or app listing connected. This opens information instead of sending you to an unverified profile or store.`}</p>`);}
 document.addEventListener('click',event=>{const button=event.target.closest('button');if(!button)return;if(button.hasAttribute('data-start'))showStart(button.dataset.plan||'Free');else if(button.dataset.feature)showFeature(button.dataset.feature);else if(button.dataset.info)showInfo(button.dataset.info);else if(button.dataset.selectLanguage)selectLanguage(button.dataset.selectLanguage,true);});
-const labels={en:['How it works','Languages','Pricing','Blog','For schools','Start learning free'],es:['Cómo funciona','Idiomas','Precios','Blog','Para escuelas','Empieza gratis'],fr:['Fonctionnement','Langues','Tarifs','Blog','Pour les écoles','Commencer gratuitement']};
-$('#locale').addEventListener('change',event=>{const locale=event.target.value;$$('a,button:not(.menu)',$('#navigation')).forEach((el,index)=>{el.textContent=labels[locale][index];el.lang=locale;});$('.header-start').textContent=labels[locale][5];$('.header-start').lang=locale;$('#locale-note').textContent=`Navigation labels previewed in ${{en:'English',es:'Spanish',fr:'French'}[locale]}. The rest of the page remains in English.`;});
 const menu=$('.menu'),nav=$('#navigation');
 const menuHome=document.createElement('span');menuHome.hidden=true;menu.before(menuHome);
 function closeMenu(){nav.classList.remove('open');nav.removeAttribute('role');nav.removeAttribute('aria-modal');menuHome.after(menu);menu.setAttribute('aria-expanded','false');menu.setAttribute('aria-label','Open navigation');$('.nav-backdrop').hidden=true;}

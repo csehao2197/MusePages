@@ -16,13 +16,13 @@ try{
  check(response.status()===200,'Static landing page responds');check(new URL(server.url).pathname.includes('/pages/language-learning-app-landing-page/GPT-6/'),'True numberless nested mount');
  check(await page.evaluate(()=>document.fonts.check('16px Inter')&&document.fonts.check('40px Jakarta')),'Local UI fonts load');
  await page.locator('#phone-answer').click();check((await page.locator('.phone-feedback').textContent()).includes('Scripted feedback'),'Phone reply gives honest local feedback');
- for(const [id,phrase,answer]of [['fr','Bonjour','Un café'],['ja','こんにちは','コーヒー'],['de','Hallo','Einen Kaffee'],['zh','你好','请给我']]){
+ for(const [id,phrase,answer]of [['fr','Hello','A coffee'],['ja','Good afternoon','A coffee'],['de','Hello','A coffee'],['zh','Hello there','A coffee']]){
   await page.locator(`[data-language="${id}"]`).click();await page.evaluate(()=>document.fonts.ready);
   check((await page.locator('#preview-phrase').textContent()).includes(phrase),`${id} phrase selection`);
   check((await page.locator('#phone-answer').textContent()).includes(answer),`${id} matching phone screen`);
   check(await page.locator(`[data-language="${id}"]`).getAttribute('aria-pressed')==='true',`${id} accessible selection`);
  }
- check(await page.evaluate(()=>document.fonts.check('16px Japanese','こんにちは')&&document.fonts.check('16px Mandarin','你好')),'Actual local CJK font subsets decode');
+ check(await page.locator('[lang]:not([lang="en"])').count()===0,'All language previews use English text and annotations');
  await page.locator('#preview-lesson').click();await page.locator('#say-hello').click();check((await page.locator('#conversation-status').textContent()).includes('other reply'),'Alternate greeting feedback');
  await page.locator('#order-coffee').click();check(await page.locator('#conversation-reply').isVisible(),'Scripted coffee response appears');check((await page.locator('#conversation-reply').textContent()).includes('Here you are'),'Response translation appears');
  await page.keyboard.press('Escape');check(!await page.locator('#dialog').isVisible(),'Native dialog escapes');await page.locator('[data-language=es]').click();
@@ -30,7 +30,7 @@ try{
  await page.locator('#walk-back').click();check(await page.locator('#walk-position').textContent()==='1 / 3','Walkthrough reverses');
  await page.locator('#walk-play').click();check(await page.locator('#walk-play').textContent()==='Pause slides','Silent walkthrough plays');
  await page.locator('#walk-play').click();check(await page.locator('#walk-play').textContent()==='Play slides','Silent walkthrough pauses');await page.keyboard.press('Escape');
- await page.locator('[data-translation="0"]').click();check((await page.locator('#match-status').textContent()).includes('Spanish word first'),'Match game explains order');
+ await page.locator('[data-translation="0"]').click();check((await page.locator('#match-status').textContent()).includes('English word first'),'Match game explains order');
  await page.locator('[data-word="0"]').focus();await page.keyboard.press('Enter');await page.locator('[data-translation="2"]').click();check((await page.locator('#match-status').textContent()).includes('Not quite'),'Incorrect match feedback');
  check(await page.locator('#match-count').textContent()==='0 / 4','Wrong answer does not progress');
  for(let index=0;index<4;index++){await page.locator(`[data-word="${index}"]`).focus();await page.keyboard.press('Enter');await page.locator(`[data-translation="${index}"]`).focus();await page.keyboard.press('Space');}
@@ -49,9 +49,8 @@ try{
  check((await page.locator('#dialog-title').textContent()).includes('French'),'Local learning path uses chosen language');check((await page.locator('dialog [role=status]').textContent()).includes('Nothing was sent or saved'),'No real signup claimed');
  await page.locator('#begin-conversation').click();check((await page.locator('#dialog-title').textContent()).includes('coffee'),'Learning path opens working conversation');await page.keyboard.press('Escape');
  await page.locator('#billing').click();check((await page.locator('.price-card.pro .price').textContent()).includes('9.99'),'Monthly pricing restored');
- await page.locator('#locale').selectOption('es');check(await page.locator('#navigation a[href="#languages"]').textContent()==='Idiomas','Spanish navigation preview');
- await page.locator('#locale').selectOption('fr');check(await page.locator('#navigation a[href="#languages"]').textContent()==='Langues','French navigation preview');
- check((await page.locator('#locale-note').textContent()).includes('rest of the page remains in English'),'Partial localization disclosed');await page.locator('#locale').selectOption('en');
+ check(await page.locator('#locale').count()===0,'Non-English interface language options are removed');
+ check((await page.locator('#locale-note').textContent()).includes('presented in English'),'English-only previews disclosed');
  await page.locator('#pause-press').click();check(await page.locator('#pause-press').getAttribute('aria-pressed')==='true','Press carousel pauses');await page.locator('#pause-press').click();check(await page.locator('#pause-press').getAttribute('aria-pressed')==='false','Press carousel resumes');
  await page.locator('details summary').first().click();check(await page.locator('details').first().getAttribute('open')!==null,'Native FAQ expands');
  await page.locator('footer [data-info=Privacy]').click();check((await page.locator('#dialog-content').textContent()).includes('No cookies'),'Privacy action opens actual information');await page.keyboard.press('Escape');

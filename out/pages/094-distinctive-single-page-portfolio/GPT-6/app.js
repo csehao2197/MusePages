@@ -41,7 +41,6 @@ function renderLocale(){
   document.documentElement.lang=locale;
   document.querySelectorAll("[data-text]").forEach((element)=>element.textContent=text(element.dataset.text));
   document.querySelectorAll("[data-label]").forEach((element)=>element.setAttribute("aria-label",text(element.dataset.label)));
-  document.querySelectorAll("[data-language]").forEach((button)=>button.setAttribute("aria-pressed",String(button.dataset.language===locale)));
   $("summary").textContent=text("summary");
   $("project-search").placeholder=text("search");$("project-search").setAttribute("aria-label",text("search"));
   $("categories").setAttribute("aria-label",text("projects"));
@@ -49,7 +48,7 @@ function renderLocale(){
   $("geometry").setAttribute("aria-label",text("object"));
   $("rotate-object").setAttribute("aria-label",text("rotate"));$("reset-object").setAttribute("aria-label",text("reset"));
   $("shuffle-quote").setAttribute("aria-label",text("shuffle"));
-  document.querySelector(".back-top").setAttribute("aria-label",locale==="id"?"Kembali ke atas":"Back to top");
+  document.querySelector(".back-top").setAttribute("aria-label","Back to top");
   $("quote").textContent=text("quotes")[quoteIndex];
   $("draft-error").textContent="";
   renderMode();renderProjects();renderSheet();
@@ -59,10 +58,6 @@ let geometry;
 try{geometry=createGeometry($("geometry"),(live)=>{geometryLive=live;renderMode();});}catch{geometryLive=false;renderMode();}
 document.addEventListener("click",async(event)=>{
   const target=event.target.closest("button");if(!target)return;
-  if(target.dataset.language){
-    const next=language(target.dataset.language);if(next===locale)return;
-    locale=next;const url=new URL(location.href);url.searchParams.set("lang",locale);history.pushState(null,"",url);renderLocale();
-  }
   if(target.dataset.category){category=target.dataset.category;renderProjects();}
   if(target.id==="show-all"){expanded=!expanded;renderProjects();if(!expanded)$("projects").scrollIntoView();}
   if(target.id==="clear-filters"){category="all";$("project-search").value="";expanded=false;renderProjects();}

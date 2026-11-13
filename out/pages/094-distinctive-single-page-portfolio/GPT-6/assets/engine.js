@@ -1,7 +1,7 @@
 import {projects,dictionaries} from "./content.js";
 export const categories=["all","saas","civic","campus","academic","personal"];
-export const language=(value)=>value==="id"?"id":"en";
-export const description=(project,locale)=>language(locale)==="id"?project.idText:project.en;
+export const language=()=>"en";
+export const description=project=>project.en;
 const normalize=(value)=>String(value??"").normalize("NFKC").toLocaleLowerCase("en").trim();
 export function filterProjects(query="",category="all",locale="en"){
   const words=normalize(query).split(/\s+/).filter(Boolean);
@@ -21,6 +21,5 @@ export function nextQuote(current,random,count=4){
 export function messageDraft(subject,message,locale="en"){
   const title=String(subject??"").trim(),body=String(message??"").trim();
   if(title.length<2||title.length>100||body.length<10||body.length>2000||/[\r\n\x00-\x1f\x7f]/.test(title)||/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/.test(body))throw new Error("Invalid draft");
-  const id=language(locale)==="id";
-  return `${id?"DRAF LOKAL BELUM TERKIRIM":"UNSENT LOCAL DRAFT"}\n${id?"Penerima: belum ditentukan":"Recipient: not configured"}\n${id?"Tidak ada pesan yang dikirim.":"Nothing has been sent."}\n\n${id?"Subjek":"Subject"}: ${title}\n\n${body}\n`;
+  return `UNSENT LOCAL DRAFT\nRecipient: not configured\nNothing has been sent.\n\nSubject: ${title}\n\n${body}\n`;
 }

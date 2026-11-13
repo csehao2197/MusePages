@@ -8,7 +8,7 @@ const tutors = [
 const subjects = [
   ["∑", "Mathematics", "Algebra, Calculus, Statistics, Geometry", "2,400", 25, "Math"],
   ["</>", "Programming", "Python, JavaScript, Java, C++", "1,800", 30, "Python"],
-  ["文", "Languages", "Spanish, French, Mandarin, Japanese", "3,200", 20, "Spanish"],
+  ["Aa", "Languages", "Spanish, French, Mandarin, Japanese", "3,200", 20, "Spanish"],
   ["A+", "Test prep", "SAT, ACT, GRE, GMAT, IELTS", "1,500", 35, "SAT"],
   ["⌬", "Sciences", "Physics, Chemistry, Biology", "1,600", 28, "Science"],
   ["Aa", "Writing", "Essays, Creative Writing, Grammar", "900", 22, "Writing"],

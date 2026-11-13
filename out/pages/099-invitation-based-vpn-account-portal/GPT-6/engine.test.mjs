@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {DAY,initial,register,login,addDevice,regenerate,disableUser,inviteCode,resetPassword,sampleText,reference} from "./assets/engine.js";
 import {qrMatrix} from "./assets/qr.js";
-import {en,fa} from "./assets/i18n.js";
+import {en} from "./assets/i18n.js";
 const password="Demo-pass-42!",now=1800000000000;
 test("invitations expire at exactly 30 days and redeem only once, including concurrent submissions",async()=>{
   const state=await initial(now),created=inviteCode(state,now);assert.equal(created.code.length,8);assert.equal(created.expires-now,30*DAY);
@@ -34,7 +34,7 @@ test("reference QR yields exact byte payload and zero Reed-Solomon syndromes",()
   }
   assert.throws(()=>qrMatrix("DEMO:a11ce001:1000xx"),/capacity/);
 });
-test("all interface, errors and five six-step platform guides have Farsi translations",()=>{
-  assert.deepEqual(Object.keys(en).sort(),Object.keys(fa).sort());for(const [key,value] of Object.entries(en))if(typeof value==="string")assert.ok(typeof fa[key]==="string"&&fa[key].trim()&&/[آ-ی]/.test(fa[key]),key);
-  for(const p of ["windows","macos","ios","android","linux"]){assert.equal(en.steps[p].length,6);assert.equal(fa.steps[p].length,6);}
+test("all interface, errors and five six-step platform guides remain English-only",()=>{
+  for(const [key,value] of Object.entries(en))if(typeof value==="string")assert.ok(value.trim()&&!/\p{Script=Arabic}/u.test(value),key);
+  for(const p of ["windows","macos","ios","android","linux"]){assert.equal(en.steps[p].length,6);for(const step of en.steps[p])assert.ok(step.trim()&&!/\p{Script=Arabic}/u.test(step));}
 });

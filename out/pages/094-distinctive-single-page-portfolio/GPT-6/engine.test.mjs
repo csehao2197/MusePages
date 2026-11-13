@@ -2,18 +2,18 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {projects,dictionaries} from "./assets/content.js";
 import {language,description,filterProjects,projectFromHash,sheetIndex,nextQuote,messageDraft} from "./assets/engine.js";
-test("Project filters intersect multilingual full-text tokens and categories without regex evaluation",()=>{
+test("Project filters intersect English full-text tokens and categories without regex evaluation",()=>{
   assert.equal(filterProjects("chat NEXT.JS","saas").length,1);
   assert.equal(filterProjects("Laravel","civic").length,2);
   assert.equal(filterProjects("Laravel","campus").length,0);
-  assert.equal(filterProjects("pembelajaran","academic","id")[0].id,"its");
+  assert.equal(filterProjects("adaptive","academic","id")[0].id,"its");
   assert.equal(filterProjects("[.*").length,0);
   assert.equal(filterProjects("Ｎｅｘｔ.js","personal").length,1);
 });
-test("Language fallback and localized descriptions retain complete parallel UI dictionaries",()=>{
-  assert.equal(language("ID"),"en");assert.equal(language("id"),"id");
-  assert.notEqual(description(projects[0],"id"),description(projects[0],"en"));
-  assert.deepEqual(Object.keys(dictionaries.en).sort(),Object.keys(dictionaries.id).sort());
+test("Legacy language choices retain English descriptions and the English-only dictionary",()=>{
+  assert.equal(language("ID"),"en");assert.equal(language("id"),"en");
+  assert.equal(description(projects[0],"id"),description(projects[0],"en"));
+  assert.deepEqual(Object.keys(dictionaries),["en"]);
 });
 test("Deep links use only exact known project identities and reject malformed encoded input",()=>{
   assert.equal(projectFromHash("#project-chatrigo").id,"chatrigo");
@@ -34,6 +34,6 @@ test("Unsent drafts validate content and reject header/control injection while p
   const draft=messageDraft("  Project conversation  ","Hello Dzaky,\nI'd like to discuss the supplied portfolio.");
   assert.match(draft,/UNSENT LOCAL DRAFT/);assert.match(draft,/Recipient: not configured/);
   assert.match(draft,/Hello Dzaky,\nI'd/);assert.ok(!draft.includes("  Project"));
-  assert.match(messageDraft("Diskusi","Mari berdiskusi tentang proyek ini.","id"),/DRAF LOKAL BELUM TERKIRIM/);
+  assert.match(messageDraft("Discussion","Let us discuss this project.","id"),/UNSENT LOCAL DRAFT/);
   for(const [subject,body]of [["x","long enough message"],["bad\nheader","long enough message"],["Valid","short"],["Valid","a".repeat(2001)],["Valid","message\u0000 body"]])assert.throws(()=>messageDraft(subject,body));
 });
