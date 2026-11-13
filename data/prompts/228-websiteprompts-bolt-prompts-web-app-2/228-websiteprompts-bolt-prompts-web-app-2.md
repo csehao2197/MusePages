@@ -1,1 +1,0 @@
-Create an ecommerce website for [product category]. Include homepage, category grid, product cards, product detail page, cart drawer, checkout mockup, reviews, trust badges, and responsive navigation. Use clean product photography placeholders and conversion-focused copy.

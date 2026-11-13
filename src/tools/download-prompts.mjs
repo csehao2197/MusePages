@@ -12,6 +12,50 @@ export const normalize = (text) => text.replace(/^\uFEFF/, "").replace(/\r\n?/g,
 const portable = (value) => value.replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "").toLowerCase();
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+export function promptBaseSlug(source, manifest, text = "") {
+  const url = new URL(source.source_url);
+  if (["websiteprompts.com", "websiteprompts.ai"].includes(url.hostname)) {
+    const detail = url.hostname === "websiteprompts.com" ? /^\/prompts\/[^/]+\/[^/]+\/?$/ : /^\/prompts\/[^/]+\/?$/;
+    const topic = detail.test(url.pathname) ? url.pathname.split("/").filter(Boolean).at(-1) : source.title;
+    return portable((topic ?? "").replace(/-website-prompt$/, ""));
+  }
+  if (url.hostname === "github.com") {
+    const parts = url.pathname.slice(1).split("/");
+    const repository = parts.slice(0, 2).join("/").toLowerCase();
+    const original = manifest.find((entry) => entry.id <= 100
+      && new URL(entry.source_url).hostname === "github.com"
+      && new URL(entry.source_url).pathname.slice(1).split("/").slice(0, 2).join("/").toLowerCase() === repository);
+    const project = original
+      ? path.win32.basename(original.filename, ".md").replace(/^\d+-/, "")
+      : portable(parts[1]);
+    const upstream = source.upstream_path ?? parts.slice(4).map(decodeURIComponent).join("/");
+    let document = path.posix.basename(upstream).replace(/\.[^.]+$/, "");
+    if (/^\d{10,}-/.test(document)) document = text.match(/^#\s+(.+)$/m)?.[1] ?? document.replace(/^\d+-/, "");
+    document = portable(document.replace(/^\d{4}-\d{2}-\d{2}-/, ""))
+      .replace(/^example-prd$/, "example-requirements")
+      .replace(/^prd$/, "requirements")
+      .replace(/^spec$/, "specification")
+      .replace(/^spec-(.+)$/, "$1-specification")
+      .replace(/^dev-plan$/, "development-plan");
+    return `${project}-${document}`;
+  }
+  return portable(source.slug || source.title);
+}
+
+export function uniquePromptSlug(source, manifest, text) {
+  const base = promptBaseSlug(source, manifest, text);
+  assert.ok(base, `Prompt topic is missing: ${source.source_url}`);
+  const used = new Set(manifest.map((entry) => path.win32.basename(entry.filename, ".md").replace(/^\d+-/, "").toLowerCase()));
+  if (!used.has(base)) return base;
+  const brand = text.match(/\bcalled\s+["\u201c]([^"\u201d]+)["\u201d]/i)?.[1]
+    ?? text.match(/\bfor\s+\*\*([^*]+)\*\*/i)?.[1]
+    ?? text.match(/^#\s+(.+?)(?:\s+[\u2014\u2013]\s+|:\s+)/m)?.[1];
+  const qualifier = brand ? portable(brand) : "";
+  const variant = `${base}-${qualifier}`;
+  assert.ok(qualifier && !used.has(variant), `Prompt name collision needs a semantic qualifier: ${base}`);
+  return variant;
+}
+
 export function extractPrompts(html, decode) {
   const found = [];
   for (const match of html.matchAll(/<(?:button|a|div)\b(?:"[^"]*"|'[^']*'|[^'">])*>/gi)) {
@@ -27,6 +71,29 @@ export function extractPrompts(html, decode) {
     }
   }
   return found.filter((item, index) => found.findIndex((other) => other.text === item.text) === index);
+}
+
+export function extractFramerPrompts(html, decode) {
+  const found = [];
+  for (const tag of html.matchAll(/<a\b(?:"[^"]*"|'[^']*'|[^'">])*>/gi)) {
+    const attr = tag[0].match(/\bhref\s*=\s*(?:"([^"]*)"|'([^']*)')/i);
+    if (!attr) continue;
+    const href = decode(attr[1] ?? attr[2]);
+    const position = href.indexOf("#prompt=");
+    if (position === -1) continue;
+    const text = normalize(decodeURIComponent(href.slice(position + 8)));
+    if (text && !found.some((item) => item.text === text)) found.push({ text });
+  }
+  return found;
+}
+
+export function framerPromptUrls(xml, index) {
+  const locations = [...xml.matchAll(/<loc>(.*?)<\/loc>/gs)].map((match) => match[1]);
+  return [...new Set([...locations, ...Object.keys(index)].map((value) => {
+    const url = new URL(value, "https://websiteprompts.ai");
+    if (url.origin !== "https://websiteprompts.ai" || !/^\/prompts\/[^/]+\/?$/.test(url.pathname)) return null;
+    return url.origin + url.pathname.replace(/\/$/, "");
+  }).filter(Boolean))].sort();
 }
 
 export function isRequirement(file, originalFiles = []) {
@@ -70,8 +137,9 @@ async function keepFile(file, data) {
 }
 
 async function main() {
+  const aiWebsite = process.argv.includes("--source=websiteprompts.ai");
   const manifestFile = path.join(root, "src", "manifest.json");
-  const reportFile = path.join(root, "src", "downloads", "manifest.json");
+  const reportFile = path.join(root, "src", "downloads", aiWebsite ? "websiteprompts-ai.json" : "manifest.json");
   const manifestData = await readFile(manifestFile);
   let manifestHash = digest(manifestData);
   const original = JSON.parse(manifestData.toString("utf8"));
@@ -89,7 +157,8 @@ async function main() {
   const resume = process.argv.includes("--resume");
   const report = resume ? JSON.parse(await readFile(reportFile, "utf8")) : {
     started_at_utc: new Date().toISOString(),
-    scope: "All public English copy-ready website prompts, plus requirement/prompt files in manifest-linked GitHub repositories at their current default-branch revision.",
+    scope: aiWebsite ? "All public full website prompts on websiteprompts.ai, discovered through its sitemap and public search index."
+      : "All public English copy-ready website prompts, plus requirement/prompt files in manifest-linked GitHub repositories at their current default-branch revision.",
     selection: "GitHub PRD/SRS/spec/requirements/prompt/brief/design/plan/roadmap/todo documents, prompt/spec/plan directories, and explicitly listed originals. Dependency lists, reusable agent skills, translated website duplicates and interactive generator combinations are excluded.",
     rights: "Original authors retain their rights. Source URLs and available repository licenses are recorded; public access alone does not grant republication or commercial rights.",
     website: { pages: [], prompts: [] },
@@ -113,11 +182,13 @@ async function main() {
   const lastRequest = new Map();
   async function get(url, attempt = 0) {
     const host = new URL(url).hostname;
-    assert.ok(["websiteprompts.com", "api.github.com", "raw.githubusercontent.com"].includes(host));
+    const allowed = aiWebsite ? ["websiteprompts.ai", "framerusercontent.com"]
+      : ["websiteprompts.com", "api.github.com", "raw.githubusercontent.com"];
+    assert.ok(allowed.includes(host));
     await delay(Math.max(0, 1100 - (Date.now() - (lastRequest.get(host) ?? 0))));
     lastRequest.set(host, Date.now());
     const response = await fetch(url, { headers: { "User-Agent": agent }, signal: AbortSignal.timeout(60000) });
-    assert.ok(["websiteprompts.com", "api.github.com", "raw.githubusercontent.com"].includes(new URL(response.url).hostname));
+    assert.ok(allowed.includes(new URL(response.url).hostname));
     if (!response.ok) {
       const error = new Error(`HTTP ${response.status}: ${url}`);
       error.status = response.status;
@@ -150,9 +221,7 @@ async function main() {
       const reused = Boolean(entry);
       if (!entry) {
         const id = Math.max(...manifest.map((item) => item.id)) + 1;
-        const base = portable(source.slug).slice(0, 110) || "website-prompt";
-        let slug = base;
-        if (slugs.has(slug)) slug = `${base}-${hash.slice(0, 10).toLowerCase()}`;
+        const slug = uniquePromptSlug(source, manifest, text);
         assert.ok(!slugs.has(slug), `Prompt slug collision: ${slug}`);
         const name = `${String(id).padStart(3, "0")}-${slug}`;
         const filename = path.join(name, `${name}.md`);
@@ -234,6 +303,60 @@ async function main() {
       if ((index + 1) % 20 === 0 || index === remaining.length - 1) {
         await atomicJson(reportFile, report);
         console.log(`Website: ${report.website.pages.length}/${pages.length} pages scanned, ${report.website.prompts.length} prompt copies.`);
+      }
+    }
+  }
+  async function websiteAi() {
+    const origin = "https://websiteprompts.ai";
+    const robots = (await get(`${origin}/robots.txt`)).toString("utf8");
+    assert.match(robots, /Allow:\s*\/(?:\s|$)/);
+    const sitemapUrl = robots.match(/^Sitemap:\s*(\S+)/m)?.[1];
+    assert.ok(sitemapUrl, "robots.txt must provide a sitemap");
+    const xml = (await get(sitemapUrl)).toString("utf8");
+    const home = (await get(origin + "/")).toString("utf8");
+    const searchUrl = home.match(/<meta\b[^>]*name="framer-search-index"[^>]*content="([^"]+)"/i)?.[1];
+    assert.ok(searchUrl, "Public search index must be linked from the homepage");
+    const index = JSON.parse((await get(decode(searchUrl))).toString("utf8"));
+    const pages = framerPromptUrls(xml, index);
+    assert.ok(pages.length, "Prompt catalog is empty");
+    report.website.sitemaps = [sitemapUrl];
+    report.website.search_index = searchUrl;
+    report.website.sitemap_prompt_pages = framerPromptUrls(xml, {});
+    report.website.search_index_prompt_pages = framerPromptUrls("", index);
+    report.website.discovered_pages = pages.length;
+    report.website.library_pages = pages.length;
+    report.rights = {
+      source_url: origin + "/",
+      statement: "Every prompt on websiteprompts.ai is completely free. Copy and use them as many times as you like, for personal or commercial projects.",
+      attribution: "websiteprompts.ai, built by Adam Sebesta. Original authors retain their rights.",
+    };
+    const remaining = pendingWebsitePages(pages, report.website.pages);
+    for (const [index, url] of remaining.entries()) {
+      report.website.pages = report.website.pages.filter((page) => page.url !== url);
+      report.website.prompts = report.website.prompts.filter((prompt) => prompt.fetch_url !== url);
+      report.failures = report.failures.filter((failure) => failure.source !== url);
+      try {
+        const html = (await get(url)).toString("utf8");
+        const items = extractFramerPrompts(html, decode);
+        assert.ok(items.length, `No full prompt extracted: ${url}`);
+        const title = decode(html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1]?.replace(/<[^>]*>/g, "") ?? new URL(url).pathname).trim();
+        for (const [position, item] of items.entries()) {
+          report.website.prompts.push(await savePrompt({
+            host: "websiteprompts.ai",
+            title: items.length > 1 ? `${title} - prompt ${position + 1}` : title,
+            slug: `websiteprompts-ai-${new URL(url).pathname.split("/").filter(Boolean).at(-1)}${items.length > 1 ? `-${position + 1}` : ""}`,
+            source_url: items.length > 1 ? `${url}#prompt-${position + 1}` : url,
+            fetch_url: url, source_kind: "native Markdown website prompt",
+          }, Buffer.from(item.text + "\n")));
+        }
+        report.website.pages.push({ url, status: "downloaded", prompts: items.length });
+      } catch (error) {
+        report.website.pages.push({ url, status: "failed", error: error.message });
+        report.failures.push({ source: url, error: error.message });
+      }
+      if ((index + 1) % 20 === 0 || index === remaining.length - 1) {
+        await atomicJson(reportFile, report);
+        console.log(`Websiteprompts.ai: ${report.website.pages.length}/${pages.length} pages scanned.`);
       }
     }
   }
@@ -344,7 +467,8 @@ async function main() {
       console.log(`GitHub: ${repositoryIndex}/${repos.size} ${repo}: ${record.status}, ${record.prompts.length} documents.`);
     }
   }
-  await Promise.all([website(), github()]);
+  if (aiWebsite) await websiteAi();
+  else await Promise.all([website(), github()]);
   await pending;
   assert.deepEqual(manifest.slice(0, original.length), original);
   for (const [file, hash] of originalHashes) assert.equal(digest(await readFile(file)), hash, `Original input changed: ${file}`);
@@ -354,6 +478,7 @@ async function main() {
   const records = [...report.website.prompts, ...report.github.flatMap((repo) => repo.prompts)];
   for (const entry of records) {
     assert.equal(digest(await readFile(path.join(root, entry.archive))), entry.sha256);
+    if (entry.active === false) continue;
     const prompt = await readFile(path.join(root, "data", "prompts", entry.prompt_filename), "utf8");
     assert.equal(digest(normalize(prompt)), digest(normalize((await readFile(path.join(root, entry.archive))).toString("utf8"))));
   }
@@ -367,10 +492,13 @@ async function main() {
     github_documents: report.github.reduce((count, repo) => count + repo.prompts.length, 0),
     new_prompt_files: report.added.length,
     total_prompt_files: manifest.length,
+    removed_prompt_files: report.removed_prompts?.length ?? 0,
     original_inputs_preserved: true,
     failures: report.failures.length,
   };
-  report.selection = "GitHub PRD/SRS/spec/requirements/prompt/brief/design/plan/roadmap/todo documents, prompt/spec/plan directories, and explicitly listed originals. Dependency lists, reusable agent skills, translated website duplicates and interactive generator combinations are excluded.";
+  report.selection = aiWebsite
+    ? "Full Markdown from each public detail page's encoded prompt link; sitemap and public search-index catalogs are reconciled. Outbound AI-builder links are decoded locally and never opened."
+    : "GitHub PRD/SRS/spec/requirements/prompt/brief/design/plan/roadmap/todo documents, prompt/spec/plan directories, and explicitly listed originals. Dependency lists, reusable agent skills, translated website duplicates and interactive generator combinations are excluded.";
   report.status = report.failures.length ? "partial" : "complete";
   await atomicJson(reportFile, report);
   console.log(JSON.stringify({ status: report.status, ...report.summary }));

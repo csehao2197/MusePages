@@ -1,1 +1,0 @@
-Create a responsive portfolio website for [role/name]. Include a strong hero, selected projects, case study cards, skills, testimonials, about section, contact CTA, and dark/light friendly styling. Use modern React components, shadcn/ui patterns, and Tailwind utility classes.

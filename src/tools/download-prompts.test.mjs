@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { extractPrompts, isRequirement, normalize, pendingWebsitePages, websiteUrls } from "./download-prompts.mjs";
+import { extractFramerPrompts, extractPrompts, framerPromptUrls, isRequirement, normalize, pendingWebsitePages, promptBaseSlug, uniquePromptSlug, websiteUrls } from "./download-prompts.mjs";
 
 const decode = (value) => value.replaceAll("&quot;", '"').replaceAll("&amp;", "&").replaceAll("&lt;", "<").replaceAll("&gt;", ">");
 
@@ -43,4 +43,40 @@ test("resumes failed or unvisited pages without recrawling successful pages", ()
     { url: "done", status: "downloaded" },
     { url: "failed", status: "failed" },
   ]), ["failed", "new"]);
+});
+
+test("extracts complete Framer prompt links without losing newlines, plus signs or literal entities", () => {
+  const text = '# Example\n\nUse C++ and A+B.\n```html\n<main title="A&B">&amp;</main>\n```\nLiteral %20.';
+  const href = `https://builder.example/#prompt=${encodeURIComponent(text)}`;
+  assert.deepEqual(extractFramerPrompts(`<a href="${href}">Open</a><a href='${href}'>Again</a>`, decode), [{ text }]);
+  assert.deepEqual(extractFramerPrompts('<a href="/prompts/example">Example</a>', decode), []);
+  assert.throws(() => extractFramerPrompts('<a href="https://builder.example/#prompt=%XY">Broken</a>', decode), URIError);
+});
+
+test("reconciles Framer sitemap and search-index detail pages without collecting categories or external sites", () => {
+  assert.deepEqual(framerPromptUrls(
+    "<loc>https://websiteprompts.ai/prompts/one/</loc><loc>https://websiteprompts.ai/prompts/category/dark</loc>",
+    { "/prompts/one": {}, "/prompts/two": {}, "/blog/post": {}, "https://other.example/prompts/three": {} },
+  ), ["https://websiteprompts.ai/prompts/one", "https://websiteprompts.ai/prompts/two"]);
+});
+
+test("names website prompts by topic rather than source host, category or clipboard position", () => {
+  assert.equal(promptBaseSlug({ source_url: "https://websiteprompts.com/prompts/agency/agency-about-page/" }, []), "agency-about-page");
+  assert.equal(promptBaseSlug({ source_url: "https://websiteprompts.ai/prompts/accountant-website-prompt" }, []), "accountant");
+  assert.equal(promptBaseSlug({ source_url: "https://websiteprompts.com/category/portfolio/#prompt-5", title: "3D Artist Portfolio" }, []), "3d-artist-portfolio");
+  assert.equal(promptBaseSlug({ source_url: "https://websiteprompts.com/", title: "Task Dashboard" }, []), "task-dashboard");
+});
+
+test("names GitHub documents using the original project topic and document purpose", () => {
+  const manifest = [{ id: 85, filename: "085-photography-portfolio\\085-photography-portfolio.md", source_url: "https://github.com/owner/project/blob/revision/SPEC.md" }];
+  assert.equal(promptBaseSlug({ source_url: "https://github.com/owner/project/blob/new/docs/2026-01-27-major-redesign.md" }, manifest), "photography-portfolio-major-redesign");
+  assert.equal(promptBaseSlug({ source_url: "https://github.com/owner/project/blob/new/plans/1779942743938-random-name.md" }, manifest, "# Animation & Interactivity Plan\n"), "photography-portfolio-animation-interactivity-plan");
+});
+
+test("distinguishes naming collisions by brand and reports unresolved semantic collisions", () => {
+  const manifest = [{ filename: "041-yoga-studio\\041-yoga-studio.md" }];
+  const source = { source_url: "https://websiteprompts.ai/prompts/yoga-studio" };
+  assert.equal(uniquePromptSlug(source, manifest, 'Build a website called "Solis Studio".'), "yoga-studio-solis-studio");
+  assert.throws(() => uniquePromptSlug(source, manifest, "Build a yoga website."), /semantic qualifier/);
+  assert.throws(() => uniquePromptSlug(source, [...manifest, { filename: "485-yoga-studio-solis-studio\\485-yoga-studio-solis-studio.md" }], 'Build a website called "Solis Studio".'), /semantic qualifier/);
 });

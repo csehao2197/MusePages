@@ -1,1 +1,0 @@
-Create a [website type] website for [business or project] targeting [audience]. The goal is to [conversion goal]. Use a [tone] tone and design the page for [AI tool/output]. Include hero, key sections, proof, FAQ, and final CTA. Make the copy specific, practical, and ready to refine.

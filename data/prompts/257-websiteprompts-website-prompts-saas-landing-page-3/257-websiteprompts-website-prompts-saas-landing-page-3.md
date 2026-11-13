@@ -1,1 +1,0 @@
-Create a SaaS pricing section for [product]. Include 3 tiers, who each plan is for, monthly prices, key features, CTA text, and a short FAQ below the table. Make the recommended plan obvious without using manipulative copy.

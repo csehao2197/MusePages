@@ -23,6 +23,7 @@ MusePages 收集由 AI 根据原始需求生成的网站首页。同一个 promp
 | 命令 | 用途 |
 | --- | --- |
 | `node src\tools\download-prompts.mjs` | 下载网站公开英文 prompt 和清单所关联 GitHub 仓库的需求文档 |
+| `node src\tools\download-prompts.mjs --source=websiteprompts.ai` | 下载 websiteprompts.ai 的完整公开 prompt |
 | `npm run generate -- <ai model>` | 执行[页面生成工作流](#页面生成工作流) |
 | `npm run ai-generate -- <ai model>` | 执行[AI页面生成工作流](#ai页面生成工作流) |
 | `npm run dist` | 按发布选择执行[dist工作流](#dist工作流)，生成 `deploy\dist\MusePages` |
@@ -31,6 +32,8 @@ MusePages 收集由 AI 根据原始需求生成的网站首页。同一个 promp
 `generate` 已实现，配置与限制见[模型与发布配置](#模型与发布配置)。`ai-generate` 仍是待实现接口；现有 `dist` 使用按 prompt 文件名分组的 version 2 配置执行完整本地汇集，兼容迁移旧版数组配置，生成每个 prompt 一个轮播面板，按配置顺序展示选中模型；增量处理和作品详情页尚待实现。
 
 下载器按内容去重并保留已有需求，将新输入追加到 `data\prompts` 和 `src\manifest.json`；原文快照与可取得的许可证保存于 `data\downloads`，覆盖与来源记录位于 `src\downloads\manifest.json`。加 `--resume` 可复用已完成的网站扫描和仓库快照，补充遗漏或失败项；报告记录不可访问来源和空文档。
+
+websiteprompts.ai 使用站点地图与公开搜索索引核对覆盖，保留原始 Markdown 换行，下载记录单独保存为 `src\downloads\websiteprompts-ai.json`。
 
 生成前，由管理员配置并启动模型服务，提供调用 URI、API 类型、认证方式和真实模型 ID。`<ai model>` 用于选择服务配置，不等于真实模型 ID；凭据仅从本地环境读取。脚本不管理模型服务器，也不能在服务不兼容时自动换模型。
 
@@ -230,6 +233,8 @@ task\
 根目录保留项目说明、规则及 npm 配置；设计指引、工具与报告集中于 `src\`。原始需求不可改写，已有参考实现不可覆盖。旧 `prompts\`、`src\prompts\` 和 `out\MusePages\` 不作为新流程的输入或输出。
 
 ### 路径与模型身份
+
+需求目录与文件统一使用 `<编号>-<英文主题短名>\<同名>.md`，来源信息保存在清单中；重名主题以品牌或用途区分。
 
 `<prompt>` 取自原始 Markdown 文件名，去掉 `.md` 并保留内部编号；`<ai model>` 是适合文件系统和 URL 的稳定模型目录名，须记录其与实际模型 ID 的映射。同一 prompt 的不同模型互不覆盖；输入重名或模型名称规范化冲突时停止并报告，不静默合并。
 

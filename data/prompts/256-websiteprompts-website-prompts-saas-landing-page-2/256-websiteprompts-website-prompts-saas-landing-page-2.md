@@ -1,1 +1,0 @@
-Write 5 hero section options for a SaaS product called [product]. Each option should include headline, subheadline, primary CTA, secondary CTA, and proof line. Target [audience] who struggle with [pain point].

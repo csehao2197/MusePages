@@ -1,1 +1,0 @@
-Create a dashboard web app for [app idea]. Include sidebar navigation, metric cards, charts, recent activity, filters, empty states, loading states, and a settings page. Use a calm, professional interface with responsive layout and accessible contrast.
