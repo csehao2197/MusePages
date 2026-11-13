@@ -352,6 +352,50 @@ test("read-only coverage spans explicit models and ignores validation/publicatio
   assert.deepEqual(await snapshot(f.workspace), before);
 });
 
+test("service failures report the stage, URL and nested network causes without leaking credentials", async (t) => {
+  const f = await fixture(t);
+  const config = await readJson(path.join(f.workspace, "config.json"));
+  config.models.local.baseUrl = "http://127.0.0.1:8000/v1";
+  await save(path.join(f.workspace, "config.json"), config);
+  const logs = [];
+  t.mock.method(globalThis, "fetch", async () => {
+    const cause = Object.assign(new Error(`connect ECONNREFUSED ${secret}`), {
+      code: "ECONNREFUSED", syscall: "connect", address: "127.0.0.1", port: 8000,
+    });
+    throw new TypeError("fetch failed", { cause: new AggregateError([cause]) });
+  });
+  const report = await renderPromptPages(f.workspace, ["local"], f.options("success", { onLog: (message) => logs.push(message) }));
+  assert.equal(report.summary.failed, 1);
+  const reason = report.items[0].reason;
+  for (const pattern of [/\[verify-model-service\]/, /GET http:\/\/127\.0\.0\.1:8000\/v1\/models/, /ECONNREFUSED/, /address=127\.0\.0\.1/, /port=8000/, /\[REDACTED\]/]) {
+    assert.match(reason, pattern);
+  }
+  assert.ok(logs.some((message) => message.includes(`[${prompt}/local] verify-model-service:`)));
+  assert.ok(logs.some((message) => message.includes("failed:") && message.includes("ECONNREFUSED")));
+  assert.ok(!JSON.stringify({ report, logs }).includes(secret));
+  await assert.rejects(readFile(path.join(f.output, "metadata.json")), { code: "ENOENT" });
+});
+
+test("service diagnostics distinguish HTTP errors, malformed JSON and request timeouts", async (t) => {
+  const fetch = t.mock.method(globalThis, "fetch");
+  fetch.mock.mockImplementation(async () => new Response("", { status: 503 }));
+  await assert.rejects(verifyModelService(model, { env }), /GET http:\/\/127\.0\.0\.1:1\/v1\/models \(HTTP 503\)/);
+  fetch.mock.mockImplementation(async () => new Response("not JSON"));
+  await assert.rejects(verifyModelService(model, { env }), /GET http:\/\/127\.0\.0\.1:1\/v1\/models returned invalid JSON/);
+  fetch.mock.mockImplementation(async (_url, { signal }) => {
+    await new Promise((resolve) => {
+      signal.addEventListener("abort", resolve, { once: true });
+      setTimeout(resolve, 100);
+    });
+    signal.throwIfAborted();
+  });
+  await assert.rejects(verifyModelService(model, { env, timeoutMs: 1 }), (error) => {
+    assert.match(error.message, /GET http:\/\/127\.0\.0\.1:1\/v1\/models \(timeout 1 ms\)/);
+    assert.equal(error.cause.name, "TimeoutError");
+    return true;
+  });
+});
+
 test("preflight rejects identity substitution and missing authentication before creating result files", async (t) => {
   const f = await fixture(t);
   await service(t, f.workspace, { advertised: "different-model" });
@@ -653,6 +697,8 @@ test("the actual CLI returns coverage JSON and an appropriate exit code without 
   const missing = run();
   assert.equal(missing.status, 1, missing.stderr);
   assert.equal(JSON.parse(missing.stdout).summary.missing, 1);
+  assert.match(missing.stderr, /Loading model configuration:/);
+  assert.match(missing.stderr, /\[001-travel\/local\] missing/);
   assert.deepEqual(await snapshot(f.workspace), before);
   await save(path.join(f.output, "metadata.json"), metadata());
   const complete = run();
@@ -674,4 +720,34 @@ test("the actual CLI returns coverage JSON and an appropriate exit code without 
   assert.equal(unknown.status, 1);
   assert.match(unknown.stderr, /Unknown prompt number: 999/);
   assert.deepEqual(await snapshot(f.workspace), numericBefore);
+});
+
+test("the actual CLI prints detailed network failures to stderr and keeps stdout as JSON", async (t) => {
+  const f = await fixture(t);
+  const directory = path.join(f.workspace, "src", "workflows");
+  await mkdir(directory, { recursive: true });
+  for (const filename of ["render-prompt-pages.mjs", "deploy-site.mjs", "render-prompt-page.mjs"]) {
+    await copyFile(new URL(filename, import.meta.url), path.join(directory, filename));
+  }
+  const config = await readJson(path.join(f.workspace, "config.json"));
+  delete config.models.local.apiKeyEnv;
+  config.models.local.baseUrl = "http://127.0.0.1:8000/v1";
+  await save(path.join(f.workspace, "config.json"), config);
+  const network = path.join(f.workspace, "mock-network.cjs");
+  await save(network, `
+globalThis.fetch = async () => {
+  const cause = Object.assign(new Error("connect ECONNREFUSED 127.0.0.1:8000"), { code: "ECONNREFUSED", address: "127.0.0.1", port: 8000 });
+  throw new TypeError("fetch failed", { cause });
+};
+`);
+  const failed = spawnSync(process.execPath, ["--require", network, path.join(directory, "render-prompt-pages.mjs"), "001", "local"], {
+    cwd: f.workspace, env: process.env, encoding: "utf8", timeout: 5000,
+  });
+  assert.equal(failed.status, 1, failed.stderr);
+  const report = JSON.parse(failed.stdout);
+  assert.equal(report.summary.failed, 1);
+  assert.match(report.items[0].reason, /\[verify-model-service\].*ECONNREFUSED/);
+  assert.match(failed.stderr, /GET http:\/\/127\.0\.0\.1:8000\/v1\/models/);
+  assert.match(failed.stderr, /ECONNREFUSED.*address=127\.0\.0\.1.*port=8000/);
+  await assert.rejects(readFile(path.join(f.output, "metadata.json")), { code: "ENOENT" });
 });

@@ -30,6 +30,20 @@ function promptNumber(value) {
   return number;
 }
 
+function errorDetails(error, seen = new Set()) {
+  if (!error || seen.has(error) || seen.size >= 10) return "";
+  seen.add(error);
+  const details = [error.message || error.name || String(error)];
+  for (const key of ["code", "syscall", "address", "port"]) {
+    if (error[key] !== undefined) details.push(`${key}=${error[key]}`);
+  }
+  for (const cause of [error.cause, ...(Array.isArray(error.errors) ? error.errors : [])]) {
+    const detail = errorDetails(cause, seen);
+    if (detail) details.push(`cause: ${detail}`);
+  }
+  return details.join("; ");
+}
+
 async function info(file) {
   try {
     const result = await lstat(file);
@@ -228,15 +242,26 @@ async function sharedMetadata(workspace, inputs) {
 export async function verifyModelService(model, { env = process.env, timeoutMs = 10000, signal } = {}) {
   const key = model.apiKeyEnv ? env[model.apiKeyEnv] : undefined;
   if (model.apiKeyEnv && !key) throw Error(`Missing authentication environment variable: ${model.apiKeyEnv}`);
+  const endpoint = `${model.baseUrl.replace(/\/+$/, "")}/models`;
   const timeout = AbortSignal.timeout(timeoutMs);
-  const response = await fetch(`${model.baseUrl.replace(/\/+$/, "")}/models`, {
-    headers: key ? { Authorization: `Bearer ${key}` } : {},
-    redirect: "error", signal: signal ? AbortSignal.any([signal, timeout]) : timeout,
-  });
-  if (!response.ok) throw Error(`Model service identity check failed (HTTP ${response.status})`);
-  const body = await response.json();
+  let response;
+  try {
+    response = await fetch(endpoint, {
+      headers: key ? { Authorization: `Bearer ${key}` } : {},
+      redirect: "error", signal: signal ? AbortSignal.any([signal, timeout]) : timeout,
+    });
+  } catch (error) {
+    throw new Error(`Model service identity check failed: GET ${endpoint} (timeout ${timeoutMs} ms)`, { cause: error });
+  }
+  if (!response.ok) throw Error(`Model service identity check failed: GET ${endpoint} (HTTP ${response.status})`);
+  let body;
+  try {
+    body = await response.json();
+  } catch (error) {
+    throw new Error(`Model service identity check failed: GET ${endpoint} returned invalid JSON`, { cause: error });
+  }
   if (!Array.isArray(body.data) || !body.data.some((entry) => entry.id === model.modelId)) {
-    throw Error("Configured modelId is not advertised by the model service; refusing to substitute another model");
+    throw Error(`Configured modelId "${model.modelId}" is not advertised by GET ${endpoint}; refusing to substitute another model`);
   }
 }
 
@@ -303,7 +328,7 @@ ${prompt.content}
 </original-requirement>`;
 }
 
-export async function runCodex({ folder, prompt, model, command, timeoutMs, attempt, env = process.env, signal }) {
+export async function runCodex({ folder, prompt, model, command, timeoutMs, attempt, env = process.env, signal, onLog }) {
   const home = await mkdtemp(path.join(os.tmpdir(), "musepages-codex-"));
   const overrides = {
     model_provider: "musepages",
@@ -384,7 +409,9 @@ export async function runCodex({ folder, prompt, model, command, timeoutMs, atte
     const key = model.apiKeyEnv && env[model.apiKeyEnv];
     if (key) output = output.replaceAll(key, "[REDACTED]");
     try {
-      await writeFile(path.join(folder, `.generation-attempt-${attempt}-${randomUUID()}.log`), output, { flag: "wx" });
+      const logFile = path.join(folder, `.generation-attempt-${attempt}-${randomUUID()}.log`);
+      await writeFile(logFile, output, { flag: "wx" });
+      onLog?.(`Attempt log: ${logFile}`);
     } finally {
       await rm(home, { recursive: true, force: true });
     }
@@ -523,6 +550,7 @@ async function withPromptLock(workspace, id, action) {
 }
 
 async function processItem(workspace, prompt, model, shared, options, getCommand, verifyService) {
+  options.progress("lock", "Acquiring prompt generation lock");
   return withPromptLock(workspace, prompt.id, async () => {
     const current = await inspect(workspace, prompt, model);
     const sharedFile = await inside(workspace, "out", "pages", prompt.id, "metadata.json");
@@ -541,7 +569,9 @@ async function processItem(workspace, prompt, model, shared, options, getCommand
     let metadata = current.metadata;
     let generated = false;
     if (!metadata?.generated) {
+      options.progress("verify-model-service", `GET ${model.baseUrl.replace(/\/+$/, "")}/models; expected modelId=${model.modelId}; timeout=10000 ms`);
       await verifyService(model);
+      options.progress("resolve-codex", "Locating Codex CLI");
       const command = await getCommand();
       await ensureDirectory(workspace, "out", "pages", prompt.id, model.directory);
       metadata = {
@@ -550,17 +580,21 @@ async function processItem(workspace, prompt, model, shared, options, getCommand
       };
       await saveJson(current.file, metadata);
       for (let attempt = 1; attempt <= options.retries + 1; attempt++) {
+        options.progress("generate", `Attempt ${attempt}/${options.retries + 1}; executable=${command.executable}; cwd=${current.folder}; timeout=${options.timeoutMs} ms`);
         try {
           await runCodex({
             folder: current.folder, prompt: instructions(prompt, options.design, shared, model),
             model, command, timeoutMs: options.timeoutMs, attempt, env: options.env, signal: options.signal,
+            onLog: (message) => options.progress("generate", message),
           });
           break;
         } catch (error) {
+          options.progress("generate", `Attempt ${attempt} failed: ${errorDetails(error)}`);
           if (options.signal?.aborted || attempt > options.retries) throw error;
         }
       }
       // The workflow, not an agent's exit status or self-written state, owns metadata.
+      options.progress("validate-source", "Checking generated source and model identity");
       validateMetadata(await json(current.file), model);
       await checkSource(current.folder);
       metadata.generated = true;
@@ -568,6 +602,7 @@ async function processItem(workspace, prompt, model, shared, options, getCommand
       await saveText(fingerprint, digest);
       generated = true;
     }
+    options.progress("prepare-static", "Checking source and preparing static homepage");
     const type = await checkSource(current.folder);
     const exported = await inside(current.folder, ...metadata.staticDir.split("/"));
     if (exported === current.folder && type === "next") throw Error("Next.js source is not a static export");
@@ -576,6 +611,7 @@ async function processItem(workspace, prompt, model, shared, options, getCommand
     }
     let staticDigest;
     try {
+      options.progress("validate-static", exported);
       staticDigest = await validateStaticOutput(exported, shared.slug, model.directory);
     } catch (error) {
       metadata.preview = false;
@@ -585,6 +621,7 @@ async function processItem(workspace, prompt, model, shared, options, getCommand
     }
     let preview;
     try {
+      options.progress("preview", "Preparing homepage screenshot");
       preview = await ensurePreview(workspace, current, exported, staticDigest, options.signal, metadata.preview);
     } catch (error) {
       metadata.preview = false;
@@ -596,6 +633,7 @@ async function processItem(workspace, prompt, model, shared, options, getCommand
     metadata.validated = true;
     await saveJson(current.file, metadata);
     try {
+      options.progress("register", "Updating deployment options");
       await inside(workspace, "deploy", "config.json");
       const added = await registerGeneratedPage(workspace, {
         prompt: prompt.id, model: model.directory, slug: shared.slug, title: shared.title,
@@ -619,8 +657,18 @@ export async function renderPromptPages(workspace = root, selections = [], optio
     || !Number.isInteger(settings.retries) || settings.retries < 0 || settings.retries > 2) {
     throw Error("timeoutMs must be between 1 and 2147483647; retries must be between 0 and 2");
   }
-  const models = await loadModels(workspace, selections);
+  let models = [];
+  const redact = (message) => models.reduce((value, model) => {
+    const key = model.apiKeyEnv && settings.env[model.apiKeyEnv];
+    return key ? value.replaceAll(key, "[REDACTED]") : value;
+  }, String(message));
+  const log = (message) => settings.onLog?.(redact(message));
+  log(`Loading model configuration: ${path.join(workspace, "config.json")}`);
+  models = await loadModels(workspace, selections);
+  log("Reading original prompts");
   const inputs = await prompts(workspace, settings.prompts);
+  log(`Selected ${inputs.length} prompt(s), ${models.length} model(s); mode=${settings.check ? "check" : "generate"}`);
+  if (!settings.check) log("Checking shared output metadata and reading DESIGN.md");
   const shared = settings.check ? null : await sharedMetadata(workspace, inputs);
   if (!settings.check) settings.design = await text(await inside(workspace, "src", "workflows", "AI Agent", "DESIGN.md"));
   if (!settings.check && !settings.design.trim()) throw Error("DESIGN.md is empty");
@@ -637,7 +685,13 @@ export async function renderPromptPages(workspace = root, selections = [], optio
     for (const model of models) {
       const item = { prompt: prompt.id, model: model.selection, directory: model.directory };
       let inspected = false;
+      let stage = "inspect";
+      const progress = (next, message) => {
+        stage = next;
+        log(`[${prompt.id}/${model.selection}] ${stage}: ${message}`);
+      };
       try {
+        progress("inspect", `Output directory: ${path.join(workspace, "out", "pages", prompt.id, model.directory)}`);
         if (settings.signal?.aborted) throw Error("Generation cancelled");
         const current = await inspect(workspace, prompt, model);
         inspected = true;
@@ -645,14 +699,15 @@ export async function renderPromptPages(workspace = root, selections = [], optio
         if (settings.check) {
           Object.assign(item, { status: current.metadata?.generated ? "skipped" : "missing", generated: current.metadata?.generated ?? false });
         } else {
-          Object.assign(item, await processItem(workspace, prompt, model, shared.get(prompt.id), settings, getCommand, verifyService));
+          Object.assign(item, await processItem(workspace, prompt, model, shared.get(prompt.id), { ...settings, progress }, getCommand, verifyService));
         }
       } catch (error) {
         item.status = !inspected || /locked|collision|Symbolic|Shared metadata/.test(error.message) ? "pending" : "failed";
         try { item.generated = (await inspect(workspace, prompt, model)).metadata?.generated ?? false; } catch { /* Keep unknown state unclaimed. */ }
-        const key = model.apiKeyEnv && settings.env[model.apiKeyEnv];
-        item.reason = key ? error.message.replaceAll(key, "[REDACTED]") : error.message;
+        item.reason = `[${stage}] ${errorDetails(error)}`;
       }
+      if (item.reason) item.reason = redact(item.reason);
+      log(`[${prompt.id}/${model.selection}] ${item.status}${item.reason ? `: ${item.reason}` : ""}`);
       items.push(item);
     }
   }
@@ -692,12 +747,15 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   process.once("SIGTERM", cancel);
   try {
     const { selections, options } = parseArguments(process.argv.slice(2));
-    const report = await renderPromptPages(root, selections, { ...options, signal: controller.signal });
+    const report = await renderPromptPages(root, selections, {
+      ...options, signal: controller.signal,
+      onLog: (message) => console.error(`[${new Date().toISOString()}] ${message}`),
+    });
     console.log(JSON.stringify(report, null, 2));
     if (report.summary.failed || report.summary.pending || report.summary.missing) process.exitCode = 1;
     if (controller.signal.aborted) process.exitCode = 130;
   } catch (error) {
-    console.error(error.message);
+    console.error(errorDetails(error));
     process.exitCode = 1;
   } finally {
     process.removeListener("SIGINT", cancel);
