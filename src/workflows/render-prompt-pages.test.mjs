@@ -561,6 +561,51 @@ test("CLI arguments reject unknown flags and unsafe prompt paths", () => {
   assert.throws(() => parseArguments(["local", "--timeout-ms=no"]), /Invalid timeout/);
 });
 
+test("CLI arguments accept a leading prompt number while preserving existing model selections and flags", () => {
+  for (const number of ["003", "3"]) {
+    assert.deepEqual(parseArguments([number, "Qwen3.8", "--check", "--retry"]), {
+      selections: ["Qwen3.8"], options: { check: true, retry: true, prompts: [number] },
+    });
+  }
+  assert.deepEqual(parseArguments(["local", "another-model", "--check"]), {
+    selections: ["local", "another-model"], options: { check: true },
+  });
+  for (const args of [
+    ["003", "Qwen3.8", "--prompts=001-travel"],
+    ["--prompts=001-travel", "003", "Qwen3.8"],
+  ]) assert.throws(() => parseArguments(args), /either a positional prompt number or --prompts/);
+  assert.throws(() => parseArguments(["003"]), /followed by a model selection/);
+  for (const number of ["0", "000", "9007199254740992"]) {
+    assert.throws(() => parseArguments([number, "Qwen3.8"]), /positive safe integer/);
+  }
+});
+
+test("numeric selection generates only the matching prompt and rejects missing or ambiguous numbers", async (t) => {
+  const f = await fixture(t);
+  const requests = await service(t, f.workspace);
+  const selected = "003-selected";
+  await save(path.join(f.workspace, "data", "prompts", selected, `${selected}.md`), "# Selected requirement\n");
+  await save(path.join(f.workspace, "data", "prompts", "030-other", "030-other.md"), "# Unselected requirement\n");
+  const { selections, options } = parseArguments(["003", "local"]);
+  const report = await renderPromptPages(f.workspace, selections, f.options("success", options));
+  assert.equal(report.summary.generated, 1, JSON.stringify(report));
+  assert.deepEqual(report.items.map((item) => item.prompt), [selected]);
+  assert.deepEqual(await readdir(path.join(f.workspace, "out", "pages")), [selected]);
+  assert.equal(requests(), 1);
+  const invocation = await readJson(path.join(f.workspace, "out", "pages", selected, "model-a", ".invocation.json"));
+  assert.ok(invocation.input.includes("# Selected requirement"));
+  assert.ok(!invocation.input.includes("# Unselected requirement"));
+  assert.ok(!invocation.input.includes("# Travel"));
+  const before = await snapshot(f.workspace);
+  await assert.rejects(renderPromptPages(f.workspace, ["local"], { prompts: ["999"], check: true }), /Unknown prompt number/);
+  assert.deepEqual(await snapshot(f.workspace), before);
+  await save(path.join(f.workspace, "data", "prompts", "003-duplicate", "003-duplicate.md"), "# Duplicate number\n");
+  const ambiguous = await snapshot(f.workspace);
+  await assert.rejects(renderPromptPages(f.workspace, ["local"], { prompts: ["3"], check: true }), /Ambiguous prompt number/);
+  assert.deepEqual(await snapshot(f.workspace), ambiguous);
+  assert.equal(requests(), 1);
+});
+
 test("the actual CLI returns coverage JSON and an appropriate exit code without generation or authentication", async (t) => {
   const f = await fixture(t);
   const directory = path.join(f.workspace, "src", "workflows");
@@ -568,7 +613,7 @@ test("the actual CLI returns coverage JSON and an appropriate exit code without 
   for (const filename of ["render-prompt-pages.mjs", "deploy-site.mjs", "render-prompt-page.mjs"]) {
     await copyFile(new URL(filename, import.meta.url), path.join(directory, filename));
   }
-  const run = () => spawnSync(process.execPath, [path.join(directory, "render-prompt-pages.mjs"), "local", "--check"], {
+  const run = (args = ["local", "--check"]) => spawnSync(process.execPath, [path.join(directory, "render-prompt-pages.mjs"), ...args], {
     cwd: f.workspace, env: { ...process.env, MUSE_TEST_KEY: "" }, encoding: "utf8", timeout: 5000,
   });
   const before = await snapshot(f.workspace);
@@ -580,4 +625,20 @@ test("the actual CLI returns coverage JSON and an appropriate exit code without 
   const complete = run();
   assert.equal(complete.status, 0, complete.stderr);
   assert.equal(JSON.parse(complete.stdout).summary.skipped, 1);
+  const config = await readJson(path.join(f.workspace, "config.json"));
+  await save(path.join(f.workspace, "config.json"), { version: 1, models: { "Qwen3.8": config.models.local } });
+  await save(path.join(f.workspace, "data", "prompts", "003-selected", "003-selected.md"), "# Selected requirement\n");
+  await save(path.join(f.workspace, "data", "prompts", "030-other", "030-other.md"), "# Unselected requirement\n");
+  const numericBefore = await snapshot(f.workspace);
+  for (const number of ["003", "3"]) {
+    const selected = run([number, "Qwen3.8", "--check"]);
+    assert.equal(selected.status, 1, selected.stderr);
+    const report = JSON.parse(selected.stdout);
+    assert.equal(report.summary.missing, 1);
+    assert.deepEqual(report.items.map(({ prompt, model }) => ({ prompt, model })), [{ prompt: "003-selected", model: "Qwen3.8" }]);
+  }
+  const unknown = run(["999", "Qwen3.8", "--check"]);
+  assert.equal(unknown.status, 1);
+  assert.match(unknown.stderr, /Unknown prompt number: 999/);
+  assert.deepEqual(await snapshot(f.workspace), numericBefore);
 });

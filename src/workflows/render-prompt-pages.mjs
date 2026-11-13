@@ -24,6 +24,12 @@ function name(value, label) {
   return value;
 }
 
+function promptNumber(value) {
+  const number = Number(value);
+  if (!Number.isSafeInteger(number) || number < 1) throw Error("Prompt number must be a positive safe integer");
+  return number;
+}
+
 async function info(file) {
   try {
     const result = await lstat(file);
@@ -138,8 +144,20 @@ async function prompts(workspace, selected) {
   }
   if (!found.length) throw Error("No original Markdown prompts found");
   if (selected) {
-    if (selected.some((id) => !found.some((prompt) => prompt.id === id))) throw Error("Unknown prompt selection");
-    return found.filter((prompt) => selected.includes(prompt.id));
+    const ids = new Set();
+    for (const selection of selected) {
+      if (/^\d+$/.test(selection)) {
+        const number = promptNumber(selection);
+        const matches = found.filter((prompt) => Number(prompt.id.match(/^(\d+)-/)?.[1]) === number);
+        if (!matches.length) throw Error(`Unknown prompt number: ${selection}`);
+        if (matches.length > 1) throw Error(`Ambiguous prompt number: ${selection}`);
+        ids.add(matches[0].id);
+      } else {
+        if (!found.some((prompt) => prompt.id === selection)) throw Error("Unknown prompt selection");
+        ids.add(selection);
+      }
+    }
+    return found.filter((prompt) => ids.has(prompt.id));
   }
   return found;
 }
@@ -655,6 +673,13 @@ export function parseArguments(args) {
       options[key === "timeout-ms" ? "timeoutMs" : key] = Number(value);
     } else if (arg.startsWith("-")) throw Error(`Unknown option: ${arg}`);
     else selections.push(name(arg, "model selection"));
+  }
+  if (/^\d+$/.test(selections[0])) {
+    const selection = selections.shift();
+    promptNumber(selection);
+    if (!selections.length) throw Error("A prompt number must be followed by a model selection");
+    if (options.prompts) throw Error("Use either a positional prompt number or --prompts");
+    options.prompts = [selection];
   }
   return { selections, options };
 }

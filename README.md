@@ -24,7 +24,7 @@ MusePages 收集由 AI 根据原始需求生成的网站首页。同一个 promp
 | --- | --- |
 | `node src\tools\download-prompts.mjs` | 下载网站公开英文 prompt 和清单所关联 GitHub 仓库的需求文档 |
 | `node src\tools\download-prompts.mjs --source=websiteprompts.ai` | 下载 websiteprompts.ai 的完整公开 prompt |
-| `npm run generate -- <ai model>` | 执行[页面生成工作流](#页面生成工作流) |
+| `npm run generate -- [<prompt number>] <ai model>` | 执行[页面生成工作流](#页面生成工作流)，可按编号限定单一需求 |
 | `npm run ai-generate -- <ai model>` | 执行[AI页面生成工作流](#ai页面生成工作流) |
 | `npm run dist` | 按发布选择执行[dist工作流](#dist工作流)，生成 `deploy\dist\MusePages` |
 | `npm run publish` | 将静态集合复制到 `deploy\site\MusePages` |
@@ -124,7 +124,7 @@ node src\workflows\generate-preview.mjs out\pages\006-travel-agency-homepage\mod
 
 ### 页面生成工作流
 
-页面生成工作流以用户指定的 `<ai model>` 为输入，读取根目录 `config.json` 中的模型服务配置，由 `src\workflows\render-prompt-pages.mjs` 遍历原始 prompt，按需生成该模型对应的网站代码与静态首页。
+页面生成工作流以用户指定的 `<ai model>` 为输入，可附带 prompt 编号限定单一需求；读取根目录 `config.json` 中的模型服务配置，由 `src\workflows\render-prompt-pages.mjs` 按需生成该模型对应的网站代码与静态首页。
 
 流程依次完成模型配置校验、已有结果检查、缺失页面生成和静态产物准备。已有结果按[覆盖检查规则](#生成覆盖检查与模型匹配)判断，不因未验证、未发布或配置未登记而重复生成源码。
 
@@ -261,7 +261,11 @@ task\
 npm run generate -- local --check
 npm run generate -- local another-model --check
 
-# 仅生成指定原始文件名对应的页面；省略 --prompts 时遍历全部原始需求
+# 按编号处理单一需求；3 与 003 等价，Qwen3.8 对应 config.json 的 models 配置键
+npm run generate -- 003 Qwen3.8
+npm run generate -- 3 Qwen3.8 --check
+
+# 按完整原始文件名选择页面；省略编号与 --prompts 时遍历全部原始需求
 npm run generate -- local --prompts=006-travel-agency-homepage
 
 # 明确授权重试元数据中 generated=false 的结果；不覆盖已完成结果
