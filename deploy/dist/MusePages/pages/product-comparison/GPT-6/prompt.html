@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TechVault | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>TechVault</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code>Build a clean, conversion-focused product comparison page for an electronics retailer called &quot;TechVault&quot; — a premium consumer electronics store. This page compares 3 wireless noise-cancelling headphones side-by-side. The design should make complex spec data easy to scan, highlight differences clearly, and guide the user toward a purchase decision.
+
+1. NAVIGATION BAR
+- Logo: &quot;TechVault&quot; in bold sans-serif with a vault-door icon, dark charcoal (#1A1A2E)
+- Links: Shop, Deals, Compare, Reviews, Support
+- Right side: search icon, wishlist heart with count badge, cart icon with item count, &quot;Account&quot; dropdown
+- White background, subtle bottom shadow, sticky on scroll
+- Mobile: logo + search icon + cart icon + hamburger
+
+2. BREADCRUMB &amp; PAGE HEADER
+- Breadcrumb: Home &gt; Headphones &gt; Compare
+- Title: &quot;Compare Wireless Noise-Cancelling Headphones&quot;
+- Subtitle: &quot;Side-by-side comparison of the top 3 premium headphones to help you pick the right one&quot;
+- &quot;Edit comparison&quot; text link to add/remove products from the comparison
+- Share icon to copy comparison URL
+
+3. PRODUCT HEADER ROW (sticky on scroll)
+- 4-column layout: label column (200px) + 3 product columns (equal width)
+- Each product column contains:
+  - Product image (200px square, white background, centered)
+  - Product name (bold): &quot;Sony WH-1000XM5&quot;, &quot;Bose QuietComfort Ultra&quot;, &quot;Apple AirPods Max&quot;
+  - Star rating with count: &quot;★★★★★ 4.7 (2,341 reviews)&quot;, &quot;★★★★★ 4.6 (1,892 reviews)&quot;, &quot;★★★★☆ 4.5 (3,104 reviews)&quot;
+  - Price: &quot;$348&quot;, &quot;$379&quot;, &quot;$549&quot;
+  - Original prices with strikethrough where applicable: &quot;$399&quot; for Sony, &quot;$429&quot; for Bose
+  - &quot;Add to Cart&quot; button per product (solid #7C3AED purple-600, white text, 8px radius)
+  - Color swatches below button: Sony (Black, Silver, Midnight Blue), Bose (Black, White Smoke, Lunar Blue), Apple (Space Gray, Silver, Sky Blue, Midnight, Starlight)
+- Sticky behavior: on scroll, header row compresses to product name + price + &quot;Add to Cart&quot; mini bar
+- Label column stays empty in header row (aligns with spec rows below)
+
+4. QUICK VERDICT BANNER
+- Full-width card below header, light purple background (#F5F3FF)
+- &quot;🏆 Our Pick: Sony WH-1000XM5&quot; in bold
+- &quot;Best overall value with top-tier noise cancellation, 30-hour battery, and the lightest build at 250g. Save $51 vs retail.&quot;
+- &quot;Read full review →&quot; link
+- Small print: &quot;Verdict based on TechVault editorial testing, not influenced by brand partnerships&quot;
+
+5. KEY SPECS COMPARISON TABLE
+- Alternating row backgrounds: white and #F8FAFC
+- Label column (left): spec name in medium-weight text
+- Value cells: centered text, with green checkmark ✓ or red ✗ for boolean features
+- **Highlight differences**: when values differ across products, the best value gets a subtle green background (#F0FDF4) with a small &quot;Best&quot; badge
+
+  Rows:
+  - **Price**: $348, $379, $549
+  - **Noise Cancellation**: Adaptive ANC, Adaptive ANC, Active ANC — all ✓
+  - **Battery Life**: 30 hours (Best ✓), 24 hours, 20 hours
+  - **Weight**: 250g (Best ✓), 250g (Best ✓), 384g
+  - **Driver Size**: 30mm, 35mm (Best ✓), 40mm (Best ✓)
+  - **Bluetooth Version**: 5.3, 5.3, 5.0
+  - **Codec Support**: LDAC, SBC, AAC | aptX Adaptive, SBC, AAC | AAC only
+  - **Multipoint Connection**: ✓, ✓, ✗
+  - **Wired Option**: 3.5mm included, 3.5mm included, Lightning cable (adapter needed)
+  - **Foldable**: ✓, ✓, ✗
+  - **Carrying Case**: Included (slim), Included (hard shell), Smart Case (included)
+  - **Water/Sweat Resistance**: IPX4 (Best ✓), None ✗, None ✗
+  - **Transparency Mode**: ✓, ✓, ✓
+  - **Spatial Audio**: ✓ (360 Reality Audio), ✓ (Immersive Audio), ✓ (Dolby Atmos, Best ✓)
+  - **Voice Assistant**: Google, Alexa, Siri | Google, Alexa | Siri only
+  - **App Support**: Sony Headphones Connect, Bose Music, Apple Settings (limited)
+  - **Warranty**: 1 year, 1 year, 1 year
+
+6. RATING BREAKDOWN COMPARISON
+- Headline: &quot;How They Rate&quot;
+- Side-by-side horizontal bar charts for each category (5-star scale):
+  - Sound Quality: Sony 4.8, Bose 4.7, Apple 4.8
+  - Noise Cancellation: Sony 4.9, Bose 4.8, Apple 4.6
+  - Comfort: Sony 4.7, Bose 4.6, Apple 4.3
+  - Battery Life: Sony 4.8, Bose 4.5, Apple 4.2
+  - Build Quality: Sony 4.5, Bose 4.6, Apple 4.9
+  - Value for Money: Sony 4.7, Bose 4.4, Apple 3.8
+- Bar colors: Sony (#2563EB blue), Bose (#059669 emerald), Apple (#6B7280 gray)
+- Winner badge on highest bar per category
+
+7. PROS &amp; CONS SECTION
+- 3 columns, one per product
+- Each column:
+  - Product image (small, 60px) + name
+  - Pros list (green ✓ prefix):
+    - Sony: &quot;Industry-leading ANC&quot;, &quot;30-hour battery&quot;, &quot;Lightweight (250g)&quot;, &quot;LDAC hi-res audio&quot;, &quot;Multipoint Bluetooth&quot;
+    - Bose: &quot;Best-in-class comfort&quot;, &quot;aptX Adaptive codec&quot;, &quot;CustomTune sound calibration&quot;, &quot;Excellent call quality&quot;, &quot;Premium carrying case&quot;
+    - Apple: &quot;Seamless Apple ecosystem&quot;, &quot;Best build quality&quot;, &quot;Dolby Atmos spatial audio&quot;, &quot;Computational audio processing&quot;, &quot;Premium materials (aluminum, steel)&quot;
+  - Cons list (red ✗ prefix):
+    - Sony: &quot;Plastic build feels less premium&quot;, &quot;Touch controls can be finicky&quot;, &quot;Call quality just average&quot;
+    - Bose: &quot;No water resistance&quot;, &quot;Shorter battery (24h)&quot;, &quot;Heavier than Sony&quot;
+    - Apple: &quot;Heaviest option (384g)&quot;, &quot;No multipoint&quot;, &quot;Expensive at $549&quot;, &quot;Lightning connector (adapter needed)&quot;, &quot;Limited EQ controls&quot;
+- Cards with 12px radius, 1px border
+
+8. EXPERT MINI-REVIEWS
+- 3 review cards (one per product) in a horizontal row
+- Each card:
+  - Product name + score badge (e.g., &quot;9.2/10&quot;)
+  - 3-line expert summary: &quot;The XM5 continues Sony&#39;s dominance in the ANC space. It&#39;s lighter, quieter, and longer-lasting than the competition — and at $348, it&#39;s the best value in premium wireless headphones.&quot;
+  - &quot;Read Full Review →&quot; link
+  - Reviewer avatar + name: &quot;Alex Chen, Audio Editor&quot;
+- White cards, subtle shadow, 12px radius
+
+9. USER REVIEW HIGHLIGHTS
+- Headline: &quot;What Buyers Say&quot;
+- One featured review per product (horizontal cards):
+  - Sony: &quot;Upgraded from XM4 — the difference in noise cancellation on my daily commute is night and day. Battery lasts my entire work week.&quot; — ★★★★★ Michael R., verified buyer
+  - Bose: &quot;Most comfortable headphones I&#39;ve ever worn. The immersive audio mode makes movies feel like a theater.&quot; — ★★★★★ Sarah T., verified buyer
+  - Apple: &quot;If you&#39;re all-in on Apple, these are magical. The seamless switching between my iPhone, iPad, and MacBook is worth the premium.&quot; — ★★★★☆ David L., verified buyer
+
+10. &quot;BEST FOR&quot; RECOMMENDATION CARDS
+- 3 cards side by side:
+  - &quot;Best Overall&quot; → Sony WH-1000XM5 — &quot;Top noise cancellation, longest battery, best price&quot; — &quot;Add to Cart&quot; CTA
+  - &quot;Best for Comfort&quot; → Bose QuietComfort Ultra — &quot;Plush fit for all-day wear, excellent sound&quot; — &quot;Add to Cart&quot; CTA
+  - &quot;Best for Apple Users&quot; → Apple AirPods Max — &quot;Seamless ecosystem integration, premium build&quot; — &quot;Add to Cart&quot; CTA
+- Each card: product icon, award badge, headline, one-liner, CTA
+- Light purple background (#F5F3FF), 12px radius, purple left border accent (4px, #7C3AED)
+
+11. FAQ SECTION
+- Headline: &quot;Common Questions&quot;
+- Accordion items:
+  - &quot;Which headphones have the best noise cancellation?&quot; → &quot;In our testing, the Sony WH-1000XM5 edges out the competition with its Integrated Processor V2 and 8 microphones...&quot;
+  - &quot;Are these headphones good for working out?&quot; → &quot;Only the Sony WH-1000XM5 has IPX4 water/sweat resistance...&quot;
+  - &quot;Can I use these headphones wired?&quot; → &quot;Yes — Sony and Bose include 3.5mm cables. Apple uses Lightning...&quot;
+  - &quot;Which headphones are best for phone calls?&quot; → &quot;The Bose QuietComfort Ultra leads in call quality...&quot;
+  - &quot;Do any of these support lossless audio?&quot; → &quot;The Sony XM5 supports LDAC for near-lossless streaming...&quot;
+
+12. RECENTLY VIEWED &amp; CROSS-SELLS
+- Headline: &quot;You May Also Like&quot;
+- 4 product cards (horizontal scroll):
+  - &quot;Sony WF-1000XM5 Earbuds&quot; — $278 — ★ 4.6 — &quot;In-ear alternative&quot;
+  - &quot;Bose QuietComfort Earbuds II&quot; — $249 — ★ 4.5
+  - &quot;Sennheiser Momentum 4&quot; — $299 — ★ 4.4
+  - &quot;Audio-Technica ATH-M50xBT2&quot; — $179 — ★ 4.3
+- Each card: image, name, price, rating, &quot;Add to Cart&quot; outline button
+
+13. FOOTER
+- 4 columns on #F8FAFC:
+  - Shop: All Categories, New Arrivals, Best Sellers, Sale, Gift Cards
+  - Help: Customer Service, Shipping &amp; Returns, Warranty Info, Order Tracking, FAQs
+  - About: Our Story, Reviews Policy, Affiliate Program, Blog, Careers
+  - Connect: Newsletter signup input + button, social icons (Instagram, YouTube, Twitter, TikTok)
+- Payment icons: Visa, Mastercard, Amex, PayPal, Apple Pay, Google Pay, Klarna
+- &quot;© 2026 TechVault. All rights reserved.&quot; + Privacy · Terms · Accessibility
+
+Design: Clean, data-forward, scannable. Primary: #7C3AED (purple-600 for CTAs and accents), secondary: #1A1A2E (near-black for headings), body text: #475569 (slate-600). Success green: #10B981 for &quot;Best&quot; badges and pros. Error red: #EF4444 for cons. Backgrounds: white for comparison table rows, #F8FAFC for alternating rows. Typography: Inter for everything — weights 400 (body), 500 (specs), 600 (product names, prices), 700 (headings). Table cells vertically centered, generous padding (16px). Green highlight cells (#F0FDF4) for best-in-category values. Sticky product header with z-index layering for smooth scroll experience.
+
+Responsive: Mobile-first. On screens under 768px, the comparison table switches to a horizontal-scroll layout with the first product column visible and swipe to see others. Sticky header shows 1 product at a time with left/right arrows to switch. &quot;Best For&quot; cards stack vertically. Pros/cons stack vertically. Add &quot;Compare at a glance&quot; toggle that shows only rows where products differ. Filter sidebar for mobile: chips to toggle which specs to show. All touch targets 44px minimum. Bottom sticky bar with &quot;Add to Cart&quot; for the currently viewed product.</code></pre>
+    </section>
+  </main>
+</body>
+</html>

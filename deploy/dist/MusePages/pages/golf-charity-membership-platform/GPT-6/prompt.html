@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Goodround 公益会员概念 | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Goodround 公益会员概念</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># PRD — Golf Charity Subscription Platform
+&gt; Issued by Digital Heroes · digitalheroes.co.in
+&gt; Version 1.0 · March 2026
+
+## 01 Project Overview
+A subscription-driven web application combining golf performance tracking, charity fundraising, and a monthly draw-based reward engine. Design Direction: Emotion-driven, modern. NOT a traditional golf website.
+
+## 02 User Roles
+- Public Visitor: view platform, explore charities, initiate subscription
+- Registered Subscriber: manage profile, enter scores, select charity, view winnings
+- Administrator: manage users, configure draws, manage charities, verify winners
+
+## 03 Subscription &amp; Payment System
+- Plans: Monthly and Yearly (discounted)
+- Gateway: Mock payment service (Stripe unavailable in India)
+- Access Control: Non-subscribers get restricted access
+- Lifecycle: renewal, cancellation, lapsed states
+- Real-time subscription status check on every authenticated request
+
+## 04 Score Management
+- Users enter last 5 golf scores in Stableford format
+- Score range: 1-45
+- Each score requires a date
+- Only latest 5 scores retained — new score auto-replaces oldest
+- Display in reverse chronological order
+
+## 05 Draw &amp; Reward System
+- Draw types: 5-Number Match, 4-Number Match, 3-Number Match
+- Draw logic: Random (lottery) or Algorithmic (weighted by score frequency)
+- Monthly cadence
+- Admin controls publishing
+- Simulation mode before official publish
+- Jackpot rollover if no 5-match winner
+
+## 06 Prize Pool Logic
+- 5-Number Match: 40% of pool — JACKPOT — rolls over if unclaimed
+- 4-Number Match: 35% of pool — no rollover
+- 3-Number Match: 25% of pool — no rollover
+- Auto-calculated from active subscriber count
+- Multiple winners in same tier split prize equally
+
+## 07 Charity System
+- Users select charity at signup
+- Minimum contribution: 10% of subscription fee
+- Users can increase percentage voluntarily
+- Independent donation option
+- Charity listing with search and filter
+- Individual charity profiles with description, images, events
+- Featured charity section on homepage
+
+## 08 Winner Verification
+- Proof upload: screenshot of scores
+- Admin review: Approve or Reject
+- Payment states: Pending → Paid
+
+## 09 User Dashboard
+- Subscription status (active/inactive/renewal date)
+- Score entry and edit interface
+- Selected charity and contribution percentage
+- Participation summary (draws entered, upcoming draws)
+- Winnings overview: total won and payment status
+
+## 10 Admin Dashboard
+- User Management: view/edit profiles, edit scores, manage subscriptions
+- Draw Management: configure logic, run simulations, publish results
+- Charity Management: add/edit/delete charities, manage media
+- Winners Management: view list, verify submissions, mark payouts
+- Reports: total users, prize pool, charity totals, draw statistics
+
+## 11 Technical Requirements
+- Mobile-first, fully responsive
+- Next.js 16 App Router, TypeScript
+- Supabase for auth and database
+- ShadCN Nova preset, Tailwind CSS v4
+- Secure authentication, HTTPS
+- Email notifications for draw results and winner alerts
+
+## 12 Design Direction
+- NOT a golf website — no fairways, no plaid, no club imagery
+- Emotion-driven — lead with charitable impact
+- Feel: modern fintech/charity app (Monzo, Every.org energy)
+- Subtle animations and micro-interactions
+- Mobile-first responsive
+- CTA: subscribe button must be prominent and persuasive
+
+## 13 Database Tables Required
+- profiles: user data, role (subscriber/admin)
+- subscriptions: plan type, status, renewal dates
+- scores: max 5 per user, rolling
+- charities: listings with content and media
+- draws: monthly draw records, status, published flag
+- draw_entries: user participation per draw
+- winners: match type, prize amount, verification status
+
+## 14 Mandatory Deliverables
+- Live deployed URL on Vercel (new account)
+- Supabase backend (new project)
+- User panel with test credentials
+- Admin panel with admin credentials
+- Clean well-commented codebase
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dzaky 双语复古作品集 | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Dzaky 双语复古作品集</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># PRD.md: Portfolio Architecture &amp; System Instructions
+
+## 1. Role &amp; Objective
+You are an Expert Frontend Architect specializing in Next.js 16, React 19.2, Tailwind CSS, and React Three Fiber. Your objective is to build a highly distinctive, single-page portfolio utilizing a &quot;Corporate Weirdcore&quot; aesthetic. 
+
+Do NOT generate generic, smooth web templates. You must strictly adhere to the chunky, retro OS constraints and design systems outlined in this document and `DESIGN.md`.
+
+## 2. Technical Stack &amp; Constraints
+* **Framework:** Next.js 16 (App Router) with React 19.2.
+* **Bundler:** Turbopack.
+* **Language:** TypeScript (Strict mode).
+* **Styling:** Tailwind CSS (extended with custom variables for hard shadows and thick borders).
+* **3D Engine:** `@react-three/fiber` and `three`.
+    * *Constraint:* The 3D element should mimic PS1-era low-poly graphics. Use flat shading (`MeshBasicMaterial` or `MeshToonMaterial`) and rigid rotations.
+* **Localization (i18n):** Native Next.js dynamic routing (`app/[lang]`) utilizing raw JSON dictionaries (`en.json`, `id.json`). No heavy third-party i18n libraries.
+* **State Management:** React `useState`/`useTransition` for the project carousel modals.
+
+## 3. Layout Architecture (The 8-Point Flow)
+The application abandons a rigid full-page grid for a sequential, narrative layout using retro OS &quot;Windows&quot;.
+
+1. **Header:** Clunky, bordered nav bar with a physical-feeling toggle switch for `EN / ID`.
+2. **Main Profile (Hero):** Massive serif typography paired with a harshly bordered Profile Picture container. Includes the 3D `&lt;Canvas&gt;` rendering a low-poly geometric object.
+3. **Education:** Presented as a clunky system log or &quot;Window&quot; block.
+4. **Short Profile (The Inventory):** A cluster of small windows displaying tech stack tags (`Next.js`, `TypeScript`) and current status.
+5. **Projects (The Realms):** Massive, text-heavy dialogue boxes.
+    * *Interaction:* Clicking a project opens `Image_Viewer.exe` (A modal overlay with a harsh backdrop and raw `[ &lt; ]` `[ &gt; ]` navigation buttons to cycle through project screenshots).
+6. **Experience:** An interactive accordion or zig-zag timeline. Expanding a role snaps it open instantly.
+7. **Contact (&quot;Let&#39;s Talk&quot;):** Screen-filling section with a massive, blocky email button.
+8. **Footer:** Thick top border, containing retro web badges, social links, and a dynamic randomized quote string.
+
+## 4. Content Dictionary (The Source of Truth)
+When generating UI components, use ONLY the following verified data. **Do NOT invent, hallucinate, or add marketing fluff.**
+
+### Identity
+* **Name:** Dzaky Fatur Rahman
+* **Title:** Lead Fullstack Engineer &amp; AI Integrator
+* **Summary:** Architecting scalable omnichannel SaaS platforms, AI-integrated systems, and secure civic web infrastructure. Proven track record of managing the end-to-end SDLC and leading technical divisions.
+
+### Project 1: Chatrigo (SaaS &amp; AI Orchestration)
+* **Role:** Lead Fullstack Engineer at PT Rigo Inovasi Digital
+* **Stack:** Next.js 15/16, Prisma, Supabase, PostgreSQL (pgvector)
+* **Details:** Multi-tenant B2B omnichannel AI chatbot platform (WhatsApp, Telegram). Anti-hallucination AI with RAG and AI Business Advisor. Led technical division and code quality standards.
+* **Images:** `/images/chatrigo/*` in `en.json` / `id.json`
+
+### Project 2: Chatrigo Mobile (SaaS &amp; Mobile)
+* **Role:** Lead Fullstack Engineer at PT Rigo Inovasi Digital
+* **Stack:** Expo, React Native, TypeScript
+* **Details:** Mobile companion for the Chatrigo omnichannel SaaS — agent and conversation workflows on the go, same backend as web.
+* **Images:** `/images/chatrigo-mobile/1.png`–`3.png`
+
+### Project 3: E-Sign (Civic Tech)
+* **Role:** Fullstack Web &amp; Mobile Developer at Diskominfo Balikpapan
+* **Stack:** Laravel, Tailwind CSS, Queue Processing
+* **Details:** Municipal E-Signature — QR generation, queue processing, government API verification; deployed for signing workflows including city schools.
+* **Images:** `/images/e-sign/1.png`–`6.png`
+
+### Project 4: E-KGB (Civic Tech)
+* **Role:** Fullstack Web &amp; Mobile Developer at Diskominfo Balikpapan
+* **Stack:** Laravel, Tailwind CSS
+* **Details:** Personnel salary and promotion (KGB) management — dashboards and secure auth.
+* **Images:** `/images/e-kgb/1.png`–`2.png`
+
+### Project 5: E-Manuntung (Civic Tech)
+* **Role:** Fullstack Web &amp; Mobile Developer at Diskominfo Balikpapan
+* **Stack:** Flutter
+* **Details:** Flutter web/mobile public-service app for Diskominfo Balikpapan citizen services.
+* **Images:** `/images/e-manuntung/1.jpg`, `2.png`
+
+### Project 6: UNITY 2025 (Campus / Events)
+* **Role:** Website Coordinator at UNITY UMN
+* **Stack:** Next.js, TypeScript, Tailwind CSS
+* **Details:** UNITY UMN English competition website (2025) — registration, content, publication pipelines.
+* **Images:** `/images/unity/unity1.png`–`6.png`
+
+### Project 7: Starlight 2024 (Campus / Events)
+* **Role:** Campus web (STARLIGHT UMN)
+* **Stack:** Next.js, TypeScript, Tailwind CSS
+* **Details:** STARLIGHT UMN event/competition website (2024).
+* **Images:** `/images/starlight/starlight1.png`–`6.png`
+
+### Project 8: Intelligent Tutoring System (Academic/AI)
+* **Role:** Informatics Graduate (GPA 3.71/4.00) at Universitas Multimedia Nusantara
+* **Stack:** Python, AI Agents, LLM Engineering
+* **Details:** Undergraduate thesis — Octalysis gamification and autonomous AI agents for adaptive tutoring and real-time feedback.
+* **Images:** `/images/its/*` (Starcoder)
+
+### Project 9: AikoPetshop (Academic / Web)
+* **Role:** UMN Informatics coursework
+* **Stack:** Laravel, PHP, Tailwind CSS
+* **Details:** Pet shop web storefront (course project).
+* **Images:** `/images/aiko_petshop/aiko1.png`–`12.png`
+
+### Project 10: Pemrograman Web Forums (Academic / Web)
+* **Role:** UMN Informatics — Web Programming context
+* **Stack:** Laravel, PHP, MySQL
+* **Details:** Forum/discussion web app (course deliverable).
+* **Images:** `/images/astratech/astra1.png`
+
+### Project 11: MeowTask (Academic / Web)
+* **Role:** UMN Informatics lab/course project
+* **Stack:** JavaScript, Node.js, Express
+* **Details:** Task/productivity web app with CRUD workflows.
+* **Images:** `/images/meowtask/meowtask1.jpg`–`4.jpg`
+
+### Project 12: UQuizz (Academic / Web)
+* **Role:** UMN Informatics coursework
+* **Stack:** JavaScript, HTML, CSS
+* **Details:** Quiz/assessment web application.
+* **Images:** `/images/uquizz/uquizz1.png`–`7.png`
+
+### Project 13: Portfolio Website (Personal / Frontend)
+* **Role:** Personal project (this repository)
+* **Stack:** Next.js 16, React 19, TypeScript, Tailwind CSS, @react-three/fiber
+* **Details:** Corporate Weirdcore single-page portfolio with EN/ID i18n and Image_Viewer.exe modal.
+* **Images:** (empty in JSON until added)
+
+### Certifications &amp; Specs
+* **Language:** TOEIC (960/990), Duolingo English Test (145/160)
+* **Tech:** Huawei HCIA-AI, Data Science Fundamentals (DQLab)</code></pre>
+    </section>
+  </main>
+</body>
+</html>

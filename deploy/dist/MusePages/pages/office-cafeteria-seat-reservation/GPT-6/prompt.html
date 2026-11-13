@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blu Reserve 办公餐厅座位预约 | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Blu Reserve 办公餐厅座位预约</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Blu-Reserve MVP - Frontend Tasks
+
+## Project Overview
+
+A cafeteria seat reservation system for post-COVID office spaces. Employees can book seats (not tables) for 30-minute time slots during office hours.
+
+**Tech Stack:** Next.js, TypeScript, Tailwind CSS
+**Design Direction:** Modern, sleek cafeteria aesthetic with blue-centric palette
+
+---
+
+## 📋 Task List
+
+### Phase 1: Foundation
+
+- [ ] **1.1 Project Setup**
+    - Configure Tailwind with custom blue palette
+    - Set up folder structure (components, lib, hooks, types)
+    - Install and configure distinctive fonts
+    - Create CSS variables for theming
+
+- [ ] **1.2 Mock API Layer**
+    - Create `/api/auth/login` mock handler
+    - Create `/api/auth/logout` mock handler
+    - Create `/api/bookings/my` mock handler
+    - Create `/api/bookings/create` mock handler
+    - Create `/api/seats/availability` mock handler (seat status for time slot)
+
+- [ ] **1.3 Types &amp; Constants**
+    - Define TypeScript interfaces (Seat, Booking, User, ApiResponse)
+    - Define constants (time slots, table/seat configuration)
+
+---
+
+### Phase 2: Authentication
+
+- [ ] **2.1 Auth Context**
+    - Create AuthContext with login state
+    - Handle session persistence (localStorage/cookies)
+    - Protected route wrapper component
+
+- [ ] **2.2 Login Page**
+    - Employee ID input field
+    - Password input field
+    - Error message display for invalid credentials
+    - Loading state during authentication
+    - Redirect to dashboard on success
+
+---
+
+### Phase 3: Core UI
+
+- [ ] **3.1 Dashboard Layout**
+    - Header with Blu-Reserve branding
+    - User info display
+    - Logout button
+    - Main content area
+
+- [ ] **3.2 Cafeteria Floor Plan**
+    - Visual layout of 6 tables
+    - 5 chairs per table (30 total seats)
+    - Seat states: available, booked, selected
+    - Interactive seat selection
+    - Table numbering/labeling
+
+- [ ] **3.3 Time Slot Selector**
+    - 9:00 AM to 5:00 PM range
+    - 30-minute intervals (16 slots total)
+    - Visual time picker UI
+    - Current time indicator
+    - Selected slot highlight
+
+---
+
+### Phase 4: Booking Flow
+
+- [ ] **4.1 Seat Booking Interaction**
+    - Click seat to select
+    - Show seat details on selection
+    - Confirm booking button
+    - API call to create booking
+    - Success confirmation modal/toast
+    - Error handling with rejection reasons:
+        - SEAT_UNAVAILABLE
+        - MANAGER_CAPACITY_EXCEEDED
+        - INVALID_TIME_RANGE
+
+- [ ] **4.2 My Bookings View**
+    - List view of today&#39;s bookings
+    - Show: seat number, time range, status
+    - Visual status indicators (BOOKED, etc.)
+    - Empty state if no bookings
+
+---
+
+### Phase 5: Polish
+
+- [ ] **5.1 Animations &amp; Micro-interactions**
+    - Page transitions
+    - Seat hover effects
+    - Button interactions
+    - Loading skeletons
+    - Success/error animations
+
+- [ ] **5.2 Responsive Design**
+    - Ensure usability on tablet/mobile
+    - Adaptive cafeteria layout
+
+- [ ] **5.3 Final Touches**
+    - Favicon and metadata
+    - Error boundaries
+    - Edge case handling
+
+---
+
+## 🎨 Design Notes
+
+**Color Palette:**
+
+- Primary: Deep blue (#0A2540) to Electric blue (#0066FF)
+- Accent: Cyan/Teal highlights
+- Neutral: Slate grays
+- Status: Green (available), Red (booked), Amber (selected)
+
+**Typography:**
+
+- Display: Something bold and modern (e.g., Syne, Plus Jakarta Sans)
+- Body: Clean sans-serif with good readability
+
+**Aesthetic:**
+
+- Clean lines, generous whitespace
+- Subtle shadows and depth
+- Smooth transitions
+- Glass-morphism elements for modals
+- Cafeteria/architectural blueprint vibes for the floor plan
+
+---
+
+## 📡 API Reference
+
+| Endpoint                  | Method | Purpose                       |
+| ------------------------- | ------ | ----------------------------- |
+| `/api/auth/login`         | POST   | Authenticate employee         |
+| `/api/auth/logout`        | POST   | End session                   |
+| `/api/bookings/my`        | GET    | Get today&#39;s bookings          |
+| `/api/bookings/create`    | POST   | Create new booking            |
+| `/api/seats/availability` | GET    | Get seat status for time slot |
+
+---
+
+## 🗂️ Seat Configuration
+
+```
+Tables: 6 (arranged in 2 rows of 3)
+Seats per table: 5
+Total seats: 30
+
+Naming: T1-S1 through T6-S5
+  - T = Table number (1-6)
+  - S = Seat number (1-5)
+```
+
+---
+
+## ⏰ Time Slots
+
+```
+09:00 - 09:30
+09:30 - 10:00
+10:00 - 10:30
+10:30 - 11:00
+11:00 - 11:30
+11:30 - 12:00
+12:00 - 12:30
+12:30 - 13:00
+13:00 - 13:30
+13:30 - 14:00
+14:00 - 14:30
+14:30 - 15:00
+15:00 - 15:30
+15:30 - 16:00
+16:00 - 16:30
+16:30 - 17:00
+```
+
+---
+
+## Progress Tracker
+
+| Phase                   | Status         | Notes |
+| ----------------------- | -------------- | ----- |
+| Phase 1: Foundation     | 🔴 Not Started |       |
+| Phase 2: Authentication | 🔴 Not Started |       |
+| Phase 3: Core UI        | 🔴 Not Started |       |
+| Phase 4: Booking Flow   | 🔴 Not Started |       |
+| Phase 5: Polish         | 🔴 Not Started |       |
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

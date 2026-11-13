@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flowline | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Flowline</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code>Create a blog and content hub page for a SaaS product called &quot;Flowline&quot; (project management tool) that serves as the company&#39;s content marketing engine:
+
+1. NAVIGATION BAR
+- Logo: &quot;Flowline&quot; with abstract flow icon in #2563EB blue
+- Links: Product, Solutions, Pricing, Resources (active dropdown), Company
+- Resources dropdown: Blog, Guides, Webinars, Case Studies, API Docs
+- Right side: Search icon, &quot;Sign In&quot; text link, &quot;Start Free&quot; button (#2563EB)
+- Sticky with white background and subtle bottom border on scroll
+
+2. HERO SECTION (full-width, 50vh)
+- Light gradient background from #EFF6FF to white
+- Large headline: &quot;The Flowline Blog&quot;
+- Subheadline: &quot;Insights on productivity, project management, and building better teams&quot;
+- Search bar with icon: &quot;Search articles...&quot; (480px max-width, centered)
+- Topic filter pills below search: All, Productivity, Engineering, Remote Work, Leadership, Product Updates, Customer Stories
+- Active pill filled #2563EB with white text, others outlined
+
+3. FEATURED ARTICLE (full-width card, 400px height)
+- Left 55%: large thumbnail image with rounded corners (12px)
+- Right 45%: padding 48px
+  - Category badge: &quot;PRODUCTIVITY&quot; in #2563EB
+  - Title: &quot;The 4-Day Work Week: How We Boosted Output by 23%&quot;
+  - Excerpt: &quot;After six months of experimentation, here&#39;s what we learned about compressed schedules, async communication, and measuring what matters.&quot;
+  - Author row: avatar, &quot;Sarah Chen · Head of People&quot; · &quot;Mar 10, 2026&quot; · &quot;8 min read&quot;
+  - &quot;Read Article →&quot; link in blue
+- Card has subtle shadow and hover lift effect
+
+4. ARTICLE GRID (3-column, 32px gap)
+- 9 article cards total (3 rows), each card:
+  - Thumbnail image (16:9 ratio, rounded top corners)
+  - Category badge (small, colored by topic)
+  - Title (20px, semibold, 2-line clamp)
+  - Excerpt (14px, gray-600, 2-line clamp)
+  - Bottom row: author avatar (28px round), author name, date, read time
+  - Hover: subtle shadow increase, image slight zoom
+
+Sample articles:
+- &quot;Async-First: 7 Rules for Teams That Ship Faster&quot; — Engineering, 6 min
+- &quot;Building a Culture of Ownership in Remote Teams&quot; — Remote Work, 10 min
+- &quot;What We Shipped in February 2026&quot; — Product Updates, 4 min
+- &quot;How Designlab Reduced Project Delays by 40%&quot; — Customer Stories, 7 min
+- &quot;The Manager&#39;s Guide to Running Better Standups&quot; — Leadership, 5 min
+- &quot;Why We Replaced Meetings With Flowline Briefs&quot; — Productivity, 9 min
+- &quot;CI/CD for Non-Engineers: A Visual Guide&quot; — Engineering, 12 min
+- &quot;From Chaos to Clarity: Our Planning Framework&quot; — Productivity, 8 min
+- &quot;Introducing Flowline AI: Your Smart Assistant&quot; — Product Updates, 3 min
+
+Category badge colors:
+- Productivity: #2563EB (blue)
+- Engineering: #7C3AED (purple)
+- Remote Work: #059669 (green)
+- Leadership: #D97706 (amber)
+- Product Updates: #DC2626 (red)
+- Customer Stories: #0891B2 (cyan)
+
+5. NEWSLETTER SIGNUP BANNER (between row 2 and 3)
+- Background: #1E3A5F dark blue with subtle dot pattern
+- Headline: &quot;Get smarter about work, weekly&quot;
+- Subheadline: &quot;Join 12,000+ managers and makers. No spam, unsubscribe anytime.&quot;
+- Email input + &quot;Subscribe&quot; button inline (max-width 500px)
+- Small text: &quot;By subscribing, you agree to our Privacy Policy&quot;
+- Decorative envelope icon
+
+6. PAGINATION
+- &quot;Load More Articles&quot; button (outline style, centered)
+- Or numbered pagination: ← 1 2 3 ... 12 →
+- Show &quot;Showing 9 of 108 articles&quot;
+
+7. RESOURCE SIDEBAR (right rail on desktop, 300px width)
+- &quot;Popular This Month&quot; — top 5 articles, numbered list with titles and read counts
+  1. &quot;The 4-Day Work Week...&quot; — 14.2K reads
+  2. &quot;Async-First: 7 Rules...&quot; — 9.8K reads
+  3. &quot;Flowline AI: Your Smart...&quot; — 8.1K reads
+  4. &quot;Manager&#39;s Guide to Standups&quot; — 6.4K reads
+  5. &quot;CI/CD for Non-Engineers&quot; — 5.7K reads
+- Divider
+- &quot;Free Resources&quot; section:
+  - &quot;📘 The Remote Team Playbook&quot; — Download PDF
+  - &quot;📊 Project Health Scorecard&quot; — Download Template
+  - &quot;🎥 Flowline Masterclass&quot; — Watch Free
+  Each with thumbnail, title, and download/watch CTA
+
+8. TOPIC PAGES SECTION (below main grid)
+- Headline: &quot;Explore by Topic&quot;
+- 6 topic cards in 3x2 grid:
+  - Icon + topic name + article count
+  - &quot;Productivity — 28 articles&quot;
+  - &quot;Engineering — 22 articles&quot;
+  - &quot;Remote Work — 19 articles&quot;
+  - &quot;Leadership — 15 articles&quot;
+  - &quot;Product Updates — 14 articles&quot;
+  - &quot;Customer Stories — 10 articles&quot;
+- Each card links to filtered view, hover border highlight
+
+9. FOOTER CTA
+- Light blue background (#EFF6FF)
+- &quot;Ready to work smarter?&quot;
+- &quot;See how Flowline helps teams ship 2x faster.&quot;
+- &quot;Start Free Trial&quot; button and &quot;Book a Demo&quot; outline button
+
+Design: Clean editorial style. Primary: #2563EB (blue), text: #111827 (gray-900), body: #4B5563 (gray-600), backgrounds: white and #F9FAFB. Typography: Inter for body, Cal Sans or similar geometric sans for headings. Cards with 8px border-radius and #E5E7EB borders. Generous whitespace between sections (80px).
+
+Responsive: On tablet, article grid becomes 2 columns with sidebar below. On mobile, single column, featured article stacks vertically (image on top), topic pills horizontally scrollable, newsletter banner full-width with stacked input/button. Sticky mobile header with hamburger menu.</code></pre>
+    </section>
+  </main>
+</body>
+</html>

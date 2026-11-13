@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kite | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Kite</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code>Create a pre-launch waitlist landing page for a product called &quot;Kite&quot; (an AI-powered email client) designed to build hype and collect signups before launch:
+
+1. NAVIGATION BAR (minimal)
+- Logo: &quot;Kite&quot; with paper plane icon in #6366F1 (indigo)
+- Right side only: &quot;Follow us on X&quot; link with X icon
+- No other nav links — keep focus on the signup
+- Fixed position, transparent background that turns white on scroll
+
+2. HERO SECTION (centered, 80vh min-height)
+- Pre-header badge: &quot;LAUNCHING SPRING 2026&quot; in a rounded pill (#EEF2FF background, #6366F1 text)
+- Main headline (56px): &quot;Email that works for you, not against you&quot;
+- Subheadline (20px, gray-500): &quot;Kite uses AI to draft replies, sort your inbox, and surface what matters. Join the waitlist for early access.&quot;
+- Email input (480px max-width, 52px height) with placeholder &quot;Enter your email&quot;
+- &quot;Join the Waitlist&quot; button (#6366F1, 52px height, right-aligned to input)
+- Below form: &quot;🎉 4,832 people already on the waitlist&quot; with subtle count-up animation
+- Small trust line: &quot;No spam. Unsubscribe anytime. We respect your inbox (obviously).&quot;
+
+3. PRODUCT TEASER (3-column feature preview)
+- Section title: &quot;A smarter inbox is coming&quot;
+- Three feature cards with icon, title, and one-liner:
+  - 🤖 &quot;AI Draft Replies&quot; — &quot;One-click responses that actually sound like you&quot;
+  - 📬 &quot;Smart Triage&quot; — &quot;Important emails first. Newsletters later. Spam never.&quot;
+  - ⚡ &quot;Instant Search&quot; — &quot;Find any email in under 100ms. Seriously.&quot;
+- Cards: white background, 1px #E5E7EB border, 12px radius, 32px padding
+- Subtle hover: border color transitions to #6366F1
+
+4. HOW IT WORKS (visual timeline)
+- Headline: &quot;How the waitlist works&quot;
+- Three numbered steps in a horizontal flow with connecting line:
+  1. &quot;Sign up&quot; — &quot;Enter your email to reserve your spot&quot;
+  2. &quot;Move up the list&quot; — &quot;Share your link to jump ahead (each referral = +100 spots)&quot;
+  3. &quot;Get early access&quot; — &quot;Top of the list gets invited first with 3 months free&quot;
+- Each step: number circle (48px, indigo), title (18px bold), description (14px gray)
+- Connecting line: dashed #C7D2FE between circles
+
+5. REFERRAL PROGRAM SECTION (shown after signup, or as preview)
+- Headline: &quot;Skip the line&quot;
+- Subheadline: &quot;Share your unique link. Every friend who joins moves you 100 spots ahead.&quot;
+- Referral link display: input with &quot;https://kite.email/r/abc123&quot; and copy button
+- Share buttons row: X (Twitter), LinkedIn, Email, WhatsApp
+- Stats dashboard (mini):
+  - &quot;Your position: #4,833&quot;
+  - &quot;Referrals: 0&quot;
+  - &quot;Spots jumped: 0&quot;
+- Progress bar showing position relative to total signups
+
+6. SOCIAL PROOF SECTION
+- Headline: &quot;People are excited&quot;
+- Grid of 6 tweet-style testimonial cards:
+  - &quot;@designlead: Just signed up for @kite_email — finally someone rethinking email with AI&quot;
+  - &quot;@sarahdev: The referral system is genius. Already moved up 300 spots 🚀&quot;
+  - &quot;@markfounder: If Kite is half as good as their landing page, I&#39;m sold&quot;
+  - &quot;@emilywrites: AI email replies that don&#39;t sound robotic? Take my money&quot;
+  - &quot;@alexops: Referred my whole team. We need this yesterday&quot;
+  - &quot;@jakepm: Smart triage is the feature I didn&#39;t know I needed&quot;
+- Cards styled like social posts: avatar, name, handle, verified badge, text
+- Masonry-style layout (2 columns on desktop)
+
+7. FAQ SECTION (accordion)
+- &quot;When does Kite launch?&quot; — &quot;We&#39;re targeting Spring 2026. Waitlist members get access first.&quot;
+- &quot;Is the waitlist free?&quot; — &quot;Yes, completely free. Top positions also get 3 months of Kite Pro free.&quot;
+- &quot;How does the referral system work?&quot; — &quot;Each person who joins through your link moves you up 100 spots. No limit.&quot;
+- &quot;What platforms will Kite support?&quot; — &quot;Web, macOS, iOS at launch. Windows and Android coming shortly after.&quot;
+- &quot;Will my data be used to train AI?&quot; — &quot;Never. Your email data stays private and encrypted. We use AI models without training on your content.&quot;
+
+8. FINAL CTA (repeat signup)
+- Dark background: #1E1B4B (deep indigo)
+- Headline (white): &quot;Don&#39;t miss your spot&quot;
+- Subheadline (indigo-300): &quot;The first 1,000 users get Kite Pro free for 3 months&quot;
+- Email input + &quot;Join the Waitlist&quot; button (white button with indigo text)
+- Countdown or waitlist counter: &quot;4,832 already joined&quot;
+
+9. FOOTER (minimal)
+- Logo + tagline: &quot;Email, reimagined&quot;
+- Links: Privacy Policy, Terms, X (Twitter), LinkedIn
+- Copyright: &quot;© 2026 Kite, Inc.&quot;
+
+Design: Minimal and modern. Primary: #6366F1 (indigo), dark backgrounds: #1E1B4B, text: #111827, light gray: #F9FAFB. Typography: Plus Jakarta Sans headings, Inter body. Heavy whitespace. Cards have soft shadows (0 1px 3px rgba(0,0,0,0.1)). Smooth micro-interactions: button hover scale, input focus glow, count-up animation on the waitlist number. Background: subtle gradient from white to #F5F3FF.
+
+Responsive: On mobile, hero section reduces to 48px headline, email input stacks above button (full-width each). Feature cards stack vertically. Timeline steps stack vertically with vertical connecting line. Share buttons wrap to 2x2 grid. FAQ accordion full-width. Sticky bottom bar with &quot;Join Waitlist&quot; CTA on mobile (appears after scrolling past hero).</code></pre>
+    </section>
+  </main>
+</body>
+</html>
