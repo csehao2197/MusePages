@@ -76,7 +76,7 @@ out\pages\<prompt_name>\
 
 `preview.png` 必须来自对应模型静态首页的实际浏览器渲染，与实际 `staticDir` 中的 `index.html` 同级保存，不使用占位图、设计稿或其他模型的截图。
 
-`src\workflows\render-prompt-pages.mjs` 在静态检查通过后、发布登记前调用 `src\workflows\generate-preview.mjs`。截图脚本接收静态目录，也可单独执行：
+在静态检查通过后、发布登记前调用 `src\workflows\generate-preview.mjs`。截图脚本接收静态目录，也可单独执行：
 
 ```powershell
 node src\workflows\generate-preview.mjs out\pages\006-travel-agency-homepage\model-a\out
