@@ -1,0 +1,147 @@
+Create a premium, aspirational landing page for "Ridgeline at Cedar Creek" — a new residential development of 86 single-family homes by a regional builder called "Crestwood Homes" in the suburbs of Raleigh, NC. The design should feel polished, trustworthy, and forward-looking — conveying the excitement of buying a brand-new home in a planned community. Target audience: families and young professionals (30-50) looking for new construction in the $425K-$650K range.
+
+1. NAVIGATION BAR
+- Logo: "Crestwood Homes" in a clean geometric sans-serif with a subtle roof peak integrated into the logomark
+- Links: Community, Floor Plans, Gallery, Availability, Financing, Contact
+- Right side: phone number "919-555-0142" with phone icon + "Schedule a Tour" CTA (solid #1D4ED8 blue-700, white text)
+- White background, subtle shadow, sticky on scroll
+- Mobile: logo + phone icon + hamburger
+
+2. HERO SECTION
+- Full-width cinematic rendering of the community from an elevated angle — homes along tree-lined streets, community green space, families walking, golden-hour lighting
+- Gradient overlay bottom 50% (dark)
+- Headline: "Your New Home at Ridgeline at Cedar Creek" in bold, 52px, white
+- Subheadline: "86 thoughtfully designed single-family homes from the $420s in Southwest Raleigh. Now selling Phase 2." in 18px, white/85%
+- Two CTAs: "Explore Floor Plans" (solid #1D4ED8) and "Schedule a Model Home Tour" (outline white)
+- Floating badge in corner: "Phase 2 Now Selling · 14 Homesites Remaining" with pulsing green dot
+- Animated counter bar below hero on white background:
+  - "Starting from $425,000" | "3–5 Bedrooms" | "1,800–3,200 sq ft" | "0.25–0.40 Acre Lots"
+
+3. COMMUNITY OVERVIEW
+- Headline: "Life at Ridgeline"
+- Subtext: "A walkable, amenity-rich neighborhood designed for how families actually live — with trails, green space, and neighbors who become friends."
+- 2-column layout: left text content, right photo collage (3 images: community pool, playground with kids, couple walking dog on trail)
+- Community highlights as icon + text rows:
+  - 🏊 "Resort-style pool & clubhouse" — opens summer 2026
+  - 🌳 "12 acres of preserved green space with walking trails"
+  - 🛝 "Two playgrounds + sand volleyball court"
+  - 🚌 "Zoned for top-rated Wake County schools (Cedar Creek Elementary, Panther Creek High)"
+  - 🛒 "5 minutes to Costco, Whole Foods, and Crossroads Plaza"
+  - 🏥 "8 minutes to WakeMed Cary Hospital"
+- "Download Community Brochure (PDF)" link
+
+4. FLOOR PLANS
+- Headline: "Choose Your Floor Plan"
+- Filter bar: bedrooms (3 / 4 / 5), sq ft range slider, price range, stories (1-story / 2-story)
+- 4 floor plan cards in 2x2 grid:
+  - "The Oakmont" — 3 bed / 2.5 bath — 1,842 sq ft — 1-story — From $425,000 — rendering of craftsman-style exterior
+  - "The Ashford" — 4 bed / 3 bath — 2,456 sq ft — 2-story — From $498,000 — rendering of modern farmhouse exterior — "Most Popular" badge
+  - "The Belmont" — 4 bed / 3.5 bath — 2,890 sq ft — 2-story — From $565,000 — rendering of transitional exterior
+  - "The Crestview" — 5 bed / 4 bath — 3,218 sq ft — 2-story — From $639,000 — rendering of estate-style exterior — "Model Home Open" badge
+- Each card: exterior rendering (aspect 16:10), plan name (bold, 22px), specs row (bed/bath/sqft/stories), starting price (blue-700, bold), badges, two buttons: "View Floor Plan" (outline) + "Check Availability" (solid)
+- Click "View Floor Plan" opens detail modal with:
+  - Floor plan line drawing (each level)
+  - Room dimensions list
+  - Included features list
+  - Customization options available
+  - "Request Pricing" CTA
+
+5. INTERACTIVE SITE PLAN / LOT AVAILABILITY MAP
+- Headline: "Find Your Homesite"
+- Interactive SVG site plan showing all 86 lots:
+  - Color-coded by status:
+    - Available: #22C55E (green) — clickable
+    - Under contract: #F59E0B (amber) — tooltip only
+    - Sold: #94A3B8 (slate-400) — grayed out
+    - Model home: #1D4ED8 (blue) — special marker
+  - Legend bar below map explaining color codes
+- Lot count summary: "14 Available · 23 Under Contract · 46 Sold · 3 Model Homes"
+- Click an available lot to see popover:
+  - Lot number, size (e.g., "Lot 47 · 0.31 acres"), orientation (e.g., "South-facing backyard")
+  - Compatible floor plans for this lot size
+  - Premium features (e.g., "Backs to green space" or "Corner lot")
+  - "Request Info on This Lot" CTA
+- Phase labels: Phase 1 (sold out), Phase 2 (selling now), Phase 3 (coming Q4 2026)
+- Mobile: site plan becomes horizontally scrollable/zoomable, or switches to list view with lot cards
+
+6. MODEL HOME VIRTUAL TOUR
+- Headline: "Tour Our Model Homes"
+- Subtext: "Walk through The Crestview and The Ashford — finished, furnished, and ready to inspire."
+- 2 model home cards side by side:
+  - "The Crestview — Model Home" — photo of furnished living room — "3,218 sq ft · 5 bed · 4 bath" — "Take Virtual Tour" button (launches 360° embedded tour or video) + "Schedule In-Person Tour" button
+  - "The Ashford — Model Home" — photo of furnished kitchen — "2,456 sq ft · 4 bed · 3 bath" — same two CTAs
+- Below: "Model Home Hours: Thu–Mon 10AM–5PM · Closed Tue–Wed" with address and directions link
+- Photo gallery strip: 6 thumbnail images (kitchen, master bath, great room, backyard, front porch, home office) — click to expand lightbox
+
+7. INCLUDED FEATURES & UPGRADES
+- Headline: "What's Included — Standard"
+- Two columns comparing Standard vs. Premium Upgrade Package:
+  - Kitchen: granite countertops vs. quartz waterfall island · stainless steel appliances vs. GE Café series · 36" cabinets vs. 42" soft-close with under-cabinet lighting
+  - Flooring: LVP throughout main level vs. hardwood throughout + tile in all baths
+  - Exterior: fiber cement siding vs. stone/brick accent facades · sodded front yard vs. full landscape package with irrigation
+  - Smart Home: Schlage keypad entry vs. full Ring security system + Nest thermostat + motorized blinds
+  - Energy: Energy Star certified, 2x6 wall framing, tankless water heater (standard on all homes)
+- "Standard" column: white background. "Premium" column: light blue highlight (#EFF6FF)
+- CTA: "Request Full Specifications Sheet" button
+
+8. FINANCING & INCENTIVES
+- Headline: "Make It Affordable"
+- Subtext: "Our preferred lender partners offer exclusive rates for Ridgeline buyers."
+- 3 incentive cards:
+  - 🏦 "Preferred Lender Rate" — "Lock in 5.99% with Crestwood Mortgage Partners*" — "Save up to $12,000 in closing costs"
+  - 💰 "Phase 2 Incentive" — "$15,000 toward upgrades or closing costs when you contract by April 30, 2026" — "Limited time" badge
+  - 📋 "VA & FHA Eligible" — "Crestwood homes qualify for VA $0-down and FHA 3.5% down programs"
+- Small print: "*Rate as of March 2026. Subject to credit approval. APR may vary."
+- "Get Pre-Qualified in 10 Minutes →" button (solid blue-700)
+- Background: #F8FAFC light slate
+
+9. TESTIMONIALS
+- Headline: "From Our Homeowners"
+- 3 testimonial cards:
+  - "We looked at resale homes for 6 months and everything needed $40K+ in updates. Building new with Crestwood meant we got exactly what we wanted — and the warranty gave us peace of mind." — The Martinez Family, Lot 22 — photo of family on front porch — ★★★★★
+  - "The build process was transparent. We had a dedicated project manager, a portal to track progress, and they finished 2 weeks ahead of schedule." — Jason & Emily P., Lot 38 — ★★★★★
+  - "Ridgeline sold us — the pool, the trails, the schools. Our kids ride bikes to the playground every afternoon. It feels like a real neighborhood." — Sarah L., Lot 51 — ★★★★★
+- Each: quote, family name, lot number, optional photo, star rating
+
+10. CONTACT & SCHEDULE TOUR FORM
+- Headline: "Ready to Visit?"
+- Split layout: left 55% form, right 45% map with pin on community entrance
+- Form fields:
+  - First name, last name (side by side)
+  - Email, phone (side by side)
+  - "I'm interested in:" — checkboxes: The Oakmont, The Ashford, The Belmont, The Crestview
+  - "I'd like to:" — radio: Schedule a Tour, Get Pricing Info, Speak With a Sales Advisor
+  - "Preferred tour date" — date picker
+  - "Anything else?" — optional textarea
+- Submit: "Request My Tour" (solid blue-700, full-width)
+- Below form: "Sales Center: 100 Ridgeline Drive, Raleigh, NC 27607 · Open Thu–Mon 10AM–5PM · 919-555-0142"
+- Privacy note: "We respect your privacy. Your info is never shared with third parties."
+
+11. FOOTER
+- 4 columns on #1E293B (dark slate) background, white text:
+  - Community: Overview, Floor Plans, Availability, Gallery, Amenities
+  - Buying: Financing, Incentives, FAQ, Build Process Timeline
+  - Crestwood Homes: About, Other Communities, Careers, Warranty, Refer a Friend
+  - Connect: Contact Sales, Schedule Tour, Newsletter, Instagram, Facebook
+- Bottom bar: "© 2026 Crestwood Homes, LLC. All pricing, square footage, and availability subject to change without notice. Renderings are artist's impressions and may vary from final product."
+- Equal Housing Opportunity logo + NC Licensed General Contractor #12345
+
+DESIGN SYSTEM
+- Primary: #1D4ED8 (blue-700) for CTAs, links, and interactive elements
+- Secondary: #1E293B (slate-800) for dark sections and header text
+- Accent: #059669 (emerald-600) for "available" status and positive indicators
+- Amber: #F59E0B for "under contract" and urgency badges
+- Body text: #334155 (slate-700) on light backgrounds
+- Backgrounds: white, #F8FAFC (slate-50), #1E293B (dark slate) alternating
+- Typography: Playfair Display for section headlines (elegant, aspirational), Inter for body and UI elements
+- Cards: 16px border-radius, clean shadows, ample whitespace
+- Premium feel: subtle gradient overlays on hero images, thin gold/amber accent lines on section dividers
+
+RESPONSIVE BEHAVIOR
+- Mobile-first. Hero heading drops to 36px, counter bar stacks 2x2.
+- Floor plan cards stack to single column. Filter bar becomes expandable accordion.
+- Site plan map switches to scrollable list view with lot cards sorted by status (available first).
+- Model home section stacks vertically. Photo strip becomes swipeable carousel.
+- Features comparison becomes tabbed (Standard / Premium) instead of side-by-side columns.
+- Financing cards stack vertically. Contact form stacks above map.
+- Footer collapses to accordion. All touch targets minimum 44px. Sticky "Schedule a Tour" bar on mobile bottom.

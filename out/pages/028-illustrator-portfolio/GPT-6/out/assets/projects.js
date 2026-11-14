@@ -1,0 +1,200 @@
+export const projects=[
+  {
+    "slug": "midnight-garden",
+    "title": "The Midnight Garden",
+    "category": "Book Covers",
+    "client": "Fictional book-cover study",
+    "aspect": 0.72,
+    "description": "A moonlit garden where wild foliage holds a small, quiet world.",
+    "alt": "A cobalt moon, layered teal leaves and a warm ochre deer in a dense night garden.",
+    "motion": false,
+    "year": "2025"
+  },
+  {
+    "slug": "ai-issue",
+    "title": "Bloomberg Businessweek: AI Issue",
+    "category": "Editorial",
+    "client": "Bloomberg — sample from brief",
+    "aspect": 1.4,
+    "description": "Four original concept illustrations exploring relationships between artificial intelligence and human thought.",
+    "alt": "A warm human profile connected to a geometric AI network on an ochre field.",
+    "motion": false,
+    "year": "2025"
+  },
+  {
+    "slug": "fauna-coffee",
+    "title": "Fauna Coffee Branding",
+    "category": "Branding",
+    "client": "Fictional Fauna Coffee",
+    "aspect": 1,
+    "description": "An illustrated coffee identity connecting a daily ritual with the natural world.",
+    "alt": "A blue bird perched among green coffee branches on a cream coffee-label composition.",
+    "motion": false,
+    "year": "2025"
+  },
+  {
+    "slug": "migration",
+    "title": "Migration Patterns",
+    "category": "Personal",
+    "client": "Self-initiated study",
+    "aspect": 0.8,
+    "description": "A study of rhythm, distance and the instinct to find a way home.",
+    "alt": "A flock of dark birds travels across a terracotta sky above a pale sun and layered hills.",
+    "motion": false,
+    "year": "2025"
+  },
+  {
+    "slug": "urban-solitude",
+    "title": "New Yorker: Urban Solitude",
+    "category": "Editorial",
+    "client": "The New Yorker — sample from brief",
+    "aspect": 0.7,
+    "description": "A conceptual cover about finding a private moment in a very public city.",
+    "alt": "Geometric blue city buildings surround a single warmly lit window and a solitary person.",
+    "motion": false,
+    "year": "2025"
+  },
+  {
+    "slug": "dreamscape",
+    "title": "Dreamscape",
+    "category": "Motion",
+    "client": "Self-initiated animated study",
+    "aspect": 1.45,
+    "description": "An original gently moving dream landscape; pause available in project view.",
+    "alt": "Floating pastel islands, a large amber sun and a stairway above a deep blue sea.",
+    "motion": true,
+    "year": "2025"
+  },
+  {
+    "slug": "herbarium",
+    "title": "Wildflower Herbarium",
+    "category": "Personal",
+    "client": "Self-initiated botanical study",
+    "aspect": 1,
+    "description": "A small field guide to the colors and shapes that reward a closer look.",
+    "alt": "Nine individually drawn wildflowers arranged like a botanical specimen collection.",
+    "motion": false,
+    "year": "2025"
+  },
+  {
+    "slug": "lost-city",
+    "title": "HarperCollins: The Lost City",
+    "category": "Book Covers",
+    "client": "HarperCollins — sample from brief",
+    "aspect": 0.75,
+    "description": "A fictional adventure-cover study about a city slowly reclaimed by nature.",
+    "alt": "Warm stone arches, a cobalt doorway and tall leafy palms under a cream sky.",
+    "motion": false,
+    "year": "2025"
+  },
+  {
+    "slug": "oat-campaign",
+    "title": "Oatly Campaign Illustrations",
+    "category": "Branding",
+    "client": "Oatly — sample from brief",
+    "aspect": 1.45,
+    "description": "A self-initiated oat illustration concept; no commercial brand endorsement.",
+    "alt": "Loose ochre oat stems, a cream carton and a blue breakfast bowl on a pale green field.",
+    "motion": false,
+    "year": "2025"
+  },
+  {
+    "slug": "deep-creatures",
+    "title": "Creatures of the Deep",
+    "category": "Personal",
+    "client": "Self-initiated marine study",
+    "aspect": 0.72,
+    "description": "An underwater field of graceful, unfamiliar shapes.",
+    "alt": "A large blue whale, delicate jellyfish and small golden fish in a deep sea.",
+    "motion": false,
+    "year": "2025"
+  },
+  {
+    "slug": "quantum",
+    "title": "Wired Magazine: Quantum Computing",
+    "category": "Editorial",
+    "client": "Wired — sample from brief",
+    "aspect": 1.4,
+    "description": "A conceptual translation of connection and uncertainty into a clear editorial image.",
+    "alt": "Interlocking blue orbit lines, bright nodes and a warm central geometric cube.",
+    "motion": false,
+    "year": "2025"
+  },
+  {
+    "slug": "luna-tea",
+    "title": "Luna Tea Packaging",
+    "category": "Branding",
+    "client": "Fictional Luna Tea",
+    "aspect": 1,
+    "description": "An evening-tea illustration that makes a small daily pause feel special.",
+    "alt": "An owl, crescent moon and leafy tea branches in a midnight-blue label design.",
+    "motion": false,
+    "year": "2025"
+  },
+  {
+    "slug": "orchard",
+    "title": "Orchard Stories",
+    "category": "Book Covers",
+    "client": "Fictional short-story collection",
+    "aspect": 0.78,
+    "description": "A book-jacket concept about the many seasons of belonging.",
+    "alt": "Warm red pears, cream leaves and a hand-drawn orchard pattern on pale blue.",
+    "motion": false,
+    "year": "2025"
+  },
+  {
+    "slug": "seasons",
+    "title": "Seasons in Motion",
+    "category": "Motion",
+    "client": "Self-initiated animated study",
+    "aspect": 1.3,
+    "description": "A quietly animated botanical composition that changes with attention.",
+    "alt": "Fine green stems and large rose petals move gently across an ivory background.",
+    "motion": true,
+    "year": "2025"
+  },
+  {
+    "slug": "coastal",
+    "title": "Coastal Lines",
+    "category": "Personal",
+    "client": "Self-initiated landscape",
+    "aspect": 1.15,
+    "description": "A graphic memory of a long walk where the land meets the sea.",
+    "alt": "Layered teal waves, chalk-white cliffs and a small red boat under an ochre sun.",
+    "motion": false,
+    "year": "2025"
+  },
+  {
+    "slug": "quiet-hours",
+    "title": "Quiet Hours",
+    "category": "Editorial",
+    "client": "Fictional culture-journal study",
+    "aspect": 0.8,
+    "description": "An editorial study about protecting an hour of quiet in a busy day.",
+    "alt": "A person reads beneath a warm lamp beside a tall indigo window and a leafy plant.",
+    "motion": false,
+    "year": "2025"
+  },
+  {
+    "slug": "atlas",
+    "title": "The Neighborhood Atlas",
+    "category": "Editorial",
+    "client": "Self-initiated city illustration",
+    "aspect": 1.25,
+    "description": "An illustrated map of everyday landmarks and the routes between them.",
+    "alt": "A playful neighborhood map with brick houses, a park, river and hand-drawn paths.",
+    "motion": false,
+    "year": "2025"
+  },
+  {
+    "slug": "little-forest",
+    "title": "The Little Forest",
+    "category": "Book Covers",
+    "client": "Fictional children's-book study",
+    "aspect": 0.75,
+    "description": "A woodland cover study about learning to notice the small things.",
+    "alt": "A small rust-colored fox rests below layered green branches and tiny golden stars.",
+    "motion": false,
+    "year": "2025"
+  }
+];

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stellar Forge Delivery Roadmap | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Stellar Forge Delivery Roadmap</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Stellar Forge — Roadmap (SCF Tranche-Aligned)
+
+Tranche structure follows the SCF Build Award rules (handbook: github.com/stellar/scf-handbook): three tranches of deliverables, each with success criteria and a way for reviewers to verify completion. Tranche #2 includes the mandatory threat model + monitoring plan; Tranche #3 is the mainnet launch.
+
+Current status: **Tranche #1 in progress** (core shipped, testnet evidence pending). The Instaward sprint (docs/INSTAWARD-SOW.md) executes the tranche-#1 thin slice.
+
+## Tranche #1 — MVP (20%)
+
+Goal: a developer installs the skill, scaffolds a project, and the workflow builds + evals on Stellar Testnet.
+
+| Deliverable | Success criteria | Reviewer verification | Status |
+|---|---|---|---|
+| Framework 1.0: kernel graph engine, 6 agents, 5 eval suites | Scaffold → build → eval → testnet-deploy passes end-to-end | Repo CI green; clean-checkout `npm install &amp;&amp; npm test` works | done |
+| CLI + templates (contracts/frontend/backend/cicd) | Clean-environment scaffold works from docs alone | Fresh-environment reproduction | done |
+| Testnet thin slice: reference contract + SDK interaction | Soroban contract builds, tests pass, deploys to testnet | Contract ID + tx hash in `data/deployments/testnet.json` | in progress (Instaward) |
+| Eval suites run from a fresh checkout | `npm test` passes or skips gracefully | Test output in CI | done |
+
+## Tranche #2 — Testnet Expansion (30%)
+
+Goal: feature depth — payments, e2e harness, security readiness — all validated on testnet.
+
+| Deliverable | Success criteria | Reviewer verification | Status |
+|---|---|---|---|
+| Testnet reference dApp (token contract + wallet UI + paid API via x402) | Deployed on testnet; contract ID + tx hashes captured | Explorer links + deployment registry | pending |
+| E2E harness (local Stellar + Playwright + Agentic Kit hooks) | e2e suite runs in CI and locally | CI logs + badge | pending |
+| Threat model + monitoring plan (STRIDE-aligned) | Threat model covering generated-code, credential, supply-chain, eval-bypass risks; monitoring metrics, emissions, triggers | Docs in repo (follows Stellar threat-modeling + monitoring templates) | pending |
+| Clean-environment reproducibility + knowledge-graph (graphify) integration | Second developer reproduces workflow from clean setup | Reproduction video + graph output | pending |
+
+## Tranche #3 — Mainnet Launch (40%)
+
+Goal: production release with a mainnet-validated reference dApp and adoption materials.
+
+| Deliverable | Success criteria | Reviewer verification | Status |
+|---|---|---|---|
+| Production release: v1.0 tag, npm publish, skills registry | `npx create-stellar-agentic` installs from npm | npm page + release tag | pending |
+| Reference dApp live on mainnet (token + wallet + paid endpoint) | Mainnet contract deployed + activated; paid request served end-to-end | Explorer links + tx hashes + demo | pending |
+| Docs site + onboarding guides + reproducible examples | Developer goes from docs to mainnet-validated app | Docs site + clean-setup run | pending |
+| Community launch: adoption kit, contribution guide, monitoring live | Contribution guidelines + adoption tutorial; monitoring per tranche-2 plan | Repo + monitoring dashboard | pending |
+
+## Tranche Deadlines
+
+Each tranche submits within 90 days of the previous payment (SCF rule) — timeline: T1 by day 30 (Instaward completes), T2 by day 90, T3 by day 120.</code></pre>
+    </section>
+  </main>
+</body>
+</html>

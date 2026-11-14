@@ -1,0 +1,31 @@
+{
+  "name": "nextjs-sample-workspace",
+  "private": true,
+  "workspaces": ["data/prompts/[0-9]*-*"],
+  "scripts": {
+    "config": "python3 .\\src\\tools\\select_deploy_pages.py",
+    "deploy:sync": "node src/workflows/deploy-site.mjs sync",
+    "deploy:watch": "node src/workflows/deploy-site.mjs watch",
+    "dist": "node src/workflows/deploy-site.mjs dist",
+    "generate": "node src/workflows/render-prompt-pages.mjs",
+    "generate:sample": "node src/workflows/generate-sample.mjs",
+    "publish": "node src/workflows/publish-site.mjs",
+    "validate": "node src/tools/validate.mjs"
+  },
+  "dependencies": {
+    "@tailwindcss/postcss": "4.3.3",
+    "framer-motion": "14.6.0",
+    "lucide-react": "1.61.0",
+    "next": "16.4.3",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "tailwindcss": "4.3.3"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "5.9.3"
+  }
+}

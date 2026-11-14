@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fafaf8">
+  <meta name="description" content="Orbit API reference — a fictional developer platform with versioned docs, six language examples and a private in-browser request playground.">
+  <title>Orbit API — Build with a little more possibility.</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <script src="assets/reference.js" defer></script>
+  <script src="assets/examples.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#introduction">Skip to documentation</a>
+  <header class="site-header"><div class="brand-area"><button class="icon-button mobile-menu" id="mobile-menu" aria-label="Open documentation navigation" aria-expanded="false" aria-controls="sidebar"><svg><use href="assets/icons.svg#menu"/></svg></button><a class="brand" href="index.html"><img src="assets/favicon.svg" alt="" width="27" height="27">orbit<span>/</span><strong>developers</strong></a></div><div class="header-center"><span>API Reference</span><label class="version-select"><span class="sr-only">API version</span><select id="api-version"><option value="2.1">v2.1 · latest</option><option value="2.0">v2.0</option><option value="1.x">v1.x · legacy</option></select></label></div><div class="header-actions"><button class="search-trigger" id="open-search"><svg><use href="assets/icons.svg#search"/></svg><span>Search documentation…</span><kbd>Ctrl K</kbd></button><button class="icon-button" id="theme-toggle" aria-label="Switch to dark mode" aria-pressed="false"><svg><use href="assets/icons.svg#moon"/></svg></button><button class="key-button" data-open-key>Get API key <svg><use href="assets/icons.svg#arrow-up-right"/></svg></button></div></header>
+  <button class="sidebar-scrim" id="sidebar-scrim" aria-label="Close documentation navigation" hidden></button>
+  <div class="docs-layout">
+    <aside class="sidebar" id="sidebar" aria-label="Documentation navigation"><div class="sidebar-top"><span>THE DEVELOPER TOOLKIT</span><span class="sidebar-version">v2.1</span></div><nav id="docs-nav"></nav><div class="sidebar-bottom"><button id="status-button"><i></i><span>Demo API: operational</span><svg><use href="assets/icons.svg#arrow-up-right"/></svg></button><span>Fictional API · local playground</span></div></aside>
+    <main id="documentation" class="documentation"></main>
+    <aside class="playground" id="playground" aria-labelledby="playground-title">
+      <div class="playground-top"><span><svg><use href="assets/icons.svg#terminal"/></svg> THE PLAYGROUND</span><span class="local-pill"><i></i>LOCAL ONLY</span></div>
+      <h2 id="playground-title">Meet your first response.</h2>
+      <p class="playground-description">Real interactions. Sample data. <br>Everything happens in this browser.</p>
+      <form id="request-form" novalidate>
+        <label for="endpoint-select">ENDPOINT</label><select id="endpoint-select"></select>
+        <div class="request-path"><span id="request-method" class="method">GET</span><code id="request-path"></code></div>
+        <label for="demo-key">DEMO API KEY <span>never enter real credentials</span></label>
+        <div class="key-input"><svg><use href="assets/icons.svg#key-round"/></svg><input id="demo-key" type="password" value="demo_local" autocomplete="off" spellcheck="false" maxlength="64" pattern="demo_(local|[a-f0-9]{24})" required aria-describedby="key-note"><button type="button" class="icon-button" id="show-key" aria-label="Show demo key" aria-pressed="false"><svg><use href="assets/icons.svg#eye"/></svg></button></div>
+        <p id="key-note">Only public demo_ keys work. Keys are never saved or sent.</p>
+        <div id="request-inputs"></div>
+        <label for="response-scenario">RESPONSE SCENARIO</label>
+        <select id="response-scenario"><option value="success">Success · sample resource</option><option value="400">400 · Bad request</option><option value="401">401 · Unauthorized</option><option value="404">404 · Not found</option><option value="409">409 · Conflict</option><option value="429">429 · Rate limited</option><option value="500">500 · Server error</option></select>
+        <button class="execute-button" id="execute" type="submit"><svg><use href="assets/icons.svg#play"/></svg>Send test request <kbd>LOCAL</kbd></button>
+        <p class="request-status" id="request-status" role="status">No HTTP request will be sent.</p>
+      </form>
+      <div class="right-code-heading"><span>YOUR REQUEST</span><div class="compact-languages" id="playground-languages"></div></div>
+      <div id="playground-code"></div>
+      <div class="response-heading"><span>RESPONSE</span><strong id="response-status">Ready when you are</strong></div>
+      <div id="live-response" aria-live="polite"><div class="empty-response"><svg><use href="assets/icons.svg#braces"/></svg><p>A good place to start.</p><span>Send a test request to see the response.</span></div></div>
+      <details class="response-headers"><summary>Response headers <svg><use href="assets/icons.svg#chevron-down"/></svg></summary><div id="response-headers"><p>Headers appear after a request.</p></div></details>
+      <div class="playground-bottom"><span>Changes live in this tab.</span><button id="reset-sandbox"><svg><use href="assets/icons.svg#rotate-ccw"/></svg>Reset sandbox</button></div>
+    </aside>
+  </div>
+  <dialog id="search-dialog" aria-label="Search documentation"><div class="search-dialog-top"><svg><use href="assets/icons.svg#search"/></svg><input id="docs-search" type="search" placeholder="Search documentation..." maxlength="120" aria-label="Search documentation" autocomplete="off"><button class="icon-button" data-close="search-dialog" aria-label="Close search"><svg><use href="assets/icons.svg#x"/></svg></button></div><p id="search-count" role="status"></p><div id="search-results"></div><div class="search-help">↑ ↓ to choose <span>Enter to open · Esc to close</span></div></dialog>
+  <dialog id="key-dialog" aria-labelledby="key-title"><div class="dialog-top"><span class="eyebrow">YOUR FIRST LITTLE BUILDING BLOCK</span><button class="icon-button" data-close="key-dialog" aria-label="Close demo key"><svg><use href="assets/icons.svg#x"/></svg></button></div><span class="dialog-icon"><svg><use href="assets/icons.svg#key-round"/></svg></span><h2 id="key-title">A key to the sandbox.</h2><p>Create a public demonstration key. It works only in this page’s simulated requests, creates no account, and expires when you leave.</p><button class="orange-button" id="generate-key">Create demo key <svg><use href="assets/icons.svg#arrow-right"/></svg></button><div id="generated-key" hidden><label for="new-key">YOUR PUBLIC DEMO KEY</label><input id="new-key" readonly><button class="text-button" id="use-key">Use in playground <svg><use href="assets/icons.svg#arrow-right"/></svg></button></div><p class="dialog-fineprint">No production credentials, authentication server or external service is connected.</p></dialog>
+  <dialog id="info-dialog" aria-labelledby="info-title"><div class="dialog-top"><span class="eyebrow">ORBIT / DEVELOPER NOTES</span><button class="icon-button" data-close="info-dialog" aria-label="Close information"><svg><use href="assets/icons.svg#x"/></svg></button></div><h2 id="info-title"></h2><div id="info-content"></div></dialog>
+  <div class="toast" id="toast" role="status" hidden></div>
+  <noscript><div class="noscript-note">Orbit is a fictional API. JavaScript renders the versioned documentation and local-only interactive playground. No live API service is connected.</div></noscript>
+</body>
+</html>

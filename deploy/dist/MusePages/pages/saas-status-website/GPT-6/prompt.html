@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CloudSync Status | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>CloudSync Status</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code>Create a SaaS service status page for &quot;CloudSync&quot; that displays real-time system health, incident reports, and uptime history:
+
+1. HEADER
+- Logo: &quot;CloudSync Status&quot; with signal/pulse icon
+- Clean minimal header — no full navigation menu
+- Right side: &quot;Subscribe to Updates&quot; button (outline #3B82F6 blue) and &quot;Visit CloudSync&quot; link
+- Overall system status banner across full width below header:
+  - All Systems Operational → green background (#ECFDF5), green checkmark icon, text: &quot;All Systems Operational&quot;
+  - Partial Outage → yellow background (#FFFBEB), warning icon, text: &quot;Partial System Outage&quot;
+  - Major Outage → red background (#FEF2F2), alert icon, text: &quot;Major System Outage&quot;
+- Current state: &quot;All Systems Operational&quot; with timestamp &quot;Last updated 2 minutes ago&quot;
+
+2. COMPONENT STATUS LIST
+- Section headline: &quot;Current Status&quot;
+- Each component row:
+  - Component name (left)
+  - Status indicator (right): green dot &quot;Operational&quot;, yellow dot &quot;Degraded&quot;, red dot &quot;Outage&quot;, gray dot &quot;Maintenance&quot;
+
+- Components:
+  - Web Application — Operational (green)
+  - API (v2) — Operational (green)
+  - Database Cluster — Operational (green)
+  - File Storage &amp; CDN — Operational (green)
+  - Authentication Service — Operational (green)
+  - Webhooks — Degraded Performance (yellow)
+  - Email Delivery — Operational (green)
+  - Search &amp; Indexing — Operational (green)
+  - Mobile API — Operational (green)
+  - Background Jobs — Operational (green)
+
+- Each row separated by thin #E5E7EB border
+- Expandable: clicking a component reveals sub-components and 7-day uptime bar
+
+3. UPTIME CHART (90-day view)
+- Section headline: &quot;Uptime Over the Last 90 Days&quot;
+- Horizontal bar chart for each component (thin bars, one per day)
+  - Green bars: 100% uptime
+  - Yellow bars: degraded (99.0-99.9%)
+  - Red bars: outage (&lt;99%)
+  - Gray bars: scheduled maintenance
+- Hover tooltip on each bar: date, uptime percentage, any incident note
+- Summary at right of each row: &quot;99.98% uptime&quot; in green text
+- Overall uptime badge at top: &quot;99.97% over 90 days&quot;
+
+4. ACTIVE INCIDENTS
+- Section headline: &quot;Active Incidents&quot;
+- If none: &quot;No active incidents&quot; with green checkmark
+- If active incident:
+  - Yellow or red banner card with:
+    - Severity: &quot;Minor&quot; / &quot;Major&quot; / &quot;Critical&quot;
+    - Title: &quot;Degraded Webhook Delivery Performance&quot;
+    - Affected components: &quot;Webhooks&quot;
+    - Started: &quot;March 13, 2026 at 9:42 AM UTC&quot;
+    - Duration: &quot;2h 15m&quot;
+  - Timeline of updates (newest first):
+    - 11:57 AM — Monitoring — &quot;Webhook delivery latency has improved. We are continuing to monitor.&quot;
+    - 10:30 AM — Identified — &quot;Root cause identified as elevated queue backlog in US-East region. Scaling resources.&quot;
+    - 9:42 AM — Investigating — &quot;We are investigating reports of delayed webhook deliveries.&quot;
+  - Status progression bar: Investigating → Identified → Monitoring → Resolved
+
+5. INCIDENT HISTORY (last 14 days)
+- Section headline: &quot;Past Incidents&quot;
+- Grouped by date with date headers
+
+- March 12, 2026:
+  - &quot;No incidents reported&quot; (green text)
+
+- March 11, 2026:
+  - Resolved — &quot;Elevated API Response Times&quot; — Duration: 45 min — Components: API (v2)
+  - Timeline: Investigating (2:10 PM) → Identified (2:25 PM) → Monitoring (2:40 PM) → Resolved (2:55 PM)
+  - Post-mortem link: &quot;Read Post-Mortem →&quot;
+
+- March 8, 2026:
+  - Resolved — &quot;Scheduled Maintenance: Database Migration&quot; — Duration: 2h — Components: Database Cluster
+  - Note: &quot;Planned maintenance completed successfully. No user-facing impact.&quot;
+
+- March 3, 2026:
+  - Resolved — &quot;File Upload Failures&quot; — Duration: 1h 20m — Components: File Storage &amp; CDN
+  - Timeline with updates
+
+- &quot;View Full Incident History →&quot; link at bottom
+
+6. SCHEDULED MAINTENANCE
+- Section headline: &quot;Upcoming Maintenance&quot;
+- Card with blue left border (#3B82F6):
+  - Title: &quot;Infrastructure Upgrade — US-West Region&quot;
+  - Scheduled: &quot;March 18, 2026, 2:00 AM - 4:00 AM UTC&quot;
+  - Expected impact: &quot;Brief interruptions to File Storage &amp; CDN (&lt; 5 minutes)&quot;
+  - Affected components listed with icons
+  - &quot;Subscribe to get notified&quot; link
+- If no upcoming maintenance: &quot;No scheduled maintenance&quot;
+
+7. SUBSCRIBE TO UPDATES
+- Section with light blue background (#EFF6FF)
+- Headline: &quot;Stay Informed&quot;
+- Subheadline: &quot;Get notified about incidents and maintenance via your preferred channel&quot;
+- Three subscription options (cards):
+  - Email: Input field + &quot;Subscribe&quot; button
+  - Slack: &quot;Add to Slack&quot; button with Slack icon
+  - RSS: &quot;RSS Feed&quot; link with feed icon
+- Checkbox options: &quot;All incidents&quot;, &quot;Only major outages&quot;, &quot;Scheduled maintenance&quot;
+- Privacy note: &quot;We&#39;ll only send status-related notifications. Unsubscribe anytime.&quot;
+
+8. SYSTEM METRICS (expandable section)
+- Headline: &quot;Performance Metrics&quot;
+- 3 metric cards:
+  - API Response Time: &quot;45ms avg&quot; — sparkline chart showing last 24h — p50: 32ms, p95: 89ms, p99: 142ms
+  - Error Rate: &quot;0.02%&quot; — sparkline trending down — &quot;Below threshold&quot;
+  - Throughput: &quot;12.4K req/s&quot; — sparkline showing daily pattern — Peak: 18.2K req/s
+
+9. FOOTER
+- Minimal footer
+- Links: CloudSync Home, API Documentation, Support, Privacy Policy
+- &quot;Powered by CloudSync Status&quot; branding
+- Social: Twitter/X (@CloudSyncStatus for live updates)
+- © 2026 CloudSync Inc.
+
+Design: Clean, trust-focused, information-dense. Primary: #3B82F6 (blue), success: #10B981 (green), warning: #F59E0B (amber), danger: #EF4444 (red), neutral: #111827 text on white. Typography: Inter for everything (system-level trust feel). Minimal decoration — status pages should feel reliable and transparent. Cards with 8px border-radius, 1px borders instead of shadows. Consistent 4px/8px spacing grid. Monospace font for timestamps and metrics.
+
+Responsive: On mobile, uptime bars simplify to weekly summary. Component list remains full-width. Incident timelines stack cleanly. Metric sparklines scale to full width. Subscribe section stacks vertically. Maintain readability at all sizes — this page may be accessed during outages on poor connections.</code></pre>
+    </section>
+  </main>
+</body>
+</html>

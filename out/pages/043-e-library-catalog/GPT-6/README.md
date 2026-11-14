@@ -1,0 +1,8 @@
+# OpenShelf
+
+- Input: `data/prompts/043-e-library-catalog/043-e-library-catalog.md` + `src/workflows/AI Agent/DESIGN.md`. Actual model: `gpt-6.1-sol`; directory label: `GPT-6`.
+- Standalone HTML/CSS/JS in this directory; clean static export in `out/`. Serve that directory with any static server. Intended URL: `/pages/e-library-catalog/GPT-6/index.html`; registered disabled/undeployed, without collection assembly or publication.
+- Twelve fictional records across eleven subjects support title/author/topic/demo-ISBN search, keyboard suggestions, combined filters, sorting, grid/list views, load-more, collections, in-session bookmarks/history, citations, deep-link sharing, original excerpts and twelve-module quizzes. Mobile includes a focus-trapped filter drawer and docked search.
+- Three bookmarks, six history records and the API tutorial’s 45% progress are visibly seeded demonstrations. Progress becomes module-based after continuing. Reload resets all state; forms send nothing. No backend, account, payments, analytics, persistence or environment variables.
+- Platform-scale counts, authors, institutions, journals, ratings, citations, premium access and language metadata are illustrative. Original English excerpts are not full publications; video previews are silent three-slide presentations; podcasts provide short original transcripts. No publisher affiliation or credential is verified.
+- Checks: `node --check app.js`, `node prepare.mjs`, `node verify.mjs`; 90 passing browser/static assertions at 1440/1024/768/390/320px. Desktop/mobile/full-page captures and real 1200×900 preview visually inspected; results in `verification.json`. Local fonts/icons and sources/licenses: `assets/credits.txt`.

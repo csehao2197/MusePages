@@ -1,0 +1,1 @@
+Build a conversion-focused agency website for [agency niche]. Include a homepage, services section, case studies, process, testimonials, FAQ, and contact CTA. Make the copy specific to [target customer] and avoid generic marketing claims.

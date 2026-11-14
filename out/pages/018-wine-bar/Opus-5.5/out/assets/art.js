@@ -1,0 +1,60 @@
+// Original SVG illustrations used in place of photography (no licensed photos are bundled).
+(function () {
+  const svg = (vb, body, label) => `<svg viewBox="${vb}" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${label}">${body}</svg>`;
+  let u = 0;
+  const glow = (cx, cy, r, c = "#FFB547", o = 0.22) => `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${c}" opacity="${o}"/><circle cx="${cx}" cy="${cy}" r="${r * 0.4}" fill="${c}" opacity="${o * 1.4}"/>`;
+  const brick = (w, h, base = "#4A2A26") => { let o = `<rect width="${w}" height="${h}" fill="${base}"/>`; for (let y = 0, r = 0; y < h; y += 24, r++) for (let x = r % 2 ? -36 : 0; x < w; x += 72) o += `<rect x="${x + 2}" y="${y + 2}" width="68" height="20" rx="2" fill="${["#5A322C", "#53302A", "#62382F", "#4E2C27"][(x / 72 + r) & 3]}"/>`; return o; };
+  const glass = (x, y, s, wine = "#7A1830") => `<g transform="translate(${x} ${y}) scale(${s})"><path d="M-22 0 Q -24 40 0 46 Q 24 40 22 0 Z" fill="#fff" opacity=".18"/><path d="M-20 18 Q -20 40 0 44 Q 20 40 20 18 Z" fill="${wine}"/><rect x="-1.5" y="46" width="3" height="40" fill="#fff" opacity=".35"/><ellipse cx="0" cy="88" rx="16" ry="4" fill="#fff" opacity=".3"/><path d="M-16 6 q -2 16 2 28" stroke="#fff" stroke-width="2" opacity=".35" fill="none"/></g>`;
+  const bottleShape = (x, y, s, c, label = "#E8DCC4") => `<g transform="translate(${x} ${y}) scale(${s})"><path d="M-10 -120 h 20 v 50 q 0 16 16 30 q 8 8 8 22 v 110 q 0 8 -8 8 h -52 q -8 0 -8 -8 v -110 q 0 -14 8 -22 q 16 -14 16 -30 z" fill="${c}"/><rect x="-10" y="-120" width="20" height="18" fill="#8B2252"/><rect x="-22" y="10" width="44" height="54" fill="${label}"/><path d="M-20 -30 q 2 60 0 120" stroke="#fff" stroke-width="3" opacity=".12" fill="none"/></g>`;
+
+  function hero() {
+    return svg("0 0 1600 1000", `${brick(1600, 1000)}<rect width="1600" height="1000" fill="#1A1A2E" opacity=".55"/>
+      ${[200, 520, 840, 1160, 1460].map((x) => `<path d="M${x} 0 V 170" stroke="#0C0C14" stroke-width="2"/><ellipse cx="${x}" cy="186" rx="14" ry="22" fill="#FFCF7A"/>${glow(x, 200, 90)}`).join("")}
+      <rect x="0" y="330" width="1600" height="16" fill="#3A2416"/>${[...Array(26)].map((_, i) => bottleShape(70 + i * 58, 320, 0.42, ["#2A1418", "#1F2A1C", "#3A1E22", "#2E2A18"][i % 4], "#5E5040")).join("")}
+      <rect x="0" y="470" width="1600" height="16" fill="#3A2416"/>${[...Array(26)].map((_, i) => bottleShape(100 + i * 58, 460, 0.42, ["#1F2A1C", "#3A1E22", "#2A1418", "#2E2A18"][i % 4], "#5E5040")).join("")}
+      <rect x="0" y="640" width="1600" height="40" fill="#5A3418"/><rect x="0" y="676" width="1600" height="324" fill="#26160E"/><path d="M0 640 H1600" stroke="#C9A96E" stroke-width="3" opacity=".6"/>
+      ${[[340, 560], [470, 566], [1080, 560], [1220, 566]].map(([x, y], i) => glass(x, y, 1.6, i % 2 ? "#E8C468" : "#7A1830")).join("")}
+`, "Illustration of a dimly lit wine bar interior with warm amber pendant lights, bottle shelves and a bar counter");
+  }
+
+  function bottle(name, c, label, region) {
+    return svg("0 0 400 500", `<defs><radialGradient id="bg${++u}" cx=".5" cy=".4" r=".7"><stop offset="0" stop-color="#2A2A4A"/><stop offset="1" stop-color="#121226"/></radialGradient></defs><rect width="400" height="500" fill="url(#bg${u})"/>${glow(200, 200, 200, "#C9A96E", 0.08)}
+      <ellipse cx="200" cy="440" rx="110" ry="14" fill="#000" opacity=".5"/>${bottleShape(200, 260, 1.5, c, label)}
+      <text x="200" y="300" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="15" fill="#2A1418">${name}</text><text x="200" y="320" text-anchor="middle" font-family="Inter, sans-serif" font-size="8" letter-spacing="2" fill="#4A3A2E">${region.toUpperCase()}</text>
+      ${glass(310, 330, 1.4, c === "#C9C27A" ? "#E8D58A" : "#7A1830")}`, `Bottle of ${name}`);
+  }
+
+  const scenes = {
+    tasting: () => `${brick(600, 760)}<rect width="600" height="760" fill="#1A1A2E" opacity=".45"/>${glow(300, 120, 200)}<path d="M300 0 V 90" stroke="#000" stroke-width="2"/><ellipse cx="300" cy="104" rx="60" ry="14" fill="#C9A96E"/>
+      <rect x="60" y="420" width="480" height="24" fill="#5A3418"/><rect x="80" y="444" width="16" height="200" fill="#3A2416"/><rect x="504" y="444" width="16" height="200" fill="#3A2416"/>
+      ${[...Array(5)].map((_, i) => glass(140 + i * 80, 340, 1.3, ["#E8D58A", "#F2B6A0", "#7A1830", "#5A1020", "#3A0A14"][i])).join("")}
+      <rect x="220" y="400" width="160" height="18" rx="4" fill="#C9A96E"/>${[0, 1, 2, 3].map((i) => `<path d="M${240 + i * 34} 400 l 14 -16 l 14 16 z" fill="${["#F2D06B", "#E8C468", "#F4EDE0", "#E8C468"][i]}"/>`).join("")}
+      ${[90, 510].map((x) => `<rect x="${x - 40}" y="520" width="80" height="100" rx="40" fill="#2A1A2E"/>`).join("")}`,
+    bar: () => `${brick(600, 700)}<rect width="600" height="700" fill="#1A1A2E" opacity=".5"/>${[0, 1, 2].map((r) => `<rect y="${120 + r * 110}" width="600" height="10" fill="#3A2416"/>${[...Array(10)].map((_, i) => glass(40 + i * 58, 80 + r * 110, 0.7, "#ffffff00")).join("")}`).join("")}<rect y="480" width="600" height="40" fill="#5A3418"/><rect y="520" width="600" height="180" fill="#26160E"/>${[150, 300, 450].map((x, i) => glass(x, 410, 1.3, ["#7A1830", "#E8D58A", "#5A1020"][i])).join("")}${glow(300, 0, 260, "#FFB547", 0.12)}`,
+    cheese: () => `<rect width="600" height="500" fill="#16213E"/><rect x="60" y="80" width="480" height="340" rx="22" fill="#8A5A34"/><rect x="60" y="80" width="480" height="340" rx="22" fill="none" stroke="#6A4224" stroke-width="8"/>
+      <path d="M120 140 L 240 140 L 220 240 Z" fill="#F2D06B"/><path d="M130 160 L 210 160" stroke="#E5B93B" stroke-width="3"/><circle cx="330" cy="190" r="56" fill="#F4EDE0"/><circle cx="330" cy="190" r="56" fill="none" stroke="#E2D6BE" stroke-width="8"/>
+      ${[...Array(9)].map((_, i) => `<circle cx="${430 + (i % 3) * 22}" cy="${150 + Math.floor(i / 3) * 22}" r="11" fill="#5A1A3A"/>`).join("")}${[...Array(6)].map((_, i) => `<ellipse cx="${140 + i * 34}" cy="330" rx="22" ry="14" fill="#C9483A"/><path d="M${126 + i * 34} 330 h 28" stroke="#F4C3B8" stroke-width="3"/>`).join("")}
+      ${[...Array(5)].map((_, i) => `<rect x="${380 + i * 26}" y="300" width="20" height="70" rx="4" fill="#E8C98E" transform="rotate(${-10 + i * 5} ${390 + i * 26} 335)"/>`).join("")}`,
+    candles: () => `${brick(600, 600)}<rect width="600" height="600" fill="#1A1A2E" opacity=".35"/>${[[120, 380, 80], [210, 400, 120], [300, 370, 60], [420, 410, 100], [500, 390, 70]].map(([x, y, h]) => `<rect x="${x - 14}" y="${y}" width="28" height="${h}" fill="#F4EDE0"/><path d="M${x} ${y - 4} q -8 -16 0 -30 q 8 14 0 30" fill="#FFD27A"/>${glow(x, y - 20, 70, "#FFB547", 0.2)}`).join("")}<rect y="500" width="600" height="100" fill="#26160E"/>`,
+    patio: () => `<rect width="600" height="600" fill="#1E2A4A"/><rect width="600" height="260" fill="#2A2050"/>${[...Array(16)].map((_, i) => `<circle cx="${i * 40 + 10}" cy="${80 + Math.sin(i / 2) * 18}" r="5" fill="#FFE2A0"/>${glow(i * 40 + 10, 80 + Math.sin(i / 2) * 18, 16, "#FFE2A0", 0.2)}`).join("")}
+      ${brick(600, 0)}<rect y="300" width="600" height="300" fill="#3A3040"/>${[150, 450].map((x) => `<ellipse cx="${x}" cy="420" rx="90" ry="22" fill="#2A1E16"/><rect x="${x - 4}" y="420" width="8" height="90" fill="#1A120C"/>${glass(x - 30, 360, 1, "#7A1830")}${glass(x + 30, 360, 1, "#E8D58A")}`).join("")}${[...Array(6)].map((_, i) => `<ellipse cx="${30 + i * 110}" cy="300" rx="40" ry="20" fill="#3F5E3A"/>`).join("")}`,
+    pour: () => `<rect width="600" height="760" fill="#121226"/>${glow(300, 300, 260, "#C9A96E", 0.1)}${glass(300, 380, 3.2, "#7A1830")}<g transform="rotate(-40 440 200)"><rect x="400" y="20" width="90" height="250" rx="28" fill="#2A1418"/><rect x="430" y="-70" width="32" height="110" rx="8" fill="#2A1418"/><rect x="406" y="120" width="78" height="80" fill="#E8DCC4"/></g><path d="M326 222 C 316 270 304 330 300 430" stroke="#7A1830" stroke-width="7" fill="none"/>
+      <path d="M120 760 L 160 520 Q 200 470 240 520 L 230 760 Z" fill="#0C0C18"/><rect x="150" y="560" width="70" height="200" fill="#F4EDE0" opacity=".9"/>`,
+    alcove: () => `${brick(600, 700)}<path d="M100 700 V 260 Q 300 40 500 260 V 700 Z" fill="#16213E"/><path d="M130 700 V 270 Q 300 80 470 270 V 700 Z" fill="#1F1530"/>
+      <rect x="170" y="460" width="260" height="20" fill="#5A3418"/><rect x="190" y="480" width="12" height="160" fill="#3A2416"/><rect x="398" y="480" width="12" height="160" fill="#3A2416"/>${glass(250, 380, 1.3, "#7A1830")}${glass(350, 380, 1.3, "#5A1020")}<rect x="294" y="420" width="12" height="40" fill="#F4EDE0"/><path d="M300 416 q -5 -10 0 -18 q 5 8 0 18" fill="#FFD27A"/>${glow(300, 400, 120, "#FFB547", 0.18)}
+      ${[150, 450].map((x) => `<rect x="${x - 50}" y="520" width="100" height="120" rx="20" fill="#8B2252"/>`).join("")}`,
+    oldnew: () => `<rect width="600" height="400" fill="#16213E"/>${[0, 1].map((k) => `<rect x="${k * 300}" width="300" height="400" fill="${k ? "#1E2A4A" : "#2A1A2E"}"/>${bottleShape(150 + k * 300, 230, 1, k ? "#2A1418" : "#1F2A1C")}`).join("")}<text x="150" y="380" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-size="30" font-style="italic" fill="#C9A96E">Old World</text><text x="450" y="380" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-size="30" font-style="italic" fill="#C9A96E">New World</text><circle cx="300" cy="200" r="30" fill="#8B2252"/><text x="300" y="208" text-anchor="middle" font-family="Inter, sans-serif" font-size="18" font-weight="700" fill="#fff">vs</text>`,
+    italy: () => `<rect width="600" height="400" fill="#1A1A2E"/><path d="M0 260 Q 150 180 300 230 T 600 200 V 400 H0 Z" fill="#3F5E3A"/>${[...Array(8)].map((_, i) => `<path d="M${i * 80} 400 L ${300} 230" stroke="#2E4A2A" stroke-width="6"/>`).join("")}<circle cx="480" cy="100" r="40" fill="#F2D06B" opacity=".8"/>${glass(150, 230, 1.8, "#7A1830")}${glass(250, 240, 1.6, "#5A1020")}`,
+    blind: () => `<rect width="600" height="400" fill="#121226"/>${[0, 1, 2, 3, 4].map((i) => `${bottleShape(80 + i * 110, 240, 0.9, "#1A1A1A", "#1A1A1A")}<rect x="${40 + i * 110}" y="140" width="80" height="140" rx="8" fill="#16213E" stroke="#C9A96E" stroke-width="2"/><text x="${80 + i * 110}" y="225" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-size="48" fill="#C9A96E">${i + 1}</text>`).join("")}`,
+  };
+  const vb = { tasting: "0 0 600 760", bar: "0 0 600 700", cheese: "0 0 600 500", candles: "0 0 600 600", patio: "0 0 600 600", pour: "0 0 600 760", alcove: "0 0 600 700", oldnew: "0 0 600 400", italy: "0 0 600 400", blind: "0 0 600 400" };
+
+  function map() {
+    return svg("0 0 700 520", `<rect width="700" height="520" fill="#16213E"/>${[...Array(8)].map((_, i) => `<path d="M0 ${40 + i * 66} H700" stroke="#1F2B4E" stroke-width="${i === 4 ? 20 : 9}"/>`).join("")}${[...Array(9)].map((_, i) => `<path d="M${30 + i * 82} 0 V520" stroke="#1F2B4E" stroke-width="${i === 3 ? 20 : 9}"/>`).join("")}
+      <text x="14" y="300" font-family="Inter, sans-serif" font-size="11" font-weight="700" letter-spacing="3" fill="#6B7AA6">WAREHOUSE ROW</text><rect x="420" y="320" width="120" height="90" rx="6" fill="#22305A"/><text x="480" y="370" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#8B9AC6">GARAGE</text>
+      <rect x="80" y="80" width="140" height="100" rx="6" fill="#22305A"/><text x="150" y="134" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#8B9AC6">ARTS DISTRICT</text>
+      <g transform="translate(300 304)"><circle r="40" fill="#8B2252" opacity=".25"/><circle r="15" fill="#8B2252" stroke="#C9A96E" stroke-width="3"/></g><text x="324" y="290" font-family="'Cormorant Garamond', serif" font-size="20" fill="#C9A96E">Terroir &amp; Vine</text>`, "Map of Warehouse Row in the Arts District showing Terroir & Vine and the Warehouse Row garage");
+  }
+
+  window.Art = { hero, bottle, scene: (n, l) => svg(vb[n], scenes[n](), l), map };
+})();

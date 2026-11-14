@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AVARC — System Atlas | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>AVARC — System Atlas</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Architecture diagram
+
+Source of truth for the system diagram required by
+[SPEC-architecture-diagram.md](SPEC-architecture-diagram.md). Dashed borders
+mark undecided components; dotted, muted borders mark components planned for
+after the MVP. Dotted arrows are connections that belong to post-MVP components. The browser
+calls the frontend pages and `/api` through the ingress; login is a backend
+OIDC flow, with the session in a cookie. Each sub-application (frontend, backend, Keycloak
+setup, ingress) may have its own, more detailed architecture diagram next to
+its code.
+
+```mermaid
+flowchart TB
+    Browser[Browser]
+    AIClient[&quot;AI assistant&lt;br/&gt;MCP client (post-MVP)&quot;]
+
+    subgraph Server[&quot;avarc-server&quot;]
+        Ingress[&quot;Web server / ingress&lt;br/&gt;nginx&quot;]
+        Frontend[&quot;Frontend&lt;br/&gt;Next.js&quot;]
+        Backend[&quot;Backend API&lt;br/&gt;Spring Boot + Modulith&quot;]
+        Keycloak[&quot;Keycloak&lt;br/&gt;realm avarc&quot;]
+        MapServer[&quot;Public read-only map server&lt;br/&gt;(post-MVP)&quot;]
+        MCP[&quot;MCP server&lt;br/&gt;(post-MVP)&quot;]
+        DB[(&quot;Database&lt;br/&gt;PostgreSQL + PostGIS&lt;br/&gt;(schema avarc, Keycloak&#39;s own database)&quot;)]
+        DBTool[&quot;Database tool&lt;br/&gt;(optional, dev and stage only)&quot;]
+    end
+
+    subgraph Monitoring[&quot;Monitoring stack (own Compose project, optional on dev)&quot;]
+        Alloy[&quot;Alloy&lt;br/&gt;log collector&quot;]
+        Loki[&quot;Loki&quot;]
+        Prometheus[&quot;Prometheus&quot;]
+        Grafana[&quot;Grafana&quot;]
+    end
+
+    Browser -- &quot;HTTPS&quot; --&gt; Ingress
+    Ingress -- &quot;pages&quot; --&gt; Frontend
+    Ingress -- &quot;/api&quot; --&gt; Backend
+    Ingress -- &quot;/auth/realms/avarc (login, logout)&quot; --&gt; Keycloak
+    Backend -- &quot;OIDC client: code exchange, signing keys&quot; --&gt; Keycloak
+    Backend -- &quot;JPA, Flyway&quot; --&gt; DB
+    Keycloak --&gt; DB
+    DBTool -- &quot;read-only&quot; --&gt; DB
+    Alloy -- &quot;container log files&quot; --&gt; Loki
+    Prometheus -- &quot;scrape metrics (management ports)&quot; --&gt; Backend
+    Prometheus -- &quot;scrape metrics&quot; --&gt; Keycloak
+    Prometheus -- &quot;scrape metrics&quot; --&gt; Ingress
+    Grafana --&gt; Loki
+    Grafana --&gt; Prometheus
+    Anonymous[&quot;Anonymous public&lt;br/&gt;(post-MVP)&quot;]
+    Anonymous -. &quot;HTTPS&quot; .-&gt; Ingress
+    Ingress -. &quot;map&quot; .-&gt; MapServer
+    MapServer -. &quot;public data&quot; .-&gt; DB
+    AIClient -. &quot;MCP&quot; .-&gt; Ingress
+    Ingress -. &quot;MCP&quot; .-&gt; MCP
+    MCP -. &quot;API&quot; .-&gt; Backend
+    MCP -. &quot;validate token&quot; .-&gt; Keycloak
+
+    classDef undecided stroke-dasharray: 5 5;
+
+    classDef postmvp stroke-dasharray: 2 4,fill:#f4f4f4,stroke:#999,color:#666;
+    class AIClient,MCP,MapServer,Anonymous postmvp;
+```
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

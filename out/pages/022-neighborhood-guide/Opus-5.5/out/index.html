@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neighborhood Guide — Find the Neighborhood That Fits Your Life | HomeScope Realty</title>
+<meta name="description" content="Explore local schools, commute times, amenities, safety and home prices. Compare neighborhoods side by side with HomeScope Realty.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,600;9..40,700;9..40,800&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-scope" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/><path d="M7.5 12 11 8.5l3.5 3.5V15h-7z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-walk" viewBox="0 0 24 24"><circle cx="13" cy="4" r="2"/><path d="m9 20 3-6 3 3 1 5M7 11l3-3 4 1 2 4"/></symbol>
+  <symbol id="i-school" viewBox="0 0 24 24"><path d="M14 22v-4a2 2 0 1 0-4 0v4"/><path d="m18 10 3.447 1.724a1 1 0 0 1 .553.894V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7.382a1 1 0 0 1 .553-.894L6 10M18 5v17M4 6l7.106-3.553a2 2 0 0 1 1.788 0L20 6M6 5v17"/><circle cx="12" cy="9" r="2"/></symbol>
+  <symbol id="i-tree" viewBox="0 0 24 24"><path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17ZM12 22v-3"/></symbol>
+  <symbol id="i-fork" viewBox="0 0 24 24"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M16 10a4 4 0 0 1-8 0M3.103 6.034h17.794"/><path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"/></symbol>
+  <symbol id="i-health" viewBox="0 0 24 24"><path d="M11 2v2M5 2v2M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1"/><path d="M8 15a6 6 0 0 0 12 0v-3"/><circle cx="20" cy="10" r="2"/></symbol>
+  <symbol id="i-car" viewBox="0 0 24 24"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></symbol>
+  <symbol id="i-bus" viewBox="0 0 24 24"><path d="M8 6v6M15 6v6M2 12h19.6M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3"/><circle cx="7" cy="18" r="2"/><path d="M9 18h5"/><circle cx="16" cy="18" r="2"/></symbol>
+  <symbol id="i-bike" viewBox="0 0 24 24"><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="m5 12 7-7 7 7M12 19V5"/></symbol>
+  <symbol id="i-dn" viewBox="0 0 24 24"><path d="M12 5v14M19 12l-7 7-7-7"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M3 12h.01M3 18h.01M3 6h.01M8 12h13M8 18h13M8 6h13"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M10.268 21a2 2 0 0 0 3.464 0M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></symbol>
+</svg>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="wrap nav-row">
+    <a class="logo" href="#top"><span class="mark"><svg class="i"><use href="#i-scope"/></svg></span>HomeScope <span>Realty</span></a>
+    <nav class="links" aria-label="Primary"><a href="#featured">Neighborhoods</a><a href="#detail">Explore</a><a href="#schools">Schools</a><a href="#market">Market</a><a href="#compare">Compare</a></nav>
+    <a class="btn btn-teal btn-sm" href="#contact">Talk to an Agent</a>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" id="top" aria-labelledby="hero-h">
+    <div class="hero-art" data-art="aerial"></div>
+    <div class="wrap hero-inner">
+      <h1 id="hero-h">Find the Neighborhood That Fits Your Life</h1>
+      <p class="lede">Explore local schools, commute times, amenities, and more — all in one place</p>
+      <form class="search" data-search role="search" autocomplete="off">
+        <label class="sf"><svg class="i"><use href="#i-search"/></svg><span class="sr-only">Neighborhood, city or ZIP</span><input data-q placeholder="Enter a neighborhood, city, or ZIP code" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="ac"></label>
+        <button class="btn btn-teal" type="submit">Explore</button>
+        <ul class="ac" id="ac" role="listbox" hidden data-ac></ul>
+      </form>
+      <p class="search-msg" data-search-msg role="status" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <section class="section soft" id="featured" aria-labelledby="ft-h">
+    <div class="wrap">
+      <div class="head row"><div><h2 id="ft-h">Featured Neighborhoods</h2><p class="sub">Six of the most-searched neighborhoods this month</p></div><div class="arrows"><button type="button" data-rail="-1" aria-label="Scroll left"><svg class="i"><use href="#i-left"/></svg></button><button type="button" data-rail="1" aria-label="Scroll right"><svg class="i"><use href="#i-right"/></svg></button></div></div>
+      <div class="rail" data-cards></div>
+    </div>
+  </section>
+
+  <section class="section" id="detail" aria-labelledby="nb-name" tabindex="-1">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="#top">Home</a></li><li><a href="#featured">Neighborhoods</a></li><li aria-current="page" data-crumb></li></ol></nav>
+      <div class="ov">
+        <div><h2 id="nb-name" class="nb-name" data-name></h2><p class="nb-loc" data-loc></p><p class="nb-desc" data-desc></p></div>
+        <dl class="kstats" data-kstats></dl>
+      </div>
+
+      <div class="scores" data-scores aria-label="Scores and ratings"></div>
+    </div>
+  </section>
+
+  <section class="section soft" id="amenities" aria-labelledby="am-h">
+    <div class="wrap">
+      <div class="head row"><div><h2 id="am-h">Local Amenities</h2><p class="sub" data-am-sub></p></div><button class="btn btn-ghost btn-sm list-toggle" type="button" aria-expanded="true" aria-controls="amlist" data-list-toggle><svg class="i"><use href="#i-list"/></svg>List</button></div>
+      <div class="cats" role="group" aria-label="Filter amenities" data-cats></div>
+      <div class="map-layout">
+        <div class="map-box"><svg class="map" viewBox="0 0 800 520" data-map role="group" aria-label="Amenities map"></svg><div class="tip" data-tip hidden></div></div>
+        <ul class="am-list" id="amlist" data-amlist aria-label="Amenities list"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="schools" aria-labelledby="sc-h">
+    <div class="wrap">
+      <h2 id="sc-h" data-schools-h></h2>
+      <div class="table-wrap"><table class="schools"><thead><tr><th scope="col">School</th><th scope="col">Grades</th><th scope="col">Rating</th><th scope="col">Distance</th><th scope="col">Students</th></tr></thead><tbody data-schools></tbody></table></div>
+      <p class="src">Ratings from GreatSchools.org</p>
+    </div>
+  </section>
+
+  <section class="section soft" aria-labelledby="cm-h">
+    <div class="wrap">
+      <h2 id="cm-h" data-commute-h></h2>
+      <div class="commutes" data-commutes></div>
+      <p class="src">Estimates based on average weekday conditions</p>
+    </div>
+  </section>
+
+  <section class="section" id="market" aria-labelledby="mk-h">
+    <div class="wrap mk">
+      <div><h2 id="mk-h" data-market-h></h2><dl class="mgrid" data-mgrid></dl><a class="btn btn-navy" href="#contact" data-listings></a></div>
+      <figure class="chart-card"><figcaption><b>12-month median sale price</b><span data-chart-range></span></figcaption><div class="chart" data-chart></div></figure>
+    </div>
+  </section>
+
+  <section class="section soft" aria-labelledby="rv-h">
+    <div class="wrap">
+      <div class="head row"><h2 id="rv-h">What Residents Say</h2><p class="avg" data-avg></p></div>
+      <div class="reviews" data-reviews></div>
+    </div>
+  </section>
+
+  <section class="section" id="compare" aria-labelledby="cp-h">
+    <div class="wrap">
+      <div class="head row"><div><h2 id="cp-h">How It Compares</h2><p class="sub">A quick look at nearby neighborhoods</p></div><button class="btn btn-teal" type="button" data-open-compare>Compare Neighborhoods Side by Side</button></div>
+      <div class="table-wrap"><table class="cmp" data-teaser></table></div>
+    </div>
+  </section>
+
+  <section class="section cta" id="contact" aria-labelledby="ct-h">
+    <div class="wrap cta-grid">
+      <div>
+        <h2 id="ct-h" data-cta-h></h2>
+        <div class="agent"><span class="ag-photo" data-agent></span><div><b>Marcus Bell</b><p data-agent-role></p><p><a href="tel:+15553340220"><svg class="i"><use href="#i-phone"/></svg>(555) 334-0220</a></p><p><a href="mailto:marcus@homescope.example"><svg class="i"><use href="#i-mail"/></svg>marcus@homescope.example</a></p></div></div>
+        <button class="btn btn-teal" type="button" data-open-tour>Schedule a Neighborhood Tour</button>
+      </div>
+      <form class="alerts" data-alerts novalidate>
+        <h3><svg class="i"><use href="#i-bell"/></svg>Get Market Alerts for This Area</h3>
+        <p data-alert-sub></p>
+        <div class="alert-row"><label class="sr-only" for="alert-email">Email address</label><input id="alert-email" type="email" placeholder="you@example.com" required autocomplete="email"><button class="btn btn-navy" type="submit">Subscribe</button></div>
+        <p class="alert-msg" data-alert-msg role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="footer"><div class="wrap foot"><a class="logo light" href="#top"><span class="mark"><svg class="i"><use href="#i-scope"/></svg></span>HomeScope <span>Realty</span></a><p>© 2026 HomeScope Realty · Neighborhood data shown is illustrative · <a href="#top">Privacy</a> · <a href="#top">Terms</a></p><p>Equal Housing Opportunity</p></div></footer>
+
+<dialog class="modal wide" data-modal="compare" aria-labelledby="cmp-h">
+  <div class="m-head"><h2 id="cmp-h">Compare Neighborhoods</h2><button class="x" type="button" data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
+  <div class="m-body"><div class="pickers" data-pickers></div><div class="table-wrap"><table class="cmp full" data-full-cmp></table></div><p class="src">Best value in each row is highlighted.</p></div>
+</dialog>
+
+<dialog class="modal" data-modal="tour" aria-labelledby="tr-h">
+  <form class="m-form" data-tour-form novalidate>
+    <div class="m-head"><h2 id="tr-h">Schedule a Neighborhood Tour</h2><button class="x" type="button" data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
+    <div class="m-body"><p class="m-sub" data-tour-sub></p>
+      <div class="g2"><label class="f"><span>Name</span><input name="name" required autocomplete="name"></label><label class="f"><span>Email</span><input name="email" type="email" required autocomplete="email"></label></div>
+      <div class="g2"><label class="f"><span>Date</span><input name="date" type="date" required></label><label class="f"><span>Tour type</span><select name="kind"><option>Driving tour (60 min)</option><option>Walking tour (90 min)</option><option>Virtual video tour (30 min)</option></select></label></div>
+      <p class="err" data-err></p></div>
+    <div class="m-foot"><button class="btn btn-teal wide" type="submit">Request Tour</button></div>
+  </form>
+  <div class="done" hidden><svg class="i"><use href="#i-check"/></svg><h3>Tour requested</h3><p data-done></p><button class="btn btn-ghost" type="button" data-close>Close</button></div>
+</dialog>
+
+<div class="toast" data-toast role="status" aria-live="polite"></div>
+
+<script src="assets/art.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

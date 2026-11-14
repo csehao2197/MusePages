@@ -1,0 +1,123 @@
+Create a homepage for "Harvest & Hearth," a farm-to-table restaurant that partners with local farms and changes its menu seasonally. The design should feel warm, earthy, and organic — like walking into a rustic farmhouse with modern refinement.
+
+1. HERO SECTION (full-viewport height)
+- Full-bleed background image of a beautifully plated seasonal dish on a reclaimed wood table, with soft natural light
+- Overlaid text in a warm serif font:
+  - "Harvest & Hearth"
+  - Tagline: "From Our Farms to Your Fork"
+- A subtle animated line drawing of a wheat stalk or vine framing the text
+- Two CTA buttons: "View Today's Menu" (primary, filled) and "Reserve a Table" (secondary, outlined)
+- Scroll indicator at bottom with gentle bounce animation
+
+2. PHILOSOPHY SECTION (centered text block)
+- Headline: "Rooted in the Land, Served with Love"
+- Body text (3 sentences): "Every dish at Harvest & Hearth begins with a conversation — with the soil, the season, and the farmers who nurture our ingredients. We source 90% of our produce from farms within 30 miles, ensuring peak freshness and supporting our local food community. Our chefs craft each plate to honor the ingredient first, letting nature lead the way."
+- Background: subtle hand-drawn botanical illustration (faded, decorative)
+- Small horizontal rule divider with a leaf icon in the center
+
+3. SEASONAL MENU PREVIEW (tabbed section)
+- Headline: "What's Growing Now — Spring 2026 Menu"
+- Three tabs: "Starters" | "Mains" | "Desserts"
+- Starters tab (default active):
+  - "Heirloom Tomato Gazpacho" — roasted garlic croutons, basil oil, microgreens — $14
+  - "Burrata & Stone Fruit" — grilled peaches, arugula, aged balsamic, toasted hazelnuts — $18
+  - "Farm Egg Tartine" — sourdough, whipped ricotta, pickled shallots, herb salad — $16
+  - "Spring Pea Soup" — mint crème fraîche, pea shoots, lemon zest — $13
+- Mains tab:
+  - "Pan-Seared Trout" — asparagus, fingerling potatoes, brown butter, capers — $32
+  - "Grass-Fed Ribeye" — roasted root vegetables, bone marrow jus, chimichurri — $42
+  - "Wild Mushroom Risotto" — porcini, chanterelle, truffle oil, aged parmesan — $28
+  - "Heritage Pork Chop" — braised greens, apple mostarda, sweet potato purée — $36
+- Desserts tab:
+  - "Lavender Crème Brûlée" — shortbread cookie, fresh berries — $14
+  - "Seasonal Fruit Galette" — vanilla bean ice cream, honey drizzle — $15
+  - "Dark Chocolate Torte" — raspberry coulis, whipped cream, edible flowers — $16
+- "View Full Menu" link at bottom
+- Each dish on its own row with name, description, and price aligned right
+
+4. FARM PARTNERS SECTION (3-column cards)
+- Headline: "Our Farm Family"
+- Subheading: "We're proud to work with these local growers and producers"
+- Card 1: "Sunnyside Organic Farm" — 8 miles away — Heirloom tomatoes, leafy greens, herbs — Photo of farm rows at sunrise
+- Card 2: "Blue Ridge Creamery" — 22 miles away — Artisan cheeses, fresh butter, crème fraîche — Photo of grazing cows
+- Card 3: "Willow Creek Ranch" — 15 miles away — Grass-fed beef, heritage pork, free-range eggs — Photo of open pasture
+- Each card has: farm photo (top), farm name, distance badge, list of products, "Learn More" link
+- Optional: a subtle map showing farm locations relative to the restaurant
+
+5. CHEF'S STORY SECTION (2-column layout)
+- Left column: portrait photo of the head chef in the kitchen, natural light
+- Right column:
+  - Headline: "Meet Chef Elara Voss"
+  - Bio (3 sentences): "With 15 years of experience in kitchens from Lyon to Portland, Chef Elara brings a deep respect for seasonal cooking and traditional techniques. She joined Harvest & Hearth in 2022 with a mission: let the ingredients speak for themselves. Her menus change weekly based on what arrives from the farms — no two visits are ever quite the same."
+  - Pull quote in italic: "I don't write menus. The farms write them for me."
+  - Small credential badges: "James Beard Semifinalist 2025" and "Farm-to-Table Chef of the Year"
+
+6. PHOTO GALLERY (masonry grid, 6 images)
+- Beautiful food photography mixed with atmosphere shots:
+  - Close-up of a plated dish with edible flowers
+  - Rustic dining room interior with candlelight
+  - Chef's hands plating a dish
+  - Outdoor patio with string lights at dusk
+  - Fresh produce basket from a farm delivery
+  - Wine being poured at a table setting
+- Lightbox on click with navigation arrows
+- Subtle hover zoom effect on each image
+
+7. EVENTS & PRIVATE DINING (split section)
+- Left half — "Farm Dinners":
+  - "Join us for monthly farm dinners at our partner farms. A 5-course meal served under the stars, featuring ingredients harvested that afternoon."
+  - "Next Event: April 18, 2026 — Spring Harvest Dinner at Sunnyside Farm"
+  - "$125 per person, wine pairing included"
+  - "Reserve Your Spot" button
+- Right half — "Private Dining":
+  - "Host your next celebration in our private dining room, seating up to 24 guests."
+  - "Custom menus crafted by Chef Elara for your event"
+  - "Available Tuesday–Sunday evenings"
+  - "Inquire Now" button
+- Background: warm linen-textured off-white
+
+8. TESTIMONIALS (horizontal carousel, 3 reviews)
+- Review 1: "The best meal I've had in years. You can taste the care in every bite." — Sarah M., Google Reviews ★★★★★
+- Review 2: "We drove two hours for the farm dinner and it was worth every mile. Extraordinary." — James & Lina T., Yelp ★★★★★
+- Review 3: "The mushroom risotto changed my life. I'm not exaggerating." — Devon R., OpenTable ★★★★★
+- Auto-advance every 6 seconds with dot navigation
+- Large quotation mark decorative element
+
+9. RESERVATION SECTION (centered form)
+- Headline: "Reserve Your Table"
+- Form fields: Date (date picker), Time (dropdown: 5:00 PM – 9:30 PM in 30-min slots), Party Size (1–12 dropdown), Name, Email, Phone, Special Requests (textarea, optional)
+- "Book Now" submit button
+- Note: "For parties larger than 12, please contact us directly"
+- Alternative: "Or call us at (555) 482-7700"
+- Background: slightly darker warm tone to distinguish from rest of page
+
+10. LOCATION & HOURS (2-column)
+- Left: embedded map showing restaurant location at "412 Elm Street, Ashford Valley"
+- Right column:
+  - "Visit Us"
+  - Address: 412 Elm Street, Ashford Valley, OR 97520
+  - Hours:
+    - Tuesday – Thursday: 5:00 PM – 9:30 PM
+    - Friday – Saturday: 5:00 PM – 10:30 PM
+    - Sunday Brunch: 10:00 AM – 2:00 PM
+    - Monday: Closed
+  - Phone: (555) 482-7700
+  - Email: hello@harvestandhearth.com
+  - Parking: "Free lot behind the building, street parking available"
+
+11. NEWSLETTER SIGNUP (full-width banner)
+- Headline: "Stay in Season"
+- Subtext: "Get weekly menu updates, farm dinner invitations, and seasonal recipes from Chef Elara."
+- Email input field + "Subscribe" button inline
+- "We respect your inbox — one email per week, unsubscribe anytime."
+
+12. FOOTER
+- Restaurant name and small logo (wheat stalk icon)
+- Quick links: Menu, Reservations, Private Dining, Farm Partners, About, Contact
+- Social icons: Instagram, Facebook, Yelp
+- "© 2026 Harvest & Hearth. All rights reserved."
+- "Proudly serving Ashford Valley since 2018."
+
+Design: Warm and organic aesthetic. Background: #FAF8F4 (warm cream), cards: #FFFFFF with 1px #E8E2D9 borders, text: #2C2418 (dark brown), accent: #6B8C42 (sage green), secondary accent: #C4913E (warm amber). Typography: "Playfair Display" for headings, "Lato" for body text. Border-radius: 8px on cards, 4px on buttons. Generous whitespace (64px–80px between sections). Subtle paper-grain texture on backgrounds.
+
+Responsive: On mobile, farm partner cards stack vertically, menu tabs become a dropdown selector, photo gallery becomes a swipe carousel, reservation form goes full-width, events section stacks vertically with "Farm Dinners" on top. Sticky "Reserve a Table" button fixed at bottom of screen on mobile.

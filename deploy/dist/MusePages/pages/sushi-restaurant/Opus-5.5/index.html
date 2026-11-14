@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hikari 光 — Omakase Sushi Counter · Downtown</title>
+<meta name="description" content="A 14-seat omakase experience with fish flown in daily from Tokyo's Toyosu Market. Chef Kenji Tanaka's 18-course omakase, Tuesday through Saturday.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&display=swap&text=%E9%AE%A8%E5%87%A6%E5%85%89%E4%B8%80%E6%9C%9F%E4%BC%9A%E5%AD%A3%E7%AF%80%E3%81%8A%E3%81%BE%E3%81%8B%E3%81%9B%E7%94%B0%E4%B8%AD%E5%81%A5%E4%BA%8C">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 12h16M4 6h16M4 18h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></symbol>
+  <symbol id="i-utensils" viewBox="0 0 24 24"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5"/></symbol>
+  <symbol id="i-bottle" viewBox="0 0 24 24"><path d="M10 2h4M10 2v4.5c0 1-2 2-2 4V20a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-9.5c0-2-2-3-2-4V2"/><path d="M8 14h8"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-car" viewBox="0 0 24 24"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></symbol>
+  <symbol id="i-train" viewBox="0 0 24 24"><path d="M8 3.1V7a4 4 0 0 0 8 0V3.1M9 15l-1-1M15 15l1-1"/><path d="M9 19c-2.8 0-5-2.2-5-5v-4a8 8 0 0 1 16 0v4c0 2.8-2.2 5-5 5Z"/><path d="m8 19-2 3M16 19l2 3"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-instagram" viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37zM17.5 6.5h.01"/></symbol>
+  <symbol id="i-facebook" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></symbol>
+  <symbol id="i-google" viewBox="0 0 24 24"><path d="M21 12.2c0-.6-.1-1.2-.2-1.8H12v3.4h5a4.3 4.3 0 0 1-1.9 2.8v2.3h3A9 9 0 0 0 21 12.2Z"/><path d="M12 21a8.8 8.8 0 0 0 6.1-2.2l-3-2.3a5.5 5.5 0 0 1-8.2-2.9H3.8v2.4A9 9 0 0 0 12 21ZM6.9 13.6a5.4 5.4 0 0 1 0-3.4V7.8H3.8a9 9 0 0 0 0 8.2l3.1-2.4ZM12 6.6c1.3 0 2.5.5 3.5 1.4l2.6-2.6A8.8 8.8 0 0 0 12 3a9 9 0 0 0-8.2 4.8l3.1 2.4A5.4 5.4 0 0 1 12 6.6Z"/></symbol>
+</svg>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" data-nav>
+  <div class="wrap nav-row">
+    <a class="logo" href="#top" aria-label="Hikari home"><span>Hikari</span><span class="kanji" lang="ja" aria-hidden="true">光</span></a>
+    <nav class="links" aria-label="Primary"><a href="#menu">Menu</a><a href="#omakase">Omakase</a><a href="#story">Our Story</a><a href="#gallery">Gallery</a><a href="#reserve">Reservations</a></nav>
+    <a class="btn btn-red nav-cta" href="#reserve">Reserve a Table</a>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="mnav" aria-label="Open menu" data-burger><svg class="i"><use href="#i-menu"/></svg></button>
+  </div>
+  <nav class="mnav" id="mnav" aria-label="Mobile" hidden><a href="#menu">Menu</a><a href="#omakase">Omakase</a><a href="#story">Our Story</a><a href="#gallery">Gallery</a><a href="#reserve">Reservations</a><a class="btn btn-red" href="#reserve">Reserve a Table</a></nav>
+</header>
+
+<main id="main">
+  <section class="hero" id="top" aria-labelledby="hero-h">
+    <div class="hero-art" data-art="hero"></div>
+    <div class="hero-inner">
+      <p class="brush" lang="ja">鮨処 光</p>
+      <h1 id="hero-h">The Art of Sushi, Perfected</h1>
+      <p class="lede">A 14-seat omakase experience featuring the freshest fish flown in daily from Tokyo's Toyosu Market.</p>
+      <div class="ctas"><a class="btn btn-red" href="#omakase">View Omakase Menu</a><a class="btn btn-ghost" href="#reserve">Make a Reservation</a></div>
+    </div>
+    <div class="jp-divider" aria-hidden="true"><span></span><i></i><span></span></div>
+  </section>
+
+  <section class="navy philosophy" id="story" aria-labelledby="ph-h">
+    <p class="vertical" lang="ja" aria-label="Ichigo ichie — one time, one meeting">一期一会</p>
+    <div class="narrow reveal">
+      <p class="label">Our Philosophy</p>
+      <h2 id="ph-h">Every Piece Tells a Story</h2>
+      <p>At Hikari, we believe sushi is a conversation between chef and guest. Each piece of nigiri is shaped by hand, seasoned with decades of tradition, and served at the precise moment it reaches perfection. Our fish arrives daily from Toyosu Market, and our rice is seasoned with a house-blend vinegar aged for three years.</p>
+      <span class="gold-rule" aria-hidden="true"></span>
+    </div>
+  </section>
+
+  <section class="navy2 seasonal" id="menu" aria-labelledby="se-h">
+    <div class="wrap">
+      <div class="head reveal"><h2 id="se-h">Seasonal Selection · <span class="brush-inline" lang="ja">季節</span></h2><p class="sub">Spring 2026</p></div>
+      <div class="cards">
+        <article class="card reveal"><div class="c-img" data-dish="otoro" data-label="Glistening otoro nigiri on a dark ceramic plate"><span class="badge">Peak Season</span></div><div class="c-body"><h3>Otoro <span>Bluefin Tuna Belly</span></h3><p class="origin"><svg class="i"><use href="#i-pin"/></svg>Wild-caught, Oma, Aomori Prefecture</p><p>The pinnacle of tuna. Silky, marbled, and rich — served with aged soy and fresh wasabi.</p></div></article>
+        <article class="card reveal"><div class="c-img" data-dish="uni" data-label="Golden uni on a bed of seasoned rice"><span class="badge">Chef's Choice</span></div><div class="c-body"><h3>Uni <span>Sea Urchin</span></h3><p class="origin"><svg class="i"><use href="#i-pin"/></svg>Hokkaido, hand-harvested</p><p>Creamy and briny with a sweet finish. Served on warm rice to release the full aroma.</p></div></article>
+        <article class="card reveal"><div class="c-img" data-dish="masu" data-label="Pink cherry trout nigiri with a sakura petal garnish"><span class="badge">Limited</span></div><div class="c-body"><h3>Sakura Masu <span>Cherry Trout</span></h3><p class="origin"><svg class="i"><use href="#i-pin"/></svg>River-caught, Nagano</p><p>A spring delicacy with a clean, delicate flavor. Lightly cured and served with yuzu zest.</p></div></article>
+      </div>
+      <button class="gold-link" type="button" data-open="menu">View Full Menu <svg class="i"><use href="#i-arrow"/></svg></button>
+    </div>
+  </section>
+
+  <section class="cream omakase" id="omakase" aria-labelledby="om-h">
+    <div class="wrap om-grid">
+      <div class="strip">
+        <div class="s-img reveal" data-strip="slicing" data-label="Chef slicing fish with a yanagiba knife"></div>
+        <div class="s-img reveal" data-strip="pressing" data-label="Close-up of hands pressing nigiri"></div>
+        <div class="s-img reveal" data-strip="lacquer" data-label="A plated course on red lacquerware"></div>
+      </div>
+      <div class="om-copy reveal">
+        <p class="label">Omakase · <span lang="ja">おまかせ</span></p>
+        <h2 id="om-h">Leave It to the Chef</h2>
+        <p>Our 18-course omakase is a journey through Japan's seasons, guided by Chef Kenji Tanaka's 25 years of experience. Each course is prepared in front of you at our hinoki wood counter. The menu changes daily based on what arrives from the market.</p>
+        <dl class="facts">
+          <div><svg class="i"><use href="#i-utensils"/></svg><dt>Courses</dt><dd>18 Courses</dd></div>
+          <div><svg class="i"><use href="#i-clock"/></svg><dt>Duration</dt><dd>90 Minutes</dd></div>
+          <div><svg class="i"><use href="#i-tag"/></svg><dt>Price</dt><dd>$185 per person</dd></div>
+          <div><svg class="i"><use href="#i-bottle"/></svg><dt>Sake</dt><dd>Sake pairing: +$65</dd></div>
+        </dl>
+        <a class="btn btn-red" href="#reserve" data-omakase-cta>Reserve Omakase Seats</a>
+        <p class="note">Omakase seating limited to 14 guests per evening. Reservations required 48 hours in advance.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="navy chef" aria-labelledby="chef-h">
+    <div class="narrow reveal">
+      <div class="chef-photo" data-art="chef"></div>
+      <h2 id="chef-h">Chef Kenji Tanaka · <span class="brush-inline" lang="ja">田中健二</span></h2>
+      <p class="title">Head Chef &amp; Owner</p>
+      <p>Born in Osaka, Chef Tanaka trained for 12 years under Master Jiro Ono's protégé in Tokyo before opening Hikari in 2019. His approach honors Edomae tradition while embracing the finest seasonal ingredients from both Japan and the Pacific Northwest.</p>
+      <p class="creds">25 years experience · Michelin-recognized · James Beard semifinalist 2025</p>
+    </div>
+  </section>
+
+  <section class="gallery-sec" id="gallery" aria-labelledby="gal-h">
+    <div class="wrap">
+      <h2 id="gal-h" class="sr-only">Gallery</h2>
+      <div class="gallery" data-gallery></div>
+    </div>
+  </section>
+
+  <section class="navy press" aria-labelledby="pr-h">
+    <div class="wrap">
+      <div class="featured reveal"><h2 id="pr-h">Featured in</h2><ul><li class="p-nyt">The New York Times</li><li class="p-eater">EATER</li><li class="p-ba">Bon Appétit</li><li class="p-mich">MICHELIN GUIDE</li></ul></div>
+      <div class="reviews" data-reviews>
+        <figure class="rv reveal"><div class="stars" role="img" aria-label="4 out of 4 stars" data-stars="4"></div><blockquote>“An extraordinary omakase. Each course was a revelation.”</blockquote><figcaption>The New York Times</figcaption></figure>
+        <figure class="rv reveal"><p class="pick">Editor's Pick</p><blockquote>“Hikari is the closest you'll get to Tokyo without a plane ticket.”</blockquote><figcaption>Eater</figcaption></figure>
+        <figure class="rv reveal"><div class="stars" role="img" aria-label="5 out of 5 stars" data-stars="5"></div><blockquote>“The fish quality is unmatched. Chef Tanaka's knife work is mesmerizing.”</blockquote><figcaption>Sarah K., Google Reviews</figcaption></figure>
+      </div>
+      <div class="rv-dots" data-rv-dots aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <section class="cream reserve" id="reserve" aria-labelledby="res-h">
+    <div class="wrap res-grid">
+      <div class="res-info reveal">
+        <h2 id="res-h">Reserve Your Experience</h2>
+        <p>We recommend booking at least one week in advance for omakase seating. Walk-ins welcome for à la carte dining at the bar, subject to availability.</p>
+        <dl class="details">
+          <div><dt>Dinner</dt><dd>Tuesday–Saturday, 5:30 PM – 10:00 PM</dd></div>
+          <div><dt>Omakase seatings</dt><dd>6:00 PM and 8:30 PM</dd></div>
+          <div><dt>Closed</dt><dd>Sunday &amp; Monday</dd></div>
+          <div><dt>Private dining</dt><dd>Available for parties of 6-8 (inquire directly)</dd></div>
+        </dl>
+        <p class="contact"><svg class="i"><use href="#i-phone"/></svg><a href="tel:+15553198800">(555) 319-8800</a></p>
+        <p class="contact"><svg class="i"><use href="#i-mail"/></svg><a href="mailto:reservations@hikarisushi.com">reservations@hikarisushi.com</a></p>
+      </div>
+      <form class="res-form reveal" data-res novalidate>
+        <div class="pref" role="radiogroup" aria-label="Dining preference">
+          <label><input type="radio" name="pref" value="omakase" checked><span><b>Omakase Counter</b>18 courses · $185</span></label>
+          <label><input type="radio" name="pref" value="bar"><span><b>À La Carte Bar</b>Order by the piece</span></label>
+        </div>
+        <div class="row3">
+          <label class="f"><span>Date</span><input type="date" name="date" required></label>
+          <label class="f"><span>Time</span><select name="time" required data-time></select></label>
+          <label class="f"><span>Party size</span><select name="party" data-party></select></label>
+        </div>
+        <div class="row2"><label class="f"><span>Name</span><input name="name" required autocomplete="name"></label><label class="f"><span>Email</span><input name="email" type="email" required autocomplete="email"></label></div>
+        <label class="f"><span>Special requests</span><textarea name="notes" rows="2" placeholder="Allergies, celebrations, seating preferences"></textarea></label>
+        <p class="hint" data-hint aria-live="polite"></p>
+        <p class="err" data-err role="alert"></p>
+        <button class="btn btn-red wide" type="submit">Request Reservation</button>
+        <p class="note">You'll receive a confirmation email within 2 hours</p>
+      </form>
+      <div class="res-done" data-done hidden tabindex="-1"><svg class="i"><use href="#i-check"/></svg><h3>Request received</h3><p data-done-text></p><button class="btn btn-outline" type="button" data-again>Make another request</button></div>
+    </div>
+  </section>
+
+  <section class="location" aria-labelledby="loc-h">
+    <div class="map" data-art="map"></div>
+    <div class="loc-copy reveal">
+      <h2 id="loc-h">Find Us</h2>
+      <p class="addr"><svg class="i"><use href="#i-pin"/></svg>428 Pine Street, Suite B, Downtown</p>
+      <p><svg class="i"><use href="#i-car"/></svg>Validated parking at Pine Street Garage</p>
+      <p><svg class="i"><use href="#i-train"/></svg>2 blocks from Central Station (Blue Line)</p>
+      <p class="status" data-status></p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div><h3>Dining</h3><ul><li><a href="#menu">Menu</a></li><li><a href="#omakase">Omakase</a></li><li><button class="linkish" type="button" data-open="menu">Sake List</button></li><li><a href="#reserve">Private Events</a></li></ul></div>
+      <div><h3>Visit</h3><ul><li><a href="#reserve">Hours</a></li><li><a href="#loc-h">Location</a></li><li><a href="#loc-h">Parking</a></li><li><a href="mailto:reservations@hikarisushi.com">Accessibility</a></li></ul></div>
+      <div><h3>Connect</h3><ul><li><a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a></li><li><a href="https://www.facebook.com/" target="_blank" rel="noopener">Facebook</a></li><li><a href="#news-email">Email Newsletter</a></li></ul></div>
+      <form class="news" data-news novalidate><label for="news-email">Join our list for seasonal menu updates</label><div><input id="news-email" type="email" placeholder="Email address" required autocomplete="email"><button class="btn btn-gold" type="submit">Subscribe</button></div><p class="news-msg" data-news-msg role="status" aria-live="polite"></p></form>
+    </div>
+    <div class="foot-bottom">
+      <ul class="social"><li><a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram"><svg class="i"><use href="#i-instagram"/></svg></a></li><li><a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook"><svg class="i"><use href="#i-facebook"/></svg></a></li><li><a href="https://business.google.com/" target="_blank" rel="noopener" aria-label="Google Business"><svg class="i"><use href="#i-google"/></svg></a></li></ul>
+      <p>© 2026 Hikari Sushi · <span lang="ja">光</span></p>
+    </div>
+  </div>
+</footer>
+
+<div class="lightbox" data-lb hidden role="dialog" aria-modal="true" aria-label="Gallery">
+  <button class="lb-btn lb-x" type="button" data-lb-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button>
+  <button class="lb-btn lb-p" type="button" data-lb-step="-1" aria-label="Previous photo"><svg class="i"><use href="#i-left"/></svg></button>
+  <figure><div class="lb-img" data-lb-img></div><figcaption data-lb-cap></figcaption></figure>
+  <button class="lb-btn lb-n" type="button" data-lb-step="1" aria-label="Next photo"><svg class="i"><use href="#i-right"/></svg></button>
+</div>
+
+<dialog class="modal" data-modal="menu" aria-labelledby="mn-h">
+  <div class="m-head"><h2 id="mn-h">À La Carte &amp; Sake</h2><button class="x" type="button" data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
+  <div class="m-body" data-full-menu></div>
+</dialog>
+
+<div class="toast" data-toast role="status" aria-live="polite"></div>
+
+<script src="assets/art.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

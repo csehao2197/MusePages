@@ -1,0 +1,129 @@
+Create a polished graphic designer portfolio website for [designer name], a [specialty or positioning] designer who works with [ideal clients]. The website should make the visual work memorable while giving prospective clients enough context to understand the designer's thinking, services, and results.
+
+GRAPHIC DESIGNER PORTFOLIO PROMPT
+
+1. GOAL AND AUDIENCE
+- Primary audience: [creative directors, founders, agencies, cultural organizations, or other ideal clients]
+- Primary goal: generate qualified project inquiries
+- Secondary goal: help hiring managers or collaborators assess the designer's range and process
+- Positioning statement: "[Designer name] creates [type of work] for [audience] so they can [outcome]."
+- Avoid generic claims such as "I make ideas come alive" unless they are supported with specific work
+
+2. VISUAL DIRECTION
+- Editorial, image-led layout with generous whitespace
+- Typography should feel intentional: use one expressive display face with one highly readable sans-serif
+- Neutral background with one configurable accent color drawn from the designer's identity
+- Let project imagery carry the visual weight; decorative effects should never compete with the work
+- Support light and dark artwork without losing contrast
+- Use restrained transitions and respect prefers-reduced-motion
+
+3. NAVIGATION
+- Logo or wordmark: [designer name]
+- Links: Work, About, Services, Process, Contact
+- Optional filters: Brand Identity, Campaign, Packaging, Editorial, Digital
+- Persistent "Start a project" CTA on desktop
+- Compact mobile menu with a minimum 44px touch target for every action
+
+4. HERO
+- Concise role and specialty
+- One-sentence value proposition for the intended client
+- Featured-project image or rotating pair of project details
+- Primary CTA: "View selected work"
+- Secondary CTA: "Start a project"
+- Optional availability note with location and timezone
+
+5. SELECTED WORK
+Create an image-first project grid with 6–10 strong projects. Each card should include:
+- Project name
+- Client or self-initiated label
+- Discipline and year
+- One-sentence challenge or outcome
+- Lead image with an intentional crop and useful alt text
+- Hover and keyboard-focus states that reveal the project context without hiding essential information
+
+Use a varied but orderly grid. Do not use a masonry layout if it creates an unpredictable reading order for keyboard or screen-reader users.
+
+6. PROJECT CASE STUDIES
+Each featured project should have its own page with:
+- Client, industry, year, role, collaborators, and deliverables
+- The business or communication challenge
+- Audience and project constraints
+- Creative direction and key design decisions
+- Brand-system elements such as typography, color, logo behavior, grids, and art direction
+- Applications across relevant touchpoints: packaging, print, social, web, environmental, or campaign assets
+- Process material such as sketches, rejected directions, mockups, and production details
+- Outcome, launch context, client quote, or measurable result when available
+- Next-project navigation and a contextual inquiry CTA
+
+Never invent client results. Use a clearly labeled placeholder when a real metric or testimonial is unavailable.
+
+7. SERVICES
+Present 3–5 clearly scoped services, such as:
+- Brand identity systems
+- Campaign art direction
+- Packaging design
+- Editorial and publication design
+- Digital design and launch assets
+
+For each service, explain ideal fit, typical deliverables, engagement shape, and the next step. Do not publish fixed prices unless [designer name] provides them.
+
+8. ABOUT AND CREDIBILITY
+- Short first-person biography focused on point of view and relevant experience
+- Portrait or studio image with descriptive alt text
+- Selected clients, awards, exhibitions, publications, or talks
+- Tools and production capabilities only where they help clients assess fit
+- Collaboration approach and the types of teams the designer works with
+- Downloadable résumé or capabilities deck if provided
+
+9. PROCESS
+Explain a practical four-stage process:
+- Discover: brief, audience, references, and project constraints
+- Define: strategy, creative territories, and success criteria
+- Design: concepts, feedback rounds, system development, and applications
+- Deliver: production files, guidelines, handoff, and launch support
+
+Include realistic expectations for feedback, approvals, revision rounds, and final-file delivery.
+
+10. TESTIMONIALS
+- Use 2–4 real testimonials with client name, role, and company
+- Place each testimonial near the project or service it supports
+- If testimonials are unavailable, create a clearly labeled placeholder component rather than fabricated praise
+
+11. PROJECT INQUIRY FLOW
+Create an accessible inquiry form with:
+- Name, email, company, and website
+- Project type
+- Project summary
+- Desired timeline
+- Budget range with "Not sure yet" option
+- How the client found the designer
+- Consent and privacy note
+- Clear success, validation, loading, and error states
+
+Add a direct email alternative and state the expected response time.
+
+12. RESPONSIVE AND ACCESSIBLE BEHAVIOR
+- Preserve the intended project reading order on mobile
+- Provide descriptive alt text guidance for every portfolio image
+- Make project filters keyboard operable and announce active states
+- Meet WCAG AA contrast for text and controls
+- Use visible focus styles, semantic headings, landmarks, and form labels
+- Lazy-load below-the-fold imagery and reserve image dimensions to prevent layout shift
+- Offer a reduced-motion experience
+
+13. SEO AND SHARING
+- Add a unique title and meta description for the homepage and every case study
+- Use Person or ProfessionalService structured data where appropriate
+- Include canonical URLs and social-sharing images
+- Create clean project URLs such as /work/[project-slug]
+- Add a concise text introduction so the homepage is understandable without relying only on images
+- Generate an XML sitemap and robots.txt recommendation
+
+14. IMPLEMENTATION NOTES
+- Build reusable components for ProjectCard, ProjectFilter, CaseStudyHeader, ImageSequence, ServicesGrid, Testimonial, and InquiryForm
+- Keep projects, services, clients, and testimonials in structured data that [designer name] can edit
+- Optimize images with modern formats, responsive sizes, and art-directed crops
+- Include sample content for three projects, clearly marked as placeholders
+- Finish with a content checklist listing every image, client fact, quote, link, and project result the designer must supply before launch
+
+Deliver the complete responsive portfolio, component structure, sample project data, accessibility notes, SEO metadata, and the pre-launch content checklist.

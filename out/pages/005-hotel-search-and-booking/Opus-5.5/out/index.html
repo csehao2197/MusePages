@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StayFinder | A Better Stay in Tokyo</title>
+<meta name="description" content="Compare and book hotels in Tokyo: ryokans, capsule hotels, apartments and luxury stays.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-bed" viewBox="0 0 24 24"><path d="M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 17h20M6 8v9"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 4.99-5.54 10.19-7.4 11.8a1 1 0 0 1-1.2 0C9.54 20.19 4 14.99 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-door" viewBox="0 0 24 24"><path d="M13 4h3a2 2 0 0 1 2 2v14M2 20h3M13 20h9M10 12v.01M13 4.56v16.16a1 1 0 0 1-1.24.97L5 20V5.56a2 2 0 0 1 1.51-1.94l4-1A2 2 0 0 1 13 4.56Z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="i-map" viewBox="0 0 24 24"><path d="M14.1 5.9 9.9 3.8a2 2 0 0 0-1.8 0L3.6 6.1A1 1 0 0 0 3 7v12.4a1 1 0 0 0 1.4.9l3.7-1.9a2 2 0 0 1 1.8 0l4.2 2.1a2 2 0 0 0 1.8 0l4.5-2.3a1 1 0 0 0 .6-.9V4.6a1 1 0 0 0-1.4-.9l-3.7 1.9a2 2 0 0 1-1.8 0M15 5.8v15M9 3.2v15"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M3 12h.01M3 18h.01M3 6h.01M8 12h13M8 18h13M8 6h13"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-chev-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-chev-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-chev-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24"><path d="M10 20a1 1 0 0 0 .55.9l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .52-1.34L21.7 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.74 1.67l7.22 7.99A2 2 0 0 1 10 14z"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M12 20h.01M2 8.82a15 15 0 0 1 20 0M5 12.86a10 10 0 0 1 14 0M8.5 16.43a5 5 0 0 1 7 0"/></symbol>
+  <symbol id="i-pool" viewBox="0 0 24 24"><path d="M2 12h20M2 16c1.5 0 2.5-1 4-1s2.5 1 4 1 2.5-1 4-1 2.5 1 4 1 2.5-1 4-1M2 20c1.5 0 2.5-1 4-1s2.5 1 4 1 2.5-1 4-1 2.5 1 4 1 2.5-1 4-1M8 12V5a2 2 0 0 1 4 0M16 12V5a2 2 0 0 0-4 0"/></symbol>
+  <symbol id="i-gym" viewBox="0 0 24 24"><path d="M14.4 14.4 9.6 9.6M18.66 21.51a2 2 0 1 1-2.83-2.82l-1.77 1.77a2 2 0 1 1-2.83-2.83l6.37-6.37a2 2 0 1 1 2.83 2.83l-1.77 1.77a2 2 0 1 1 2.82 2.83zM21.5 21.5l-1.4-1.4M3.9 3.9 2.5 2.5M6.4 12.77a2 2 0 1 1-2.83-2.83l1.77-1.77a2 2 0 1 1-2.83-2.83l2.83-2.83a2 2 0 1 1 2.83 2.83l1.77-1.77a2 2 0 1 1 2.83 2.83z"/></symbol>
+  <symbol id="i-spa" viewBox="0 0 24 24"><path d="M12 22c4.97 0 9-2.69 9-6s-4.03-6-9-6-9 2.69-9 6 4.03 6 9 6ZM12 10c0-3 2-5 5-6-1 3-2 5-5 6ZM12 10c0-3-2-5-5-6 1 3 2 5 5 6Z"/></symbol>
+  <symbol id="i-utensils" viewBox="0 0 24 24"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></symbol>
+  <symbol id="i-shirt" viewBox="0 0 24 24"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></symbol>
+  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></symbol>
+  <symbol id="i-sofa" viewBox="0 0 24 24"><path d="M20 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3M2 16a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1.5a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5V11a2 2 0 0 0-4 0zM4 18v2M20 18v2M12 4v9"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M10.27 21a2 2 0 0 0 3.46 0M3.26 15.33A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.67C19.41 13.96 18 12.5 18 8A6 6 0 0 0 6 8c0 4.5-1.41 5.96-2.74 7.33"/></symbol>
+  <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M10 2v2M14 2v2M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1M6 2v2"/></symbol>
+  <symbol id="i-bus" viewBox="0 0 24 24"><path d="M8 6v6M15 6v6M2 12h19.6M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3"/><circle cx="7" cy="18" r="2"/><path d="M9 18h5"/><circle cx="16" cy="18" r="2"/></symbol>
+  <symbol id="i-car" viewBox="0 0 24 24"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></symbol>
+  <symbol id="i-snow" viewBox="0 0 24 24"><path d="M2 12h20M12 2v20M20 16l-4-4 4-4M4 8l4 4-4 4M16 4l-4 4-4-4M8 20l4-4 4 4"/></symbol>
+  <symbol id="i-tv" viewBox="0 0 24 24"><rect width="20" height="15" x="2" y="7" rx="2"/><path d="m17 2-5 5-5-5"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-badge" viewBox="0 0 24 24"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-headset" viewBox="0 0 24 24"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83zM2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></symbol>
+  <symbol id="i-walk" viewBox="0 0 24 24"><circle cx="13" cy="4" r="2"/><path d="m9 20 3-6 3 2v6M8 11l2-3 4 1 3 3M10 8l-2 6"/></symbol>
+  <symbol id="i-train" viewBox="0 0 24 24"><path d="M8 3.1V7a4 4 0 0 0 8 0V3.1M9 15l-1-1M15 15l1-1M9 19c-2.8 0-5-2.2-5-5v-4a8 8 0 0 1 16 0v4c0 2.8-2.2 5-5 5ZM8 19l-2 3M16 19l2 3"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></symbol>
+</defs></svg>
+
+<a class="skip" href="#results">Skip to results</a>
+<header class="nav" id="top">
+  <div class="wrap nav-row">
+    <a class="logo" href="#top"><span class="logo-ic"><svg class="ic"><use href="#i-bed"/></svg></span>StayFinder</a>
+    <nav class="links" aria-label="Primary"><a href="#top" aria-current="page">Hotels</a><a href="#top">Vacation Rentals</a><a href="#top">Experiences</a><a href="#top">Deals</a></nav>
+    <button class="compact" id="compact" type="button" aria-label="Edit search"><svg class="ic"><use href="#i-search"/></svg><span id="compactText">Tokyo · Apr 14–21 · 2 guests</span></button>
+    <div class="nav-right">
+      <label class="vh" for="currency">Currency</label><select id="currency" class="currency"><option value="USD">USD</option><option value="EUR">EUR</option><option value="JPY">JPY</option></select>
+      <a class="list-prop" href="#top" data-toast="Property listing is a demo.">List Your Property</a>
+      <button class="icon-btn saved-btn" id="savedBtn" type="button" aria-label="Saved hotels"><svg class="ic"><use href="#i-heart"/></svg><span class="count" id="savedCount" hidden>0</span></button>
+      <button class="signin" type="button" data-toast="Sign in is a demo."><span class="avatar"><svg class="ic"><use href="#i-user"/></svg></span><span>Sign In</span></button>
+    </div>
+  </div>
+</header>
+
+<section class="search-wrap wrap" aria-label="Search hotels">
+  <button class="m-search" id="mSearchToggle" aria-expanded="false" aria-controls="searchCard"><svg class="ic"><use href="#i-search"/></svg><span><strong>Tokyo, Japan</strong><small id="mSearchSub">Apr 14 – Apr 21 · 2 Adults · 1 Room</small></span><svg class="ic"><use href="#i-chev-down"/></svg></button>
+  <form class="search-card" id="searchCard" novalidate>
+    <div class="sf dest"><span class="sl"><svg class="ic"><use href="#i-pin"/></svg>Destination</span>
+      <input id="dest" value="Tokyo, Japan" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="destList" aria-autocomplete="list" aria-label="Destination">
+      <ul class="ac" id="destList" role="listbox" hidden></ul></div>
+    <label class="sf"><span class="sl"><svg class="ic"><use href="#i-calendar"/></svg>Check-in</span><input type="date" id="checkin" value="2026-04-14"></label>
+    <label class="sf"><span class="sl"><svg class="ic"><use href="#i-calendar"/></svg>Check-out</span><input type="date" id="checkout" value="2026-04-21"></label>
+    <div class="sf guests"><span class="sl"><svg class="ic"><use href="#i-users"/></svg>Guests</span>
+      <button type="button" class="dd" id="guestBtn" aria-expanded="false" aria-controls="guestPop"><span id="guestLabel">2 Adults, 0 Children</span><svg class="ic"><use href="#i-chev-down"/></svg></button>
+      <div class="pop" id="guestPop" hidden>
+        <div class="prow"><span>Adults</span><div class="step"><button type="button" data-k="adults" data-d="-1" aria-label="Fewer adults"><svg class="ic"><use href="#i-minus"/></svg></button><output id="gAdults">2</output><button type="button" data-k="adults" data-d="1" aria-label="More adults"><svg class="ic"><use href="#i-plus"/></svg></button></div></div>
+        <div class="prow"><span>Children</span><div class="step"><button type="button" data-k="children" data-d="-1" aria-label="Fewer children"><svg class="ic"><use href="#i-minus"/></svg></button><output id="gChildren">0</output><button type="button" data-k="children" data-d="1" aria-label="More children"><svg class="ic"><use href="#i-plus"/></svg></button></div></div>
+        <button type="button" class="btn btn-blue btn-block" id="guestDone">Done</button></div></div>
+    <label class="sf"><span class="sl"><svg class="ic"><use href="#i-door"/></svg>Rooms</span><select id="rooms"><option value="1">1 Room</option><option value="2">2 Rooms</option><option value="3">3 Rooms</option><option value="4">4 Rooms</option></select></label>
+    <button class="btn btn-blue search-btn" type="submit"><svg class="ic"><use href="#i-search"/></svg>Search</button>
+  </form>
+  <p class="search-err" id="searchErr" role="alert" hidden></p>
+  <p class="search-meta" id="searchMeta"><strong>7 nights</strong> · 245 hotels found · Prices include taxes &amp; fees</p>
+</section>
+
+<main class="wrap page" id="main">
+  <aside class="filters" id="filters" aria-label="Filters">
+    <div class="f-head"><h2>Filters</h2><button type="button" class="text-btn" id="clearAll">Clear All Filters</button><button class="icon-btn sheet-close" id="closeSheet" aria-label="Close filters"><svg class="ic"><use href="#i-x"/></svg></button></div>
+    <div class="f-body">
+      <button type="button" class="mapprev" id="mapPrev" aria-label="Show map"><span class="mp-art" aria-hidden="true"></span><span class="btn btn-white-sm"><svg class="ic"><use href="#i-map"/></svg>Show Map</span></button>
+      <section class="fg"><h3>Price per night</h3><div class="hist" id="hist" aria-hidden="true"></div>
+        <div class="dual"><input type="range" id="pMin" min="50" max="800" step="5" value="50" aria-label="Minimum price per night"><input type="range" id="pMax" min="50" max="800" step="5" value="800" aria-label="Maximum price per night"><span class="dual-fill" id="dualFill"></span></div>
+        <div class="rv"><span id="pMinV">$50</span><span id="pMaxV">$800+</span></div></section>
+      <section class="fg"><h3>Star Rating</h3><div class="checks" id="fStars"></div></section>
+      <section class="fg"><h3>Guest Rating</h3><div class="checks" id="fGuest" role="radiogroup" aria-label="Guest rating"></div></section>
+      <section class="fg"><h3>Property Type</h3><div class="checks" id="fType"></div></section>
+      <section class="fg"><h3>Neighborhood</h3><div class="checks" id="fHood"></div><button type="button" class="text-btn" id="moreHood" aria-expanded="false">Show more</button></section>
+      <section class="fg"><h3>Amenities</h3><div class="checks" id="fAmen"></div></section>
+    </div>
+    <div class="f-foot"><button class="btn btn-blue btn-block" id="applySheet" type="button">Show <span id="sheetN">245</span> hotels</button></div>
+  </aside>
+  <div class="backdrop" id="backdrop" hidden></div>
+
+  <div class="results" id="results">
+    <div class="sortbar">
+      <p class="count" id="count"><strong>245 hotels found</strong></p>
+      <div class="sort-chips" role="radiogroup" aria-label="Sort by" id="sortChips"></div>
+      <div class="sort-r"><label class="vh" for="sort">Sort by</label><select id="sort"><option value="rec">Recommended</option><option value="plh">Price: Low to High</option><option value="phl">Price: High to Low</option><option value="rating">Guest Rating</option><option value="dist">Distance to Center</option></select>
+        <div class="views" role="group" aria-label="View"><button type="button" class="vbtn on" data-view="list" aria-pressed="true" aria-label="List view"><svg class="ic"><use href="#i-list"/></svg></button><button type="button" class="vbtn" data-view="grid" aria-pressed="false" aria-label="Grid view"><svg class="ic"><use href="#i-grid"/></svg></button><button type="button" class="vbtn mapbtn" id="mapBtn" aria-label="Map view"><svg class="ic"><use href="#i-map"/></svg></button></div></div>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="list" id="list" aria-live="polite"></div>
+    <div class="empty" id="empty" hidden><h3>No hotels match your filters</h3><p>Try a wider price range or fewer amenities.</p><button class="btn btn-outline" type="button" id="emptyClear">Clear All Filters</button></div>
+    <nav class="pager" id="pager" aria-label="Pagination"></nav>
+    <div class="loadmore"><button class="btn btn-outline" type="button" id="loadMore">Load More</button></div>
+
+    <section class="trust" aria-labelledby="trustTitle">
+      <h2 id="trustTitle" class="vh">Why book with StayFinder</h2>
+      <ul class="trust-grid">
+        <li><svg class="ic"><use href="#i-shield"/></svg><div><strong>Price Match Guarantee</strong><span>Found it cheaper? We refund the difference.</span></div></li>
+        <li><svg class="ic"><use href="#i-badge"/></svg><div><strong>Verified Reviews</strong><span>Only from guests who stayed.</span></div></li>
+        <li><svg class="ic"><use href="#i-lock"/></svg><div><strong>Secure Booking</strong><span>Encrypted payments, always.</span></div></li>
+        <li><svg class="ic"><use href="#i-headset"/></svg><div><strong>24/7 Customer Support</strong><span>Real people, any time zone.</span></div></li>
+      </ul>
+      <div class="pay-row"><p>Over <strong>2 million bookings</strong> made through StayFinder</p><ul class="paylogos" aria-label="Accepted payment methods"><li class="visa">VISA</li><li class="mc"><i></i><i></i><span>Mastercard</span></li><li class="amex">AMEX</li><li class="pp">PayPal</li><li class="ap">Apple Pay</li></ul></div>
+    </section>
+
+    <section class="recent" aria-labelledby="recentTitle">
+      <h2 id="recentTitle">Your Recently Viewed Hotels</h2>
+      <div class="recent-track" id="recent" tabindex="0" aria-label="Recently viewed hotels"></div>
+    </section>
+  </div>
+</main>
+
+<div class="mapview" id="mapView" hidden role="dialog" aria-modal="true" aria-label="Map of hotels">
+  <div class="map-top"><strong id="mapCount">245 hotels</strong><button type="button" class="btn btn-white-sm" id="searchArea"><svg class="ic"><use href="#i-search"/></svg>Search this area</button><button class="icon-btn" id="mapClose" aria-label="Close map"><svg class="ic"><use href="#i-x"/></svg></button></div>
+  <div class="map" id="map"><div class="map-canvas" id="mapCanvas"></div>
+    <div class="map-ctrl"><button type="button" id="zoomIn" aria-label="Zoom in"><svg class="ic"><use href="#i-plus"/></svg></button><button type="button" id="zoomOut" aria-label="Zoom out"><svg class="ic"><use href="#i-minus"/></svg></button><button type="button" id="satBtn" aria-pressed="false" aria-label="Satellite view"><svg class="ic"><use href="#i-layers"/></svg></button></div>
+    <div class="map-card" id="mapCard" hidden></div>
+    <p class="map-legend"><i class="lg avail"></i>Available<i class="lg sold"></i>Sold out</p>
+  </div>
+</div>
+
+<dialog class="detail" id="detail" aria-labelledby="dTitle"><div class="d-in" id="dBody"></div></dialog>
+
+<footer class="footer">
+  <div class="wrap foot">
+    <nav aria-label="Popular destinations"><h3>Popular Destinations</h3><a href="#top">Tokyo</a><a href="#top">Paris</a><a href="#top">New York</a><a href="#top">Bali</a><a href="#top">London</a><a href="#top">Barcelona</a></nav>
+    <nav aria-label="Property types"><h3>Property Types</h3><a href="#top">Hotels</a><a href="#top">Vacation Rentals</a><a href="#top">Hostels</a><a href="#top">Resorts</a><a href="#top">Apartments</a></nav>
+    <nav aria-label="Company"><h3>Company</h3><a href="#top">About</a><a href="#top">Careers</a><a href="#top">Press</a><a href="#top">Affiliate Program</a><a href="#top">Blog</a></nav>
+    <nav aria-label="Support"><h3>Support</h3><a href="#top">Help Center</a><a href="#top">Contact Us</a><a href="#top">Cancellation Policy</a><a href="#top">COVID-19 Info</a></nav>
+  </div>
+  <div class="wrap foot-base">
+    <a class="logo logo-sm" href="#top"><span class="logo-ic"><svg class="ic"><use href="#i-bed"/></svg></span>StayFinder</a>
+    <div class="locale"><label for="fCur" class="vh">Currency</label><select id="fCur"><option value="USD">USD $</option><option value="EUR">EUR €</option><option value="JPY">JPY ¥</option></select><label for="fLang" class="vh">Language</label><select id="fLang"><option>English (US)</option><option>日本語</option><option>Español</option><option>Français</option></select></div>
+    <span>© 2026 StayFinder Inc.</span>
+  </div>
+</footer>
+
+<div class="mbar" id="mbar"><span id="mbarText">From <strong>$38</strong>/night</span><div><button class="btn btn-outline-sm" id="mFilters" type="button" aria-label="Filters"><svg class="ic"><use href="#i-filter"/></svg><span class="bt">Filters</span></button><button class="btn btn-outline-sm" id="mMap" type="button" aria-label="Map"><svg class="ic"><use href="#i-map"/></svg><span class="bt">Map</span></button><a class="btn btn-blue-sm" id="mDeal" href="#results">View Deal</a></div></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="assets/photos.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

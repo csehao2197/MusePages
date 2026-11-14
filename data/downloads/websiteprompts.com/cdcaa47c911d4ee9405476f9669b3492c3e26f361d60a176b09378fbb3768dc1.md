@@ -1,0 +1,1 @@
+Create a SaaS landing page for [product] that helps [audience] achieve [outcome]. Include hero, pain points, benefits, feature grid, product workflow, pricing, testimonials, FAQ, and final CTA. Make the copy specific, avoid generic claims, and optimize for trial signups.

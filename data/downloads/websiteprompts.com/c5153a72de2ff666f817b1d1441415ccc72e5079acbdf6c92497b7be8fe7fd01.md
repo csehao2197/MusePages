@@ -1,0 +1,143 @@
+Create a hotel search results and booking page for a travel platform called "StayFinder" that helps travelers compare and book accommodations. The design should feel trustworthy, easy to scan, and conversion-optimized.
+
+1. NAVIGATION BAR
+- Logo: "StayFinder" with a bed/house icon
+- Links: Hotels, Vacation Rentals, Experiences, Deals
+- Right side: currency selector (USD ▾), "List Your Property" text link, heart icon (saved), user avatar with "Sign In"
+- Search bar integrated into nav on scroll (compact version)
+- White background with bottom border (#E5E7EB)
+
+2. SEARCH BAR (prominent, full-width card below nav)
+- White card with soft shadow, 16px border-radius
+- Fields in a row:
+  - 📍 Destination: "Tokyo, Japan" (pre-filled, with autocomplete dropdown)
+  - 📅 Check-in: "Apr 14, 2026" (date picker)
+  - 📅 Check-out: "Apr 21, 2026" (date picker)
+  - 👥 Guests: "2 Adults, 0 Children" (dropdown stepper)
+  - Rooms: "1 Room" (dropdown)
+- "Search" button (solid #2563EB blue, large)
+- Below search: "7 nights · 245 hotels found · Prices include taxes & fees"
+
+3. FILTER SIDEBAR (left column, 280px wide)
+- Sticky on scroll, scrollable if content overflows
+- Map toggle: "Show Map" button with mini-map preview
+- Price Range: dual-handle slider $50–$800/night, with histogram showing distribution
+- Star Rating: checkboxes — ★★★★★ (42), ★★★★ (89), ★★★ (67), ★★ (31), ★ (16)
+- Guest Rating: "9+ Exceptional" (28), "8+ Excellent" (64), "7+ Very Good" (112)
+- Property Type: Hotel (156), Ryokan (34), Hostel (28), Apartment (18), Capsule Hotel (9)
+- Neighborhood: Shinjuku (52), Shibuya (41), Ginza (38), Asakusa (29), Roppongi (22), Akihabara (15), more...
+- Amenities: Free WiFi, Breakfast Included, Pool, Gym, Free Cancellation, Airport Shuttle, Onsen/Hot Spring
+- "Clear All Filters" link at top
+- Each filter shows result count in parentheses
+
+4. SORT BAR (above results)
+- Sort dropdown: "Recommended" (default), "Price: Low to High", "Price: High to Low", "Guest Rating", "Distance to Center"
+- View toggle: list view (default) / grid view icons
+- Results count: "245 hotels found"
+- Active filter chips with X to remove: "Shinjuku ✕", "Free Cancellation ✕", "4+ Stars ✕"
+
+5. HOTEL RESULT CARDS (list view — horizontal cards)
+- Card 1: "Park Hyatt Tokyo"
+  - Photo carousel (4 images, dots indicator, arrow navigation)
+  - ★★★★★ · Shinjuku
+  - Guest rating: 9.4/10 "Exceptional" (1,284 reviews)
+  - Key amenities icons: WiFi, Pool, Gym, Spa, Restaurant
+  - "Lost in Translation" filming location" badge
+  - Room: "Deluxe King — City View" · 45m²
+  - Price: ~~$580~~ "$412/night" (29% off) · "$2,884 total for 7 nights"
+  - "Free cancellation until Apr 7" in green
+  - "Only 3 rooms left!" urgency text in red
+  - "Book Now" button (solid blue) + heart save icon
+
+- Card 2: "MUJI HOTEL GINZA"
+  - Photo carousel
+  - ★★★★ · Ginza
+  - Guest rating: 9.1/10 "Excellent" (876 reviews)
+  - Key amenities: WiFi, Restaurant, Laundry
+  - "Minimalist Design" style badge
+  - Room: "Type E — Double" · 32m²
+  - Price: "$198/night" · "$1,386 total"
+  - "Free cancellation until Apr 10"
+  - "Book Now" button
+
+- Card 3: "Hoshinoya Tokyo"
+  - Photo carousel
+  - ★★★★★ · Otemachi
+  - Guest rating: 9.6/10 "Exceptional" (542 reviews)
+  - Key amenities: WiFi, Onsen, Spa, Restaurant, Room Service
+  - "Traditional Ryokan" style badge
+  - Room: "Sakura Suite — Garden View" · 56m²
+  - Price: ~~$720~~ "$549/night" · "$3,843 total"
+  - "Includes breakfast & onsen access"
+  - "Book Now" button
+
+- Card 4: "Capsule Hotel Anshin Oyado"
+  - Photo carousel
+  - ★★★ · Shinjuku
+  - Guest rating: 8.2/10 "Very Good" (2,105 reviews)
+  - Key amenities: WiFi, Sauna, Laundry, Lounge
+  - "Budget Pick" badge
+  - Room: "Premium Capsule — Male Floor"
+  - Price: "$38/night" · "$266 total"
+  - "Pay at property"
+  - "Book Now" button
+
+- Each card: 12px border-radius, hover shadow lift, photo left (40%), details right (60%)
+- Sponsored result label on first result (subtle "Ad" badge)
+
+6. MAP VIEW (toggleable overlay or split-screen)
+- Interactive map with price bubble markers ($38, $198, $412, $549)
+- Markers color-coded: blue for available, gray for sold out
+- Click marker to show mini card with photo, name, rating, price
+- Cluster markers for dense areas
+- Map controls: zoom, satellite toggle, "Search this area" button
+
+7. PAGINATION
+- "Showing 1–20 of 245 results"
+- Page numbers: 1, 2, 3, ... 13 with Previous/Next arrows
+- "Load More" alternative button
+
+8. HOTEL DETAIL MODAL (opens on card click — or separate detail section)
+- Large photo gallery: 5+ photos in grid layout (main large image + 4 thumbnails), "View all 32 photos" link
+- Hotel name, star rating, address with map pin link
+- Guest rating breakdown: Cleanliness 9.6, Location 9.8, Service 9.2, Value 8.9, Facilities 9.0
+- Description: 2-3 paragraph overview of the hotel
+- Room types comparison table:
+  - Standard King: 30m², city view, $350/night
+  - Deluxe King: 45m², city view, $412/night — "Most Popular"
+  - Suite: 72m², park view, $680/night
+  - Each row: room photo, size, bed type, view, max guests, price, "Select" button
+- Amenities grid (3 columns): Full list with icons
+- Location section: embedded map, nearby attractions with walking distances
+  - Shinjuku Station: 8 min walk
+  - Shinjuku Gyoen: 12 min walk
+  - Meiji Shrine: 20 min by train
+- House Rules: Check-in 3:00 PM, Check-out 11:00 AM, No smoking, Pets not allowed
+- Reviews section: 3 featured reviews with response from hotel, "Read all 1,284 reviews" link
+- Sticky booking bar at bottom: selected room, dates, total price, "Reserve Now" button
+
+9. TRUST & SOCIAL PROOF ELEMENTS
+- "Price Match Guarantee" badge with shield icon
+- "Verified Reviews" badge
+- "Secure Booking" with lock icon
+- "24/7 Customer Support" with headset icon
+- Payment method logos: Visa, Mastercard, Amex, PayPal, Apple Pay
+- "Over 2 million bookings made through StayFinder"
+
+10. RECENTLY VIEWED (horizontal scroll section at bottom)
+- "Your Recently Viewed Hotels"
+- 4-5 compact cards showing photo, name, rating, price
+- Each card links back to full listing
+
+11. FOOTER
+- 4 columns: Popular Destinations, Property Types, Company, Support
+- Popular Destinations: Tokyo, Paris, New York, Bali, London, Barcelona
+- Property Types: Hotels, Vacation Rentals, Hostels, Resorts, Apartments
+- Company: About, Careers, Press, Affiliate Program, Blog
+- Support: Help Center, Contact Us, Cancellation Policy, COVID-19 Info
+- Currency & language selectors
+- © 2026 StayFinder Inc.
+
+Design: Clean, functional, trust-building. Primary: #2563EB (blue), secondary: #1E40AF (dark blue), success: #16A34A (green for free cancellation), warning: #DC2626 (red for urgency), neutral backgrounds: white and #F8FAFC. Typography: Inter for all text. Cards with 12px border-radius, clear visual hierarchy, generous whitespace. Price always prominent and right-aligned. Shadows subtle (0 1px 3px rgba(0,0,0,0.1)).
+
+Responsive: On mobile, filter sidebar becomes a bottom sheet modal triggered by "Filters" button. Search bar fields stack vertically in collapsible panel. Hotel cards switch to vertical layout (photo on top). Map view becomes full-screen overlay. Sort bar becomes horizontal scroll of chips. Sticky bottom bar shows lowest price + "View Deal" on card scroll. Photo gallery becomes horizontal swipe carousel.

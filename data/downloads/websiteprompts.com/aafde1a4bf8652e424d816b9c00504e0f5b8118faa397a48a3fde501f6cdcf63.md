@@ -1,0 +1,110 @@
+Create a home valuation lead-generation landing page for "Keystone Realty Group." The page lets homeowners get a free instant estimate of their home's value by entering their address. It doubles as a lead capture tool for the realty group. Design should feel trustworthy, clean, and data-driven.
+
+1. HERO SECTION (50vh, centered)
+- Clean white background with a subtle geometric pattern (light gray lines forming house/roof shapes)
+- Headline: "What's Your Home Worth?"
+- Subheading: "Get a free, instant estimate based on real market data — no obligation, no sign-up required."
+- Address input bar (prominent, 60px height):
+  - Placeholder: "Enter your home address..."
+  - Autocomplete dropdown as user types (Google Places-style)
+  - "Get My Estimate" button to the right of input (bold, filled)
+- Trust badges below input: "✓ 100% Free" | "✓ No Obligation" | "✓ Based on Recent Sales"
+- Small text: "Trusted by 28,000+ homeowners in the greater metro area"
+
+2. HOW IT WORKS (3-step horizontal process)
+- Headline: "Your Home Value in 3 Simple Steps"
+- Step 1: icon of a map pin — "Enter Your Address" — "Type in your property address and we'll pull the latest data."
+- Step 2: icon of a chart — "See Your Estimate" — "Our algorithm analyzes recent sales, market trends, and property details."
+- Step 3: icon of a handshake — "Talk to an Expert" — "Want a precise valuation? Connect with a local Keystone agent for a free CMA."
+- Steps connected by a dashed line/arrow between them
+- Each step: circular icon (64px), step number badge, title, one-line description
+
+3. SAMPLE VALUATION REPORT (mock result preview)
+- Headline: "Here's What a Report Looks Like"
+- Mock report card with sample data (placeholder to show what users will receive):
+  - Property: "742 Evergreen Terrace, Springfield"
+  - Estimated Value: "$485,000 – $520,000"
+  - Confidence Level: "High" (green badge)
+  - Value range visualized as a horizontal bar with low/estimated/high markers
+  - Key factors grid (2×3):
+    - Bedrooms: 4 | Bathrooms: 2.5 | Sq Ft: 2,100
+    - Lot Size: 0.28 acres | Year Built: 1998 | Garage: 2-car
+  - "Last 12-Month Trend: ↑ 6.2%" with small sparkline chart
+  - "Nearby Comparable Sales" mini-section: 3 recent sales with address, price, date
+    - "738 Evergreen Terrace — $498,000 — Jan 2026"
+    - "801 Oak Avenue — $512,000 — Feb 2026"
+    - "655 Maple Drive — $475,000 — Dec 2025"
+- Card has subtle shadow and a "Sample Report" watermark/badge in corner
+- CTA below: "Get Your Real Report — Enter Your Address Above"
+
+4. MARKET SNAPSHOT SECTION (local market data)
+- Headline: "Local Market at a Glance — March 2026"
+- 4 stat cards in a row:
+  - Median Home Price: "$472,000" — "↑ 5.8% YoY" (green arrow)
+  - Average Days on Market: "18 days" — "↓ 4 days from last year" (green arrow)
+  - Homes Sold (Last 30 Days): "342" — "↑ 12% vs. last month"
+  - Price Per Sq Ft: "$228" — "↑ 3.1% YoY"
+- Below stats: small area chart showing median home price over the last 12 months
+- Source attribution: "Data sourced from MLS and public records, updated weekly"
+
+5. WHY KEYSTONE REALTY (trust-building section)
+- Headline: "Why Homeowners Trust Keystone"
+- 2-column layout:
+  - Left: 4 trust points with icons:
+    - "15+ Years of Local Expertise" — "We've been in this market since 2010"
+    - "3,200+ Homes Sold" — "Across all price ranges and neighborhoods"
+    - "98% Client Satisfaction" — "Based on post-closing surveys"
+    - "$1.2B in Total Sales Volume" — "2025 fiscal year"
+  - Right: team photo of 4–5 agents standing in front of the Keystone office, friendly and professional
+- Background: very light warm gray
+
+6. TESTIMONIALS (3 review cards)
+- Review 1: "The online estimate was spot-on. Keystone's agent then did a full CMA and we listed $15K above the estimate. Sold in 9 days!" — Michael & Sarah T., Springfield — ★★★★★
+- Review 2: "I was just curious about my home's value and wasn't ready to sell. Zero pressure from the team — just helpful information." — Janet L., Riverside — ★★★★★
+- Review 3: "Accurate data and a smooth process. The market snapshot report helped me decide the right time to sell." — Robert K., Oakwood — ★★★★★
+- Each card: star rating, quote, name, location
+- Light border and subtle quote icon
+
+7. AGENT CMA OFFER (conversion section, 2-column)
+- Left column:
+  - Headline: "Want an Exact Number?"
+  - Body: "Our instant estimate is a great starting point, but nothing beats a professional Comparative Market Analysis (CMA). A Keystone agent will visit your home, assess its unique features, and deliver a detailed valuation within 48 hours — completely free."
+  - Bullet points:
+    - "In-person walkthrough of your property"
+    - "Analysis of 10+ comparable recent sales"
+    - "Custom report with pricing strategy"
+    - "No commitment to list"
+- Right column — Contact form:
+  - Fields: Full Name, Email, Phone, Property Address (pre-filled if they entered one above), "When are you considering selling?" (dropdown: "Just curious", "0–3 months", "3–6 months", "6–12 months", "Not selling"), Message (optional textarea)
+  - "Request Free CMA" submit button
+  - Below form: "A local Keystone agent will contact you within 24 hours"
+  - Lock icon + "Your information is secure and never shared"
+
+8. FAQ SECTION (accordion, 5 questions)
+- "How accurate is the online estimate?" — "Our algorithm uses recent comparable sales, tax records, and market trends to provide an estimate within 5-8% of actual market value. For a precise valuation, we recommend a professional CMA."
+- "Do I have to be selling to get an estimate?" — "Not at all. Many homeowners check their home value annually for financial planning, refinancing, or curiosity. There's zero obligation."
+- "What is a CMA?" — "A Comparative Market Analysis is a detailed report prepared by a licensed real estate agent. It compares your home to similar recently sold properties and accounts for unique features, condition, and local market trends."
+- "How is this different from Zillow's Zestimate?" — "We use local MLS data and agent expertise specific to your neighborhood. Our agents live and work in these communities, providing context that national algorithms miss."
+- "Is my personal information safe?" — "Absolutely. We never sell your information to third parties. Your data is used solely to provide your home valuation and connect you with a local Keystone agent if you request it."
+- Each question expands on click, one open at a time
+
+9. SECONDARY CTA (full-width banner)
+- Background: brand blue gradient
+- Headline: "Ready to Find Out What Your Home Is Worth?"
+- Repeated address input bar + "Get My Estimate" button (same as hero)
+- "Or call us: (555) 329-8100"
+
+10. FOOTER
+- Keystone Realty Group logo
+- Columns:
+  - Services: Home Valuation, Buy a Home, Sell Your Home, Agents
+  - Resources: Market Reports, Neighborhood Guides, Mortgage Calculator, Blog
+  - Company: About Us, Careers, Press, Contact
+- Social icons: Facebook, Instagram, LinkedIn, YouTube
+- "© 2026 Keystone Realty Group. All rights reserved."
+- Licensing: "Licensed in the State of Oregon. NMLS #123456"
+- Fair Housing logo and Equal Opportunity statement
+
+Design: Clean, data-driven, and trustworthy. Background: #F9FAFB (cool light gray), cards: #FFFFFF with border 1px #E5E7EB and shadow (0 1px 3px rgba(0,0,0,0.08)), text: #111827 (near-black), accent: #2563EB (confident blue), secondary accent: #059669 (growth green for positive stats), warning: #D97706 (amber for neutral indicators). Typography: "DM Sans" for headings and body (clean geometric sans-serif). Border-radius: 12px on cards, 8px on buttons, 40px (full-round) on address input bar. Section spacing: 72px vertical padding.
+
+Responsive: On mobile, address input and button stack vertically, 3-step process becomes vertical timeline, sample report card scrolls horizontally if needed, market stats become 2×2 grid, agent CMA form goes full-width below the copy, FAQ takes full width. Floating "Get Your Estimate" button fixed at bottom on mobile.

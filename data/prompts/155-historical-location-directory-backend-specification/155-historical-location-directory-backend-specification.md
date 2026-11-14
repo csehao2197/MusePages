@@ -1,0 +1,137 @@
+# SPEC: Backend
+
+Status: draft. Part of [SPEC.md](../SPEC.md).
+
+## Purpose
+
+Define the API service that stores and serves locations.
+
+## Requirements
+
+- Implemented in Java as a Spring Boot monolith using Spring Modulith, built
+  with Maven.
+- Exposes an HTTP API for creating, reading, updating, deleting and listing
+  locations, as defined by [SPEC-locations.md](SPEC-locations.md).
+- Enforces authentication and authorization as defined by
+  [SPEC-auth.md](SPEC-auth.md).
+- Persists data in PostgreSQL with the PostGIS extension, which stores and
+  queries geographic coordinates.
+- The API is REST with JSON bodies under `/api/`, described by an OpenAPI
+  document generated from the code and served by the backend.
+
+## Decisions
+
+- **Language, framework, build:** Java with Spring Boot and Maven. Spring
+  Security's OAuth2 client logs users in at Keycloak and keeps the session
+  ([SPEC-auth.md](SPEC-auth.md)); the OAuth2 resource server for bearer
+  tokens is added when a client needs it.
+- **Architecture:** a monolithic application built with Spring Modulith:
+  one deployable Spring Boot service holds the whole API and its business
+  logic, structured into application modules whose boundaries Spring
+  Modulith verifies; there are no separate microservices.
+- **Modules:** introduced in
+  [AVARC-35](../tasks/finished/TASK-modulith-verification.md). An
+  application module is a direct sub-package of `org.avarc.server`; the
+  types in its top-level package are its API and its sub-packages are
+  internal; modules depend on each other only through that API and without
+  cycles; the root package holds the application class only. A test calls
+  `ApplicationModules.verify()`, so `./mvnw verify` fails when a boundary is
+  broken, and it writes the module diagrams to the build directory. The
+  modules today are `auth` ([SPEC-auth.md](SPEC-auth.md)), `user`
+  ([SPEC-users.md](SPEC-users.md)), `apidocs` (the
+  API description, below), `hello` (a placeholder endpoint) and `location`
+  ([SPEC-locations.md](SPEC-locations.md),
+  [AVARC-10](../tasks/finished/TASK-locations-crud-api.md)).
+  A new area of the backend starts as a new module.
+- **Database:** PostgreSQL with PostGIS. A `point` position is stored as a
+  `geography(Point, 4326)` column (WGS 84), generated from `latitude` and
+  `longitude` columns, which are what the application reads and writes (so
+  no spatial mapping library is needed), next to the `kind` discriminator
+  column, so further kinds ([SPEC-locations.md](SPEC-locations.md)) add
+  columns or tables without changing existing rows. Locations carry the UUID
+  as their identity and may have an internal numeric surrogate key.
+  Schema changes are applied by versioned migrations.
+- **Persistence setup:** introduced in [AVARC-42](../tasks/finished/TASK-user-entities.md).
+  Spring Data JPA with Hibernate, migrations by Flyway, which the backend
+  runs at startup. The `public` schema of the PostGIS database is never
+  empty (the extension's tables, and the schemas `tiger`, `tiger_data` and
+  `topology`), so the application's tables live in the schema `avarc`, which
+  the first migration creates; Flyway manages that schema only. Hibernate
+  validates the mapping against it and never changes it. The connection is
+  configured at runtime (address, database and user in the environment, the
+  password a file secret). Tests that touch the database run against a
+  PostGIS container (Testcontainers).
+- **Java format:** introduced in [AVARC-44](../tasks/finished/TASK-java-formatter.md).
+  The Java sources (`src/main/java`, `src/test/java`) are formatted by
+  Open Java Format (MIT licensed, a drop-in for palantir-java-format, lines
+  of 120 characters), which has one style and no options, so formatting is
+  never discussed or configured. The Maven plugin
+  `dev.openjavaformat:fmt-maven-plugin` runs in the backend module with the
+  formatter version it selects; both versions are properties of the
+  module's `pom.xml`, which Renovate updates. It was checked with Java 25.
+  A normal build rewrites the sources (`format` in `process-sources`); when
+  the environment variable `CI` is set, or with `-Pformat-check`, the build
+  fails on unformatted code instead (`check`), so CI never changes what it
+  built. The pre-commit hook runs the check when Java files are staged
+  ([SPEC-work-tracking.md](SPEC-work-tracking.md)), and the check is a code
+  quality check of its own ([SPEC-code-scanning.md](SPEC-code-scanning.md)).
+  The commit that first formatted the code is listed in
+  `.git-blame-ignore-revs`. Anyone who writes Java, agents included, formats
+  it before showing a diff and before committing
+  (`tools/java-format.sh`, see `AGENTS.md`). That script does not use Maven:
+  it downloads the precompiled binary of the same formatter version (read
+  from the POM property) from the formatter's GitHub release once, verifies
+  its checksum and keeps it in the user's cache directory, so the hook, the
+  workflow and agents need no Java and give the same result as the build.
+  For local development with an agent, a hook after every edit runs
+  `tools/java-format.sh file <path>`, which formats that one file and keeps
+  unused imports (an import may be added before its use); the hook is
+  personal configuration, not part of the repository, and `AGENTS.md` shows
+  it. Edits through shell commands are caught by the pre-commit hook and CI.
+- **Actuator:** served on a port of its own (`management.server.port`,
+  default 9091, `MANAGEMENT_PORT`), which only the metrics network of the Compose
+  project reaches and which the ingress routes only in development and stage
+  ([AVARC-22](../tasks/finished/TASK-observability-backend.md),
+  [SPEC-ingress.md](SPEC-ingress.md)); the application port answers 404 for
+  `/actuator/`. Only `health` (with the liveness and readiness
+  groups; readiness includes the database) and `prometheus` are exposed by
+  default; the `dev` and `stage` environments, through the Spring profile of
+  the same name, expose all actuator endpoints, on that port.
+- **Observability** (conventions in [SPEC-observability.md](SPEC-observability.md)):
+  - Logs are JSON lines on standard output with the shared fields
+    (`JsonLogFormatter`, selected by `logging.structured.format.console`),
+    plus the logger and any key-value fields of the log call. The user ID is
+    the Keycloak subject of the logged-in user, an opaque ID.
+  - `RequestIdFilter` takes `X-Request-Id` (8 to 64 characters of letters,
+    digits, `.`, `_`, `-`) or makes an ID, puts it into every log line of the
+    request and returns it in the response.
+  - Metrics are those of Micrometer (requests by route and status, the
+    connection pool, the JVM) in the Prometheus format at
+    `/actuator/prometheus` on the management port.
+  - Changes are audited by `AuditLog` (module `audit`): the creation, update
+    and deletion of a location and the labels of a tag each write one line
+    from the logger `audit` with `audit=true`, the action (such as
+    `location.created`), the type and the ID of the entity, and the user and
+    request of the log fields. Only IDs are recorded, no content.
+- **API:** REST + OpenAPI, generated from the code (springdoc). Other
+  consumers, such as API keys or an MCP adapter, use the same API.
+- **API description and Swagger UI:** introduced in
+  [AVARC-34](../tasks/finished/TASK-api-docs.md). The OpenAPI document
+  (`/api/docs/openapi.json`) and Swagger UI (`/api/docs`) are served in the
+  `dev` and `stage` environments only, enabled by their Spring profile like
+  the actuator endpoints; prod serves neither. They are under `/api/`, so
+  the ingress routes them without a rule of their own. They are readable
+  without a login, and only where springdoc is enabled: the security
+  configuration opens those paths on the same setting, so a prod
+  deployment cannot open them by mistake. The endpoints themselves are
+  unchanged and need a login; "Try it out" in Swagger UI uses the session
+  cookie of a login on the same origin and, for requests that change data,
+  the CSRF token that `GET /api/auth/me` reports, which the page describes.
+  Opening the endpoints themselves would be a change of the security model
+  and needs a decision of its own.
+- **Security fixes ahead of Spring Boot.** Dependabot alerts for libraries that
+  Spring Boot manages (Tomcat, Jackson) are fixed by overriding the version
+  properties of the Boot BOM (`tomcat.version`, `jackson-bom.version`,
+  `jackson-2-bom.version`) in the parent `pom.xml`, as soon as a patched
+  release exists. The override is removed once Boot manages a version at least
+  as new.

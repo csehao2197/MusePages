@@ -1,0 +1,37 @@
+export async function exercise(page, assert) {
+  assert.equal(await page.locator(".flight-card").count(), 10);
+  await page.getByRole("checkbox", { name: "Nonstop", exact: false }).check();
+  assert.equal(await page.locator(".flight-card").count(), 3);
+  await page.getByRole("button", { name: "Reset All Filters", exact: true }).click();
+  await page.getByRole("combobox", { name: "Sort flights", exact: true }).selectOption("price");
+  assert.match(await page.locator(".flight-card .price").first().innerText(), /876/);
+  await page.getByRole("button", { name: "Flight details" }).first().click();
+  assert.ok(await page.locator(".expanded").first().isVisible());
+  await page.getByRole("button", { name: "Select This Fare", exact: true }).first().click();
+  await page.getByRole("button", { name: "Confirm demo selection" }).click();
+  assert.match(await page.locator("#booking-status").innerText(), /Nothing was booked/);
+  await page.getByRole("button", { name: "Close dialog" }).click();
+  await page.getByRole("button", { name: "Show 20 more flights" }).click();
+  assert.equal(await page.locator(".flight-card").count(), 30);
+  await page.getByRole("button", { name: "Show full month view" }).click();
+  assert.equal(await page.locator("#month-grid button").count(), 30);
+  await page.locator("#month-grid [data-date='18']").click();
+  assert.match(await page.locator("#results-summary").innerText(), /Apr 18/);
+  await page.getByLabel("Currency", { exact: true }).selectOption("EUR");
+  assert.match(await page.locator(".flight-card .price").first().innerText(), /€/);
+  await page.getByRole("textbox", { name: "Price alert email" }).fill("test@example.invalid");
+  await page.getByRole("button", { name: "Set Price Alert" }).click();
+  assert.match(await page.locator("#alert-status").innerText(), /No email/);
+  await page.getByLabel("Maximum price").fill("650");
+  assert.ok(await page.locator(".empty").isVisible());
+  await page.getByRole("button", { name: "Reset filters", exact: true }).click();
+  await page.getByRole("tab", { name: "One Way", exact: true }).click();
+  assert.equal(await page.locator("#return-field").isVisible(), false);
+  await page.getByRole("tab", { name: "Round Trip", exact: true }).click();
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.getByRole("button", { name: "Filters", exact: true }).click();
+  assert.ok(await page.locator("#filters").isVisible());
+  await page.getByRole("button", { name: "Close filters", exact: true }).click();
+  assert.equal(await page.locator("#filters").isVisible(), false);
+  await page.setViewportSize({ width: 1200, height: 900 });
+}

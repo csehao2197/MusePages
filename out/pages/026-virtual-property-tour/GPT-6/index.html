@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101716">
+  <meta name="description" content="Step inside The Alder House: an interactive, fictional property concept with genuine 360-degree photography, room navigation and an illustrative floor plan.">
+  <title>The Alder House | A Different Perspective</title>
+  <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/dm-sans.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <script src="assets/qrcode.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#listing-summary">Read the text-only property overview</a>
+<main>
+<section class="tour" id="tour" aria-label="Interactive property tour">
+  <div class="scene" id="scene">
+    <div class="primary-view" id="primary-view">
+      <canvas id="panorama" tabindex="0" role="application" aria-label="Interactive 360-degree Living Room. Drag to look around; arrow keys turn, plus and minus zoom, Home resets." aria-describedby="viewer-help"></canvas>
+      <div class="fallback" id="fallback" hidden><p>Interactive 360° rendering is unavailable on this device. Explore the perspective photographs, floor plan and text descriptions instead.</p><button class="button" data-panel="gallery">Explore photographs</button></div>
+      <div id="hotspots" aria-label="Room points of interest"></div>
+      <div class="hotspot-card" id="hotspot-card" hidden><button class="icon close" data-close-hotspot aria-label="Close point of interest"><svg><use href="assets/icons.svg#close"></use></svg></button><span class="eyebrow" id="hotspot-kind"></span><h2 id="hotspot-title"></h2><p id="hotspot-body"></p><a id="hotspot-link" target="_blank" rel="noopener noreferrer" hidden>Explore the resource <svg><use href="assets/icons.svg#external"></use></svg></a></div>
+    </div>
+    <div class="comparison-view" id="comparison-view" hidden><div class="comparison-caption"><span>REFERENCE SPACE</span><select id="comparison-room" aria-label="Reference room"></select><button class="icon" id="close-compare" aria-label="Close split comparison"><svg><use href="assets/icons.svg#close"></use></svg></button></div><canvas id="comparison-panorama" tabindex="0" role="application" aria-label="Independent reference panorama. Drag or use arrow keys to explore."></canvas><p class="comparison-note">Independent stock space · not a comparable live listing</p></div>
+  </div>
+  <div class="vignette" aria-hidden="true"></div>
+  <header class="header">
+    <a class="brand" href="#listing-summary" aria-label="The Alder House property overview"><img src="assets/mark.svg" width="43" height="43" alt=""><span><strong>THE ALDER HOUSE</strong><small>1840 Alder Lane · Austin, TX <b>Fictional</b></small></span></a>
+    <div class="property-price"><strong>$1,250,000</strong><span>4 bed <i></i> 3.5 bath <i></i> 3,200 sq ft</span></div>
+    <nav class="header-actions" aria-label="Property actions">
+      <button class="button schedule-header" data-schedule><svg><use href="assets/icons.svg#calendar"></use></svg><span>Schedule Tour</span></button>
+      <button class="icon" id="save" aria-label="Save this home for this tab" aria-pressed="false"><svg><use href="assets/icons.svg#heart"></use></svg></button>
+      <button class="icon" data-share aria-label="Share this tour"><svg><use href="assets/icons.svg#share"></use></svg></button>
+      <a class="exit" href="#listing-summary">Exit tour <svg><use href="assets/icons.svg#exit"></use></svg></a>
+    </nav>
+  </header>
+  <div class="tour-label"><span class="live-dot"></span> A DIFFERENT PERSPECTIVE <span class="demo-label">FICTIONAL PROPERTY · STOCK 360°</span></div>
+  <div class="guide-bar" aria-label="Guided tour controls">
+    <button id="mode" aria-label="Switch to guided tour"><span class="mode-long">Self-guided</span><span class="mode-short">Self</span><svg><use href="assets/icons.svg#chevron"></use></svg></button>
+    <span class="separator"></span>
+    <button class="icon" id="previous-room" aria-label="Previous room"><svg><use href="assets/icons.svg#prev"></use></svg></button>
+    <button class="icon" id="play" aria-label="Play guided tour" aria-pressed="false"><svg><use href="assets/icons.svg#play"></use></svg></button>
+    <button class="icon" id="next-room" aria-label="Next room"><svg><use href="assets/icons.svg#next"></use></svg></button>
+    <button class="icon" id="narration" aria-label="Turn on local narration" aria-pressed="false"><svg><use href="assets/icons.svg#mute"></use></svg></button>
+    <button class="icon" data-panel="transcript" aria-label="Read the guided tour transcript"><svg><use href="assets/icons.svg#text"></use></svg></button>
+    <div id="guide-progress" aria-hidden="true"></div>
+  </div>
+  <div class="loading" id="loading" role="status"><span class="loading-ring"></span><strong id="loading-label">Loading Living Room…</strong><progress id="load-progress" max="100" value="0">0%</progress><small id="quality-label">Preparing a genuine 360° panorama</small></div>
+  <div class="side-tools" aria-label="Explore the property">
+    <button class="tool" data-panel="room"><svg><use href="assets/icons.svg#info"></use></svg><span>Room info</span></button>
+    <button class="tool" data-panel="floorplan"><svg><use href="assets/icons.svg#plan"></use></svg><span>Floor plan</span></button>
+    <button class="tool" data-panel="gallery"><svg><use href="assets/icons.svg#gallery"></use></svg><span>Gallery</span></button>
+    <button class="tool" id="compare" aria-pressed="false"><svg><use href="assets/icons.svg#compare"></use></svg><span>Compare</span></button>
+    <button class="tool" data-panel="settings"><svg><use href="assets/icons.svg#settings"></use></svg><span>Tour tools</span></button>
+  </div>
+  <div class="view-tools" aria-label="Panorama view controls">
+    <button class="icon" id="zoom-in" aria-label="Zoom in"><svg><use href="assets/icons.svg#plus"></use></svg></button>
+    <button class="icon" id="zoom-out" aria-label="Zoom out"><svg><use href="assets/icons.svg#minus"></use></svg></button>
+    <span></span><button class="icon" id="auto-rotate" aria-label="Auto-rotate panorama" aria-pressed="false"><svg><use href="assets/icons.svg#rotate"></use></svg></button>
+    <button class="icon" id="reset" aria-label="Reset panorama view"><svg><use href="assets/icons.svg#reset"></use></svg></button>
+    <button class="icon" id="fullscreen" aria-label="Enter fullscreen"><svg><use href="assets/icons.svg#expand"></use></svg></button>
+  </div>
+  <div class="room-heading"><span class="eyebrow">WELCOME INSIDE</span><h1 id="current-room">Living Room</h1><p><span id="room-dimensions">22 × 18 ft</span><span class="small-dot"></span><span id="room-subtitle">A little room to slow down.</span></p><button class="room-detail" data-panel="room">Explore this room <svg><use href="assets/icons.svg#arrow"></use></svg></button></div>
+  <div class="minimap" id="minimap"><div class="minimap-head"><span>MAIN LEVEL <small>SCHEMATIC</small></span><button class="icon" id="hide-minimap" aria-label="Hide mini map"><svg><use href="assets/icons.svg#minus"></use></svg></button></div><div class="plan-map" data-plan="mini" aria-label="Illustrative clickable property plan"></div><div class="map-legend"><span></span> You are here <small>Illustrative layout</small></div></div>
+  <div class="room-navigation"><p class="viewer-help" id="viewer-help"><svg><use href="assets/icons.svg#eye"></use></svg> Drag to look around <span>·</span> Scroll or pinch to zoom</p><nav class="room-strip" id="room-strip" aria-label="Choose a room"></nav><div class="tour-caption"><span class="tour-line"></span> SPACE TO MAKE YOURSELF AT HOME <span class="tour-line"></span></div></div>
+  <aside class="visit-card"><span class="eyebrow">LOVE THIS HOME?</span><button data-schedule>Come see it in person <svg><use href="assets/icons.svg#arrow"></use></svg></button><button class="more-info" data-more-info>Or request more information</button></aside>
+  <nav class="mobile-nav" aria-label="Mobile tour navigation"><button data-panel="room"><svg><use href="assets/icons.svg#info"></use></svg>Room info</button><button data-panel="floorplan"><svg><use href="assets/icons.svg#plan"></use></svg>Floor plan</button><button data-panel="gallery"><svg><use href="assets/icons.svg#gallery"></use></svg>Gallery</button><button data-panel="settings"><svg><use href="assets/icons.svg#settings"></use></svg>Tools</button><button data-schedule><svg><use href="assets/icons.svg#calendar"></use></svg>Visit</button></nav>
+  <div class="tour-status" id="tour-status" role="status" aria-live="polite"></div>
+</section>
+<section class="listing-summary" id="listing-summary" tabindex="-1">
+  <div><span class="eyebrow">THE ALDER HOUSE · AN INTERACTIVE CONCEPT</span><h2>Some places deserve<br>a closer look.</h2><p>An unhurried exploration of light, texture and the spaces in between. This fictional home brings four independent stock panoramas together to demonstrate a thoughtful virtual-tour experience.</p><a class="button" href="#tour">Return to the 360° tour <svg><use href="assets/icons.svg#arrow"></use></svg></a></div>
+  <div class="summary-details"><h3>1840 Alder Lane</h3><p>Fictional Austin, Texas address · illustrative $1,250,000</p><dl><div><dt>Bedrooms</dt><dd>4</dd></div><div><dt>Bathrooms</dt><dd>3.5</dd></div><div><dt>Interior</dt><dd>3,200 sq ft</dd></div><div><dt>School district</dt><dd>Not supplied or verified</dd></div><div><dt>Property tax</dt><dd>Not supplied or verified</dd></div><div><dt>HOA</dt><dd>Not supplied or verified</dd></div><div><dt>Agent contact</dt><dd>No live agent or delivery service</dd></div></dl><button class="text-button" data-panel="details">Read all property details <svg><use href="assets/icons.svg#arrow"></use></svg></button></div>
+  <div class="text-alternative"><h3>A tour in words</h3><div id="text-rooms"></div><p class="disclosure">Independent CC0 panoramas by Greg Zaal / Poly Haven show unrelated locations, not a connected scan of this address. Dimensions, layout, listing specifications and features are illustrative. Measurement uses the schematic plan, not image depth. Forms stay in this tab; nothing is booked or sent. <a href="assets/CREDITS.txt">Photography, footage &amp; credits</a></p></div>
+</section>
+</main>
+<dialog class="drawer" id="drawer" aria-labelledby="drawer-title"><div class="drawer-heading"><div><span class="eyebrow" id="drawer-eyebrow">A CLOSER LOOK</span><h2 id="drawer-title">Room information</h2></div><button class="icon" data-close-drawer aria-label="Close panel"><svg><use href="assets/icons.svg#close"></use></svg></button></div><div id="drawer-content"></div></dialog>
+<dialog class="schedule-dialog" id="schedule-dialog" aria-labelledby="schedule-title"><button class="icon close" data-close-schedule aria-label="Close inquiry"><svg><use href="assets/icons.svg#close"></use></svg></button><span class="eyebrow">A PLACE TO BEGIN</span><h2 id="schedule-title">See it for yourself.</h2><p>This is a local form demonstration. There is no live agent, appointment availability or delivery service.</p><div class="inquiry-tabs" role="tablist" aria-label="Inquiry type"><button role="tab" id="visit-tab" aria-controls="inquiry-form" aria-selected="true">In-person tour</button><button role="tab" id="info-tab" aria-controls="inquiry-form" aria-selected="false" tabindex="-1">More information</button></div><form id="inquiry-form"><div id="visit-fields" class="form-pair"><label>Preferred date<input type="date" name="date" required></label><label>Preferred time<select name="time" required><option value="">Choose a time</option><option>10:00 AM</option><option>12:00 PM</option><option>2:00 PM</option><option>4:00 PM</option><option>6:00 PM</option></select></label></div><small id="time-note">Central time. A preference, not confirmed availability.</small><label>Your name<input name="name" autocomplete="name" minlength="2" maxlength="80" required></label><label>Email address<input name="email" type="email" autocomplete="email" maxlength="120" required></label><label>Phone <span>(optional)</span><input name="phone" type="tel" autocomplete="tel" pattern="[+0-9\(\) .\-]{7,30}" maxlength="30"></label><label>Anything you would like to know?<textarea name="message" rows="2" maxlength="800"></textarea></label><label class="consent"><input name="consent" type="checkbox" required><span>I understand this preview stays in this tab and is not sent or booked.</span></label><button class="button" type="submit">Preview my request <svg><use href="assets/icons.svg#arrow"></use></svg></button></form><div id="inquiry-receipt" hidden role="status"></div></dialog>
+<dialog class="media-dialog" id="media-dialog" aria-labelledby="media-title"><div class="media-head"><h2 id="media-title">A closer look</h2><button class="icon" data-close-media aria-label="Close media"><svg><use href="assets/icons.svg#close"></use></svg></button></div><div id="media-content"></div><p id="media-caption"></p></dialog>
+<noscript><div class="noscript"><h2>Explore The Alder House</h2><p>JavaScript enables the interactive panorama. The text-only overview remains available below.</p><img src="assets/photos/lounge-1.jpg" width="640" height="400" alt="Independent stock lounge with large garden windows, pale sofas and warm natural light."><a href="#listing-summary">Read the property overview</a></div></noscript>
+</body>
+</html>

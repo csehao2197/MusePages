@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aperture Journal | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Aperture Journal</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code>Create a visually stunning, image-first blog homepage for a travel and landscape photographer named &quot;Elena Voss&quot; who runs a blog called &quot;Aperture Journal.&quot; The blog features photo essays, location guides, gear reviews, and behind-the-scenes editing breakdowns. The design should let the photography speak — minimal chrome, maximum visual impact.
+
+1. NAVIGATION BAR
+- Logo: &quot;Aperture Journal&quot; in a thin sans-serif, lowercase, with a small aperture blade icon
+- Links: Stories, Destinations, Gear, About, Prints
+- Right side: search icon + &quot;Subscribe&quot; link (text, not button — minimal)
+- Transparent over hero, transitions to white with subtle bottom border on scroll
+- Mobile: logo + hamburger only, full-screen overlay with dark background
+
+2. HERO / FEATURED POST
+- Full-viewport featured post with cinematic photo — wide landscape shot of the Dolomites at golden hour, jagged peaks with low cloud layers
+- Content overlay at bottom with gradient fade-up from black:
+  - Category badge: &quot;Photo Essay&quot; in uppercase, small, with gold (#D4A853) underline
+  - Headline: &quot;First Light on the Tre Cime: A Dolomites Morning&quot;
+  - Excerpt: &quot;I hiked 4 hours in the dark to reach Rifugio Locatelli before sunrise. What I found was worth every frozen step.&quot;
+  - Meta: &quot;March 8, 2026 · 12 photos · 8 min read&quot;
+  - &quot;Read Story →&quot; link in gold
+- Subtle slow pan/zoom animation on the background image (Ken Burns)
+- Full-bleed, no margins, edge-to-edge
+
+3. RECENT POSTS (editorial grid)
+- Section headline: &quot;Recent Stories&quot; (left-aligned, minimal)
+- Asymmetric grid layout — 2 large + 3 small:
+  - Large (left, spans 2 rows): &quot;Iceland&#39;s Diamond Beach at Midnight Sun&quot; — Photo Essay — black sand beach with crystal ice chunks catching golden light — &quot;Jun 2025 · 18 photos&quot;
+  - Large (right top): &quot;The Gear I Actually Use: 2026 Kit Breakdown&quot; — Gear Review — flat lay of camera body, 3 lenses, filters, tripod — &quot;Feb 2026 · 14 min read&quot;
+  - Small (right middle-left): &quot;Patagonia in Autumn: Torres del Paine&quot; — Destination Guide — mountain reflected in turquoise lake — &quot;Apr 2025&quot;
+  - Small (right middle-right): &quot;How I Edit Moody Landscapes in Lightroom&quot; — Behind the Scenes — split screen before/after edit — &quot;Jan 2026&quot;
+  - Small (right bottom, full width): &quot;Scottish Highlands: Rain, Fog, and Perfect Light&quot; — Photo Essay — lone cottage by misty loch — &quot;Nov 2025 · 22 photos&quot;
+- Each card: photo fills entire card, text overlaid at bottom with gradient, category badge, title, date
+- Hover: slight zoom on image, text becomes more visible
+- Background: white with thin 1px borders between grid items
+
+4. DESTINATIONS (horizontal scroll)
+- Section headline: &quot;Explore by Destination&quot;
+- 6 destination cards in horizontal scroll:
+  - &quot;Iceland&quot; — 8 stories — hero: black sand beach, northern lights overlay — dark teal tint
+  - &quot;Italian Dolomites&quot; — 5 stories — hero: mountain hut at sunrise — warm amber tint
+  - &quot;Patagonia&quot; — 4 stories — hero: glacier and jagged peaks — cool blue tint
+  - &quot;Scottish Highlands&quot; — 6 stories — hero: foggy glen with deer — green tint
+  - &quot;Norway&quot; — 7 stories — hero: Lofoten fishing village — deep blue tint
+  - &quot;New Zealand&quot; — 3 stories — hero: Milford Sound mirror reflection — teal tint
+- Each card: tall portrait aspect ratio (3:4), photo with color tint overlay, destination name large, story count
+- Click navigates to destination page with all posts from that location
+- Scroll with arrow buttons on desktop, swipe on mobile
+- Background: #0A0A0A (near black)
+
+5. CURATED GALLERY (mosaic)
+- Section headline: &quot;Selected Work&quot;
+- Subheadline: &quot;A curated collection of my favorite frames from the last year&quot;
+- Photo mosaic grid — 9 images in varying sizes:
+  - Panoramic: &quot;Milky Way over Kirkjufell, Iceland&quot; — 2-column span
+  - Portrait: &quot;Lone tree at Wanaka, New Zealand&quot; — tall 1-column
+  - Square: &quot;Foggy morning in Glencoe, Scotland&quot; — 1x1
+  - Wide: &quot;Sunrise at Seceda ridgeline, Dolomites&quot; — 2-column span
+  - Square: &quot;Aurora reflection, Reine, Norway&quot; — 1x1
+  - Portrait: &quot;Fitz Roy alpenglow, Patagonia&quot; — tall 1-column
+  - Wide: &quot;Faroe Islands sea stacks at sunset&quot; — 2-column span
+  - Square: &quot;Icelandic wild horses in snowstorm&quot; — 1x1
+  - Square: &quot;Lago di Braies turquoise waters&quot; — 1x1
+- Click any image: lightbox with EXIF data overlay (camera, lens, settings, location)
+- &quot;View Full Portfolio →&quot; link at bottom
+- Background: white
+
+6. GEAR REVIEWS (featured cards)
+- Section headline: &quot;Gear Talk&quot;
+- 3 review cards in a row:
+  - &quot;Sony A7R V Review: 14 Months Later&quot; — Rating: 9.2/10 — &quot;Still the best landscape body I&#39;ve used. The autofocus improvement is real.&quot; — product photo — &quot;Read Review →&quot;
+  - &quot;Peak Design Travel Tripod&quot; — Rating: 8.5/10 — &quot;Compact brilliance with one compromise — stiffness in wind.&quot; — product photo — &quot;Read Review →&quot;
+  - &quot;NiSi V7 Filter System&quot; — Rating: 9.0/10 — &quot;My go-to ND and polarizer kit. The magnetic system is a game-changer for quick setups.&quot; — product photo — &quot;Read Review →&quot;
+- Each card: product photo, title, numeric rating badge, one-line verdict, read more link
+- Rating badge: gold circle with score
+- Background: #F5F5F4 (warm gray)
+
+7. BEHIND THE SCENES (before/after)
+- Section headline: &quot;From RAW to Final&quot;
+- Featured editing breakdown:
+  - Title: &quot;Editing a Dolomites Sunrise — Step by Step&quot;
+  - Before/after slider: drag to reveal RAW file vs. final edit
+  - Brief steps listed alongside:
+    - &quot;1. White balance correction — shifted 300K warmer&quot;
+    - &quot;2. Exposure blend — 3 brackets for dynamic range&quot;
+    - &quot;3. Luminosity masks for sky vs. foreground&quot;
+    - &quot;4. Color grading — teal shadows, warm highlights&quot;
+    - &quot;5. Local adjustments — enhanced fog in valley&quot;
+  - Camera info: &quot;Sony A7R V · 16-35mm f/2.8 GM · f/11 · 1/15s · ISO 100 · tripod&quot;
+- &quot;More Editing Breakdowns →&quot; link
+- Background: white
+
+8. ABOUT THE PHOTOGRAPHER (profile section)
+- Two-column layout:
+  - Left: portrait photo of Elena — outdoors, camera in hand, mountain backdrop, natural light
+  - Right: bio and stats
+    - &quot;Elena Voss&quot; — Travel &amp; Landscape Photographer
+    - Bio: &quot;I&#39;ve spent the last 6 years chasing light in the wildest corners of the world. Based in Portland, OR — usually planning the next trip. Aperture Journal is where I share the stories behind the photos, honest gear reviews, and everything I&#39;ve learned about making images in remote places.&quot;
+    - Stats row: &quot;42 countries&quot; · &quot;200+ published stories&quot; · &quot;85K newsletter subscribers&quot;
+    - Featured in: logos for National Geographic, Outdoor Photographer, PetaPixel, Lonely Planet (grayscale)
+    - CTA: &quot;More About Elena →&quot;
+- Background: #F5F5F4 (warm gray)
+
+9. NEWSLETTER SIGNUP
+- Background: full-bleed photo — night sky with Milky Way over a tent, warm campfire glow
+- Overlay content (centered):
+  - Headline: &quot;Stories, Not Spam&quot;
+  - Subheadline: &quot;One email per week. New photo essays, location guides, and editing tips. Join 85,000 photographers.&quot;
+  - Email input + &quot;Subscribe&quot; button (solid gold #D4A853, dark text)
+  - &quot;No spam. Unsubscribe anytime.&quot;
+  - Sample preview: &quot;Latest issue: &#39;Why I Sold My Drone (And Why I Might Buy Another)&#39;&quot;
+- Dark gradient overlay for legibility
+
+10. PRINT SHOP TEASER
+- Section headline: &quot;Bring the Landscape Home&quot;
+- 4 print preview cards:
+  - &quot;Tre Cime Sunrise&quot; — 24x36&quot; — From $189 — framed preview mockup
+  - &quot;Diamond Beach Ice&quot; — 20x30&quot; — From $149 — framed preview mockup
+  - &quot;Milford Sound Mirror&quot; — 30x20&quot; — From $169 — framed preview mockup
+  - &quot;Aurora Over Reine&quot; — 24x36&quot; — From $199 — framed preview mockup — Badge: &quot;Best Seller&quot;
+- Each card: photo in frame mockup, title, size, starting price
+- &quot;Browse All Prints →&quot; link
+- Note: &quot;Museum-quality giclée prints on Hahnemühle paper. Ships worldwide.&quot;
+- Background: white
+
+11. FOOTER
+- 4 columns: Explore, Resources, Connect, Legal
+- Explore: Latest Stories, Destinations, Curated Gallery, Print Shop
+- Resources: Gear Reviews, Editing Tutorials, Location Guides, Recommended Books
+- Connect: Newsletter, Instagram (@aperturejournal), YouTube, Email (elena@aperturejournal.com)
+- Legal: Privacy Policy, Terms, Cookie Preferences, Licensing
+- Bottom: &quot;All photographs © 2026 Elena Voss / Aperture Journal. Do not reproduce without permission.&quot;
+
+Design: Minimal, image-forward, editorial. Primary: #0A0A0A (near black), secondary: #D4A853 (warm gold for accents), tertiary: #F5F5F4 (warm gray for alt sections). Backgrounds: white, near-black, and warm gray — no bright colors competing with photography. Typography: Instrument Serif for headings (refined editorial serif), Inter for body and meta text. Let photos dominate — minimal borders, no card shadows, thin dividers only. Full-bleed images wherever possible. Generous whitespace between sections. Cursor changes to zoom icon over gallery images.
+
+Responsive: On mobile, hero post is full-viewport with stacked text. Editorial grid becomes single-column stacked cards (large photos). Destinations scroll horizontally with snap points. Gallery mosaic becomes 2-column grid. Gear reviews stack vertically. Before/after slider works with touch drag. Print cards become 2x2 grid. Newsletter section is full-bleed photo with stacked form. Navigation is logo + hamburger with dark overlay. No floating bars — keep the reading experience clean.</code></pre>
+    </section>
+  </main>
+</body>
+</html>

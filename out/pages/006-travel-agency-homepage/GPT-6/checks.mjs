@@ -1,0 +1,35 @@
+export async function exercise(page, assert) {
+  assert.equal(await page.locator(".destination").count(),4);
+  await page.getByLabel("Trip style", { exact: true }).selectOption("Beach & Island");
+  await page.getByLabel("Trip destination", { exact: true }).selectOption("Kyoto");
+  await page.getByRole("button", { name: "Search Trips", exact: true }).click();
+  assert.equal(await page.locator(".destination").count(),0);
+  await page.getByRole("button", { name: "Show all destinations", exact: true }).click();
+  await page.getByRole("button", { name: "Clear filters", exact: true }).click();
+  await page.getByRole("button", { name: "Save Santorini, Greece", exact: true }).click();
+  await page.getByRole("button", { name: "Open wishlist", exact: true }).click();
+  assert.match(await page.locator("#wish-list").innerText(),/Santorini/);
+  await page.getByRole("button", { name: "Close dialog", exact: true }).click();
+  await page.getByLabel("Trip destination", { exact: true }).selectOption("Kyoto");
+  await page.getByRole("button", { name: "Search Trips", exact: true }).click();
+  assert.equal(await page.locator(".destination").count(),1);
+  await page.getByRole("button", { name: "Explore", exact: false }).first().click();
+  assert.match(await page.locator("dialog").innerText(),/Kyoto/);
+  await page.getByRole("button", { name: "Make this journey mine" }).click();
+  await page.getByLabel("Your email", { exact: true }).fill("test@example.invalid");
+  await page.getByRole("button", { name: "Create my demo inquiry" }).click();
+  assert.match(await page.locator("#plan-status").innerText(),/no data was stored/);
+  await page.getByRole("button", { name: "Close dialog", exact: true }).click();
+  await page.getByRole("button", { name: "View All Destinations" }).click();
+  assert.equal(await page.locator(".destination").count(),7);
+  await page.locator('[data-style="Food & Wine"]').click();
+  assert.equal(await page.locator(".destination").count(),1);
+  assert.match(await page.locator(".destination-title").innerText(),/Amalfi/);
+  await page.getByRole("button", { name: "Top 10 Hidden Beaches" }).click();
+  assert.match(await page.locator("#modal-content").innerText(),/Koh Kood/);
+  await page.getByRole("button", { name: "Close dialog", exact: true }).click();
+  await page.getByRole("textbox", { name: "Newsletter email", exact: true }).fill("test@example.invalid");
+  await page.getByRole("button", { name: "Subscribe", exact: true }).click();
+  assert.match(await page.locator("#subscribe-status").innerText(),/No email was stored/);
+  await page.evaluate(()=>window.scrollTo(0,0));
+}

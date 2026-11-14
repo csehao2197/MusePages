@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f9f7f3">
+  <meta name="description" content="A gentle little story shelf. Read original illustrated stories together, listen to included narration, or make a local reading draft.">
+  <title>Dreamio · Little stories, big dreams</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to stories</a>
+  <aside class="sidebar">
+    <a class="brand" href="index.html"><img src="assets/favicon.svg" width="38" height="38" alt=""><span>dreamio<span class="brand-dot">.</span></span></a>
+    <p class="side-label">A LITTLE WORLD OF WONDER</p>
+    <nav aria-label="Main navigation">
+      <button class="nav-button active" id="tonight"><svg><use href="assets/icons.svg#home"/></svg>Tonight</button>
+      <button class="nav-button" id="shelf-nav"><svg><use href="assets/icons.svg#book"/></svg>Story shelf<span id="shelf-count">3</span></button>
+      <button class="nav-button" id="favorites-nav"><svg><use href="assets/icons.svg#heart"/></svg>Favorites<span id="favorites-count">0</span></button>
+      <button class="nav-button create-nav" data-create><svg><use href="assets/icons.svg#plus"/></svg>Create a story</button>
+    </nav>
+    <div class="side-bottom"><div class="moon-note"><svg><use href="assets/icons.svg#moon"/></svg><p>A little less screen.<br>A little more imagination.</p><span>Make room for a softer goodnight.</span></div><button class="nav-button" data-about><svg><use href="assets/icons.svg#help"/></svg>How Dreamio works</button><small>STATIC STORYBOOK DEMO</small></div>
+  </aside>
+  <main id="main">
+    <header class="topbar"><span>YOUR LITTLE EVENING RITUAL</span><button class="quiet-button" id="night-toggle" aria-pressed="false"><svg><use href="assets/icons.svg#moon"/></svg><span>Night colors</span></button></header>
+    <section class="intro" aria-labelledby="welcome"><div><p class="eyebrow"><span class="tiny-star">✦</span> GOOD EVENING, DREAMERS</p><h1 id="welcome">Little stories.<br><em>Big dreams.</em></h1><p>Let the day drift away. A world of gentle adventures<br class="desktop-break"> is waiting for your favorite little person.</p></div><div class="intro-note"><svg><use href="assets/icons.svg#sparkles"/></svg><p>One more story.<br>One closer cuddle.</p><span>A lovely way to end the day.</span></div></section>
+    <section class="featured" aria-labelledby="feature-title">
+      <div class="feature-copy"><p class="eyebrow">TONIGHT’S LITTLE ESCAPE</p><h2 id="feature-title">Follow a <br>little light.</h2><p>A curious rabbit discovers that the smallest<br class="desktop-break"> adventures can leave the warmest glow.</p><div class="feature-meta"><span>Wonder</span><span>3 chapters</span><span>~2 min read</span></div><div class="feature-actions"><button class="primary" data-read="lantern"><svg><use href="assets/icons.svg#book"/></svg>Read together<svg><use href="assets/icons.svg#arrow"/></svg></button><button class="text-button" data-listen="lantern"><svg><use href="assets/icons.svg#headphones"/></svg>Listen</button></div><span class="feature-foot">THE LITTLE LANTERN · AN ORIGINAL DREAMIO STORY</span></div>
+      <div class="feature-art"><img src="assets/lantern-meadow.svg" width="600" height="420" alt="Pip the rabbit holds a glowing lantern beneath the moon, among soft meadow leaves."><span class="art-label"><svg><use href="assets/icons.svg#moon"/></svg>A small story. A softer night.</span></div>
+    </section>
+    <section class="library" id="story-shelf" aria-labelledby="library-title">
+      <div class="section-heading"><div><p class="eyebrow">A SHELF FULL OF POSSIBILITIES</p><h2 id="library-title">Find their next favorite.</h2></div><label class="search"><svg><use href="assets/icons.svg#search"/></svg><input id="search" type="search" placeholder="Find a little adventure…" aria-label="Search stories" maxlength="100"></label></div>
+      <div class="library-tools"><div class="filters" role="group" aria-label="Story mood"><button class="chip selected" data-theme="all" aria-pressed="true">All stories</button><button class="chip" data-theme="Wonder" aria-pressed="false">Wonder</button><button class="chip" data-theme="Kindness" aria-pressed="false">Kindness</button><button class="chip" data-theme="Calm" aria-pressed="false">Calm</button></div><label class="sort-label">Sort by <select id="sort" aria-label="Sort stories"><option value="newest">Newest first</option><option value="title">Title A–Z</option></select></label></div>
+      <p class="result-label" id="result-count" aria-live="polite"></p><div id="story-grid" class="story-grid"></div><div id="empty" class="empty" hidden><svg><use href="assets/icons.svg#book"/></svg><h3>No stories on this shelf yet.</h3><p>Try another mood, clear your search, or add a favorite.</p><button id="clear-filters" class="secondary">Show all stories</button></div>
+    </section>
+    <section class="create-banner"><div class="create-symbol"><svg><use href="assets/icons.svg#sparkles"/></svg></div><div><h2>Every little idea deserves a story.</h2><p>Pick a character. Add a little imagination. Make a reading draft together.</p><span>A fixed local template, your words, and included illustrations. Not an AI service.</span></div><button class="secondary" data-create>Let’s make a story<svg><use href="assets/icons.svg#arrow"/></svg></button></section>
+    <footer><span class="footer-brand">dreamio.</span><p>Small moments. Lasting magic.</p><button class="text-button" data-about>About this little world<svg><use href="assets/icons.svg#arrow"/></svg></button></footer>
+    <p class="demo-note">Original sample stories · Local sample narration · Changes last only until refresh</p>
+  </main>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <dialog id="reader" aria-labelledby="reader-title">
+    <div class="dialog-top"><span class="eyebrow">A LITTLE TIME TOGETHER</span><button class="icon-button" data-close="reader" aria-label="Close story"><svg><use href="assets/icons.svg#close"/></svg></button></div>
+    <div class="reader-layout"><div class="reader-picture"><img id="scene-image" width="600" height="420" alt=""></div><div class="reader-copy"><p class="eyebrow" id="chapter-count"></p><h2 id="reader-title"></h2><h3 id="chapter-title"></h3><p id="chapter-text"></p><p id="hidden-caption" hidden>The words are hidden. Turn captions on to read along.</p><div class="page-controls"><button class="secondary" id="previous"><svg><use href="assets/icons.svg#left"/></svg>Previous</button><div id="page-dots" aria-label="Chapter navigation"></div><button class="secondary" id="next">Next<svg><use href="assets/icons.svg#right"/></svg></button></div></div></div>
+    <div class="audio-controls"><button class="primary" id="voice-button"><svg><use href="assets/icons.svg#play"/></svg><span>Play narration</span></button><div class="progress"><label class="sr-only" for="seek">Narration position</label><input id="seek" type="range" min="0" max="1" value="0" step=".1" disabled><span id="audio-time">0:00 / 0:00</span></div><button class="secondary" id="music-toggle" aria-pressed="false"><svg><use href="assets/icons.svg#music"/></svg>Music</button></div>
+    <div class="reader-options"><label><input type="checkbox" id="captions" checked>Show words</label><label><input type="checkbox" id="advance">Advance with narration</label><button class="text-button" id="reader-favorite"><svg><use href="assets/icons.svg#heart"/></svg><span>Favorite</span></button><button class="text-button" id="download"><svg><use href="assets/icons.svg#download"/></svg>Save text</button></div>
+    <p id="audio-status" role="status" class="audio-status"></p><p id="narration-source" class="audio-source"></p>
+  </dialog>
+  <dialog id="creator" aria-labelledby="creator-title">
+    <div class="dialog-top"><span class="eyebrow">MADE WITH A LITTLE IMAGINATION</span><button class="icon-button" data-close="creator" aria-label="Close story creator"><svg><use href="assets/icons.svg#close"/></svg></button></div>
+    <h2 id="creator-title">What shall we dream up?</h2><p class="dialog-lead">Your words + a fixed local template. Choose a fictional place and a wish; then edit the three chapters. This is not AI generation.</p>
+    <form id="draft-form"><label>Give it a title<input name="title" maxlength="60" required placeholder="A very small adventure"></label><fieldset><legend>Meet your main character</legend><div class="characters"><label><input type="radio" name="character" value="lantern" checked><img src="assets/lantern-meadow.svg" alt="" width="140" height="98"><span>Pip the rabbit</span></label><label><input type="radio" name="character" value="whale"><img src="assets/whale-sky.svg" alt="" width="140" height="98"><span>Bean the whale</span></label><label><input type="radio" name="character" value="fox"><img src="assets/fox-garden.svg" alt="" width="140" height="98"><span>Fern the fox</span></label></div></fieldset><div class="form-pair"><label>A made-up place<input name="setting" maxlength="80" required placeholder="a garden above the clouds"></label><label>One little wish<input name="wish" maxlength="120" required placeholder="to give a star a goodnight hug"></label></div><p class="small-note">Use make-believe details. This demo keeps drafts in memory until refresh. Up to 8 custom stories.</p><button type="submit" class="primary"><svg><use href="assets/icons.svg#sparkles"/></svg>Make a reading draft</button></form>
+    <section id="draft-editor" hidden aria-labelledby="draft-editor-title"><h3 id="draft-editor-title">Make the words your own.</h3><p>Reuses the chosen character’s three original scenes. Custom stories are read-aloud only; matching narration is not connected.</p><form id="chapter-form"><div id="draft-chapters"></div><div class="form-actions"><button class="secondary" type="button" id="back-to-idea">Back to the idea</button><button class="primary" type="submit">Add to my story shelf<svg><use href="assets/icons.svg#arrow"/></svg></button></div></form></section><p id="draft-status" class="form-status" role="status"></p>
+  </dialog>
+  <dialog id="about" aria-labelledby="about-title"><div class="dialog-top"><span class="eyebrow">AN HONEST LITTLE INTRODUCTION</span><button class="icon-button" data-close="about" aria-label="Close about"><svg><use href="assets/icons.svg#close"/></svg></button></div><h2 id="about-title">A storybook, not a service.</h2><p>Read three original, illustrated stories. Listen to the included English sample narration, turn on a quiet music loop, or make a draft with a fixed local template.</p><dl><div><dt>Your little shelf</dt><dd>Favorites, drafts, filters, and night colors live in this tab’s memory. Refresh starts fresh. Download text to keep your words.</dd></div><div><dt>Real local media</dt><dd>Nine original SVG scenes, nine prerecorded Windows Zira sample narrations, and one original music loop. Playback starts only when you choose it.</dd></div><div><dt>What is not connected</dt><dd>AI, ElevenLabs, image generation, Supabase, accounts, uploads, recording, installation, and offline PWA caching. This static prototype has no runtime backend or cloud saving.</dd></div></dl><button class="primary" data-close="about">Back to the stories<svg><use href="assets/icons.svg#arrow"/></svg></button></dialog>
+  <audio id="narration" preload="none"></audio><audio id="soundtrack" src="assets/starlight-music.wav" preload="none" loop></audio>
+</body>
+</html>

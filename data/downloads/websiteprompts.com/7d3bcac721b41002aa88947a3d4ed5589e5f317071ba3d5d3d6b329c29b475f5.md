@@ -1,0 +1,1 @@
+Build an internal tool dashboard for [workflow]. Include login placeholder, sidebar navigation, records table, detail panel, create/edit form, filters, activity log, and settings. Use a dense but readable operations interface.

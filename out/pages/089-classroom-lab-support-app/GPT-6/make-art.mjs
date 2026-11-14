@@ -1,0 +1,33 @@
+import { writeFile, copyFile } from "node:fs/promises";
+import { createRequire } from "node:module";
+const require = createRequire(new URL("../../../../package.json", import.meta.url));
+const React = require("react");
+const { renderToStaticMarkup } = require("react-dom/server");
+const lucide = require("lucide-react");
+const icons = { Sprout: "sprout", CircleHelp: "circle-help", Plus: "plus", ArrowUpRight: "arrow-up-right", ArrowDown: "arrow-down", ArrowRight: "arrow-right", ShieldCheck: "shield-check", HeartHandshake: "heart-handshake", HardDrive: "hard-drive", Projector: "projector", Monitor: "monitor", Wifi: "wifi", Search: "search", NotebookPen: "notebook-pen", CircleCheck: "circle-check", BookOpen: "book-open", Printer: "printer", Check: "check", X: "x" };
+const symbols = Object.entries(icons).map(([name, id]) => renderToStaticMarkup(React.createElement(lucide[name])).replace(/<svg[^>]*>/, `<symbol id="${id}" viewBox="0 0 24 24">`).replace("</svg>", "</symbol>"));
+await writeFile(new URL("assets/icons.svg", import.meta.url), `<svg xmlns="http://www.w3.org/2000/svg"><defs>${symbols.join("")}</defs></svg>`);
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="640" height="510" viewBox="0 0 640 510">
+<defs><pattern id="paper" width="9" height="9" patternUnits="userSpaceOnUse"><circle cx="2" cy="3" r=".45" fill="#aaa885" opacity=".17"/></pattern><clipPath id="window"><path d="M470 90h95v190h-95z"/></clipPath></defs>
+<path d="M77 444V204Q77 73 231 67h251q81 1 81 102v275Z" fill="#e6e4d3"/>
+<path d="M78 444V204Q77 73 231 67h251q81 1 81 102v275Z" fill="url(#paper)"/>
+<path d="M470 90h95v190h-95z" fill="#cbd7c3"/><g clip-path="url(#window)"><circle cx="541" cy="129" r="37" fill="#f3d996"/><path d="m457 268 53-124 31 130 44-85 29 126Z" fill="#a7b49b"/><path d="m490 283 64-91 39 96Z" fill="#b9c5a8"/></g><path d="M470 88v194m48-194v194m49-194v194M468 184h99m-99 100h99" fill="none" stroke="#f7f5e8" stroke-width="8"/>
+<path d="M500 285 430 444H217L469 184v100Z" fill="#f8efd2" opacity=".5"/>
+<rect x="125" y="126" width="310" height="211" rx="8" fill="#8a7652"/><rect x="134" y="135" width="292" height="192" rx="3" fill="#376353"/><path d="M146 148h267v164H146Z" fill="none" stroke="#79927b" stroke-width="1" opacity=".4"/>
+<text x="280" y="201" text-anchor="middle" fill="#f4efda" font-size="27" font-family="Georgia,serif" font-style="italic">Keep the</text><text x="280" y="238" text-anchor="middle" fill="#f4efda" font-size="36" font-family="Georgia,serif" font-style="italic">curiosity.</text>
+<path d="M230 256q56 21 104-2" fill="none" stroke="#d7bb79" stroke-width="2" stroke-linecap="round"/><path d="m189 172 5 8 9-4-4 9 7 6-10-1-3 9-2-10-10 1 8-7Z" fill="#c5d2b2"/>
+<path d="M393 268q-2-17-12-20m12 18q3-15 11-16" fill="none" stroke="#bac7a9" stroke-width="2"/><path d="M381 248q12-7 11 10-13 3-11-10m23 2q-12-4-10 10 13 3 10-10" fill="#b7c8a9"/>
+<rect x="137" y="329" width="287" height="10" rx="2" fill="#a59472"/><rect x="324" y="326" width="25" height="4" rx="2" fill="#f1e7c7"/><rect x="351" y="323" width="25" height="7" rx="2" fill="#c0b9a2"/>
+<path d="M81 444h489l33 22H47Z" fill="#c7c7ae"/><path d="M90 445h477" stroke="#b3b39a" stroke-width="2"/>
+<path d="M145 367h287v18H145z" fill="#b38e61"/><path d="m152 384-10 70h15l14-70m232 0 11 70h15l-9-70" fill="#886b48"/><path d="M166 385h236v21H166Z" fill="#c6a575"/><path d="M174 397h217" stroke="#ae8d60"/>
+<g transform="rotate(-8 205 357)"><rect x="174" y="350" width="73" height="14" rx="2" fill="#b26649"/><rect x="179" y="353" width="66" height="7" fill="#f3e7c9"/><rect x="169" y="340" width="77" height="12" rx="2" fill="#7b8d62"/><rect x="174" y="342" width="70" height="7" fill="#f4eacb"/><rect x="176" y="332" width="64" height="10" rx="2" fill="#d2b877"/></g>
+<path d="m319 349 47-8 30 15-48 8Z" fill="#ece1c0"/><path d="m348 364 1-15m-30 0 30 0 17-8" fill="none" stroke="#bcb28e"/><path d="m369 346 22-18" stroke="#a96543" stroke-width="3"/><path d="m388 330 4-2-1 5" fill="#485d43"/>
+<rect x="95" y="382" width="39" height="49" rx="5" fill="#7d9064"/><path d="M97 388h35m-30 7h25" stroke="#acb78f"/><path d="m107 379 1-39m5 39 8-45m-3 44 14-29" stroke="#83734e" stroke-width="3"/>
+<path d="M491 359v50m-1-34-22-21m23 8 23-22m-21 1-13-24" stroke="#6b8153" stroke-width="3" fill="none"/><path d="M470 354q-34-2-30-33 31-4 30 33m43-13q3-30 28-23-1 29-28 23m-29-24q-25-10-12-32 25 3 12 32m8 44q-2-25 16-28 17 20-16 28" fill="#7d9664"/><path d="m465 395 52 0-7 43h-37Z" fill="#bd7652"/><path d="M461 393h60v9h-60Z" fill="#ca8660"/><path d="M473 432h36" stroke="#a96545"/>
+<g fill="none" stroke="#8a9873" stroke-linecap="round"><path d="M60 270q-20-9-27 4m30 7-25 2" stroke-width="2"/><path d="m585 223 13-5m-11 13 11 4" stroke-width="2"/></g>
+<circle cx="109" cy="95" r="4" fill="#d3b47a"/><circle cx="591" cy="370" r="5" fill="#c6c7a6"/><path d="m94 300 3 5 6-2-4 5 3 5-6-2-4 4 1-6-5-3 6-1Z" fill="#bd9b61"/>
+</svg>`;
+await writeFile(new URL("assets/classroom.svg", import.meta.url), svg);
+await writeFile(new URL("assets/favicon.svg", import.meta.url), '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><rect width="40" height="40" rx="12" fill="#28594c"/><path d="M20 31V17m0 7Q5 24 8 11q14-2 12 13m0-7Q20 5 33 8q1 12-13 13" fill="none" stroke="#f3e4b7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+for (const file of ["inter.woff2", "inter-OFL.txt", "lucide-LICENSE.txt"]) await copyFile(new URL(`../../081-file-upload-saas/GPT-6/assets/${file}`, import.meta.url), new URL(`assets/${file}`, import.meta.url));
+console.log("Original classroom illustration, local Lucide icons and licensed Inter prepared.");

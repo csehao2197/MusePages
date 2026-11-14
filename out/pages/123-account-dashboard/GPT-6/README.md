@@ -1,0 +1,15 @@
+# Forma — Your Account
+
+- Main features: Order filters/detail/timeline/tracking, text invoice downloads, cart reordering and return drafts; address CRUD/defaults; masked preset cards; wishlist/cart/alert preferences; local reviews; profile/photo/preferences; password-form preview and confirmed demo logout/deletion.
+
+- Original: `data\prompts\123-account-dashboard\123-account-dashboard.md`; design: `src\workflows\AI Agent\DESIGN.md`.
+- Actual model: `gpt-6.1-sol`; stable directory alias: `GPT-6`. Type: standalone HTML/CSS/JavaScript.
+- Direction: Calm slate-blue retail account workspace with a persistent desktop sidebar, precise order table, original product illustrations and mobile-first account panels.
+- Source: `index.html` and any adjacent public assets. Static export: `out\`.
+- Generation-run validation: 45 interaction assertions, 68 total assertions passed. Responsive widths: 1440, 1024, 768, 390, 320px. Browser/resource errors: none. This generation run executed the exported `verify` function from `verify.mjs` through a temporary orchestration harness; the file itself is not a standalone test runner.
+- Preview from repository root: `node src\workflows\generate-preview.mjs out\pages\123-account-dashboard\GPT-6\out`. It renders/checks the preview; it does not update metadata or replay interaction assertions. Browse `out\` with a static HTTP server; no build or environment variables are required.
+- Actual PNG preview: 1200 by 900. Desktop/mobile screenshots and results: `.checks\`. Visual review: Reviewed actual 1200x900 preview, full desktop/mobile screenshots and mobile order-dialog image. Slate-blue account panels, clear status badges and original product art remain coherent; mobile tables scroll with an explicit hint, and the order dialog stays readable within its viewport. Corrected nested product-icon sizing after initial screenshot review and recaptured. Real browser checks cover order filtering/tracking/reordering/invoice download/return draft, address create-edit-delete-default, sample-card creation/removal, cart, empty wishlist and alerts, local reviews, profile persistence/photo, password mismatch/success preview, preferences, logout and delete/reopen, including small-screen forms. No authentication, live fulfilment, payment or production account changes are represented.
+- Registered only, disabled and not deployed. Expected publication: `pages\account-dashboard\GPT-6\index.html`.
+- Assets: original HTML/CSS/SVG illustrations; Lucide-style SVG icons use Lucide (ISC) path geometry. No external images, fonts or runtime requests. System serif/sans-serif fonts replace remote font families for offline portability.
+- Significant limitations: Account/order/payment data is fictional and changes use this demo's browser-storage key. Tracking, returns, checkout, alerts and reviews contact no provider; sample invoices are not tax documents. Password values and photo previews are not persisted. Password/logout/deletion controls simulate only this local demo, not production authentication or account changes.
+- Not performed: builds, dependency installation, dist, publication, remote upload and backend testing.

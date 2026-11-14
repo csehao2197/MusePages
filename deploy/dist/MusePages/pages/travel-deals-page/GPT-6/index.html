@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="description" content="FareFinder: a travel-deals demo with handpicked getaways, local price filters, saved trips and destination inspiration.">
+  <title>FareFinder | Good Trips. Great Prices.</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/outfit-700.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="assets/inter-400.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#deals">Skip to deals</a>
+  <div class="topline"><span>Good trips. Great prices. A little more <i>why not?</i></span><span class="topline-note">Interactive demo · All prices in USD</span></div>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#" aria-label="FareFinder home"><span class="brand-mark"><svg class="icon"><use href="assets/icons.svg#Plane"></use></svg></span>fare<span>finder</span><span class="brand-dot">.</span></a>
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a class="active" href="#deals" data-type="">Discover deals</a>
+        <a href="#deals" data-type="Flights">Flights</a>
+        <a href="#deals" data-type="Hotels">Hotels</a>
+        <a href="#deals" data-type="Packages">Packages</a>
+        <a href="#deals" data-type="Cruises">Cruises</a>
+      </nav>
+      <div class="header-actions">
+        <button class="saved-button" id="show-saved" aria-pressed="false" aria-label="Show saved deals"><svg class="icon"><use href="assets/icons.svg#Heart"></use></svg><span class="saved-label">Saved</span><span id="saved-count">0</span></button>
+        <a class="button button-outline alert-link" href="#price-alert"><svg class="icon"><use href="assets/icons.svg#Bell"></use></svg>Get deal alerts</a>
+        <button class="icon-button mobile-menu-button" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"><svg class="icon"><use href="assets/icons.svg#Menu"></use></svg></button>
+      </div>
+    </div>
+    <nav id="mobile-menu" class="mobile-menu wrap" aria-label="Mobile navigation" hidden>
+      <a href="#deals" data-type="">Discover all deals</a><a href="#deals" data-type="Flights">Flights</a><a href="#deals" data-type="Hotels">Hotels</a><a href="#deals" data-type="Packages">Packages</a><a href="#deals" data-type="Cruises">Cruises</a><a href="#price-alert">Get deal alerts</a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap hero-inner">
+        <div class="hero-copy">
+          <div class="new-deals"><span class="live-dot"></span><svg class="icon"><use href="assets/icons.svg#Flame"></use></svg>47 new deals added today <span class="demo-chip">DEMO</span></div>
+          <h1 id="hero-title">Deals that<br><em>won't wait.</em></h1>
+          <p>Big adventures. Small prices.<br>Save up to <strong>60%</strong> on handpicked flights, hotels<br class="desktop-break"> and vacation packages.</p>
+          <div class="hero-caption"><span class="tiny-line"></span>A great escape starts with a great deal.</div>
+        </div>
+        <div class="hero-art">
+          <div class="flight-path" aria-hidden="true"><svg class="icon"><use href="assets/icons.svg#Plane"></use></svg></div>
+          <button class="hero-postcard" data-open="santorini" aria-label="Explore the Santorini package, 5 nights from 899 dollars per person">
+            <img src="assets/santorini.jpg" alt="Whitewashed island architecture above the blue Aegean Sea" width="600" height="420" fetchpriority="high">
+            <span class="postcard-caption"><span><svg class="icon"><use href="assets/icons.svg#MapPin"></use></svg>Santorini, Greece</span><strong>from $899 <svg class="icon"><use href="assets/icons.svg#ArrowUpRight"></use></svg></strong></span>
+          </button>
+          <div class="discount-stamp"><span>UP TO</span><strong>60<small>%</small></strong><span>LESS SPEND. MORE GO.</span></div>
+          <div class="boarding-slip"><span class="boarding-icon"><svg class="icon"><use href="assets/icons.svg#Plane"></use></svg></span><span><small>YOUR NEXT “WHY NOT?”</small><strong>New York <span>→</span> Barcelona</strong><span>Round-trip flight <b>$289</b></span></span><button class="icon-button" data-open="barcelona" aria-label="View Barcelona flight"><svg class="icon"><use href="assets/icons.svg#ArrowUpRight"></use></svg></button></div>
+        </div>
+      </div>
+      <div class="wrap search-wrap">
+        <form id="deal-search" class="search-panel">
+          <label><span><svg class="icon"><use href="assets/icons.svg#Navigation"></use></svg>FROM</span><input id="from-city" type="text" placeholder="Your city" maxlength="60" autocomplete="off"></label>
+          <label><span><svg class="icon"><use href="assets/icons.svg#MapPin"></use></svg>TO</span><input id="to-city" type="search" placeholder="Anywhere" maxlength="70" autocomplete="off"></label>
+          <label><span><svg class="icon"><use href="assets/icons.svg#CalendarDays"></use></svg>TRAVEL DATES</span><select id="search-dates"><option value="">I'm flexible</option><option value="0">This month</option><option value="1">Next month</option></select></label>
+          <label><span><svg class="icon"><use href="assets/icons.svg#Users"></use></svg>TRAVELERS</span><select id="travelers"><option value="1">1 adult</option><option value="2" selected>2 adults</option><option value="3">3 adults</option><option value="4">4 adults</option><option value="5">5 adults</option><option value="6">6 adults</option></select></label>
+          <button class="button button-orange" type="submit"><svg class="icon"><use href="assets/icons.svg#Search"></use></svg>Find deals</button>
+        </form>
+        <div class="trust-row"><button data-info="guarantee"><svg class="icon"><use href="assets/icons.svg#ShieldCheck"></use></svg>Best Price Guarantee</button><button data-info="cancellation"><svg class="icon"><use href="assets/icons.svg#CheckCheck"></use></svg>Free Cancellation</button><button data-info="support"><svg class="icon"><use href="assets/icons.svg#Headphones"></use></svg>24/7 Support</button><span>Sample offers · No live inventory or bookings</span></div>
+      </div>
+    </section>
+
+    <section class="flash-section wrap" aria-labelledby="flash-title">
+      <div class="section-top">
+        <div><p class="eyebrow orange"><svg class="icon"><use href="assets/icons.svg#Zap"></use></svg>GOOD THINGS DON'T STICK AROUND</p><h2 id="flash-title">Flash deals. <span class="muted-heading">Gone in a flash.</span></h2></div>
+        <div class="flash-controls"><span class="master-timer">Next ends in <strong id="master-countdown">02:47:09</strong></span><button class="icon-button bordered" id="flash-prev" aria-label="Previous flash deal"><svg class="icon"><use href="assets/icons.svg#ChevronLeft"></use></svg></button><button class="icon-button bordered" id="flash-next" aria-label="Next flash deal"><svg class="icon"><use href="assets/icons.svg#ChevronRight"></use></svg></button><button class="icon-button bordered" id="flash-play" aria-label="Play automatic flash carousel" aria-pressed="false"><svg class="icon"><use href="assets/icons.svg#Play"></use></svg></button></div>
+      </div>
+      <div id="flash-track" class="flash-track" tabindex="0" role="region" aria-label="Flash deals carousel. Scroll or use the previous and next buttons."></div>
+      <p class="fixture-note"><svg class="icon"><use href="assets/icons.svg#CircleHelp"></use></svg>Demo flash sale: prices, timers and scarcity are illustrative. Timers expire locally; no real availability is implied.</p>
+    </section>
+
+    <section class="deals-section" id="deals" aria-labelledby="deals-title">
+      <div class="wrap section-top deals-heading">
+        <div><p class="eyebrow orange">LESS SCROLLING. MORE GOING.</p><h2 id="deals-title">Your next “out of office”</h2><p class="section-description">A world of possibilities. A price you'll feel good about.</p></div>
+        <span class="handpicked"><svg class="icon"><use href="assets/icons.svg#Check"></use></svg>Handpicked, not an endless feed</span>
+      </div>
+      <div class="filter-shell" id="filter-shell">
+        <div class="wrap filter-inner">
+          <button id="filter-toggle" class="filter-toggle" aria-expanded="false" aria-controls="filter-fields"><svg class="icon"><use href="assets/icons.svg#SlidersHorizontal"></use></svg>Filter your escape<svg class="icon"><use href="assets/icons.svg#ChevronDown"></use></svg></button>
+          <div class="filter-fields" id="filter-fields">
+            <label><span class="sr-only">Deal type</span><svg class="icon"><use href="assets/icons.svg#Luggage"></use></svg><select id="filter-type"><option value="">All deal types</option><option>Flights</option><option>Hotels</option><option>Packages</option><option>Cruises</option><option>Cars</option><option>Experiences</option></select></label>
+            <label><span class="sr-only">Destination region</span><svg class="icon"><use href="assets/icons.svg#Globe"></use></svg><select id="filter-region"><option value="">Anywhere</option><option>Europe</option><option>Asia</option><option>Caribbean</option><option>Americas</option><option>Africa</option></select></label>
+            <label><span class="sr-only">Budget per person</span><svg class="icon"><use href="assets/icons.svg#SlidersHorizontal"></use></svg><select id="filter-budget"><option value="">Any budget</option><option value="under">Under $300</option><option value="mid">$300–$700</option><option value="high">$700–$1,500</option><option value="luxury">$1,500+</option></select></label>
+            <label><span class="sr-only">Travel dates</span><svg class="icon"><use href="assets/icons.svg#CalendarDays"></use></svg><select id="filter-dates"><option value="">Flexible dates</option><option value="0">This month</option><option value="1">Next month</option></select></label>
+          </div>
+          <button id="clear-filters" class="text-button">Reset filters</button>
+        </div>
+      </div>
+      <div class="wrap">
+        <div class="results-toolbar"><div><strong id="result-count" aria-live="polite"></strong><span id="search-summary"></span></div><label class="sort-label">Sort by <select id="sort"><option value="best">Best deals</option><option value="price">Price: low to high</option><option value="savings">Biggest savings</option><option value="soon">Departing soon</option></select></label></div>
+        <div id="deals-grid" class="deals-grid"></div>
+        <div id="empty-results" class="empty-state" hidden><span class="empty-icon"><svg class="icon"><use href="assets/icons.svg#Compass"></use></svg></span><h3>No matching escapes. Yet.</h3><p>Try a wider budget or a different destination.<br>This demo searches a small, local collection—not live inventory.</p><button class="button button-orange" id="empty-reset">Explore all deals</button></div>
+        <div class="load-more-wrap"><p id="showing-count"></p><button id="load-more" class="button button-outline">Load more deals<svg class="icon"><use href="assets/icons.svg#ChevronDown"></use></svg></button></div>
+      </div>
+    </section>
+
+    <section class="categories-section wrap" aria-labelledby="categories-title">
+      <div class="section-top"><div><p class="eyebrow orange">PICK YOUR KIND OF GETAWAY</p><h2 id="categories-title">Big plans come in all shapes.</h2></div><p class="small-muted">Browse by type</p></div>
+      <div id="category-grid" class="category-grid"></div>
+      <p class="fixture-note">Category counts are fictional archive totals. Clicking a category filters the smaller local demo collection.</p>
+    </section>
+
+    <section class="spotlight-section" aria-labelledby="spotlight-title">
+      <div class="wrap spotlight-layout">
+        <div class="spotlight-photo"><img src="assets/lisbon.jpg" alt="Lisbon's Praça do Comércio and Rua Augusta Arch under a blue sky" width="900" height="1000" loading="lazy"><span class="photo-chip"><svg class="icon"><use href="assets/icons.svg#Sun"></use></svg>MORE SUNSHINE. LESS SPEND.</span><div class="photo-title"><small>THE SLOW LIFE IS CALLING</small><strong>Olá, Portugal.</strong><span>Come for the pastel de nata. Stay for everything.</span></div><span class="photo-note">Lisbon, Portugal · Illustrative destination photography</span></div>
+        <div class="spotlight-copy">
+          <p class="eyebrow orange">THIS MONTH'S TOP DESTINATION</p><h2 id="spotlight-title">A little Portugal.<br>A lot to fall for.</h2><p>Golden coastlines, tiled streets and long lunches.<br>Some places are worth taking your time in.</p>
+          <div id="portugal-deals" class="portugal-deals"></div>
+          <button class="text-button arrow-link" id="see-portugal">See all Portugal deals<svg class="icon"><use href="assets/icons.svg#ArrowRight"></use></svg></button>
+        </div>
+      </div>
+    </section>
+
+    <section id="price-alert" class="alert-section wrap" aria-labelledby="alert-title">
+      <div class="alert-top"><span class="alert-icon"><svg class="icon"><use href="assets/icons.svg#Bell"></use></svg></span><div><p class="eyebrow">YOUR BUDGET. YOUR BUCKET LIST.</p><h2 id="alert-title">The right price. Right in your inbox.</h2><p>Never miss a deal. Tell us where you want to go and what you want to spend.</p></div></div>
+      <form id="alert-form" class="alert-form">
+        <label>Dream destination<span class="input-with-icon"><svg class="icon"><use href="assets/icons.svg#MapPin"></use></svg><input name="destination" placeholder="e.g. Tokyo, Japan" required minlength="2" maxlength="80"></span></label>
+        <label>Max price per person<span class="input-with-icon"><span class="currency-symbol">$</span><input name="price" type="number" placeholder="700" required min="1" max="100000" step="1"></span></label>
+        <label>Your email<span class="input-with-icon"><svg class="icon"><use href="assets/icons.svg#Mail"></use></svg><input name="email" type="email" placeholder="you@example.com" required maxlength="150"></span></label>
+        <button class="button button-navy" type="submit">Set price alert<svg class="icon"><use href="assets/icons.svg#Bell"></use></svg></button>
+      </form>
+      <p id="alert-feedback" class="form-feedback" role="status"></p>
+      <div class="alert-bottom"><span><span class="avatar-letters" aria-hidden="true"><b>JL</b><b>AK</b><b>MS</b><b>+</b></span>Join <strong>280,000+</strong> deal hunters saving an average of <strong>$340</strong> per trip.*</span><small>*Illustrative figures. Demo form only: no email is sent or stored.</small></div>
+    </section>
+
+    <section class="history-section wrap" aria-labelledby="history-title">
+      <div class="section-top"><div><p class="eyebrow orange">STILL THINKING ABOUT IT?</p><h2 id="history-title">Worth another look.</h2><p class="section-description">Recently viewed deals, just on this browser.</p></div><button id="clear-history" class="text-button"><svg class="icon"><use href="assets/icons.svg#Trash2"></use></svg>Clear history</button></div>
+      <div id="recently-viewed" class="recently-viewed"></div>
+      <div class="recommendations-heading"><h3>A few more ways to get away</h3><p id="recommendation-note">Popular sample picks. Browse a deal to see region-based recommendations.</p></div>
+      <div id="recommendations" class="recommendations-grid"></div>
+    </section>
+
+    <section class="newsletter-section" aria-labelledby="newsletter-title">
+      <div class="wrap newsletter-inner"><div><p class="eyebrow">THE GOOD STUFF GOES FIRST</p><h2 id="newsletter-title">Your inbox called.<br>It needs a vacation.</h2><p>Get exclusive deals and 6-hour early access to our best escapes.*</p></div><div class="newsletter-form-wrap"><form id="newsletter-form"><label class="sr-only" for="newsletter-email">Your email address</label><input id="newsletter-email" name="email" type="email" placeholder="Your email address" required maxlength="150"><button class="button button-orange" type="submit">Count me in<svg class="icon"><use href="assets/icons.svg#ArrowRight"></use></svg></button></form><p id="newsletter-feedback" class="form-feedback" role="status"></p><small>Unsubscribe anytime. No spam. *Demo only—no subscription, email delivery or early access.</small></div></div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap footer-top">
+      <div class="footer-brand"><a class="brand" href="#"><span class="brand-mark"><svg class="icon"><use href="assets/icons.svg#Plane"></use></svg></span>fare<span>finder</span><span class="brand-dot">.</span></a><p>A little less on the fare.<br>A little more on the memories.</p><span class="footer-location"><svg class="icon"><use href="assets/icons.svg#Globe"></use></svg>For the wonderfully restless.</span></div>
+      <div><h3>Find your deal</h3><a href="#deals" data-type="Flights">Flight deals</a><a href="#deals" data-type="Hotels">Hotel deals</a><a href="#deals" data-type="Packages">Vacation packages</a><a href="#deals" data-preset="last">Last-minute escapes</a><a href="#deals" data-preset="weekend">Weekend getaways</a></div>
+      <div><h3>Go somewhere</h3><a href="#deals" data-region="Europe">Europe</a><a href="#deals" data-region="Asia">Asia</a><a href="#deals" data-region="Caribbean">Caribbean</a><a href="#deals" data-region="Americas">Americas</a><a href="#deals" data-region="Africa">Africa &amp; Middle East</a></div>
+      <div><h3>Get to know us</h3><button data-info="about">About FareFinder</button><button data-info="how">How it works</button><button data-info="press">Press</button><button data-info="careers">Careers</button><button data-info="affiliates">Affiliates</button></div>
+      <div><h3>Here to help</h3><button data-info="support">Help center</button><button data-info="guarantee">Price guarantee</button><button data-info="cancellation">Cancellation policy</button><button data-info="contact">Contact us</button><button data-info="privacy">Privacy &amp; local data</button></div>
+    </div>
+    <div class="wrap footer-bottom"><span>© 2026 FareFinder. All rights reserved.</span><a href="assets/IMAGE-CREDITS.txt">Photography credits &amp; licenses</a><div class="payment-labels" aria-label="Illustrative payment brand labels; checkout is not available"><b>VISA</b><b>mastercard</b><b>AMEX</b><b>PayPal</b><b>Apple Pay</b></div><span>USD · English</span></div>
+    <div class="wrap final-disclosure">A fictional travel storefront. All fares, savings, ratings, review counts, stock, sale timers and audience figures are demo fixtures—not live offers. Photography is illustrative. No bookings, payments or emails are processed.</div>
+  </footer>
+  <div class="mobile-bottom"><span><strong id="mobile-count">17</strong><span>matching deals</span></span><button class="button button-orange" id="mobile-filter"><svg class="icon"><use href="assets/icons.svg#SlidersHorizontal"></use></svg>Filter deals</button></div>
+  <dialog id="deal-dialog" aria-labelledby="detail-title">
+    <button class="dialog-close icon-button" data-close aria-label="Close deal details"><svg class="icon"><use href="assets/icons.svg#X"></use></svg></button>
+    <div id="deal-detail"></div>
+  </dialog>
+  <dialog id="info-dialog" class="info-dialog" aria-labelledby="info-title">
+    <button class="dialog-close icon-button" data-close aria-label="Close information"><svg class="icon"><use href="assets/icons.svg#X"></use></svg></button>
+    <span class="info-icon"><svg class="icon"><use href="assets/icons.svg#CircleHelp"></use></svg></span><p class="eyebrow orange">A LITTLE TRANSPARENCY</p><h2 id="info-title"></h2><p id="info-text"></p><button id="clear-local-data" class="button button-outline" hidden>Clear saved deals &amp; history</button>
+    <p id="privacy-feedback" class="form-feedback" role="status"></p>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+  <noscript><p class="noscript">This static demo needs JavaScript for its local deal catalogue, filters and forms. It never uses a live booking service.</p></noscript>
+</body>
+</html>

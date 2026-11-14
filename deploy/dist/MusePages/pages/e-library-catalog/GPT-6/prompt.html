@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OpenShelf — Digital Library | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>OpenShelf — Digital Library</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code>Create a digital library and resource catalog page for an online education platform called &quot;OpenShelf&quot; that lets students browse, search, and save educational resources including e-books, research papers, video lectures, and interactive tutorials. The design should feel clean, organized, and scholarly yet modern.
+
+1. HERO / SEARCH SECTION
+- Clean white section with centered layout
+- Headline: &quot;Explore 12,000+ Learning Resources&quot;
+- Subheadline: &quot;E-books, research papers, video lectures, and tutorials — all in one place&quot;
+- Large search bar (max-width 640px, centered):
+  - Placeholder: &quot;Search by title, author, topic, or ISBN...&quot;
+  - Search icon left, clear button right
+  - Dropdown suggestions as you type (recent searches + popular)
+- Below search: quick filter chips — &quot;Trending This Week&quot;, &quot;New Arrivals&quot;, &quot;Staff Picks&quot;, &quot;Open Access&quot;
+- Stats bar: &quot;12,450 Resources&quot; | &quot;1,200+ Authors&quot; | &quot;86 Subjects&quot; | &quot;Free for Members&quot;
+
+2. SIDEBAR FILTERS (left column, 280px)
+- Resource Type (checkboxes):
+  - E-Books (4,230)
+  - Research Papers (3,890)
+  - Video Lectures (2,100)
+  - Interactive Tutorials (1,430)
+  - Podcasts (800)
+- Subject Area (expandable list):
+  - Computer Science (2,340)
+  - Mathematics (1,890)
+  - Business &amp; Economics (1,560)
+  - Psychology (1,230)
+  - Engineering (980)
+  - &quot;Show 81 more subjects&quot; expand link
+- Level:
+  - Beginner (3,200)
+  - Intermediate (5,100)
+  - Advanced (4,150)
+- Language: English, Spanish, French, German, Mandarin
+- Availability: Free / Premium / Open Access
+- Publication Year: range slider (2015–2026)
+- &quot;Clear All Filters&quot; link at bottom
+- Mobile: filters collapse into a &quot;Filters&quot; button that opens a slide-in drawer
+
+3. RESULTS HEADER
+- Left: &quot;Showing 1–24 of 12,450 results&quot; with active filter tags (removable)
+- Right: View toggle (grid / list icons) + Sort dropdown: Relevance, Newest, Most Popular, Highest Rated
+- Below: Applied filter pills with × to remove each
+
+4. RESOURCE CARDS (main content area, 3-column grid)
+- Card 1 — E-Book:
+  - Book cover thumbnail (vertical rectangle, shadow)
+  - Title: &quot;Algorithms: Design and Analysis&quot;
+  - Author: &quot;Dr. Sarah Mitchell&quot;
+  - Type badge: &quot;E-Book&quot; in blue (#3B82F6)
+  - Subject: Computer Science
+  - Rating: 4.8★ (342 ratings)
+  - &quot;Free&quot; or &quot;Premium&quot; access badge
+  - Action row: &quot;Read Now&quot; button + bookmark icon + share icon
+
+- Card 2 — Video Lecture:
+  - Video thumbnail with play button overlay and duration &quot;1h 24m&quot;
+  - Title: &quot;Introduction to Behavioral Economics&quot;
+  - Instructor: &quot;Prof. James Carter, MIT&quot;
+  - Type badge: &quot;Video&quot; in purple (#7C3AED)
+  - Subject: Business &amp; Economics
+  - Rating: 4.9★ (518 ratings)
+  - &quot;Free&quot; badge
+  - Action row: &quot;Watch Now&quot; + bookmark + share
+
+- Card 3 — Research Paper:
+  - Abstract preview icon (document with lines)
+  - Title: &quot;Neural Networks in Climate Modeling: A Comprehensive Review&quot;
+  - Authors: &quot;Park, J., Williams, R., &amp; Liu, X. (2025)&quot;
+  - Type badge: &quot;Paper&quot; in green (#059669)
+  - Journal: &quot;Nature Machine Intelligence&quot;
+  - Citations: 89 citations
+  - &quot;Open Access&quot; badge
+  - Action row: &quot;Read Paper&quot; + &quot;Cite&quot; + bookmark
+
+- Card 4 — Interactive Tutorial:
+  - Colorful module preview thumbnail
+  - Title: &quot;Build a REST API with Node.js&quot;
+  - Creator: &quot;LearnCraft Team&quot;
+  - Type badge: &quot;Tutorial&quot; in orange (#F97316)
+  - Estimated time: &quot;3 hours&quot; | 12 modules
+  - Rating: 4.7★ (203 ratings)
+  - Progress bar: &quot;45% Complete&quot; (if user has started)
+  - Action row: &quot;Continue&quot; or &quot;Start&quot; + bookmark
+
+- Cards: white, 12px border-radius, soft shadow, hover lift with blue border-left accent
+- Pagination at bottom: Previous | 1 2 3 ... 519 | Next — or infinite scroll with &quot;Load More&quot;
+
+5. LIST VIEW (toggle alternative)
+- Compact horizontal rows with:
+  - Small thumbnail (60×80px)
+  - Title + author on same line
+  - Type badge, subject, rating, availability
+  - Quick actions: Read/Watch, Bookmark, Share
+- Denser information display for power users
+
+6. READING LISTS / COLLECTIONS (right sidebar or section below)
+- &quot;My Reading List&quot; — 14 items saved
+  - Shows 3 recent saves with cover thumbnails
+  - &quot;View All →&quot; link
+- &quot;Popular Collections&quot; curated by staff:
+  - &quot;Machine Learning Essentials&quot; — 28 resources — by Dr. Liu
+  - &quot;Startup Founder Reading List&quot; — 15 resources — by OpenShelf Team
+  - &quot;Data Science with Python&quot; — 22 resources — by Prof. Carter
+- Each collection: small cover mosaic, title, count, curator name
+
+7. RECENTLY VIEWED
+- Horizontal scroll row of 6 small cards showing recently accessed resources
+- Each card: mini thumbnail, title (truncated), type icon
+- &quot;Clear History&quot; link on the right
+
+8. FOOTER SECTION
+- Newsletter: &quot;Get weekly reading recommendations&quot; — email input + &quot;Subscribe&quot; button
+- Quick links: Browse by Subject, New Arrivals, Most Popular, Open Access, Request a Resource
+- Help: FAQ, Contact Librarian, Accessibility, API for Institutions
+- &quot;© 2026 OpenShelf. Making knowledge accessible to everyone.&quot;
+
+Design: Clean, academic, modern. Primary: #3B82F6 (blue), secondary: #059669 (green for open access), accent: #7C3AED (purple for video content). Neutral backgrounds: white and #F8FAFC. Typography: Source Serif 4 or Merriweather for resource titles (scholarly feel), Inter for UI and body. Cards with subtle shadows and generous padding. Type-specific color coding throughout (blue=books, purple=video, green=papers, orange=tutorials).
+
+Responsive: Mobile-first. Sidebar filters become slide-in drawer with &quot;Filters (3)&quot; button. Grid switches to 2 columns on tablet, 1 on mobile. List view especially useful on mobile. Reading lists section moves below results. Search bar full-width on mobile with sticky behavior on scroll.</code></pre>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,1 @@
+Build a SaaS MVP for [idea]. Include marketing homepage, auth screens, dashboard, settings, billing placeholder, onboarding checklist, sample data, and responsive styling. Keep the architecture simple and explain the file structure before implementation.

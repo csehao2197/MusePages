@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="A quieter place to work. A local-first Pomodoro timer with focus, home, and ambient modes.">
+  <meta name="theme-color" content="#f8f6f1"><title>Focus — a little room to concentrate</title>
+  <link rel="icon" href="assets/mark.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to timer</a>
+  <header id="header">
+    <a class="brand" href="#focus"><img src="assets/mark.svg" width="35" height="35" alt="">focus<span>less, but better.</span></a>
+    <nav aria-label="Workspace"><a href="#home" data-view="home">Home</a><a href="#ambient" data-view="ambient">Ambient</a><a href="#focus" data-view="focus">Focus</a></nav>
+    <button class="settings-link" id="settings-button"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#settings"/></svg><span>Settings</span></button>
+  </header>
+  <div id="storage-note" class="storage-note" hidden></div>
+  <main id="main" tabindex="-1"></main>
+  <footer id="footer"><span><i></i> Made for the present moment.</span><button id="about-button">Local to this browser <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#help"/></svg></button></footer>
+  <div id="message" role="status" aria-live="polite"></div>
+  <dialog id="dialog" aria-labelledby="dialog-title"></dialog>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+2026-11-12T20:58:30Z — actual rendered-image inspection, not screenshot existence checks.
+
+Inspected with functions.view:
+.checks\desktop-1440.png — full desktop page, all ten sections; consistent warm editorial hierarchy, clear spacing, aligned four-column portraits and balanced alternating surfaces.
+.checks\mobile-390.png — full mobile page; single-column leadership/benefits, two-column crew/stats, stacked job cards and tools, horizontal culture collage.
+.checks\mobile-first-screen.png — 390x844; readable headline, candid stock photo, decorative sticker and all three vertically stacked statistics.
+.checks\crew-desktop.png and .checks\crew-mobile.png — consistent portrait treatment, accurate department pills, clear names/facts; mobile social controls remain exposed and touchable.
+.checks\careers-desktop.png and .checks\careers-mobile.png — readable role/location/type layout, archived internship disclosure and open-application CTA.
+.checks\application-local-preview.png — actual validated preview dialog; submitted-looking unsafe markup is rendered as literal text, explicit not-submitted notice, editable preview.
+out\preview.png — actual 1200x900 Chromium first screen; headline, team image and all three floating badges are visible.
+
+Fixes made after actual inspection: reduced desktop photo height and adjusted focal position; anchored photo caption to a dedicated photo frame; clipped the unfocused offscreen skip link to avoid capture artifacts while retaining actual Tab/Enter access. Native single-button modal Tab escape was independently found by browser tests and fixed with explicit focus containment. All original behavioral assertions retained and passed again.
+
+Limitations: stock photographs are illustrative, with reused portraits in the expanded fictional roster. Generic Lucide symbols are not official brand logos. Fictional employer/award/statistical copy, archived summer role, social previews and local-only forms are clearly labeled. No real recruiting, project delivery or external-service verification. No physical-device, WCAG certification, build, assembly, deployment or upload claims.

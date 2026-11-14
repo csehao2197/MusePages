@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Elevate Rewards | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Elevate Rewards</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code>Create a customer loyalty and rewards program page for an e-commerce brand called &quot;Elevate Rewards&quot; that lets members track points, unlock tiers, and redeem perks. The design should feel exclusive and motivating — like a premium club membership.
+
+1. HEADER BANNER
+- Full-width gradient banner (#7C3AED purple to #2563EB blue)
+- Left side: &quot;Welcome back, Sarah!&quot; with member since date &quot;Member since Jan 2024&quot;
+- Right side: Current points balance displayed large — &quot;4,280 Points&quot; with sparkle icon
+- Below points: &quot;You&#39;re 720 points away from Platinum!&quot; with slim progress bar
+- Mobile: stacked vertically, centered
+
+2. TIER STATUS SECTION
+- Horizontal tier progression bar showing 4 tiers:
+  - Bronze (0–1,000 pts) — #CD7F32
+  - Silver (1,001–3,000 pts) — #9CA3AF
+  - Gold (3,001–6,000 pts) — #F59E0B
+  - Platinum (6,001+ pts) — #7C3AED
+- Current tier &quot;Gold&quot; highlighted with glow effect and checkmark
+- Each tier shows its key perk underneath:
+  - Bronze: &quot;Earn 1pt per $1&quot;
+  - Silver: &quot;5% birthday discount&quot;
+  - Gold: &quot;Free shipping on all orders&quot;
+  - Platinum: &quot;Early access + personal shopper&quot;
+- Active milestone marker on the bar at 4,280/6,000
+- Card below: &quot;Your Gold Benefits&quot; — 4 icon cards showing active perks (free shipping, 2x point days, exclusive sales, priority support)
+
+3. POINTS ACTIVITY LOG (table/list)
+- Section title: &quot;Points History&quot;
+- Filter tabs: All | Earned | Redeemed | Expired
+- Table columns: Date, Description, Points (+/−), Balance
+- Sample rows:
+  - Mar 10, 2026 | &quot;Purchase — Order #8834&quot; | +240 | 4,280
+  - Mar 5, 2026 | &quot;Redeemed — $10 Store Credit&quot; | −500 | 4,040
+  - Feb 28, 2026 | &quot;Bonus — Double Points Weekend&quot; | +380 | 4,540
+  - Feb 20, 2026 | &quot;Purchase — Order #8791&quot; | +160 | 4,160
+  - Feb 14, 2026 | &quot;Bonus — Valentine&#39;s Day Promo&quot; | +200 | 4,000
+- Earned points in green, redeemed/expired in red
+- Pagination: &quot;Showing 1–10 of 47 transactions&quot;
+- Mobile: card layout instead of table
+
+4. REWARDS CATALOG (redemption grid)
+- Section title: &quot;Redeem Your Points&quot;
+- Filter bar: Category (All, Discounts, Products, Experiences) + Sort (Points: Low to High)
+- 3-column card grid (2 on tablet, 1 on mobile):
+  - &quot;$5 Store Credit&quot; — 250 pts — gift card icon — &quot;Redeem&quot; button
+  - &quot;$10 Store Credit&quot; — 500 pts — gift card icon — &quot;Redeem&quot; button
+  - &quot;Free Express Shipping&quot; — 300 pts — truck icon — &quot;Redeem&quot; button
+  - &quot;20% Off Next Order&quot; — 800 pts — tag icon — &quot;Redeem&quot; button
+  - &quot;Exclusive Tote Bag&quot; — 1,500 pts — bag icon — &quot;Redeem&quot; button (photo thumbnail)
+  - &quot;VIP Shopping Event Access&quot; — 3,000 pts — star icon — &quot;Redeem&quot; button
+- Cards: white background, 12px border-radius, soft shadow, hover lift
+- Insufficient points: button grayed out with &quot;Need X more pts&quot;
+
+5. EARN MORE POINTS (action cards)
+- Section title: &quot;Ways to Earn&quot;
+- 4 horizontal action cards:
+  - &quot;Shop &amp; Earn&quot; — &quot;Earn 1 point for every $1 spent&quot; — shopping bag icon — &quot;Shop Now&quot; link
+  - &quot;Refer a Friend&quot; — &quot;Give $10, get 500 points when they purchase&quot; — users icon — &quot;Share Link&quot; button
+  - &quot;Write a Review&quot; — &quot;Earn 50 points per product review&quot; — pencil icon — &quot;Review Products&quot; link
+  - &quot;Connect Social&quot; — &quot;Follow us on Instagram for 100 bonus points&quot; — Instagram icon — &quot;Connect&quot; button
+- Light purple background (#F5F3FF) for the section
+- Cards: white, left icon, right CTA, border-left 4px accent color
+
+6. REFERRAL TRACKER (mini section)
+- Your unique referral link with copy button: &quot;elevate.com/ref/sarah2024&quot;
+- Stats row: &quot;12 friends invited&quot; | &quot;8 signed up&quot; | &quot;3,500 pts earned from referrals&quot;
+- Leaderboard teaser: &quot;You&#39;re #14 on this month&#39;s referral leaderboard!&quot;
+
+7. UPCOMING PROMOTIONS
+- Section title: &quot;Don&#39;t Miss Out&quot;
+- 2 promo cards side by side:
+  - &quot;Triple Points Weekend&quot; — Mar 22–24, 2026 — &quot;Earn 3x points on all purchases&quot; — countdown timer showing days/hours/minutes — purple gradient background
+  - &quot;Platinum Flash Sale&quot; — Mar 28, 2026 — &quot;Gold &amp; Platinum members get 30% off sitewide&quot; — gold accent border — &quot;Set Reminder&quot; button
+- Mobile: stacked vertically
+
+8. MEMBER DASHBOARD OVERVIEW
+- Section title: &quot;Your Rewards Snapshot&quot;
+- 4 quick-stat cards in a row (2x2 on mobile):
+  - &quot;Total Earned&quot; — &quot;12,450 pts&quot; — trending-up icon — green accent — &quot;+1,240 this month&quot;
+  - &quot;Total Redeemed&quot; — &quot;8,170 pts&quot; — gift icon — blue accent — &quot;Last: $10 credit on Mar 5&quot;
+  - &quot;Referral Bonus&quot; — &quot;3,500 pts&quot; — users icon — purple accent — &quot;8 successful referrals&quot;
+  - &quot;Next Reward&quot; — &quot;220 pts away&quot; — target icon — orange accent — &quot;$5 Store Credit&quot;
+- Cards: white background, top colored border (4px), 12px border-radius, subtle shadow
+- Each card shows a small sparkline chart of the past 6 months
+
+9. GAMIFICATION &amp; CHALLENGES
+- Section title: &quot;Challenges &amp; Achievements&quot;
+- Subtitle: &quot;Complete challenges to earn bonus points and unlock exclusive badges&quot;
+- Active Challenges (3 cards in a row, 1 on mobile):
+  - &quot;Weekend Warrior&quot; — &quot;Make 3 purchases this weekend&quot; — 500 bonus pts — progress: 1/3 — shield icon — expires &quot;Mar 16&quot;
+  - &quot;Review Rockstar&quot; — &quot;Write 5 product reviews&quot; — 300 bonus pts — progress: 3/5 — star icon — expires &quot;Mar 31&quot;
+  - &quot;Social Butterfly&quot; — &quot;Share 2 products on social media&quot; — 200 bonus pts — progress: 0/2 — share icon — expires &quot;Mar 25&quot;
+- Progress bars with animated fill, percentage label
+- Badges Section below:
+  - &quot;Earned Badges&quot; heading with count (6/15)
+  - Grid of circular badge icons (earned ones full color, locked ones grayed with lock overlay):
+    - &quot;First Purchase&quot; — shopping bag — earned
+    - &quot;Loyal Customer&quot; — heart — earned (10+ purchases)
+    - &quot;Referral Pro&quot; — megaphone — earned (5+ referrals)
+    - &quot;Review Maven&quot; — pencil — earned (10+ reviews)
+    - &quot;Big Spender&quot; — diamond — earned ($500+ lifetime)
+    - &quot;Early Bird&quot; — sunrise — earned (purchased within 1hr of sale launch)
+    - &quot;Streak Master&quot; — flame — locked (purchase 4 consecutive weeks)
+    - &quot;Social Star&quot; — camera — locked (share 10 products)
+    - &quot;Birthday Club&quot; — cake — locked (make birthday month purchase)
+  - Hover on badge: tooltip showing name, description, and date earned
+
+10. FAQ SECTION
+- Section title: &quot;Frequently Asked Questions&quot;
+- Accordion-style expandable questions (6 items):
+  - &quot;How do I earn points?&quot; — &quot;You earn 1 point for every $1 spent. Bonus points are available through referrals, reviews, social sharing, and seasonal promotions.&quot;
+  - &quot;Do my points expire?&quot; — &quot;Points expire 12 months after they are earned if there is no account activity. Any purchase or redemption resets the expiration clock.&quot;
+  - &quot;How do I move to the next tier?&quot; — &quot;Tiers are based on cumulative points earned within a calendar year. Once you reach the threshold, your tier upgrades automatically.&quot;
+  - &quot;Can I combine points with other discounts?&quot; — &quot;Yes! Points redemptions can be stacked with sale prices and promo codes. The only exception is the VIP Shopping Event discount.&quot;
+  - &quot;How does the referral program work?&quot; — &quot;Share your unique link. When a friend makes their first purchase, they get $10 off and you earn 500 bonus points. There&#39;s no limit on referrals.&quot;
+  - &quot;What happens if I return an item?&quot; — &quot;Points earned from the purchase will be deducted from your balance. If this brings your balance below zero, future earnings will offset the negative balance.&quot;
+- Collapse/expand with smooth animation, chevron icon rotation
+- Light background (#FAFAFA), cards with white background and 8px border-radius
+
+11. FOOTER CTA
+- Dark section (#1E1B4B)
+- &quot;Not a member yet?&quot; — &quot;Join Elevate Rewards for free and start earning points on every purchase&quot;
+- &quot;Join Now — It&#39;s Free&quot; CTA button (solid #7C3AED)
+- Below: &quot;Already have an account? Sign in to view your rewards&quot;
+
+Design: Premium, motivating loyalty experience. Primary: #7C3AED (purple), secondary: #2563EB (blue), accent: #F59E0B (gold for tier highlights). Background: white with alternating #F5F3FF (light purple) sections. Typography: Plus Jakarta Sans or DM Sans for headings, Inter for body. Cards with 12px border-radius and soft shadows. Progress bars with smooth gradient fills and animated transitions.
+
+Responsive: Mobile-first. Tier bar becomes vertical stepper on mobile. Points table converts to card list. Rewards grid stacks to single column. Referral link has tap-to-copy. Sticky bottom bar on mobile with points balance and &quot;Redeem&quot; quick action.</code></pre>
+    </section>
+  </main>
+</body>
+</html>

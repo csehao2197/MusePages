@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1e3a5f">
+  <meta name="description" content="Explore an illustrative HomeScope neighborhood guide: local amenities, schools, commute times and side-by-side neighborhood comparisons.">
+  <title>HomeScope Realty | Find Your Neighborhood</title>
+  <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/dm-sans.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#home" aria-label="HomeScope Realty home"><img src="assets/mark.svg" alt="" width="43" height="43"><span>HomeScope<span class="brand-small">REALTY · A PLACE TO BELONG</span></span></a>
+      <nav class="desktop-nav" aria-label="Main navigation"><a href="#explore">Explore neighborhoods</a><a href="#amenities">Local life</a><button type="button" data-compare>Compare areas</button></nav>
+      <a class="button button-outline header-contact" href="#contact">Talk to a local<svg class="icon" aria-hidden="true"><use href="assets/icons.svg#arrow"></use></svg></a>
+      <button class="icon-button mobile-menu" type="button" aria-label="Open navigation" aria-controls="nav-dialog" aria-expanded="false"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#menu"></use></svg></button>
+    </div>
+  </header>
+  <main id="main">
+    <section class="hero" id="home" aria-labelledby="hero-title">
+      <div class="hero-media"><img src="assets/neighborhood-aerial.jpg" alt="Illustrative aerial photograph of homes, tree-lined roads and gardens" width="2000" height="1125" fetchpriority="high"></div>
+      <div class="container hero-content">
+        <p class="eyebrow"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#pin"></use></svg>Good neighbors. Great possibilities.</p>
+        <h1 id="hero-title">Find the Neighborhood <br>That Fits Your Life<span>.</span></h1>
+        <p class="hero-subtitle">Explore local schools, commute times, amenities, and more — all in one place.</p>
+        <form class="search-form" id="search-form">
+          <label class="sr-only" for="area-search">Search example neighborhoods, city or ZIP code</label>
+          <svg class="icon search-icon" aria-hidden="true"><use href="assets/icons.svg#search"></use></svg>
+          <input id="area-search" name="area" type="search" placeholder="Enter a neighborhood, city, or ZIP code" required autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="search-options" aria-describedby="search-help search-status">
+          <button class="button" type="submit">Find my neighborhood<svg class="icon" aria-hidden="true"><use href="assets/icons.svg#arrow"></use></svg></button>
+          <div class="search-options" id="search-options" role="listbox" aria-label="Example neighborhoods" hidden></div>
+        </form>
+        <div class="popular"><span>Try a little local discovery</span><button type="button" data-guide="maplewood">Maplewood Heights</button><button type="button" data-guide="riverside">Riverside Commons</button><button type="button" data-guide="old-town">Old Town</button></div>
+        <p class="hero-note" id="search-help">Independent concept · Fictional Fairhaven guides and example data, not live research.</p>
+        <p class="search-status" id="search-status" role="status"></p>
+      </div>
+      <span class="hero-credit">Illustrative stock photography · Not a named neighborhood</span>
+    </section>
+
+    <section class="section featured" id="explore" aria-labelledby="featured-title">
+      <div class="container">
+        <div class="section-heading"><div><p class="eyebrow">A neighborhood for every next chapter</p><h2 id="featured-title">Find your kind of local.</h2></div><div class="strip-actions"><button class="icon-button" id="area-prev" type="button" aria-label="Previous neighborhoods"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#left"></use></svg></button><button class="icon-button" id="area-next" type="button" aria-label="Next neighborhoods"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#arrow"></use></svg></button></div></div>
+        <div class="neighborhood-strip" id="neighborhood-strip" tabindex="0" role="region" aria-label="Six example neighborhoods; scroll or use arrow keys"></div>
+        <p class="small-note">Six illustrative areas. Prices, scores and place names are example information, not current housing advice.</p>
+      </div>
+    </section>
+
+    <div class="container guide-container">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="#home">Home</a><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#next"></use></svg><a href="#explore">Neighborhoods</a><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#next"></use></svg><span aria-current="page">Maplewood Heights</span></nav>
+      <section class="overview" id="maplewood" aria-labelledby="overview-title">
+        <div class="overview-title"><div><p class="eyebrow"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#pin"></use></svg>Fairhaven, Oregon · Fictional setting</p><h2 id="overview-title">Maplewood Heights</h2></div><button class="button button-outline" type="button" data-compare><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#compare"></use></svg>Compare neighborhood</button></div>
+        <p class="overview-description">Maplewood Heights is a tree-lined residential neighborhood known for its top-rated schools, community parks, and charming downtown strip. Popular with young families and professionals, it offers a perfect balance of suburban tranquility and urban convenience.</p>
+        <div class="area-tags"><span>Family-Friendly</span><span>Great Schools</span><span>Quiet Streets</span><span class="example-tag">Illustrative guide</span></div>
+        <dl class="key-stats"><div><dt>Population</dt><dd>28,400</dd></div><div><dt>Median income</dt><dd>$94,000</dd></div><div><dt>Median home price</dt><dd>$485,000</dd></div><div><dt>Average rent</dt><dd>$2,100<span>/mo</span></dd></div></dl>
+        <div class="score-grid" id="scores" aria-label="Original brief's unverified neighborhood scores"></div>
+        <p class="small-note score-note">Illustrative scores from the brief. Descriptors are supplied labels, not independently verified ratings or safety guarantees.</p>
+      </section>
+    </div>
+
+    <section class="section section-tinted amenities" id="amenities" aria-labelledby="amenities-title">
+      <div class="container">
+        <div class="section-heading"><div><p class="eyebrow">The everyday, mapped out</p><h2 id="amenities-title">A little closer to everything.</h2><p>Get a feel for the places that make a neighborhood feel like home.</p></div><span class="outline-label"><span></span>Interactive example map</span></div>
+        <div class="map-filters" role="group" aria-label="Filter map and nearby places">
+          <button type="button" data-category="all" aria-pressed="true">All places<span>11</span></button>
+          <button type="button" data-category="schools" aria-pressed="false"><i class="category-dot schools"></i>Schools</button>
+          <button type="button" data-category="parks" aria-pressed="false"><i class="category-dot parks"></i>Parks</button>
+          <button type="button" data-category="dining" aria-pressed="false"><i class="category-dot dining"></i>Dining</button>
+          <button type="button" data-category="shopping" aria-pressed="false"><i class="category-dot shopping"></i>Shopping</button>
+          <button type="button" data-category="healthcare" aria-pressed="false"><i class="category-dot healthcare"></i>Healthcare</button>
+        </div>
+        <div class="map-layout">
+          <div class="map-panel">
+            <div class="map-stage" id="amenity-map" tabindex="0" role="region" aria-label="Illustrative Maplewood amenities map. Drag to pan, use arrow keys, plus or minus to zoom.">
+              <svg id="map-art" viewBox="0 0 900 600" preserveAspectRatio="none" aria-hidden="true">
+                <defs><pattern id="blocks" width="75" height="66" patternUnits="userSpaceOnUse"><rect width="75" height="66" fill="#eef0eb"/><rect x="7" y="7" width="25" height="20" rx="2" fill="#e1e4dc"/><rect x="39" y="7" width="27" height="20" rx="2" fill="#e1e4dc"/><rect x="7" y="34" width="59" height="23" rx="2" fill="#e1e4dc"/></pattern></defs>
+                <rect width="900" height="600" fill="url(#blocks)"/><path d="M0 400Q140 330 210 430T410 515Q500 480 530 600H0Z" fill="#c6dfdf"/>
+                <path d="M560 0H820V163H560Z M215 335h160v145H215Z M690 330h170v160H690Z" fill="#d2e3cc"/>
+                <path d="M42 110H860L827 531 558 570 274 532 110 348Z" fill="#0d94880c" stroke="#0d9488" stroke-width="2" stroke-dasharray="9 7"/>
+                <path d="M0 198H900M0 325H900M0 481H900M157 0V600M451 0V600M676 0V600M900 53 0 550" fill="none" stroke="#fff" stroke-width="16"/>
+                <g fill="#7c8b87" font-family="sans-serif" font-size="12" letter-spacing="2"><text x="320" y="184">MAPLE AVENUE</text><text x="490" y="313">CENTRAL WAY</text><text x="525" y="470">RIVERSIDE DRIVE</text><text x="588" y="92">NORTH GREEN</text><text x="237" y="427">CENTRAL PARK</text><text x="44" y="577">RIVER TRAIL</text></g>
+              </svg>
+              <div id="map-pins"></div>
+              <span class="map-caption"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#pin"></use></svg>Maplewood Heights<span>Original schematic · Not to scale</span></span>
+              <div class="map-controls"><button class="icon-button" type="button" id="map-in" aria-label="Zoom in amenities map"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#plus"></use></svg></button><button class="icon-button" type="button" id="map-out" aria-label="Zoom out amenities map"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#minus"></use></svg></button><button class="icon-button" type="button" id="map-reset" aria-label="Reset amenities map"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#reset"></use></svg></button></div>
+              <span class="map-disclaimer">Illustration, not geographic or navigation data</span>
+            </div>
+            <div class="map-selection" aria-live="polite"><span class="selection-icon schools" id="selection-icon"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#school"></use></svg></span><div><strong id="selection-name">Maplewood Elementary</strong><span id="selection-detail">School · 0.4 mi · Example rating 9/10</span></div><span class="selection-status">Selected place</span></div>
+          </div>
+          <details class="amenity-sidebar" id="amenity-sidebar" open><summary><span>Places nearby <span id="place-count">11</span></span><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#chevron"></use></svg></summary><div id="place-list" class="place-list"></div></details>
+        </div>
+        <p class="small-note">Drag or use the keyboard to explore; filters update both map pins and the nearby list. All distances, counts and positions are illustrative.</p>
+      </div>
+    </section>
+
+    <section class="section schools-section" id="schools" aria-labelledby="schools-title">
+      <div class="container">
+        <div class="section-heading"><div><p class="eyebrow">Room to learn. Space to grow.</p><h2 id="schools-title">Schools in Maplewood Heights</h2></div><span class="outline-label"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#school"></use></svg>4 example schools</span></div>
+        <div class="school-table"><div class="school-table-head" aria-hidden="true"><span>School</span><span>Grades</span><span>Rating</span><span>Distance</span><span>Students</span></div><div id="school-rows"></div></div>
+        <p class="small-note">Original brief attribution: “Ratings from <a href="https://www.greatschools.org/" target="_blank" rel="noopener noreferrer">GreatSchools.org</a>”. These example ratings were not retrieved from or verified by GreatSchools. Check current school boundaries and official sources.</p>
+      </div>
+    </section>
+
+    <section class="section commute-section" id="commute" aria-labelledby="commute-title">
+      <div class="container"><p class="eyebrow">Less time in between</p><h2 id="commute-title">Getting Around from Maplewood Heights</h2><div class="commute-grid" id="commute-grid"></div><p class="small-note">Estimates based on average weekday conditions — original brief estimates, not live route calculations.</p></div>
+    </section>
+
+    <section class="section section-tinted market-section" id="market" aria-labelledby="market-title">
+      <div class="container">
+        <div class="section-heading"><div><p class="eyebrow">The local picture, at a glance</p><h2 id="market-title">Maplewood Heights Market Trends</h2></div><span class="outline-label">Illustrative market snapshot</span></div>
+        <div class="market-layout">
+          <dl class="market-metrics"><div><dt>Median sale price</dt><dd>$485,000</dd><span class="metric-change"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#trend"></use></svg>+4.2% YoY</span></div><div><dt>Days on market</dt><dd>18<span>days</span></dd><span class="metric-change">3 fewer days YoY</span></div><div><dt>Price per sq ft</dt><dd>$245</dd><span>Example market figure</span></div><div><dt>Homes sold</dt><dd>24</dd><span>Last 30 days · example</span></div></dl>
+          <div class="chart-card"><div class="chart-heading"><div><span>Median sale price</span><strong>$485,000</strong></div><span class="chart-period">12-month example</span></div><svg id="price-chart" viewBox="0 0 620 215" role="img" aria-labelledby="chart-title chart-desc"><title id="chart-title">Illustrative twelve-month median home prices</title><desc id="chart-desc">Not historical MLS data. Exact example values are available in the table below.</desc></svg><details class="chart-data"><summary>View monthly example data<svg class="icon" aria-hidden="true"><use href="assets/icons.svg#chevron"></use></svg></summary><div class="chart-table-wrap"><table><caption class="sr-only">Twelve illustrative monthly median prices</caption><thead><tr><th scope="col">Month</th><th scope="col">Median price</th></tr></thead><tbody id="chart-data"></tbody></table></div></details><p class="small-note">Original brief endpoint; intermediate points are illustrative, not historic MLS measurements.</p></div>
+        </div>
+        <button class="button market-listings" id="listings-button" type="button">View All Maplewood Heights Listings<svg class="icon" aria-hidden="true"><use href="assets/icons.svg#arrow"></use></svg></button>
+      </div>
+    </section>
+
+    <section class="section reviews-section" id="reviews" aria-labelledby="reviews-title">
+      <div class="container"><div class="section-heading"><div><p class="eyebrow">The best perspective? The people.</p><h2 id="reviews-title">A few words from the neighborhood.</h2></div><div class="review-average"><strong>4.7<span>/5</span></strong><div><span class="stars" aria-label="Average rating 4.7 out of 5" id="average-stars"></span><span>156 example reviews</span></div></div></div><div class="review-grid" id="review-grid"></div><p class="small-note">Fictional resident quotations and aggregate rating from the original brief, not collected or verified reviews.</p></div>
+    </section>
+
+    <section class="section comparison-section" id="compare" aria-labelledby="compare-title">
+      <div class="container compare-layout"><div><p class="eyebrow">Good choices start with a clearer picture</p><h2 id="compare-title">The right fit is <br>in the details.</h2><p>Put your favorites next to each other. A little perspective can make your next move feel a lot simpler.</p><button class="button" type="button" data-compare>Compare Neighborhoods Side by Side<svg class="icon" aria-hidden="true"><use href="assets/icons.svg#arrow"></use></svg></button><p class="small-note">Example comparisons, not a recommendation.</p></div><div class="comparison-preview table-scroll" id="comparison-preview" tabindex="0" role="region" aria-label="Example neighborhood comparison; scroll horizontally on small screens"></div></div>
+    </section>
+
+    <section class="section contact-section" id="contact" aria-labelledby="contact-title">
+      <div class="container contact-layout"><div><p class="eyebrow">Meet your next chapter</p><h2 id="contact-title">Ready to Explore<br>Maplewood Heights?</h2><p>Walk the streets. Find your coffee spot. See what feeling at home could look like.</p><div class="agent-card"><img src="assets/jamie.jpg" alt="Illustrative stock portrait, not the named example agent" width="320" height="480" loading="lazy"><div><span class="agent-label">YOUR EXAMPLE LOCAL SPECIALIST</span><h3>Jamie Carter</h3><span>HomeScope Realty · Illustrative agent</span><button class="text-button agent-contact" type="button" id="agent-contact"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#phone"></use></svg>Phone not supplied</button><button class="text-button agent-contact" type="button" id="agent-email"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#mail"></use></svg>jamie@example.invalid</button></div></div><button class="button button-light" type="button" id="tour-open"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#calendar"></use></svg>Schedule a Neighborhood Tour</button><p class="contact-note">Preview a request locally. This concept has no booking or message service.</p></div>
+        <div class="alerts-card"><span class="alerts-icon"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#mail"></use></svg></span><h3>Get Market Alerts<br>for This Area</h3><p>A place for the local updates you care about.</p><form id="alert-form"><label for="alert-email">Email address</label><input id="alert-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required><label class="consent"><input name="consent" type="checkbox" required><span>I understand this previews an alert request locally; no subscription is created.</span></label><button class="button" type="submit">Preview market alerts<svg class="icon" aria-hidden="true"><use href="assets/icons.svg#arrow"></use></svg></button></form><p class="small-note">No email sent, address saved, or account required.</p></div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="container"><div class="footer-top"><a class="brand" href="#home"><img src="assets/mark.svg" alt="" width="40" height="40"><span>HomeScope<span class="brand-small">A LITTLE LOCAL GOES A LONG WAY</span></span></a><nav aria-label="Footer"><a href="#explore">Explore</a><button type="button" data-compare>Compare</button><button type="button" data-policy="privacy">Privacy</button><button type="button" data-policy="terms">Terms</button></nav></div><div class="footer-bottom"><span>© 2026 HomeScope Realty · Independent static concept</span><span>Fictional areas, reviews and agent · Unverified prices, scores and school information</span></div></div></footer>
+
+  <dialog class="nav-dialog" id="nav-dialog" aria-labelledby="nav-title"><div class="dialog-heading"><h2 id="nav-title">Find your local</h2><button class="icon-button" type="button" data-close="nav-dialog" aria-label="Close navigation"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#close"></use></svg></button></div><nav aria-label="Mobile navigation"><a href="#explore">Explore neighborhoods</a><a href="#amenities">Local life</a><a href="#schools">Schools</a><a href="#market">Market trends</a><a href="#contact">Talk to a local</a></nav></dialog>
+  <dialog class="guide-dialog" id="guide-dialog" aria-labelledby="guide-title"><div class="dialog-heading"><span class="eyebrow">A little local preview</span><button class="icon-button" type="button" data-close="guide-dialog" aria-label="Close neighborhood preview"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#close"></use></svg></button></div><img class="guide-image" id="guide-image" src="assets/riverside.jpg" alt="" width="900" height="600"><div class="guide-dialog-content"><p class="eyebrow">Fairhaven, Oregon · Fictional setting</p><h2 id="guide-title">Riverside Commons</h2><p id="guide-description"></p><dl class="guide-stats" id="guide-stats"></dl><p class="small-note">Illustrative neighborhood preview. Only Maplewood Heights has a full example guide; photographs are not the named place.</p><button class="button" type="button" id="guide-compare">Compare with Maplewood Heights<svg class="icon" aria-hidden="true"><use href="assets/icons.svg#compare"></use></svg></button></div></dialog>
+  <dialog class="compare-dialog" id="compare-dialog" aria-labelledby="comparison-title"><div class="dialog-heading"><div><p class="eyebrow">Your next move, in perspective</p><h2 id="comparison-title">Compare neighborhoods</h2></div><button class="icon-button" type="button" data-close="compare-dialog" aria-label="Close neighborhood comparison"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#close"></use></svg></button></div><p>Keep Maplewood Heights in view and choose two other example areas.</p><form class="compare-controls" id="compare-form"><label>First nearby area<select id="compare-first" name="first"></select></label><label>Second nearby area<select id="compare-second" name="second"></select></label><button class="button" type="submit">Update comparison</button></form><p class="small-note">Swipe or scroll horizontally on smaller screens to see every neighborhood.</p><div class="table-scroll" id="comparison-result" tabindex="0" role="region" aria-label="Detailed neighborhood comparison; scroll horizontally if needed"></div><p class="small-note">All prices, scores, ratings and travel times are unverified example data. Additional neighborhoods are invented for this concept.</p></dialog>
+  <dialog class="tour-dialog" id="tour-dialog" aria-labelledby="tour-title"><div class="dialog-heading"><div><p class="eyebrow">See how it could feel</p><h2 id="tour-title">A Maplewood neighborhood walk</h2></div><button class="icon-button" type="button" data-close="tour-dialog" aria-label="Close neighborhood tour"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#close"></use></svg></button></div><p>This form creates a local request preview only. Nothing is sent, saved or booked.</p><form id="tour-form"><label>Your name<input name="name" autocomplete="name" required maxlength="100"></label><label>Email address<input name="email" type="email" autocomplete="email" required></label><div class="form-pair"><label>Preferred date<input name="date" id="tour-date" type="date" required></label><label>Preferred time<select name="time" required><option value="">Choose a time</option><option>Morning · 9 am–12 pm</option><option>Afternoon · 12–5 pm</option><option>Evening · 5–7 pm</option></select></label></div><label class="consent"><input name="consent" type="checkbox" required><span>I understand this is a local preview, not a confirmed appointment.</span></label><button class="button" type="submit">Preview tour request<svg class="icon" aria-hidden="true"><use href="assets/icons.svg#arrow"></use></svg></button></form></dialog>
+  <dialog class="info-dialog" id="info-dialog" aria-labelledby="info-title"><div class="dialog-heading"><h2 id="info-title">Local information</h2><button class="icon-button" type="button" data-close="info-dialog" aria-label="Close information"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#close"></use></svg></button></div><div id="info-content"></div></dialog>
+  <noscript><p class="noscript-note">Enable JavaScript for the local search, map, comparison and form previews. This is an illustrative static guide.</p></noscript>
+</body>
+</html>
