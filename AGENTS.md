@@ -22,7 +22,7 @@ MusePages 的目标是生成一个可静态部署的网站，收集由 prompts �
 - 新生成代码只写入 `out/pages/<prompt_file_name>/<ai_model_name>/`，按 prompt 和模型隔离，不得写入原始需求或最终发布目录。
 - prompt 目录仅作为模型结果的容器；`metadata.json` 仅在模型目录维护，公开标题与 slug 随模型选项保存在 `deploy\config.json`。
 - `npm run dist` 将静态集合生成到 `deploy/dist/MusePages/`，`npm run publish` 保留 `deploy/site/MusePages/` 根目录的 `.ssh`，清空其余内容后复制该集合，复制时同样排除源根目录 `.ssh`；Next.js 项目必须先取得静态导出，禁止将项目源码、`.next`、配置、脚本、密钥或 Git 元数据作为网站资源发布。
-- 辅助工具、记录和文档放在 `src/`；发布使用 `src/workflows/deploy-site.mjs` 和目录外的 `deploy/config.json`，不要重建旧 SSH 部署流程，也不得擅自读取或删除本地密钥。
+- 辅助工具、记录和文档放在 `src/`；发布使用 `src/workflows/script/deploy-site.mjs` 和目录外的 `deploy/config.json`，不要重建旧 SSH 部署流程，也不得擅自读取或删除本地密钥。
 
 ## 3. 代码与文档更新
 

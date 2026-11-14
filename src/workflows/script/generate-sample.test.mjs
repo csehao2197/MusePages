@@ -51,9 +51,9 @@ async function sampleWorkspace()
     });
     for (const name of ["index.html", "sample-destination.html"])
     {
-        await copyFile(new URL(`../gallery/${name}`, import.meta.url), path.join(assets, name));
+        await copyFile(new URL(`../../gallery/${name}`, import.meta.url), path.join(assets, name));
     }
-    await copyFile(new URL("../../data/prompts/001-destination-guide/001-destination-guide.md", import.meta.url),
+    await copyFile(new URL("../../../data/prompts/001-destination-guide/001-destination-guide.md", import.meta.url),
         path.join(input, "001-destination-guide.md"));
     return workspace;
 }
@@ -89,7 +89,7 @@ test("generates a linked gallery, nested sample, and plain-text prompt page", as
         const screenshot = await readFile(path.join(page, "preview.png"));
         assert.equal(screenshot.subarray(0, 8).toString("hex"), "89504e470d0a1a0a");
         assert.match(await readFile(path.join(page, "index.html"), "utf8"), /href="\.\.\/\.\.\/\.\.\/index\.html"/);
-        const source = new URL("../../data/prompts/001-destination-guide/001-destination-guide.md", import.meta.url);
+        const source = new URL("../../../data/prompts/001-destination-guide/001-destination-guide.md", import.meta.url);
         const prompt = await readFile(source, "utf8");
         assert.equal(
             await readFile(path.join(page, "prompt.html"), "utf8"),
@@ -185,7 +185,7 @@ test("page and return links work when the host lists directories instead of serv
         assert.equal(await page.title(), "MusePages - AI Website Design Gallery");
         await page.locator(".prompt").click();
         await page.waitForURL(`${base}/pages/destination-guide/unspecified/prompt.html`);
-        const prompt = await readFile(new URL("../../data/prompts/001-destination-guide/001-destination-guide.md", import.meta.url), "utf8");
+        const prompt = await readFile(new URL("../../../data/prompts/001-destination-guide/001-destination-guide.md", import.meta.url), "utf8");
         assert.equal(await page.locator("pre code").textContent(), prompt.replace(/\r\n?/g, "\n"));
         await page.getByRole("link",
         {
@@ -764,7 +764,7 @@ test("gallery groups models into stable, accessible carousels with synchronized 
 
 test("inline model selectors reserve footer space for larger model groups on narrow screens", async () =>
 {
-    const template = await readFile(new URL("../gallery/index.html", import.meta.url), "utf8");
+    const template = await readFile(new URL("../../gallery/index.html", import.meta.url), "utf8");
     const browser = await chromium.launch(
     {
         headless: true
@@ -833,7 +833,7 @@ test("four selected prompt pages show original text and return to the collection
         {
             recursive: true
         });
-        await copyFile(new URL(`../../data/prompts/${name}/${name}.md`, import.meta.url), path.join(input, `${name}.md`));
+        await copyFile(new URL(`../../../data/prompts/${name}/${name}.md`, import.meta.url), path.join(input, `${name}.md`));
         await writeFile(path.join(output, "index.html"), "<h1>Static result</h1>");
     }
     const config = await syncDeployConfig(workspace);
@@ -861,7 +861,7 @@ test("four selected prompt pages show original text and return to the collection
         {
             assert.ok(href.endsWith("/prompt.html"));
             const folder = Object.keys(config.pages).find((key) => config.pages[key].pages.some((entry) => entry.slug === href.split("/")[1]));
-            const prompt = await readFile(new URL(`../../data/prompts/${folder}/${folder}.md`, import.meta.url), "utf8");
+            const prompt = await readFile(new URL(`../../../data/prompts/${folder}/${folder}.md`, import.meta.url), "utf8");
             for (const width of [1280, 375])
             {
                 await page.setViewportSize(

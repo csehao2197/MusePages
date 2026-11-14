@@ -40,7 +40,7 @@ import
 }
 from "@playwright/test";
 
-const root = fileURLToPath(new URL("../../", import.meta.url));
+const root = fileURLToPath(new URL("../../../", import.meta.url));
 const viewport = {
     width: 1200,
     height: 900
@@ -397,7 +397,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
         const args = process.argv.slice(2);
         if (args.length === 1 && args[0] === "--help")
         {
-            console.log("Usage: node src\\workflows\\generate-preview.mjs <static-directory> [--timeout-ms=60000]");
+            console.log("Usage: node src\\workflows\\script\\generate-preview.mjs <static-directory> [--timeout-ms=60000]");
         }
         else
         {

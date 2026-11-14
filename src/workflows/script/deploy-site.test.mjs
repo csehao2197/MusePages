@@ -49,7 +49,7 @@ async function fixture(t)
     {
         recursive: true
     });
-    await copyFile(new URL("../gallery/index.html", import.meta.url), path.join(workspace, "src", "gallery", "index.html"));
+    await copyFile(new URL("../../gallery/index.html", import.meta.url), path.join(workspace, "src", "gallery", "index.html"));
     await mkdir(path.join(workspace, "data", "prompts"),
     {
         recursive: true
@@ -1315,13 +1315,16 @@ test("concurrent sync operations preserve one option and leave no lock behind", 
 test("the JavaScript dist CLI and npm run dist assemble the exact configured website and refresh its sitemap", async (t) =>
 {
     const workspace = await fixture(t);
-    const workflows = path.join(workspace, "src", "workflows");
-    await mkdir(workflows);
+    const workflows = path.join(workspace, "src", "workflows", "script");
+    await mkdir(workflows,
+    {
+        recursive: true
+    });
     for (const file of ["deploy-site.mjs", "render-prompt-page.mjs"])
     {
         await copyFile(new URL(`./${file}`, import.meta.url), path.join(workflows, file));
     }
-    await copyFile(new URL("../../package.json", import.meta.url), path.join(workspace, "package.json"));
+    await copyFile(new URL("../../../package.json", import.meta.url), path.join(workspace, "package.json"));
     await result(workspace, "001-travel", "model-a");
     await result(workspace, "001-travel", "model-b");
     const cli = (command) =>

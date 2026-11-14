@@ -358,14 +358,14 @@ test("the CLI captures an isolated static export, documents usage and rejects in
     assert.equal(invalid.code, 1);
     assert.match(invalid.stderr, /Expected <static-directory>/);
     const f = await fixture(t);
-    const workflows = path.join(f.workspace, "src", "workflows");
+    const workflows = path.join(f.workspace, "src", "workflows", "script");
     await mkdir(workflows,
     {
         recursive: true
     });
     const isolated = path.join(workflows, "generate-preview.mjs");
     await copyFile(script, isolated);
-    await symlink(fileURLToPath(new URL("../../node_modules", import.meta.url)),
+    await symlink(fileURLToPath(new URL("../../../node_modules", import.meta.url)),
         path.join(f.workspace, "node_modules"), process.platform === "win32" ? "junction" : "dir");
     const generated = await run([f.directory, "--timeout-ms=15000"], isolated);
     assert.equal(generated.code, 0, generated.stderr);

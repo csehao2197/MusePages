@@ -96,10 +96,10 @@ deploy\dist\MusePages\
 
 ### 首页预览截图
 
-由 `src\workflows\generate-preview.mjs` 生成预览，接收 `out\pages\<prompt>\<ai model>\out\` 静态目录作为输入。脚本内置仅绑定 `127.0.0.1` 随机端口的临时 HTTP 服务，无需 `npm start` 或修改模型项目的启动配置。服务只托管输入目录中的静态资源，不启动 Next.js 运行时、不执行构建，也不重新生成页面源码。
+由 `src\workflows\script\generate-preview.mjs` 生成预览，接收 `out\pages\<prompt>\<ai model>\out\` 静态目录作为输入。脚本内置仅绑定 `127.0.0.1` 随机端口的临时 HTTP 服务，无需 `npm start` 或修改模型项目的启动配置。服务只托管输入目录中的静态资源，不启动 Next.js 运行时、不执行构建，也不重新生成页面源码。
 
 ```powershell
-node src\workflows\generate-preview.mjs out\pages\006-travel-agency-homepage\model-a\out
+node src\workflows\script\generate-preview.mjs out\pages\006-travel-agency-homepage\model-a\out
 ```
 
 每个新生成的页面都须从对应模型的 `out\index.html` 实际浏览器渲染结果取得 `preview.png`，作为集合面板的预览。截图须来自该 prompt／模型的真实静态首页，不使用设计稿、其他模型的截图或占位图片冒充；页面视觉内容更新后同步更新截图。
@@ -126,7 +126,7 @@ node src\workflows\generate-preview.mjs out\pages\006-travel-agency-homepage\mod
 
 ### 页面生成工作流
 
-页面生成工作流接收 `prompt_scope` 和 `display_model_name` 两个位置参数；由 `src\workflows\render-prompt-page.mjs` 从 `http://localhost:8000/v1/models` 获取唯一模型，按指定范围和展示目录生成网站代码与静态首页。
+页面生成工作流接收 `prompt_scope` 和 `display_model_name` 两个位置参数；由 `src\workflows\script\render-prompt-page.mjs` 从 `http://localhost:8000/v1/models` 获取唯一模型，按指定范围和展示目录生成网站代码与静态首页。
 
 流程依次完成模型配置校验、已有结果检查、缺失页面生成和静态产物准备。已有结果按[覆盖检查规则](#生成覆盖检查与模型匹配)判断，不因未验证、未发布或配置未登记而重复生成源码。
 
@@ -142,7 +142,7 @@ AI 页面生成工作流以用户指定的 `<ai model>` 为输入，由 AI agent
 
 ### dist工作流
 
-dist 工作流以 `deploy\config.json` 中的发布选择为输入，由 `node src/workflows/deploy-site.mjs dist` 组装本地目标网站，输出到 `deploy\dist\MusePages\`。`deploy\dist\` 与 `deploy\site\` 使用相同的站点目录结构。
+dist 工作流以 `deploy\config.json` 中的发布选择为输入，由 `node src/workflows/script/deploy-site.mjs dist` 组装本地目标网站，输出到 `deploy\dist\MusePages\`。`deploy\dist\` 与 `deploy\site\` 使用相同的站点目录结构。
 
 配置 `siteUrl` 后同时生成 `sitemap.xml` 和 `robots.txt`，收录集合首页及已启用模型首页，随发布选择同步更新。当前公开地址为 `https://musepages.pages.dev/`；运行 `npm run dist`、`npm run publish` 并上传后，可在 Google Search Console 提交 `https://musepages.pages.dev/sitemap.xml`。
 
@@ -164,7 +164,7 @@ dist 工作流以 `deploy\config.json` 中的发布选择为输入，由 `node s
 
 ### publish工作流
 
-`npm run publish` 执行 `src\workflows\publish-site.mjs`：保留 `deploy\site\MusePages\` 根目录的 `.git`、`.ssh`、`google*.html` 和 `robots.txt`，清空其余内容，再复制 `deploy\dist\MusePages\` 中除根目录 `.git`、`.ssh` 外的内容。同名静态文件随源内容更新，源中缺少时保留已有验证文件和 `robots.txt`。目标目录缺失时自动创建；其他站点和源目录保持不变。
+`npm run publish` 执行 `src\workflows\script\publish-site.mjs`：保留 `deploy\site\MusePages\` 根目录的 `.git`、`.ssh`、`google*.html` 和 `robots.txt`，清空其余内容，再复制 `deploy\dist\MusePages\` 中除根目录 `.git`、`.ssh` 外的内容。同名静态文件随源内容更新，源中缺少时保留已有验证文件和 `robots.txt`。目标目录缺失时自动创建；其他站点和源目录保持不变。
 
 ### 生成覆盖检查与模型匹配
 
@@ -202,10 +202,11 @@ src\
     AI Agent\
       DESIGN.md                     # 通用设计指引
       render-prompt-pages.md        # 目标 Agent 编排指引
-    render-prompt-page.mjs          # 目标页面生成脚本
-    deploy-site.mjs                 # 本地发布入口
-    publish-site.mjs                # 清空并复制静态集合到站点目录
-    ...                             # 示例生成与回归测试
+    script\                         # 工作流脚本与回归测试
+      render-prompt-page.mjs         # 目标页面生成脚本
+      deploy-site.mjs                # 本地发布入口
+      publish-site.mjs               # 清空并复制静态集合到站点目录
+      ...                           # 示例生成与回归测试
   tools\                            # 历史示例验证等辅助工具
   downloads\manifest.json           # 下载覆盖、来源映射与异常记录
   manifest.json                     # 原始需求来源、路径和 SHA-256
@@ -246,7 +247,7 @@ task\
 
 ### 页面生成脚本
 
-`src\workflows\render-prompt-page.mjs` 按以下顺序编排：
+`src\workflows\script\render-prompt-page.mjs` 按以下顺序编排：
 
 1. **发现本地模型**：请求 `http://localhost:8000/v1/models`，要求 `data` 恰好包含一个模型，使用其有效 `id` 核对身份。
 2. **读取需求与设计指引**：遍历原始需求 Markdown，结合 `src\workflows\AI Agent\DESIGN.md` 准备输入，不把 README、生成记录或已有代码当作原始 prompt，不擅自扩展需求。
@@ -263,7 +264,7 @@ task\
 npm run generate -- All QWen3 --check
 
 # 按编号处理单一需求；3 与 003 等价，QWen3 为展示名称和输出目录
-node src\workflows\render-prompt-page.mjs 003 QWen3
+node src\workflows\script\render-prompt-page.mjs 003 QWen3
 npm run generate -- 3 QWen3 --check
 
 # 按编号范围依次处理，包含两端
@@ -286,7 +287,7 @@ npm run generate -- 006 QWen3 --retry
 隔离测试使用临时目录、模拟 Responses 模型目录接口和模拟 Codex 子进程，不调用真实 AI 服务、不运行网站构建或发布到真实目标目录：
 
 ```powershell
-node --test src\workflows\render-prompt-pages.test.mjs src\workflows\deploy-site.test.mjs src\workflows\generate-sample.test.mjs
+node --test src\workflows\script\render-prompt-pages.test.mjs src\workflows\script\deploy-site.test.mjs src\workflows\script\generate-sample.test.mjs
 ```
 
 ### 页面生成 Markdown

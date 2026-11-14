@@ -41,16 +41,16 @@ const meta = path.join(folder, 'metadata.json');
 const
 {
     StaticHomepage
-} = await import('../workflows/render-prompt-page.mjs');
+} = await import('../workflows/script/render-prompt-page.mjs');
 const
 {
     generatePreview,
     startPreviewServer
-} = await import('../workflows/generate-preview.mjs');
+} = await import('../workflows/script/generate-preview.mjs');
 const
 {
     registerGeneratedPage
-} = await import('../workflows/deploy-site.mjs');
+} = await import('../workflows/script/deploy-site.mjs');
 if (action === 'begin')
 {
     await mkdir(path.dirname(lock),
@@ -262,7 +262,7 @@ else
         assert.equal(option.deployed, false);
         m.config_added = true;
         await atomic(meta, m);
-        await writeFile(path.join(folder, 'README.md'), `# ${intent.title}\n\n- Original: \`data\\prompts\\${prompt}\\${prompt}.md\`; design: \`src\\workflows\\AI Agent\\DESIGN.md\`.\n- Actual model: \`gpt-6.1-sol\`; stable alias: \`GPT-6\`. Standalone HTML/CSS/JavaScript.\n- Functions: ${intent.features}\n- Source: \`out\\pages\\${prompt}\\GPT-6\\index.html\` and adjacent browser assets; static export: its \`out\\\` directory. Serve that directory with any static HTTP server. No build or environment variables required.\n- Mocks and limits: ${intent.limits}\n- Checks: ${v.checks} actual assertions, including ${v.interactionAssertions} focused interaction assertions; responsive widths ${v.widths.join(', ')}px; zero browser/resource errors. \`verify.mjs\` exports assertions exercised by this run's temporary Playwright harness, rather than a standalone CLI.\n- Screenshot command from repository root: \`node src\\workflows\\generate-preview.mjs out\\pages\\${prompt}\\GPT-6\\out\`. This renders/resource-checks the screenshot, without updating metadata or replaying interaction assertions.\n- Actual evidence: \`.checks\\desktop.png\`, \`.checks\\mobile.png\`, \`out\\preview.png\`. Visual review: ${args[0]}\n- Assets: original CSS/inline SVG artwork and system fonts; any Lucide icon paths retain their ISC license. Original requirement authors retain their rights; no additional rights granted.\n- Registered disabled and undeployed; expected publication: \`pages\\${slug}\\GPT-6\\index.html\`.\n- Unperformed: builds, installs, dist, publication, uploads and production backend tests.\n`);
+        await writeFile(path.join(folder, 'README.md'), `# ${intent.title}\n\n- Original: \`data\\prompts\\${prompt}\\${prompt}.md\`; design: \`src\\workflows\\AI Agent\\DESIGN.md\`.\n- Actual model: \`gpt-6.1-sol\`; stable alias: \`GPT-6\`. Standalone HTML/CSS/JavaScript.\n- Functions: ${intent.features}\n- Source: \`out\\pages\\${prompt}\\GPT-6\\index.html\` and adjacent browser assets; static export: its \`out\\\` directory. Serve that directory with any static HTTP server. No build or environment variables required.\n- Mocks and limits: ${intent.limits}\n- Checks: ${v.checks} actual assertions, including ${v.interactionAssertions} focused interaction assertions; responsive widths ${v.widths.join(', ')}px; zero browser/resource errors. \`verify.mjs\` exports assertions exercised by this run's temporary Playwright harness, rather than a standalone CLI.\n- Screenshot command from repository root: \`node src\\workflows\\script\\generate-preview.mjs out\\pages\\${prompt}\\GPT-6\\out\`. This renders/resource-checks the screenshot, without updating metadata or replaying interaction assertions.\n- Actual evidence: \`.checks\\desktop.png\`, \`.checks\\mobile.png\`, \`out\\preview.png\`. Visual review: ${args[0]}\n- Assets: original CSS/inline SVG artwork and system fonts; any Lucide icon paths retain their ISC license. Original requirement authors retain their rights; no additional rights granted.\n- Registered disabled and undeployed; expected publication: \`pages\\${slug}\\GPT-6\\index.html\`.\n- Unperformed: builds, installs, dist, publication, uploads and production backend tests.\n`);
         const summary = {
             timestamp: new Date().toISOString(),
             run,

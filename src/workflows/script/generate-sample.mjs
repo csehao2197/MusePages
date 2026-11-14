@@ -22,7 +22,7 @@ import
 }
 from "./deploy-site.mjs";
 
-const root = fileURLToPath(new URL("../../", import.meta.url));
+const root = fileURLToPath(new URL("../../../", import.meta.url));
 
 export async function generateSample(workspace = root)
 {

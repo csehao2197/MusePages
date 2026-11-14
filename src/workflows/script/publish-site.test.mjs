@@ -262,13 +262,13 @@ test("npm run publish creates a missing destination and copies contents without 
     await writeFile(path.join(source, "index.html"), 'new index<a href="collections/index.html">Collections</a>');
     await mkdir(path.join(source, "collections"));
     await writeFile(path.join(source, "collections", "index.html"), "administrator preview");
-    const scripts = path.join(workspace, "src", "workflows");
+    const scripts = path.join(workspace, "src", "workflows", "script");
     await mkdir(scripts,
     {
         recursive: true
     });
     await copyFile(new URL("./publish-site.mjs", import.meta.url), path.join(scripts, "publish-site.mjs"));
-    await copyFile(new URL("../../package.json", import.meta.url), path.join(workspace, "package.json"));
+    await copyFile(new URL("../../../package.json", import.meta.url), path.join(workspace, "package.json"));
     const command = process.platform === "win32" ? process.env.ComSpec : "npm";
     const args = process.platform === "win32" ? ["/d", "/s", "/c", "npm run publish"] : ["run", "publish"];
     const result = spawnSync(command, args,

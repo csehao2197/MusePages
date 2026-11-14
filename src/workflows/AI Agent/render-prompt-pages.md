@@ -77,10 +77,10 @@ out\pages\<prompt_name>\
 
 `preview.png` 必须来自对应模型静态首页的实际浏览器渲染，与实际 `staticDir` 中的 `index.html` 同级保存，不使用占位图、设计稿或其他模型的截图。
 
-在静态检查通过后、发布登记前调用 `src\workflows\generate-preview.mjs`。截图脚本接收静态目录，也可单独执行：
+在静态检查通过后、发布登记前调用 `src\workflows\script\generate-preview.mjs`。截图脚本接收静态目录，也可单独执行：
 
 ```powershell
-node src\workflows\generate-preview.mjs out\pages\006-travel-agency-homepage\model-a\out
+node src\workflows\script\generate-preview.mjs out\pages\006-travel-agency-homepage\model-a\out
 ```
 
 截图使用内置的临时 HTTP 服务，仅绑定 `127.0.0.1` 随机端口，无需 `npm start`。不启动 Next.js 运行时、不执行构建，也不重新生成源码。Playwright Chromium 等待资源、字体及首屏图片加载后，截取 **1200 × 900** 首屏 PNG，检查资源错误、JavaScript 异常及明显空白页面；仍需人工核对视觉效果。

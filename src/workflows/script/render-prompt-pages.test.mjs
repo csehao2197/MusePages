@@ -1439,7 +1439,7 @@ test("discovery rejects empty, ambiguous and malformed model lists before writin
 test("the actual CLI discovers the local model and returns read-only coverage JSON without configuration", async (t) =>
 {
     const f = await fixture(t);
-    const directory = path.join(f.workspace, "src", "workflows");
+    const directory = path.join(f.workspace, "src", "workflows", "script");
     await mkdir(directory,
     {
         recursive: true
@@ -1522,7 +1522,11 @@ globalThis.fetch = async (url) => {
 test("the actual CLI appends prompts, commands, Codex output and results without replacing prior logs", async (t) =>
 {
     const f = await fixture(t);
-    const directory = path.join(f.workspace, "src", "workflows");
+    const directory = path.join(f.workspace, "src", "workflows", "script");
+    await mkdir(directory,
+    {
+        recursive: true
+    });
     for (const filename of ["render-prompt-page.mjs", "deploy-site.mjs"])
     {
         await copyFile(new URL(filename, import.meta.url), path.join(directory, filename));
@@ -1572,7 +1576,7 @@ test("the actual CLI appends prompts, commands, Codex output and results without
 test("the actual CLI prints detailed discovery failures to stderr without claiming a generation result", async (t) =>
 {
     const f = await fixture(t);
-    const directory = path.join(f.workspace, "src", "workflows");
+    const directory = path.join(f.workspace, "src", "workflows", "script");
     await mkdir(directory,
     {
         recursive: true

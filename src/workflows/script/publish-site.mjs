@@ -15,7 +15,7 @@ import
 }
 from "node:url";
 
-const root = fileURLToPath(new URL("../../", import.meta.url));
+const root = fileURLToPath(new URL("../../../", import.meta.url));
 const protectedNames = new Set([".git", ".ssh"]);
 const preservedFiles = /^(?:google.*\.html|robots\.txt)$/i;
 

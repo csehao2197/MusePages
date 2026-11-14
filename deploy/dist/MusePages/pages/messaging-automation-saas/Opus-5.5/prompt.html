@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trigly — Comment &amp; DM Automation | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Trigly — Comment &amp; DM Automation</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Product Requirements Document (PRD) - Trigly (Instagram DM Chat Application)
+
+## 1. Overview
+**Product Name:** Trigly (internal code/pkg name `slice`) 
+**Description:** Trigly is a Next.js-based SaaS platform designed to revolutionize Instagram engagement for creators and businesses. It enables users to automate Instagram Direct Messages (DMs) and comment replies using rule-based keyword triggers and OpenAI-powered dynamic responses.
+**Target Audience:** Instagram Creators, Influencers, and Businesses looking to automate their audience engagement, lead generation, and customer support.
+
+## 2. Goals &amp; Objectives
+*   **Increase Engagement:** Provide automated, instant responses to followers&#39; comments and DMs.
+*   **Generate Leads:** Turn comments into conversations and conversations into conversions through automated DM sequences.
+*   **Smart Communication:** Utilize AI (OpenAI) to provide contextual, natural-sounding replies instead of just static automated responses.
+*   **Monetization:** Offer a freemium model where basic automation is free, and premium AI features are gatekept behind a SaaS subscription.
+
+## 3. Tech Stack
+*   **Frontend / Framework:** Next.js 15 (App Router), React 19
+*   **Styling &amp; UI:** Tailwind CSS, Shadcn UI, Radix UI primitives, Lucide Icons, Framer Motion (animations)
+*   **Backend / API:** Next.js Server Actions &amp; API Routes
+*   **Database &amp; ORM:** PostgreSQL, Prisma Client
+*   **Authentication:** Clerk
+*   **Payments &amp; Subscriptions:** Stripe
+*   **AI Integration:** OpenAI API (GPT-4o)
+*   **External Integrations:** Instagram Graph API &amp; Webhooks
+*   **State Management &amp; Data Fetching:** React Redux, TanStack React Query
+
+## 4. Core Features &amp; Requirements
+
+### 4.1. User Management &amp; Authentication
+*   **Sign Up / Log In:** Users must be able to authenticate seamlessly using Clerk.
+*   **Profile Management:** Store basic user information (Firstname, Lastname, Email, Clerk ID) in the database upon successful authentication.
+*   **Subscription &amp; Plan Management:** 
+    *   **Free Plan ($0/month):** Basic static automations, targeted responses.
+    *   **Smart AI / PRO Plan ($99/month):** AI-powered response generation, advanced analytics. Checked in DB model `Subscription: plan` (`PRO` or `FREE`).
+
+### 4.2. Instagram Integration (OAuth &amp; Webhooks)
+*   **Connect Account:** Users can link their Meta/Instagram Professional accounts using OAuth.
+*   **Token Storing:** Store Instagram Access Tokens securely against the `Integrations` model.
+*   **Webhooks:** Listen to incoming payload events from Instagram (DMs and Comments).
+    *   Secure webhook validation using `hub.challenge` tokens.
+
+### 4.3. Automation Engine Workflow
+*   An *Automation* is a rule-based flow created by the user containing Triggers, Keywords, and Listeners.
+*   **Triggers &amp; Keywords:** Users can define specific keywords. When the webhook detects these keywords in an incoming DM or Comment, the automation activates.
+*   **Listener Modes:**
+    *   `MESSAGE` Mode: Sends a predefined static response.
+    *   `SMARTAI` Mode: Sends the user&#39;s prompt alongside the conversation history to OpenAI (GPT-4o) and returns a natural, context-aware AI response. Limited to `&lt; 2 sentences`.
+*   **Targeting (Posts vs DMs):** 
+    *   Automations can be linked to specific Instagram Posts/Reels (so it only replies to comments on that specific post).
+    *   General DM triggers apply to direct messages.
+
+### 4.4. Conversation Tracking &amp; Chat History
+*   **DM History (Dms Model):** Keep track of automated messages sent and received by the AI for context preservation.
+*   **Analytics / Counters:**
+    *   Track the total count of DMs and comments successfully replied to under each `Listener`.
+
+### 4.5. Dashboard &amp; User Interface
+*   **Landing Page:** Highlights Value Proposition, Features, and Pricing Plans.
+*   **Protected Dashboard:** 
+    *   View connected integrations (Instagram).
+    *   Create, Read, Update, Delete (CRUD) operations for Automations.
+    *   Activate/Deactivate toggle for Automations.
+    *   Detailed view per automation to attach keywords, set triggers, and config listener (Message vs SmartAI) prompts.
+    *   Displays recent posts fetched live from Instagram Graph API for assigning automations.
+*   **Loading States &amp; Toast Notify:** Smooth UI transitions using Sonner and custom loading components.
+
+## 5. Security &amp; Privacy Considerations
+*   Environment configurations (`.env`) for keeping API Keys (OpenAI, Stripe, Clerk, Instagram Client Secret) secure.
+*   Automated messages and database records securely linked to the authenticated user&#39;s ID to prevent unauthorized access.
+*   Webhook event mapping cross-references automation ownership.
+
+## 6. Future Scope / Expansion (Post MVP)
+*   Visual Node-based automation flow builder.
+*   Support for other platforms (Facebook Messenger, WhatsApp, Twitter).
+*   Detailed Analytics Graphs utilizing `recharts` (library already in package.json).
+*   Broadcast messaging to multiple followers.
+
+## 7. Assumptions &amp; Dependencies
+*   User must hold an active Instagram Creator or Business Account linked to a Facebook Page.
+*   Meta App must be approved for Instagram Graph API (messages, comments permissions).
+*   Continuous uptime of Ngrok (dev) or production domain for Meta Webhook delivery.
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

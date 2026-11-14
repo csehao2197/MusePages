@@ -40,7 +40,7 @@ import
 }
 from "./render-prompt-page.mjs";
 
-const root = fileURLToPath(new URL("../../", import.meta.url));
+const root = fileURLToPath(new URL("../../../", import.meta.url));
 const gitFiles = new Set([".git", ".gitignore", ".gitattributes"]);
 const excludedDirectories = new Set(["node_modules", ".next", ".git"]);
 const staticExtensions = new Set([

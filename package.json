@@ -4,12 +4,12 @@
   "workspaces": ["data/prompts/[0-9]*-*"],
   "scripts": {
     "config": "python3 .\\src\\tools\\select_deploy_pages.py",
-    "deploy:sync": "node src/workflows/deploy-site.mjs sync",
-    "deploy:watch": "node src/workflows/deploy-site.mjs watch",
-    "dist": "node src/workflows/deploy-site.mjs dist",
-    "generate": "node src/workflows/render-prompt-page.mjs",
-    "generate:sample": "node src/workflows/generate-sample.mjs",
-    "publish": "node src/workflows/publish-site.mjs",
+    "deploy:sync": "node src/workflows/script/deploy-site.mjs sync",
+    "deploy:watch": "node src/workflows/script/deploy-site.mjs watch",
+    "dist": "node src/workflows/script/deploy-site.mjs dist",
+    "generate": "node src/workflows/script/render-prompt-page.mjs",
+    "generate:sample": "node src/workflows/script/generate-sample.mjs",
+    "publish": "node src/workflows/script/publish-site.mjs",
     "validate": "node src/tools/validate.mjs"
   },
   "dependencies": {

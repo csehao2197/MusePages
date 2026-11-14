@@ -38,7 +38,7 @@ import
 }
 from "node:url";
 
-const root = fileURLToPath(new URL("../../", import.meta.url));
+const root = fileURLToPath(new URL("../../../", import.meta.url));
 const states = ["generated", "preview", "config_added", "validated"];
 const assets = new Set([
     ".html", ".css", ".js", ".mjs", ".json", ".png", ".jpg", ".jpeg", ".gif",
