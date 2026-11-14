@@ -7,7 +7,7 @@ import {chromium} from '@playwright/test';
 const folder=path.dirname(fileURLToPath(import.meta.url));
 const root=path.resolve(folder,'..','..','..','..');
 const {startPreviewServer,generatePreview}=await import(pathToFileURL(path.join(root,'src','workflows','generate-preview.mjs')));
-const { StaticHomepage }=await import(pathToFileURL(path.join(root,'src','workflows','render-prompt-pages.mjs')));
+const { StaticHomepage }=await import(pathToFileURL(path.join(root,'src','workflows','render-prompt-page.mjs')));
 const exported=path.join(folder,'out');
 const slug='transformation-story-gallery';
 const digest=await StaticHomepage.validateStaticOutput(exported,slug,'GPT-6');

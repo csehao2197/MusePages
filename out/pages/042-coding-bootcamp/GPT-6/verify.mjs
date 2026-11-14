@@ -6,7 +6,7 @@ import {createHash} from 'node:crypto';
 import {chromium} from '@playwright/test';
 const folder=path.dirname(fileURLToPath(import.meta.url)),root=path.resolve(folder,'..','..','..','..'),exported=path.join(folder,'out'),slug='coding-bootcamp';
 const {startPreviewServer,generatePreview}=await import(pathToFileURL(path.join(root,'src','workflows','generate-preview.mjs')));
-const { StaticHomepage }=await import(pathToFileURL(path.join(root,'src','workflows','render-prompt-pages.mjs')));
+const { StaticHomepage }=await import(pathToFileURL(path.join(root,'src','workflows','render-prompt-page.mjs')));
 const staticDigest=await StaticHomepage.validateStaticOutput(exported,slug,'GPT-6');
 const server=await startPreviewServer(exported,{workspace:root});
 const browser=await chromium.launch();

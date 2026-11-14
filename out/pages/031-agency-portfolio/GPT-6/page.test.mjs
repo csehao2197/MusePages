@@ -4,7 +4,7 @@ import {readFile,writeFile,readdir,rm} from "node:fs/promises";
 import path from "node:path";
 import {chromium,expect} from "@playwright/test";
 import {startPreviewServer} from "../../../../src/workflows/generate-preview.mjs";
-import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-page.mjs";
 const root=import.meta.dirname;
 const exported=path.join(root,"out");
 const checks=path.join(root,".checks");

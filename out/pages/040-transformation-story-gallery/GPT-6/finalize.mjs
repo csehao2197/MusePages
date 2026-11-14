@@ -7,7 +7,7 @@ const prompt='040-transformation-story-gallery';
 const metadata=JSON.parse(await readFile(path.join(folder,'metadata.json'),'utf8'));
 const verification=JSON.parse(await readFile(path.join(folder,'verification.json'),'utf8'));
 if(!verification.passed)throw Error('Verification must pass first');
-const { StaticHomepage }=await import(pathToFileURL(path.join(root,'src','workflows','render-prompt-pages.mjs')));
+const { StaticHomepage }=await import(pathToFileURL(path.join(root,'src','workflows','render-prompt-page.mjs')));
 if(await StaticHomepage.validateStaticOutput(path.join(folder,'out'),'transformation-story-gallery','GPT-6')!==verification.staticDigest)throw Error('Export changed after verification');
 const {registerGeneratedPage}=await import(pathToFileURL(path.join(root,'src','workflows','deploy-site.mjs')));
 const configBefore=JSON.parse(await readFile(path.join(root,'deploy','config.json'),'utf8'));

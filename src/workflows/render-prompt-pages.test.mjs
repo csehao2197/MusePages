@@ -38,7 +38,7 @@ import
     PromptPageWorkflow,
     StaticHomepage,
 }
-from "./render-prompt-pages.mjs";
+from "./render-prompt-page.mjs";
 
 const prompt = "001-travel";
 const modelId = "actual-model-id";
@@ -331,7 +331,7 @@ test("generates through a child process with stdin, real model selection, static
 
 Arguments:
 - prompt_scope: 001
-- model_name: model-a
+- display_model_name: model-a
 
 Read the specification completely before making changes.
 Apply all required code modifications and keep the implementation consistent with existing project conventions.`);
@@ -922,7 +922,7 @@ test("a successful retry is verified and a reported model mismatch is rejected",
 
 Arguments:
 - prompt_scope: 001
-- model_name: model-a
+- display_model_name: model-a
 
 Read the specification completely before making changes.
 Apply all required code modifications and keep the implementation consistent with existing project conventions.`);
@@ -1167,83 +1167,90 @@ test("Windows npm wrappers run their JavaScript entry with Node rather than cons
     }), /Codex CLI not found/);
 });
 
-test("CLI arguments reject unknown flags and unsafe prompt paths", () =>
+test("CLI arguments accept a scope and display name with existing execution flags", () =>
 {
-    assert.deepEqual(GenerationCli.parseArguments(["local", "--check", "--prompts=001-travel", "--timeout-ms=1000", "--retries=1"]),
+    assert.deepEqual(GenerationCli.parseArguments(["003", "QWen3", "--check", "--timeout-ms=1000", "--retries=1"]),
     {
-        selections: ["local"],
+        selections: [],
         options:
         {
             check: true,
-            prompts: ["001-travel"],
             timeoutMs: 1000,
-            retries: 1
+            retries: 1,
+            prompts: ["003"],
+            displayModelName: "QWen3"
         },
     });
-    assert.throws(() => GenerationCli.parseArguments(["local", "--unknown"]), /Unknown option/);
-    assert.throws(() => GenerationCli.parseArguments(["local", "--prompts=../escape"]), /Invalid prompt/);
-    assert.throws(() => GenerationCli.parseArguments(["local", "--timeout-ms=no"]), /Invalid timeout/);
+    assert.throws(() => GenerationCli.parseArguments(["003", "QWen3", "--unknown"]), /Unknown option/);
+    assert.throws(() => GenerationCli.parseArguments(["../escape", "QWen3"]), /Invalid prompt_scope/);
+    assert.throws(() => GenerationCli.parseArguments(["003", "../escape"]), /Invalid display model name/);
+    assert.throws(() => GenerationCli.parseArguments(["003", "QWen3", "--timeout-ms=no"]), /Invalid timeout/);
 });
 
-test("CLI arguments accept a leading prompt number while preserving existing model selections and flags", () =>
+test("CLI arguments require two positional values and accept numbers or All", () =>
 {
     for (const number of ["003", "3"])
     {
-        assert.deepEqual(GenerationCli.parseArguments([number, "Qwen3.8", "--check", "--retry"]),
+        assert.deepEqual(GenerationCli.parseArguments([number, "QWen3", "--check", "--retry"]),
         {
-            selections: ["Qwen3.8"],
+            selections: [],
             options:
             {
                 check: true,
                 retry: true,
-                prompts: [number]
+                prompts: [number],
+                displayModelName: "QWen3"
             },
         });
     }
-    assert.deepEqual(GenerationCli.parseArguments(["local", "another-model", "--check"]),
+    for (const scope of ["All", "all", "ALL"])
     {
-        selections: ["local", "another-model"],
-        options:
+        assert.deepEqual(GenerationCli.parseArguments([scope, "QWen3", "--check"]),
         {
-            check: true
-        },
-    });
+            selections: [],
+            options:
+            {
+                check: true,
+                displayModelName: "QWen3"
+            },
+        });
+    }
     for (const args of [
-            ["003", "Qwen3.8", "--prompts=001-travel"],
-            ["--prompts=001-travel", "003", "Qwen3.8"],
-        ]) assert.throws(() => GenerationCli.parseArguments(args), /either a positional prompt number or --prompts/);
-    assert.throws(() => GenerationCli.parseArguments(["003"]), /followed by a model selection/);
+            [],
+            ["003"],
+            ["003", "QWen3", "extra"],
+        ]) assert.throws(() => GenerationCli.parseArguments(args), /Expected two arguments/);
     for (const number of ["0", "000", "9007199254740992"])
     {
-        assert.throws(() => GenerationCli.parseArguments([number, "Qwen3.8"]), /positive safe integer/);
+        assert.throws(() => GenerationCli.parseArguments([number, "QWen3"]), /positive safe integer/);
     }
 });
 
-test("CLI arguments accept inclusive prompt ranges and reject invalid bounds or conflicting selectors", () =>
+test("CLI arguments accept inclusive prompt ranges and reject invalid bounds or old selectors", () =>
 {
     for (const range of ["001-010", "1-10", "003-003"])
     {
-        assert.deepEqual(GenerationCli.parseArguments([range, "Qwen3.8", "--check", "--retry"]),
+        assert.deepEqual(GenerationCli.parseArguments([range, "QWen3", "--check", "--retry"]),
         {
-            selections: ["Qwen3.8"],
+            selections: [],
             options:
             {
                 check: true,
                 retry: true,
-                prompts: [range]
+                prompts: [range],
+                displayModelName: "QWen3"
             },
         });
     }
-    assert.throws(() => GenerationCli.parseArguments(["010-001", "Qwen3.8"]), /range start must not exceed its end/);
+    assert.throws(() => GenerationCli.parseArguments(["010-001", "QWen3"]), /range start must not exceed its end/);
     for (const range of ["000-010", "001-000", "1-9007199254740992"])
     {
-        assert.throws(() => GenerationCli.parseArguments([range, "Qwen3.8"]), /positive safe integer/);
+        assert.throws(() => GenerationCli.parseArguments([range, "QWen3"]), /positive safe integer/);
     }
-    assert.throws(() => GenerationCli.parseArguments(["001-010"]), /range must be followed by a model selection/);
     for (const args of [
-            ["001-010", "Qwen3.8", "--prompts=001-travel"],
-            ["--prompts=001-travel", "001-010", "Qwen3.8"],
-        ]) assert.throws(() => GenerationCli.parseArguments(args), /either a positional prompt range or --prompts/);
+            ["001-010", "QWen3", "--prompts=001-travel"],
+            ["--prompts=001-travel", "001-010", "QWen3"],
+        ]) assert.throws(() => GenerationCli.parseArguments(args), /Unknown option/);
 });
 
 test("prompt ranges generate sequentially in numeric order and only select inclusive bounds", async (t) =>
@@ -1260,7 +1267,7 @@ test("prompt ranges generate sequentially in numeric order and only select inclu
     {
         selections,
         options
-    } = GenerationCli.parseArguments(["001-003", "local"]);
+    } = GenerationCli.parseArguments(["001-003", "model-a"]);
     const report = await PromptPageWorkflow.renderPromptPages(f.workspace, selections, f.options("success",
     {
         ...options,
@@ -1279,7 +1286,7 @@ test("prompt ranges generate sequentially in numeric order and only select inclu
 
 Arguments:
 - prompt_scope: ${String(index + 1).padStart(3, "0")}
-- model_name: model-a
+- display_model_name: model-a
 
 Read the specification completely before making changes.
 Apply all required code modifications and keep the implementation consistent with existing project conventions.`);
@@ -1361,15 +1368,15 @@ test("numeric selection generates only the matching prompt and rejects missing o
     {
         selections,
         options
-    } = GenerationCli.parseArguments(["003", "Qwen3.8"]);
+    } = GenerationCli.parseArguments(["003", "QWen3"]);
     const report = await PromptPageWorkflow.renderPromptPages(f.workspace, selections, f.options("success", options));
     assert.equal(report.summary.generated, 1, JSON.stringify(report));
     assert.deepEqual(report.items.map((item) => item.prompt), [selected]);
     assert.equal(report.items[0].model, "Qwen3.8");
-    assert.equal(report.items[0].directory, "qwen3.8");
+    assert.equal(report.items[0].directory, "QWen3");
     assert.deepEqual(await readdir(path.join(f.workspace, "out", "pages")), [selected]);
     assert.equal(requests(), 1);
-    const output = path.join(f.workspace, "out", "pages", selected, "qwen3.8");
+    const output = path.join(f.workspace, "out", "pages", selected, "QWen3");
     const invocation = await readJson(path.join(output, ".invocation.json"));
     assert.equal(invocation.args[invocation.args.indexOf("--model") + 1], modelId);
     assert.notEqual(modelId, "Qwen3.8");
@@ -1378,10 +1385,21 @@ test("numeric selection generates only the matching prompt and rejects missing o
 
 Arguments:
 - prompt_scope: 003
-- model_name: qwen3.8
+- display_model_name: QWen3
 
 Read the specification completely before making changes.
 Apply all required code modifications and keep the implementation consistent with existing project conventions.`);
+    const deployment = await readJson(path.join(f.workspace, "deploy", "config.json"));
+    assert.equal(deployment.pages[selected].pages[0].model, "QWen3");
+    const generated = await snapshot(f.workspace);
+    const checked = await PromptPageWorkflow.renderPromptPages(f.workspace, selections,
+    {
+        ...options,
+        check: true
+    });
+    assert.equal(checked.summary.skipped, 1);
+    assert.deepEqual(await snapshot(f.workspace), generated);
+    assert.equal(requests(), 1);
     const before = await snapshot(f.workspace);
     await assert.rejects(PromptPageWorkflow.renderPromptPages(f.workspace, ["Qwen3.8"],
     {
@@ -1400,6 +1418,41 @@ Apply all required code modifications and keep the implementation consistent wit
     assert.equal(requests(), 1);
 });
 
+test("display names require one configured API service before any writes or model calls", async (t) =>
+{
+    const f = await fixture(t);
+    const requests = await service(t, f.workspace);
+    const config = await readJson(modelConfig(f.workspace));
+    const
+    {
+        selections,
+        options
+    } = GenerationCli.parseArguments(["003", "QWen3", "--check"]);
+    for (const models of [
+            {},
+            {
+                local: config.models.local,
+                other:
+                {
+                    ...config.models.local,
+                    directory: "other-model"
+                }
+            },
+        ])
+    {
+        await save(modelConfig(f.workspace),
+        {
+            version: 1,
+            models
+        });
+        const before = await snapshot(f.workspace);
+        await assert.rejects(PromptPageWorkflow.renderPromptPages(f.workspace, selections, options),
+            /exactly one configured API service/);
+        assert.deepEqual(await snapshot(f.workspace), before);
+    }
+    assert.equal(requests(), 0);
+});
+
 test("the actual CLI returns coverage JSON and an appropriate exit code without generation or authentication", async (t) =>
 {
     const f = await fixture(t);
@@ -1408,11 +1461,11 @@ test("the actual CLI returns coverage JSON and an appropriate exit code without 
     {
         recursive: true
     });
-    for (const filename of ["render-prompt-pages.mjs", "deploy-site.mjs", "render-prompt-page.mjs"])
+    for (const filename of ["render-prompt-page.mjs", "deploy-site.mjs"])
     {
         await copyFile(new URL(filename, import.meta.url), path.join(directory, filename));
     }
-    const run = (args = ["local", "--check"]) => spawnSync(process.execPath, [path.join(directory, "render-prompt-pages.mjs"), ...args],
+    const run = (args = ["001", "model-a", "--check"]) => spawnSync(process.execPath, [path.join(directory, "render-prompt-page.mjs"), ...args],
     {
         cwd: f.workspace,
         env:
@@ -1450,7 +1503,7 @@ test("the actual CLI returns coverage JSON and an appropriate exit code without 
     const numericBefore = await snapshot(f.workspace);
     for (const number of ["003", "3"])
     {
-        const selected = run([number, "Qwen3.8", "--check"]);
+        const selected = run([number, "model-a", "--check"]);
         assert.equal(selected.status, 1, selected.stderr);
         const report = JSON.parse(selected.stdout);
         assert.equal(report.summary.missing, 1);
@@ -1468,12 +1521,18 @@ test("the actual CLI returns coverage JSON and an appropriate exit code without 
             model: "Qwen3.8"
         }]);
     }
-    const ranged = run(["001-003", "Qwen3.8", "--check"]);
+    const ranged = run(["001-003", "model-a", "--check"]);
     assert.equal(ranged.status, 1, ranged.stderr);
     const rangeReport = JSON.parse(ranged.stdout);
     assert.equal(rangeReport.summary.skipped, 1);
     assert.equal(rangeReport.summary.missing, 2);
     assert.deepEqual(rangeReport.items.map((item) => item.prompt), [prompt, "2-middle", "003-selected"]);
+    const all = run(["All", "model-a", "--check"]);
+    assert.equal(all.status, 1, all.stderr);
+    const allReport = JSON.parse(all.stdout);
+    assert.equal(allReport.summary.skipped, 1);
+    assert.equal(allReport.summary.missing, 3);
+    assert.deepEqual(allReport.items.map((item) => item.prompt), [prompt, "2-middle", "003-selected", "030-other"]);
     const unknown = run(["999", "Qwen3.8", "--check"]);
     assert.equal(unknown.status, 1);
     assert.match(unknown.stderr, /Unknown prompt number: 999/);
@@ -1488,7 +1547,7 @@ test("the actual CLI prints detailed network failures to stderr and keeps stdout
     {
         recursive: true
     });
-    for (const filename of ["render-prompt-pages.mjs", "deploy-site.mjs", "render-prompt-page.mjs"])
+    for (const filename of ["render-prompt-page.mjs", "deploy-site.mjs"])
     {
         await copyFile(new URL(filename, import.meta.url), path.join(directory, filename));
     }
@@ -1503,7 +1562,7 @@ globalThis.fetch = async () => {
   throw new TypeError("fetch failed", { cause });
 };
 `);
-    const failed = spawnSync(process.execPath, ["--require", network, path.join(directory, "render-prompt-pages.mjs"), "001", "local"],
+    const failed = spawnSync(process.execPath, ["--require", network, path.join(directory, "render-prompt-page.mjs"), "001", "model-a"],
     {
         cwd: f.workspace,
         env: process.env,

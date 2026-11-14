@@ -10,7 +10,7 @@ const root = path.resolve(folder, "..", "..", "..", "..");
 const exported = path.join(folder, "out");
 const checks = path.join(folder, ".checks");
 const { startPreviewServer } = await import(pathToFileURL(path.join(root, "src", "workflows", "generate-preview.mjs")));
-const { StaticHomepage } = await import(pathToFileURL(path.join(root, "src", "workflows", "render-prompt-pages.mjs")));
+const { StaticHomepage } = await import(pathToFileURL(path.join(root, "src", "workflows", "render-prompt-page.mjs")));
 async function guard() {
   const contents = await readFile(path.join(root, "out", ".generation-locks", "033-creative-agency-team.lock"), "utf8");
   const [pid, session] = contents.trim().split(/\r?\n/);

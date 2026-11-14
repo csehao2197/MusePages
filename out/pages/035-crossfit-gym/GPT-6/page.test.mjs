@@ -4,7 +4,7 @@ import { readFile, writeFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { chromium } from "@playwright/test";
 import { startPreviewServer } from "../../../../src/workflows/generate-preview.mjs";
-import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-page.mjs";
 
 const folder = import.meta.dirname;
 const workspace = path.resolve(folder, "../../../..");

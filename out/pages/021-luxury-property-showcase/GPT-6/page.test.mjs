@@ -5,7 +5,7 @@ import path from "node:path";
 import {fileURLToPath} from "node:url";
 import {chromium,expect} from "@playwright/test";
 import {startPreviewServer} from "../../../../src/workflows/generate-preview.mjs";
-import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-page.mjs";
 const model=fileURLToPath(new URL(".",import.meta.url));
 const workspace=fileURLToPath(new URL("../../../../",import.meta.url));
 test("Meridian independent cinematic luxury residence",{timeout:180000},async(t)=>{

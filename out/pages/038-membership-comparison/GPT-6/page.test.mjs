@@ -4,7 +4,7 @@ import { readFile, readdir, mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { chromium, expect } from "@playwright/test";
 import { startPreviewServer } from "../../../../src/workflows/generate-preview.mjs";
-import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-page.mjs";
 
 const root = process.cwd();
 const folder = path.join(root, "out", "pages", "038-membership-comparison", "GPT-6");

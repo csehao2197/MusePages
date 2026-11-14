@@ -5,7 +5,7 @@ import path from "node:path";
 import {fileURLToPath} from "node:url";
 import {chromium,expect} from "@playwright/test";
 import {startPreviewServer} from "../../../../src/workflows/generate-preview.mjs";
-import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-page.mjs";
 import {projects} from "./assets/content.js";
 const model=fileURLToPath(new URL(".",import.meta.url)),workspace=fileURLToPath(new URL("../../../../",import.meta.url)),checks=path.join(model,".checks");
 test("Nora Vale independent graphic-design portfolio",{timeout:180000},async(t)=>{

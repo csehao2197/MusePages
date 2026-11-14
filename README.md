@@ -24,7 +24,7 @@ MusePages 收集由 AI 根据原始需求生成的网站首页。同一个 promp
 | --- | --- |
 | `node src\tools\download-prompts.mjs` | 下载网站公开英文 prompt 和清单所关联 GitHub 仓库的需求文档 |
 | `node src\tools\download-prompts.mjs --source=websiteprompts.ai` | 下载 websiteprompts.ai 的完整公开 prompt |
-| `npm run generate -- [<prompt number>] <ai model>` | 执行[页面生成工作流](#页面生成工作流)，可按编号限定单一需求 |
+| `npm run generate -- <prompt_scope> <display_model_name>` | 按编号、区间或 `All` 执行[页面生成工作流](#页面生成工作流)，第二个参数指定展示名称和输出目录 |
 | `npm run ai-generate -- <ai model>` | 执行[AI页面生成工作流](#ai页面生成工作流) |
 | `npm run dist` | 按发布选择执行[dist工作流](#dist工作流)，生成 `deploy\dist\MusePages` |
 | `npm run publish` | 将静态集合复制到 `deploy\site\MusePages` |
@@ -35,7 +35,7 @@ MusePages 收集由 AI 根据原始需求生成的网站首页。同一个 promp
 
 websiteprompts.ai 使用站点地图与公开搜索索引核对覆盖，保留原始 Markdown 换行，下载记录单独保存为 `src\downloads\websiteprompts-ai.json`。
 
-生成前，由管理员配置并启动模型服务，提供调用 URI、API 类型、认证方式和真实模型 ID。`<ai model>` 用于选择服务配置，不等于真实模型 ID；凭据仅从本地环境读取。脚本不管理模型服务器，也不能在服务不兼容时自动换模型。
+生成前，由管理员配置并启动模型服务，提供调用 URI、API 类型、认证方式和真实模型 ID。`generate` 自动使用配置中唯一的 API 服务，`display_model_name` 独立控制展示名称和输出目录，真实模型 ID 仍记录在元数据中；凭据仅从本地环境读取。
 
 已有辅助入口保留如下，不替代目标生成流程：
 
@@ -126,7 +126,7 @@ node src\workflows\generate-preview.mjs out\pages\006-travel-agency-homepage\mod
 
 ### 页面生成工作流
 
-页面生成工作流以用户指定的 `<ai model>` 为输入，可附带 prompt 编号限定单一需求；由 `src\workflows\render-prompt-pages.mjs` 读取其专用配置 `src\workflows\config.json`，按需生成该模型对应的网站代码与静态首页。
+页面生成工作流接收 `prompt_scope` 和 `display_model_name` 两个位置参数；由 `src\workflows\render-prompt-page.mjs` 读取 `src\workflows\config.json` 中唯一的 API 服务，按指定范围和展示目录生成网站代码与静态首页。
 
 流程依次完成模型配置校验、已有结果检查、缺失页面生成和静态产物准备。已有结果按[覆盖检查规则](#生成覆盖检查与模型匹配)判断，不因未验证、未发布或配置未登记而重复生成源码。
 
@@ -202,8 +202,8 @@ src\
     AI Agent\
       DESIGN.md                     # 通用设计指引
       render-prompt-pages.md        # 目标 Agent 编排指引
-    render-prompt-pages.mjs          # 目标页面生成脚本
-    config.json                     # render-prompt-pages.mjs 专用模型服务配置
+    render-prompt-page.mjs          # 目标页面生成脚本
+    config.json                     # render-prompt-page.mjs 专用模型服务配置
     deploy-site.mjs                 # 本地发布入口
     publish-site.mjs                # 清空并复制静态集合到站点目录
     ...                             # 示例生成与回归测试
@@ -246,12 +246,12 @@ task\
 
 ### 页面生成脚本
 
-`src\workflows\render-prompt-pages.mjs` 按以下顺序编排：
+`src\workflows\render-prompt-page.mjs` 按以下顺序编排：
 
 1. **校验模型配置**：读取指定服务的 URI、接口类型和实际模型 ID，验证连接与身份，不把服务配置名称当作真实模型。
 2. **读取需求与设计指引**：遍历原始需求 Markdown，结合 `src\workflows\AI Agent\DESIGN.md` 准备输入，不把 README、生成记录或已有代码当作原始 prompt，不擅自扩展需求。
 3. **判断是否需要生成**：对照元数据、实际代码和当前需求，按[覆盖检查规则](#生成覆盖检查与模型匹配)筛选；有效结果跳过，仅缺静态导出时保留源码，只补后续产物。
-4. **调用 Codex 生成源码**：对获准生成的缺失项，再次检查并加锁，以对应模型目录为子进程工作目录，非交互调用 `codex exec`。`-c` 覆盖服务配置，`--model` 选择实际模型；标准输入以 `Implement the specification in render-prompt-pages.md.` 开头，在 `Arguments:` 中传入 `prompt_scope` 和 `model_name`，并要求完整阅读规范、完成修改及遵循项目约定。编号取原始文件名前缀并补足三位，目录名取模型配置的 `directory`。
+4. **调用 Codex 生成源码**：对获准生成的缺失项，再次检查并加锁，以对应展示目录为子进程工作目录，非交互调用 `codex exec`。`-c` 覆盖服务配置，`--model` 使用配置中的真实模型 ID；标准输入以 `Implement the specification in render-prompt-pages.md.` 开头，在 `Arguments:` 中传入当前编号 `prompt_scope` 和用户指定的 `display_model_name`，并要求完整阅读规范、完成修改及遵循项目约定。
 5. **准备并检查静态首页**：保留源码，将发布用首页及资源放入其 `out\` 子目录，按[静态产物边界](#静态产物边界)核验，不用 `.next` 或截图代替静态网页。
 6. **准备首页预览**：调用 `generate-preview.mjs` 补齐或刷新 `preview.png`，摘要一致的已有预览复用；失败保留源码和旧预览并报告待处理，不把缺少截图当作需要重新生成源码。
 7. **更新记录与发布选项**：静态检查及预览准备通过后更新元数据并登记发布选项；配置登记失败时保留代码，下次仅补登记，不重复生成。结束时报告生成、跳过、待确认、失败及剩余缺失项。
@@ -259,23 +259,18 @@ task\
 已实现的使用方式：
 
 ```powershell
-# 仅查看明确指定模型的覆盖情况，不连接服务或修改文件
-npm run generate -- local --check
-npm run generate -- local another-model --check
+# 查看指定展示目录的全部覆盖情况
+npm run generate -- All QWen3 --check
 
-# 按编号处理单一需求；3 与 003 等价，Qwen3.8 对应 src\workflows\config.json 的 models 配置键
-npm run generate -- 003 Qwen3.8
-npm run generate -- 3 Qwen3.8 --check
+# 按编号处理单一需求；3 与 003 等价，QWen3 为展示名称和输出目录
+node src\workflows\render-prompt-page.mjs 003 QWen3
+npm run generate -- 3 QWen3 --check
 
-# 按编号范围依次处理，包含两端；开始前确认范围内每个编号唯一且存在
-node src\workflows\render-prompt-pages.mjs 001-010 Qwen3.8
-npm run generate -- 001-010 Qwen3.8 --check
+# 按编号范围依次处理，包含两端
+npm run generate -- 001-010 QWen3 --check
 
-# 按完整原始文件名选择页面；省略编号与 --prompts 时遍历全部原始需求
-npm run generate -- local --prompts=006-travel-agency-homepage
-
-# 明确授权重试元数据中 generated=false 的结果；不覆盖已完成结果
-npm run generate -- local --prompts=006-travel-agency-homepage --retry
+# 明确授权重试该目录中 generated=false 的结果
+npm run generate -- 006 QWen3 --retry
 ```
 
 每次 Codex 调用默认限时 30 分钟、不自动重试；`--timeout-ms=600000` 可调整超时，`--retries=1` 或 `2` 明确授权当次调用的有限重试。每个 prompt 共用生成锁，防止不同模型并发改写共享信息；中断或超时会终止当前子进程树，保留代码和隐藏的尝试日志，不自动删除其他进程留下的锁。
@@ -355,7 +350,7 @@ prompt 目录仅容纳模型结果目录。公开标题与 slug 保存在 `deplo
 
 ### 模型与发布配置
 
-`src\workflows\config.json` 专用于 `src\workflows\render-prompt-pages.mjs`，保存调用 URI、接口类型、真实模型 ID 与稳定目录名；可选认证值从环境读取。AI Agent 的模型与范围由本轮任务约定，发布选择独立保存在 `deploy\config.json`。
+`src\workflows\config.json` 专用于 `src\workflows\render-prompt-page.mjs`，保存调用 URI、接口类型、真实模型 ID 与稳定目录名；可选认证值从环境读取。AI Agent 的模型与范围由本轮任务约定，发布选择独立保存在 `deploy\config.json`。
 
 当前生成脚本使用以下模型配置结构。按实际服务创建 `src\workflows\config.json`；以下为无认证本地服务示例，服务由管理员启动：
 
@@ -373,7 +368,7 @@ prompt 目录仅容纳模型结果目录。公开标题与 slug 保存在 `deplo
 }
 ```
 
-`local` 是命令行选择名，`modelId` 是请求的真实模型 ID，`directory` 是唯一、稳定的小写输出目录名；不能让多个配置占用同一目录。例如选择名 `Qwen3.8` 可使用目录 `qwen3.8`，Codex 的 `--model` 和服务身份检查使用配置中的 `modelId`（如 `qwen3.8-flash-next-iq3_s`）。`baseUrl` 指向 OpenAI 兼容 API 根路径，必须使用 HTTPS，只有 loopback 地址允许 HTTP；不允许在 URL 中放认证信息、查询参数或 fragment。`apiKeyEnv` 只保存环境变量名，无认证的本地服务可以省略该字段。
+`local` 是服务配置键，`modelId` 是请求的真实模型 ID，`directory` 是程序化调用的默认小写输出目录。CLI 要求恰好配置一个 API 服务，并使用用户指定的 `display_model_name` 作为输出目录，保留其大小写；例如 `003 QWen3` 写入 `out\pages\<prompt>\QWen3\`。Codex 的 `--model`、服务身份检查及元数据 `modelId` 始终使用配置中的真实 ID。`baseUrl` 使用 HTTPS 或 loopback HTTP，`apiKeyEnv` 保存认证环境变量名。
 
 当前只支持 Responses 接口，并要求同一 API 根路径下的 `GET /models` 返回 `data[].id`，且包含精确匹配的 `modelId`。仅在需要调用模型时连接服务并读取认证环境；覆盖检查和已有结果的补登记不需要在线服务或 Codex。配置不兼容、连接失败或模型未被列出时明确失败，不切换服务或模型。该检查证明服务声明提供该 ID，不独立证明服务内部使用的模型权重；Codex 事件若报告不同模型 ID，会拒绝结果。实际调用还需安装兼容的 Codex CLI；隔离测试不能代替真实服务联调。
 

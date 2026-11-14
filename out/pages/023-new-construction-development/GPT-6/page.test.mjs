@@ -5,7 +5,7 @@ import path from "node:path";
 import {fileURLToPath} from "node:url";
 import {chromium,expect} from "@playwright/test";
 import {startPreviewServer} from "../../../../src/workflows/generate-preview.mjs";
-import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-page.mjs";
 const model=fileURLToPath(new URL(".",import.meta.url)),workspace=fileURLToPath(new URL("../../../../",import.meta.url)),checks=path.join(model,".checks");
 test("Ridgeline independent new-construction homepage",{timeout:150000},async(t)=>{
  const service=await startPreviewServer(path.join(model,"out"),{workspace}),browser=await chromium.launch();

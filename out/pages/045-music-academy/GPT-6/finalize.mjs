@@ -4,7 +4,7 @@ import {fileURLToPath,pathToFileURL} from 'node:url';
 const folder=path.dirname(fileURLToPath(import.meta.url)),root=path.resolve(folder,'..','..','..','..'),prompt='045-music-academy',slug='music-academy';
 const metadata=JSON.parse(await readFile(path.join(folder,'metadata.json'),'utf8')),verification=JSON.parse(await readFile(path.join(folder,'verification.json'),'utf8'));
 if(!verification.passed)throw Error('Verification required');
-const { StaticHomepage }=await import(pathToFileURL(path.join(root,'src','workflows','render-prompt-pages.mjs')));
+const { StaticHomepage }=await import(pathToFileURL(path.join(root,'src','workflows','render-prompt-page.mjs')));
 if(await StaticHomepage.validateStaticOutput(path.join(folder,'out'),slug,'GPT-6')!==verification.staticDigest)throw Error('Static output changed');
 const {registerGeneratedPage}=await import(pathToFileURL(path.join(root,'src','workflows','deploy-site.mjs')));
 const before=JSON.parse(await readFile(path.join(root,'deploy','config.json'),'utf8')),existing=before.pages[prompt]?.pages?.find(option=>option.model==='GPT-6');

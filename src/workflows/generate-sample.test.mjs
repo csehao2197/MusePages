@@ -25,7 +25,7 @@ import
 from "./generate-sample.mjs";
 import
 {
-    renderPromptPage
+    PromptPageRenderer
 }
 from "./render-prompt-page.mjs";
 import
@@ -93,7 +93,7 @@ test("generates a linked gallery, nested sample, and plain-text prompt page", as
         const prompt = await readFile(source, "utf8");
         assert.equal(
             await readFile(path.join(page, "prompt.html"), "utf8"),
-            renderPromptPage(prompt, "Tokyo destination guide", "../../../index.html"),
+            PromptPageRenderer.renderPromptPage(prompt, "Tokyo destination guide", "../../../index.html"),
         );
         await writeFile(path.join(output, "index.html"), "preserve existing gallery");
         await writeFile(path.join(output, "unrelated.txt"), "preserve");
@@ -223,7 +223,7 @@ test("prompt codebox preserves text, escapes markup, and fits desktop and mobile
                 width,
                 height: 800
             });
-            await page.setContent(renderPromptPage(prompt, title, "../../../index.html"));
+            await page.setContent(PromptPageRenderer.renderPromptPage(prompt, title, "../../../index.html"));
             assert.equal(await page.locator("pre code").textContent(), prompt);
             assert.equal(await page.locator("h1").textContent(), title);
             assert.equal(await page.locator("pre code > *").count(), 0);

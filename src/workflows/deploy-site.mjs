@@ -36,8 +36,7 @@ import
 from "node:timers/promises";
 import
 {
-    escapeHtml,
-    renderPromptPage
+    PromptPageRenderer
 }
 from "./render-prompt-page.mjs";
 
@@ -530,35 +529,35 @@ export function renderGallery(template, pages,
         const slides = models.map((page, index) =>
         {
             const href = `${flat ? "../" : ""}pages/${encodeURIComponent(page.slug)}/${encodeURIComponent(page.model)}`;
-            const title = escapeHtml(page.title);
+            const title = PromptPageRenderer.escapeHtml(page.title);
             const preview = page.preview ?
                 `<img src="${href}/preview.png" alt="Preview of ${title}" width="1200" height="900" loading="lazy">` :
                 '<span class="preview-label">No preview provided</span>';
             const topics = `${page.title} ${page.tags.join(" ")}`;
             const groups = categories.filter(([, pattern]) => pattern.test(topics)).map(([name]) => name).join(" ");
-            const slideAttributes = flat ? "" : ` role="group" aria-roledescription="slide" aria-label="${index + 1} of ${models.length}: ${escapeHtml(page.model)}"`;
-            return `<div class="slide"${slideAttributes} data-model="${escapeHtml(page.model)}" data-tags="${escapeHtml(JSON.stringify(page.tags))}" data-categories="${groups}"${index ? " hidden inert" : ""}>
+            const slideAttributes = flat ? "" : ` role="group" aria-roledescription="slide" aria-label="${index + 1} of ${models.length}: ${PromptPageRenderer.escapeHtml(page.model)}"`;
+            return `<div class="slide"${slideAttributes} data-model="${PromptPageRenderer.escapeHtml(page.model)}" data-tags="${PromptPageRenderer.escapeHtml(JSON.stringify(page.tags))}" data-categories="${groups}"${index ? " hidden inert" : ""}>
       <a class="preview" href="${href}/index.html" aria-label="Open ${title}" draggable="false">${preview}<span class="preview-arrow">${arrow}</span></a>
       <div class="details"><h3><a href="${href}/index.html" title="${title}">${title}</a></h3>
-        <div class="tags">${page.tags.slice(0, 2).map((tag) => `<button class="tag" type="button" data-tag="${escapeHtml(tag)}">${escapeHtml(tag)}</button>`).join("")}</div>
-        <div class="card-footer"><span class="model" aria-label="Model: ${escapeHtml(page.model)}" title="${escapeHtml(page.model)}">${escapeHtml(page.model)}</span><a class="prompt" href="${href}/prompt.html">View prompt ${arrow}</a></div>
+        <div class="tags">${page.tags.slice(0, 2).map((tag) => `<button class="tag" type="button" data-tag="${PromptPageRenderer.escapeHtml(tag)}">${PromptPageRenderer.escapeHtml(tag)}</button>`).join("")}</div>
+        <div class="card-footer"><span class="model" aria-label="Model: ${PromptPageRenderer.escapeHtml(page.model)}" title="${PromptPageRenderer.escapeHtml(page.model)}">${PromptPageRenderer.escapeHtml(page.model)}</span><a class="prompt" href="${href}/prompt.html">View prompt ${arrow}</a></div>
       </div>
     </div>`;
         }).join("\n");
         const dots = models.map((page, index) =>
-            `<button class="dot" type="button" data-index="${index}" aria-label="Show model ${escapeHtml(page.model)}" title="${escapeHtml(page.model)}" aria-current="${index === 0}"><span></span></button>`).join("");
+            `<button class="dot" type="button" data-index="${index}" aria-label="Show model ${PromptPageRenderer.escapeHtml(page.model)}" title="${PromptPageRenderer.escapeHtml(page.model)}" aria-current="${index === 0}"><span></span></button>`).join("");
         const sizing = models.length > 1 ?
             ` style="--carousel-width:${Math.min(models.length, 3) * 24}px;--carousel-height:${Math.ceil(models.length / 3) * 24}px"` :
             "";
         const attributes = flat ?
-            `data-gallery-card aria-label="${escapeHtml(models[0].title)} - ${escapeHtml(models[0].model)}"` :
-            `data-carousel role="region" aria-roledescription="carousel" aria-label="${escapeHtml(models[0].title)} model previews"`;
+            `data-gallery-card aria-label="${PromptPageRenderer.escapeHtml(models[0].title)} - ${PromptPageRenderer.escapeHtml(models[0].model)}"` :
+            `data-carousel role="region" aria-roledescription="carousel" aria-label="${PromptPageRenderer.escapeHtml(models[0].title)} model previews"`;
         return `<article class="card" ${attributes}${sizing}>
       <div class="slides">${slides}</div>
 ${models.length > 1 ? `      <div class="carousel-controls">
         <div class="dots" role="group" aria-label="Choose model">${dots}</div>
       </div>` : ""}
-${flat ? "" : `      <p class="carousel-status sr-only" role="status" aria-atomic="true">${escapeHtml(models[0].model)}</p>`}
+${flat ? "" : `      <p class="carousel-status sr-only" role="status" aria-atomic="true">${PromptPageRenderer.escapeHtml(models[0].model)}</p>`}
     </article>`;
     }).join("\n");
     const marker = "<!-- RESULT_CARDS -->";
@@ -576,7 +575,7 @@ ${flat ? "" : `      <p class="carousel-status sr-only" role="status" aria-atomi
         `<nav class="filters model-filters" aria-label="Filter by model">
         <button type="button" data-model="" aria-pressed="true">All models</button>
 ${[...new Set(pages.map((page) => page.model))].map((model) =>
-    `        <button type="button" data-model="${escapeHtml(model)}" aria-pressed="false">${escapeHtml(model)}</button>`).join("\n")}
+    `        <button type="button" data-model="${PromptPageRenderer.escapeHtml(model)}" aria-pressed="false">${PromptPageRenderer.escapeHtml(model)}</button>`).join("\n")}
       </nav>` :
         "";
     return template.replace("<!-- MODEL_FILTERS -->", () => modelFilters)
@@ -803,7 +802,7 @@ export async function publishSite(workspace = root)
                     throw Error(`Static index.html is missing for ${page.prompt}/${page.model}; export it before publishing`);
                 }
                 await writeFile(path.join(destination, "prompt.html"),
-                    renderPromptPage(await readFile(promptFile, "utf8"), page.title, "../../../index.html"), "utf8");
+                    PromptPageRenderer.renderPromptPage(await readFile(promptFile, "utf8"), page.title, "../../../index.html"), "utf8");
                 page.preview = await exists(path.join(destination, "preview.png"));
             }
             const template = await readFile(path.join(workspace, "src", "gallery", "index.html"), "utf8");
@@ -821,7 +820,7 @@ export async function publishSite(workspace = root)
                     new URL(`pages/${encodeURIComponent(page.slug)}/${encodeURIComponent(page.model)}/index.html`, base).href)];
                 await writeFile(path.join(staging, "sitemap.xml"),
                     '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
-                    urls.map((url) => `  <url><loc>${escapeHtml(url)}</loc></url>`).join("\n") + "\n</urlset>\n", "utf8");
+                    urls.map((url) => `  <url><loc>${PromptPageRenderer.escapeHtml(url)}</loc></url>`).join("\n") + "\n</urlset>\n", "utf8");
                 await writeFile(path.join(staging, "robots.txt"),
                     `User-agent: *\nAllow: /\n\nSitemap: ${new URL("sitemap.xml", base).href}\n`, "utf8");
             }

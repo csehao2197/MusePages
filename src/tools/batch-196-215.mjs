@@ -41,7 +41,7 @@ const meta = path.join(folder, 'metadata.json');
 const
 {
     StaticHomepage
-} = await import('../workflows/render-prompt-pages.mjs');
+} = await import('../workflows/render-prompt-page.mjs');
 const
 {
     generatePreview,

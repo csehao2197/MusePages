@@ -6,7 +6,7 @@ import path from "node:path";
 import {fileURLToPath} from "node:url";
 import {chromium,expect} from "@playwright/test";
 import {startPreviewServer} from "../../../../src/workflows/generate-preview.mjs";
-import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-page.mjs";
 import {tracks} from "./assets/tracks.js";
 
 const model=fileURLToPath(new URL(".",import.meta.url));
