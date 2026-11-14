@@ -9,6 +9,7 @@
     :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8;--accent:#28674e}
     *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}a{color:inherit}button{font:inherit;cursor:pointer}a:focus-visible,button:focus-visible{outline:3px solid #ae592d;outline-offset:4px}.wrap{max-width:1480px;margin:auto;padding:0 32px}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
     header{display:flex;justify-content:space-between;align-items:center;padding-top:16px!important;padding-bottom:16px!important;border-bottom:1px solid var(--line);gap:20px}.brand{font:bold 28px/1 Georgia,serif;text-decoration:none;letter-spacing:-1px}.brand span{color:#7c946b}.main-nav{display:flex;gap:28px;font-size:13px}.main-nav a{text-decoration:none}.hero{padding:18px 0 20px}h1{font:normal clamp(29px,3.2vw,36px)/1.2 Georgia,serif;letter-spacing:-.7px;margin:0 0 14px}
+    .hero .intro{max-width:720px;margin:0 0 18px;color:var(--muted);font-size:14px}
     .filters{display:flex;flex-wrap:wrap;gap:8px}.filters button{min-height:34px;border:1px solid var(--line);border-radius:999px;background:#edf1e8;color:var(--ink);padding:6px 16px;font-size:12px}.filters button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:white}.filters #selected-tag{background:#e4ebdf;max-width:100%;overflow-wrap:anywhere}
     .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;grid-auto-rows:1fr}.card{position:relative;min-width:0;background:white;border:1px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column}.card:hover,.card:focus-within{border-color:#9cafa0}.slides{display:grid;flex:1;min-width:0;touch-action:pan-y}.slide{grid-area:1/1;display:flex;flex-direction:column;min-width:0}.slide[hidden]{display:flex;visibility:hidden;pointer-events:none}
     .preview{display:block;position:relative;flex:none;aspect-ratio:3/2;overflow:hidden;background:#e6ebe2;border-bottom:1px solid var(--line);touch-action:pan-y}.preview img{display:block;width:100%;height:100%;object-fit:cover;object-position:top;-webkit-user-drag:none;user-select:none;transition:transform .2s ease}.preview:hover img,.preview:focus-visible img{transform:scale(1.02)}.preview-label{position:absolute;inset:0;display:grid;place-items:center;font-size:12px;color:var(--muted)}.external-icon{width:16px;height:16px;flex:none}.preview-arrow{position:absolute;top:12px;right:12px;display:grid;place-items:center;width:34px;height:34px;background:#fffffff5;border:1px solid var(--line);border-radius:6px;opacity:0;transform:translateY(3px);transition:opacity .2s ease,transform .2s ease}.preview:hover .preview-arrow,.preview:focus-visible .preview-arrow{opacity:1;transform:none}
@@ -25,7 +26,8 @@
   <header class="wrap"><a class="brand" href="index.html">MusePages<span>.</span></a><nav class="main-nav" aria-label="Main navigation"><a href="#collection">Explore</a><a href="#collections">Collections</a></nav></header>
   <main class="wrap">
     <section class="hero" aria-labelledby="gallery-title">
-      <h1 id="gallery-title">Website inspiration, made with AI.</h1>
+      <h1 id="gallery-title">Explore AI Prompts &amp; Generated Websites</h1>
+      <p class="intro">Discover original prompts and compare the website front pages created by different AI models. Explore each design, read its prompt, and get inspired.</p>
       <nav class="filters" id="collections" aria-label="Filter websites">
         <button type="button" data-filter="all" aria-pressed="true">All websites</button>
         <button type="button" data-filter="portfolio" aria-pressed="false">Portfolio</button>
@@ -117,6 +119,17 @@
       <div class="carousel-controls">
         <div class="dots" role="group" aria-label="Choose model"><button class="dot" type="button" data-index="0" aria-label="Show model GPT-6" title="GPT-6" aria-current="true"><span></span></button><button class="dot" type="button" data-index="1" aria-label="Show model Opus-5.5" title="Opus-5.5" aria-current="false"><span></span></button></div>
       </div>
+      <p class="carousel-status sr-only" role="status" aria-atomic="true">GPT-6</p>
+    </article>
+<article class="card" data-carousel role="region" aria-roledescription="carousel" aria-label="Rowan Hale — A Photographic Study model previews">
+      <div class="slides"><div class="slide" role="group" aria-roledescription="slide" aria-label="1 of 1: GPT-6" data-tags="[&quot;Photography Portfolio&quot;,&quot;Masonry Gallery&quot;,&quot;Accessible Lightbox&quot;]" data-categories="portfolio">
+      <a class="preview" href="pages/photographer-portfolio/GPT-6/index.html" aria-label="Open Rowan Hale — A Photographic Study" draggable="false"><img src="pages/photographer-portfolio/GPT-6/preview.png" alt="Preview of Rowan Hale — A Photographic Study" width="1200" height="900" loading="lazy"><span class="preview-arrow"><svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></span></a>
+      <div class="details"><h3><a href="pages/photographer-portfolio/GPT-6/index.html" title="Rowan Hale — A Photographic Study">Rowan Hale — A Photographic Study</a></h3>
+        <div class="tags"><button class="tag" type="button" data-tag="Photography Portfolio">Photography Portfolio</button><button class="tag" type="button" data-tag="Masonry Gallery">Masonry Gallery</button></div>
+        <div class="card-footer"><span class="model" aria-label="Model: GPT-6" title="GPT-6">GPT-6</span><a class="prompt" href="pages/photographer-portfolio/GPT-6/prompt.html">View prompt <svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></div>
+      </div>
+    </div></div>
+
       <p class="carousel-status sr-only" role="status" aria-atomic="true">GPT-6</p>
     </article>
 <article class="card" data-carousel role="region" aria-roledescription="carousel" aria-label="Verdant Journeys | Travel with Purpose model previews" style="--carousel-width:48px;--carousel-height:24px">
@@ -2242,17 +2255,6 @@
       <div class="details"><h3><a href="pages/motion-designer-portfolio/GPT-6/index.html" title="Jules Ito — Motion with Intent">Jules Ito — Motion with Intent</a></h3>
         <div class="tags"><button class="tag" type="button" data-tag="Motion Design">Motion Design</button><button class="tag" type="button" data-tag="Interactive Reel">Interactive Reel</button></div>
         <div class="card-footer"><span class="model" aria-label="Model: GPT-6" title="GPT-6">GPT-6</span><a class="prompt" href="pages/motion-designer-portfolio/GPT-6/prompt.html">View prompt <svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></div>
-      </div>
-    </div></div>
-
-      <p class="carousel-status sr-only" role="status" aria-atomic="true">GPT-6</p>
-    </article>
-<article class="card" data-carousel role="region" aria-roledescription="carousel" aria-label="Rowan Hale — A Photographic Study model previews">
-      <div class="slides"><div class="slide" role="group" aria-roledescription="slide" aria-label="1 of 1: GPT-6" data-tags="[&quot;Photography Portfolio&quot;,&quot;Masonry Gallery&quot;,&quot;Accessible Lightbox&quot;]" data-categories="portfolio">
-      <a class="preview" href="pages/photographer-portfolio/GPT-6/index.html" aria-label="Open Rowan Hale — A Photographic Study" draggable="false"><img src="pages/photographer-portfolio/GPT-6/preview.png" alt="Preview of Rowan Hale — A Photographic Study" width="1200" height="900" loading="lazy"><span class="preview-arrow"><svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></span></a>
-      <div class="details"><h3><a href="pages/photographer-portfolio/GPT-6/index.html" title="Rowan Hale — A Photographic Study">Rowan Hale — A Photographic Study</a></h3>
-        <div class="tags"><button class="tag" type="button" data-tag="Photography Portfolio">Photography Portfolio</button><button class="tag" type="button" data-tag="Masonry Gallery">Masonry Gallery</button></div>
-        <div class="card-footer"><span class="model" aria-label="Model: GPT-6" title="GPT-6">GPT-6</span><a class="prompt" href="pages/photographer-portfolio/GPT-6/prompt.html">View prompt <svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a></div>
       </div>
     </div></div>
 
