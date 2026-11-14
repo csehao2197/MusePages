@@ -126,7 +126,7 @@ node src\workflows\generate-preview.mjs out\pages\006-travel-agency-homepage\mod
 
 ### 页面生成工作流
 
-页面生成工作流接收 `prompt_scope` 和 `display_model_name` 两个位置参数；由 `src\workflows\render-prompt-page.mjs` 读取 `src\workflows\config.json` 中唯一的 API 服务，按指定范围和展示目录生成网站代码与静态首页。
+页面生成工作流接收 `prompt_scope` 和 `display_model_name` 两个位置参数；由 `src\workflows\render-prompt-page.mjs` 从 `http://localhost:8000/v1/models` 获取唯一模型，按指定范围和展示目录生成网站代码与静态首页。
 
 流程依次完成模型配置校验、已有结果检查、缺失页面生成和静态产物准备。已有结果按[覆盖检查规则](#生成覆盖检查与模型匹配)判断，不因未验证、未发布或配置未登记而重复生成源码。
 
@@ -203,7 +203,6 @@ src\
       DESIGN.md                     # 通用设计指引
       render-prompt-pages.md        # 目标 Agent 编排指引
     render-prompt-page.mjs          # 目标页面生成脚本
-    config.json                     # render-prompt-page.mjs 专用模型服务配置
     deploy-site.mjs                 # 本地发布入口
     publish-site.mjs                # 清空并复制静态集合到站点目录
     ...                             # 示例生成与回归测试
@@ -248,10 +247,10 @@ task\
 
 `src\workflows\render-prompt-page.mjs` 按以下顺序编排：
 
-1. **校验模型配置**：读取指定服务的 URI、接口类型和实际模型 ID，验证连接与身份，不把服务配置名称当作真实模型。
+1. **发现本地模型**：请求 `http://localhost:8000/v1/models`，要求 `data` 恰好包含一个模型，使用其有效 `id` 核对身份。
 2. **读取需求与设计指引**：遍历原始需求 Markdown，结合 `src\workflows\AI Agent\DESIGN.md` 准备输入，不把 README、生成记录或已有代码当作原始 prompt，不擅自扩展需求。
 3. **判断是否需要生成**：对照元数据、实际代码和当前需求，按[覆盖检查规则](#生成覆盖检查与模型匹配)筛选；有效结果跳过，仅缺静态导出时保留源码，只补后续产物。
-4. **调用 Codex 生成源码**：对获准生成的缺失项，再次检查并加锁，以对应展示目录为子进程工作目录，非交互调用 `codex exec`。`-c` 覆盖服务配置，`--model` 使用配置中的真实模型 ID；标准输入以 `Implement the specification in render-prompt-pages.md.` 开头，在 `Arguments:` 中传入当前编号 `prompt_scope` 和用户指定的 `display_model_name`，并要求完整阅读规范、完成修改及遵循项目约定。
+4. **调用 Codex 生成源码**：对获准生成的缺失项，再次检查并加锁，以对应展示目录为子进程工作目录，非交互调用 `codex exec`。`-c` 指定本地 Responses 服务，`--model` 使用发现的真实模型 ID；标准输入以 `Implement the specification in render-prompt-pages.md.` 开头，在 `Arguments:` 中传入当前编号 `prompt_scope` 和用户指定的 `display_model_name`，并要求完整阅读规范、完成修改及遵循项目约定。
 5. **准备并检查静态首页**：保留源码，将发布用首页及资源放入其 `out\` 子目录，按[静态产物边界](#静态产物边界)核验，不用 `.next` 或截图代替静态网页。
 6. **准备首页预览**：调用 `generate-preview.mjs` 补齐或刷新 `preview.png`，摘要一致的已有预览复用；失败保留源码和旧预览并报告待处理，不把缺少截图当作需要重新生成源码。
 7. **更新记录与发布选项**：静态检查及预览准备通过后更新元数据并登记发布选项；配置登记失败时保留代码，下次仅补登记，不重复生成。结束时报告生成、跳过、待确认、失败及剩余缺失项。
@@ -293,7 +292,7 @@ node --test src\workflows\render-prompt-pages.test.mjs src\workflows\deploy-site
 
 文档应明确以下内容：
 
-1. **输入与范围**：接收用户指定的 `<ai model>` 和本轮授权范围，读取原始 prompt 与 `src\workflows\AI Agent\DESIGN.md`，明确真实生成模型及允许写入的位置；调用 `.mjs` 生成脚本时，由该脚本读取其专用配置。
+1. **输入与范围**：接收用户指定的 `<ai model>` 和本轮授权范围，读取原始 prompt 与 `src\workflows\AI Agent\DESIGN.md`，明确真实生成模型及允许写入的位置；调用 `.mjs` 生成脚本时，由该脚本发现本地服务的唯一模型。
 2. **执行依据**：沿用[页面生成脚本](#页面生成脚本)的步骤与[覆盖检查规则](#生成覆盖检查与模型匹配)，不另设判断标准。模型身份无法核实或不匹配时报告阻塞；已有有效结果跳过，需要覆盖或重试时先取得授权。
 3. **输出要求**：源码写入 `out\pages\<prompt>\<ai model>\`，静态首页及资源写入其 `out\` 子目录；每次生成必须为该模型结果生成非空 `tags` 并写入模型元数据，按[项目状态元数据](#项目状态元数据)核验并记录结果，登记默认关闭的发布选项，不把 Agent 返回成功当作生成完成。
 4. **恢复与交付**：约定超时、有限重试和中断恢复方式，保留已有有效产物；结束时汇总生成、跳过、待确认、失败及剩余缺失项，说明原因和后续步骤，不自动部署目标网站。
@@ -350,27 +349,11 @@ prompt 目录仅容纳模型结果目录。公开标题与 slug 保存在 `deplo
 
 ### 模型与发布配置
 
-`src\workflows\config.json` 专用于 `src\workflows\render-prompt-page.mjs`，保存调用 URI、接口类型、真实模型 ID 与稳定目录名；可选认证值从环境读取。AI Agent 的模型与范围由本轮任务约定，发布选择独立保存在 `deploy\config.json`。
+生成脚本直接请求无认证本地服务 `http://localhost:8000/v1/models`，使用唯一模型的 `data[0].id` 作为 Codex `--model`、报告模型名和元数据 `modelId`；`src\workflows\config.json` 已由在线发现替代。零个、多个或无效模型 ID 均明确报错，连接超时为 10 秒。
 
-当前生成脚本使用以下模型配置结构。按实际服务创建 `src\workflows\config.json`；以下为无认证本地服务示例，服务由管理员启动：
+`display_model_name` 仅指定展示目录，保留大小写；例如 `003 QWen3` 写入 `out\pages\<prompt>\QWen3\`。每次运行（含 `--check` 和补登记）先发现模型，因此需要本地服务在线；已有结果仍按真实模型身份校验并保留源码。AI Agent 的范围由本轮任务约定，发布选择独立保存在 `deploy\config.json`。
 
-```json
-{
-  "version": 1,
-  "models": {
-    "local": {
-      "apiType": "openai-responses",
-      "baseUrl": "http://127.0.0.1:8000/v1",
-      "modelId": "actual-model-id",
-      "directory": "model-a"
-    }
-  }
-}
-```
-
-`local` 是服务配置键，`modelId` 是请求的真实模型 ID，`directory` 是程序化调用的默认小写输出目录。CLI 要求恰好配置一个 API 服务，并使用用户指定的 `display_model_name` 作为输出目录，保留其大小写；例如 `003 QWen3` 写入 `out\pages\<prompt>\QWen3\`。Codex 的 `--model`、服务身份检查及元数据 `modelId` 始终使用配置中的真实 ID。`baseUrl` 使用 HTTPS 或 loopback HTTP，`apiKeyEnv` 保存认证环境变量名。
-
-当前只支持 Responses 接口，并要求同一 API 根路径下的 `GET /models` 返回 `data[].id`，且包含精确匹配的 `modelId`。仅在需要调用模型时连接服务并读取认证环境；覆盖检查和已有结果的补登记不需要在线服务或 Codex。配置不兼容、连接失败或模型未被列出时明确失败，不切换服务或模型。该检查证明服务声明提供该 ID，不独立证明服务内部使用的模型权重；Codex 事件若报告不同模型 ID，会拒绝结果。实际调用还需安装兼容的 Codex CLI；隔离测试不能代替真实服务联调。
+实际生成还需兼容的 Codex CLI，以及服务的 `POST /v1/responses`、流式响应和工具调用支持。模型列表仅证明服务声明提供该 ID；Codex 事件报告不同模型 ID 时会拒绝结果。隔离测试使用模拟服务与子进程，真实服务联调需单独验证。
 
 生成脚本与发布器使用 **version 2** 发布配置。`pages` 以原始 prompt Markdown 文件名（不含 `.md`，保留内部编号）为 key，每个值为 prompt 对象，其 `pages` 字段保存模型页面数组。新选项保持 `enabled: false`、`deployed: false`，同步保留已有开关、发布状态、模型顺序及用户展示信息；已有 slug 或导出路径与元数据冲突时报告登记失败。
 

@@ -41,7 +41,7 @@ import
 from "./render-prompt-page.mjs";
 
 const prompt = "001-travel";
-const modelId = "actual-model-id";
+const modelId = "local";
 const secret = "synthetic-test-secret";
 const model = {
     apiType: "openai-responses",
@@ -80,14 +80,9 @@ async function fixture(t)
     await save(path.join(workspace, "src", "workflows", "AI Agent", "DESIGN.md"), "Use responsive, accessible UI. Preserve source licenses.");
     await save(path.join(workspace, "data", "prompts", prompt, `${prompt}.md`), "# Travel\nBuild a travel homepage.\n& echo unsafe; $(not-a-command)\n中文");
     await save(path.join(workspace, "data", "prompts", prompt, "README.md"), "# Not an original prompt");
-    await save(modelConfig(workspace),
-    {
-        version: 1,
-        models:
-        {
-            local: model
-        }
-    });
+    const originalFetch = globalThis.fetch;
+    t.mock.method(globalThis, "fetch", (url, options) => String(url) === "http://localhost:8000/v1/models" ?
+        Promise.resolve(Response.json({ data: [{ id: modelId }] })) : originalFetch(url, options));
     const script = path.join(workspace, "mock-codex.cjs");
     await save(script, `
 const fs = require("node:fs");
@@ -99,7 +94,7 @@ process.stdin.on("end", () => {
   fs.writeFileSync(".invocation.json", JSON.stringify({ args: process.argv.slice(3), input, cwd: process.cwd(), home: process.env.CODEX_HOME }));
   const count = fs.existsSync(".attempt-count") ? Number(fs.readFileSync(".attempt-count")) + 1 : 1;
   fs.writeFileSync(".attempt-count", String(count));
-  console.log(process.env.MUSE_TEST_KEY);
+  console.log(process.argv.some(arg => arg.startsWith("model_providers.musepages.env_key=")) ? process.env.MUSE_TEST_KEY : "mock codex");
   if (mode === "empty") return;
   fs.writeFileSync("README.md", "Static travel homepage. No integration; browser-only mock interactions.");
   if (mode === "timeout") {
@@ -146,6 +141,7 @@ process.stdin.on("end", () => {
         options: (mode = "success", rest = {}) => (
         {
             env,
+            displayModelName: "model-a",
             command:
             {
                 executable: process.execPath,
@@ -161,7 +157,7 @@ async function service(t, workspace,
 {
     advertised = modelId,
     status = 200,
-    authenticated = true
+    authenticated = false
 } = {})
 {
     let requests = 0;
@@ -184,9 +180,9 @@ async function service(t, workspace,
     });
     await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
     t.after(() => new Promise((resolve) => server.close(resolve)));
-    const config = await readJson(modelConfig(workspace));
-    config.models.local.baseUrl = `http://127.0.0.1:${server.address().port}/v1`;
-    await save(modelConfig(workspace), config);
+    const originalFetch = globalThis.fetch;
+    t.mock.method(globalThis, "fetch", (url, options) => String(url) === "http://localhost:8000/v1/models" ?
+        originalFetch(`http://127.0.0.1:${server.address().port}/v1/models`, options) : originalFetch(url, options));
     return () => requests;
 }
 
@@ -223,22 +219,16 @@ async function snapshot(folder)
     return result;
 }
 
-test("the render script exclusively reads its workflow-local configuration without a root fallback", async (t) =>
+test("local discovery works without configuration files and ignores stale workflow configuration", async (t) =>
 {
     const f = await fixture(t);
     const rootConfig = path.join(f.workspace, "config.json");
-    await save(rootConfig,
-    {
-        version: 1,
-        models:
-        {
-            local:
-            {
-                ...model,
-                modelId: "unrelated-root-model"
-            }
-        }
-    });
+    const [discovered] = await new ModelService(f.workspace).load([], "QWen3");
+    assert.equal(discovered.modelId, modelId);
+    assert.equal(discovered.directory, "QWen3");
+    assert.equal(discovered.baseUrl, "http://localhost:8000/v1");
+    await save(rootConfig, "{invalid configuration");
+    await save(modelConfig(f.workspace), "{invalid configuration");
     await save(path.join(f.workspace, "deploy", "config.json"),
     {
         version: 2,
@@ -246,20 +236,18 @@ test("the render script exclusively reads its workflow-local configuration witho
         {}
     });
     const before = await snapshot(f.workspace);
-    const [configured] = await new ModelService(f.workspace).load(["local"]);
+    const [configured] = await new ModelService(f.workspace).load([], "model-a");
     assert.equal(configured.modelId, modelId);
     const report = await PromptPageWorkflow.renderPromptPages(f.workspace, ["local"],
     {
-        check: true
+        check: true,
+        displayModelName: "model-a"
     });
     assert.equal(report.summary.missing, 1);
     assert.deepEqual(await snapshot(f.workspace), before);
     await rm(modelConfig(f.workspace));
-    await assert.rejects(ModelService.loadModels(f.workspace, ["local"]),
-    {
-        message: `Required file is missing: ${modelConfig(f.workspace)}`,
-    });
-    assert.equal((await readJson(rootConfig)).models.local.modelId, "unrelated-root-model");
+    assert.equal((await ModelService.loadModels(f.workspace, [], "QWen3"))[0].modelId, modelId);
+    assert.equal(await readFile(rootConfig, "utf8"), "{invalid configuration");
 });
 
 test("generates through a child process with stdin, real model selection, static checks and disabled grouped registration", async (t) =>
@@ -324,7 +312,8 @@ test("generates through a child process with stdin, real model selection, static
     assert.ok(!diagnostics.join("\n").includes("# Travel"));
     assert.ok(invocation.args.includes('model_provider="musepages"'));
     assert.ok(invocation.args.includes('model_providers.musepages.wire_api="responses"'));
-    assert.ok(invocation.args.includes('model_providers.musepages.env_key="MUSE_TEST_KEY"'));
+    assert.ok(!invocation.args.some((arg) => arg.startsWith("model_providers.musepages.env_key=")));
+    assert.ok(invocation.args.includes('model_providers.musepages.base_url="http://localhost:8000/v1"'));
     assert.ok(invocation.args.includes("workspace-write"));
     assert.ok(invocation.args.includes("exec"));
     assert.equal(invocation.input, `Implement the specification in render-prompt-pages.md.
@@ -343,7 +332,7 @@ Apply all required code modifications and keep the implementation consistent wit
     const logs = (await readdir(f.output)).filter((file) => file.endsWith(".log"));
     assert.equal(logs.length, 1);
     const log = await readFile(path.join(f.output, logs[0]), "utf8");
-    assert.ok(log.includes("[REDACTED]"));
+    assert.ok(log.includes("turn.completed"));
     assert.ok(!log.includes(secret));
     assert.deepEqual((await readdir(path.join(f.output, "out"))).sort(), ["client.js", "images", "index.html", "preview.png", "style.css"]);
     assert.equal(await readFile(path.join(f.workspace, "deploy", "dist", "MusePages", "index.html"), "utf8"), "existing website");
@@ -411,9 +400,6 @@ test("generation works without API-key settings or environment variables", async
     {
         authenticated: false
     });
-    const config = await readJson(modelConfig(f.workspace));
-    delete config.models.local.apiKeyEnv;
-    await save(modelConfig(f.workspace), config);
     const keylessEnv = {
         ...process.env
     };
@@ -496,7 +482,7 @@ test("completed results repair registration without a model call and preserve ex
     });
     assert.deepEqual((await readJson(file)).pages[prompt], config.pages[prompt]);
     assert.equal(await readFile(path.join(f.output, ".attempt-count"), "utf8"), "1");
-    assert.equal(requests(), 1);
+    assert.equal(requests(), 3);
     await assert.rejects(readFile(path.join(f.output, "..", "metadata.json")),
     {
         code: "ENOENT"
@@ -547,7 +533,7 @@ test("changed exports and corrupt previews refresh screenshots without regenerat
     assert.equal(recovered.items[0].preview, "generated", JSON.stringify(recovered));
     assert.equal((await readJson(path.join(f.output, "metadata.json"))).preview, true);
     assert.deepEqual(await readJson(file), config);
-    assert.equal(requests(), 1);
+    assert.equal(requests(), 5);
     assert.equal(await readFile(path.join(f.output, ".attempt-count"), "utf8"), "1");
 });
 
@@ -576,6 +562,7 @@ test("legacy metadata migrates preview and removes deployed only during non-chec
         const checked = await PromptPageWorkflow.renderPromptPages(f.workspace, ["local"],
         {
             check: true,
+            displayModelName: "model-a",
             env:
             {}
         });
@@ -586,7 +573,7 @@ test("legacy metadata migrates preview and removes deployed only during non-chec
         assert.equal((await readJson(file)).preview, true);
         assert.equal(Object.hasOwn(await readJson(file), "deployed"), false);
     }
-    assert.equal(requests(), 1);
+    assert.equal(requests(), 5);
     assert.equal(await readFile(path.join(f.output, ".attempt-count"), "utf8"), "1");
 });
 
@@ -629,7 +616,7 @@ test("preview failure retains source and the old image, reports pending and resu
     assert.equal(resumed.items[0].preview, "generated");
     assert.equal((await readJson(path.join(f.output, "metadata.json"))).preview, true);
     assert.equal((await readJson(path.join(f.output, "metadata.json"))).validated, true);
-    assert.equal(requests(), 1);
+    assert.equal(requests(), 3);
     assert.equal(await readFile(path.join(f.output, ".attempt-count"), "utf8"), "1");
 });
 
@@ -647,6 +634,7 @@ test("cancelling preview preparation releases browser and generation locks witho
     await save(path.join(f.output, "out", "index.html"), html);
     const report = await PromptPageWorkflow.renderPromptPages(f.workspace, ["local"],
     {
+        displayModelName: "model-a",
         env:
         {},
         command:
@@ -672,44 +660,34 @@ test("cancelling preview preparation releases browser and generation locks witho
     });
 });
 
-test("read-only coverage spans explicit models and ignores validation/publication without touching files or service", async (t) =>
+test("read-only coverage discovers the model and ignores validation/publication without touching files", async (t) =>
 {
     const f = await fixture(t);
-    const config = await readJson(modelConfig(f.workspace));
-    config.models.second = {
-        ...model,
-        modelId: "second-id",
-        directory: "model-b"
-    };
-    await save(modelConfig(f.workspace), config);
+    const requests = await service(t, f.workspace);
     await save(path.join(f.output, "metadata.json"), metadata());
     const before = await snapshot(f.workspace);
-    const report = await PromptPageWorkflow.renderPromptPages(f.workspace, ["local", "second"],
+    const report = await PromptPageWorkflow.renderPromptPages(f.workspace, [],
     {
         check: true,
+        displayModelName: "model-a",
         env:
         {}
     });
     assert.equal(report.summary.skipped, 1);
-    assert.equal(report.summary.missing, 1);
-    assert.deepEqual(report.remainingMissing, [
-    {
-        prompt,
-        model: "second"
-    }]);
+    assert.equal(report.summary.missing, 0);
+    assert.deepEqual(report.remainingMissing, []);
+    assert.equal(report.items[0].model, modelId);
+    assert.equal(requests(), 1);
     assert.deepEqual(await snapshot(f.workspace), before);
 });
 
-test("service failures report the stage, URL and nested network causes without leaking credentials", async (t) =>
+test("discovery failures retain the URL and nested network causes before creating result files", async (t) =>
 {
     const f = await fixture(t);
-    const config = await readJson(modelConfig(f.workspace));
-    config.models.local.baseUrl = "http://127.0.0.1:8000/v1";
-    await save(modelConfig(f.workspace), config);
     const logs = [];
     t.mock.method(globalThis, "fetch", async () =>
     {
-        const cause = Object.assign(new Error(`connect ECONNREFUSED ${secret}`),
+        const cause = Object.assign(new Error("connect ECONNREFUSED"),
         {
             code: "ECONNREFUSED",
             syscall: "connect",
@@ -721,23 +699,19 @@ test("service failures report the stage, URL and nested network causes without l
             cause: new AggregateError([cause])
         });
     });
-    const report = await PromptPageWorkflow.renderPromptPages(f.workspace, ["local"], f.options("success",
+    await assert.rejects(PromptPageWorkflow.renderPromptPages(f.workspace, [], f.options("success",
     {
         onLog: (message) => logs.push(message)
-    }));
-    assert.equal(report.summary.failed, 1);
-    const reason = report.items[0].reason;
-    for (const pattern of [/\[verify-model-service\]/, /GET http:\/\/127\.0\.0\.1:8000\/v1\/models/, /ECONNREFUSED/, /address=127\.0\.0\.1/, /port=8000/, /\[REDACTED\]/])
+    })), (error) =>
     {
-        assert.match(reason, pattern);
-    }
-    assert.ok(logs.some((message) => message.includes(`[${prompt}/local] verify-model-service:`)));
-    assert.ok(logs.some((message) => message.includes("failed:") && message.includes("ECONNREFUSED")));
-    assert.ok(!JSON.stringify(
-    {
-        report,
-        logs
-    }).includes(secret));
+        const reason = GenerationCli.errorDetails(error);
+        for (const pattern of [/GET http:\/\/localhost:8000\/v1\/models/, /ECONNREFUSED/, /address=127\.0\.0\.1/, /port=8000/])
+        {
+            assert.match(reason, pattern);
+        }
+        return true;
+    });
+    assert.ok(logs.some((message) => message.includes("Discovering local model:")));
     await assert.rejects(readFile(path.join(f.output, "metadata.json")),
     {
         code: "ENOENT"
@@ -794,9 +768,7 @@ test("preflight rejects identity substitution and missing authentication before 
     {
         advertised: "different-model"
     });
-    const report = await PromptPageWorkflow.renderPromptPages(f.workspace, ["local"], f.options());
-    assert.equal(report.summary.failed, 1);
-    assert.match(report.items[0].reason, /not advertised/);
+    await assert.rejects(PromptPageWorkflow.renderPromptPages(f.workspace, ["local"], f.options()), /does not match/);
     await assert.rejects(readFile(path.join(f.output, "metadata.json")),
     {
         code: "ENOENT"
@@ -806,6 +778,12 @@ test("preflight rejects identity substitution and missing authentication before 
         env:
         {}
     }), /Missing authentication/);
+    await assert.rejects(ModelService.verifyModelService(
+    {
+        ...model,
+        baseUrl: "http://localhost:8000/v1",
+        apiKeyEnv: undefined
+    }), /not advertised/);
 });
 
 test("missing, malformed and mismatched metadata never authorize overwriting existing code", async (t) =>
@@ -946,7 +924,7 @@ test("Next.js source with no export stays generated but unvalidated; supplying o
     await save(path.join(f.output, "out", "index.html"), "<html><body><main>Prepared export</main></body></html>");
     const resumed = await PromptPageWorkflow.renderPromptPages(f.workspace, ["local"], f.options("fail"));
     assert.equal(resumed.summary.registered, 1, JSON.stringify(resumed));
-    assert.equal(requests(), 1);
+    assert.equal(requests(), 2);
     assert.equal(await readFile(path.join(f.output, ".attempt-count"), "utf8"), "1");
 });
 
@@ -1019,21 +997,10 @@ test("static validation checks CSS resources, nested public paths and forbidden 
     await assert.rejects(StaticHomepage.validateStaticOutput(output, "travel", "model-a"), /Missing static resource/);
 });
 
-test("model directories, input names and public slug collisions stop before any model call", async (t) =>
+test("invalid display directories, input names and public slug collisions stop before Codex calls", async (t) =>
 {
     const f = await fixture(t);
-    const config = await readJson(modelConfig(f.workspace));
-    config.models.duplicate = {
-        ...model
-    };
-    await save(modelConfig(f.workspace), config);
-    await assert.rejects(ModelService.loadModels(f.workspace, ["local"]), /directory collision/);
-    delete config.models.duplicate;
-    config.models.local.directory = "../escape";
-    await save(modelConfig(f.workspace), config);
-    await assert.rejects(ModelService.loadModels(f.workspace, ["local"]), /Invalid model directory/);
-    config.models.local = model;
-    await save(modelConfig(f.workspace), config);
+    await assert.rejects(ModelService.loadModels(f.workspace, [], "../escape"), /Invalid display model name/);
     await save(path.join(f.workspace, "data", "prompts", "another-folder", `${prompt}.md`), "Duplicate");
     await assert.rejects(PromptPageWorkflow.renderPromptPages(f.workspace, ["local"], f.options()), /Duplicate prompt/);
     await rm(path.join(f.workspace, "data", "prompts", "another-folder", `${prompt}.md`));
@@ -1064,7 +1031,7 @@ test("shared metadata discovery ignores output-root files and still checks direc
         title: "Another travel page"
     });
     await assert.rejects(PromptPageWorkflow.renderPromptPages(f.workspace, ["local"], f.options()), /Conflicting public slug/);
-    assert.equal(requests(), 1);
+    assert.equal(requests(), 2);
 });
 
 test("locks and symbolic-link output parents cannot redirect or overwrite results", async (t) =>
@@ -1303,12 +1270,13 @@ Apply all required code modifications and keep the implementation consistent wit
     const checked = await PromptPageWorkflow.renderPromptPages(f.workspace, ["local"],
     {
         prompts: ["001-003"],
+        displayModelName: "model-a",
         check: true
     });
     assert.equal(checked.summary.skipped, 3);
     assert.deepEqual(checked.items.map((item) => item.prompt), ids);
     assert.deepEqual(await snapshot(f.workspace), before);
-    assert.equal(requests(), 1);
+    assert.equal(requests(), 2);
 });
 
 test("prompt ranges reject missing or ambiguous numbers before generation without expanding huge ranges", async (t) =>
@@ -1338,29 +1306,18 @@ test("prompt ranges reject missing or ambiguous numbers before generation withou
     const single = await PromptPageWorkflow.renderPromptPages(f.workspace, ["local"],
     {
         prompts: ["001-001"],
+        displayModelName: "model-a",
         check: true
     });
     assert.deepEqual(single.items.map((item) => item.prompt), [prompt]);
-    assert.equal(requests(), 0);
+    assert.equal(requests(), 4);
 });
 
 test("numeric selection generates only the matching prompt and rejects missing or ambiguous numbers", async (t) =>
 {
     const f = await fixture(t);
-    const requests = await service(t, f.workspace);
-    const config = await readJson(modelConfig(f.workspace));
-    await save(modelConfig(f.workspace),
-    {
-        version: 1,
-        models:
-        {
-            "Qwen3.8":
-            {
-                ...config.models.local,
-                directory: "qwen3.8"
-            }
-        },
-    });
+    const actualId = "qwen3.8-flash-next-iq3_s";
+    const requests = await service(t, f.workspace, { advertised: actualId });
     const selected = "003-selected";
     await save(path.join(f.workspace, "data", "prompts", selected, `${selected}.md`), "# Selected requirement\n");
     await save(path.join(f.workspace, "data", "prompts", "030-other", "030-other.md"), "# Unselected requirement\n");
@@ -1372,15 +1329,14 @@ test("numeric selection generates only the matching prompt and rejects missing o
     const report = await PromptPageWorkflow.renderPromptPages(f.workspace, selections, f.options("success", options));
     assert.equal(report.summary.generated, 1, JSON.stringify(report));
     assert.deepEqual(report.items.map((item) => item.prompt), [selected]);
-    assert.equal(report.items[0].model, "Qwen3.8");
+    assert.equal(report.items[0].model, actualId);
     assert.equal(report.items[0].directory, "QWen3");
     assert.deepEqual(await readdir(path.join(f.workspace, "out", "pages")), [selected]);
     assert.equal(requests(), 1);
     const output = path.join(f.workspace, "out", "pages", selected, "QWen3");
     const invocation = await readJson(path.join(output, ".invocation.json"));
-    assert.equal(invocation.args[invocation.args.indexOf("--model") + 1], modelId);
-    assert.notEqual(modelId, "Qwen3.8");
-    assert.equal((await readJson(path.join(output, "metadata.json"))).modelId, modelId);
+    assert.equal(invocation.args[invocation.args.indexOf("--model") + 1], actualId);
+    assert.equal((await readJson(path.join(output, "metadata.json"))).modelId, actualId);
     assert.equal(invocation.input, `Implement the specification in render-prompt-pages.md.
 
 Arguments:
@@ -1399,9 +1355,9 @@ Apply all required code modifications and keep the implementation consistent wit
     });
     assert.equal(checked.summary.skipped, 1);
     assert.deepEqual(await snapshot(f.workspace), generated);
-    assert.equal(requests(), 1);
+    assert.equal(requests(), 2);
     const before = await snapshot(f.workspace);
-    await assert.rejects(PromptPageWorkflow.renderPromptPages(f.workspace, ["Qwen3.8"],
+    await assert.rejects(PromptPageWorkflow.renderPromptPages(f.workspace, [],
     {
         prompts: ["999"],
         check: true
@@ -1409,51 +1365,43 @@ Apply all required code modifications and keep the implementation consistent wit
     assert.deepEqual(await snapshot(f.workspace), before);
     await save(path.join(f.workspace, "data", "prompts", "003-duplicate", "003-duplicate.md"), "# Duplicate number\n");
     const ambiguous = await snapshot(f.workspace);
-    await assert.rejects(PromptPageWorkflow.renderPromptPages(f.workspace, ["Qwen3.8"],
+    await assert.rejects(PromptPageWorkflow.renderPromptPages(f.workspace, [],
     {
         prompts: ["3"],
         check: true
     }), /Ambiguous prompt number/);
     assert.deepEqual(await snapshot(f.workspace), ambiguous);
-    assert.equal(requests(), 1);
+    assert.equal(requests(), 4);
 });
 
-test("display names require one configured API service before any writes or model calls", async (t) =>
+test("discovery rejects empty, ambiguous and malformed model lists before writing results", async (t) =>
 {
     const f = await fixture(t);
-    const requests = await service(t, f.workspace);
-    const config = await readJson(modelConfig(f.workspace));
     const
     {
         selections,
         options
     } = GenerationCli.parseArguments(["003", "QWen3", "--check"]);
-    for (const models of [
+    const fetch = t.mock.method(globalThis, "fetch");
+    for (const body of [
+            { data: [] },
+            { data: [{ id: modelId }, { id: "another-model", status: { value: "loaded" } }] },
             {},
-            {
-                local: config.models.local,
-                other:
-                {
-                    ...config.models.local,
-                    directory: "other-model"
-                }
-            },
+            null,
+            { data: [null] },
+            { data: [{ id: "" }] },
+            { data: [{ id: "invalid model" }] },
         ])
     {
-        await save(modelConfig(f.workspace),
-        {
-            version: 1,
-            models
-        });
+        fetch.mock.mockImplementation(async () => Response.json(body));
         const before = await snapshot(f.workspace);
         await assert.rejects(PromptPageWorkflow.renderPromptPages(f.workspace, selections, options),
-            /exactly one configured API service/);
+            /exactly one model|invalid model ID/);
         assert.deepEqual(await snapshot(f.workspace), before);
     }
-    assert.equal(requests(), 0);
 });
 
-test("the actual CLI returns coverage JSON and an appropriate exit code without generation or authentication", async (t) =>
+test("the actual CLI discovers the local model and returns read-only coverage JSON without configuration", async (t) =>
 {
     const f = await fixture(t);
     const directory = path.join(f.workspace, "src", "workflows");
@@ -1465,7 +1413,14 @@ test("the actual CLI returns coverage JSON and an appropriate exit code without 
     {
         await copyFile(new URL(filename, import.meta.url), path.join(directory, filename));
     }
-    const run = (args = ["001", "model-a", "--check"]) => spawnSync(process.execPath, [path.join(directory, "render-prompt-page.mjs"), ...args],
+    const network = path.join(f.workspace, "mock-discovery.cjs");
+    await save(network, `
+globalThis.fetch = async (url) => {
+  if (url !== "http://localhost:8000/v1/models") throw Error("Unexpected discovery URL");
+  return Response.json({ data: [{ id: ${JSON.stringify(modelId)} }] });
+};
+`);
+    const run = (args = ["001", "model-a", "--check"]) => spawnSync(process.execPath, ["--require", network, path.join(directory, "render-prompt-page.mjs"), ...args],
     {
         cwd: f.workspace,
         env:
@@ -1480,23 +1435,13 @@ test("the actual CLI returns coverage JSON and an appropriate exit code without 
     const missing = run();
     assert.equal(missing.status, 1, missing.stderr);
     assert.equal(JSON.parse(missing.stdout).summary.missing, 1);
-    assert.match(missing.stderr, /Loading model configuration:/);
-    assert.ok(missing.stderr.includes(modelConfig(f.workspace)));
+    assert.match(missing.stderr, /Discovering local model: GET http:\/\/localhost:8000\/v1\/models/);
     assert.match(missing.stderr, /\[001-travel\/local\] missing/);
     assert.deepEqual(await snapshot(f.workspace), before);
     await save(path.join(f.output, "metadata.json"), metadata());
     const complete = run();
     assert.equal(complete.status, 0, complete.stderr);
     assert.equal(JSON.parse(complete.stdout).summary.skipped, 1);
-    const config = await readJson(modelConfig(f.workspace));
-    await save(modelConfig(f.workspace),
-    {
-        version: 1,
-        models:
-        {
-            "Qwen3.8": config.models.local
-        }
-    });
     await save(path.join(f.workspace, "data", "prompts", "2-middle", "2-middle.md"), "# Middle requirement\n");
     await save(path.join(f.workspace, "data", "prompts", "003-selected", "003-selected.md"), "# Selected requirement\n");
     await save(path.join(f.workspace, "data", "prompts", "030-other", "030-other.md"), "# Unselected requirement\n");
@@ -1518,7 +1463,7 @@ test("the actual CLI returns coverage JSON and an appropriate exit code without 
         })), [
         {
             prompt: "003-selected",
-            model: "Qwen3.8"
+            model: modelId
         }]);
     }
     const ranged = run(["001-003", "model-a", "--check"]);
@@ -1539,7 +1484,7 @@ test("the actual CLI returns coverage JSON and an appropriate exit code without 
     assert.deepEqual(await snapshot(f.workspace), numericBefore);
 });
 
-test("the actual CLI prints detailed network failures to stderr and keeps stdout as JSON", async (t) =>
+test("the actual CLI prints detailed discovery failures to stderr without claiming a generation result", async (t) =>
 {
     const f = await fixture(t);
     const directory = path.join(f.workspace, "src", "workflows");
@@ -1551,10 +1496,6 @@ test("the actual CLI prints detailed network failures to stderr and keeps stdout
     {
         await copyFile(new URL(filename, import.meta.url), path.join(directory, filename));
     }
-    const config = await readJson(modelConfig(f.workspace));
-    delete config.models.local.apiKeyEnv;
-    config.models.local.baseUrl = "http://127.0.0.1:8000/v1";
-    await save(modelConfig(f.workspace), config);
     const network = path.join(f.workspace, "mock-network.cjs");
     await save(network, `
 globalThis.fetch = async () => {
@@ -1570,10 +1511,8 @@ globalThis.fetch = async () => {
         timeout: 5000,
     });
     assert.equal(failed.status, 1, failed.stderr);
-    const report = JSON.parse(failed.stdout);
-    assert.equal(report.summary.failed, 1);
-    assert.match(report.items[0].reason, /\[verify-model-service\].*ECONNREFUSED/);
-    assert.match(failed.stderr, /GET http:\/\/127\.0\.0\.1:8000\/v1\/models/);
+    assert.equal(failed.stdout, "");
+    assert.match(failed.stderr, /GET http:\/\/localhost:8000\/v1\/models/);
     assert.match(failed.stderr, /ECONNREFUSED.*address=127\.0\.0\.1.*port=8000/);
     await assert.rejects(readFile(path.join(f.output, "metadata.json")),
     {

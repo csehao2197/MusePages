@@ -501,7 +501,7 @@ export class GenerationCli
 }
 
 /**
- * Loads model configuration and verifies service identity using this invocation's credentials.
+ * Discovers the local model and verifies service identity.
  */
 export class ModelService
 {
@@ -518,65 +518,36 @@ export class ModelService
         this.signal = signal;
     }
 
-    async load(selections, displayModelName)
+    async load(selections = [], displayModelName)
     {
-        const workspace = this.workspace;
-        const config = await WorkspaceFiles.json(await WorkspaceFiles.inside(workspace, "src", "workflows", "config.json"));
-        if (config.version !== 1 || !config.models || Array.isArray(config.models) || typeof config.models !== "object")
+        if (displayModelName !== undefined) GenerationCli.name(displayModelName, "display model name");
+        const baseUrl = "http://localhost:8000/v1";
+        const body = await this.requestModels({ baseUrl });
+        if (!Array.isArray(body?.data) || body.data.length !== 1)
         {
-            throw Error("Expected model config version 1 with a models object");
+            throw Error(`GET ${baseUrl}/models must return exactly one model`);
         }
-        const directories = new Set();
-        for (const [selection, model] of Object.entries(config.models))
+        const modelId = body.data[0]?.id;
+        if (typeof modelId !== "string" || !/^[^\s\x00-\x1f]+$/.test(modelId))
         {
-            GenerationCli.name(selection, "model selection");
-            if (!model || Object.keys(model).some((key) =>
-                    !["apiType", "baseUrl", "modelId", "directory", "apiKeyEnv"].includes(key)))
-            {
-                throw Error(`Unknown model settings for ${selection}; credentials belong in environment variables`);
-            }
-            if (model.apiType !== "openai-responses") throw Error(`Unsupported API type for ${selection}: expected openai-responses`);
-            GenerationCli.name(model.directory, "model directory");
-            if (model.directory !== model.directory.toLowerCase()) throw Error("Model directories must be lowercase");
-            if (directories.has(model.directory)) throw Error(`Model directory collision: ${model.directory}`);
-            directories.add(model.directory);
-            if (typeof model.modelId !== "string" || !/^[^\s\x00-\x1f]+$/.test(model.modelId))
-            {
-                throw Error(`Missing or invalid modelId for ${selection}`);
-            }
-            const url = new URL(model.baseUrl);
-            const local = ["localhost", "127.0.0.1", "[::1]"].includes(url.hostname);
-            if (url.username || url.password || url.search || url.hash ||
-                (url.protocol !== "https:" && !(url.protocol === "http:" && local)))
-            {
-                throw Error(`Use HTTPS (or loopback HTTP) without credentials, queries or fragments for ${selection}`);
-            }
-            if (model.apiKeyEnv !== undefined && !/^[A-Za-z_][A-Za-z0-9_]*$/.test(model.apiKeyEnv))
-            {
-                throw Error(`Invalid apiKeyEnv for ${selection}`);
-            }
+            throw Error(`GET ${baseUrl}/models returned an invalid model ID`);
         }
-        if (displayModelName !== undefined)
+        if (selections.length && (selections.length !== 1 || selections[0] !== modelId))
         {
-            GenerationCli.name(displayModelName, "display model name");
-            const configured = Object.keys(config.models);
-            if (configured.length !== 1) throw Error("display_model_name requires exactly one configured API service");
-            if (selections.length) throw Error("display_model_name uses the sole configured API service without a model selection");
-            selections = configured;
+            throw Error(`Requested model does not match the discovered model "${modelId}"`);
         }
-        if (!selections.length || new Set(selections).size !== selections.length) throw Error("Select at least one distinct model");
-        return selections.map((selection) =>
+        this.discovered = { baseUrl, body };
+        return [
         {
-            if (!Object.hasOwn(config.models, selection)) throw Error(`Unknown model selection: ${selection}`);
-            return {
-                ...config.models[selection],
-                directory: displayModelName ?? config.models[selection].directory,
-                selection
-            };
-        });
+            apiType: "openai-responses",
+            baseUrl,
+            modelId,
+            directory: GenerationCli.name(displayModelName ?? modelId, "model directory"),
+            selection: modelId
+        }];
     }
 
-    async verify(model)
+    async requestModels(model)
     {
         const
         {
@@ -622,9 +593,17 @@ export class ModelService
                 cause: error
             });
         }
-        if (!Array.isArray(body.data) || !body.data.some((entry) => entry.id === model.modelId))
+        return body;
+    }
+
+    async verify(model)
+    {
+        const body = this.discovered?.baseUrl === model.baseUrl ?
+            this.discovered.body : await this.requestModels(model);
+        const endpoint = `${model.baseUrl.replace(/\/+$/, "")}/models`;
+        if (!Array.isArray(body?.data) || !body.data.some((entry) => entry?.id === model.modelId))
         {
-            throw Error(`Configured modelId "${model.modelId}" is not advertised by GET ${endpoint}; refusing to substitute another model`);
+            throw Error(`Model ID "${model.modelId}" is not advertised by GET ${endpoint}; refusing to substitute another model`);
         }
     }
 
@@ -1133,8 +1112,9 @@ export class PromptPageWorkflow
             return key ? value.replaceAll(key, "[REDACTED]") : value;
         }, String(message));
         const log = (message) => settings.onLog?.(redact(message));
-        log(`Loading model configuration: ${path.join(workspace, "src", "workflows", "config.json")}`);
+        log("Discovering local model: GET http://localhost:8000/v1/models");
         models = await this.modelService.load(this.selections, settings.displayModelName);
+        log(`Discovered model: ${models[0].modelId}; output directory: ${models[0].directory}`);
         log("Reading original prompts");
         const inputs = await PromptPageWorkflow.prompts(workspace, settings.prompts);
         log(`Selected ${inputs.length} prompt(s), ${models.length} model(s); mode=${settings.check ? "check" : "generate"}`);
