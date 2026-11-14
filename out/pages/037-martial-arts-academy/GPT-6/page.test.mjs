@@ -4,7 +4,7 @@ import { readFile, writeFile, readdir, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { chromium } from '@playwright/test';
 import { startPreviewServer } from '../../../../src/workflows/generate-preview.mjs';
-import { validateStaticOutput } from '../../../../src/workflows/render-prompt-pages.mjs';
+import { StaticHomepage } from '../../../../src/workflows/render-prompt-pages.mjs';
 const root = 'C:\\Code\\MusePages';
 const folder = import.meta.dirname;
 const exported = path.join(folder, 'out');
@@ -217,7 +217,7 @@ test('Iron Path static homepage: eight focused browser and export checks', { tim
       } finally { await noScript.close(); }
     });
     await guard();
-    const digest = await validateStaticOutput(exported, 'martial-arts-academy', 'GPT-6');
+    const digest = await StaticHomepage.validateStaticOutput(exported, 'martial-arts-academy', 'GPT-6');
     await writeFile(path.join(folder, '.checks', 'validation.json'), JSON.stringify({ checkedAt: new Date().toISOString(), digest, errors: [], checks, focusedChecks: checks.length, browser: 'Playwright Chromium', mount: '/pages/martial-arts-academy/GPT-6/index.html', requests: requests.length, methods: ['GET'], externalRequests: 0, widths: [1440,1024,768,390,320], touchSwipe: true, screenshots: ['desktop.png','desktop-first.png','mobile.png','mobile-first.png','mobile-form.png'], sourceExportEqual: true }, null, 2) + '\n');
   } finally {
     await context?.close();

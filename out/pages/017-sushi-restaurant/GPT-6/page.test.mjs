@@ -5,7 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium, expect } from "@playwright/test";
 import { startPreviewServer } from "../../../../src/workflows/generate-preview.mjs";
-import { validateStaticOutput } from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
 const model = fileURLToPath(new URL(".", import.meta.url));
 const workspace = fileURLToPath(new URL("../../../../", import.meta.url));
 test("Hikari independent Japanese dining experience", { timeout: 150000 }, async (t) => {
@@ -58,7 +58,7 @@ test("Hikari independent Japanese dining experience", { timeout: 150000 }, async
       const sprite = await readFile(path.join(model, "out", "assets", "icons.svg"), "utf8");
       for (const id of new Set(await page.locator('use[href^="assets/icons.svg"]').evaluateAll((uses) => uses.map((use) => use.getAttribute("href").split("#")[1])))) assert.ok(sprite.includes(`id="${id}"`), id);
       for (const file of ["index.html", "style.css", "app.js"]) assert.equal(await readFile(path.join(model, file), "utf8"), await readFile(path.join(model, "out", file), "utf8"));
-      assert.match(await validateStaticOutput(path.join(model, "out"), "sushi-restaurant", "GPT-6"), /^[a-f0-9]{64}$/);
+      assert.match(await StaticHomepage.validateStaticOutput(path.join(model, "out"), "sushi-restaurant", "GPT-6"), /^[a-f0-9]{64}$/);
       await expect(page.locator(".hero")).toContainText("14-seat");
       await expect(page.locator("#omakase")).toContainText("18-course");
       await expect(page.locator("#story")).toContainText("James Beard semifinalist 2025");
@@ -264,7 +264,7 @@ test("Hikari independent Japanese dining experience", { timeout: 150000 }, async
   assert.deepEqual(errors, []);
   assert.equal(requests.every((request) => request.method === "GET" && new URL(request.url).origin === new URL(service.url).origin), true);
   await writeFile(path.join(model, ".checks", "validation.json"), JSON.stringify({
-    checkedAt: new Date().toISOString(), digest: await validateStaticOutput(path.join(model, "out"), "sushi-restaurant", "GPT-6"), browser: browser.version(), widths: [1440, 1024, 768, 390, 320], errors,
+    checkedAt: new Date().toISOString(), digest: await StaticHomepage.validateStaticOutput(path.join(model, "out"), "sushi-restaurant", "GPT-6"), browser: browser.version(), widths: [1440, 1024, 768, 390, 320], errors,
     checks: ["Actual public subpath with local Japanese fonts, photos and icons", "Three archived source selections and eighteen-course sample outline", "Six-photo asymmetric gallery and keyboard lightbox", "Tue–Sat reservation, exact 48-hour notice, bar and omakase slots", "185/65 prices, 21+ pairing confirmation and safe local preview", "Private 6–8 whole guests and temporary contact cleanup", "All footer actions, newsletter and truthful non-geocoded map", "Five widths, 44px touch targets, actual review swipe and reduced motion", "Actual desktop/mobile full-page screenshots"],
   }, null, 2) + "\n");
 });

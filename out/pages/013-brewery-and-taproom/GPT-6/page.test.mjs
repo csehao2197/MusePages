@@ -5,7 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium, expect } from "@playwright/test";
 import { startPreviewServer } from "../../../../src/workflows/generate-preview.mjs";
-import { validateStaticOutput } from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
 const model = fileURLToPath(new URL(".", import.meta.url));
 const workspace = fileURLToPath(new URL("../../../../", import.meta.url));
 
@@ -47,7 +47,7 @@ test("Iron Ridge static brewery homepage", async (t) => {
   await t.test("all public resources, PDF, fonts, SVG references and anchors work at the actual subpath", async () => {
     const { page, context } = await visit();
     try {
-      assert.match(await validateStaticOutput(path.join(model, "out"), "brewery-and-taproom", "GPT-6"), /^[a-f0-9]{64}$/);
+      assert.match(await StaticHomepage.validateStaticOutput(path.join(model, "out"), "brewery-and-taproom", "GPT-6"), /^[a-f0-9]{64}$/);
       assert.match(new URL(page.url()).pathname, /^\/pages\/brewery-and-taproom\/GPT-6\/index\.html$/);
       await expect(page).toHaveTitle("Iron Ridge Brewing Co. | Asheville Taproom");
       await loadImages(page);
@@ -279,7 +279,7 @@ test("Iron Ridge static brewery homepage", async (t) => {
   assert.deepEqual(errors, []);
   assert.ok(requests.every((request) => request.method === "GET" && new URL(request.url).origin === new URL(service.url).origin));
   await writeFile(path.join(model, ".checks", "validation.json"), JSON.stringify({
-    checkedAt: new Date().toISOString(), digest: await validateStaticOutput(path.join(model, "out"), "brewery-and-taproom", "GPT-6"),
+    checkedAt: new Date().toISOString(), digest: await StaticHomepage.validateStaticOutput(path.join(model, "out"), "brewery-and-taproom", "GPT-6"),
     widths: [320, 390, 768, 1200, 1440], browser: "Chromium", errors,
     checks: ["offline public subpath", "static/source agreement", "resources, PDF and fonts", "beer filters and data",
       "scheduled tour validation and age confirmation", "exact prices and safe text", "calendar download",

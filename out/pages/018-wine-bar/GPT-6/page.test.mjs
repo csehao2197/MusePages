@@ -5,7 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium, expect } from "@playwright/test";
 import { startPreviewServer } from "../../../../src/workflows/generate-preview.mjs";
-import { validateStaticOutput } from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
 const model = fileURLToPath(new URL(".", import.meta.url));
 const workspace = fileURLToPath(new URL("../../../../", import.meta.url));
 test("Terroir & Vine independent wine-bar experience", { timeout: 150000 }, async (t) => {
@@ -60,7 +60,7 @@ test("Terroir & Vine independent wine-bar experience", { timeout: 150000 }, asyn
       }
       assert.deepEqual(await page.locator('a[href^="#"]').evaluateAll((links) => links.filter((link) => !document.getElementById(link.hash.slice(1))).map((link) => link.hash)), []);
       for (const file of ["index.html", "style.css", "app.js"]) assert.equal(await readFile(path.join(model, file), "utf8"), await readFile(path.join(model, "out", file), "utf8"));
-      assert.match(await validateStaticOutput(path.join(model, "out"), "wine-bar", "GPT-6"), /^[a-f0-9]{64}$/);
+      assert.match(await StaticHomepage.validateStaticOutput(path.join(model, "out"), "wine-bar", "GPT-6"), /^[a-f0-9]{64}$/);
       await expect(page.locator("#about")).toContainText("family-owned vineyards across France, Italy, and Spain");
       await expect(page.locator("#visit")).toContainText("30% off all wines by the glass");
       await expect(page.locator("footer")).toContainText("Must be 21+ to enter. Please drink responsibly.");
@@ -304,7 +304,7 @@ test("Terroir & Vine independent wine-bar experience", { timeout: 150000 }, asyn
   assert.deepEqual(errors, []);
   assert.equal(requests.every((request) => request.method === "GET" && new URL(request.url).origin === new URL(service.url).origin), true);
   await writeFile(path.join(model, ".checks", "validation.json"), JSON.stringify({
-    checkedAt: new Date().toISOString(), digest: await validateStaticOutput(path.join(model, "out"), "wine-bar", "GPT-6"), browser: browser.version(), widths: [1440, 1024, 768, 390, 320], errors,
+    checkedAt: new Date().toISOString(), digest: await StaticHomepage.validateStaticOutput(path.join(model, "out"), "wine-bar", "GPT-6"), browser: browser.version(), widths: [1440, 1024, 768, 390, 320], errors,
     checks: ["Actual public subpath, local fonts, photos, sprites and source agreement", "Three wine details, accent-insensitive search, style filter and price sorting", "30% sample happy-hour pricing: 19.60, 15.40 and 12.60", "All original event dates, prices and non-live example availability", "Age-gated integer tasting quantities and private 8–24 guests with weekday/date checks", "Safe local previews, contact cleanup, all footer and newsletter actions", "Six-photo asymmetric gallery, cyclic keyboard lightbox and focus restoration", "Five-second review rotation, hover/focus/manual/modal/reduced-motion pauses", "Five widths, 44px mobile targets, actual event/review touch swipes", "Actual desktop/mobile full-page screenshots; no external calls or storage"],
   }, null, 2) + "\n");
 });

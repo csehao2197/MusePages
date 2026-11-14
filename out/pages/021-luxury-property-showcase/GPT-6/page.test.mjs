@@ -5,7 +5,7 @@ import path from "node:path";
 import {fileURLToPath} from "node:url";
 import {chromium,expect} from "@playwright/test";
 import {startPreviewServer} from "../../../../src/workflows/generate-preview.mjs";
-import {validateStaticOutput} from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
 const model=fileURLToPath(new URL(".",import.meta.url));
 const workspace=fileURLToPath(new URL("../../../../",import.meta.url));
 test("Meridian independent cinematic luxury residence",{timeout:180000},async(t)=>{
@@ -51,7 +51,7 @@ test("Meridian independent cinematic luxury residence",{timeout:180000},async(t)
       const pdf=await readFile(await file.path());assert.equal(pdf.subarray(0,5).toString(),"%PDF-");assert.ok(pdf.length>10000);
       await expect(page.locator(".details-inner dd")).toHaveText(["4","3.5","3,800","42nd","2"]);
       await expect(page.locator(".photo-tile")).toHaveCount(14);await expect(page.locator(".amenity-card")).toHaveCount(8);
-      assert.match(await validateStaticOutput(path.join(model,"out"),"luxury-property-showcase","GPT-6"),/^[a-f0-9]{64}$/);
+      assert.match(await StaticHomepage.validateStaticOutput(path.join(model,"out"),"luxury-property-showcase","GPT-6"),/^[a-f0-9]{64}$/);
       assert.equal(await page.evaluate(()=>localStorage.length+sessionStorage.length),0);
     } finally {await context.close();}
   });
@@ -272,7 +272,7 @@ test("Meridian independent cinematic luxury residence",{timeout:180000},async(t)
   assert.deepEqual(errors,[]);
   assert.ok(requests.every((request)=>request.method==="GET"&&new URL(request.url).origin===new URL(server.url).origin));
   await writeFile(path.join(model,".checks","validation.json"),JSON.stringify({
-    checkedAt:new Date().toISOString(),digest:await validateStaticOutput(path.join(model,"out"),"luxury-property-showcase","GPT-6"),
+    checkedAt:new Date().toISOString(),digest:await StaticHomepage.validateStaticOutput(path.join(model,"out"),"luxury-property-showcase","GPT-6"),
     widths:[1440,1024,768,390,320],browser:"Playwright Chromium",errors,
     checks:["Independent public subpath and matching source/export; local fonts, decoded images, icon symbols and actual PDF download","Fourteen-photo lightbox loop, keyboard, touch swipe and focus return","Seven exact room dimensions, selection, actual 100–300% zoom and contained scrolling","Six original finish groups and eight scrollable amenity cards","Interactive schematic neighborhood pins, proximity selection, genuine mouse/touch pan, zoom/reset and original unverified scores","Four-room illustrative 2D walkthrough, scene selection, image pan/zoom and real full-window expansion","Amortization formula and zero-rate/all-down/boundary cases; native viewing guards, safe local preview and personal-field cleanup","All contact, social, policy, comparable listing actions; five responsive widths, mobile native accordions, drawer, fixed action and CDP touch gestures","Every application request local GET; no page/console/resource errors or browser storage"]
   },null,2)+"\n");

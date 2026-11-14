@@ -6,8 +6,8 @@ import {createHash} from 'node:crypto';
 import {chromium} from '@playwright/test';
 const folder=path.dirname(fileURLToPath(import.meta.url)),root=path.resolve(folder,'..','..','..','..'),exported=path.join(folder,'out'),slug='online-course-landing-page';
 const {startPreviewServer,generatePreview}=await import(pathToFileURL(path.join(root,'src','workflows','generate-preview.mjs')));
-const {validateStaticOutput}=await import(pathToFileURL(path.join(root,'src','workflows','render-prompt-pages.mjs')));
-const staticDigest=await validateStaticOutput(exported,slug,'GPT-6'),server=await startPreviewServer(exported,{workspace:root}),browser=await chromium.launch();
+const { StaticHomepage }=await import(pathToFileURL(path.join(root,'src','workflows','render-prompt-pages.mjs')));
+const staticDigest=await StaticHomepage.validateStaticOutput(exported,slug,'GPT-6'),server=await startPreviewServer(exported,{workspace:root}),browser=await chromium.launch();
 let checks=0;const errors=[],requests=[],check=(condition,message)=>{assert.ok(condition,message);checks++;};
 try{
  const context=await browser.newContext({viewport:{width:1440,height:1000},reducedMotion:'reduce'}),page=await context.newPage();page.setDefaultTimeout(6500);

@@ -5,7 +5,7 @@ import path from "node:path";
 import {fileURLToPath} from "node:url";
 import {chromium,expect} from "@playwright/test";
 import {startPreviewServer} from "../../../../src/workflows/generate-preview.mjs";
-import {validateStaticOutput} from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
 const model=fileURLToPath(new URL(".",import.meta.url)),workspace=fileURLToPath(new URL("../../../../",import.meta.url));
 test("HomeScope independent interactive neighborhood guide",{timeout:150000},async(t)=>{
   const service=await startPreviewServer(path.join(model,"out"),{workspace}),browser=await chromium.launch({headless:true});
@@ -42,7 +42,7 @@ test("HomeScope independent interactive neighborhood guide",{timeout:150000},asy
       const sprite=await readFile(path.join(model,"out","assets","icons.svg"),"utf8");
       for(const id of new Set(await page.locator("use").evaluateAll((uses)=>uses.map((use)=>use.getAttribute("href").split("#")[1]))))assert.ok(sprite.includes(`id="${id}"`),id);
       assert.deepEqual(await page.locator('a[href^="#"]').evaluateAll((links)=>links.filter((link)=>!document.getElementById(link.hash.slice(1))).map((link)=>link.hash)),[]);
-      assert.match(await validateStaticOutput(path.join(model,"out"),"neighborhood-guide","GPT-6"),/^[a-f0-9]{64}$/);
+      assert.match(await StaticHomepage.validateStaticOutput(path.join(model,"out"),"neighborhood-guide","GPT-6"),/^[a-f0-9]{64}$/);
       await expect(page.locator(".neighborhood-card")).toHaveCount(6);
       await expect(page.locator(".score-card")).toHaveCount(4);await expect(page.locator(".score-card").first()).toContainText("82");
       assert.equal(await page.evaluate(()=>localStorage.length+sessionStorage.length),0);
@@ -235,7 +235,7 @@ test("HomeScope independent interactive neighborhood guide",{timeout:150000},asy
   });
   assert.deepEqual(errors,[]);assert.ok(requests.every((request)=>request.method==="GET"&&new URL(request.url).origin===new URL(service.url).origin));
   await writeFile(path.join(model,".checks","validation.json"),JSON.stringify({
-    checkedAt:new Date().toISOString(),digest:await validateStaticOutput(path.join(model,"out"),"neighborhood-guide","GPT-6"),widths:[1440,1024,768,390,320],browser:"Playwright Chromium",errors,
+    checkedAt:new Date().toISOString(),digest:await StaticHomepage.validateStaticOutput(path.join(model,"out"),"neighborhood-guide","GPT-6"),widths:[1440,1024,768,390,320],browser:"Playwright Chromium",errors,
     checks:["Independent matching export and public subpath; local images, DM Sans/Inter and Lucide references decoded","Six-area accessible keyboard/pointer autocomplete, city/ZIP matching and unknown/whitespace/XSS-safe searches","Horizontal discovery strip controls, keyboard endpoints, five distinct previews and comparison handoff","Five category filters synchronize 11 schematic map pins and sidebar; actual pointer/touch/keyboard pan, bounded zoom and reset","Original Maplewood overview, scores, four schools, seven commute modes, honest source attribution and accessible twelve-month chart data","Three-column selectable comparison, displayed value updates and duplicate-area validation","Native email/name/date/consent guards, local-only alert/tour previews, safe rendering and personal-field cleanup; contact/listing/policy feedback","Five widths, mobile drawer, native taps, CDP scroll-snap swipe and unobstructed map drag, desktop/mobile screenshots; no storage or external application requests"]
   },null,2)+"\n");
 });

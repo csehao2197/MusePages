@@ -5,7 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium, expect } from "@playwright/test";
 import { startPreviewServer } from "../../../../src/workflows/generate-preview.mjs";
-import { validateStaticOutput } from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
 const model = fileURLToPath(new URL(".", import.meta.url));
 const workspace = fileURLToPath(new URL("../../../../", import.meta.url));
 test("Aurelian independent static fine dining experience", { timeout: 120000 }, async (t) => {
@@ -53,7 +53,7 @@ test("Aurelian independent static fine dining experience", { timeout: 120000 }, 
       const sprite = await readFile(path.join(model, "out", "assets", "icons.svg"), "utf8");
       for (const id of new Set(await page.locator('use[href^="assets/icons.svg"]').evaluateAll((uses) => uses.map((use) => use.getAttribute("href").split("#")[1])))) assert.ok(sprite.includes(`id="${id}"`), id);
       for (const file of ["index.html", "style.css", "app.js"]) assert.equal(await readFile(path.join(model, file), "utf8"), await readFile(path.join(model, "out", file), "utf8"));
-      assert.match(await validateStaticOutput(path.join(model, "out"), "fine-dining-restaurant", "GPT-6"), /^[a-f0-9]{64}$/);
+      assert.match(await StaticHomepage.validateStaticOutput(path.join(model, "out"), "fine-dining-restaurant", "GPT-6"), /^[a-f0-9]{64}$/);
       assert.equal(await page.locator(".hero").evaluate((element) => getComputedStyle(element).height), "1000px");
       await expect(page.locator("body")).not.toContainText("015-");
     } finally { await context.close(); }
@@ -288,7 +288,7 @@ test("Aurelian independent static fine dining experience", { timeout: 120000 }, 
   assert.deepEqual(errors, []);
   assert.ok(requests.every((request) => request.method === "GET" && new URL(request.url).origin === new URL(service.url).origin));
   await writeFile(path.join(model, ".checks", "validation.json"), JSON.stringify({
-    checkedAt: new Date().toISOString(), digest: await validateStaticOutput(path.join(model, "out"), "fine-dining-restaurant", "GPT-6"),
+    checkedAt: new Date().toISOString(), digest: await StaticHomepage.validateStaticOutput(path.join(model, "out"), "fine-dining-restaurant", "GPT-6"),
     widths: [320, 390, 768, 1200, 1440], browser: "Chromium", errors,
     checks: ["source/export match", "offline public subpath and assets", "seven exact courses and five pairings", "archived menu and disclosed fictional recognition",
       "six-image masonry and wrapping accessible lightbox", "nine-wine filters and four bottle details", "Wednesday–Sunday date validation", "party limits and accurate food/wine estimates",

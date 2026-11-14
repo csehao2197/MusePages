@@ -5,7 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium, expect } from "@playwright/test";
 import { startPreviewServer } from "../../../../src/workflows/generate-preview.mjs";
-import { validateStaticOutput } from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
 
 const model = fileURLToPath(new URL(".", import.meta.url));
 const workspace = fileURLToPath(new URL("../../../../", import.meta.url));
@@ -55,7 +55,7 @@ test("Golden Crumb static homepage", async (t) => {
   await t.test("all local assets, anchors, categories and the full menu work at the public subpath", async () => {
     const { page, context } = await visit();
     try {
-      assert.match(await validateStaticOutput(path.join(model, "out"), "bakery-and-cafe", "GPT-6"), /^[a-f0-9]{64}$/);
+      assert.match(await StaticHomepage.validateStaticOutput(path.join(model, "out"), "bakery-and-cafe", "GPT-6"), /^[a-f0-9]{64}$/);
       assert.match(new URL(page.url()).pathname, /^\/pages\/bakery-and-cafe\/GPT-6\/index\.html$/);
       await expect(page).toHaveTitle("Golden Crumb | Artisan Bakery & Cafe");
       assert.equal(await page.locator(".special-card").count(), 3);

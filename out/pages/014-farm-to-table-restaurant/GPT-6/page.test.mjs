@@ -5,7 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium, expect } from "@playwright/test";
 import { startPreviewServer } from "../../../../src/workflows/generate-preview.mjs";
-import { validateStaticOutput } from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
 const model = fileURLToPath(new URL(".", import.meta.url));
 const workspace = fileURLToPath(new URL("../../../../", import.meta.url));
 
@@ -58,7 +58,7 @@ test("Harvest & Hearth static seasonal restaurant", { timeout: 120000 }, async (
       const sprite = await readFile(path.join(model, "out", "assets", "icons.svg"), "utf8");
       for (const id of new Set(await page.locator('use[href^="assets/icons.svg"]').evaluateAll((uses) => uses.map((use) => use.getAttribute("href").split("#")[1])))) assert.ok(sprite.includes(`id="${id}"`), id);
       for (const file of ["index.html", "style.css", "app.js"]) assert.equal(await readFile(path.join(model, file), "utf8"), await readFile(path.join(model, "out", file), "utf8"));
-      assert.match(await validateStaticOutput(path.join(model, "out"), "farm-to-table-restaurant", "GPT-6"), /^[a-f0-9]{64}$/);
+      assert.match(await StaticHomepage.validateStaticOutput(path.join(model, "out"), "farm-to-table-restaurant", "GPT-6"), /^[a-f0-9]{64}$/);
     } finally { await context.close(); }
   });
   await t.test("desktop tabs use roving keyboard focus; full menu retains all eleven dishes and original prices", async () => {
@@ -274,7 +274,7 @@ test("Harvest & Hearth static seasonal restaurant", { timeout: 120000 }, async (
   assert.deepEqual(errors, []);
   assert.ok(requests.every((request) => request.method === "GET" && new URL(request.url).origin === new URL(service.url).origin));
   await writeFile(path.join(model, ".checks", "validation.json"), JSON.stringify({
-    checkedAt: new Date().toISOString(), digest: await validateStaticOutput(path.join(model, "out"), "farm-to-table-restaurant", "GPT-6"),
+    checkedAt: new Date().toISOString(), digest: await StaticHomepage.validateStaticOutput(path.join(model, "out"), "farm-to-table-restaurant", "GPT-6"),
     widths: [320, 390, 768, 1200, 1440], browser: "Chromium", errors,
     checks: ["source/export match", "offline public subpath and assets", "eleven menu dishes/prices", "accessible menu tabs and mobile dropdown", "farm details",
       "six-image lightbox and focus restoration", "reservation dates and Sunday brunch", "contact validation and safe text", "archived event",

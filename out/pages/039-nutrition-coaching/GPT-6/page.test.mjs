@@ -5,7 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium, expect } from "@playwright/test";
 import { startPreviewServer } from "../../../../src/workflows/generate-preview.mjs";
-import { validateStaticOutput } from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
 
 const folder = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(folder, "../../../..");
@@ -59,7 +59,7 @@ check("Clean export matches source, local assets and real nested static validati
     assert.deepEqual(await readFile(path.join(folder, "assets", name)), await readFile(path.join(exported, "assets", name)));
   }
   assert.deepEqual((await readdir(exported)).filter((name) => name !== "preview.png").sort(), ["app.js", "assets", "index.html", "style.css"]);
-  assert.match(await validateStaticOutput(exported, "nutrition-coaching", "GPT-6"), /^[0-9a-f]{64}$/);
+  assert.match(await StaticHomepage.validateStaticOutput(exported, "nutrition-coaching", "GPT-6"), /^[0-9a-f]{64}$/);
 });
 check("Monthly and annual prices use exactly 20% savings and disclose upfront totals", async () => {
   const { page, context } = await visit();
@@ -228,7 +228,7 @@ check("Fresh receipt is persisted only after all six checks and zero browser/net
   assert.deepEqual(problems, []);
   await writeFile(path.join(checks, "validation.json"), JSON.stringify({
     checkedAt: new Date().toISOString(), modelId: "gpt-6.1-sol",
-    digest: await validateStaticOutput(exported, "nutrition-coaching", "GPT-6"),
+    digest: await StaticHomepage.validateStaticOutput(exported, "nutrition-coaching", "GPT-6"),
     tests: [...completed, "Receipt integrity"], testCount: 7, errors: problems,
     viewports: [1440, 1024, 768, 390, 320],
     runtime: "Real installed Playwright Chromium; nested static URL; local GET requests only; no storage writes",

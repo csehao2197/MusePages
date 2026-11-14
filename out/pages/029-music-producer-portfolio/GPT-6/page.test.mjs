@@ -6,7 +6,7 @@ import path from "node:path";
 import {fileURLToPath} from "node:url";
 import {chromium,expect} from "@playwright/test";
 import {startPreviewServer} from "../../../../src/workflows/generate-preview.mjs";
-import {validateStaticOutput} from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
 import {tracks} from "./assets/tracks.js";
 
 const model=fileURLToPath(new URL(".",import.meta.url));
@@ -235,6 +235,6 @@ test("KVOLT original audio portfolio", {timeout:180000}, async t => {
   assert.deepEqual(errors,[]);
   const origin=new URL(service.url).origin;
   assert.ok(requests.every(request=>request.method==="GET"&&(request.url.startsWith(origin)||request.url.startsWith(`blob:${origin}/`))),"Only same-origin static requests and locally created audio blobs");
-  const digest=await validateStaticOutput(path.join(model,"out"),"music-producer-portfolio","GPT-6");
+  const digest=await StaticHomepage.validateStaticOutput(path.join(model,"out"),"music-producer-portfolio","GPT-6");
   await writeFile(path.join(checks,"validation.json"),JSON.stringify({checkedAt:new Date().toISOString(),digest,errors,requests:requests.length,cancelledLocalMedia:cancelledMedia.length,checks:["six distinct non-silent original WAV compositions","actual playback of all six files and changing analyser pixels","seek, pause, volume, mute, previous/next, ended state and persistent licensing","all sample tiers, selection and local inquiry","catalog, reference discography, legal notes and newsletter","five widths, real touch swipe and mobile player"]},null,2)+"\n");
 });

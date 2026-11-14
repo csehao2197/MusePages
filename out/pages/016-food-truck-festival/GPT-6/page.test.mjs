@@ -5,7 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium, expect } from "@playwright/test";
 import { startPreviewServer } from "../../../../src/workflows/generate-preview.mjs";
-import { validateStaticOutput } from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
 const model = fileURLToPath(new URL(".", import.meta.url));
 const workspace = fileURLToPath(new URL("../../../../", import.meta.url));
 test("StreetBite independent static festival experience", { timeout: 150000 }, async (t) => {
@@ -50,7 +50,7 @@ test("StreetBite independent static festival experience", { timeout: 150000 }, a
       const sprite = await readFile(path.join(model, "out", "assets", "icons.svg"), "utf8");
       for (const id of new Set(await page.locator('use[href^="assets/icons.svg"]').evaluateAll((uses) => uses.map((use) => use.getAttribute("href").split("#")[1])))) assert.ok(sprite.includes(`id="${id}"`), id);
       for (const file of ["index.html", "style.css", "app.js"]) assert.equal(await readFile(path.join(model, file), "utf8"), await readFile(path.join(model, "out", file), "utf8"));
-      assert.match(await validateStaticOutput(path.join(model, "out"), "food-truck-festival", "GPT-6"), /^[a-f0-9]{64}$/);
+      assert.match(await StaticHomepage.validateStaticOutput(path.join(model, "out"), "food-truck-festival", "GPT-6"), /^[a-f0-9]{64}$/);
       await expect(page.locator("body")).not.toContainText("016-");
       await expect(page.locator(".archive-note")).toContainText("Saturday–Monday");
       assert.equal(await page.locator(".vendor-grid").evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(" ").length), 4);
@@ -312,7 +312,7 @@ test("StreetBite independent static festival experience", { timeout: 150000 }, a
   });
   assert.deepEqual(errors, []);
   assert.equal(requests.every((request) => request.method === "GET" && new URL(request.url).origin === new URL(service.url).origin), true);
-  const digest = await validateStaticOutput(path.join(model, "out"), "food-truck-festival", "GPT-6");
+  const digest = await StaticHomepage.validateStaticOutput(path.join(model, "out"), "food-truck-festival", "GPT-6");
   await writeFile(path.join(model, ".checks", "validation.json"), JSON.stringify({
     checkedAt: new Date().toISOString(), digest, browser: browser.version(), widths: [1440, 1024, 768, 390, 320], errors,
     checks: ["Actual public subpath with local resources", "Eight source vendors, nine filters and combined zones", "Thirteen map places, list, zoom and real PDF", "Nineteen events with keyboard tabs and date conflict disclosure", "Three ticket prices, CREW20 boundary and quantity validity", "Actual local audio playback, exclusivity and completion", "Eight FAQs and every footer action", "Safe ephemeral forms and no storage or external requests", "Five widths, actual touch swipe and reduced motion", "Desktop and mobile full-page screenshots"],

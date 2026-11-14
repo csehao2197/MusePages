@@ -5,7 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium, expect } from "@playwright/test";
 import { startPreviewServer } from "../../../../src/workflows/generate-preview.mjs";
-import { validateStaticOutput } from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
 
 const model = fileURLToPath(new URL(".", import.meta.url));
 const workspace = fileURLToPath(new URL("../../../../", import.meta.url));
@@ -48,7 +48,7 @@ test("Savory Affairs independently deployable catering homepage", async (t) => {
   await t.test("all public resources, font faces, SVG symbols and anchors resolve without runtime network services", async () => {
     const { page, context } = await visit();
     try {
-      const digest = await validateStaticOutput(path.join(model, "out"), "catering-services", "GPT-6");
+      const digest = await StaticHomepage.validateStaticOutput(path.join(model, "out"), "catering-services", "GPT-6");
       assert.match(digest, /^[a-f0-9]{64}$/);
       assert.match(new URL(page.url()).pathname, /^\/pages\/catering-services\/GPT-6\/index\.html$/);
       await expect(page).toHaveTitle("Savory Affairs | Catering & Gatherings");
@@ -249,7 +249,7 @@ test("Savory Affairs independently deployable catering homepage", async (t) => {
   assert.ok(requests.every((request) => request.method === "GET" && new URL(request.url).origin === new URL(service.url).origin));
   await writeFile(path.join(model, ".checks", "validation.json"), JSON.stringify({
     checkedAt: new Date().toISOString(),
-    digest: await validateStaticOutput(path.join(model, "out"), "catering-services", "GPT-6"),
+    digest: await StaticHomepage.validateStaticOutput(path.join(model, "out"), "catering-services", "GPT-6"),
     widths: [320, 390, 768, 1200, 1440], browser: "Chromium", errors,
     checks: ["offline public subpath", "source/export agreement", "resources and fonts", "tabs and keyboard",
       "gallery filtering and lightbox focus", "testimonials and touch", "form validation and exact estimates",

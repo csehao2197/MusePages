@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { chromium, expect } from "@playwright/test";
 import { startPreviewServer } from "../../../../src/workflows/generate-preview.mjs";
-import { validateStaticOutput } from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
 
 const model = fileURLToPath(new URL(".", import.meta.url));
 const workspace = fileURLToPath(new URL("../../../../", import.meta.url));
@@ -148,7 +148,7 @@ test("Ava Chen independent, local-only product design portfolio", { timeout: 180
   });
   assert.equal(failures, 0); assert.deepEqual(errors, []);
   assert.ok(requests.every(([url, method]) => method === "GET" && new URL(url).origin === new URL(service.url).origin));
-  const digest = await validateStaticOutput(path.join(model, "out"), "ux-ui-designer-portfolio", "GPT-6");
+  const digest = await StaticHomepage.validateStaticOutput(path.join(model, "out"), "ux-ui-designer-portfolio", "GPT-6");
   await writeFile(path.join(checks, "validation.json"), JSON.stringify({
     checkedAt: new Date().toISOString(), digest, errors, requests: requests.length,
     tests: "4 browser subtests plus parent; all case dialogs, local sketches, truthful resume/profile, safe form, history and five responsive widths",

@@ -5,7 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium } from "@playwright/test";
 import { startPreviewServer } from "../../../../src/workflows/generate-preview.mjs";
-import { validateStaticOutput } from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
 
 const folder = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(folder, "../../../..");
@@ -246,7 +246,7 @@ test("IGNITE 30 real Chromium static homepage", { timeout: 180000 }, async (t) =
     });
     assert.equal(allPassed, true, "Every browser subtest must pass before issuing a success receipt");
     await guard();
-    const digest = await validateStaticOutput(exported, slug, "GPT-6");
+    const digest = await StaticHomepage.validateStaticOutput(exported, slug, "GPT-6");
     await writeFile(path.join(checks, "validation.json"), JSON.stringify({ checkedAt: new Date().toISOString(), digest, errors: [...errors], tests: outcomes, browser: await browser.version(), widths: [1440, 1024, 768, 390, 320], touch: "Actual Chromium CDP touch swipe, tap menu, Free plan and locked-day unlock", requests: { count: requests.length, methods: [...new Set(requests.map((request) => request.method))], origins: [...new Set(requests.map((request) => new URL(request.url).origin))], failed: 0, external: 0 }, storage: "No persistence, cookies, POST or external runtime requests", screenshots: ["desktop-1440.png", "desktop-hero.png", "desktop-pricing.png", "mobile-hero.png", "mobile-390.png", "mobile-workouts.png"] }, null, 2) + "\n");
     await context.close();
   } finally { try { await browser?.close(); } finally { await service.close(); } }

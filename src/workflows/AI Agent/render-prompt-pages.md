@@ -23,7 +23,7 @@
 
 `api_model_name` 是agent 调用的本地AI模型的名字 一般情况下不出现在生成目标里
 
-`model_name` 是target asset的变量之一，默认为 `GPT-6`, 只用于生成目标folder和tag. 不要理解为和目前和AI模型有任何关系, 不需要检查和匹配.
+`display_model_name` 是target asset的变量之一，默认为 `GPT-6`, 只用于生成目标folder和tag. 不要理解为和目前和AI模型有任何关系, 不需要检查和匹配.
 
 ## 1. 任务
 
@@ -33,7 +33,7 @@
 
 先按原始需求 Markdown 文件名的编号前缀解析 `prompt_scope`，核对输入与输出映射，形成完整待处理清单；按编号升序、同编号按文件名排序。`All` 包含全部原始需求；同号多个需求分别保留为独立任务，同名文件映射冲突按现有规则确认后处理。
 
-清单中的每个 prompt 均先读取目标模型目录的 `metadata.json`，核对真实 `model_name`、`generated`、`preview`、`validated`、`config_added` 及实际产物，再按下文“元数据与续跑规则”决定跳过、补齐后续步骤、生成或报告待确认。范围参数只筛选输入，已有进度与重试授权规则保持不变；所有选中项（包括跳过项）均记录处理汇总。
+清单中的每个 prompt 均先读取目标模型目录的 `metadata.json`，核对真实 `display_model_name`、`generated`、`preview`、`validated`、`config_added` 及实际产物，再按下文“元数据与续跑规则”决定跳过、补齐后续步骤、生成或报告待确认。范围参数只筛选输入，已有进度与重试授权规则保持不变；所有选中项（包括跳过项）均记录处理汇总。
 
 ## 2. 确认输入、规则与授权
 
@@ -47,15 +47,15 @@
 
 ### 交付目录与文件
 
-目标网站采用 HTML 静态网站或 Next.js 项目形式，源码与静态产物只写入 `out\pages\<prompt_name>\<model_name>\`，不改动原始需求、其他模型的结果或最终发布目录。
+目标网站采用 HTML 静态网站或 Next.js 项目形式，源码与静态产物只写入 `out\pages\<prompt_name>\<display_model_name>\`，不改动原始需求、其他模型的结果或最终发布目录。
 
-`<prompt_name>` 为原始需求 Markdown 文件名去掉 `.md` 后的名称，保留内部编号；`<model_name>` 沿用本文约定的模型目录名，用于隔离输出，不能代替元数据中记录的真实 `model_name`。
+`<prompt_name>` 为原始需求 Markdown 文件名去掉 `.md` 后的名称，保留内部编号；`<display_model_name>` 沿用本文约定的模型目录名，用于隔离输出，不能代替元数据中记录的真实 `display_model_name`。
 
 每个模型结果分别保留源码、说明、元数据与静态交付物：
 
 ```text
 out\pages\<prompt_name>\
-  <model_name>\
+  <display_model_name>\
     README.md                      # 功能、运行方式、Mock、实际验证与已知限制
     metadata.json                  # 真实模型、静态产物位置及各阶段状态
     .generation-preview.sha256     # 生成流程维护的预览摘要，不发布
@@ -90,11 +90,11 @@ node src\workflows\generate-preview.mjs out\pages\006-travel-agency-homepage\mod
 
 prompt 目录仅容纳模型结果目录；`metadata.json` 仅在模型目录维护。公开标题与 slug 随模型选项保存在 `deploy\config.json`，同一 prompt 的各模型使用相同 slug；新结果默认从去编号的文件名派生，已有展示信息保持原样。
 
-模型级 `out\pages\<prompt_name>\<model_name>\metadata.json` 保存真实模型身份及各阶段状态。所有模型结果均包含布尔字段 `preview`，新结果默认 `false`：
+模型级 `out\pages\<prompt_name>\<display_model_name>\metadata.json` 保存真实模型身份及各阶段状态。所有模型结果均包含布尔字段 `preview`，新结果默认 `false`：
 
 ```json
 {
-  "model_name": "actual-model-id",
+  "display_model_name": "actual-model-id",
   "tags": ["Travel"],
   "staticDir": "out",
   "generated": false,
@@ -141,7 +141,7 @@ prompt 的 `weight` 默认 `1`，已有值保持；首页面板按权重降序�
 
 每个 prompt 处理结束后（包括跳过、失败或阻塞），追加一条汇总记录，仅包含以下内容：
 
-- **时间与关联信息**：使用带时区的 ISO 8601 时间，记录本轮执行标识；涉及具体结果时，记录原始 prompt 名称、真实 `model_name` 与输出路径。模型身份尚未确认时明确标注，不用目录名代替。
+- **时间与关联信息**：使用带时区的 ISO 8601 时间，记录本轮执行标识；涉及具体结果时，记录原始 prompt 名称、真实 `display_model_name` 与输出路径。模型身份尚未确认时明确标注，不用目录名代替。
 - **处理结果汇总**：记录本项实际执行的操作、生成或跳过的结果、已生成的 `tags` 及其非空核验结果，以及 `metadata.json` 中的 `generated`、`preview`、`validated`、`config_added` 状态；需要报告发布状态时读取 `deploy\config.json` 对应模型选项中的 `deployed`。记录缺失或不可读时明确说明，不推断状态。简述实际验证方式与结论，未执行的检查标注“未执行”；如有失败、阻塞或未完成事项，说明原因、保留的产物及下一步，不将已生成或已登记等同于已验证或已部署。
 
 汇总不包含密钥、令牌或其他敏感信息，不替代 `metadata.json` 与实际产物核验；中断后缺少汇总记录不能作为成功依据。

@@ -5,7 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium, expect } from "@playwright/test";
 import { startPreviewServer } from "../../../../src/workflows/generate-preview.mjs";
-import { validateStaticOutput } from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
 const model = fileURLToPath(new URL(".",import.meta.url));
 const workspace = fileURLToPath(new URL("../../../../",import.meta.url));
 test("Vanguard Commercial independent static search", {timeout:150000}, async (t) => {
@@ -48,7 +48,7 @@ test("Vanguard Commercial independent static search", {timeout:150000}, async (t
       const sprite = await readFile(path.join(model,"out","assets","icons.svg"),"utf8");
       for (const id of new Set(await page.locator("use").evaluateAll((uses) => uses.map((use) => use.getAttribute("href").split("#")[1])))) assert.ok(sprite.includes(`id="${id}"`),id);
       for (const file of ["index.html","style.css","app.js"]) assert.equal(await readFile(path.join(model,file),"utf8"),await readFile(path.join(model,"out",file),"utf8"));
-      assert.match(await validateStaticOutput(path.join(model,"out"),"commercial-property-listings","GPT-6"),/^[a-f0-9]{64}$/);
+      assert.match(await StaticHomepage.validateStaticOutput(path.join(model,"out"),"commercial-property-listings","GPT-6"),/^[a-f0-9]{64}$/);
       assert.deepEqual(await page.locator('a[href^="#"]').evaluateAll((links) => links.filter((link) => !document.getElementById(link.hash.slice(1))).map((link) => link.hash)),[]);
       await expect(page.locator(".property-card h3")).toHaveText(["Frost Tower — Suite 2400","Domain NORTHSIDE — Retail Pad 8","East Austin Distribution Center"]);
       await expect(page.locator(".card-price strong")).toHaveText(["$52.00","$42.00","$6,750,000"]);
@@ -265,7 +265,7 @@ test("Vanguard Commercial independent static search", {timeout:150000}, async (t
   assert.deepEqual(errors,[]);
   assert.equal(requests.every((request) => request.method==="GET" && new URL(request.url).origin===new URL(service.url).origin),true);
   await writeFile(path.join(model,".checks","validation.json"),JSON.stringify({
-    checkedAt:new Date().toISOString(),digest:await validateStaticOutput(path.join(model,"out"),"commercial-property-listings","GPT-6"),browser:browser.version(),widths:[1440,1024,768,390,320],errors,
+    checkedAt:new Date().toISOString(),digest:await StaticHomepage.validateStaticOutput(path.join(model,"out"),"commercial-property-listings","GPT-6"),browser:browser.version(),widths:[1440,1024,768,390,320],errors,
     checks:["Actual public subpath, local font/images/sprites, source/static agreement","Original three records, prices, specs, feature, four market stats and honest downloaded report","Location/type/transaction search, all filter groups, range validation and dual slider agreement","Transaction-aware price units, size sorting, real pagination, zero states and memory-only favorites","Safe age-neutral listing/alert/tour previews, future local tour dates and contact cleanup","Schematic map: pin tooltip/overlay, clustering, zoom, keyboard pan, rectangle and visible-area filters, palette and fullscreen","Every footer/contact route, multi-submarket requirement preview and safe text rendering","Five widths, mobile nav/filter/map, actual photo touch swipe, 44px actions","Actual full-page desktop/mobile screenshots; no external calls, errors or storage"],
   },null,2)+"\n");
 });

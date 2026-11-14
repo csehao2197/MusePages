@@ -4,7 +4,7 @@ import { readFile, readdir, mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { chromium, expect } from "@playwright/test";
 import { startPreviewServer } from "../../../../src/workflows/generate-preview.mjs";
-import { validateStaticOutput } from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
 
 const root = process.cwd();
 const folder = path.join(root, "out", "pages", "038-membership-comparison", "GPT-6");
@@ -76,7 +76,7 @@ check("Source/export equality, actual static validator and asset bounds", async 
   assert.ok(assets.includes("icons.svg") && assets.includes("lucide-LICENSE.txt"));
   for (const file of assets) assert.deepEqual(await readFile(path.join(folder, "assets", file)), await readFile(path.join(exported, "assets", file)));
   for (const file of await readdir(exported)) assert.ok(["index.html", "style.css", "app.js", "assets", "preview.png"].includes(file), `Unexpected public file ${file}`);
-  digest = await validateStaticOutput(exported, "membership-comparison", "GPT-6");
+  digest = await StaticHomepage.validateStaticOutput(exported, "membership-comparison", "GPT-6");
   assert.ok(digest);
 });
 check("Billing toggle updates all cards and sticky comparison prices accurately", async () => {
@@ -277,7 +277,7 @@ check("Final fresh browser receipt records only successful actual checks and no 
   await guard();
   assert.equal(testNames.length, 7, "Every previous test must pass before a success receipt is written");
   assert.deepEqual(problems, []);
-  const finalDigest = await validateStaticOutput(exported, "membership-comparison", "GPT-6");
+  const finalDigest = await StaticHomepage.validateStaticOutput(exported, "membership-comparison", "GPT-6");
   assert.equal(digest, finalDigest);
   await writeFile(path.join(checks, "validation.json"), JSON.stringify({
     checkedAt: new Date().toISOString(), digest: finalDigest, errors: [],

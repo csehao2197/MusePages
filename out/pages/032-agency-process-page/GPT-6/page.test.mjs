@@ -5,7 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium } from "@playwright/test";
 import { startPreviewServer } from "../../../../src/workflows/generate-preview.mjs";
-import { validateStaticOutput } from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
 
 const folder = path.dirname(fileURLToPath(import.meta.url));
 const exported = path.join(folder, "out");
@@ -183,7 +183,7 @@ test("Frameshift static homepage browser verification", { timeout: 180000 }, asy
       assert.equal(await page.locator('a[href^="http"]').count(), 0);
     });
     if (failures.length) throw Error(failures.join("\n"));
-    const digest = await validateStaticOutput(exported, "agency-process-page", "GPT-6");
+    const digest = await StaticHomepage.validateStaticOutput(exported, "agency-process-page", "GPT-6");
     await writeFile(path.join(checks, "validation.json"), JSON.stringify({ checkedAt: new Date().toISOString(), digest, errors: [], tests: executed, requestCount: requests.length, network: "GET loopback only; no external calls or submissions", viewports: [1440, 1024, 768, 390, 320], browser: "Chromium", screenshots: ["desktop-1440.png", "mobile-390.png"], cleanup: "browser/context/server closed in finally" }, null, 2));
   } finally { try { await context?.close(); } finally { try { await browser?.close(); } finally { await service?.close(); } } }
 });

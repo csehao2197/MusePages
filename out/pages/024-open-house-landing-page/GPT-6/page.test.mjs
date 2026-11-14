@@ -5,7 +5,7 @@ import path from "node:path";
 import {fileURLToPath} from "node:url";
 import {chromium,expect} from "@playwright/test";
 import {startPreviewServer} from "../../../../src/workflows/generate-preview.mjs";
-import {validateStaticOutput} from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
 const model=fileURLToPath(new URL(".",import.meta.url)),workspace=fileURLToPath(new URL("../../../../",import.meta.url)),checks=path.join(model,".checks");
 test("Pinnacle independent open-house homepage",{timeout:150000},async(t)=>{
  const service=await startPreviewServer(path.join(model,"out"),{workspace}),browser=await chromium.launch();
@@ -34,7 +34,7 @@ test("Pinnacle independent open-house homepage",{timeout:150000},async(t)=>{
    const pdf=await page.request.get(new URL("assets/property-specifications.pdf",page.url()).href);assert.equal(pdf.status(),200);assert.equal((await pdf.body()).subarray(0,8).toString(),"%PDF-1.4");
    const sprite=await readFile(path.join(model,"out","assets","icons.svg"),"utf8");for(const id of new Set(await page.locator("use").evaluateAll(uses=>uses.map(u=>u.getAttribute("href").split("#")[1]))))assert.ok(sprite.includes(`id="${id}"`),id);
    assert.deepEqual(await page.locator('a[href^="#"]').evaluateAll(links=>links.filter(a=>!document.getElementById(a.hash.slice(1))).map(a=>a.hash)),[]);
-   assert.match(await validateStaticOutput(path.join(model,"out"),"open-house-landing-page","GPT-6"),/^[a-f0-9]{64}$/);
+   assert.match(await StaticHomepage.validateStaticOutput(path.join(model,"out"),"open-house-landing-page","GPT-6"),/^[a-f0-9]{64}$/);
   }finally{await context.close();}
  });
  await t.test("all twelve image lightboxes, wrap, keyboard focus, crop and Escape",async()=>{
@@ -118,6 +118,6 @@ test("Pinnacle independent open-house homepage",{timeout:150000},async(t)=>{
   }
  });
  assert.deepEqual(errors,[]);assert.ok(requests.length>30);assert.ok(requests.every(r=>r.method==="GET"&&new URL(r.url).origin===new URL(service.url).origin));
- const digest=await validateStaticOutput(path.join(model,"out"),"open-house-landing-page","GPT-6");
+ const digest=await StaticHomepage.validateStaticOutput(path.join(model,"out"),"open-house-landing-page","GPT-6");
  await writeFile(path.join(checks,"validation.json"),JSON.stringify({checkedAt:new Date().toISOString(),digest,errors,tests:"6 real Chromium subtests: resources/PDF/subpath, twelve-photo keyboard/wrap lightbox, map synchronization, actual amortization and edge cases, private form/resources/listings, five widths/native phone tap/swipe",requests:requests.length,widths:[1440,1024,768,390,320],build:"not run",publish:"not run"},null,2)+"\n");
 });

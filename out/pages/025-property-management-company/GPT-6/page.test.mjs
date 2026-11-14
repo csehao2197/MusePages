@@ -5,7 +5,7 @@ import path from "node:path";
 import {fileURLToPath} from "node:url";
 import {chromium,expect} from "@playwright/test";
 import {startPreviewServer} from "../../../../src/workflows/generate-preview.mjs";
-import {validateStaticOutput} from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
 const model=fileURLToPath(new URL(".",import.meta.url)),workspace=fileURLToPath(new URL("../../../../",import.meta.url)),checks=path.join(model,".checks");
 test("Keystone independent property-management homepage",{timeout:180000},async(t)=>{
  const service=await startPreviewServer(path.join(model,"out"),{workspace}),browser=await chromium.launch();
@@ -29,7 +29,7 @@ test("Keystone independent property-management homepage",{timeout:180000},async(
    for(const pdf of["sample-lease.pdf","sample-owner-statement.pdf"]){const response=await page.request.get(new URL(`assets/${pdf}`,page.url()).href);assert.equal(response.status(),200);assert.equal((await response.body()).subarray(0,8).toString(),"%PDF-1.4");}
    const sprite=await readFile(path.join(model,"assets","icons.svg"),"utf8");for(const id of new Set(await page.locator("use").evaluateAll(uses=>uses.map(u=>u.getAttribute("href").split("#")[1]))))assert.ok(sprite.includes(`id="${id}"`),id);
    assert.deepEqual(await page.locator('a[href^="#"]').evaluateAll(links=>links.filter(a=>!document.getElementById(a.hash.slice(1))).map(a=>a.hash)),[]);
-   assert.match(await validateStaticOutput(path.join(model,"out"),"property-management-company","GPT-6"),/^[a-f0-9]{64}$/);
+   assert.match(await StaticHomepage.validateStaticOutput(path.join(model,"out"),"property-management-company","GPT-6"),/^[a-f0-9]{64}$/);
   }finally{await context.close();}
  });
  await t.test("all expandable services and FAQs, real carousel controls and availability filters",async()=>{
@@ -112,6 +112,6 @@ test("Keystone independent property-management homepage",{timeout:180000},async(
   }
  });
  assert.deepEqual(errors,[]);assert.ok(requests.every(r=>r.method==="GET"&&new URL(r.url).origin===new URL(service.url).origin));
- const digest=await validateStaticOutput(path.join(model,"out"),"property-management-company","GPT-6");
+ const digest=await StaticHomepage.validateStaticOutput(path.join(model,"out"),"property-management-company","GPT-6");
  await writeFile(path.join(checks,"validation.json"),JSON.stringify({checkedAt:new Date().toISOString(),digest,errors,requests:requests.length,widths:[1440,1024,768,390,320],checks:["complete static subpath and assets","six expandable services and FAQ","six-property carousel and three actual rental pages","independent real ROI arithmetic and negative/invalid boundaries","owner/tenant portals, inert payments and private draft","safe local analysis and rental inquiry forms","keyboard, actual phone taps/swipe and 44px targets","five responsive widths and Portfolio-first mobile pricing","no network submissions, external assets or storage"]},null,2)+"\n");
 });

@@ -5,7 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium, expect } from "@playwright/test";
 import { startPreviewServer } from "../../../../src/workflows/generate-preview.mjs";
-import { validateStaticOutput } from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
 const model = fileURLToPath(new URL(".",import.meta.url));
 const workspace = fileURLToPath(new URL("../../../../",import.meta.url));
 test("Keystone independent static home valuation",{timeout:150000},async (t) => {
@@ -48,7 +48,7 @@ test("Keystone independent static home valuation",{timeout:150000},async (t) => 
       const sprite = await readFile(path.join(model,"out","assets","icons.svg"),"utf8");
       for (const id of new Set(await page.locator("use").evaluateAll((uses) => uses.map((use) => use.getAttribute("href").split("#")[1])))) assert.ok(sprite.includes(`id="${id}"`),id);
       assert.deepEqual(await page.locator('a[href^="#"]').evaluateAll((links) => links.filter((link) => !document.getElementById(link.hash.slice(1))).map((link) => link.hash)),[]);
-      assert.match(await validateStaticOutput(path.join(model,"out"),"home-valuation-landing-page","GPT-6"),/^[a-f0-9]{64}$/);
+      assert.match(await StaticHomepage.validateStaticOutput(path.join(model,"out"),"home-valuation-landing-page","GPT-6"),/^[a-f0-9]{64}$/);
       await expect(page.locator("h1")).toHaveText("What's Your Home Worth?");
       await expect(page.locator(".steps li")).toHaveCount(3); await expect(page.locator(".review-card")).toHaveCount(3);
       assert.equal(await page.evaluate(() => localStorage.length+sessionStorage.length),0);
@@ -218,7 +218,7 @@ test("Keystone independent static home valuation",{timeout:150000},async (t) => 
   assert.deepEqual(errors,[]);
   assert.ok(requests.length>0 && requests.every((request) => new URL(request.url).origin===new URL(service.url).origin && request.method==="GET"));
   await writeFile(path.join(model,".checks","validation.json"),JSON.stringify({
-    checkedAt:new Date().toISOString(),digest:await validateStaticOutput(path.join(model,"out"),"home-valuation-landing-page","GPT-6"),
+    checkedAt:new Date().toISOString(),digest:await StaticHomepage.validateStaticOutput(path.join(model,"out"),"home-valuation-landing-page","GPT-6"),
     widths:[1440,1024,768,390,320],browser:"Playwright Chromium",errors,
     checks:["Independent unnumbered public subpath; local DM Sans, images and SVG icons; source/export match","Both autocomplete inputs support keyboard and pointer; sample address report and unknown-address honesty; safe text and CMA prefill","Original sample range/specs/comparables, market stats, actual chart keyboard/hover and mutually exclusive FAQ","Required/email/phone/consent guards; safe CMA preview; reset fields, Escape cleanup, focus restoration; no storage","Editable amortization; interest, zero-interest and full-down-payment boundaries; invalid down payment/rate/term/price guards","All footer, social and phone information routes; genuine local calculator; no unrelated external destinations","Five widths, mobile navigation/floating estimate and stacked address forms; narrow report scroll; 44px buttons/links","All runtime requests local GET; no page/console/resource errors; actual desktop/mobile full-page screenshots"],
   },null,2)+"\n");

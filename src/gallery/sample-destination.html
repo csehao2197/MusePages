@@ -1,45 +1,398 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="An illustrative Tokyo destination guide sample for the MusePages gallery.">
-  <title>Tokyo | Wanderly destination guide sample</title>
-  <style>
-    :root{color-scheme:light;--ink:#173e38;--muted:#63776f;--teal:#267764;--paper:#f9faf5}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:20px}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.7 system-ui,sans-serif}a{color:inherit;text-underline-offset:4px}a:focus-visible{outline:3px solid #b65b34;outline-offset:5px}.wrap{max-width:1100px;margin:auto;padding:0 36px}header{display:flex;justify-content:space-between;align-items:center;padding-top:20px!important;padding-bottom:20px!important;gap:20px}.brand{font:bold 28px Georgia,serif;text-decoration:none}nav{display:flex;gap:24px;font-size:12px}nav a{text-decoration:none}.hero{position:relative;min-height:480px;overflow:hidden;background:#aec5b3}.landscape{position:absolute;inset:0;width:100%;height:100%}.shade{position:absolute;inset:0;background:linear-gradient(90deg,#10352fbb,#173e3810)}.hero-content{position:relative;padding-top:80px;padding-bottom:65px;color:white}.eyebrow{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase}h1{font:normal clamp(76px,10vw,128px)/1 Georgia,serif;letter-spacing:-5px;margin:20px 0}h1 span{color:#d9bd88}.hero p{max-width:430px;color:#e7efe4;font-size:16px}.button{display:inline-block;background:#fff;color:var(--ink);padding:12px 22px;border-radius:5px;text-decoration:none;font-size:12px;font-weight:600;margin-top:16px}.facts{display:flex;gap:36px;padding:24px 0;border-bottom:1px solid #dfe6dc;font-size:12px;flex-wrap:wrap}.facts span{color:var(--muted)}section{padding:52px 0;border-bottom:1px solid #dfe6dc}h2{font:normal clamp(29px,4vw,40px)/1.2 Georgia,serif;margin:12px 0 20px;letter-spacing:-1px}.intro{max-width:680px;color:var(--muted)}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:28px}.card{background:white;border:1px solid #dfe6dc;border-radius:10px;padding:26px}.card small{color:var(--teal);font-size:10px;letter-spacing:2px}.card h3{font:normal 23px Georgia,serif;margin:14px 0}.card p{font-size:13px;color:var(--muted)}.tips{display:grid;grid-template-columns:1fr 1fr;gap:25px}.tips p{color:var(--muted);font-size:14px}footer{padding:28px 0;color:var(--muted);font-size:11px}footer a{color:var(--ink)}.sample{background:#e8eee1;color:#435844;font-size:11px;padding:9px 20px;text-align:center}
-    @media(max-width:650px){.wrap{padding:0 22px}header{flex-wrap:wrap}nav{gap:15px}.hero{min-height:430px}.hero-content{padding-top:70px}.cards,.tips{grid-template-columns:1fr}.facts{gap:12px 24px}section{padding:36px 0}h1{letter-spacing:-3px}}
-    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-  </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="An illustrative Tokyo destination guide sample for the MusePages gallery.">
+    <title>Tokyo | Wanderly destination guide sample</title>
+    <style>
+        :root
+        {
+            color-scheme: light;
+            --ink: #173e38;
+            --muted: #63776f;
+            --teal: #267764;
+            --paper: #f9faf5
+        }
+
+        *
+        {
+            box-sizing: border-box
+        }
+
+        html
+        {
+            scroll-behavior: smooth;
+            scroll-padding-top: 20px
+        }
+
+        body
+        {
+            margin: 0;
+            background: var(--paper);
+            color: var(--ink);
+            font: 15px/1.7 system-ui, sans-serif
+        }
+
+        a
+        {
+            color: inherit;
+            text-underline-offset: 4px
+        }
+
+        a:focus-visible
+        {
+            outline: 3px solid #b65b34;
+            outline-offset: 5px
+        }
+
+        .wrap
+        {
+            max-width: 1100px;
+            margin: auto;
+            padding: 0 36px
+        }
+
+        header
+        {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px !important;
+            padding-bottom: 20px !important;
+            gap: 20px
+        }
+
+        .brand
+        {
+            font: bold 28px Georgia, serif;
+            text-decoration: none
+        }
+
+        nav
+        {
+            display: flex;
+            gap: 24px;
+            font-size: 12px
+        }
+
+        nav a
+        {
+            text-decoration: none
+        }
+
+        .hero
+        {
+            position: relative;
+            min-height: 480px;
+            overflow: hidden;
+            background: #aec5b3
+        }
+
+        .landscape
+        {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%
+        }
+
+        .shade
+        {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, #10352fbb, #173e3810)
+        }
+
+        .hero-content
+        {
+            position: relative;
+            padding-top: 80px;
+            padding-bottom: 65px;
+            color: white
+        }
+
+        .eyebrow
+        {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase
+        }
+
+        h1
+        {
+            font: normal clamp(76px, 10vw, 128px)/1 Georgia, serif;
+            letter-spacing: -5px;
+            margin: 20px 0
+        }
+
+        h1 span
+        {
+            color: #d9bd88
+        }
+
+        .hero p
+        {
+            max-width: 430px;
+            color: #e7efe4;
+            font-size: 16px
+        }
+
+        .button
+        {
+            display: inline-block;
+            background: #fff;
+            color: var(--ink);
+            padding: 12px 22px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 16px
+        }
+
+        .facts
+        {
+            display: flex;
+            gap: 36px;
+            padding: 24px 0;
+            border-bottom: 1px solid #dfe6dc;
+            font-size: 12px;
+            flex-wrap: wrap
+        }
+
+        .facts span
+        {
+            color: var(--muted)
+        }
+
+        section
+        {
+            padding: 52px 0;
+            border-bottom: 1px solid #dfe6dc
+        }
+
+        h2
+        {
+            font: normal clamp(29px, 4vw, 40px)/1.2 Georgia, serif;
+            margin: 12px 0 20px;
+            letter-spacing: -1px
+        }
+
+        .intro
+        {
+            max-width: 680px;
+            color: var(--muted)
+        }
+
+        .cards
+        {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 28px
+        }
+
+        .card
+        {
+            background: white;
+            border: 1px solid #dfe6dc;
+            border-radius: 10px;
+            padding: 26px
+        }
+
+        .card small
+        {
+            color: var(--teal);
+            font-size: 10px;
+            letter-spacing: 2px
+        }
+
+        .card h3
+        {
+            font: normal 23px Georgia, serif;
+            margin: 14px 0
+        }
+
+        .card p
+        {
+            font-size: 13px;
+            color: var(--muted)
+        }
+
+        .tips
+        {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px
+        }
+
+        .tips p
+        {
+            color: var(--muted);
+            font-size: 14px
+        }
+
+        footer
+        {
+            padding: 28px 0;
+            color: var(--muted);
+            font-size: 11px
+        }
+
+        footer a
+        {
+            color: var(--ink)
+        }
+
+        .sample
+        {
+            background: #e8eee1;
+            color: #435844;
+            font-size: 11px;
+            padding: 9px 20px;
+            text-align: center
+        }
+
+        @media(max-width:650px)
+        {
+            .wrap
+            {
+                padding: 0 22px
+            }
+
+            header
+            {
+                flex-wrap: wrap
+            }
+
+            nav
+            {
+                gap: 15px
+            }
+
+            .hero
+            {
+                min-height: 430px
+            }
+
+            .hero-content
+            {
+                padding-top: 70px
+            }
+
+            .cards,
+            .tips
+            {
+                grid-template-columns: 1fr
+            }
+
+            .facts
+            {
+                gap: 12px 24px
+            }
+
+            section
+            {
+                padding: 36px 0
+            }
+
+            h1
+            {
+                letter-spacing: -3px
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce)
+        {
+            html
+            {
+                scroll-behavior: auto
+            }
+        }
+
+    </style>
 </head>
+
 <body>
-  <div class="sample">MusePages illustrative static sample &middot; No booking services or live travel data</div>
-  <header class="wrap"><a class="brand" href="index.html">Wanderly.</a><nav aria-label="Main navigation"><a href="#discover">Discover</a><a href="#itinerary">Your itinerary</a><a href="../../../index.html">MusePages &nearr;</a></nav></header>
-  <main>
-    <div class="hero">
-      <svg class="landscape" viewBox="0 0 1400 650" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="scene-title">
-        <title id="scene-title">Original illustration of Mount Fuji and the Tokyo skyline at sunset</title>
-        <defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#b3c9b8"/><stop offset="1" stop-color="#ecdbb8"/></linearGradient><linearGradient id="mountain" x2="0" y2="1"><stop stop-color="#729790"/><stop offset="1" stop-color="#a8b7a3"/></linearGradient></defs>
-        <path fill="url(#sky)" d="M0 0h1400v650H0z"/><circle cx="1050" cy="170" r="67" fill="#f3dfaa"/>
-        <path d="M450 490 880 155l360 335Z" fill="url(#mountain)"/><path d="m880 155-100 78 57-10 42 21 28-29 46 8Z" fill="#f4f2dc"/>
-        <path d="m0 440 150-60 130 40 170-45 160 60 160-30 200 65 230-70 200 60v190H0Z" fill="#7e9f8c"/>
-        <g fill="#4a786c"><path d="M0 480h100v170H0zm125-65h60v235h-60zm85 43h80v192h-80zm110-76h60v268h-60zm93 111h120v157H413zm460-50h70v207h-70zm90-60h85v267h-85zm116 75h60v192h-60zm89-115h83v307h-83zm101 130h120v177h-120z"/><path d="M690 650 748 270h7l58 380h-22l-40-280-39 280Z"/><path d="M715 462h74v10h-74zm13-80h46v9h-46zm20-153h7v53h-7z"/></g>
-        <g fill="#ead7a2" opacity=".8"><path d="M143 443h7v12h-7zm18 0h7v12h-7zm-18 25h7v12h-7zm18 0h7v12h-7zm178-59h9v15h-9zm0 30h9v15h-9zm642-36h10v15h-10zm28 0h10v15h-10zm-28 30h10v15h-10zm28 0h10v15h-10zm180-60h10v15h-10zm28 0h10v15h-10zm-28 30h10v15h-10z"/></g>
-        <path d="M0 565q240-55 480 5t480-4 440 12v72H0Z" fill="#2f5b50"/>
-      </svg>
-      <div class="shade"></div>
-      <div class="wrap hero-content"><span class="eyebrow">Japan / A field guide for the curious</span><h1>Tokyo<span>.</span></h1><p>Ancient rituals. Electric streets.<br>A city of beautiful contrasts, waiting to be explored.</p><a class="button" href="#itinerary">Find your own Tokyo &darr;</a></div>
-    </div>
-    <div class="wrap">
-      <div class="facts"><div>Best enjoyed <span>/ At your own pace</span></div><div>Suggested stay <span>/ 3 days</span></div><div>The mood <span>/ Wonder, always</span></div></div>
-      <section id="discover"><span class="eyebrow">Beyond the postcard</span><h2>A thousand little worlds.<br>One extraordinary city.</h2><p class="intro">Start with a quiet shrine, follow the scent of coffee down a side street, and end beneath a sky of neon. Tokyo rewards the unhurried traveler. This sample itinerary is an invitation to explore, not a live travel service.</p></section>
-      <section id="itinerary" aria-labelledby="itinerary-title"><span class="eyebrow">A little structure. Plenty of possibility.</span><h2 id="itinerary-title">Three days to find your rhythm.</h2><div class="cards">
-        <article class="card"><small>DAY 01 / OLD TOKYO</small><h3>Start with a little stillness.</h3><p>Explore Asakusa, take in the grounds of Senso-ji, and wander toward the Sumida River for an afternoon walk.</p></article>
-        <article class="card"><small>DAY 02 / CITY ENERGY</small><h3>Follow the bright lights.</h3><p>Find a quiet moment around Meiji Shrine before exploring Harajuku's side streets and Shibuya after sunset.</p></article>
-        <article class="card"><small>DAY 03 / YOUR OWN WAY</small><h3>Leave room for discovery.</h3><p>Browse a neighborhood bookshop, linger over a coffee, or spend an afternoon exploring a museum of your choice.</p></article>
-      </div></section>
-      <section><span class="eyebrow">Before you wander</span><h2>Small tips, better days.</h2><div class="tips"><p><strong>Travel thoughtfully.</strong><br>Respect local signage and quiet spaces. Check current opening hours and entry requirements before visiting.</p><p><strong>Keep plans flexible.</strong><br>Leave time between neighborhoods. The most memorable moments rarely follow an exact schedule.</p></div></section>
-    </div>
-  </main>
-  <footer class="wrap">Wanderly is a fictional travel brand. Original illustration; system fonts; no external assets. <a href="prompt.html">Read the original prompt</a> &middot; <a href="../../../index.html">Back to MusePages</a></footer>
+    <div class="sample">MusePages illustrative static sample &middot; No booking services or live travel data</div>
+    <header class="wrap"><a class="brand" href="index.html">Wanderly.</a>
+        <nav aria-label="Main navigation"><a href="#discover">Discover</a><a href="#itinerary">Your itinerary</a><a href="../../../index.html">MusePages &nearr;</a></nav>
+    </header>
+    <main>
+        <div class="hero">
+            <svg class="landscape" viewBox="0 0 1400 650" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="scene-title">
+                <title id="scene-title">Original illustration of Mount Fuji and the Tokyo skyline at sunset</title>
+                <defs>
+                    <linearGradient id="sky" x2="0" y2="1">
+                        <stop stop-color="#b3c9b8" />
+                        <stop offset="1" stop-color="#ecdbb8" />
+                    </linearGradient>
+                    <linearGradient id="mountain" x2="0" y2="1">
+                        <stop stop-color="#729790" />
+                        <stop offset="1" stop-color="#a8b7a3" />
+                    </linearGradient>
+                </defs>
+                <path fill="url(#sky)" d="M0 0h1400v650H0z" />
+                <circle cx="1050" cy="170" r="67" fill="#f3dfaa" />
+                <path d="M450 490 880 155l360 335Z" fill="url(#mountain)" />
+                <path d="m880 155-100 78 57-10 42 21 28-29 46 8Z" fill="#f4f2dc" />
+                <path d="m0 440 150-60 130 40 170-45 160 60 160-30 200 65 230-70 200 60v190H0Z" fill="#7e9f8c" />
+                <g fill="#4a786c">
+                    <path d="M0 480h100v170H0zm125-65h60v235h-60zm85 43h80v192h-80zm110-76h60v268h-60zm93 111h120v157H413zm460-50h70v207h-70zm90-60h85v267h-85zm116 75h60v192h-60zm89-115h83v307h-83zm101 130h120v177h-120z" />
+                    <path d="M690 650 748 270h7l58 380h-22l-40-280-39 280Z" />
+                    <path d="M715 462h74v10h-74zm13-80h46v9h-46zm20-153h7v53h-7z" />
+                </g>
+                <g fill="#ead7a2" opacity=".8">
+                    <path d="M143 443h7v12h-7zm18 0h7v12h-7zm-18 25h7v12h-7zm18 0h7v12h-7zm178-59h9v15h-9zm0 30h9v15h-9zm642-36h10v15h-10zm28 0h10v15h-10zm-28 30h10v15h-10zm28 0h10v15h-10zm180-60h10v15h-10zm28 0h10v15h-10zm-28 30h10v15h-10z" />
+                </g>
+                <path d="M0 565q240-55 480 5t480-4 440 12v72H0Z" fill="#2f5b50" />
+            </svg>
+            <div class="shade"></div>
+            <div class="wrap hero-content"><span class="eyebrow">Japan / A field guide for the curious</span>
+                <h1>Tokyo<span>.</span></h1>
+                <p>Ancient rituals. Electric streets.<br>A city of beautiful contrasts, waiting to be explored.</p><a class="button" href="#itinerary">Find your own Tokyo &darr;</a>
+            </div>
+        </div>
+        <div class="wrap">
+            <div class="facts">
+                <div>Best enjoyed <span>/ At your own pace</span></div>
+                <div>Suggested stay <span>/ 3 days</span></div>
+                <div>The mood <span>/ Wonder, always</span></div>
+            </div>
+            <section id="discover"><span class="eyebrow">Beyond the postcard</span>
+                <h2>A thousand little worlds.<br>One extraordinary city.</h2>
+                <p class="intro">Start with a quiet shrine, follow the scent of coffee down a side street, and end beneath a sky of neon. Tokyo rewards the unhurried traveler. This sample itinerary is an invitation to explore, not a live travel service.</p>
+            </section>
+            <section id="itinerary" aria-labelledby="itinerary-title"><span class="eyebrow">A little structure. Plenty of possibility.</span>
+                <h2 id="itinerary-title">Three days to find your rhythm.</h2>
+                <div class="cards">
+                    <article class="card"><small>DAY 01 / OLD TOKYO</small>
+                        <h3>Start with a little stillness.</h3>
+                        <p>Explore Asakusa, take in the grounds of Senso-ji, and wander toward the Sumida River for an afternoon walk.</p>
+                    </article>
+                    <article class="card"><small>DAY 02 / CITY ENERGY</small>
+                        <h3>Follow the bright lights.</h3>
+                        <p>Find a quiet moment around Meiji Shrine before exploring Harajuku's side streets and Shibuya after sunset.</p>
+                    </article>
+                    <article class="card"><small>DAY 03 / YOUR OWN WAY</small>
+                        <h3>Leave room for discovery.</h3>
+                        <p>Browse a neighborhood bookshop, linger over a coffee, or spend an afternoon exploring a museum of your choice.</p>
+                    </article>
+                </div>
+            </section>
+            <section><span class="eyebrow">Before you wander</span>
+                <h2>Small tips, better days.</h2>
+                <div class="tips">
+                    <p><strong>Travel thoughtfully.</strong><br>Respect local signage and quiet spaces. Check current opening hours and entry requirements before visiting.</p>
+                    <p><strong>Keep plans flexible.</strong><br>Leave time between neighborhoods. The most memorable moments rarely follow an exact schedule.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+    <footer class="wrap">Wanderly is a fictional travel brand. Original illustration; system fonts; no external assets. <a href="prompt.html">Read the original prompt</a> &middot; <a href="../../../index.html">Back to MusePages</a></footer>
 </body>
+
 </html>

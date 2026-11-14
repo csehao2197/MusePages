@@ -5,7 +5,7 @@ import path from "node:path";
 import {fileURLToPath} from "node:url";
 import {chromium,expect} from "@playwright/test";
 import {startPreviewServer} from "../../../../src/workflows/generate-preview.mjs";
-import {validateStaticOutput} from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
 const model=fileURLToPath(new URL(".",import.meta.url)),workspace=fileURLToPath(new URL("../../../../",import.meta.url)),checks=path.join(model,".checks");
 test("Alder independent immersive virtual-property tour",{timeout:240000},async(t)=>{
  const service=await startPreviewServer(path.join(model,"out"),{workspace}),browser=await chromium.launch();
@@ -114,5 +114,5 @@ test("Alder independent immersive virtual-property tour",{timeout:240000},async(
   }finally{await context.close();}
  });
  assert.equal(failures,0,"Every browser subtest must pass before writing a successful receipt");assert.deepEqual(errors,[]);assert.ok(requests.every(r=>r.method==="GET"&&new URL(r.url).origin===new URL(service.url).origin));
- const digest=await validateStaticOutput(path.join(model,"out"),"virtual-property-tour","GPT-6");await writeFile(path.join(checks,"validation.json"),JSON.stringify({checkedAt:new Date().toISOString(),digest,errors,requests:requests.length,tests:"7 focused browser subtests plus parent; genuine WebGL pixels, real desktop/mobile gestures, media, safety and responsive checks",hardware:"WebXR unsupported/permission behavior only; no physical headset or orientation sensor verified"},null,2)+"\n");
+ const digest=await StaticHomepage.validateStaticOutput(path.join(model,"out"),"virtual-property-tour","GPT-6");await writeFile(path.join(checks,"validation.json"),JSON.stringify({checkedAt:new Date().toISOString(),digest,errors,requests:requests.length,tests:"7 focused browser subtests plus parent; genuine WebGL pixels, real desktop/mobile gestures, media, safety and responsive checks",hardware:"WebXR unsupported/permission behavior only; no physical headset or orientation sensor verified"},null,2)+"\n");
 });

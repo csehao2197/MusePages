@@ -10,7 +10,7 @@ const root = path.resolve(folder, "..", "..", "..", "..");
 const exported = path.join(folder, "out");
 const checks = path.join(folder, ".checks");
 const { startPreviewServer } = await import(pathToFileURL(path.join(root, "src", "workflows", "generate-preview.mjs")));
-const { validateStaticOutput } = await import(pathToFileURL(path.join(root, "src", "workflows", "render-prompt-pages.mjs")));
+const { StaticHomepage } = await import(pathToFileURL(path.join(root, "src", "workflows", "render-prompt-pages.mjs")));
 async function guard() {
   const contents = await readFile(path.join(root, "out", ".generation-locks", "033-creative-agency-team.lock"), "utf8");
   const [pid, session] = contents.trim().split(/\r?\n/);
@@ -67,7 +67,7 @@ test("Mosaic Studio static homepage — actual Chromium acceptance", { timeout: 
         assert.deepEqual(await readFile(path.join(folder, file)), await readFile(path.join(exported, file)), file);
       }
       assert.match(service.url, /\/pages\/creative-agency-team\/GPT-6\/index\.html$/);
-      assert.ok(await validateStaticOutput(exported, "creative-agency-team", "GPT-6"));
+      assert.ok(await StaticHomepage.validateStaticOutput(exported, "creative-agency-team", "GPT-6"));
       await page.goto(service.url, { waitUntil: "networkidle" });
       await ready(page);
       await page.keyboard.press("Tab");
@@ -270,7 +270,7 @@ test("Mosaic Studio static homepage — actual Chromium acceptance", { timeout: 
     assert.equal(passed.length, 10, "All acceptance groups must pass before receipt");
     assert.deepEqual(issues, []);
     await guard();
-    const digest = await validateStaticOutput(exported, "creative-agency-team", "GPT-6");
+    const digest = await StaticHomepage.validateStaticOutput(exported, "creative-agency-team", "GPT-6");
     await writeFile(path.join(checks, "validation.json"), JSON.stringify({
       checkedAt: new Date().toISOString(), digest, errors:[], testGroups:passed.length,
       command:"node --test out\\pages\\033-creative-agency-team\\GPT-6\\page.test.mjs",

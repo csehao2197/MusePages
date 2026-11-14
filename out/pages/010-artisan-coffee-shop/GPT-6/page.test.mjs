@@ -5,7 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium, expect } from "@playwright/test";
 import { startPreviewServer } from "../../../../src/workflows/generate-preview.mjs";
-import { validateStaticOutput } from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
 
 const model = fileURLToPath(new URL(".", import.meta.url));
 const workspace = fileURLToPath(new URL("../../../../", import.meta.url));
@@ -38,7 +38,7 @@ test("Ember & Bloom static homepage", async (t) => {
   try {
     await t.test("local assets, section links and an actual downloadable menu work at the public subpath", async () => {
       const { page, errors, failed, requests } = await visit();
-      assert.match(await validateStaticOutput(path.join(model, "out"), "artisan-coffee-shop", "GPT-6"), /^[a-f0-9]{64}$/);
+      assert.match(await StaticHomepage.validateStaticOutput(path.join(model, "out"), "artisan-coffee-shop", "GPT-6"), /^[a-f0-9]{64}$/);
       await expect(page).toHaveTitle(/Ember & Bloom/);
       assert.equal(await page.locator(".drink-card").count(), 4);
       assert.equal(await page.locator(".menu-card dl > div").count(), 18);

@@ -5,7 +5,7 @@ import path from "node:path";
 import {fileURLToPath} from "node:url";
 import {chromium,expect} from "@playwright/test";
 import {startPreviewServer} from "../../../../src/workflows/generate-preview.mjs";
-import {validateStaticOutput} from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
 const model=fileURLToPath(new URL(".",import.meta.url)),workspace=fileURLToPath(new URL("../../../../",import.meta.url)),checks=path.join(model,".checks");
 test("Ridgeline independent new-construction homepage",{timeout:150000},async(t)=>{
  const service=await startPreviewServer(path.join(model,"out"),{workspace}),browser=await chromium.launch();
@@ -33,7 +33,7 @@ test("Ridgeline independent new-construction homepage",{timeout:150000},async(t)
    for(const file of["community-brochure.pdf","specifications.pdf"]){const response=await page.request.get(new URL("assets/"+file,page.url()).href);assert.equal(response.status(),200);assert.equal((await response.body()).subarray(0,8).toString(),"%PDF-1.4");}
    const sprite=await readFile(path.join(model,"out","assets","icons.svg"),"utf8");for(const id of new Set(await page.locator("use").evaluateAll(uses=>uses.map(u=>u.getAttribute("href").split("#")[1]))))assert.ok(sprite.includes(`id="${id}"`),id);
    assert.deepEqual(await page.locator('a[href^="#"]').evaluateAll(links=>links.filter(a=>!document.getElementById(a.hash.slice(1))).map(a=>a.hash)),[]);
-   assert.match(await validateStaticOutput(path.join(model,"out"),"new-construction-development","GPT-6"),/^[a-f0-9]{64}$/);
+   assert.match(await StaticHomepage.validateStaticOutput(path.join(model,"out"),"new-construction-development","GPT-6"),/^[a-f0-9]{64}$/);
   }finally{await context.close();}
  });
  await t.test("combined filters, empty state, reset, distinct level drawings, dimensions, features and pricing handoff",async()=>{
@@ -133,5 +133,5 @@ test("Ridgeline independent new-construction homepage",{timeout:150000},async(t)
   }
  });
  assert.deepEqual(errors,[]);assert.ok(requests.every(r=>new URL(r.url).origin===new URL(service.url).origin&&r.method==="GET"));
- await writeFile(path.join(checks,"validation.json"),JSON.stringify({checkedAt:new Date().toISOString(),digest:await validateStaticOutput(path.join(model,"out"),"new-construction-development","GPT-6"),tests:7,errors,intentionalBlobMediaAborts:expectedMediaAborts.length,checks:"Independent real Chromium: public subpath, local resources/PDF, floor filters and both levels, exact 86 statuses, keyboard map/zoom/compatibility, two playing and seekable local videos with cleanup, lightbox, expired offers, safe private form edges, newsletter, five widths, native mobile taps and CDP gallery swipe"},null,2)+"\n");
+ await writeFile(path.join(checks,"validation.json"),JSON.stringify({checkedAt:new Date().toISOString(),digest:await StaticHomepage.validateStaticOutput(path.join(model,"out"),"new-construction-development","GPT-6"),tests:7,errors,intentionalBlobMediaAborts:expectedMediaAborts.length,checks:"Independent real Chromium: public subpath, local resources/PDF, floor filters and both levels, exact 86 statuses, keyboard map/zoom/compatibility, two playing and seekable local videos with cleanup, lightbox, expired offers, safe private form edges, newsletter, five widths, native mobile taps and CDP gallery swipe"},null,2)+"\n");
 });

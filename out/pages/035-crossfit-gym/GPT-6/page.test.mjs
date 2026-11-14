@@ -4,7 +4,7 @@ import { readFile, writeFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { chromium } from "@playwright/test";
 import { startPreviewServer } from "../../../../src/workflows/generate-preview.mjs";
-import { validateStaticOutput } from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
 
 const folder = import.meta.dirname;
 const workspace = path.resolve(folder, "../../../..");
@@ -278,7 +278,7 @@ test("Iron Tide static homepage — focused real-browser validation", { timeout:
     });
     if (passed && errors.length === 0) {
       await alive();
-      const digest = await validateStaticOutput(exported, "crossfit-gym", "GPT-6");
+      const digest = await StaticHomepage.validateStaticOutput(exported, "crossfit-gym", "GPT-6");
       await writeFile(path.join(checks, "validation.json"), JSON.stringify({
         checkedAt: new Date().toISOString(), digest, errors: [], tests: testDetails,
         browser: "Playwright Chromium, real nested static mount", widths: [1440, 1024, 768, 390, 320],

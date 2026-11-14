@@ -4,7 +4,7 @@ import {readFile,writeFile,readdir,rm} from "node:fs/promises";
 import path from "node:path";
 import {chromium,expect} from "@playwright/test";
 import {startPreviewServer} from "../../../../src/workflows/generate-preview.mjs";
-import {validateStaticOutput} from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
 const root=import.meta.dirname;
 const exported=path.join(root,"out");
 const checks=path.join(root,".checks");
@@ -174,11 +174,11 @@ test("Forge & Co. static homepage acceptance",async t=>{
       assert.ok(requests.length>30);
       assert.ok(requests.every(request=>request.method==="GET"&&request.url.startsWith(new URL(server.url).origin)));
       assert.equal(await page.evaluate(()=>localStorage.length+sessionStorage.length),0);
-      assert.match(await validateStaticOutput(exported,"agency-portfolio","GPT-6"),/^[a-f0-9]{64}$/);
+      assert.match(await StaticHomepage.validateStaticOutput(exported,"agency-portfolio","GPT-6"),/^[a-f0-9]{64}$/);
     });
     await context.close();
     if(completed.length===6){
-      await writeFile(path.join(checks,"validation.json"),JSON.stringify({checkedAt:new Date().toISOString(),digest:await validateStaticOutput(exported,"agency-portfolio","GPT-6"),errors:[],tests:completed,testCount:6,viewports:[1440,1024,768,390,320],requests:requests.length,requestMethods:[...new Set(requests.map(request=>request.method))],externalRequests:0,storageWrites:0,screenshots:[".checks/desktop.png",".checks/mobile.png",".checks/desktop-viewport.png",".checks/mobile-viewport.png"],command:"node --test out\\pages\\031-agency-portfolio\\GPT-6\\page.test.mjs"},null,2)+"\n");
+      await writeFile(path.join(checks,"validation.json"),JSON.stringify({checkedAt:new Date().toISOString(),digest:await StaticHomepage.validateStaticOutput(exported,"agency-portfolio","GPT-6"),errors:[],tests:completed,testCount:6,viewports:[1440,1024,768,390,320],requests:requests.length,requestMethods:[...new Set(requests.map(request=>request.method))],externalRequests:0,storageWrites:0,screenshots:[".checks/desktop.png",".checks/mobile.png",".checks/desktop-viewport.png",".checks/mobile-viewport.png"],command:"node --test out\\pages\\031-agency-portfolio\\GPT-6\\page.test.mjs"},null,2)+"\n");
     }
   }finally{await browser?.close();await server.close();}
 });

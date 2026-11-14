@@ -1,15 +1,18 @@
-export function escapeHtml(text) {
-  return text.replace(/[&<>"']/g, (character) => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;",
-  })[character]);
+export function escapeHtml(text)
+{
+    return text.replace(/[&<>"']/g, (character) => (
+    {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;",
+    })[character]);
 }
 
-export function renderPromptPage(prompt, title, backHref = "../../index.html") {
-  return `<!doctype html>
+export function renderPromptPage(prompt, title, backHref = "../../index.html")
+{
+    return `<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">

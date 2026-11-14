@@ -4,7 +4,7 @@ import { readFile, writeFile, readdir, stat, mkdir } from "node:fs/promises";
 import path from "node:path";
 import { chromium, expect } from "@playwright/test";
 import { startPreviewServer } from "../../../../src/workflows/generate-preview.mjs";
-import { validateStaticOutput } from "../../../../src/workflows/render-prompt-pages.mjs";
+import { StaticHomepage } from "../../../../src/workflows/render-prompt-pages.mjs";
 
 const root = import.meta.dirname, output = path.join(root, "out"), checks = path.join(root, ".checks");
 async function guard() {
@@ -34,7 +34,7 @@ test("Rhythm & Flow focused static/browser acceptance", { timeout: 180000 }, asy
     await step("export equality, public paths and static boundary", async () => {
       for (const file of ["index.html", "style.css", "app.js", ...await files(path.join(root, "assets")).then((all) => all.map((name) => path.join("assets", name)))]) assert.deepEqual(await readFile(path.join(root, file)), await readFile(path.join(output, file)), file);
       assert.equal((await files(output)).some((file) => /(?:page\.test|metadata|README|\.checks|config)/i.test(file)), false);
-      assert.ok(await validateStaticOutput(output, "dance-studio", "GPT-6"));
+      assert.ok(await StaticHomepage.validateStaticOutput(output, "dance-studio", "GPT-6"));
     });
     service = await startPreviewServer(output);
     browser = await chromium.launch({ headless: true });
@@ -149,7 +149,7 @@ test("Rhythm & Flow focused static/browser acceptance", { timeout: 180000 }, asy
       assert.equal(await page.evaluate(() => localStorage.length + sessionStorage.length), 0); assert.ok(requests.length > 30);
       assert.deepEqual(errors, []);
       await guard();
-      const digest = await validateStaticOutput(output, "dance-studio", "GPT-6");
+      const digest = await StaticHomepage.validateStaticOutput(output, "dance-studio", "GPT-6");
       await mkdir(checks, { recursive: true });
       await writeFile(path.join(checks, "validation.json"), JSON.stringify({ checkedAt: new Date().toISOString(), digest, errors: [], tests: [...completed, "no runtime failures, external calls, submissions or persistent personal data"], nodeTestCount: 10, browser: "Playwright Chromium", requests: { total: requests.length, methods: [...new Set(requests.map((r) => r.method))], external: 0, failures: 0 }, viewports: [1440, 1024, 768, 390, 320], mobileTargets: "44px minimum checked at 390 and 320", syntax: "node --check app.js passed separately", cleanup: "Browser contexts and localhost random-port server closed in finally" }, null, 2) + "\n");
     });
