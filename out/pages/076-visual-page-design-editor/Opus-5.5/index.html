@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tessera — Visual Frame Editor in the Browser</title>
+<meta name="description" content="Draw, move, rotate and align frames on an infinite canvas. Tune fill, opacity, rotation and position in the properties panel and manage everything in the layer list.">
+<meta name="theme-color" content="#0F1013">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-pointer" viewBox="0 0 24 24"><path d="M4.04 4.69a.5.5 0 0 1 .65-.65l16 6.5a.5.5 0 0 1-.06.95l-6.13 1.58a2 2 0 0 0-1.43 1.43l-1.58 6.13a.5.5 0 0 1-.95.06z"/></symbol>
+  <symbol id="i-frame" viewBox="0 0 24 24"><path d="M22 6H2M22 18H2M6 2v20M18 2v20"/></symbol>
+  <symbol id="i-type" viewBox="0 0 24 24"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></symbol>
+  <symbol id="i-hand" viewBox="0 0 24 24"><path d="M18 11V6a2 2 0 0 0-4 0v5M14 10V4a2 2 0 0 0-4 0v6M10 10.5V6a2 2 0 0 0-4 0v8M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.9-6-2.3l-3.6-3.6a2 2 0 0 1 2.8-2.8L7 15"/></symbol>
+  <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></symbol>
+  <symbol id="i-redo" viewBox="0 0 24 24"><path d="m15 14 5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></symbol>
+  <symbol id="i-fit" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.06 12.35a1 1 0 0 1 0-.7 10.75 10.75 0 0 1 19.88 0 1 1 0 0 1 0 .7 10.75 10.75 0 0 1-19.88 0"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M10.73 5.08a10.74 10.74 0 0 1 11.2 6.57 1 1 0 0 1 0 .7 10.75 10.75 0 0 1-1.44 2.49M14.08 14.16a3 3 0 0 1-4.24-4.24M17.48 17.5a10.75 10.75 0 0 1-15.42-5.15 1 1 0 0 1 0-.7 10.75 10.75 0 0 1 4.45-5.14M2 2l20 20"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-unlock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.8-1"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect width="13" height="13" x="9" y="9" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+  <symbol id="i-grip" viewBox="0 0 24 24"><circle cx="9" cy="6" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="9" cy="18" r="1"/><circle cx="15" cy="6" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="18" r="1"/></symbol>
+  <symbol id="i-board" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 8h18"/></symbol>
+  <symbol id="i-square" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/></symbol>
+  <symbol id="i-keyboard" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h.01M12 12h.01M16 12h.01M7 16h10"/></symbol>
+  <symbol id="i-rotate" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M21 4h-7M10 4H3M21 12h-9M8 12H3M21 20h-5M12 20H3M14 2v4M8 10v4M16 18v4"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-reset" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></symbol>
+  <symbol id="i-forward" viewBox="0 0 24 24"><path d="m17 11-5-5-5 5M17 18l-5-5-5 5"/></symbol>
+  <symbol id="i-backward" viewBox="0 0 24 24"><path d="m7 6 5 5 5-5M7 13l5 5 5-5"/></symbol>
+  <symbol id="a-left" viewBox="0 0 24 24"><path d="M4 2v20"/><rect x="8" y="5" width="12" height="5" rx="1"/><rect x="8" y="14" width="7" height="5" rx="1"/></symbol>
+  <symbol id="a-hcenter" viewBox="0 0 24 24"><path d="M12 2v20"/><rect x="5" y="5" width="14" height="5" rx="1"/><rect x="8" y="14" width="8" height="5" rx="1"/></symbol>
+  <symbol id="a-right" viewBox="0 0 24 24"><path d="M20 2v20"/><rect x="4" y="5" width="12" height="5" rx="1"/><rect x="9" y="14" width="7" height="5" rx="1"/></symbol>
+  <symbol id="a-top" viewBox="0 0 24 24"><path d="M2 4h20"/><rect x="5" y="8" width="5" height="12" rx="1"/><rect x="14" y="8" width="5" height="7" rx="1"/></symbol>
+  <symbol id="a-vcenter" viewBox="0 0 24 24"><path d="M2 12h20"/><rect x="5" y="5" width="5" height="14" rx="1"/><rect x="14" y="8" width="5" height="8" rx="1"/></symbol>
+  <symbol id="a-bottom" viewBox="0 0 24 24"><path d="M2 20h20"/><rect x="5" y="4" width="5" height="12" rx="1"/><rect x="14" y="9" width="5" height="7" rx="1"/></symbol>
+  <symbol id="a-dh" viewBox="0 0 24 24"><path d="M3 3v18M21 3v18"/><rect x="9" y="7" width="6" height="10" rx="1"/></symbol>
+  <symbol id="a-dv" viewBox="0 0 24 24"><path d="M3 3h18M3 21h18"/><rect x="7" y="9" width="10" height="6" rx="1"/></symbol>
+</svg>
+
+<a class="skip" href="#stage">Skip to canvas</a>
+<header class="bar">
+  <a class="brand" href="#" aria-label="Tessera home"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="bname">Tessera</span></a>
+  <label class="pname"><span class="sr">Project name</span><input data-pname maxlength="48" value="Landing page"></label>
+  <nav class="tools" aria-label="Tools" data-tools>
+    <button type="button" data-tool="select" aria-pressed="true" aria-label="Select (V)" title="Select  V"><svg class="i"><use href="#i-pointer"/></svg></button>
+    <button type="button" data-tool="frame" aria-pressed="false" aria-label="Frame (F)" title="Frame  F"><svg class="i"><use href="#i-frame"/></svg></button>
+    <button type="button" data-tool="text" aria-pressed="false" aria-label="Text (T)" title="Text  T"><svg class="i"><use href="#i-type"/></svg></button>
+    <button type="button" data-tool="hand" aria-pressed="false" aria-label="Hand (H or hold Space)" title="Hand  H / Space"><svg class="i"><use href="#i-hand"/></svg></button>
+    <span class="vsep" aria-hidden="true"></span>
+    <button type="button" data-undo aria-label="Undo (Ctrl+Z)" title="Undo  Ctrl Z"><svg class="i"><use href="#i-undo"/></svg></button>
+    <button type="button" data-redo aria-label="Redo (Ctrl+Shift+Z)" title="Redo  Ctrl Shift Z"><svg class="i"><use href="#i-redo"/></svg></button>
+  </nav>
+  <div class="zoom" role="group" aria-label="Zoom">
+    <button type="button" data-zoom="-1" aria-label="Zoom out"><svg class="i"><use href="#i-minus"/></svg></button>
+    <button type="button" class="zval" data-zoom="0" aria-label="Reset zoom to 100%">100%</button>
+    <button type="button" data-zoom="1" aria-label="Zoom in"><svg class="i"><use href="#i-plus"/></svg></button>
+    <button type="button" data-fit aria-label="Zoom to fit (Shift+1)" title="Zoom to fit  Shift 1"><svg class="i"><use href="#i-fit"/></svg></button>
+  </div>
+  <button type="button" class="kbtn" data-keys aria-label="Keyboard shortcuts (?)" title="Shortcuts  ?"><svg class="i"><use href="#i-keyboard"/></svg></button>
+</header>
+
+<div class="shell" data-shell>
+  <aside class="pane left" id="layers-pane" aria-labelledby="layers-h" data-pane="layers">
+    <div class="ph"><h2 id="layers-h">Layers</h2><span class="mono dim" data-lcount></span></div>
+    <ul class="layers" data-layers aria-label="Layer list"></ul>
+    <p class="lhint">Drag to reorder, or focus a row and press Alt + ↑ / ↓. Double-click a name to rename.</p>
+  </aside>
+
+  <main class="stage" id="stage" tabindex="-1" aria-label="Canvas" data-stage>
+    <div class="world" data-world></div>
+    <div class="guides" data-guides aria-hidden="true"></div>
+    <div class="marquee" data-marquee hidden></div>
+    <p class="coach" data-coach>Space + drag to pan · scroll to zoom · F to draw a frame</p>
+  </main>
+
+  <aside class="pane right" id="props-pane" aria-labelledby="props-h" data-pane="props">
+    <div class="ph"><h2 id="props-h">Design</h2><button type="button" class="add" data-add><svg class="i"><use href="#i-plus"/></svg>Add frame</button></div>
+    <div class="props" data-props></div>
+  </aside>
+</div>
+
+<nav class="mtabs" aria-label="Panels" data-mtabs>
+  <button type="button" data-mtab="layers" aria-pressed="false"><svg class="i"><use href="#i-layers"/></svg>Layers</button>
+  <button type="button" data-mtab="props" aria-pressed="false"><svg class="i"><use href="#i-sliders"/></svg>Design</button>
+</nav>
+
+<dialog class="keys" data-keysdlg aria-labelledby="keys-h">
+  <div class="kh"><h2 id="keys-h">Keyboard shortcuts</h2><button type="button" class="ib" data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
+  <dl class="kl">
+    <dt><kbd>V</kbd> <kbd>F</kbd> <kbd>T</kbd> <kbd>H</kbd></dt><dd>Select, frame, text, hand</dd>
+    <dt><kbd>Space</kbd> + drag</dt><dd>Pan the canvas</dd>
+    <dt>Scroll · <kbd>+</kbd> <kbd>−</kbd></dt><dd>Zoom at the cursor</dd>
+    <dt><kbd>Shift</kbd> <kbd>1</kbd> · <kbd>Ctrl</kbd> <kbd>0</kbd></dt><dd>Zoom to fit · 100%</dd>
+    <dt><kbd>Shift</kbd> + click / drag</dt><dd>Add to selection · lock axis · keep ratio · snap rotation 15°</dd>
+    <dt><kbd>Alt</kbd> + drag</dt><dd>Move without snapping</dd>
+    <dt>Arrows</dt><dd>Nudge 1px (Shift: 10px)</dd>
+    <dt><kbd>Ctrl</kbd> <kbd>D</kbd> · <kbd>Del</kbd></dt><dd>Duplicate · delete</dd>
+    <dt><kbd>]</kbd> <kbd>[</kbd></dt><dd>Bring forward · send backward</dd>
+    <dt><kbd>Ctrl</kbd> <kbd>Z</kbd> · <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>Z</kbd></dt><dd>Undo · redo</dd>
+    <dt><kbd>Enter</kbd></dt><dd>Edit selected text</dd>
+  </dl>
+</dialog>
+<div class="toasts" role="status" aria-live="polite" data-toasts></div>
+<script src="app.js"></script>
+</body>
+</html>

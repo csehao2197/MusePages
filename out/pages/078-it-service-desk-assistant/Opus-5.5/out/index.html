@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TicketWise — AI Assistant Pod for Service Desk Tickets</title>
+<meta name="description" content="TicketWise sits inside the service ticket view and answers slash commands: summaries, troubleshooting suggestions, similar tickets, customer drafts, escalation notes and 5 Whys, all as the signed-in technician.">
+<meta name="theme-color" content="#0B1220">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.64l-19 6.5a.5.5 0 0 0-.02.94l7.93 3.18a2 2 0 0 1 1.11 1.11z"/><path d="m21.85 2.15-10.94 10.94"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect width="13" height="13" x="9" y="9" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+  <symbol id="i-gauge" viewBox="0 0 24 24"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.06 12.35a1 1 0 0 1 0-.7 10.75 10.75 0 0 1 19.88 0 1 1 0 0 1 0 .7 10.75 10.75 0 0 1-19.88 0"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-monitor" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="3" rx="2"/><path d="M8 21h8M12 17v4"/></symbol>
+  <symbol id="i-building" viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9 22v-4h6v4M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></symbol>
+  <symbol id="i-plug" viewBox="0 0 24 24"><path d="M12 22v-5M9 8V2M15 8V2M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8z"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-note" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v4a2 2 0 0 0 2 2h4M10 9H8M16 13H8M16 17H8"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+</svg>
+
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="logo" href="#" aria-label="TicketWise home"><span class="lm" aria-hidden="true">/</span>TicketWise</a>
+    <nav class="nav" aria-label="Main"><a href="#demo">Demo</a><a href="#commands">Commands</a><a href="#security">Security</a><a href="#setup">Setup</a></nav>
+    <a class="btn sm" href="#demo">Try the live demo</a>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero wrap" aria-labelledby="hero-h">
+    <div class="hero-copy">
+      <p class="kicker"><span class="dot"></span>Hosted Tab pod for ConnectWise PSA</p>
+      <h1 id="hero-h">Your ticket, <span>already read.</span></h1>
+      <p class="lead">TicketWise lives inside the service ticket view. Type <code>/summary</code>, <code>/similar</code> or just ask a question, and get answers built from the ticket's notes, configurations and past fixes, without leaving the ticket.</p>
+      <ul class="facts"><li><b>9</b> slash commands</li><li><b>As you</b> — your security role, your access</li><li><b>Read-only</b> — never writes back</li></ul>
+    </div>
+  </section>
+
+  <section class="demo-sec" id="demo" aria-labelledby="demo-h">
+    <div class="wrap">
+      <div class="demo-bar"><h2 id="demo-h">Live demo</h2><p>Simulated host with sample tickets. Responses are generated locally from the ticket data shown, so you can try every command.</p></div>
+      <div class="host" data-host>
+        <div class="host-chrome">
+          <span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="host-label">Demo host · Service ticket view (simulated)</span>
+          <label class="tsel"><span class="sr">Sample ticket</span><select data-ticketsel></select></label>
+          <label class="sa"><input type="checkbox" data-standalone> Open pod outside host</label>
+        </div>
+        <div class="host-body">
+          <section class="ticket" aria-label="Ticket details" data-ticket></section>
+          <aside class="pod" aria-label="TicketWise pod" data-pod>
+            <div class="pod-h"><span class="pod-logo"><span class="lm" aria-hidden="true">/</span>TicketWise</span><span class="who" data-who></span><button type="button" class="ib" data-refresh aria-label="Clear chat (/refresh)" title="Clear chat">
+              <svg class="i"><use href="#i-refresh"/></svg></button></div>
+            <div class="pod-log" data-log aria-live="polite"></div>
+            <div class="pod-quick" data-quick aria-label="Quick commands"></div>
+            <form class="pod-in" data-form autocomplete="off">
+              <div class="ac" data-ac role="listbox" aria-label="Slash commands" hidden></div>
+              <label class="sr" for="ask">Ask TicketWise or type / for commands</label>
+              <textarea id="ask" rows="1" maxlength="600" placeholder="Ask about this ticket, or type / for commands" role="combobox" aria-expanded="false" aria-controls="ac-list" aria-autocomplete="list"></textarea>
+              <button type="submit" class="send" aria-label="Send"><svg class="i"><use href="#i-send"/></svg></button>
+            </form>
+            <p class="pod-foot"><span data-rate></span><span>Model: <code>moonshotai/kimi-k2.5:nitro</code> (simulated)</span></p>
+            <div class="podonly" data-podonly hidden><svg class="i"><use href="#i-lock"/></svg><h3>Pod Mode Only</h3><p>TicketWise only runs inside a service ticket. Open a ticket in ConnectWise PSA and use the TicketWise tab.</p></div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap sec" id="commands" aria-labelledby="cmd-h">
+    <div class="sec-h"><p class="kicker">Commands</p><h2 id="cmd-h">Nine shortcuts for the questions you ask every day</h2></div>
+    <div class="cmds" data-cmds></div>
+  </section>
+
+  <section class="wrap sec flow" aria-labelledby="flow-h">
+    <div class="sec-h"><p class="kicker">How it works</p><h2 id="flow-h">From ticket open to answer in one round trip</h2></div>
+    <ol class="steps">
+      <li><span class="n">1</span><b>Open a ticket</b><p>The TicketWise tab loads as an iframe inside the ticket view.</p></li>
+      <li><span class="n">2</span><b>Handshake</b><p>The host posts the member's session to the pod. The pod accepts messages only from allowed host origins.</p></li>
+      <li><span class="n">3</span><b>Fetch context</b><p>Ticket, notes and configurations load in parallel as the signed-in member.</p></li>
+      <li><span class="n">4</span><b>Ask</b><p>Slash command or free text. Similar-ticket search covers your company's last 90 days, then everyone's last 14.</p></li>
+      <li><span class="n">5</span><b>Answer</b><p>Markdown answers with one-click rich-text copy for email and chat.</p></li>
+    </ol>
+  </section>
+
+  <section class="wrap sec" id="security" aria-labelledby="sec-h">
+    <div class="sec-h"><p class="kicker">Security &amp; permissions</p><h2 id="sec-h">It sees exactly what you see. Nothing more.</h2></div>
+    <div class="sgrid">
+      <article><svg class="i"><use href="#i-user"/></svg><h3>Runs as the signed-in technician</h3><p>Every API call uses your own verified Hosted API session, so your security role applies. If you can't open a ticket in the PSA, TicketWise can't either.</p></article>
+      <article><svg class="i"><use href="#i-shield"/></svg><h3>Origin-checked handshake</h3><p>postMessage events from anything but the allowed host domains are ignored. Session cookies are HTTP-only, Secure and SameSite=None for the cross-site iframe.</p></article>
+      <article><svg class="i"><use href="#i-lock"/></svg><h3>Pod Mode Only</h3><p>Opened directly in a browser, the app shows a locked screen. Try the switch in the demo bar above.</p></article>
+      <article><svg class="i"><use href="#i-gauge"/></svg><h3>30 requests per minute</h3><p>Per-member rate limiting keeps model spend predictable. The demo counts down live.</p></article>
+      <article><svg class="i"><use href="#i-eye"/></svg><h3>Read-only by design</h3><p>No ticket updates, no time entries, no status changes. Drafts are yours to paste.</p></article>
+      <article><svg class="i"><use href="#i-clock"/></svg><h3>Session-only history</h3><p>Chat lives in the browser tab and clears with <code>/refresh</code> or when you close it.</p></article>
+    </div>
+  </section>
+
+  <section class="wrap sec setup" id="setup" aria-labelledby="setup-h">
+    <div class="sec-h"><p class="kicker">Setup</p><h2 id="setup-h">Add the pod in a few minutes</h2></div>
+    <div class="setup-grid">
+      <ol class="setup-steps">
+        <li><b>Deploy the app</b> to your own host and set the environment variables.</li>
+        <li><b>Create a Hosted Tab pod</b> on the Service Ticket screen and point it at your deployment URL.</li>
+        <li><b>Grant API access</b> to the members who should see the tab. Their security roles carry through.</li>
+        <li><b>Open any ticket.</b> The TicketWise tab handshakes and is ready.</li>
+      </ol>
+      <div class="code"><div class="code-h"><span>.env</span><button type="button" class="ib light" data-copycode aria-label="Copy environment variables"><svg class="i"><use href="#i-copy"/></svg></button></div><pre data-code><code>OPENROUTER_API_KEY=sk-or-…
+OPENROUTER_MODEL=moonshotai/kimi-k2.5:nitro
+CW_SITE=na.myconnectwise.net
+CW_ALLOWED_ORIGINS=https://na.myconnectwise.net
+CW_CLIENT_ID=…
+RATE_LIMIT_PER_MINUTE=30
+MAX_COMPLETION_TOKENS=4096
+SIMILAR_COMPANY_DAYS=90
+SIMILAR_GLOBAL_DAYS=14</code></pre></div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <span class="logo sm"><span class="lm" aria-hidden="true">/</span>TicketWise</span>
+    <p>TicketWise is an independent concept and isn't affiliated with or endorsed by ConnectWise. ConnectWise and ConnectWise PSA are trademarks of their owners. Demo tickets, people and companies are fictional.</p>
+  </div>
+</footer>
+<div class="toasts" role="status" aria-live="polite" data-toasts></div>
+<script src="app.js"></script>
+</body>
+</html>
