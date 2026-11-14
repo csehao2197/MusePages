@@ -59,6 +59,30 @@ test("publishing clears and copies only MusePages, preserving source and sibling
   assert.deepEqual(await tree(destination), { ...await tree(source), ".git": gitMetadata });
 });
 
+test("publishing keeps collections and its navigation dist-only and removes stale published previews", async (t) => {
+  const workspace = await fixture(t);
+  const source = path.join(workspace, "deploy", "dist", "MusePages");
+  const destination = path.join(workspace, "deploy", "site", "MusePages");
+  const publicIndex = '<nav><a href="index.html#collection">Explore</a></nav>';
+  const distIndex = '<nav><a href="index.html#collection">Explore</a><a href="collections/index.html">Collections</a></nav>';
+  await mkdir(path.join(source, "collections"));
+  await writeFile(path.join(source, "collections", "index.html"), "administrator preview");
+  await writeFile(path.join(source, "index.html"), distIndex);
+  await mkdir(path.join(source, "pages", "example", "collections"), { recursive: true });
+  await writeFile(path.join(source, "pages", "example", "collections", "index.html"), "website asset");
+  await mkdir(path.join(destination, "collections"), { recursive: true });
+  await writeFile(path.join(destination, "collections", "index.html"), "stale administrator preview");
+  const before = await tree(source);
+  for (let attempt = 0; attempt < 2; attempt++) {
+    await publishToSite(workspace);
+    assert.deepEqual(await tree(destination), {
+      "index.html": Buffer.from(publicIndex),
+      pages: { example: { collections: { "index.html": Buffer.from("website asset") } } },
+    });
+    assert.deepEqual(await tree(source), before);
+  }
+});
+
 test("publishing preserves root Google verification files while removing unrelated stale HTML", async (t) => {
   const workspace = await fixture(t);
   const source = path.join(workspace, "deploy", "dist", "MusePages");
@@ -135,7 +159,10 @@ test("publishing preserves destination .ssh and excludes source .ssh even on rep
 
 test("npm run publish creates a missing destination and copies contents without an extra dist directory", async (t) => {
   const workspace = await fixture(t);
-  await writeFile(path.join(workspace, "deploy", "dist", "MusePages", "index.html"), "new index");
+  const source = path.join(workspace, "deploy", "dist", "MusePages");
+  await writeFile(path.join(source, "index.html"), 'new index<a href="collections/index.html">Collections</a>');
+  await mkdir(path.join(source, "collections"));
+  await writeFile(path.join(source, "collections", "index.html"), "administrator preview");
   const scripts = path.join(workspace, "src", "workflows");
   await mkdir(scripts, { recursive: true });
   await copyFile(new URL("./publish-site.mjs", import.meta.url), path.join(scripts, "publish-site.mjs"));

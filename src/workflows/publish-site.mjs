@@ -1,4 +1,4 @@
-import { cp, mkdir, readdir, rm } from "node:fs/promises";
+import { cp, mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -17,8 +17,14 @@ export async function publishToSite(workspace = root) {
     await rm(path.join(destination, name), { recursive: true, force: true });
   }
   for (const name of names) {
-    if (protectedNames.has(name.toLowerCase())) continue;
-    await cp(path.join(source, name), path.join(destination, name), { recursive: true });
+    if (protectedNames.has(name.toLowerCase()) || name.toLowerCase() === "collections") continue;
+    if (name.toLowerCase() === "index.html") {
+      const html = await readFile(path.join(source, name), "utf8");
+      await writeFile(path.join(destination, name),
+        html.replace(/<a\b[^>]*\bhref=(["'])(?:\.\/)?collections\/index\.html\1[^>]*>[\s\S]*?<\/a>/gi, ""), "utf8");
+    } else {
+      await cp(path.join(source, name), path.join(destination, name), { recursive: true });
+    }
   }
   return destination;
 }
