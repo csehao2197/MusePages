@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alex Morgan — Portfolio | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Alex Morgan — Portfolio</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Portfolio Website – Product Requirements Document (PRD)
+
+## 1. Overview
+
+This project is a personal portfolio website built with Next.js and React. It showcases projects, skills, and experience, and serves as a central hub for the owner’s online presence.
+
+The app is implemented with Next.js 15 (App Router) and uses Tailwind CSS for styling. Commits and releases are managed with `@programinglive/commiter` to enforce consistent commit messages and automated versioning/changelogs.
+
+## 2. Goals
+
+- Provide a fast, responsive portfolio site that works well on desktop and mobile.
+- Clearly present projects, skills, and contact information.
+- Make it easy for visitors and potential clients/employers to understand what the owner does.
+- Keep deployment and releases simple and automated via npm scripts.
+
+## 3. Non‑Goals
+
+- No complex CMS integration in the initial version (content can be static or code-driven).
+- No authentication or user accounts.
+- No blog engine in the first release (can be added later).
+
+## 4. Target Users
+
+- Recruiters and hiring managers
+- Potential freelance/contract clients
+- Other developers viewing the owner’s work
+
+## 5. Core Use Cases
+
+- View the home page with a short introduction and hero section.
+- Browse a list/grid of projects with titles, tech stack, and short descriptions.
+- View details for a specific project (optional in initial version; can be a modal or dedicated page).
+- View a list of skills/technologies.
+- Access contact methods (email, social links, GitHub, LinkedIn, etc.).
+
+## 6. Functional Requirements
+
+### 6.1 Pages &amp; Navigation
+
+- Home page
+  - Hero section with name, role, and a short tagline.
+  - Prominent call-to-action buttons (e.g., “View Projects”, “Contact”).
+- Projects section/page
+  - List of projects with: name, brief description, tech stack, and link(s) (GitHub, live demo).
+- About section/page
+  - Short professional summary and background.
+- Skills section
+  - Clear list of primary technologies and tools.
+- Contact section
+  - At minimum: email and links to main social profiles.
+
+Navigation must be clear and consistent across the site (header and/or footer links).
+
+### 6.2 Content Management
+
+- Content can be defined in TypeScript/JavaScript configuration objects or simple JSON/TS modules.
+- No external database is required for the initial release.
+
+### 6.3 Accessibility
+
+- All interactive elements must be keyboard accessible.
+- Provide descriptive `alt` text for key images/avatars.
+- Use semantic HTML structure where possible.
+
+## 7. Non‑Functional Requirements
+
+- **Performance**
+  - Fast initial load and smooth navigation (leveraging Next.js optimizations).
+- **Responsiveness**
+  - Fully responsive across common breakpoints (mobile, tablet, desktop).
+- **SEO**
+  - Basic SEO metadata for main pages (title, description, open graph tags where appropriate).
+- **Security**
+  - Keep dependencies up to date and promptly patch known vulnerabilities (e.g., Next.js/React security releases).
+
+## 8. Technology Stack
+
+- **Framework**: Next.js 15 (React 18)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Icons/Graphics**: `@heroicons/react` and/or SVG icons
+- **Tooling**:
+  - ESLint + `eslint-config-next`
+  - Husky + commitlint for git hooks and commit message enforcement
+  - `@programinglive/commiter` for release automation
+
+## 9. Release &amp; Versioning Process
+
+Releases are managed using `@programinglive/commiter` and standard-version under the hood.
+
+- **Commit messages**
+  - Follow conventional format: `type(scope): subject`
+  - Example: `feat(projects): add case study for portfolio app`
+- **Release commands** (from project root):
+  - `npm run release` – auto-detects version bump based on commits.
+  - `npm run release major` – force major version.
+  - `npm run release minor` – force minor version.
+  - `npm run release patch` – force patch version.
+- **Outputs of a release run**
+  - Bumped version in `package.json` and `package-lock.json`.
+  - Updated `CHANGELOG.md`.
+  - Release commit created.
+  - Git tag created (e.g., `v0.1.1`).
+
+After running a release command, changes and tags must be pushed:
+
+```bash
+git push --follow-tags origin main
+```
+
+## 10. Future Enhancements (Backlog)
+
+- Add a blog or articles section.
+- Add project detail pages with more extensive write-ups.
+- Add light/dark theme toggle.
+- Integrate basic analytics (e.g., privacy-friendly page view tracking).
+- Add multilingual support if needed.
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Orbit | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Orbit</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code>Create a comprehensive API documentation page for a SaaS product. Include these sections:
+
+1. DOCUMENTATION HEADER
+- Product logo
+- &quot;API Reference&quot; title
+- Version selector dropdown: v2.1 (latest), v2.0, v1.x
+- Search bar: &quot;Search documentation...&quot;
+- &quot;Get API Key&quot; button
+- Status indicator (API Status: Operational)
+
+2. SIDEBAR NAVIGATION (Sticky)
+Collapsible sections:
+- Getting Started
+  - Introduction
+  - Authentication
+  - Rate Limits
+  - Errors
+  - Versioning
+
+- Core Resources
+  - Users
+  - Projects
+  - Tasks
+  - Comments
+  - Files
+
+- Webhooks
+  - Setup
+  - Events
+  - Payloads
+  - Security
+
+- SDKs &amp; Libraries
+  - JavaScript
+  - Python
+  - Ruby
+  - Go
+  - PHP
+
+- Guides
+  - Quick Start
+  - Pagination
+  - Filtering
+  - Batch Operations
+
+3. QUICK START SECTION
+Get up and running:
+- Step 1: Get your API key
+- Step 2: Make your first request
+- Step 3: Explore the API
+
+Code example:
+```bash
+curl -X GET &quot;https://api.example.com/v2/users&quot; \
+  -H &quot;Authorization: Bearer YOUR_API_KEY&quot;
+```
+
+Response preview in collapsible panel
+
+4. AUTHENTICATION SECTION
+- API Key authentication
+- OAuth 2.0 flow explanation
+- Token refresh process
+- Security best practices
+- Example headers
+
+Code tabs: cURL, JavaScript, Python, Ruby
+
+5. ENDPOINT DOCUMENTATION
+For each endpoint, include:
+
+Endpoint header:
+- Method badge: GET / POST / PUT / DELETE (color-coded)
+- Path: /v2/users/{id}
+- Description: &quot;Retrieve a user by ID&quot;
+
+Parameters table:
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| id | string | Yes | The user&#39;s unique ID |
+| include | string | No | Related resources to include |
+
+Request example:
+```javascript
+const response = await fetch(&#39;https://api.example.com/v2/users/123&#39;, {
+  headers: {
+    &#39;Authorization&#39;: &#39;Bearer YOUR_API_KEY&#39;
+  }
+});
+```
+
+Response example:
+```json
+{
+  &quot;id&quot;: &quot;123&quot;,
+  &quot;email&quot;: &quot;user@example.com&quot;,
+  &quot;name&quot;: &quot;John Doe&quot;,
+  &quot;created_at&quot;: &quot;2024-01-15T10:30:00Z&quot;
+}
+```
+
+Response fields table with descriptions
+
+6. INTERACTIVE API PLAYGROUND
+- &quot;Try it&quot; button on each endpoint
+- Pre-filled with example values
+- Use your API key (or test key)
+- Execute request
+- See live response
+- Copy code snippet in your language
+
+7. CODE EXAMPLES
+Language tabs for each endpoint:
+- cURL
+- JavaScript (Node.js)
+- Python
+- Ruby
+- Go
+- PHP
+
+Full, copy-paste ready examples
+
+8. ERROR HANDLING
+Error codes table:
+| Code | Name | Description |
+|------|------|-------------|
+| 400 | Bad Request | Invalid parameters |
+| 401 | Unauthorized | Invalid API key |
+| 404 | Not Found | Resource doesn&#39;t exist |
+| 429 | Rate Limited | Too many requests |
+| 500 | Server Error | Something went wrong |
+
+Error response format example
+
+9. RATE LIMITS
+- Request limits per plan
+- Headers showing limit status
+- Handling rate limit errors
+- Best practices for staying under limits
+
+10. PAGINATION
+- Cursor-based pagination explanation
+- Page size options
+- Example request and response
+- Navigating between pages
+
+11. WEBHOOKS DOCUMENTATION
+- Available events list
+- Webhook payload format
+- Signature verification
+- Retry policy
+- Testing webhooks locally
+
+12. CHANGELOG
+- Recent API changes
+- Breaking changes highlighted
+- Deprecation notices
+- Migration guides
+
+13. SDK SECTION
+For each language:
+- Installation: npm install, pip install, etc.
+- Quick example
+- Link to GitHub repo
+- Documentation link
+
+14. SUPPORT FOOTER
+- &quot;Need help?&quot; section
+- Developer community link
+- Stack Overflow tag
+- Support email
+- Status page link
+
+Design: Three-column layout (nav, content, code). Syntax highlighting. Dark mode toggle. Sticky navigation. Mobile: Hamburger menu, single column. Copy buttons on all code blocks. Smooth anchor scrolling.</code></pre>
+    </section>
+  </main>
+</body>
+</html>

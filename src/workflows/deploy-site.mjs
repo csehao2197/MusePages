@@ -320,7 +320,7 @@ async function copyStatic(source, destination) {
   }
 }
 
-export function renderGallery(template, pages) {
+export function renderGallery(template, pages, { flat = false } = {}) {
   const categories = [
     ["portfolio", /portfolio|photograph|designer|architect|artist/i],
     ["saas", /saas|software|dashboard|platform|subscription|cloud/i],
@@ -330,19 +330,21 @@ export function renderGallery(template, pages) {
   const arrow = '<svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>';
   const prompts = new Map();
   for (const page of pages) {
-    if (!prompts.has(page.prompt)) prompts.set(page.prompt, []);
-    prompts.get(page.prompt).push(page);
+    const key = flat ? `${page.prompt}/${page.model}` : page.prompt;
+    if (!prompts.has(key)) prompts.set(key, []);
+    prompts.get(key).push(page);
   }
   const cards = [...prompts.values()].map((models) => {
     const slides = models.map((page, index) => {
-      const href = `pages/${encodeURIComponent(page.slug)}/${encodeURIComponent(page.model)}`;
+      const href = `${flat ? "../" : ""}pages/${encodeURIComponent(page.slug)}/${encodeURIComponent(page.model)}`;
       const title = escapeHtml(page.title);
       const preview = page.preview
         ? `<img src="${href}/preview.png" alt="Preview of ${title}" width="1200" height="900" loading="lazy">`
         : '<span class="preview-label">No preview provided</span>';
       const topics = `${page.title} ${page.tags.join(" ")}`;
       const groups = categories.filter(([, pattern]) => pattern.test(topics)).map(([name]) => name).join(" ");
-      return `<div class="slide" role="group" aria-roledescription="slide" aria-label="${index + 1} of ${models.length}: ${escapeHtml(page.model)}" data-tags="${escapeHtml(JSON.stringify(page.tags))}" data-categories="${groups}"${index ? " hidden inert" : ""}>
+      const slideAttributes = flat ? "" : ` role="group" aria-roledescription="slide" aria-label="${index + 1} of ${models.length}: ${escapeHtml(page.model)}"`;
+      return `<div class="slide"${slideAttributes} data-tags="${escapeHtml(JSON.stringify(page.tags))}" data-categories="${groups}"${index ? " hidden inert" : ""}>
       <a class="preview" href="${href}/index.html" aria-label="Open ${title}" draggable="false">${preview}<span class="preview-arrow">${arrow}</span></a>
       <div class="details"><h3><a href="${href}/index.html" title="${title}">${title}</a></h3>
         <div class="tags">${page.tags.slice(0, 2).map((tag) => `<button class="tag" type="button" data-tag="${escapeHtml(tag)}">${escapeHtml(tag)}</button>`).join("")}</div>
@@ -355,16 +357,27 @@ export function renderGallery(template, pages) {
     const sizing = models.length > 1
       ? ` style="--carousel-width:${Math.min(models.length, 3) * 24}px;--carousel-height:${Math.ceil(models.length / 3) * 24}px"`
       : "";
-    return `<article class="card" data-carousel role="region" aria-roledescription="carousel" aria-label="${escapeHtml(models[0].title)} model previews"${sizing}>
+    const attributes = flat
+      ? `data-gallery-card aria-label="${escapeHtml(models[0].title)} - ${escapeHtml(models[0].model)}"`
+      : `data-carousel role="region" aria-roledescription="carousel" aria-label="${escapeHtml(models[0].title)} model previews"`;
+    return `<article class="card" ${attributes}${sizing}>
       <div class="slides">${slides}</div>
 ${models.length > 1 ? `      <div class="carousel-controls">
         <div class="dots" role="group" aria-label="Choose model">${dots}</div>
       </div>` : ""}
-      <p class="carousel-status sr-only" role="status" aria-atomic="true">${escapeHtml(models[0].model)}</p>
+${flat ? "" : `      <p class="carousel-status sr-only" role="status" aria-atomic="true">${escapeHtml(models[0].model)}</p>`}
     </article>`;
   }).join("\n");
   const marker = "<!-- RESULT_CARDS -->";
   if (template.split(marker).length !== 2) throw Error(`Gallery template must contain exactly one ${marker}`);
+  if (flat) {
+    template = template
+      .replace(/href="(index\.html(?:#collection)?|collections\/index\.html)"/g, 'href="../$1"')
+      .replace(/<title>[^<]*<\/title>/, "<title>Collections - MusePages</title>")
+      .replace(/(<h1 id="gallery-title">)[\s\S]*?(<\/h1>)/, "$1All Website Front Pages$2")
+      .replace(/(<p class="intro">)[\s\S]*?(<\/p>)/,
+        "$1Review every enabled model result side by side, with one card per page.$2");
+  }
   return template.replace(marker, () => cards || '<p class="sample-note">No published pages yet.</p>');
 }
 
@@ -534,6 +547,9 @@ export async function publishSite(workspace = root) {
       }
       const template = await readFile(path.join(workspace, "src", "gallery", "index.html"), "utf8");
       await writeFile(path.join(staging, "index.html"), renderGallery(template, selected), "utf8");
+      await mkdir(path.join(staging, "collections"));
+      await writeFile(path.join(staging, "collections", "index.html"),
+        renderGallery(template, selected, { flat: true }), "utf8");
       if (config.siteUrl) {
         const base = siteBaseUrl(config.siteUrl);
         const urls = [base.href, ...selected.map((page) =>

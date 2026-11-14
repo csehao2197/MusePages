@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CloudSync Status — System health, incidents and uptime</title>
+<meta name="description" content="Real-time system health, incident reports, scheduled maintenance and 90-day uptime history for CloudSync.">
+<meta name="theme-color" content="#3B82F6">
+<link rel="alternate" type="application/rss+xml" title="CloudSync Status" href="assets/feed.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24"><path d="m21.7 18-8-14a2 2 0 0 0-3.4 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3zM12 9v4M12 17h.01"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M7.9 2h8.2L22 7.9v8.2L16.1 22H7.9L2 16.1V7.9z"/><path d="M12 8v4M12 16h.01"/></symbol>
+  <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9z"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M10 7 9 13M15 7l-1 6M7.5 9h9M7 11.5h9"/></symbol>
+  <symbol id="i-rss" viewBox="0 0 24 24"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1.5"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 1 1 6.7-9h1.8a4.5 4.5 0 1 1 0 9z"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18M7 15l4-4 3 3 6-6"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M4 4l16 16M20 4 4 20"/></symbol>
+</svg>
+
+<a class="skip" href="#main">Skip to status</a>
+
+<header class="hdr">
+  <div class="wrap hdr-in">
+    <a class="logo" href="#top" aria-label="CloudSync Status home"><span class="lm" aria-hidden="true"><svg class="i"><use href="#i-pulse"/></svg></span><span>CloudSync <b>Status</b></span></a>
+    <div class="hdr-r">
+      <a class="visit" href="#top" data-soon="CloudSync home">Visit CloudSync<svg class="i"><use href="#i-ext"/></svg></a>
+      <a class="btn-o" href="#subscribe" data-goto-sub><span>Subscribe<span class="long"> to Updates</span></span></a>
+    </div>
+  </div>
+</header>
+
+<div class="banner" id="top" data-banner role="status" aria-live="polite">
+  <div class="wrap banner-in">
+    <svg class="i bi" data-banner-icon><use href="#i-check"/></svg>
+    <div><p class="bt" data-banner-text>All Systems Operational</p><p class="bs" data-banner-sub></p></div>
+    <p class="upd"><span data-updated>Last updated 2 minutes ago</span></p>
+  </div>
+</div>
+
+<main id="main" class="wrap">
+  <section class="sec" aria-labelledby="active-h">
+    <h2 id="active-h">Active Incidents</h2>
+    <div data-active></div>
+  </section>
+
+  <section class="sec" aria-labelledby="cur-h">
+    <div class="sec-h"><h2 id="cur-h">Current Status</h2><p class="legend" aria-hidden="true"><span><i class="dot ok"></i>Operational</span><span><i class="dot deg"></i>Degraded</span><span><i class="dot out"></i>Outage</span><span><i class="dot mnt"></i>Maintenance</span></p></div>
+    <ul class="comps" data-comps></ul>
+  </section>
+
+  <section class="sec" aria-labelledby="up-h">
+    <div class="sec-h"><h2 id="up-h">Uptime Over the Last 90 Days</h2><span class="ubadge" data-overall></span></div>
+    <div class="uptime" data-uptime></div>
+    <p class="axis" aria-hidden="true"><span>90 days ago</span><span class="wk">13 weeks ago</span><span>Today</span></p>
+    <p class="hint">Hover or tap a bar for details. Use arrow keys on a focused row to step through days.</p>
+    <div class="tip" role="tooltip" hidden data-tip></div>
+  </section>
+
+  <section class="sec" aria-labelledby="past-h">
+    <h2 id="past-h">Past Incidents</h2>
+    <div class="past" data-past></div>
+    <button class="link-btn" type="button" aria-expanded="false" data-full>View Full Incident History<svg class="i"><use href="#i-chev"/></svg></button>
+    <div class="past full" hidden data-full-list></div>
+  </section>
+
+  <section class="sec" aria-labelledby="mnt-h">
+    <h2 id="mnt-h">Upcoming Maintenance</h2>
+    <article class="mcard" data-mnt>
+      <h3>Infrastructure Upgrade — US-West Region</h3>
+      <dl>
+        <div><dt>Scheduled</dt><dd class="mono">March 18, 2026, 2:00 AM - 4:00 AM UTC</dd></div>
+        <div><dt>Expected impact</dt><dd>Brief interruptions to File Storage &amp; CDN (&lt; 5 minutes)</dd></div>
+        <div><dt>Affected components</dt><dd class="aff"><span><svg class="i"><use href="#i-cloud"/></svg>File Storage &amp; CDN</span><span><svg class="i"><use href="#i-globe"/></svg>Edge cache (US-West)</span></dd></div>
+      </dl>
+      <p class="mnt-f"><span class="cd mono" data-countdown></span><a href="#subscribe" data-notify-mnt>Subscribe to get notified<svg class="i"><use href="#i-chev"/></svg></a></p>
+    </article>
+  </section>
+
+  <section class="sec" aria-labelledby="met-h">
+    <div class="sec-h"><h2 id="met-h"><button type="button" class="tog" aria-expanded="true" aria-controls="metrics" data-met-tog>Performance Metrics<svg class="i"><use href="#i-chev"/></svg></button></h2><span class="sub">Last 24 hours · all regions</span></div>
+    <div class="metrics" id="metrics" data-metrics></div>
+  </section>
+</main>
+
+<section class="subs" id="subscribe" aria-labelledby="sub-h">
+  <div class="wrap">
+    <h2 id="sub-h">Stay Informed</h2>
+    <p class="lead">Get notified about incidents and maintenance via your preferred channel</p>
+    <fieldset class="prefs" data-prefs>
+      <legend>Notify me about</legend>
+      <label><input type="checkbox" value="all" checked> All incidents</label>
+      <label><input type="checkbox" value="major"> Only major outages</label>
+      <label><input type="checkbox" value="maintenance" checked> Scheduled maintenance</label>
+    </fieldset>
+    <div class="opts">
+      <div class="opt">
+        <h3><svg class="i"><use href="#i-mail"/></svg>Email</h3>
+        <form class="ef" novalidate data-email-form>
+          <label class="sr" for="sub-email">Email address</label>
+          <input id="sub-email" type="email" name="email" placeholder="you@company.com" autocomplete="email" required>
+          <button class="btn" type="submit">Subscribe</button>
+        </form>
+        <p class="msg" role="status" data-email-msg></p>
+      </div>
+      <div class="opt">
+        <h3><svg class="i"><use href="#i-chat"/></svg>Slack</h3>
+        <p>Post updates to a channel in your workspace.</p>
+        <button class="btn-dark" type="button" data-slack><svg class="i"><use href="#i-chat"/></svg>Add to Slack</button>
+      </div>
+      <div class="opt">
+        <h3><svg class="i"><use href="#i-rss"/></svg>RSS</h3>
+        <p>Follow incidents in any feed reader.</p>
+        <a class="btn-o" href="assets/feed.xml" type="application/rss+xml" data-rss><svg class="i"><use href="#i-rss"/></svg>RSS Feed</a>
+      </div>
+    </div>
+    <p class="priv">We'll only send status-related notifications. Unsubscribe anytime.</p>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <nav aria-label="Footer"><a href="#top" data-soon="CloudSync home">CloudSync Home</a><a href="#top" data-soon="API documentation">API Documentation</a><a href="#top" data-soon="Support">Support</a><a href="#top" data-soon="Privacy Policy">Privacy Policy</a></nav>
+    <p class="social"><a href="#top" data-soon="@CloudSyncStatus on X"><svg class="i"><use href="#i-x"/></svg>@CloudSyncStatus</a> for live updates</p>
+    <div class="demo" data-demo>
+      <span id="demo-l">Preview page states (demo):</span>
+      <div class="seg" role="group" aria-labelledby="demo-l">
+        <button type="button" aria-pressed="true" data-scn="current">Current</button>
+        <button type="button" aria-pressed="false" data-scn="operational">Operational</button>
+        <button type="button" aria-pressed="false" data-scn="partial">Partial outage</button>
+        <button type="button" aria-pressed="false" data-scn="major">Major outage</button>
+      </div>
+    </div>
+    <p class="fine">Powered by CloudSync Status · © 2026 CloudSync Inc. · Demo page: CloudSync and all status data are fictional; the clock is fixed at March 13, 2026.</p>
+  </div>
+</footer>
+
+<dialog class="dlg" data-dlg aria-labelledby="dlg-title">
+  <button class="icon-btn dlg-x" type="button" aria-label="Close" data-close><svg class="i"><use href="#i-close"/></svg></button>
+  <div class="dlg-body" data-dlg-body></div>
+</dialog>
+<div class="toast" role="status" aria-live="polite" data-toast></div>
+<script src="app.js"></script>
+</body>
+</html>

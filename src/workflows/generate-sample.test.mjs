@@ -370,6 +370,38 @@ test("gallery groups models into stable, accessible carousels with synchronized 
     await active.locator(".prompt").click();
     await page.waitForURL(`${base}/pages/destination-guide/model-a/prompt.html`);
     assert.equal(await page.locator("pre code").textContent(), "# Original prompt\n<literal text>");
+    await page.goto(`${base}/index.html`);
+    await page.getByRole("link", { name: "Collections", exact: true }).click();
+    await page.waitForURL(`${base}/collections/index.html`);
+    assert.equal(await page.title(), "Collections - MusePages");
+    assert.equal(await page.locator("[data-carousel], .carousel-controls").count(), 0);
+    assert.equal(await page.locator("[data-gallery-card]").count(), 4);
+    assert.equal(await page.locator(".slide[hidden]").count(), 0);
+    assert.equal(await page.locator('.model').allTextContents().then(values => values.includes("disabled-model")), false);
+    const collectionsCard = page.locator("[data-gallery-card]").nth(1);
+    assert.equal(await collectionsCard.locator(".model").textContent(), "model-a");
+    assert.equal(await collectionsCard.locator(".preview").getAttribute("href"),
+      "../pages/destination-guide/model-a/index.html");
+    assert.equal(await collectionsCard.locator(".prompt").getAttribute("href"),
+      "../pages/destination-guide/model-a/prompt.html");
+    for (const width of [1280, 375, 320]) {
+      await page.setViewportSize({ width, height: 900 });
+      assert.equal(await page.locator("[data-gallery-card]:visible").count(), 4);
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+    }
+    await page.locator('.filters [data-filter="developer"]').click();
+    assert.equal(await page.locator("[data-gallery-card]:visible").count(), 1);
+    assert.equal(await page.locator("[data-gallery-card]:visible .model").textContent(), "model-a");
+    await page.getByRole("button", { name: "All websites", exact: true }).click();
+    await collectionsCard.getByRole("button", { name: "Style for model-a", exact: true }).click();
+    assert.equal(await page.locator("[data-gallery-card]:visible").count(), 1);
+    await page.getByRole("button", { name: "Clear tag filter Style for model-a" }).click();
+    await collectionsCard.locator(".prompt").click();
+    await page.waitForURL(`${base}/pages/destination-guide/model-a/prompt.html`);
+    assert.equal(await page.locator("pre code").textContent(), "# Original prompt\n<literal text>");
+    await page.goto(`${base}/collections/index.html`);
+    await page.getByRole("link", { name: "Explore", exact: true }).click();
+    await page.waitForURL(`${base}/index.html#collection`);
     config.pages[prompt].pages[0].enabled = false;
     config.pages[prompt].pages[1].enabled = false;
     await writeFile(configPath, JSON.stringify(config));
@@ -389,6 +421,9 @@ test("gallery groups models into stable, accessible carousels with synchronized 
     await publishSite(workspace);
     await page.goto(`${base}/index.html`);
     assert.equal(await page.locator("[data-carousel]").count(), 0);
+    assert.equal(await page.getByText("No published pages yet.").count(), 1);
+    await page.goto(`${base}/collections/index.html`);
+    assert.equal(await page.locator("[data-gallery-card]").count(), 0);
     assert.equal(await page.getByText("No published pages yet.").count(), 1);
     assert.deepEqual(errors, []);
   } finally {

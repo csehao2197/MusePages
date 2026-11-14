@@ -1,0 +1,19 @@
+// Simple SVG flags and step illustrations (drawn, no emoji or image files). Exposes window.Flags / window.Steps.
+(function () {
+  "use strict";
+  const f = (b, label) => `<svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${label}">${b}</svg>`;
+  const star = (cx, cy, r, rot = 0) => { let d = ""; for (let i = 0; i < 10; i++) { const a = (Math.PI / 5) * i - Math.PI / 2 + rot, rr = i % 2 ? r * 0.4 : r; d += `${i ? "L" : "M"}${(cx + Math.cos(a) * rr).toFixed(2)} ${(cy + Math.sin(a) * rr).toFixed(2)}`; } return `<path d="${d}z" fill="#FFDE00"/>`; };
+  window.Flags = {
+    es: f(`<rect width="30" height="20" fill="#AA151B"/><rect y="5" width="30" height="10" fill="#F1BF00"/><rect x="7" y="7.5" width="3" height="5" rx=".6" fill="#AA151B" opacity=".55"/>`, "Flag of Spain"),
+    fr: f(`<rect width="10" height="20" fill="#002395"/><rect x="10" width="10" height="20" fill="#fff"/><rect x="20" width="10" height="20" fill="#ED2939"/>`, "Flag of France"),
+    ja: f(`<rect width="30" height="20" fill="#fff"/><circle cx="15" cy="10" r="6" fill="#BC002D"/>`, "Flag of Japan"),
+    de: f(`<rect width="30" height="6.67" fill="#000"/><rect y="6.67" width="30" height="6.67" fill="#DD0000"/><rect y="13.33" width="30" height="6.67" fill="#FFCE00"/>`, "Flag of Germany"),
+    zh: f(`<rect width="30" height="20" fill="#DE2910"/>${star(5, 5, 3)}${star(10, 2, 1)}${star(12, 4, 1)}${star(12, 7, 1)}${star(10, 9, 1)}`, "Flag of China"),
+  };
+  const s = (b, label) => `<svg viewBox="0 0 280 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${label}">${b}</svg>`;
+  window.Steps = {
+    chat: s(`<rect width="280" height="180" rx="16" fill="#F5F3FF"/><rect x="20" y="20" width="160" height="38" rx="14" fill="#fff"/><text x="34" y="44" font-size="13" font-family="Inter, sans-serif" fill="#1F2937">¿Qué hiciste ayer?</text><rect x="100" y="70" width="160" height="38" rx="14" fill="#7C3AED"/><text x="114" y="94" font-size="13" font-family="Inter, sans-serif" fill="#fff">Yo fui al mercado</text><rect x="20" y="120" width="190" height="40" rx="14" fill="#ECFEFF" stroke="#06B6D4"/><text x="34" y="145" font-size="12" font-family="Inter, sans-serif" fill="#0E7490">✓ Perfect past tense!</text>`, "Illustration of an AI chat with a correction"),
+    game: s(`<rect width="280" height="180" rx="16" fill="#FFFBEB"/><circle cx="60" cy="70" r="34" fill="#F59E0B"/><text x="60" y="78" font-size="22" font-weight="800" text-anchor="middle" fill="#fff" font-family="Inter, sans-serif">32</text><text x="60" y="124" font-size="11" font-weight="700" text-anchor="middle" fill="#92400E" font-family="Inter, sans-serif">DAY STREAK</text><text x="120" y="52" font-size="13" font-weight="700" fill="#1F2937" font-family="Inter, sans-serif">Weekly XP</text>${[38, 54, 30, 70, 62, 80, 46].map((h, i) => `<rect x="${120 + i * 20}" y="${140 - h}" width="12" height="${h}" rx="4" fill="${i === 5 ? "#7C3AED" : "#C4B5FD"}"/>`).join("")}<rect x="120" y="150" width="140" height="8" rx="4" fill="#EDE9FE"/><rect x="120" y="150" width="96" height="8" rx="4" fill="#7C3AED"/>`, "Illustration of a streak badge and XP chart"),
+    voice: s(`<rect width="280" height="180" rx="16" fill="#ECFEFF"/>${Array.from({ length: 34 }, (_, i) => { const h = 12 + Math.abs(Math.sin(i * 0.55)) * 60; return `<rect x="${24 + i * 7}" y="${80 - h / 2}" width="4" height="${h}" rx="2" fill="${i < 22 ? "#06B6D4" : "#A5F3FC"}"/>`; }).join("")}<circle cx="226" cy="138" r="26" fill="#fff" stroke="#10B981" stroke-width="5"/><text x="226" y="145" font-size="17" font-weight="800" text-anchor="middle" fill="#047857" font-family="Inter, sans-serif">92</text><text x="24" y="146" font-size="12" font-weight="700" fill="#0E7490" font-family="Inter, sans-serif">“Bonjour” · accent score</text>`, "Illustration of a speech waveform with a pronunciation score"),
+  };
+})();

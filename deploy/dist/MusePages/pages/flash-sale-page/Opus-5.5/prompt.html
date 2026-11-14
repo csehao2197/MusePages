@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VoltEdge | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>VoltEdge</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code>Create a flash sale and daily deals page for an electronics e-commerce store called &quot;VoltEdge&quot; that drives urgency and conversions through time-limited offers:
+
+1. NAVIGATION BAR
+- Logo: &quot;VoltEdge&quot; with lightning bolt icon in #F59E0B (amber)
+- Links: Shop, Categories, Deals (active, highlighted), New Arrivals, Support
+- Right side: Search bar (280px), account icon, cart icon with item count badge
+- Announcement bar above nav: &quot;⚡ FLASH SALE: Up to 70% off — Ends tonight at midnight!&quot; — scrolling text on mobile, static on desktop
+- Announcement bar: #F59E0B background with #1F2937 text
+
+2. HERO BANNER (50vh)
+- Bold background: dark gradient from #1F2937 to #111827 with subtle geometric pattern
+- Large headline: &quot;FLASH SALE&quot; (72px, bold, #F59E0B amber with subtle glow effect)
+- Subheadline: &quot;Up to 70% off top tech. Limited quantities. When they&#39;re gone, they&#39;re gone.&quot; (white)
+- Master countdown timer (large, centered):
+  - Four boxes: Hours, Minutes, Seconds (each 80px square, #F59E0B background, #1F2937 text)
+  - Current values: 08 : 42 : 17
+  - Labels below each: &quot;HRS&quot; &quot;MIN&quot; &quot;SEC&quot;
+  - Flip animation on number change
+- &quot;Shop All Deals&quot; button (white text, #F59E0B background, 48px height)
+- Floating product images on left and right sides (headphones, laptop, camera)
+
+3. DEAL CATEGORIES BAR (sticky below nav on scroll)
+- Horizontal scrollable tabs: All Deals, Laptops, Audio, Smartphones, Cameras, Gaming, Accessories, Smart Home
+- Active tab: #F59E0B underline
+- Each tab shows deal count: &quot;Laptops (4)&quot;
+
+4. FEATURED DEAL (full-width hero card)
+- Label: &quot;⚡ DEAL OF THE DAY&quot;
+- Two-column layout:
+  - Left 50%: large product image (Sony WH-1000XM5 headphones) with &quot;SAVE 45%&quot; badge
+  - Right 50%:
+    - Product name: &quot;Sony WH-1000XM5 Wireless Headphones&quot;
+    - Star rating: ★★★★★ (4.8) — 2,341 reviews
+    - Price: &quot;$349.99&quot; crossed out, &quot;$189.99&quot; in large #F59E0B text
+    - Savings: &quot;You save $160.00 (45%)&quot;
+    - Key features: 3 bullet points
+      - &quot;Industry-leading noise cancellation&quot;
+      - &quot;30-hour battery life&quot;
+      - &quot;Multipoint Bluetooth connection&quot;
+    - Individual countdown: &quot;This deal ends in 04:22:08&quot;
+    - Stock indicator: progress bar at 78% full, &quot;Only 12 left at this price&quot; in #DC2626 red
+    - &quot;Add to Cart&quot; button (full-width, #F59E0B, 48px)
+    - &quot;🔒 Price match guarantee&quot; trust badge
+
+5. DEALS GRID (3 columns, 24px gap)
+- 9 deal cards total, each card:
+  - Product image (square, 1:1, white background)
+  - Discount badge top-left: &quot;-35%&quot; in red circle
+  - Wishlist heart icon top-right
+  - Category label (small, gray)
+  - Product name (16px, semibold, 2-line clamp)
+  - Star rating + review count
+  - Price row: original price (crossed out, gray), sale price (bold, #F59E0B)
+  - Mini countdown: &quot;Ends in 6h 22m&quot;
+  - Stock bar: colored progress bar (green &gt;50%, yellow 20-50%, red &lt;20%)
+  - Stock label: &quot;14 left&quot; or &quot;Almost gone!&quot; or &quot;Selling fast&quot;
+  - &quot;Add to Cart&quot; button
+
+Sample deals:
+1. MacBook Air M3 — was $1,199, now $899 (-25%), 8 left
+2. AirPods Pro 2 — was $249, now $169 (-32%), 23 left
+3. Samsung 65&quot; OLED TV — was $2,199, now $1,399 (-36%), 3 left ⚠️
+4. Nintendo Switch OLED — was $349, now $279 (-20%), 18 left
+5. GoPro Hero 12 — was $399, now $249 (-38%), 6 left
+6. Kindle Paperwhite — was $149, now $94 (-37%), 31 left
+7. Bose SoundLink Flex — was $149, now $89 (-40%), Almost gone!
+8. iPad 10th Gen — was $449, now $329 (-27%), 15 left
+9. Logitech MX Master 3S — was $99, now $64 (-35%), 22 left
+
+6. URGENCY BANNER (between deal rows)
+- Red/amber gradient background
+- &quot;🔥 42 items sold in the last hour&quot;
+- &quot;Prices and availability change quickly. Don&#39;t wait!&quot;
+- Animated pulse effect on the fire emoji
+
+7. LIGHTNING DEALS CAROUSEL
+- Headline: &quot;⚡ Lightning Deals — Extra 10% off for the next 2 hours&quot;
+- Horizontal scrollable row of 6 deal cards (narrower, 220px each)
+- Each card has an extra-aggressive countdown and &quot;EXTRA 10% OFF&quot; overlay badge
+- Grab-to-scroll on desktop, swipe on mobile
+
+8. RECENTLY VIEWED &amp; PERSONALIZED
+- &quot;Based on your browsing&quot; section
+- Row of 4 product cards with personalized deals
+- &quot;You viewed this 2 hours ago — now 30% off!&quot;
+
+9. EMAIL DEAL ALERTS
+- Inline banner: light amber background (#FFFBEB)
+- &quot;Never miss a deal 🔔&quot;
+- &quot;Get flash sale alerts before they go live.&quot;
+- Email input + &quot;Notify Me&quot; button
+- &quot;Join 28,000+ deal hunters&quot;
+
+10. FOOTER TRUST BAR (above main footer)
+- 4 trust icons in a row:
+  - &quot;🚚 Free shipping on orders $50+&quot;
+  - &quot;↩️ 30-day easy returns&quot;
+  - &quot;🔒 Secure checkout&quot;
+  - &quot;💰 Price match guarantee&quot;
+
+Design: High-energy, conversion-focused. Primary: #F59E0B (amber), urgency: #DC2626 (red), dark backgrounds: #1F2937. Product cards on white with 8px border-radius, 1px #E5E7EB border, hover shadow lift. Price text: sale price always in amber/bold, original always in gray with strikethrough. Countdown timers use monospace font. Stock bars: gradient from green (#22C55E) through yellow (#EAB308) to red (#EF4444) based on remaining percentage. Typography: Inter throughout, bold headings, clear price hierarchy.
+
+Responsive: On mobile, hero banner reduces headline to 40px with countdown boxes at 56px. Deal grid becomes single column with horizontal card layout (image left, details right). Featured deal stacks vertically. Category bar horizontally scrollable. Lightning deals carousel touch-swipeable. Sticky bottom bar with &quot;View Cart (3)&quot; button appears after adding items. Announcement bar text scrolls horizontally on mobile.</code></pre>
+    </section>
+  </main>
+</body>
+</html>

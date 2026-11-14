@@ -15,7 +15,7 @@
     .preview{display:block;position:relative;flex:none;aspect-ratio:3/2;overflow:hidden;background:#e6ebe2;border-bottom:1px solid var(--line);touch-action:pan-y}.preview img{display:block;width:100%;height:100%;object-fit:cover;object-position:top;-webkit-user-drag:none;user-select:none;transition:transform .2s ease}.preview:hover img,.preview:focus-visible img{transform:scale(1.02)}.preview-label{position:absolute;inset:0;display:grid;place-items:center;font-size:12px;color:var(--muted)}.external-icon{width:16px;height:16px;flex:none}.preview-arrow{position:absolute;top:12px;right:12px;display:grid;place-items:center;width:34px;height:34px;background:#fffffff5;border:1px solid var(--line);border-radius:6px;opacity:0;transform:translateY(3px);transition:opacity .2s ease,transform .2s ease}.preview:hover .preview-arrow,.preview:focus-visible .preview-arrow{opacity:1;transform:none}
     .details{padding:10px 16px 11px;display:flex;flex:1;flex-direction:column;gap:6px}.details h3{font:normal 23px/1.15 Georgia,serif;letter-spacing:-.4px;margin:0}.details h3 a{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:1;overflow:hidden;overflow-wrap:anywhere;text-decoration:none}.tags{display:flex;gap:6px}.tag{min-width:0;max-width:100%;min-height:24px;border:1px solid #e0e8dc;background:#edf2eb;color:#416446;border-radius:999px;padding:2px 10px;font-size:10px;line-height:1.6;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tag:hover{background:#dfe9da}.card-footer{display:grid;grid-template-columns:minmax(0,1fr) var(--carousel-width,0px) minmax(0,1fr);align-items:center;gap:8px;min-height:var(--carousel-height,24px);margin-top:auto;font-size:11px}.model{min-width:0;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.prompt{grid-column:3;justify-self:end;display:inline-flex;align-items:center;gap:3px;min-width:max-content;white-space:nowrap;text-underline-offset:4px}.prompt .external-icon{width:14px;height:14px}
     .carousel-controls{position:absolute;bottom:11px;left:50%;transform:translateX(-50%);width:var(--carousel-width)}.dots{display:flex;flex-wrap:wrap;justify-content:center}.dot{display:inline-flex;align-items:center;justify-content:center;flex:none;width:24px;height:24px;padding:0;border:0;background:transparent;border-radius:50%}.dot span{width:7px;height:7px;border-radius:50%;background:#b6c4b4}.dot[aria-current="true"] span{background:var(--accent);box-shadow:0 0 0 3px #dce6da}.dot:hover{background:#e3ebdf}
-    .sample-note{font-size:11px;color:var(--muted);margin:28px 0 40px;max-width:720px}footer{border-top:1px solid var(--line);padding:24px 0 32px;font-size:12px;color:var(--muted)}[data-carousel][hidden],#empty-results[hidden],#selected-tag[hidden]{display:none!important}
+    .sample-note{font-size:11px;color:var(--muted);margin:28px 0 40px;max-width:720px}footer{border-top:1px solid var(--line);padding:24px 0 32px;font-size:12px;color:var(--muted)}[data-carousel][hidden],[data-gallery-card][hidden],#empty-results[hidden],#selected-tag[hidden]{display:none!important}
     @media(max-width:1000px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
     @media(max-width:650px){.wrap{padding:0 20px}.main-nav{gap:18px;font-size:12px}.brand{font-size:25px}.hero{padding-top:22px}.grid{grid-template-columns:1fr;gap:20px}.details h3{font-size:22px}.filters button{padding:6px 12px}}
     @media(hover:none){.preview-arrow{opacity:1;transform:none}}
@@ -23,7 +23,7 @@
   </style>
 </head>
 <body>
-  <header class="wrap"><a class="brand" href="index.html">MusePages<span>.</span></a><nav class="main-nav" aria-label="Main navigation"><a href="#collection">Explore</a><a href="#collections">Collections</a></nav></header>
+  <header class="wrap"><a class="brand" href="index.html">MusePages<span>.</span></a><nav class="main-nav" aria-label="Main navigation"><a href="index.html#collection">Explore</a><a href="collections/index.html">Collections</a></nav></header>
   <main class="wrap">
     <section class="hero" aria-labelledby="gallery-title">
       <h1 id="gallery-title">Explore AI Prompts &amp; Generated Websites</h1>
@@ -49,7 +49,7 @@
   </main>
   <footer><div class="wrap">MusePages &middot; Ideas worth exploring. Built for the open web.</div></footer>
   <script>
-    const controllers = [...document.querySelectorAll("[data-carousel]")].map((carousel) => {
+    const controllers = [...document.querySelectorAll("[data-carousel], [data-gallery-card]")].map((carousel) => {
       const slides = [...carousel.querySelectorAll(".slide")];
       const dots = [...carousel.querySelectorAll("[data-index]")];
       const status = carousel.querySelector("[role=status]");
@@ -62,7 +62,7 @@
           dots[position]?.setAttribute("aria-current", String(position === current));
         });
         const model = slides[current].querySelector(".model").textContent;
-        status.textContent = model;
+        if (status) status.textContent = model;
       };
       dots.forEach((dot) => dot.addEventListener("pointerenter", (event) => {
         if (event.pointerType === "mouse" && !dot.disabled) show(Number(dot.dataset.index));
