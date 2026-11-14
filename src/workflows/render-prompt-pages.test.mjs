@@ -112,6 +112,7 @@ process.stdin.on("end", () => {
     return;
   }
   if (mode === "fail" || (mode === "retry" && count === 1)) {
+    console.error("mock codex failure");
     fs.writeFileSync("partial.txt", "useful partial code");
     process.exitCode = 2;
     return;
@@ -205,7 +206,7 @@ function metadata(changes = {})
     };
 }
 
-async function snapshot(folder)
+async function snapshot(folder, excluded = [])
 {
     const result = {};
     for (const entry of (await readdir(folder,
@@ -213,6 +214,7 @@ async function snapshot(folder)
             withFileTypes: true
         })).sort((a, b) => a.name.localeCompare(b.name)))
     {
+        if (excluded.includes(entry.name)) continue;
         const file = path.join(folder, entry.name);
         result[entry.name] = entry.isDirectory() ? await snapshot(file) : (await readFile(file)).toString("base64");
     }
@@ -340,7 +342,7 @@ Apply all required code modifications and keep the implementation consistent wit
     assert.equal(requests(), 1);
 });
 
-test("Codex command logging precedes execution and quotes arguments while redacting before quoting", async (t) =>
+test("Codex logs the redacted multiline prompt before the command and execution", async (t) =>
 {
     const f = await fixture(t);
     await mkdir(f.output,
@@ -349,6 +351,7 @@ test("Codex command logging precedes execution and quotes arguments while redact
     });
     const key = "synthetic'quoted\"secret";
     const note = "note with spaces and 'quotes'";
+    const prompt = `Requirement sent through stdin.\nPreserve "quotes" and 中文.\n${key}`;
     const options = f.options();
     const messages = [];
     await new CodexRunner(
@@ -366,19 +369,21 @@ test("Codex command logging precedes execution and quotes arguments while redact
     }).run(
     {
         folder: f.output,
-        prompt: "Private requirement sent only through stdin",
+        prompt,
         model,
         timeoutMs: options.timeoutMs,
         attempt: 1,
         onLog: (message) =>
         {
-            if (message.startsWith("Codex command:"))
+            if (message.startsWith("Codex prompt:") || message.startsWith("Codex command:"))
             {
                 assert.equal(existsSync(path.join(f.output, ".invocation.json")), false);
             }
             messages.push(message);
         },
     });
+    assert.equal(messages[0], `Codex prompt:\n${prompt.replaceAll(key, "[REDACTED]")}`);
+    assert.ok(messages[1].startsWith("Codex command:"));
     const command = messages.find((message) => message.startsWith("Codex command:"));
     assert.ok(command?.includes(process.execPath));
     assert.ok(command.includes(`--model ${modelId}`));
@@ -386,11 +391,41 @@ test("Codex command logging precedes execution and quotes arguments while redact
         "'note with spaces and ''quotes'''" : "'note with spaces and '\\''quotes'\\'''"));
     assert.ok(command.includes("[REDACTED]"));
     assert.ok(!messages.join("\n").includes(key));
-    assert.ok(!messages.join("\n").includes("Private requirement"));
     const invocation = await readJson(path.join(f.output, ".invocation.json"));
     assert.ok(invocation.args.includes(note));
     assert.ok(invocation.args.includes(key));
-    assert.equal(invocation.input, "Private requirement sent only through stdin");
+    assert.equal(invocation.input, prompt);
+});
+
+test("Codex forwards complete stdout and stderr while redacting keys split across chunks", async (t) =>
+{
+    const f = await fixture(t);
+    await mkdir(f.output, { recursive: true });
+    const script = path.join(f.workspace, "stream-output.cjs");
+    const content = "event\n".repeat(180000);
+    await save(script, `
+const key = process.env.MUSE_TEST_KEY;
+process.stdout.write("start " + key.slice(0, 5));
+process.stderr.write("warning " + key.slice(0, 4));
+setTimeout(() => {
+  process.stdout.write(key.slice(5) + "\\n" + "event\\n".repeat(180000));
+  process.stderr.write(key.slice(4) + " end");
+}, 30);
+`);
+    const streams = { stdout: "", stderr: "" };
+    await new CodexRunner({ env }).run(
+    {
+        folder: f.output,
+        prompt: "Stream test",
+        model,
+        command: { executable: process.execPath, args: [script] },
+        timeoutMs: 10000,
+        attempt: 1,
+        onOutput: (stream, data) => streams[stream] += data
+    });
+    assert.equal(streams.stdout, `start [REDACTED]\n${content}`);
+    assert.equal(streams.stderr, "warning [REDACTED] end");
+    assert.ok(!JSON.stringify(streams).includes(secret));
 });
 
 test("generation works without API-key settings or environment variables", async (t) =>
@@ -1431,13 +1466,13 @@ globalThis.fetch = async (url) => {
         encoding: "utf8",
         timeout: 5000,
     });
-    const before = await snapshot(f.workspace);
+    const before = await snapshot(f.workspace, ["logs"]);
     const missing = run();
     assert.equal(missing.status, 1, missing.stderr);
     assert.equal(JSON.parse(missing.stdout).summary.missing, 1);
     assert.match(missing.stderr, /Discovering local model: GET http:\/\/localhost:8000\/v1\/models/);
     assert.match(missing.stderr, /\[001-travel\/local\] missing/);
-    assert.deepEqual(await snapshot(f.workspace), before);
+    assert.deepEqual(await snapshot(f.workspace, ["logs"]), before);
     await save(path.join(f.output, "metadata.json"), metadata());
     const complete = run();
     assert.equal(complete.status, 0, complete.stderr);
@@ -1445,7 +1480,7 @@ globalThis.fetch = async (url) => {
     await save(path.join(f.workspace, "data", "prompts", "2-middle", "2-middle.md"), "# Middle requirement\n");
     await save(path.join(f.workspace, "data", "prompts", "003-selected", "003-selected.md"), "# Selected requirement\n");
     await save(path.join(f.workspace, "data", "prompts", "030-other", "030-other.md"), "# Unselected requirement\n");
-    const numericBefore = await snapshot(f.workspace);
+    const numericBefore = await snapshot(f.workspace, ["logs"]);
     for (const number of ["003", "3"])
     {
         const selected = run([number, "model-a", "--check"]);
@@ -1481,7 +1516,57 @@ globalThis.fetch = async (url) => {
     const unknown = run(["999", "Qwen3.8", "--check"]);
     assert.equal(unknown.status, 1);
     assert.match(unknown.stderr, /Unknown prompt number: 999/);
-    assert.deepEqual(await snapshot(f.workspace), numericBefore);
+    assert.deepEqual(await snapshot(f.workspace, ["logs"]), numericBefore);
+});
+
+test("the actual CLI appends prompts, commands, Codex output and results without replacing prior logs", async (t) =>
+{
+    const f = await fixture(t);
+    const directory = path.join(f.workspace, "src", "workflows");
+    for (const filename of ["render-prompt-page.mjs", "deploy-site.mjs"])
+    {
+        await copyFile(new URL(filename, import.meta.url), path.join(directory, filename));
+    }
+    const network = path.join(f.workspace, "mock-discovery.cjs");
+    await save(network, `globalThis.fetch = async () => Response.json({ data: [{ id: ${JSON.stringify(modelId)} }] });`);
+    const bin = path.join(f.workspace, "bin");
+    await save(path.join(bin, "codex.cmd"), "@echo off");
+    const wrapper = `process.argv.splice(2, 0, "fail");\n${await readFile(path.join(f.workspace, "mock-codex.cjs"), "utf8")}`;
+    if (process.platform === "win32")
+    {
+        await save(path.join(bin, "node_modules", "@openai", "codex", "bin", "codex.js"), wrapper);
+    }
+    else
+    {
+        await save(path.join(bin, "codex"), `#!/usr/bin/env node\n${wrapper}`);
+        const { chmod } = await import("node:fs/promises");
+        await chmod(path.join(bin, "codex"), 0o755);
+    }
+    const logFile = path.join(f.workspace, "logs", "render-prompt-page.log");
+    await save(logFile, "preserve existing log\n");
+    let previous = await readFile(logFile, "utf8");
+    for (const flags of [[], ["--retry"]])
+    {
+        const result = spawnSync(process.execPath, ["--require", network, path.join(directory, "render-prompt-page.mjs"), "001", "model-a", ...flags],
+        {
+            cwd: f.workspace,
+            env: { ...process.env, PATH: `${bin}${path.delimiter}${process.env.PATH || ""}` },
+            encoding: "utf8",
+            timeout: 10000
+        });
+        assert.equal(result.status, 1, result.stderr);
+        assert.equal(JSON.parse(result.stdout).summary.failed, 1);
+        const current = await readFile(logFile, "utf8");
+        assert.ok(current.startsWith(previous));
+        const appended = current.slice(previous.length);
+        assert.match(appended, /Codex prompt:\nImplement the specification/);
+        assert.ok(appended.indexOf("Codex prompt:") < appended.indexOf("Codex command:"));
+        assert.match(appended, /Codex stdout:\nmock codex/);
+        assert.match(appended, /Codex stderr:\nmock codex failure/);
+        assert.match(appended, /Result:\n/);
+        assert.match(appended, /"failed": 1/);
+        previous = current;
+    }
 });
 
 test("the actual CLI prints detailed discovery failures to stderr without claiming a generation result", async (t) =>
@@ -1514,6 +1599,9 @@ globalThis.fetch = async () => {
     assert.equal(failed.stdout, "");
     assert.match(failed.stderr, /GET http:\/\/localhost:8000\/v1\/models/);
     assert.match(failed.stderr, /ECONNREFUSED.*address=127\.0\.0\.1.*port=8000/);
+    const log = await readFile(path.join(f.workspace, "logs", "render-prompt-page.log"), "utf8");
+    assert.match(log, /Discovering local model/);
+    assert.match(log, /ECONNREFUSED/);
     await assert.rejects(readFile(path.join(f.output, "metadata.json")),
     {
         code: "ENOENT"

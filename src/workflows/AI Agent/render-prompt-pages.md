@@ -85,7 +85,7 @@ node src\workflows\generate-preview.mjs out\pages\006-travel-agency-homepage\mod
 
 截图使用内置的临时 HTTP 服务，仅绑定 `127.0.0.1` 随机端口，无需 `npm start`。不启动 Next.js 运行时、不执行构建，也不重新生成源码。Playwright Chromium 等待资源、字体及首屏图片加载后，截取 **1200 × 900** 首屏 PNG，检查资源错误、JavaScript 异常及明显空白页面；仍需人工核对视觉效果。
 
-单独运行截图命令只生成图片，元数据状态由生成流程核验后更新。生成脚本的 `--check` 不截图、不写文件。
+单独运行截图命令只生成图片，元数据状态由生成流程核验后更新。生成脚本的 `--check` 仅检查覆盖情况并追加运行日志，保持页面产物与元数据原样。
 
 ### 元数据与续跑规则
 

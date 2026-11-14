@@ -468,10 +468,31 @@ export class GenerationCli
     {
         const controller = new AbortController();
         const cancel = () => controller.abort();
+        const runId = randomUUID();
+        let logFile;
+        let pending = Promise.resolve();
+        let logFailure;
+        const log = (message, terminal = true) =>
+        {
+            const entry = `[${new Date().toISOString()}] [${runId}] ${message}\n`;
+            if (terminal) console.error(entry.trimEnd());
+            if (logFile)
+            {
+                pending = pending.then(() => logFile.appendFile(entry)).catch((error) =>
+                {
+                    logFailure ??= error;
+                    controller.abort();
+                });
+            }
+        };
         process.once("SIGINT", cancel);
         process.once("SIGTERM", cancel);
         try
         {
+            await WorkspaceFiles.ensureDirectory(root, "logs");
+            const file = await WorkspaceFiles.inside(root, "logs", "render-prompt-page.log");
+            logFile = await open(file, "a", 0o600);
+            log(`Run started; append-only log: ${file}`);
             const
             {
                 selections,
@@ -481,19 +502,36 @@ export class GenerationCli
             {
                 ...options,
                 signal: controller.signal,
-                onLog: (message) => console.error(`[${new Date().toISOString()}] ${message}`),
+                onLog: (message) => log(message),
+                onOutput: (message) => log(message, false),
             });
-            console.log(JSON.stringify(report, null, 2));
+            const result = JSON.stringify(report, null, 2);
+            log(`Result:\n${result}`, false);
+            console.log(result);
             if (report.summary.failed || report.summary.pending || report.summary.missing) process.exitCode = 1;
             if (controller.signal.aborted) process.exitCode = 130;
         }
         catch (error)
         {
-            console.error(GenerationCli.errorDetails(error));
+            log(GenerationCli.errorDetails(error));
             process.exitCode = 1;
         }
         finally
         {
+            await pending;
+            try
+            {
+                await logFile?.close();
+            }
+            catch (error)
+            {
+                logFailure ??= error;
+            }
+            if (logFailure)
+            {
+                console.error(`Cannot append generation log: ${GenerationCli.errorDetails(logFailure)}`);
+                process.exitCode = 1;
+            }
             process.removeListener("SIGINT", cancel);
             process.removeListener("SIGTERM", cancel);
         }
@@ -726,7 +764,8 @@ export class CodexRunner
         attempt,
         env = this.env,
         signal,
-        onLog
+        onLog,
+        onOutput
     })
     {
         const home = await mkdtemp(path.join(os.tmpdir(), "musepages-codex-"));
@@ -765,9 +804,35 @@ export class CodexRunner
         try
         {
             const key = model.apiKeyEnv && env[model.apiKeyEnv];
+            const buffered = { stdout: "", stderr: "" };
+            const forward = (stream, data, flush = false) =>
+            {
+                if (!onOutput) return;
+                const text = buffered[stream] + data;
+                const end = flush ? text.length : Math.max(0, text.length - (key ? key.length - 1 : 0));
+                let position = 0;
+                let redacted = "";
+                while (position < end)
+                {
+                    const match = key ? text.indexOf(key, position) : -1;
+                    if (match < 0 || match >= end)
+                    {
+                        redacted += text.slice(position, end);
+                        position = end;
+                    }
+                    else
+                    {
+                        redacted += text.slice(position, match) + "[REDACTED]";
+                        position = match + key.length;
+                    }
+                }
+                buffered[stream] = text.slice(position);
+                if (redacted) onOutput(stream, redacted);
+            };
             const quote = (arg) => /^[a-z0-9_./:=@,+-]+$/i.test(arg) ? arg :
                 process.platform === "win32" ? `'${arg.replaceAll("'", "''")}'` : `'${arg.replaceAll("'", "'\\''")}'`;
             const displayed = [command.executable, ...args].map((arg) => quote(key ? arg.replaceAll(key, "[REDACTED]") : arg)).join(" ");
+            onLog?.(`Codex prompt:\n${key ? prompt.replaceAll(key, "[REDACTED]") : prompt}`);
             onLog?.(`Codex command: ${process.platform === "win32" ? "& " : ""}${displayed}`);
             await new Promise((resolve, reject) =>
             {
@@ -800,16 +865,17 @@ export class CodexRunner
                     once: true
                 });
                 if (signal?.aborted) abort();
-                const append = (data) =>
+                const append = (stream, data) =>
                 {
                     output = (output + data.toString()).slice(-1024 * 1024);
+                    forward(stream, data);
                 };
                 let line = "";
                 child.stdout.setEncoding("utf8");
                 child.stderr.setEncoding("utf8");
                 child.stdout.on("data", (data) =>
                 {
-                    append(data);
+                    append("stdout", data);
                     line += data;
                     const lines = line.split(/\r?\n/);
                     line = lines.pop();
@@ -823,7 +889,7 @@ export class CodexRunner
                         stop(error);
                     }
                 });
-                child.stderr.on("data", append);
+                child.stderr.on("data", (data) => append("stderr", data));
                 child.stdin.on("error", (error) =>
                 {
                     if (error.code !== "EPIPE") stop(error);
@@ -846,6 +912,8 @@ export class CodexRunner
                     }
                     try
                     {
+                        forward("stdout", "", true);
+                        forward("stderr", "", true);
                         checkEvent(line);
                     }
                     catch (error)
@@ -984,8 +1052,7 @@ export class PromptPageWorkflow
                 await WorkspaceFiles.saveJson(current.file, metadata);
                 for (let attempt = 1; attempt <= options.retries + 1; attempt++)
                 {
-                    let instruction = PromptPageWorkflow.instructions(prompt, model);
-                    console.log(`Attempt ${attempt} instruction:`, instruction);
+                    const instruction = PromptPageWorkflow.instructions(prompt, model);
                     options.progress("generate", `Attempt ${attempt}/${options.retries + 1}; executable=${command.executable}; cwd=${current.folder}; timeout=${options.timeoutMs} ms`);
                     try
                     {
@@ -1000,6 +1067,8 @@ export class PromptPageWorkflow
                             env: options.env,
                             signal: options.signal,
                             onLog: (message) => options.progress("generate", message),
+                            onOutput: options.onOutput ? (stream, data) =>
+                                options.onOutput(`[${prompt.id}/${model.selection}] generate: Codex ${stream}:\n${data}`) : undefined,
                         });
                         break;
                     }
