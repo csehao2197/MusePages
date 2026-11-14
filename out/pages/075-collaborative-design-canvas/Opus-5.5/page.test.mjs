@@ -61,7 +61,7 @@ try {
   await check("properties panel edits (X, fill swatch, rotation), arrow nudge, duplicate, delete", async () => {
     let d = await D(page), id = d.sel[0];
     await page.fill('[data-prop="x"]', "420"); await page.press('[data-prop="x"]', "Enter"); assert.equal((await D(page)).doc.shapes[id].x, 420);
-    await page.click('[data-swatch="fill"][data-c="#EF4444"]'); assert.equal((await D(page)).doc.shapes[id].fill, "#EF4444"); assert.equal(await page.getAttribute(`[data-world] [data-id="${id}"]`, "fill"), "#EF4444");
+    await page.click('[data-swatch="fill"][data-c="#EF4444"]'); { const dd = await D(page); assert.equal(dd.doc.shapes[id].fill, "#EF4444", JSON.stringify({ sel: dd.sel, id, type: dd.doc.shapes[id].type, panel: await text(page, "[data-panel] h3") })); } assert.equal(await page.getAttribute(`[data-world] [data-id="${id}"]`, "fill"), "#EF4444");
     await page.fill('[data-prop="rot"]', "0"); await page.press('[data-prop="rot"]', "Enter");
     await page.focus("[data-stage]"); await page.keyboard.press("ArrowRight"); await page.keyboard.press("Shift+ArrowDown"); d = await D(page); assert.equal(d.doc.shapes[id].x, 421);
     await page.keyboard.press("Control+d"); d = await D(page); assert.equal(d.doc.order.length, 10); assert.equal(d.doc.shapes[d.sel[0]].x, 437);
