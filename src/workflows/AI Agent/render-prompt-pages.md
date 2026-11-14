@@ -23,7 +23,7 @@
 
 `api_model_name` 是agent 调用的本地AI模型的名字 一般情况下不出现在生成目标里
 
-`model_name` 是本轮 AI agent 的任务参数，是target asset的变量之一，默认为 `GPT-6`，执行前可按需设置：
+`model_name` 是target asset的变量之一，默认为 `GPT-6`, 只用于生成目标folder和tag. 和实际运行的AI模型无关, 不需要检查和匹配.
 
 ## 1. 任务
 
