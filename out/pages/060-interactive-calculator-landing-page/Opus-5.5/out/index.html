@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Savings Calculator — See What You Could Save with Ledgerly</title>
+<meta name="description" content="Estimate how much time and money your team could save by automating invoice processing with Ledgerly. Takes less than 2 minutes.">
+<meta name="theme-color" content="#0F766E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="i-building" viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9 22v-4h6v4M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-unlock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+  <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><path d="M4 14a1 1 0 0 1-.8-1.6l9.9-10.2a.5.5 0 0 1 .9.5l-1.9 6A1 1 0 0 0 13 10h7a1 1 0 0 1 .8 1.6l-9.9 10.2a.5.5 0 0 1-.9-.5l1.9-6A1 1 0 0 0 11 14z"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.7 9a1 1 0 0 1-.7 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.2-2.7a1.2 1.2 0 0 1 1.5 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1z"/></symbol>
+</svg>
+
+<a class="skip" href="#calc">Skip to calculator</a>
+
+<header class="top"><div class="wrap top-in"><a class="logo" href="#top"><span class="lm">L</span>Ledgerly</a><span class="top-r"><svg class="i"><use href="#i-shield"/></svg>SOC 2 Type II · Your inputs stay in your browser</span></div></header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <p class="kicker">Accounts payable ROI calculator</p>
+      <h1>Calculate Your Potential Savings</h1>
+      <p class="sub">See exactly how much time and money you could save with Ledgerly by automating invoice processing and approvals.</p>
+      <ul class="trust"><li><svg class="i"><use href="#i-building"/></svg>Used by 10,000+ companies</li><li><svg class="i"><use href="#i-clock"/></svg>Takes less than 2 minutes</li><li><svg class="i"><use href="#i-lock"/></svg>No sign-up to see results</li></ul>
+    </div>
+  </section>
+
+  <section class="calc-sec" id="calc" aria-labelledby="calc-h">
+    <div class="wrap calc">
+      <div class="wizard">
+        <h2 id="calc-h" class="sr">Savings calculator</h2>
+        <div class="progress" aria-label="Calculator progress"><ol data-steps-nav><li data-sn="0" class="on"><span>1</span>Company</li><li data-sn="1"><span>2</span>Current costs</li><li data-sn="2"><span>3</span>Goals</li></ol><div class="pbar" role="progressbar" aria-valuemin="0" aria-valuemax="100" data-pbar><i></i></div></div>
+
+        <form data-form novalidate>
+          <fieldset class="step" data-step="0">
+            <legend>Tell us about your company</legend>
+            <div class="field">
+              <label for="size">Company size <output data-size-out>51–200 employees</output></label>
+              <input type="range" id="size" min="0" max="4" step="1" value="2" data-size aria-valuetext="51–200 employees">
+              <div class="marks" aria-hidden="true"><span>1–10</span><span>11–50</span><span>51–200</span><span>201–500</span><span>500+</span></div>
+            </div>
+            <div class="field"><label for="ind">Industry</label><select id="ind" data-ind></select></div>
+            <div class="field"><label for="sol">Current solution</label><select id="sol" data-sol><option value="manual">Spreadsheets &amp; email</option><option value="erp">ERP add-on</option><option value="legacy">Legacy AP software</option><option value="none">Nothing yet</option></select></div>
+          </fieldset>
+
+          <fieldset class="step" data-step="1" hidden>
+            <legend>Your current costs</legend>
+            <div class="field">
+              <label for="hours">Hours per week spent on invoice processing <button class="tip" type="button" aria-label="What counts?" data-tip="Data entry, chasing approvals, matching POs, fixing errors and answering vendor questions — across the whole team."><svg class="i"><use href="#i-info"/></svg></button></label>
+              <div class="num"><input id="hours" type="number" inputmode="decimal" min="1" max="2000" value="40" data-in="hours"><span>hrs/wk</span></div>
+            </div>
+            <div class="field">
+              <label for="rate">Average hourly rate of team members <button class="tip" type="button" aria-label="How to estimate" data-tip="Fully loaded cost: salary plus benefits divided by working hours. A $70k salary is roughly $45/hour loaded."><svg class="i"><use href="#i-info"/></svg></button></label>
+              <div class="num pre"><span>$</span><input id="rate" type="number" inputmode="decimal" min="10" max="500" value="45" data-in="rate"><span>/hr</span></div>
+            </div>
+            <div class="field">
+              <label for="tools">Current tool costs <button class="tip" type="button" aria-label="Which tools?" data-tip="Monthly spend on OCR, approval add-ons, payment fees and other AP software Ledgerly could replace."><svg class="i"><use href="#i-info"/></svg></button></label>
+              <div class="num pre"><span>$</span><input id="tools" type="number" inputmode="decimal" min="0" max="100000" value="800" data-in="tools"><span>/month</span></div>
+            </div>
+            <div class="field">
+              <label for="team">Number of team members involved</label>
+              <div class="stepper"><button type="button" aria-label="Fewer team members" data-dec>−</button><input id="team" type="number" inputmode="numeric" min="1" max="500" value="4" data-in="team"><button type="button" aria-label="More team members" data-inc>+</button></div>
+            </div>
+            <p class="err" data-err role="alert"></p>
+          </fieldset>
+
+          <fieldset class="step" data-step="2" hidden>
+            <legend>What's most important to you? <small>(optional)</small></legend>
+            <div class="goals" data-goals>
+              <label><input type="checkbox" value="time" checked><span><svg class="i"><use href="#i-clock"/></svg>Save time</span></label>
+              <label><input type="checkbox" value="cost"><span><svg class="i"><use href="#i-target"/></svg>Reduce costs</span></label>
+              <label><input type="checkbox" value="accuracy"><span><svg class="i"><use href="#i-check"/></svg>Improve accuracy</span></label>
+              <label><input type="checkbox" value="scale"><span><svg class="i"><use href="#i-zap"/></svg>Scale operations</span></label>
+            </div>
+          </fieldset>
+
+          <div class="nav-btns"><button class="btn-g" type="button" data-back hidden><svg class="i"><use href="#i-back"/></svg>Back</button><button class="btn" type="button" data-next>Next<svg class="i"><use href="#i-arrow"/></svg></button></div>
+        </form>
+      </div>
+
+      <aside class="preview" aria-live="polite" aria-atomic="true">
+        <p class="pv-l">Your estimated savings</p>
+        <p class="pv-big"><span data-pv-savings>$0</span><small>/year</small></p>
+        <div class="pv-row"><span>Hours saved</span><b data-pv-hours>0</b></div>
+        <div class="pv-row"><span>ROI</span><b data-pv-roi>0%</b></div>
+        <p class="pv-note">Updates as you type. Estimates only.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="results" id="results" hidden data-results aria-labelledby="res-h">
+    <div class="wrap">
+      <div class="sum-card">
+        <div class="sum-main"><p class="sum-l" id="res-h">Your Annual Savings Potential</p><p class="sum-big" data-r-savings>$0</p><ul class="sum-stats"><li><b data-r-hours>0</b>hours saved/year</li><li><b data-r-roi>0%</b>ROI</li><li><b data-r-payback>0</b>payback</li></ul></div>
+        <dl class="sum-break">
+          <div><dt>Current annual cost</dt><dd data-r-current>$0</dd></div>
+          <div><dt>Projected cost with Ledgerly</dt><dd data-r-projected>$0</dd></div>
+          <div class="net"><dt>Net savings</dt><dd data-r-net>$0</dd></div>
+          <div><dt>Payback period</dt><dd data-r-payback2>0 months</dd></div>
+        </dl>
+      </div>
+
+      <div class="viz">
+        <figure class="chart"><figcaption>Before vs. after (annual cost)</figcaption><div data-bars></div></figure>
+        <figure class="chart"><figcaption>Where your money goes today</figcaption><div class="pie-wrap" data-pie></div></figure>
+        <figure class="chart wide"><figcaption>Timeline to ROI (cumulative, first 12 months)</figcaption><div data-timeline></div></figure>
+      </div>
+
+      <div class="reco">
+        <div class="plan-card" data-plan></div>
+        <div class="feat-card"><h3>Top features for your goals</h3><ul data-features></ul></div>
+        <figure class="story" data-story></figure>
+      </div>
+
+      <div class="gate" data-gate>
+        <div class="gate-blur" aria-hidden="true" data-gate-preview></div>
+        <div class="gate-card">
+          <span class="gi"><svg class="i"><use href="#i-lock"/></svg></span>
+          <h3>Get Your Detailed Report</h3>
+          <p>Unlock the line-item breakdown, industry comparison and a downloadable PDF.</p>
+          <form class="lead" data-lead novalidate>
+            <label>Work email <span class="req">(required)</span><input type="email" name="email" autocomplete="email" required></label>
+            <div class="two"><label>Name<input name="name" autocomplete="name"></label><label>Phone <span class="opt">(optional)</span><input name="phone" type="tel" autocomplete="tel"></label></div>
+            <label>Company name<input name="company" autocomplete="organization"></label>
+            <p class="err" data-lead-err role="alert"></p>
+            <button class="btn btn-lg" type="submit">Send My Report</button>
+            <p class="fine">We'll email your report and occasional product updates. Unsubscribe anytime. (Demo — nothing is sent.)</p>
+          </form>
+        </div>
+      </div>
+
+      <div class="full" hidden data-full>
+        <div class="unlocked"><svg class="i"><use href="#i-unlock"/></svg>Full analysis unlocked — a copy would be emailed to <b data-lead-email></b>.</div>
+        <section class="compare" aria-labelledby="cmp-h"><h3 id="cmp-h">How you compare</h3><p class="lead-p">Manual AP hours per team member per week</p><div data-compare></div></section>
+        <details class="detail" open><summary><h3>Detailed breakdown</h3><svg class="i"><use href="#i-chev"/></svg></summary><table class="lines"><tbody data-lines></tbody></table></details>
+      </div>
+
+      <div class="proof">
+        <p class="avg" data-avg-proof></p>
+        <ul class="logos" aria-label="Customers"><li>Northwind</li><li>Brightwave</li><li>Coastline Co.</li><li>Pinecrest</li><li>Altura</li><li>Meridian Supply</li></ul>
+        <p class="join">Join 500+ companies already saving with automated AP</p>
+      </div>
+
+      <div class="next">
+        <h3>Next steps</h3>
+        <div class="next-btns">
+          <button class="btn btn-lg" type="button" data-trial>Start Free Trial</button>
+          <button class="btn-g btn-lg" type="button" data-demo><svg class="i"><use href="#i-cal"/></svg>Schedule a Demo</button>
+          <button class="btn-g btn-lg" type="button" data-pdf><svg class="i"><use href="#i-download"/></svg>Download PDF Report</button>
+          <button class="btn-g btn-lg" type="button" data-share><svg class="i"><use href="#i-share"/></svg>Share Results</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="m-h">
+    <div class="wrap narrow">
+      <h2 id="m-h">How we calculated this</h2>
+      <p>Your current cost is <em>hours per week × 52 × hourly rate</em> plus <em>tool costs × 12</em>. We then apply assumptions drawn from customer benchmarks:</p>
+      <ul class="assume" data-assume></ul>
+      <p>Read the case studies behind these numbers: <button class="link" type="button" data-case="0">Northwind Logistics</button>, <button class="link" type="button" data-case="1">Brightwave Health</button>, <button class="link" type="button" data-case="2">Coastline Retail</button>.</p>
+      <p class="disc">Your results may vary. This calculator gives an estimate based on the numbers you entered and average outcomes; it is not a guarantee of savings.</p>
+    </div>
+  </section>
+
+  <section class="sec gray" aria-labelledby="faq-h">
+    <div class="wrap narrow">
+      <h2 id="faq-h">FAQ</h2>
+      <div class="faq" data-faq>
+        <details><summary>How accurate is this calculator?<svg class="i"><use href="#i-chev"/></svg></summary><p>It's as accurate as your inputs and our averages allow. Most customers land within ±20% of the estimate after 6 months; teams with lots of exceptions save less on labor but more on errors.</p></details>
+        <details><summary>What data do you use?<svg class="i"><use href="#i-chev"/></svg></summary><p>Only what you type here, combined with benchmark rates from aggregated, anonymized customer data. The assumptions are listed in "How we calculated this".</p></details>
+        <details><summary>Is my information secure?<svg class="i"><use href="#i-chev"/></svg></summary><p>Calculations run entirely in your browser. Nothing is sent unless you request the report, and Ledgerly is SOC 2 Type II audited.</p></details>
+        <details><summary>How do I get started?<svg class="i"><use href="#i-chev"/></svg></summary><p>Start a 14-day free trial — no credit card needed — or book a 30-minute demo and we'll walk through your numbers.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt" aria-labelledby="alt-h">
+    <div class="wrap alt-in">
+      <div><h2 id="alt-h">Not ready yet? Get our ROI Guide</h2><p>A short email series on building the business case for AP automation, with templates.</p></div>
+      <form class="alt-form" data-guide novalidate><label class="sr" for="g-email">Email</label><input id="g-email" type="email" name="email" placeholder="you@company.com" autocomplete="email"><button class="btn" type="submit">Send me the guide</button></form>
+      <p class="g-msg" data-g-msg role="status"></p>
+      <button class="link" type="button" data-save><svg class="i"><use href="#i-bookmark"/></svg>Save my results for later</button>
+    </div>
+  </section>
+</main>
+
+<footer class="foot"><div class="wrap"><p>© 2026 Ledgerly, Inc.</p><p class="demo">Demo page: Ledgerly, customers, case studies and benchmarks are fictional; figures are illustrative estimates computed in your browser.</p></div></footer>
+
+<div class="mbar" data-mbar hidden><span><small>Est. savings</small><b data-mb-savings>$0/yr</b></span><a class="btn" href="#results">See results</a></div>
+
+<dialog class="dlg" data-dlg aria-label="Details">
+  <button class="icon-btn dlg-x" type="button" aria-label="Close" data-close><svg class="i"><use href="#i-close"/></svg></button>
+  <div class="dlg-body" data-dlg-body></div>
+</dialog>
+<div class="tipbox" role="tooltip" id="tipbox" hidden data-tipbox></div>
+<div class="toast" role="status" aria-live="polite" data-toast></div>
+<script src="app.js"></script>
+</body>
+</html>

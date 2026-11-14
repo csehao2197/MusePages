@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OpenShelf — Explore 12,000+ Learning Resources</title>
+<meta name="description" content="Search and save e-books, research papers, video lectures, interactive tutorials and podcasts on OpenShelf.">
+<meta name="theme-color" content="#3B82F6">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/></symbol>
+  <symbol id="i-video" viewBox="0 0 24 24"><path d="m16 13 5.2 3.5a.5.5 0 0 0 .8-.4V7.9a.5.5 0 0 0-.8-.4L16 11"/><rect x="2" y="6" width="14" height="12" rx="2"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v4a2 2 0 0 0 2 2h4M8 13h8M8 17h5"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M3 12h.01M3 18h.01M3 6h.01M8 12h13M8 18h13M8 6h13"/></symbol>
+  <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></symbol>
+  <symbol id="i-quote" viewBox="0 0 24 24"><path d="M3 21c3 0 7-1 7-8V5c0-1.3-.8-2-2-2H4c-1.3 0-2 .8-2 2v6c0 1.3.8 2 2 2h2c0 4-3 4-3 4zM15 21c3 0 7-1 7-8V5c0-1.3-.8-2-2-2h-4c-1.3 0-2 .8-2 2v6c0 1.3.8 2 2 2h2c0 4-3 4-3 4z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M11.5 2.3a.5.5 0 0 1 1 0l2.3 4.7a2 2 0 0 0 1.6 1.2l5.2.7a.5.5 0 0 1 .3.9l-3.8 3.7a2 2 0 0 0-.6 1.9l.9 5.1a.5.5 0 0 1-.8.6l-4.6-2.4a2 2 0 0 0-2 0L6.4 21a.5.5 0 0 1-.8-.6l.9-5.1a2 2 0 0 0-.6-1.9L2.2 9.8a.5.5 0 0 1 .3-.9l5.1-.7a2 2 0 0 0 1.6-1.2z"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="m7 4 13 8-13 8z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24"><path d="M22 3H2l8 9.5V19l4 2v-8.5z"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.8 9.8 0 0 0-6.7 2.7L3 8M3 3v5h5M12 7v5l4 2"/></symbol>
+  <symbol id="i-trend" viewBox="0 0 24 24"><path d="M22 7 13.5 15.5 8.5 10.5 2 17"/><path d="M16 7h6v6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+</svg>
+
+<a class="skip" href="#results">Skip to results</a>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="logo" href="#top" aria-label="OpenShelf home"><span class="logo-mark" aria-hidden="true"><i></i><i></i><i></i></span>OpenShelf</a>
+    <nav class="top-links" aria-label="Primary"><a href="#results">Browse</a><a href="#collections">Collections</a><a href="#recent">Recently viewed</a><a href="#collections" class="rl-link">My Reading List <b data-rl-count>14</b></a></nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <h1>Explore 12,000+ Learning Resources</h1>
+      <p class="sub">E-books, research papers, video lectures, and tutorials — all in one place</p>
+      <div class="search-wrap" data-search-wrap>
+        <form class="search" role="search" data-search>
+          <svg class="i s-ico"><use href="#i-search"/></svg>
+          <label class="sr" for="q">Search resources</label>
+          <input id="q" type="search" placeholder="Search by title, author, topic, or ISBN..." autocomplete="off" role="combobox" aria-expanded="false" aria-controls="sugg" aria-autocomplete="list" data-q>
+          <button class="s-clear" type="button" aria-label="Clear search" hidden data-clear><svg class="i"><use href="#i-x"/></svg></button>
+          <button class="btn btn-blue s-go" type="submit">Search</button>
+        </form>
+        <ul class="sugg" id="sugg" role="listbox" hidden data-sugg></ul>
+      </div>
+      <div class="chips" role="group" aria-label="Quick filters">
+        <button class="chip" type="button" aria-pressed="false" data-chip="trending"><svg class="i"><use href="#i-trend"/></svg>Trending This Week</button>
+        <button class="chip" type="button" aria-pressed="false" data-chip="new">New Arrivals</button>
+        <button class="chip" type="button" aria-pressed="false" data-chip="staff">Staff Picks</button>
+        <button class="chip" type="button" aria-pressed="false" data-chip="open">Open Access</button>
+      </div>
+      <ul class="stats"><li><b>12,450</b> Resources</li><li><b>1,200+</b> Authors</li><li><b>86</b> Subjects</li><li><b>Free</b> for Members</li></ul>
+    </div>
+  </section>
+
+  <div class="wrap layout">
+    <aside class="filters" id="filters" aria-label="Filters" data-filters>
+      <div class="f-head"><h2>Filters</h2><button class="icon-btn f-close" type="button" aria-label="Close filters" data-filters-close><svg class="i"><use href="#i-x"/></svg></button></div>
+      <fieldset><legend>Resource Type</legend><div data-f-type></div></fieldset>
+      <fieldset><legend>Subject Area</legend><div data-f-subject></div><button class="link" type="button" aria-expanded="false" data-more-subjects>Show 81 more subjects</button></fieldset>
+      <fieldset><legend>Level</legend><div data-f-level></div></fieldset>
+      <fieldset><legend>Language</legend><div data-f-lang></div></fieldset>
+      <fieldset><legend>Availability</legend><div data-f-avail></div></fieldset>
+      <fieldset><legend>Publication Year</legend>
+        <div class="range" data-range><div class="r-track"><i data-r-fill></i></div><input type="range" min="2015" max="2026" value="2015" aria-label="From year" data-y0><input type="range" min="2015" max="2026" value="2026" aria-label="To year" data-y1></div>
+        <p class="r-out"><span data-y0-out>2015</span> – <span data-y1-out>2026</span></p></fieldset>
+      <button class="link" type="button" data-clear-all>Clear All Filters</button>
+      <button class="btn btn-blue f-apply" type="button" data-filters-close>Show results</button>
+    </aside>
+    <div class="scrim" hidden data-scrim></div>
+
+    <section class="results" id="results" aria-label="Results">
+      <div class="r-head">
+        <p class="r-count" aria-live="polite" data-count></p>
+        <div class="r-ctrl">
+          <button class="btn btn-ghost f-btn" type="button" aria-controls="filters" data-filters-open><svg class="i"><use href="#i-filter"/></svg>Filters <span data-fcount></span></button>
+          <div class="views" role="group" aria-label="View"><button class="icon-btn view on" type="button" aria-label="Grid view" aria-pressed="true" data-view="grid"><svg class="i"><use href="#i-grid"/></svg></button><button class="icon-btn view" type="button" aria-label="List view" aria-pressed="false" data-view="list"><svg class="i"><use href="#i-list"/></svg></button></div>
+          <label class="sort"><span class="sr">Sort by</span><select data-sort><option value="relevance">Relevance</option><option value="newest">Newest</option><option value="popular">Most Popular</option><option value="rated">Highest Rated</option></select></label>
+        </div>
+      </div>
+      <div class="pills" data-pills></div>
+      <div class="cards" data-cards></div>
+      <p class="empty" hidden data-empty>No resources match. <button class="link" type="button" data-clear-all>Clear all filters</button></p>
+      <nav class="pager" aria-label="Pagination" data-pager></nav>
+      <p class="demo-note">Demo catalog: this page loads a 48-resource sample; facet counts reflect the full 12,450-resource catalog.</p>
+    </section>
+  </div>
+
+  <section class="sec tint" id="collections" aria-labelledby="col-h">
+    <div class="wrap col-grid">
+      <div class="rl"><div class="sec-head"><h2 id="rl-h">My Reading List</h2><span class="rl-n"><b data-rl-count>14</b> items saved</span></div><ul class="rl-items" data-rl></ul><button class="link" type="button" data-soon="Your full reading list">View All <svg class="i"><use href="#i-right"/></svg></button></div>
+      <div><div class="sec-head"><h2 id="col-h">Popular Collections</h2></div><div class="cols" data-cols></div></div>
+    </div>
+  </section>
+
+  <section class="sec" id="recent" aria-labelledby="rv-h">
+    <div class="wrap"><div class="sec-head"><h2 id="rv-h"><svg class="i"><use href="#i-history"/></svg>Recently Viewed</h2><button class="link" type="button" data-clear-history>Clear History</button></div><ul class="recent" data-recent></ul><p class="empty" hidden data-recent-empty>Nothing here yet — resources you open will appear here.</p></div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <form class="news" novalidate data-news><label for="news-email"><b>Get weekly reading recommendations</b></label><div class="news-row"><input id="news-email" type="email" placeholder="you@school.edu" autocomplete="email"><button class="btn btn-blue" type="submit">Subscribe</button></div><p class="news-msg" role="status" data-news-msg></p></form>
+      <div><h3>Quick links</h3><a href="#results" data-chip-link="subject">Browse by Subject</a><a href="#results" data-chip-link="new">New Arrivals</a><a href="#results" data-chip-link="popular">Most Popular</a><a href="#results" data-chip-link="open">Open Access</a><a href="#top" data-soon="Resource requests">Request a Resource</a></div>
+      <div><h3>Help</h3><a href="#top" data-soon="The FAQ">FAQ</a><a href="mailto:librarian@openshelf.example">Contact Librarian</a><a href="#top" data-soon="The accessibility statement">Accessibility</a><a href="#top" data-soon="The institutional API">API for Institutions</a></div>
+    </div>
+    <p class="copy">© 2026 OpenShelf. Making knowledge accessible to everyone.</p>
+    <p class="note">Sample catalog for a demo page: titles, authors, institutions, journals and ratings are illustrative.</p>
+  </div>
+</footer>
+
+<dialog class="dlg" data-dlg aria-labelledby="dlg-title">
+  <button class="icon-btn dlg-x" type="button" aria-label="Close" data-close><svg class="i"><use href="#i-x"/></svg></button>
+  <div class="dlg-body" data-dlg-body></div>
+</dialog>
+<div class="toast" role="status" aria-live="polite" data-toast></div>
+
+<script src="assets/art.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
