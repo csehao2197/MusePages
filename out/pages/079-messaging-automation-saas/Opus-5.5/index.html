@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trigly — Turn Comments and DMs into Conversations, Automatically</title>
+<meta name="description" content="Keyword triggers and AI replies for Instagram comments and direct messages. Reply to every follower in seconds, target specific posts, and track what converts.">
+<meta name="theme-color" content="#17131F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></symbol>
+  <symbol id="i-msg" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/></symbol>
+  <symbol id="i-comment" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 3v4M17 5h4"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 16v-5M12 16V8M17 16v-8"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-flow" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><path d="M6.5 10v4a3 3 0 0 0 3 3H14"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.64l-19 6.5a.5.5 0 0 0-.02.94l7.93 3.18a2 2 0 0 1 1.11 1.11z"/><path d="m21.85 2.15-10.94 10.94"/></symbol>
+  <symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></symbol>
+  <symbol id="i-table" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></symbol>
+</svg>
+
+<a class="skip" href="#main">Skip to content</a>
+<header class="top" data-top>
+  <div class="wrap top-in">
+    <a class="logo" href="#/" aria-label="Trigly home"><span class="lm" aria-hidden="true"><svg class="i"><use href="#i-zap"/></svg></span>Trigly</a>
+    <nav class="nav" aria-label="Main" data-landnav><a href="#features">Features</a><a href="#playground">Try it</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a></nav>
+    <div class="top-cta" data-topcta></div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <div data-landing>
+    <section class="hero wrap" aria-labelledby="h1">
+      <div class="hero-copy">
+        <p class="tag"><span>New</span> Smart AI replies, under two sentences, always on-brand</p>
+        <h1 id="h1">Every comment becomes a <em>conversation.</em></h1>
+        <p class="lead">Trigly watches your Instagram comments and DMs for the keywords you choose, then replies instantly with your message or a short AI answer written in your voice.</p>
+        <div class="acts"><a class="btn primary" href="#/dashboard">Start free</a><a class="btn ghost" href="#playground">Try a trigger</a></div>
+        <p class="small">Free forever plan · No card needed · Works with Creator and Business accounts</p>
+      </div>
+      <div class="phone" aria-label="Animated example: a comment triggers an automatic DM" data-phone>
+        <div class="ph-post"><div class="ph-img" aria-hidden="true"><span>5 lighting setups<br>under $50</span></div>
+          <div class="ph-c" data-ph1><b>maya.shoots</b> GUIDE please!!</div>
+          <div class="ph-c reply" data-ph2><b>you</b> Sent it to your DMs, Maya!</div></div>
+        <div class="ph-dm" data-ph3><p class="ph-from">Direct message · automated</p><div class="bub">Hey Maya, here's the lighting guide: trigly.link/light5. Want my preset pack too?</div><div class="bub me">yes!!</div><div class="bub">Done. Check your inbox in a minute.</div></div>
+      </div>
+    </section>
+
+    <section class="strip" aria-label="Results"><div class="wrap strip-in"><div><b>3.2s</b><span>median reply time</span></div><div><b>11×</b><span>more DMs started from comments</span></div><div><b>0</b><span>followers left on read</span></div><div><b>24/7</b><span>while you sleep, shoot or edit</span></div></div></section>
+
+    <section class="wrap sec" id="features" aria-labelledby="f-h">
+      <p class="eyebrow">Features</p><h2 id="f-h">Set the rule once. Reply forever.</h2>
+      <div class="feats">
+        <article class="feat big"><svg class="i"><use href="#i-zap"/></svg><h3>Keyword triggers</h3><p>Pick words like <code>GUIDE</code>, <code>price</code> or <code>collab</code>. When a comment or DM contains one, the automation fires in seconds.</p></article>
+        <article class="feat"><svg class="i"><use href="#i-spark"/></svg><h3>Smart AI replies</h3><p>Give the AI a short brief and it answers with context from the conversation, kept under two sentences.</p></article>
+        <article class="feat"><svg class="i"><use href="#i-target"/></svg><h3>Post targeting</h3><p>Tie an automation to one Reel so “LINK” on your recipe video never sends the gear guide.</p></article>
+        <article class="feat"><svg class="i"><use href="#i-chart"/></svg><h3>Reply counters</h3><p>See how many comments and DMs each automation answered, and which keywords pull the most.</p></article>
+        <article class="feat"><svg class="i"><use href="#i-flow"/></svg><h3>Comment to DM</h3><p>Reply publicly, then continue privately. Turn a comment into a conversation and a lead.</p></article>
+      </div>
+    </section>
+
+    <section class="play-sec" id="playground" aria-labelledby="pg-h">
+      <div class="wrap play">
+        <div><p class="eyebrow light">Playground</p><h2 id="pg-h">Type a comment. Watch it trigger.</h2><p class="lead light">Three sample automations are live in this playground: <code>GUIDE</code> (static message), <code>price</code> and <code>collab</code> (Smart AI). Try your own wording.</p>
+          <ul class="pg-rules" data-pgrules></ul></div>
+        <div class="pg-box">
+          <form class="pg-form" data-pgform><div class="seg" role="radiogroup" aria-label="Where the message arrives"><label><input type="radio" name="src" value="comment" checked> Comment</label><label><input type="radio" name="src" value="dm"> DM</label></div>
+            <label class="sr" for="pgtext">Message</label><div class="pg-in"><input id="pgtext" maxlength="160" placeholder="e.g. how much is the preset pack?" autocomplete="off"><button class="btn primary sm" type="submit">Send</button></div></form>
+          <div class="pg-chips" data-pgchips></div>
+          <div class="pg-out" data-pgout aria-live="polite"><p class="muted">Results show here: which automation fired and the reply your follower gets.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap sec" id="pricing" aria-labelledby="p-h">
+      <p class="eyebrow">Pricing</p><h2 id="p-h">Start free. Add AI when you're ready.</h2>
+      <div class="plans">
+        <article class="plan"><h3>Free</h3><p class="price"><b>$0</b>/month</p><p class="muted">For creators getting their first automations live.</p><ul><li>Unlimited keyword automations</li><li>Static message replies</li><li>Comment and DM triggers</li><li>Post targeting</li><li>Reply counters</li></ul><a class="btn ghost full" href="#/dashboard">Start free</a></article>
+        <article class="plan pro"><span class="badge">Most popular</span><h3>Smart AI</h3><p class="price"><b>$99</b>/month</p><p class="muted">For businesses that want every reply to sound human.</p><ul><li>Everything in Free</li><li>AI replies with conversation context</li><li>Custom AI brief per automation</li><li>Advanced analytics</li><li>Priority webhook processing</li></ul><a class="btn primary full" href="#/dashboard/billing">Upgrade in the dashboard</a></article>
+      </div>
+    </section>
+
+    <section class="wrap sec" id="faq" aria-labelledby="q-h">
+      <p class="eyebrow">FAQ</p><h2 id="q-h">Questions, answered</h2>
+      <div class="faq">
+        <details><summary>Which accounts work with Trigly?</summary><p>Instagram Professional accounts (Creator or Business) linked to a Facebook Page. Personal accounts can't receive automated DMs through the official API.</p></details>
+        <details><summary>Will my replies look automated?</summary><p>Static replies say exactly what you write. Smart AI replies follow your brief, use the follower's message for context, and stay under two sentences.</p></details>
+        <details><summary>What happens if two automations match?</summary><p>The first active automation in your list wins, so put the specific ones (tied to a post) above general ones.</p></details>
+        <details><summary>Can I pause everything?</summary><p>Yes. Each automation has its own on/off switch, and disconnecting your account stops all replies immediately.</p></details>
+      </div>
+    </section>
+  </div>
+
+  <div data-app hidden></div>
+</main>
+
+<footer class="foot" data-foot>
+  <div class="wrap foot-in"><span class="logo sm"><span class="lm" aria-hidden="true"><svg class="i"><use href="#i-zap"/></svg></span>Trigly</span><p>Trigly is an independent product concept and is not affiliated with, endorsed or sponsored by Instagram or Meta. Names, accounts and numbers on this page are fictional demo data.</p></div>
+</footer>
+
+<dialog class="dlg" data-dlg aria-labelledby="dlg-h"><div class="dlg-in" data-dlgin></div></dialog>
+<div class="toasts" role="status" aria-live="polite" data-toasts></div>
+<script src="app.js"></script>
+</body>
+</html>
