@@ -947,13 +947,15 @@ export class PromptPageWorkflow
                 await WorkspaceFiles.saveJson(current.file, metadata);
                 for (let attempt = 1; attempt <= options.retries + 1; attempt++)
                 {
+                    let instruction = PromptPageWorkflow.instructions(prompt, model);
+                    console.log(`Attempt ${attempt} instruction:`, instruction);
                     options.progress("generate", `Attempt ${attempt}/${options.retries + 1}; executable=${command.executable}; cwd=${current.folder}; timeout=${options.timeoutMs} ms`);
                     try
                     {
                         await this.codex.run(
                         {
                             folder: current.folder,
-                            prompt: PromptPageWorkflow.instructions(prompt, model),
+                            prompt: instruction,
                             model,
                             command,
                             timeoutMs: options.timeoutMs,
@@ -1319,7 +1321,16 @@ export class PromptPageWorkflow
     {
         const number = prompt.id.match(/^(\d+)-/)?.[1];
         if (!number) throw Error(`Prompt filename must have a numeric prefix: ${prompt.id}`);
-        return `Implement render-prompt-pages.md prompt_scope=${number.padStart(3, "0")} model_name=${model.directory}`;
+        return [
+            "Implement the specification in render-prompt-pages.md.",
+            "",
+            "Arguments:",
+            `- prompt_scope: ${number.padStart(3, "0")}`,
+            `- model_name: ${model.directory}`,
+            "",
+            "Read the specification completely before making changes.",
+            "Apply all required code modifications and keep the implementation consistent with existing project conventions."
+        ].join("\n");
     }
 
     static async withPromptLock(workspace, id, action)

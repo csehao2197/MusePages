@@ -326,7 +326,15 @@ test("generates through a child process with stdin, real model selection, static
     assert.ok(invocation.args.includes('model_providers.musepages.wire_api="responses"'));
     assert.ok(invocation.args.includes('model_providers.musepages.env_key="MUSE_TEST_KEY"'));
     assert.ok(invocation.args.includes("workspace-write"));
-    assert.equal(invocation.input, "Implement render-prompt-pages.md prompt_scope=001 model_name=model-a");
+    assert.ok(invocation.args.includes("exec"));
+    assert.equal(invocation.input, `Implement the specification in render-prompt-pages.md.
+
+Arguments:
+- prompt_scope: 001
+- model_name: model-a
+
+Read the specification completely before making changes.
+Apply all required code modifications and keep the implementation consistent with existing project conventions.`);
     assert.ok(!invocation.args.some((arg) => arg.includes("unsafe") || arg.includes(secret)));
     await assert.rejects(readFile(path.join(invocation.home, "config.toml")),
     {
@@ -910,7 +918,14 @@ test("a successful retry is verified and a reported model mismatch is rejected",
     assert.equal(generated.summary.generated, 1, JSON.stringify(generated));
     assert.equal(await readFile(path.join(f.output, ".attempt-count"), "utf8"), "2");
     assert.equal((await readJson(path.join(f.output, ".invocation.json"))).input,
-        "Implement render-prompt-pages.md prompt_scope=001 model_name=model-a");
+        `Implement the specification in render-prompt-pages.md.
+
+Arguments:
+- prompt_scope: 001
+- model_name: model-a
+
+Read the specification completely before making changes.
+Apply all required code modifications and keep the implementation consistent with existing project conventions.`);
     const other = await fixture(t);
     await service(t, other.workspace);
     const mismatch = await PromptPageWorkflow.renderPromptPages(other.workspace, ["local"], other.options("wrong-model"));
@@ -1260,7 +1275,14 @@ test("prompt ranges generate sequentially in numeric order and only select inclu
         const invocation = await readJson(path.join(output, ".invocation.json"));
         assert.equal(invocation.cwd, output);
         assert.equal(invocation.input,
-            `Implement render-prompt-pages.md prompt_scope=${String(index + 1).padStart(3, "0")} model_name=model-a`);
+            `Implement the specification in render-prompt-pages.md.
+
+Arguments:
+- prompt_scope: ${String(index + 1).padStart(3, "0")}
+- model_name: model-a
+
+Read the specification completely before making changes.
+Apply all required code modifications and keep the implementation consistent with existing project conventions.`);
         assert.equal(await readFile(path.join(output, ".attempt-count"), "utf8"), "1");
         const generation = logs.findIndex((message) => message.startsWith(`[${id}/local] generate: Attempt 1/1;`));
         assert.ok(generation >= 0);
@@ -1352,7 +1374,14 @@ test("numeric selection generates only the matching prompt and rejects missing o
     assert.equal(invocation.args[invocation.args.indexOf("--model") + 1], modelId);
     assert.notEqual(modelId, "Qwen3.8");
     assert.equal((await readJson(path.join(output, "metadata.json"))).modelId, modelId);
-    assert.equal(invocation.input, "Implement render-prompt-pages.md prompt_scope=003 model_name=qwen3.8");
+    assert.equal(invocation.input, `Implement the specification in render-prompt-pages.md.
+
+Arguments:
+- prompt_scope: 003
+- model_name: qwen3.8
+
+Read the specification completely before making changes.
+Apply all required code modifications and keep the implementation consistent with existing project conventions.`);
     const before = await snapshot(f.workspace);
     await assert.rejects(PromptPageWorkflow.renderPromptPages(f.workspace, ["Qwen3.8"],
     {

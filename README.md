@@ -251,7 +251,7 @@ task\
 1. **校验模型配置**：读取指定服务的 URI、接口类型和实际模型 ID，验证连接与身份，不把服务配置名称当作真实模型。
 2. **读取需求与设计指引**：遍历原始需求 Markdown，结合 `src\workflows\AI Agent\DESIGN.md` 准备输入，不把 README、生成记录或已有代码当作原始 prompt，不擅自扩展需求。
 3. **判断是否需要生成**：对照元数据、实际代码和当前需求，按[覆盖检查规则](#生成覆盖检查与模型匹配)筛选；有效结果跳过，仅缺静态导出时保留源码，只补后续产物。
-4. **调用 Codex 生成源码**：对获准生成的缺失项，再次检查并加锁，以对应模型目录为子进程工作目录，非交互调用 `codex exec`。`-c` 覆盖服务配置，`--model` 选择实际模型；标准输入固定为 `Implement render-prompt-pages.md prompt_scope=<number> model_name=<folder_name>`，编号取原始文件名前缀并补足三位，目录名取模型配置的 `directory`，由 agent 读取编排指引、原始需求和设计指引。
+4. **调用 Codex 生成源码**：对获准生成的缺失项，再次检查并加锁，以对应模型目录为子进程工作目录，非交互调用 `codex exec`。`-c` 覆盖服务配置，`--model` 选择实际模型；标准输入以 `Implement the specification in render-prompt-pages.md.` 开头，在 `Arguments:` 中传入 `prompt_scope` 和 `model_name`，并要求完整阅读规范、完成修改及遵循项目约定。编号取原始文件名前缀并补足三位，目录名取模型配置的 `directory`。
 5. **准备并检查静态首页**：保留源码，将发布用首页及资源放入其 `out\` 子目录，按[静态产物边界](#静态产物边界)核验，不用 `.next` 或截图代替静态网页。
 6. **准备首页预览**：调用 `generate-preview.mjs` 补齐或刷新 `preview.png`，摘要一致的已有预览复用；失败保留源码和旧预览并报告待处理，不把缺少截图当作需要重新生成源码。
 7. **更新记录与发布选项**：静态检查及预览准备通过后更新元数据并登记发布选项；配置登记失败时保留代码，下次仅补登记，不重复生成。结束时报告生成、跳过、待确认、失败及剩余缺失项。
@@ -280,7 +280,7 @@ npm run generate -- local --prompts=006-travel-agency-homepage --retry
 
 每次 Codex 调用默认限时 30 分钟、不自动重试；`--timeout-ms=600000` 可调整超时，`--retries=1` 或 `2` 明确授权当次调用的有限重试。每个 prompt 共用生成锁，防止不同模型并发改写共享信息；中断或超时会终止当前子进程树，保留代码和隐藏的尝试日志，不自动删除其他进程留下的锁。
 
-脚本通过标准输入传递上述单行指令，以独立临时 `CODEX_HOME` 和显式 provider/model 配置调用 Codex；Windows 支持原生 `codex.exe` 或官方 npm 的 `codex.cmd` 包装器。代码核验通过后才写入 `generated: true`；HTML 源码缺少导出目录时，复制可公开文件到 `out\`，已有导出不覆盖。Next.js 缺少静态导出时保留源码并报告待准备，不自动构建、安装依赖或重新调用模型。
+脚本通过标准输入传递上述多行指令，以独立临时 `CODEX_HOME` 和显式 provider/model 配置调用 Codex；Windows 支持原生 `codex.exe` 或官方 npm 的 `codex.cmd` 包装器。代码核验通过后才写入 `generated: true`；HTML 源码缺少导出目录时，复制可公开文件到 `out\`，已有导出不覆盖。Next.js 缺少静态导出时保留源码并报告待准备，不自动构建、安装依赖或重新调用模型。
 
 静态核验检查首页、HTML/CSS 引用、子路径适配及非公开文件；静态检查及预览准备通过后设置模型元数据 `preview: true`、`validated: true`，但不代表已经完成人工交互、视觉或外部资源可用性验收。成功项的 `preview` 报告字段区分本次截图（`generated`）与复用（`preserved`），与元数据中的布尔状态不同。生成与登记不修改 `deployed` 为成功。新增结果保存需求与设计摘要到隐藏的 `.generation-input.sha256`；后续发现输入变化时报告待确认，不自动重写源码；历史结果没有摘要时，不推断其输入版本。
 
