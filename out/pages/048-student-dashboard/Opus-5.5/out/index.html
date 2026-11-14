@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard — BrightPath Student Portal</title>
+<meta name="description" content="BrightPath student dashboard: track courses, grades, assignments, schedule and announcements in one organized place.">
+<meta name="theme-color" content="#4F46E5">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M21.4 10.9a1 1 0 0 0 0-1.8L12.8 5.2a2 2 0 0 0-1.7 0L2.6 9.1a1 1 0 0 0 0 1.8l8.6 3.9a2 2 0 0 0 1.7 0zM22 10v6M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0M3.3 15.3A1 1 0 0 0 4 17h16a1 1 0 0 0 .7-1.7C19.4 14 18 12.6 18 8A6 6 0 0 0 6 8c0 4.6-1.4 6-2.7 7.3"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .7-1.5l7-6a2 2 0 0 1 2.6 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/></symbol>
+  <symbol id="i-clip" viewBox="0 0 24 24"><rect width="8" height="4" x="8" y="2" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2M12 11h4M12 16h4M8 11h.01M8 16h.01"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9M13 17V5M8 17v-3"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9l-.8-1.2A2 2 0 0 0 7.9 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/></symbol>
+  <symbol id="i-video" viewBox="0 0 24 24"><path d="m16 13 5.2 3.5a.5.5 0 0 0 .8-.4V7.9a.5.5 0 0 0-.8-.4L16 11"/><rect x="2" y="6" width="14" height="12" rx="2"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="m5 12 7-7 7 7M12 19V5"/></symbol>
+  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.4-.5-2-1-3-1.1-2.1-.2-4 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.2.4-2.3 1-3.3.4 1.3 1.4 2.4 2.5 2.8z"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 17v5M9 10.8a2 2 0 0 1-1.1 1.8l-1.8.9A2 2 0 0 0 5 15.2V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.8a2 2 0 0 0-1.1-1.8l-1.8-.9a2 2 0 0 1-1.1-1.8V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></symbol>
+  <symbol id="i-mega" viewBox="0 0 24 24"><path d="m3 11 18-5v12L3 14v-3zM11.6 16.8a3 3 0 1 1-5.8-1.6"/></symbol>
+  <symbol id="i-note" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v4a2 2 0 0 0 2 2h4M10 9H8M16 13H8M16 17H8"/></symbol>
+  <symbol id="i-party" viewBox="0 0 24 24"><path d="M5.8 11.3 2 22l10.7-3.8M4 3h.01M22 8h.01M15 2h.01M22 20h.01M22 2l-2.2.7a2.9 2.9 0 0 0-1.9 3.3c.2.9-.5 1.9-1.4 1.9H16M11 2l.3 1.3a3 3 0 0 1-2 3.5L8 7"/><path d="M11 13c1.9 1.9 2.8 4.1 2 4.9-.8.8-3-.1-4.9-2-1.9-1.9-2.8-4.1-2-4.9.8-.8 3 .1 4.9 2z"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+  <symbol id="i-brief" viewBox="0 0 24 24"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></symbol>
+  <symbol id="i-headset" viewBox="0 0 24 24"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></symbol>
+  <symbol id="i-chev-l" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-chev-r" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-chev-d" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></symbol>
+  <symbol id="i-panel" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><path d="M12.2 2h-.4a2 2 0 0 0-2 2v.2a2 2 0 0 1-1 1.7l-.4.3a2 2 0 0 1-2 0l-.2-.1a2 2 0 0 0-2.7.7l-.2.4a2 2 0 0 0 .7 2.7l.2.1a2 2 0 0 1 1 1.7v.5a2 2 0 0 1-1 1.7l-.2.1a2 2 0 0 0-.7 2.7l.2.4a2 2 0 0 0 2.7.7l.2-.1a2 2 0 0 1 2 0l.4.3a2 2 0 0 1 1 1.7v.2a2 2 0 0 0 2 2h.4a2 2 0 0 0 2-2v-.2a2 2 0 0 1 1-1.7l.4-.3a2 2 0 0 1 2 0l.2.1a2 2 0 0 0 2.7-.7l.2-.4a2 2 0 0 0-.7-2.7l-.2-.1a2 2 0 0 1-1-1.7v-.5a2 2 0 0 1 1-1.7l.2-.1a2 2 0 0 0 .7-2.7l-.2-.4a2 2 0 0 0-2.7-.7l-.2.1a2 2 0 0 1-2 0l-.4-.3a2 2 0 0 1-1-1.7V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-out" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+</svg>
+
+<a class="skip" href="#main">Skip to dashboard</a>
+
+<header class="top">
+  <button class="icon-btn collapse" type="button" aria-label="Collapse sidebar" aria-pressed="false" data-collapse><svg class="i"><use href="#i-panel"/></svg></button>
+  <a class="logo" href="#main" aria-label="BrightPath dashboard"><span class="logo-mark"><svg class="i"><use href="#i-cap"/></svg></span><span class="logo-t">BrightPath</span></a>
+  <div class="search" data-search>
+    <svg class="i"><use href="#i-search"/></svg>
+    <input type="search" placeholder="Search courses, assignments, people..." aria-label="Search courses, assignments, people" autocomplete="off" data-search-in aria-controls="search-res" aria-expanded="false">
+    <div class="pop search-res" id="search-res" role="listbox" hidden data-search-res></div>
+  </div>
+  <div class="top-r">
+    <div class="pop-wrap">
+      <button class="icon-btn" type="button" aria-label="Notifications, 3 unread" aria-expanded="false" data-pop="notif"><svg class="i"><use href="#i-bell"/></svg><span class="dot-badge" data-notif-count>3</span></button>
+      <div class="pop menu notif" hidden data-pop-panel="notif"><div class="pop-h"><b>Notifications</b><button class="link sm" type="button" data-notif-read>Mark all read</button></div><ul data-notif-list></ul></div>
+    </div>
+    <div class="pop-wrap">
+      <button class="icon-btn" type="button" aria-label="Messages, 1 unread" aria-expanded="false" data-pop="msg"><svg class="i"><use href="#i-chat"/></svg><span class="dot-badge" data-msg-count>1</span></button>
+      <div class="pop menu msgs" hidden data-pop-panel="msg"><div class="pop-h"><b>Messages</b></div><ul data-msg-list></ul></div>
+    </div>
+    <div class="pop-wrap">
+      <button class="avatar-btn" type="button" aria-label="Account menu for Alex Thompson" aria-expanded="false" data-pop="me"><span class="av av-sm" data-me-av></span><svg class="i"><use href="#i-chev-d"/></svg></button>
+      <div class="pop menu me" hidden data-pop-panel="me">
+        <div class="me-h"><b>Alex Thompson</b><small>alex.thompson@student.brightpath.example</small></div>
+        <button type="button" data-soon="My Profile"><svg class="i"><use href="#i-user"/></svg>My Profile</button>
+        <button type="button" data-soon="Settings"><svg class="i"><use href="#i-gear"/></svg>Settings</button>
+        <button type="button" data-soon="Help Center"><svg class="i"><use href="#i-help"/></svg>Help Center</button>
+        <button type="button" data-signout><svg class="i"><use href="#i-out"/></svg>Sign Out</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="side" aria-label="Main navigation" data-side>
+    <div class="me-card"><span class="av av-lg" data-me-av></span><div><b>Alex Thompson</b><small>Computer Science, Year 2</small></div></div>
+    <nav class="side-nav">
+      <a href="#main" class="on" aria-current="page" data-nav="dash"><svg class="i"><use href="#i-home"/></svg><span>Dashboard</span></a>
+      <a href="#courses" data-nav="courses"><svg class="i"><use href="#i-book"/></svg><span>My Courses</span></a>
+      <a href="#due" data-nav="due"><svg class="i"><use href="#i-clip"/></svg><span>Assignments</span><em data-due-badge>4</em></a>
+      <a href="#grades" data-nav="grades"><svg class="i"><use href="#i-chart"/></svg><span>Grades</span></a>
+      <a href="#schedule" data-nav="schedule"><svg class="i"><use href="#i-cal"/></svg><span>Schedule</span></a>
+      <a href="#messages" data-open-msg><svg class="i"><use href="#i-chat"/></svg><span>Messages</span></a>
+      <a href="#groups" data-soon="Study Groups"><svg class="i"><use href="#i-users"/></svg><span>Study Groups</span></a>
+      <a href="#links" data-nav="links"><svg class="i"><use href="#i-folder"/></svg><span>Resources</span></a>
+    </nav>
+    <div class="help"><svg class="i"><use href="#i-help"/></svg><b>Need Help?</b><p>Our support team replies within an hour on weekdays.</p><button class="btn btn-soft" type="button" data-support>Contact Support</button></div>
+  </aside>
+
+  <main class="main" id="main">
+    <section class="welcome" aria-labelledby="hi">
+      <div class="w-top">
+        <div><h1 id="hi" data-greet>Good morning, Alex</h1><p data-summary>You have 2 assignments due this week and 1 upcoming quiz.</p></div>
+        <span class="sem"><svg class="i"><use href="#i-cal"/></svg>Spring 2026</span>
+      </div>
+      <div class="qa" role="group" aria-label="Quick actions">
+        <button class="btn btn-primary" type="button" data-join><svg class="i"><use href="#i-video"/></svg>Join Next Class <span class="cd" data-join-cd>in 45 min</span></button>
+        <button class="btn btn-outline" type="button" data-submit><svg class="i"><use href="#i-upload"/></svg>Submit Assignment</button>
+        <a class="btn btn-outline" href="#schedule"><svg class="i"><use href="#i-cal"/></svg>View Calendar</a>
+      </div>
+    </section>
+
+    <section class="stats" aria-label="Progress overview">
+      <article class="stat" style="--a:#10B981"><p class="s-l">GPA</p><div class="s-row"><b>3.72</b><span class="up"><svg class="i"><use href="#i-up"/></svg>+0.08</span></div><small>from last semester</small><svg class="spark" viewBox="0 0 120 32" aria-hidden="true" preserveAspectRatio="none"><path d="M0 26 20 22 40 24 60 16 80 18 100 10 120 6" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M0 26 20 22 40 24 60 16 80 18 100 10 120 6V32H0z" fill="#10B981" opacity=".12"/></svg></article>
+      <article class="stat" style="--a:#4F46E5"><p class="s-l">Courses Active</p><div class="s-row"><b>5 <span>of 5</span></b><svg class="ring" viewBox="0 0 44 44" role="img" aria-label="100% of courses active"><circle cx="22" cy="22" r="18" fill="none" stroke="#E0E7FF" stroke-width="5"/><circle cx="22" cy="22" r="18" fill="none" stroke="#4F46E5" stroke-width="5" stroke-dasharray="113.1" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 22 22)"/><text x="22" y="26" text-anchor="middle" font-size="10" font-weight="700" fill="#4F46E5">100%</text></svg></div><small>All on track</small></article>
+      <article class="stat" style="--a:#F59E0B"><p class="s-l">Assignments Due</p><div class="s-row"><b data-due-week>2 <span>this week</span></b><span class="amber" aria-hidden="true"></span></div><small data-due-next>Next: ML Problem Set 4</small></article>
+      <article class="stat" style="--a:#EF4444"><p class="s-l">Streak</p><div class="s-row"><b>14 <span>days</span></b><svg class="i flame"><use href="#i-flame"/></svg></div><small>Keep it going!</small></article>
+    </section>
+
+    <div class="cols">
+      <div class="col-main">
+        <section class="panel" id="courses" aria-labelledby="c-h">
+          <div class="p-h"><h2 id="c-h">My Courses</h2><button class="link" type="button" data-all-courses>View All</button></div>
+          <div class="courses" data-courses></div>
+        </section>
+
+        <section class="panel" id="schedule" aria-labelledby="s-h">
+          <div class="p-h"><h2 id="s-h">This Week</h2><div class="wk-nav"><button class="icon-btn sm" type="button" aria-label="Previous day" data-day-prev><svg class="i"><use href="#i-chev-l"/></svg></button><span data-day-label></span><button class="icon-btn sm" type="button" aria-label="Next day" data-day-next><svg class="i"><use href="#i-chev-r"/></svg></button></div><button class="btn btn-outline btn-sm" type="button" data-ics><svg class="i"><use href="#i-download"/></svg>Sync to Google Calendar</button></div>
+          <div class="week" data-week></div>
+          <div class="ev-detail" data-ev-detail aria-live="polite"></div>
+        </section>
+
+        <section class="panel" id="grades" aria-labelledby="g-h">
+          <div class="p-h"><h2 id="g-h">Recent Grades</h2><button class="link" type="button" data-all-grades>View All Grades</button></div>
+          <div class="grades" role="table" aria-label="Recent grades" data-grades></div>
+        </section>
+
+        <section class="panel" aria-labelledby="a-h">
+          <div class="p-h"><h2 id="a-h">Your Study Activity</h2><span class="muted sm">Last 12 weeks</span></div>
+          <div class="heat-wrap" tabindex="0" aria-label="Study activity heatmap, scrollable"><div class="heat" data-heat></div><div class="tip" data-tip hidden></div></div>
+          <div class="legend"><span>Less</span><i style="background:#F3F4F6"></i><i style="background:#E0E7FF"></i><i style="background:#A5B4FC"></i><i style="background:#818CF8"></i><i style="background:#4F46E5"></i><span>More</span></div>
+          <p class="act-sum" data-act-sum></p>
+          <div class="bars" data-bars></div>
+        </section>
+      </div>
+
+      <div class="col-side">
+        <section class="panel" id="due" aria-labelledby="d-h">
+          <div class="p-h"><h2 id="d-h">Due Soon</h2></div>
+          <ul class="due" data-due></ul>
+        </section>
+
+        <section class="panel" aria-labelledby="n-h">
+          <div class="p-h"><h2 id="n-h">Announcements</h2><button class="link sm" type="button" data-ann-read>Mark all as read</button></div>
+          <ul class="ann" data-ann></ul>
+        </section>
+
+        <section class="panel" id="links" aria-labelledby="l-h">
+          <div class="p-h"><h2 id="l-h">Quick Links</h2></div>
+          <div class="ql">
+            <a href="#links" data-soon="Library search"><svg class="i"><use href="#i-ext"/></svg><b>Library</b><small>Search books and journals</small></a>
+            <a href="#links" data-soon="Writing Center booking"><svg class="i"><use href="#i-cal"/></svg><b>Writing Center</b><small>Book a tutoring session</small></a>
+            <a href="#links" data-soon="Career Services"><svg class="i"><use href="#i-brief"/></svg><b>Career Services</b><small>Resume review, job board</small></a>
+            <a href="#links" data-support><svg class="i"><use href="#i-headset"/></svg><b>IT Help Desk</b><small>Report tech issues</small></a>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <p>BrightPath Learning Platform — Spring 2026</p>
+      <nav aria-label="Legal"><a href="#main" data-soon="Privacy Policy">Privacy Policy</a><a href="#main" data-soon="Terms">Terms</a><a href="#main" data-soon="Accessibility statement">Accessibility</a><a href="#main" data-support>Contact Support</a></nav>
+      <p class="ver">v3.2.1 · <span class="pw"><svg class="i"><use href="#i-cap"/></svg>Powered by BrightPath</span></p>
+      <p class="demo">Demo dashboard: student, courses, grades and messages are sample data stored only in this page.</p>
+    </footer>
+  </main>
+</div>
+
+<nav class="tabbar" aria-label="Mobile navigation">
+  <a href="#main" class="on" data-tab="dash"><svg class="i"><use href="#i-home"/></svg>Dashboard</a>
+  <a href="#courses" data-tab="courses"><svg class="i"><use href="#i-book"/></svg>Courses</a>
+  <a href="#due" data-tab="due"><svg class="i"><use href="#i-clip"/></svg>Assignments</a>
+  <a href="#schedule" data-tab="schedule"><svg class="i"><use href="#i-cal"/></svg>Schedule</a>
+  <button type="button" data-more aria-expanded="false"><svg class="i"><use href="#i-more"/></svg>More</button>
+</nav>
+<div class="sheet" hidden data-sheet>
+  <div class="sheet-in" role="dialog" aria-label="More">
+    <a href="#grades" data-sheet-link><svg class="i"><use href="#i-chart"/></svg>Grades</a>
+    <a href="#messages" data-open-msg data-sheet-link><svg class="i"><use href="#i-chat"/></svg>Messages</a>
+    <a href="#groups" data-soon="Study Groups" data-sheet-link><svg class="i"><use href="#i-users"/></svg>Study Groups</a>
+    <a href="#links" data-sheet-link><svg class="i"><use href="#i-folder"/></svg>Resources</a>
+    <button type="button" data-support data-sheet-link><svg class="i"><use href="#i-help"/></svg>Need Help?</button>
+  </div>
+</div>
+
+<dialog class="dlg" data-dlg aria-label="Details">
+  <button class="icon-btn dlg-x" type="button" aria-label="Close" data-close><svg class="i"><use href="#i-close"/></svg></button>
+  <div class="dlg-body" data-dlg-body></div>
+</dialog>
+<div class="toast" role="status" aria-live="polite" data-toast></div>
+<script src="app.js"></script>
+</body>
+</html>

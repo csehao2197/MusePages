@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CollabCanvas — Multiplayer Design Canvas with an AI Co-Designer</title>
+<meta name="description" content="Draw, move, resize and rotate shapes and text together in real time, with multiplayer cursors, layers, alignment tools, version history and an AI assistant that edits the canvas from plain language.">
+<meta name="theme-color" content="#18181B">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="t-select" viewBox="0 0 24 24"><path d="M5 3l14 7-6 2-2 6z"/></symbol>
+  <symbol id="t-hand" viewBox="0 0 24 24"><path d="M18 11V6a2 2 0 0 0-4 0v5M14 10V4a2 2 0 0 0-4 0v6M10 10.5V6a2 2 0 0 0-4 0v8M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.9-6-2.3l-3.6-3.6a2 2 0 0 1 2.8-2.8L7 15"/></symbol>
+  <symbol id="t-rect" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="1.5"/></symbol>
+  <symbol id="t-ellipse" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></symbol>
+  <symbol id="t-line" viewBox="0 0 24 24"><path d="M5 19 19 5"/></symbol>
+  <symbol id="t-text" viewBox="0 0 24 24"><path d="M5 6V4h14v2M12 4v16M9 20h6"/></symbol>
+  <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></symbol>
+  <symbol id="i-redo" viewBox="0 0 24 24"><path d="m15 14 5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/></symbol>
+  <symbol id="i-zin" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M11 8v6M8 11h6"/></symbol>
+  <symbol id="i-zout" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M8 11h6"/></symbol>
+  <symbol id="i-fit" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-unlock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.8-1"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect width="13" height="13" x="9" y="9" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 3v4M17 5h4"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+  <symbol id="a-left" viewBox="0 0 24 24"><path d="M4 3v18M8 7h10v4H8zM8 14h6v4H8z"/></symbol>
+  <symbol id="a-hcenter" viewBox="0 0 24 24"><path d="M12 3v18M6 7h12v4H6zM8 14h8v4H8z"/></symbol>
+  <symbol id="a-right" viewBox="0 0 24 24"><path d="M20 3v18M6 7h10v4H6zM10 14h6v4h-6z"/></symbol>
+  <symbol id="a-top" viewBox="0 0 24 24"><path d="M3 4h18M7 8v10h4V8zM14 8v6h4V8z"/></symbol>
+  <symbol id="a-vcenter" viewBox="0 0 24 24"><path d="M3 12h18M7 6v12h4V6zM14 8v8h4V8z"/></symbol>
+  <symbol id="a-bottom" viewBox="0 0 24 24"><path d="M3 20h18M7 6v10h4V6zM14 10v6h4v-6z"/></symbol>
+  <symbol id="a-dh" viewBox="0 0 24 24"><path d="M4 3v18M20 3v18M9 8h6v8H9z"/></symbol>
+  <symbol id="a-dv" viewBox="0 0 24 24"><path d="M3 4h18M3 20h18M8 9h8v6H8z"/></symbol>
+</svg>
+
+<a class="skip" href="#canvas">Skip to canvas</a>
+<header class="top">
+  <a class="logo" href="#" aria-label="CollabCanvas"><span class="lm" aria-hidden="true"></span><span class="hide-s">CollabCanvas</span></a>
+  <label class="title"><span class="sr">Document title</span><input value="Untitled design" maxlength="60" data-title></label>
+  <div class="presence" aria-label="People in this document" data-presence></div>
+  <button class="btn-o sm hide-s" type="button" data-newtab title="Open this document in a new tab to collaborate"><svg class="i"><use href="#i-ext"/></svg>Collaborate in new tab</button>
+  <div class="zoom" role="group" aria-label="Zoom"><button class="icon-btn" type="button" aria-label="Zoom out" data-zoom="-1"><svg class="i"><use href="#i-zout"/></svg></button><button class="zv mono" type="button" aria-label="Reset zoom to 100%" data-zoom="0">100%</button><button class="icon-btn" type="button" aria-label="Zoom in" data-zoom="1"><svg class="i"><use href="#i-zin"/></svg></button><button class="icon-btn" type="button" aria-label="Zoom to fit" data-fit><svg class="i"><use href="#i-fit"/></svg></button></div>
+</header>
+
+<div class="app">
+  <nav class="tools" aria-label="Tools" data-tools>
+    <button type="button" data-tool="select" aria-pressed="true" title="Select (V)" aria-label="Select tool (V)"><svg class="i"><use href="#t-select"/></svg></button>
+    <button type="button" data-tool="hand" aria-pressed="false" title="Hand (H, or hold Space)" aria-label="Hand tool (H)"><svg class="i"><use href="#t-hand"/></svg></button>
+    <button type="button" data-tool="rect" aria-pressed="false" title="Rectangle (R)" aria-label="Rectangle tool (R)"><svg class="i"><use href="#t-rect"/></svg></button>
+    <button type="button" data-tool="ellipse" aria-pressed="false" title="Ellipse (O)" aria-label="Ellipse tool (O)"><svg class="i"><use href="#t-ellipse"/></svg></button>
+    <button type="button" data-tool="line" aria-pressed="false" title="Line (L)" aria-label="Line tool (L)"><svg class="i"><use href="#t-line"/></svg></button>
+    <button type="button" data-tool="text" aria-pressed="false" title="Text (T)" aria-label="Text tool (T)"><svg class="i"><use href="#t-text"/></svg></button>
+    <span class="sep"></span>
+    <button type="button" data-undo title="Undo (Ctrl+Z)" aria-label="Undo"><svg class="i"><use href="#i-undo"/></svg></button>
+    <button type="button" data-redo title="Redo (Ctrl+Shift+Z)" aria-label="Redo"><svg class="i"><use href="#i-redo"/></svg></button>
+  </nav>
+
+  <main class="stage" id="canvas" tabindex="0" aria-label="Design canvas. Use tool shortcuts V, R, O, L, T. Arrow keys nudge the selection." data-stage>
+    <svg class="world" data-svg aria-hidden="true"><defs><pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#D4D4D8"/></pattern></defs><rect class="bg" width="100%" height="100%" fill="url(#dots)" data-bgrect/><g data-world></g><g data-over></g></svg>
+    <div class="cursors" data-cursors aria-hidden="true"></div>
+    <p class="hint" data-hint>Pick a tool and drag to draw. Hold Space or use the hand tool to pan; Ctrl + scroll to zoom.</p>
+  </main>
+
+  <aside class="side" aria-label="Panels">
+    <div class="ptabs" role="tablist" aria-label="Panels" data-ptabs>
+      <button type="button" role="tab" aria-selected="true" aria-controls="pp" id="pt-props" data-pt="props"><svg class="i"><use href="#i-sliders"/></svg><span>Design</span></button>
+      <button type="button" role="tab" aria-selected="false" aria-controls="pp" id="pt-layers" data-pt="layers"><svg class="i"><use href="#i-layers"/></svg><span>Layers</span></button>
+      <button type="button" role="tab" aria-selected="false" aria-controls="pp" id="pt-ai" data-pt="ai"><svg class="i"><use href="#i-spark"/></svg><span>AI</span></button>
+      <button type="button" role="tab" aria-selected="false" aria-controls="pp" id="pt-history" data-pt="history"><svg class="i"><use href="#i-clock"/></svg><span>History</span></button>
+    </div>
+    <div class="panel" id="pp" role="tabpanel" aria-labelledby="pt-props" data-panel></div>
+  </aside>
+</div>
+<div class="toasts" role="status" aria-live="polite" data-toasts></div>
+<script src="app.js"></script>
+</body>
+</html>

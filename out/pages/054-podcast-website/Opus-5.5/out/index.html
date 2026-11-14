@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ship It — The Podcast About Building and Shipping Tech Products</title>
+<meta name="description" content="Stories from the builders shaping the future of tech. A weekly podcast hosted by Maya Park and Diego Santos.">
+<meta name="theme-color" content="#0F172A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12.4-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6" y="4" width="4.5" height="16" rx="1.2"/><rect x="13.5" y="4" width="4.5" height="16" rx="1.2"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24"><path d="M3 6h18M7 12h10M10 18h4"/></symbol>
+  <symbol id="i-vol" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4zM15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></symbol>
+  <symbol id="i-mute" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4zM22 9l-6 6M16 9l6 6"/></symbol>
+  <symbol id="i-notes" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v4a2 2 0 0 0 2 2h4M16 13H8M16 17H8M10 9H8"/></symbol>
+  <symbol id="i-text" viewBox="0 0 24 24"><path d="M17 6.1H3M21 12.1H3M15.1 18H3"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M11.5 2.3a.5.5 0 0 1 1 0l2.3 4.7a2 2 0 0 0 1.6 1.2l5.2.7a.5.5 0 0 1 .3.9l-3.8 3.7a2 2 0 0 0-.6 1.9l.9 5.1a.5.5 0 0 1-.8.6l-4.6-2.4a2 2 0 0 0-2 0L6.4 21a.5.5 0 0 1-.8-.6l.9-5.1a2 2 0 0 0-.6-1.9L2.2 9.8a.5.5 0 0 1 .3-.9l5.1-.7a2 2 0 0 0 1.6-1.2z"/></symbol>
+  <symbol id="i-headphones" viewBox="0 0 24 24"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="p-apple" viewBox="0 0 24 24"><circle cx="12" cy="11" r="3"/><path d="M12 14v7M7.5 16.5a7 7 0 1 1 9 0M5 19a10 10 0 1 1 14 0"/></symbol>
+  <symbol id="p-spotify" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M7 9.5c3.5-1 7.5-.6 10.5 1M7.5 12.8c3-.8 6-.4 8.5 1M8 16c2.4-.6 4.6-.3 6.5.8"/></symbol>
+  <symbol id="p-yt" viewBox="0 0 24 24"><path d="M2.5 17a24 24 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.6 49.6 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24 24 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.6 49.6 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></symbol>
+  <symbol id="p-google" viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M7 7v3M7 14v3M17 7v3M17 14v3M3 11v2M21 11v2M12 9v6"/></symbol>
+  <symbol id="p-rss" viewBox="0 0 24 24"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></symbol>
+  <symbol id="s-x" viewBox="0 0 24 24"><path d="M4 4l11.7 16H20L8.3 4zM4 20l6.8-6.8M13.2 10.8 20 4"/></symbol>
+  <symbol id="s-in" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></symbol>
+  <symbol id="s-ig" viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.4A4 4 0 1 1 12.6 8 4 4 0 0 1 16 11.4zM17.5 6.5h.01"/></symbol>
+</svg>
+
+<a class="skip" href="#episodes">Skip to episodes</a>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="#top"><span class="b-mark" data-mini-cover></span>Ship It</a>
+    <nav aria-label="Sections"><a href="#episodes">Episodes</a><a href="#guests">Guests</a><a href="#hosts">Hosts</a><a href="#newsletter">Newsletter</a><a href="#sponsors">Sponsor</a></nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-in">
+      <div class="cover" data-cover></div>
+      <div class="hero-copy">
+        <p class="kicker">Weekly tech podcast</p>
+        <h1>Ship It</h1>
+        <p class="tag">Stories from the builders shaping the future of tech</p>
+        <p class="hosts">Hosted by <a href="#hosts">Maya Park</a> &amp; <a href="#hosts">Diego Santos</a></p>
+        <p class="rating"><span class="stars" aria-hidden="true"><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg></span><span><b>4.9</b> · 12K+ ratings</span></p>
+        <div class="plats" data-plats></div>
+        <p class="count"><svg class="i"><use href="#i-headphones"/></svg>187 episodes · New episodes every Tuesday</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="latest-h">
+    <div class="wrap">
+      <h2 id="latest-h" class="sh">Latest episode</h2>
+      <article class="feat" id="ep-187">
+        <div class="f-art" data-ep-art="187"></div>
+        <div class="f-body">
+          <p class="ep-meta">EP 187 · March 4, 2026</p>
+          <h3>How Figma Rebuilt Their Multiplayer Engine</h3>
+          <p class="guest">with Dylan Field, CEO of Figma</p>
+          <p class="desc">Dylan shares the technical decisions behind Figma's real-time collaboration system, the challenges of scaling WebSocket connections to millions of users, and why they rewrote their rendering engine in Rust.</p>
+          <div class="player" data-player>
+            <button class="pp" type="button" aria-label="Play episode 187" data-pp><svg class="i"><use href="#i-play"/></svg></button>
+            <div class="track">
+              <input type="range" min="0" max="3480" value="0" step="1" aria-label="Seek" data-seek>
+              <div class="times"><span data-cur>0:00</span><span data-dur>58:00</span></div>
+            </div>
+            <button class="speed" type="button" aria-label="Playback speed 1x" data-speed>1x</button>
+            <div class="vol"><button class="icon-btn sm" type="button" aria-label="Mute" data-mute><svg class="i"><use href="#i-vol"/></svg></button><input type="range" min="0" max="100" value="80" aria-label="Volume" data-vol></div>
+          </div>
+          <p class="demo-note">Demo player — a timed preview without an audio file.</p>
+          <div class="actions"><button class="chip" type="button" data-notes="187"><svg class="i"><use href="#i-notes"/></svg>Show Notes</button><button class="chip" type="button" data-transcript="187"><svg class="i"><use href="#i-text"/></svg>Transcript</button><button class="chip" type="button" data-share="187"><svg class="i"><use href="#i-share"/></svg>Share</button><span class="dur"><svg class="i"><use href="#i-clock"/></svg>58 min</span></div>
+          <ul class="tags"><li>#design-tools</li><li>#engineering</li><li>#scaling</li></ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="sec" id="episodes" aria-labelledby="ep-h">
+    <div class="wrap">
+      <div class="list-head">
+        <h2 id="ep-h" class="sh">All episodes</h2>
+        <label class="search"><svg class="i"><use href="#i-search"/></svg><span class="sr">Search episodes</span><input type="search" placeholder="Search 187 episodes..." data-q><button class="icon-btn sm" type="button" aria-label="Sort and filter options" aria-expanded="false" data-sort-toggle><svg class="i"><use href="#i-filter"/></svg></button></label>
+      </div>
+      <div class="sort" hidden data-sort><label>Sort by <select data-sort-sel><option value="new">Newest first</option><option value="old">Oldest first</option><option value="long">Longest first</option><option value="short">Shortest first</option></select></label></div>
+      <div class="tabs" role="tablist" aria-label="Filter by topic" data-tabs><button type="button" role="tab" aria-selected="true" data-tab="All">All</button><button type="button" role="tab" aria-selected="false" data-tab="Founders">Founders</button><button type="button" role="tab" aria-selected="false" data-tab="Engineering">Engineering</button><button type="button" role="tab" aria-selected="false" data-tab="Design">Design</button><button type="button" role="tab" aria-selected="false" data-tab="Growth">Growth</button><button type="button" role="tab" aria-selected="false" data-tab="AI">AI</button></div>
+      <p class="result" data-result aria-live="polite"></p>
+      <ol class="eps" data-eps></ol>
+      <p class="center"><button class="btn-o" type="button" data-more>Load More</button></p>
+    </div>
+  </section>
+
+  <section class="sec alt" aria-labelledby="pop-h">
+    <div class="wrap">
+      <h2 id="pop-h" class="sh">Most Popular Episodes</h2>
+      <div class="pop" data-pop tabindex="0" aria-label="Most popular episodes"></div>
+    </div>
+  </section>
+
+  <section class="sec" id="guests" aria-labelledby="gu-h">
+    <div class="wrap">
+      <div class="row-h"><h2 id="gu-h" class="sh">Notable Guests</h2><button class="link" type="button" data-all-guests>View All Guests <svg class="i"><use href="#i-arrow"/></svg></button></div>
+      <div class="guests" data-guests tabindex="0" aria-label="Notable guests"></div>
+    </div>
+  </section>
+
+  <section class="sec alt" id="hosts" aria-labelledby="ho-h">
+    <div class="wrap">
+      <h2 id="ho-h" class="sh">About the Hosts</h2>
+      <div class="hostgrid">
+        <article class="host"><div class="h-photo" data-host="maya"></div><div><h3>Maya Park</h3><p>Former engineering lead at Stripe. Maya brings deep technical expertise and a passion for developer tools.</p><p class="soc"><a href="https://x.com/" target="_blank" rel="noopener" aria-label="Maya Park on Twitter"><svg class="i"><use href="#s-x"/></svg></a><a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="Maya Park on LinkedIn"><svg class="i"><use href="#s-in"/></svg></a></p></div></article>
+        <article class="host"><div class="h-photo" data-host="diego"></div><div><h3>Diego Santos</h3><p>Serial founder and YC alum. Diego focuses on the business and growth side of building products.</p><p class="soc"><a href="https://x.com/" target="_blank" rel="noopener" aria-label="Diego Santos on Twitter"><svg class="i"><use href="#s-x"/></svg></a><a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="Diego Santos on LinkedIn"><svg class="i"><use href="#s-in"/></svg></a></p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="newsletter" aria-labelledby="nl-h">
+    <div class="wrap">
+      <div class="nl">
+        <div><h2 id="nl-h">Get Show Notes in Your Inbox</h2><p>Weekly email with episode summaries, links mentioned, and bonus content.</p><p class="proof">Join 18,000+ subscribers</p></div>
+        <form data-sub novalidate><div class="nl-row"><label class="sr" for="nl-e">Email address</label><input id="nl-e" name="email" type="email" placeholder="you@company.com" autocomplete="email"><button class="btn-a" type="submit">Subscribe</button></div><p class="nl-msg" data-sub-msg role="status">No spam. Unsubscribe anytime.</p></form>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="sponsors" aria-labelledby="sp-h">
+    <div class="wrap">
+      <h2 id="sp-h" class="sh">Brought to You By</h2>
+      <div class="sponsors">
+        <article class="spon"><span class="wm wm1">▲ Vercel</span><p>Frontend cloud for shipping web apps.</p><button class="link" type="button" data-sponsor="Vercel">Learn more <svg class="i"><use href="#i-arrow"/></svg></button></article>
+        <article class="spon"><span class="wm wm2">LinearB</span><p>Engineering metrics and workflow automation.</p><button class="link" type="button" data-sponsor="LinearB">Learn more <svg class="i"><use href="#i-arrow"/></svg></button></article>
+        <article class="spon"><span class="wm wm3">Datadog</span><p>Monitoring and observability for cloud apps.</p><button class="link" type="button" data-sponsor="Datadog">Learn more <svg class="i"><use href="#i-arrow"/></svg></button></article>
+      </div>
+      <p class="kit">Interested in sponsoring? <button class="link" type="button" data-kit>Get our media kit <svg class="i"><use href="#i-arrow"/></svg></button></p>
+    </div>
+  </section>
+
+  <section class="stats" aria-label="Show stats">
+    <div class="wrap">
+      <ul class="metrics"><li><b>2M+</b>Total Downloads</li><li><b>187</b>Episodes</li><li><b>120+</b>Guests</li><li><b>18K</b>Newsletter Subs</li></ul>
+      <p class="ratings"><span>Apple Podcasts <b>4.9★</b></span><span>Spotify <b>4.8★</b></span></p>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="f-grid">
+      <nav aria-label="Listen"><h3>Listen</h3><a href="#top" data-plat-link="Apple Podcasts">Apple Podcasts</a><a href="#top" data-plat-link="Spotify">Spotify</a><a href="#top" data-plat-link="YouTube">YouTube</a><a href="#top" data-plat-link="Google Podcasts">Google Podcasts</a><a href="#top" data-plat-link="RSS">RSS Feed</a></nav>
+      <nav aria-label="Show"><h3>Show</h3><a href="#hosts">About</a><a href="#top" data-contact>Contact</a><a href="#sponsors">Sponsor</a><a href="#top" data-kit>Media Kit</a><a href="#top" data-privacy>Privacy Policy</a></nav>
+      <nav aria-label="Social"><h3>Social</h3><a href="https://x.com/" target="_blank" rel="noopener"><svg class="i"><use href="#s-x"/></svg>Twitter</a><a href="https://www.linkedin.com/" target="_blank" rel="noopener"><svg class="i"><use href="#s-in"/></svg>LinkedIn</a><a href="https://www.instagram.com/" target="_blank" rel="noopener"><svg class="i"><use href="#s-ig"/></svg>Instagram</a><a href="https://www.youtube.com/" target="_blank" rel="noopener"><svg class="i"><use href="#p-yt"/></svg>YouTube</a></nav>
+    </div>
+    <p class="copy">© 2026 Ship It Podcast. All rights reserved.</p>
+    <p class="demo">Demo page: the podcast, hosts and episodes are fictional. Guest and sponsor names are illustrative mentions, not endorsements; no audio is included.</p>
+  </div>
+</footer>
+
+<div class="mini" hidden data-mini role="region" aria-label="Now playing">
+  <div class="mini-art" data-mini-art></div>
+  <div class="mini-t"><b data-mini-title></b><div class="mini-bar"><i data-mini-prog></i></div></div>
+  <button class="pp sm" type="button" aria-label="Play" data-mini-pp><svg class="i"><use href="#i-play"/></svg></button>
+  <button class="icon-btn sm" type="button" aria-label="Close player" data-mini-x><svg class="i"><use href="#i-close"/></svg></button>
+</div>
+
+<dialog class="dlg" data-dlg aria-label="Details">
+  <button class="icon-btn dlg-x" type="button" aria-label="Close" data-close><svg class="i"><use href="#i-close"/></svg></button>
+  <div class="dlg-body" data-dlg-body></div>
+</dialog>
+<div class="toast" role="status" aria-live="polite" data-toast></div>
+<script src="assets/art.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
