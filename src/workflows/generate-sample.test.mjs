@@ -371,6 +371,7 @@ test("gallery groups models into stable, accessible carousels with synchronized 
     await page.waitForURL(`${base}/pages/destination-guide/model-a/prompt.html`);
     assert.equal(await page.locator("pre code").textContent(), "# Original prompt\n<literal text>");
     await page.goto(`${base}/index.html`);
+    assert.equal(await page.getByRole("navigation", { name: "Filter by model" }).count(), 0);
     await page.getByRole("link", { name: "Collections", exact: true }).click();
     await page.waitForURL(`${base}/collections/index.html`);
     assert.equal(await page.title(), "Collections - MusePages");
@@ -378,6 +379,9 @@ test("gallery groups models into stable, accessible carousels with synchronized 
     assert.equal(await page.locator("[data-gallery-card]").count(), 4);
     assert.equal(await page.locator(".slide[hidden]").count(), 0);
     assert.equal(await page.locator('.model').allTextContents().then(values => values.includes("disabled-model")), false);
+    const modelFilters = page.getByRole("navigation", { name: "Filter by model" });
+    assert.deepEqual(await modelFilters.locator("button").allTextContents(),
+      ["All models", "model-z", "model-a", "model-b", "only-model"]);
     const collectionsCard = page.locator("[data-gallery-card]").nth(1);
     assert.equal(await collectionsCard.locator(".model").textContent(), "model-a");
     assert.equal(await collectionsCard.locator(".preview").getAttribute("href"),
@@ -388,14 +392,35 @@ test("gallery groups models into stable, accessible carousels with synchronized 
       await page.setViewportSize({ width, height: 900 });
       assert.equal(await page.locator("[data-gallery-card]:visible").count(), 4);
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+      await modelFilters.getByRole("button", { name: "model-a", exact: true }).focus();
+      await page.keyboard.press("Enter");
+      assert.equal(await page.locator("[data-gallery-card]:visible").count(), 1);
+      assert.equal(await page.locator("[data-gallery-card]:visible .model").textContent(), "model-a");
+      assert.equal(await modelFilters.getByRole("button", { name: "model-a", exact: true }).getAttribute("aria-pressed"), "true");
+      await modelFilters.getByRole("button", { name: "All models", exact: true }).click();
     }
+    await modelFilters.getByRole("button", { name: "model-a", exact: true }).click();
+    await page.locator('.filters [data-filter="saas"]').click();
+    assert.equal(await page.locator("[data-gallery-card]:visible").count(), 0);
+    assert.equal(await page.locator("#empty-results").isVisible(), true);
+    await modelFilters.getByRole("button", { name: "only-model", exact: true }).click();
+    assert.equal(await page.locator("[data-gallery-card]:visible").count(), 1);
+    assert.equal(await page.locator("[data-gallery-card]:visible .model").textContent(), "only-model");
+    await modelFilters.getByRole("button", { name: "All models", exact: true }).click();
     await page.locator('.filters [data-filter="developer"]').click();
     assert.equal(await page.locator("[data-gallery-card]:visible").count(), 1);
     assert.equal(await page.locator("[data-gallery-card]:visible .model").textContent(), "model-a");
     await page.getByRole("button", { name: "All websites", exact: true }).click();
     await collectionsCard.getByRole("button", { name: "Style for model-a", exact: true }).click();
     assert.equal(await page.locator("[data-gallery-card]:visible").count(), 1);
+    await modelFilters.getByRole("button", { name: "model-b", exact: true }).click();
+    assert.equal(await page.locator("[data-gallery-card]:visible").count(), 0);
+    await modelFilters.getByRole("button", { name: "model-a", exact: true }).click();
+    assert.equal(await page.locator("[data-gallery-card]:visible").count(), 1);
     await page.getByRole("button", { name: "Clear tag filter Style for model-a" }).click();
+    assert.equal(await page.locator("[data-gallery-card]:visible").count(), 1);
+    await modelFilters.getByRole("button", { name: "All models", exact: true }).click();
+    assert.equal(await page.locator("[data-gallery-card]:visible").count(), 4);
     await collectionsCard.locator(".prompt").click();
     await page.waitForURL(`${base}/pages/destination-guide/model-a/prompt.html`);
     assert.equal(await page.locator("pre code").textContent(), "# Original prompt\n<literal text>");

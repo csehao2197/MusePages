@@ -344,7 +344,7 @@ export function renderGallery(template, pages, { flat = false } = {}) {
       const topics = `${page.title} ${page.tags.join(" ")}`;
       const groups = categories.filter(([, pattern]) => pattern.test(topics)).map(([name]) => name).join(" ");
       const slideAttributes = flat ? "" : ` role="group" aria-roledescription="slide" aria-label="${index + 1} of ${models.length}: ${escapeHtml(page.model)}"`;
-      return `<div class="slide"${slideAttributes} data-tags="${escapeHtml(JSON.stringify(page.tags))}" data-categories="${groups}"${index ? " hidden inert" : ""}>
+      return `<div class="slide"${slideAttributes} data-model="${escapeHtml(page.model)}" data-tags="${escapeHtml(JSON.stringify(page.tags))}" data-categories="${groups}"${index ? " hidden inert" : ""}>
       <a class="preview" href="${href}/index.html" aria-label="Open ${title}" draggable="false">${preview}<span class="preview-arrow">${arrow}</span></a>
       <div class="details"><h3><a href="${href}/index.html" title="${title}">${title}</a></h3>
         <div class="tags">${page.tags.slice(0, 2).map((tag) => `<button class="tag" type="button" data-tag="${escapeHtml(tag)}">${escapeHtml(tag)}</button>`).join("")}</div>
@@ -378,7 +378,15 @@ ${flat ? "" : `      <p class="carousel-status sr-only" role="status" aria-atomi
       .replace(/(<p class="intro">)[\s\S]*?(<\/p>)/,
         "$1Review every enabled model result side by side, with one card per page.$2");
   }
-  return template.replace(marker, () => cards || '<p class="sample-note">No published pages yet.</p>');
+  const modelFilters = flat
+    ? `<nav class="filters model-filters" aria-label="Filter by model">
+        <button type="button" data-model="" aria-pressed="true">All models</button>
+${[...new Set(pages.map((page) => page.model))].map((model) =>
+    `        <button type="button" data-model="${escapeHtml(model)}" aria-pressed="false">${escapeHtml(model)}</button>`).join("\n")}
+      </nav>`
+    : "";
+  return template.replace("<!-- MODEL_FILTERS -->", () => modelFilters)
+    .replace(marker, () => cards || '<p class="sample-note">No published pages yet.</p>');
 }
 
 async function validateLinks(staging, folder = staging) {
