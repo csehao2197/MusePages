@@ -1,0 +1,556 @@
+:root
+{
+    font-family: Arial, Helvetica, sans-serif;
+    background: #0a0a0a;
+    color: #f5f5f0;
+    -webkit-font-smoothing: antialiased;
+}
+*
+{
+    box-sizing: border-box;
+}
+body
+{
+    margin: 0;
+}
+button, input, textarea
+{
+    font: inherit;
+    color: inherit;
+}
+button
+{
+    background: none;
+    border: 0;
+    cursor: pointer;
+}
+button:focus-visible, input:focus-visible, textarea:focus-visible
+{
+    outline: 2px solid #abd4c7;
+    outline-offset: 4px;
+}
+main
+{
+    padding: 36px 50px 20px;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+}
+header
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 50px;
+    margin-bottom: 32px;
+}
+header > div
+{
+    max-width: 720px;
+}
+.availability
+{
+    color: #9eaaa5;
+    font-size: 8px;
+    letter-spacing: 1.8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.availability > span
+{
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #b6d6c9;
+}
+h1
+{
+    font-size: 43px;
+    line-height: 1.15;
+    font-weight: 400;
+    letter-spacing: -1.7px;
+    margin: 22px 0 16px;
+}
+header p
+{
+    color: #a4a8a7;
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 0;
+    max-width: 665px;
+}
+.liquid-glass
+{
+    position: relative;
+    overflow: hidden;
+    background: #ffffff05;
+    backdrop-filter: blur(4px);
+    box-shadow: inset 0 1px 1px #ffffff1a;
+    border: 1px solid #ffffff2b;
+}
+.liquid-glass:hover
+{
+    background: #ffffff13;
+}
+.team-up
+{
+    flex-shrink: 0;
+    padding: 15px 20px;
+    border-radius: 50px;
+    font-size: 11px;
+    margin-top: 40px;
+}
+.team-up span
+{
+    margin-left: 18px;
+    font-size: 16px;
+}
+.grid
+{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    flex: 1;
+    min-height: 590px;
+}
+.card
+{
+    border-radius: 17px;
+    overflow: hidden;
+    position: relative;
+    padding: 26px 23px;
+}
+.label
+{
+    font-size: 9px;
+    letter-spacing: 2.2px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    color: #e4efead0;
+    position: relative;
+    z-index: 1;
+}
+.label > span
+{
+    font-size: 15px;
+}
+.background
+{
+    background: radial-gradient(ellipse at 60% 32%, #677970 0, #263d36 32%, #0c1511 70%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.sculpture
+{
+    position: absolute;
+    inset: 60px 0 100px;
+    display: grid;
+    place-items: center;
+    animation: float 10s ease-in-out infinite alternate;
+}
+.column
+{
+    width: 72px;
+    height: 280px;
+    background: linear-gradient(90deg, #17241d, #b6c4ac 48%, #627b68 60%, #223d2f);
+    border-radius: 50% / 10%;
+    transform: rotate(20deg);
+    box-shadow: 30px 20px 50px #0005;
+}
+.disc
+{
+    width: 220px;
+    height: 62px;
+    border-radius: 50%;
+    background: linear-gradient(15deg, #10271a 10%, #687f64 40%, #c1ceb0 70%, #3b5942);
+    box-shadow: 0 15px 30px #0005;
+    transform: rotate(-20deg);
+    position: absolute;
+}
+.disc-one
+{
+    top: 20%;
+}
+.disc-two
+{
+    top: 42%;
+}
+.disc-three
+{
+    top: 64%;
+}
+.timeline
+{
+    position: relative;
+    z-index: 1;
+}
+.timeline > div
+{
+    display: grid;
+    grid-template-columns: 61px 14px 1fr;
+    column-gap: 9px;
+    align-items: center;
+    padding: 14px 0;
+    border-top: 1px solid #ffffff25;
+}
+.timeline time
+{
+    font-size: 9px;
+    color: #c3cdc6;
+}
+.timeline > div > span
+{
+    font-size: 12px;
+    color: #9db8a6;
+}
+.timeline strong
+{
+    font-size: 10px;
+    font-weight: 400;
+}
+.timeline small
+{
+    grid-column: 3;
+    margin-top: 5px;
+    font-size: 8px;
+    color: #a2b3a5;
+}
+.middle-column, .right-column
+{
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 18px;
+    min-width: 0;
+}
+.voice, .reach
+{
+    background: #324444;
+}
+.voice .label, .reach .label
+{
+    justify-content: start;
+}
+.noise::after
+{
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    opacity: .07;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23fff' filter='url(%23n)' d='M0 0h180v180H0z'/%3E%3C/svg%3E");
+}
+.quote-mark
+{
+    position: absolute;
+    top: 35px;
+    right: 20px;
+    font: 110px Georgia, serif;
+    opacity: .08;
+}
+blockquote
+{
+    font-size: 13px;
+    line-height: 1.7;
+    margin: 26px 0 22px;
+    color: #ecf1ed;
+}
+.person
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.avatar
+{
+    display: grid;
+    place-items: center;
+    background: #a6b0a1;
+    color: #24352e;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 9px;
+}
+.person strong, .person span
+{
+    display: block;
+    font-size: 10px;
+}
+.person span
+{
+    color: #bbc8c5;
+    margin-top: 5px;
+    font-size: 8px;
+}
+.impact
+{
+    background: #111f1c;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 265px;
+}
+.impact-art
+{
+    position: absolute;
+    inset: -20%;
+    background: repeating-radial-gradient(ellipse at center, transparent 0 17px, #67877366 18px 20px, transparent 21px 30px);
+    transform: rotate(35deg) perspective(300px) rotateY(25deg);
+    animation: float 12s ease-in-out infinite alternate-reverse;
+}
+.impact .label
+{
+    font-size: 7px;
+    margin-bottom: 20px;
+}
+.metric
+{
+    font-size: 85px;
+    font-weight: 300;
+    letter-spacing: -5px;
+    position: relative;
+}
+.metric-caption
+{
+    font-size: 12px;
+    margin-top: 15px;
+    position: relative;
+}
+.impact small
+{
+    font-size: 7px;
+    color: #bccbc1;
+    margin-top: 10px;
+    position: relative;
+}
+.software
+{
+    background: radial-gradient(ellipse at 50% 70%, #40524b, #182520 50%, #0d1411 90%);
+    padding-left: 0;
+    padding-right: 0;
+}
+.software > p
+{
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1.2;
+    letter-spacing: -.5px;
+    text-align: center;
+    color: #b7c8bb;
+    margin: 28px 0;
+}
+.marquee-mask
+{
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+.tool-row
+{
+    display: flex;
+    width: max-content;
+    gap: 9px;
+    padding: 5px 0;
+}
+.tool-row button
+{
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    color: #d7e5d9;
+    flex-shrink: 0;
+}
+.tool-row svg
+{
+    width: 25px;
+    height: 25px;
+}
+.first-row
+{
+    animation: left 22s linear infinite;
+}
+.second-row
+{
+    animation: right 26s linear infinite;
+}
+#pause-tools
+{
+    font-size: 7px;
+    display: block;
+    margin: 15px auto 0;
+    color: #b7c8bd;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.paused .tool-row, .paused .sculpture, .paused .impact-art
+{
+    animation-play-state: paused;
+}
+.reach
+{
+    display: flex;
+    flex-direction: column;
+    min-height: 235px;
+}
+.reach-arrow
+{
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 23px;
+    z-index: 1;
+}
+.reach-copy
+{
+    margin-top: auto;
+    padding-top: 40px;
+}
+.reach-copy button
+{
+    font-size: 23px;
+    letter-spacing: -.7px;
+    padding: 0;
+}
+.reach-copy svg
+{
+    opacity: .5;
+    margin-left: 5px;
+}
+.reach-copy > span
+{
+    display: block;
+    font-size: 14px;
+    margin-top: 12px;
+    color: #d6e0db;
+}
+#copy-status
+{
+    font-size: 8px;
+    color: #bbcac5;
+    margin: 22px 0 0;
+}
+footer
+{
+    display: flex;
+    justify-content: space-between;
+    color: #777e79;
+    font-size: 7px;
+    letter-spacing: 1px;
+    margin-top: 20px;
+}
+dialog
+{
+    background: #263a33;
+    color: #e9f1eb;
+    border: 1px solid #ffffff40;
+    border-radius: 18px;
+    width: min(520px, calc(100% - 32px));
+    padding: 40px;
+}
+dialog::backdrop
+{
+    background: #000b;
+    backdrop-filter: blur(10px);
+}
+.close
+{
+    font-size: 30px;
+    position: absolute;
+    top: 10px;
+    right: 13px;
+}
+dialog .label
+{
+    font-size: 7px;
+    justify-content: start;
+}
+dialog h2
+{
+    font-size: 31px;
+    font-weight: 400;
+    letter-spacing: -1px;
+}
+dialog p
+{
+    color: #bdcec3;
+    font-size: 13px;
+    line-height: 1.7;
+}
+form label
+{
+    display: block;
+    margin: 20px 0;
+    font-size: 11px;
+}
+input, textarea
+{
+    display: block;
+    width: 100%;
+    border: 1px solid #ffffff35;
+    border-radius: 7px;
+    background: #10251c70;
+    padding: 12px;
+    margin-top: 8px;
+    resize: vertical;
+    font-size: 12px;
+}
+.submit
+{
+    padding: 13px 20px;
+    border-radius: 30px;
+    font-size: 12px;
+}
+@keyframes left
+{
+    to { transform: translateX(-50%); }
+}
+@keyframes right
+{
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+}
+@keyframes float
+{
+    to { translate: 10px -12px; rotate: 5deg; }
+}
+@media (max-width: 1000px)
+{
+    main { padding: 30px; }
+    header { gap: 25px; }
+    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .right-column { grid-column: span 2; grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .background { min-height: 620px; }
+    h1 { font-size: 37px; }
+    .team-up { max-width: 190px; }
+}
+@media (max-width: 600px)
+{
+    main { padding: 28px 18px 20px; }
+    header { display: block; margin-bottom: 26px; }
+    h1 { font-size: 32px; }
+    header p { font-size: 13px; line-height: 1.7; }
+    .team-up { margin-top: 23px; max-width: none; }
+    .grid { display: block; }
+    .background { min-height: 560px; margin-bottom: 16px; }
+    .sculpture { inset: 45px 0 185px; }
+    .disc { width: 200px; height: 55px; }
+    .middle-column, .right-column { display: grid; grid-template-columns: 1fr; grid-template-rows: auto auto; gap: 16px; margin-bottom: 16px; }
+    .voice { min-height: 280px; }
+    .software { min-height: 350px; }
+    .reach { min-height: 255px; }
+    blockquote { font-size: 14px; }
+    footer { display: grid; gap: 12px; line-height: 1.5; }
+    dialog { padding: 38px 25px; }
+}
+@media (prefers-reduced-motion: reduce)
+{
+    * { animation: none !important; }
+}

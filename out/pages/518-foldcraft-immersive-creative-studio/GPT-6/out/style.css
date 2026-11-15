@@ -1,0 +1,333 @@
+:root
+{
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #fff;
+    background: #0c3036;
+    font-synthesis: none;
+}
+*
+{
+    box-sizing: border-box;
+}
+body
+{
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+}
+button, a
+{
+    color: inherit;
+    font: inherit;
+    text-decoration: none;
+}
+button
+{
+    cursor: pointer;
+    background: none;
+    border: 0;
+}
+button:focus-visible, a:focus-visible
+{
+    outline: 2px solid #93e8dc;
+    outline-offset: 6px;
+}
+.ocean
+{
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(180deg, #17363e, #71918d 35%, #c1c4a4 45%, #427b7c 46%, #144c56 68%, #062d3e);
+    overflow: hidden;
+}
+.horizon
+{
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #08222d99, transparent 75%), radial-gradient(ellipse at 75% 39%, #f5dfb959, transparent 40%);
+}
+.water
+{
+    position: absolute;
+    inset: 46% -20% -20%;
+    background: repeating-radial-gradient(ellipse at 58% -15%, transparent 0 19px, #b9eee31c 20px 21px, transparent 22px 40px);
+    transform: perspective(350px) rotateX(28deg);
+    animation: swell 12s ease-in-out infinite alternate;
+}
+.rock
+{
+    position: absolute;
+    background: linear-gradient(110deg, #576b65 0, #263d3d 30%, #112c33 55%, #071d27 75%);
+    clip-path: polygon(0 100%, 8% 49%, 18% 44%, 25% 19%, 32% 21%, 43% 0, 54% 17%, 61% 13%, 77% 37%, 83% 63%, 100% 100%);
+    filter: drop-shadow(0 20px 10px #020e18);
+}
+.near
+{
+    width: 49%;
+    height: 85%;
+    right: -9%;
+    bottom: -6%;
+}
+.far
+{
+    width: 23%;
+    height: 29%;
+    right: 24%;
+    bottom: 32%;
+    opacity: .8;
+}
+.wash
+{
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #031f2a88, transparent 75%), linear-gradient(0deg, #061f29a6, transparent 50%);
+}
+header
+{
+    position: relative;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    padding: 27px 64px;
+    gap: 65px;
+}
+.logo
+{
+    font-weight: 650;
+    font-size: 24px;
+    letter-spacing: -.8px;
+}
+.logo span
+{
+    font-size: 11px;
+    vertical-align: super;
+    margin-left: 4px;
+}
+nav
+{
+    display: flex;
+    gap: 30px;
+    font-size: 13px;
+}
+nav button
+{
+    padding: 0;
+}
+nav button:hover, nav a:hover
+{
+    color: #b6e3d6;
+}
+.talk, .explore
+{
+    background: #fff;
+    border-radius: 8px;
+    color: #173a3e;
+    padding: 13px 22px;
+    font-weight: 600;
+    font-size: 13px;
+    transition: transform .2s;
+}
+.talk:hover, .explore:hover
+{
+    transform: translateY(-3px);
+}
+header .talk
+{
+    margin-left: auto;
+}
+#menu-toggle
+{
+    display: none;
+    margin-left: auto;
+    width: 40px;
+    height: 40px;
+}
+main
+{
+    position: relative;
+    min-height: calc(100svh - 96px);
+    padding: 70px 64px 53px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 80px;
+}
+.badge
+{
+    display: flex;
+    gap: 11px;
+    align-items: center;
+    font-size: 13px;
+    animation: arrive .8s .1s both;
+}
+.badge span
+{
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #c1debe;
+}
+h1
+{
+    font-size: clamp(42px, 5.85vw, 88px);
+    font-weight: 450;
+    line-height: 1.08;
+    letter-spacing: -3px;
+    margin: 26px 0 0;
+    animation: arrive .8s .3s both;
+}
+h1 em
+{
+    font-style: normal;
+    color: #d3ded5;
+}
+.bottom
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 50px;
+    animation: arrive .8s .6s both;
+}
+.bottom p
+{
+    max-width: 430px;
+    color: #c5d5d4;
+    font-size: 17px;
+    line-height: 1.65;
+    margin: 0 0 23px;
+}
+.explore
+{
+    display: inline-flex;
+    align-items: center;
+    gap: 40px;
+    padding: 15px 23px;
+}
+.scene-note
+{
+    text-align: right;
+}
+.scene-note span
+{
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+.scene-note p
+{
+    font-size: 11px;
+    margin: 10px 0 25px;
+}
+.scene-note button
+{
+    font-size: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid #ffffff50;
+}
+[hidden]
+{
+    display: none !important;
+}
+#mobile-menu
+{
+    position: fixed;
+    z-index: 3;
+    inset: 0;
+    background: #061c21fa;
+    backdrop-filter: blur(20px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 24px;
+    padding: 36px;
+}
+#mobile-menu > button, #mobile-menu > a
+{
+    text-align: left;
+    font-size: 32px;
+}
+#mobile-menu .talk
+{
+    font-size: 17px;
+    text-align: center;
+    margin-top: 20px;
+}
+#mobile-menu > span
+{
+    margin-top: 30px;
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+dialog
+{
+    color: #12363a;
+    background: #f0f3eb;
+    border: 0;
+    border-radius: 12px;
+    width: min(660px, calc(100% - 32px));
+    padding: 48px;
+}
+dialog::backdrop
+{
+    background: #001c29b8;
+    backdrop-filter: blur(10px);
+}
+.close
+{
+    position: absolute;
+    right: 16px;
+    top: 10px;
+    font-size: 30px;
+}
+#eyebrow
+{
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+dialog h2
+{
+    font-size: 42px;
+    line-height: 1.1;
+    letter-spacing: -1.7px;
+    font-weight: 450;
+}
+#panel-content
+{
+    font-size: 16px;
+    line-height: 1.8;
+}
+#panel-content article
+{
+    border-top: 1px solid #234e4a40;
+    padding: 14px 0;
+}
+.paused .water
+{
+    animation-play-state: paused;
+}
+@keyframes swell
+{
+    to { translate: 2% 20px; scale: 1.05; }
+}
+@keyframes arrive
+{
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 750px)
+{
+    header { padding: 20px 25px; }
+    nav, header .talk { display: none; }
+    #menu-toggle { display: block; }
+    main { padding: 47px 25px 35px; min-height: calc(100svh - 80px); gap: 80px; }
+    h1 { font-size: clamp(36px, 8.8vw, 65px); letter-spacing: -1.8px; line-height: 1.13; }
+    .bottom { display: block; }
+    .bottom p { font-size: 15px; max-width: 315px; }
+    .scene-note { display: none; }
+    .near { right: -21%; width: 85%; height: 58%; bottom: 1%; }
+    .far { right: 13%; width: 45%; bottom: 38%; height: 20%; }
+    dialog { padding: 40px 25px; }
+}
+@media (prefers-reduced-motion: reduce)
+{
+    * { animation: none !important; transition: none !important; }
+}

@@ -1,0 +1,11 @@
+import fs from "node:fs/promises";
+const folder = "out\\pages\\489-viktor-oddy-design-studio\\GPT-6";
+const names = ["evr", "COSMIC", "velorah", "ASME", "AUTOMATION", "aethera", "xPortfolio", "NEXORA"];
+const colors = [["#071c29", "#a9e3cd"], ["#181925", "#e7d2c8"], ["#d9b8a4", "#1a3534"], ["#d5e1e2", "#182a30"], ["#d8fb47", "#142614"], ["#e6e5df", "#535951"], ["#aebfdf", "#172d4e"], ["#182a23", "#b9d1c1"]];
+for (let i = 0; i < 8; i++)
+{
+    const [bg, ink] = colors[i];
+    const lines = Array.from({ length: 14 }, (_, j) => `<ellipse cx="760" cy="410" rx="${80 + j * 23}" ry="${160 + j * 8}" transform="rotate(${i * 13 + j * 4} 760 410)" stroke="${ink}" stroke-opacity=".35" fill="none"/>`).join("");
+    await fs.writeFile(`${folder}\\study-${i}.svg`, `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800"><path fill="${bg}" d="M0 0h1200v800H0z"/>${lines}<g fill="${ink}" font-family="Arial,sans-serif"><text x="60" y="65" font-size="24">${names[i]}</text><text x="980" y="65" font-size="12">INDEPENDENT DESIGN</text><text x="60" y="320" font-size="88" letter-spacing="-6">${i % 2 ? "A new" : "Built for"}</text><text x="60" y="410" font-size="88" letter-spacing="-6">${i % 2 ? "perspective." : "what’s next."}</text><text x="60" y="484" font-size="18">Clarity. Character. Lasting impact.</text><rect x="60" y="540" width="140" height="45" rx="24" fill="none" stroke="${ink}"/><text x="86" y="569" font-size="14">Explore the idea ↗</text><path d="M60 720h1080" stroke="${ink}" opacity=".3"/><text x="60" y="755" font-size="12">ORIGINAL STUDIO STUDY</text></g></svg>`);
+}
+await fs.writeFile(`${folder}\\portrait.svg`, `<svg xmlns="http://www.w3.org/2000/svg" width="500" height="700"><path fill="#d9d4c8" d="M0 0h500v700H0z"/><path d="M50 700q0-250 200-250t200 250" fill="#213c3a"/><path d="M200 370h100v130H200" fill="#b69376"/><ellipse cx="250" cy="300" rx="100" ry="140" fill="#caa98b"/><path d="M150 300q-40-180 100-180 140 0 100 180l-35-90q-100 35-135-10" fill="#35332d"/><path d="M185 300h45m40 0h45m-83 70q22 15 45 0" fill="none" stroke="#483f34" stroke-width="7" stroke-linecap="round"/><path d="m252 308-12 40h20" fill="none" stroke="#9e7b60" stroke-width="6"/></svg>`);

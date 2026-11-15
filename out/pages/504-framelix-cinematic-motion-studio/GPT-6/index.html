@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#000">
+    <title>Framelix 3D — Cinematic motion studios</title>
+    <style>
+        * { box-sizing: border-box; }html { scroll-behavior: smooth; }body { margin: 0; background: #000; color: white; font-family: Arial, sans-serif; }a { color: inherit; text-decoration: none; }button, input { font: inherit; }button { cursor: pointer; }:focus-visible { outline: 2px solid #a6a4ff; outline-offset: 6px; }
+        header { padding: 32px 38px 20px; display: flex; align-items: center; justify-content: space-between; gap: 30px; }.logo { font-size: 30px; letter-spacing: -1.5px; font-weight: 700; }.logo sup { font-size: 11px; vertical-align: top; display: inline-block; margin: 3px 0 0 3px; }nav { display: flex; gap: 64px; }nav div { display: flex; flex-direction: column; gap: 9px; }nav button, nav a { border: 0; background: none; color: #ddd; font-size: 11px; padding: 0; text-align: left; }nav button:hover, nav a:hover { color: #a6a4ff; }.ticket { border: 0; padding: 0; position: relative; width: 29px; height: 34px; background: none; color: white; }.ticket svg { width: 29px; height: 34px; }.ticket span { position: absolute; inset: 0; display: grid; place-items: center; font-size: 11px; }
+        .hero { height: calc(100svh - 98px); min-height: 790px; position: relative; overflow: hidden; text-align: center; }.hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; }.hero-heading { position: relative; z-index: 1; padding: 40px 24px 0; }.hero-heading > p { font-size: 23px; margin: 0 0 14px; letter-spacing: -.5px; }.hero-heading sup { font-size: 10px; vertical-align: top; }.hero h1 { font-size: clamp(32px, 5vw, 68px); font-weight: 500; letter-spacing: -2.7px; margin: 0; }.hero-cta { position: absolute; z-index: 1; bottom: 8%; left: 0; right: 0; }.pill { background: white; color: black; border: 1px solid white; padding: 16px 47px; font-size: 18px; border-radius: 100px; transition: transform .2s, background .2s; }.pill:hover { transform: translateY(-3px); background: #deddf4; }.hero-cta p { color: #888; font-size: 11px; margin-top: 16px; }.hero-index { position: absolute; bottom: 30px; left: 38px; font-size: 8px; text-transform: uppercase; letter-spacing: 2px; color: #888; }.hero-index.right { left: auto; right: 38px; }
+        .marquee { overflow: hidden; background: #a6a4ff; color: black; padding: 15px 0; }.track { display: flex; width: max-content; gap: 60px; animation: marquee 20s linear infinite; }.track span { font-size: 14px; white-space: nowrap; }.track b { font-size: 17px; font-weight: 500; }.track sup { font-size: 9px; }
+        .shipping { background: #eaeaea; border-radius: 0 0 40px 40px; color: black; text-align: center; padding: 70px 24px 100px; position: relative; overflow: hidden; }.shipping > p { font-size: 20px; letter-spacing: -.5px; margin: 0 0 12px; }.shipping sup { font-size: 10px; vertical-align: top; }.shipping h2 { font-size: 51px; font-weight: 500; letter-spacing: -2px; margin: 0; }.product-art { width: 290px; height: 320px; margin: 85px auto 70px; perspective: 900px; display: grid; place-items: center; }.box { width: 210px; height: 270px; position: relative; background: #a6a4ff; box-shadow: 23px 30px 35px #0002; transform: rotateY(-27deg) rotateX(10deg) rotateZ(-8deg); transform-style: preserve-3d; text-align: left; padding: 25px; }.box::before { content: ""; width: 55px; height: 100%; position: absolute; right: -55px; top: 0; background: #7a78c9; transform: rotateY(90deg); transform-origin: left; }.box::after { content: ""; width: 100%; height: 55px; position: absolute; top: -55px; left: 0; background: #c4c2ff; transform: rotateX(90deg); transform-origin: bottom; }.box small { font-size: 11px; }.box strong { font-size: 70px; font-weight: 500; letter-spacing: -5px; line-height: .9; display: block; margin-top: 45px; }.box span { position: absolute; bottom: 20px; left: 25px; font-size: 8px; text-transform: uppercase; letter-spacing: 1px; }.shipping .pill { background: black; border-color: black; color: white; padding: 14px 80px; font-size: 15px; }.explore { display: block; color: black; border: 0; background: none; padding: 20px; margin: auto; font-size: 16px; }.shipping .disclaimer { font-size: 10px; color: #666; letter-spacing: 0; max-width: 400px; margin: auto; line-height: 1.8; }
+        footer { display: flex; justify-content: space-between; gap: 25px; padding: 28px 38px; font-size: 10px; color: #777; }footer a { text-decoration: underline; }
+        dialog { width: min(650px, calc(100% - 32px)); max-height: 90svh; overflow: auto; background: #101010; color: white; border: 1px solid #444; border-radius: 22px; padding: 35px; }dialog::backdrop { background: #000b; backdrop-filter: blur(12px); }.close { position: absolute; top: 11px; right: 16px; font-size: 25px; padding: 8px; color: white; background: none; border: 0; border-radius: 50%; }dialog h2 { font-size: 35px; font-weight: 400; letter-spacing: -1px; margin: 25px 0; }dialog p { color: #aaa; font-size: 13px; line-height: 1.8; }.eyebrow { color: #a6a4ff; font-size: 9px; text-transform: uppercase; letter-spacing: 2px; }#reel canvas { width: 100%; height: 300px; background: black; border-radius: 12px; }.playback { display: flex; gap: 15px; align-items: center; margin-top: 15px; }.playback .pill { padding: 10px 18px; font-size: 11px; }.playback input { min-width: 0; flex: 1; accent-color: #a6a4ff; }.playback span { font-size: 10px; color: #aaa; }.cart-row { display: flex; gap: 18px; align-items: center; border: 1px solid #444; border-radius: 12px; padding: 18px; }.cart-row > span { padding: 16px 12px; color: black; background: #a6a4ff; font-size: 17px; border-radius: 4px; }.cart-row strong { display: block; font-size: 16px; font-weight: 400; }.cart-row button { border: 0; background: none; color: #aaa; padding: 0; font-size: 11px; text-decoration: underline; }.cart-total { display: flex; justify-content: space-between; margin: 25px 0; }#cart .pill { font-size: 13px; padding: 14px 24px; }[hidden] { display: none !important; }
+        @keyframes marquee { to { transform: translateX(-50%); } }
+        @media (max-width: 700px)
+        {
+            header { padding: 25px 24px 15px; }.logo { font-size: 26px; }nav { display: none; }.hero { min-height: 750px; height: calc(100svh - 80px); }.hero-heading { padding-top: 38px; }.hero-heading > p { font-size: 19px; }.hero h1 { font-size: 39px; line-height: 1.1; max-width: 330px; margin: auto; letter-spacing: -1.5px; }.hero-cta { bottom: 9%; }.pill { padding: 15px 39px; font-size: 17px; }.hero-index { left: 24px; font-size: 7px; bottom: 23px; }.hero-index.right { right: 24px; }.shipping { padding-top: 55px; }.shipping h2 { font-size: 42px; }.product-art { margin-top: 70px; margin-bottom: 60px; }footer { padding: 25px 24px; font-size: 9px; line-height: 1.6; }dialog { padding: 32px 23px; }#reel canvas { height: 220px; }.playback { gap: 9px; }
+        }
+        @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; }* { animation: none !important; transition: none !important; } }
+    </style>
+</head>
+<body>
+    <header><a class="logo" href="#home" aria-label="Framelix 3D home">framelix<sup>3D</sup></a><nav aria-label="Studio"><div><button data-reel>Reels</button><button data-info="Services">Services</button></div><div><a href="#shipping">Projects</a><button data-info="Pipeline">Pipeline</button></div><div><button data-info="Careers">Careers</button><button data-info="Get In Touch">Get In Touch</button></div></nav><button class="ticket" aria-label="Open cart"><svg viewBox="0 0 27 30" fill="none" aria-hidden="true"><path d="M1 1h25v7c-5 0-5 7 0 7v14H1V15c5 0 5-7 0-7V1Z" stroke="white"/><path d="M7 5h13M7 25h13" stroke="white" stroke-dasharray="2 2"/></svg><span id="cart-count">0</span></button></header>
+    <main>
+        <section class="hero" id="home"><canvas id="sculpture" aria-label="Original rotating lavender architectural sculpture" role="img"></canvas><div class="hero-heading"><p>Framelix<sup>3D</sup></p><h1>Cinematic Motion Studios</h1></div><div class="hero-cta"><button class="pill" data-reel>Explore Reel ↗</button><p>Ready in 24–48 hours*</p></div><span class="hero-index">Independent motion practice / 2026</span><span class="hero-index right">Soundless. Limitless.</span></section>
+        <div class="marquee" aria-label="New 3D OS version 1.2.1"><div class="track" id="marquee-track"></div></div>
+        <section class="shipping" id="shipping"><p>Framelix<sup>3D</sup></p><h2>Shipping Now</h2><div class="product-art" role="img" aria-label="Original lavender 3D OS creative kit box"><div class="box"><small>FRAMELIX®</small><strong>3D<br>OS</strong><span>Motion toolkit / V1.2.1</span></div></div><button class="pill" id="buy">Buy Now ↗</button><button class="explore" data-info="3D OS">Explore now ↓</button><p class="disclaimer">A fictional motion toolkit. $129 demo price. *Illustrative delivery window; no purchase, charge or digital delivery occurs.</p></section>
+    </main>
+    <footer><span>© 2026 Framelix 3D · Original procedural motion concept.</span><a href="NOTICE">Credits &amp; license</a></footer>
+    <dialog id="reel" aria-labelledby="reel-title"><button class="close" aria-label="Close reel">×</button><span class="eyebrow">Original procedural showreel / 24 seconds</span><h2 id="reel-title">Shape. Motion. Feeling.</h2><canvas id="reel-canvas" aria-label="Interactive original motion reel"></canvas><div class="playback"><button class="pill" id="play" aria-pressed="false">Play</button><input id="seek" type="range" min="0" max="24" step=".1" value="0" aria-label="Reel position"><span id="time">00 / 24</span></div><p id="chapter">01 / Form</p><p>Rendered live in your browser. No external video, sound or streaming service.</p></dialog>
+    <dialog id="cart" aria-labelledby="cart-title"><button class="close" aria-label="Close cart">×</button><span class="eyebrow">Your creative toolkit</span><h2 id="cart-title">The cart.</h2><div id="cart-content"></div><p id="order-status" role="status"></p></dialog>
+    <dialog id="info" aria-labelledby="info-title"><button class="close" aria-label="Close information">×</button><span class="eyebrow">Inside Framelix</span><h2 id="info-title"></h2><p id="info-copy"></p></dialog>
+    <script>
+        const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+        const canvas = document.querySelector("#sculpture");
+        const reelCanvas = document.querySelector("#reel-canvas");
+        const reel = document.querySelector("#reel");
+        let playing = false;
+        let position = 0;
+        let previous = performance.now();
+        function draw(target, seconds)
+        {
+            const rect = target.getBoundingClientRect();
+            const width = Math.max(1, rect.width);
+            const height = Math.max(1, rect.height);
+            if (target.width !== Math.round(width * devicePixelRatio) || target.height !== Math.round(height * devicePixelRatio))
+            {
+                target.width = Math.round(width * devicePixelRatio);
+                target.height = Math.round(height * devicePixelRatio);
+            }
+            const context = target.getContext("2d");
+            context.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+            context.fillStyle = "#000";
+            context.fillRect(0, 0, width, height);
+            const scale = Math.min(width * .32, height * .32);
+            const angle = seconds * .17 + .65;
+            function project(point)
+            {
+                const [x, y, z] = point;
+                const rx = x * Math.cos(angle) - z * Math.sin(angle);
+                const rz = x * Math.sin(angle) + z * Math.cos(angle);
+                return [width / 2 + rx * scale, height * .52 + (y * .85 + rz * .45) * scale, rz - y * .2];
+            }
+            const faces = [];
+            const cubes = [[-.65, -.65, 0], [0, -.65, 0], [.65, -.65, 0], [-.65, 0, 0], [.65, 0, 0], [-.65, .65, 0], [0, .65, 0], [.65, .65, 0], [0, 0, .65]];
+            cubes.forEach(([x, y, z], index) =>
+            {
+                const half = .265;
+                const pulse = 1 + .06 * Math.sin(seconds + index);
+                const points = [[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]].map(([a,b,c]) => project([x * pulse + a * half, y * pulse + b * half, z * pulse + c * half]));
+                [[0,1,2,3],[4,5,6,7],[0,1,5,4],[3,2,6,7],[0,3,7,4],[1,2,6,5]].forEach((indices, face) =>
+                {
+                    const polygon = indices.map((point) => points[point]);
+                    faces.push({ polygon, depth: polygon.reduce((sum, point) => sum + point[2], 0) / 4, face });
+                });
+            });
+            faces.sort((a, b) => a.depth - b.depth).forEach(({ polygon, face }) =>
+            {
+                const colors = position >= 16 && target === reelCanvas ? ["#496e6c", "#a2c2b9", "#d9e8dd", "#34514f", "#83a39c", "#bed3c9"] : ["#615f99", "#aaa7e4", "#e0dfff", "#48466e", "#8d89c2", "#bfbcf5"];
+                context.beginPath();
+                polygon.forEach(([x, y], index) => index ? context.lineTo(x, y) : context.moveTo(x, y));
+                context.closePath();
+                context.fillStyle = colors[face];
+                context.fill();
+                context.strokeStyle = "#0006";
+                context.lineWidth = .7;
+                context.stroke();
+            });
+        }
+        function updatePlayback()
+        {
+            document.querySelector("#seek").value = position;
+            document.querySelector("#time").textContent = `${String(Math.floor(position)).padStart(2, "0")} / 24`;
+            document.querySelector("#chapter").textContent = position < 8 ? "01 / Form" : position < 16 ? "02 / Rhythm" : "03 / Feeling";
+        }
+        function frame(now)
+        {
+            const delta = Math.min(.1, (now - previous) / 1000);
+            previous = now;
+            if (!document.hidden)
+            {
+                draw(canvas, reduced.matches ? 0 : now / 1000);
+                if (reel.open)
+                {
+                    if (playing) position = (position + delta) % 24;
+                    draw(reelCanvas, position);
+                    updatePlayback();
+                }
+            }
+            requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+        document.querySelectorAll("[data-reel]").forEach((button) => button.addEventListener("click", () =>
+        {
+            reel.showModal();
+            draw(reelCanvas, position);
+        }));
+        document.querySelector("#play").addEventListener("click", (event) =>
+        {
+            playing = !playing;
+            event.currentTarget.textContent = playing ? "Pause" : "Play";
+            event.currentTarget.setAttribute("aria-pressed", String(playing));
+        });
+        reel.addEventListener("close", () =>
+        {
+            playing = false;
+            document.querySelector("#play").textContent = "Play";
+            document.querySelector("#play").setAttribute("aria-pressed", "false");
+        });
+        document.querySelector("#seek").addEventListener("input", (event) =>
+        {
+            position = Number(event.currentTarget.value);
+            updatePlayback();
+            draw(reelCanvas, position);
+        });
+        const track = document.querySelector("#marquee-track");
+        for (let index = 0; index < 12; index++)
+        {
+            const item = document.createElement("span");
+            item.innerHTML = 'New! <b>3D<sup>OS</sup></b> V1.2.1 out now! <span aria-hidden="true">↗</span>';
+            if (index >= 6) item.setAttribute("aria-hidden", "true");
+            track.append(item);
+        }
+        const cart = document.querySelector("#cart");
+        let inCart = false;
+        function renderCart()
+        {
+            document.querySelector("#cart-count").textContent = inCart ? "1" : "0";
+            const content = document.querySelector("#cart-content");
+            content.innerHTML = inCart ? '<div class="cart-row"><span>3D OS</span><div><strong>3D OS / V1.2.1</strong><p>Original motion toolkit · Demo item</p><button id="remove">Remove item</button></div></div><div class="cart-total"><span>Demo total</span><strong>$129</strong></div><button class="pill" id="checkout">Create demo order ↗</button><p>No payment or delivery. This is a local demonstration.</p>' : "<p>Your cart is empty. Explore 3D OS to find your next creative starting point.</p>";
+            if (inCart)
+            {
+                document.querySelector("#remove").addEventListener("click", () =>
+                {
+                    inCart = false;
+                    document.querySelector("#order-status").textContent = "";
+                    renderCart();
+                });
+                document.querySelector("#checkout").addEventListener("click", () =>
+                {
+                    document.querySelector("#order-status").textContent = "Demo order prepared: 3D OS V1.2.1 / $129. You have not been charged. No order was placed.";
+                });
+            }
+        }
+        document.querySelector(".ticket").addEventListener("click", () =>
+        {
+            renderCart();
+            cart.showModal();
+        });
+        document.querySelector("#buy").addEventListener("click", () =>
+        {
+            inCart = true;
+            document.querySelector("#order-status").textContent = "";
+            renderCart();
+            cart.showModal();
+        });
+        const information =
+        {
+            Services: "Art direction, procedural 3D, motion identity and cinematic product stories. Original work from a fictional independent motion studio.",
+            Pipeline: "Discover → Shape → Animate → Refine. A focused process from a clear brief to carefully timed motion, with accessible reduced-motion alternatives.",
+            Careers: "Small by design, collaborative by nature. This fictional studio has no open recruitment or application service.",
+            "Get In Touch": "Start with a clear brief: your audience, the story, the format and the deadline. This independent concept has no connected contact service.",
+            "3D OS": "A fictional creative kit for expressive motion: form studies, rhythm explorations and color directions. V1.2.1 is an illustrative release, not a downloadable product. Add it to the demo cart to explore the local order flow."
+        };
+        document.querySelectorAll("[data-info]").forEach((button) => button.addEventListener("click", () =>
+        {
+            document.querySelector("#info-title").textContent = button.dataset.info;
+            document.querySelector("#info-copy").textContent = information[button.dataset.info];
+            document.querySelector("#info").showModal();
+        }));
+        document.querySelectorAll(".close").forEach((button) => button.addEventListener("click", () => button.closest("dialog").close()));
+    </script>
+</body>
+</html>

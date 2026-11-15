@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#0a0a0a">
+    <title>Michael Smith — Digital interactions</title>
+    <style>
+        :root { --bg: #0a0a0a; --surface: #141414; --text: #f5f5f5; --muted: #888; --accent: #f5f5f5; --stroke: #1f1f1f; --blue: linear-gradient(90deg, #89aacc, #4e85bf); }
+        * { box-sizing: border-box; }html { scroll-behavior: smooth; }body { margin: 0; background: var(--bg); color: var(--text); font-family: Arial, sans-serif; }a { color: inherit; text-decoration: none; }button, input, textarea { font: inherit; }button { cursor: pointer; }button, a { -webkit-tap-highlight-color: transparent; }:focus-visible { outline: 2px solid #89aacc; outline-offset: 5px; }
+        .loader { position: fixed; inset: 0; z-index: 9999; background: var(--bg); display: grid; place-items: center; }.loader > span { position: absolute; top: 45px; left: 48px; font-size: 11px; color: var(--muted); letter-spacing: 3px; text-transform: uppercase; }.loader-word { font: italic 72px Georgia, serif; color: #ddd; }.counter { position: absolute; right: 48px; bottom: 45px; font: 110px Georgia, serif; font-variant-numeric: tabular-nums; }.progress { position: absolute; height: 3px; bottom: 0; left: 0; width: 100%; background: var(--blue); transform: scaleX(0); transform-origin: left; box-shadow: 0 0 8px #89aacc66; }.loader.leaving { opacity: 0; transition: opacity .6s; pointer-events: none; }[hidden] { display: none !important; }
+        header { position: fixed; top: 25px; left: 0; right: 0; display: flex; justify-content: center; z-index: 20; pointer-events: none; }.nav { display: flex; align-items: center; gap: 5px; border: 1px solid #ffffff1a; border-radius: 100px; padding: 7px; background: #141414dc; backdrop-filter: blur(15px); pointer-events: auto; }.monogram { width: 36px; height: 36px; padding: 2px; border-radius: 50%; background: var(--blue); display: grid; place-items: center; }.monogram span { display: grid; place-items: center; background: #0a0a0a; width: 32px; height: 32px; border-radius: 50%; font: italic 13px Georgia, serif; transition: transform .3s; }.monogram:hover span { transform: scale(.9); }.divider { width: 1px; height: 20px; background: var(--stroke); margin: 0 5px; }.nav > a:not(.monogram), .nav button { padding: 11px 17px; border: 1px solid transparent; border-radius: 50px; color: #aaa; background: none; font-size: 12px; }.nav a[aria-current], .nav a:hover, .nav button:hover { color: white; background: #ffffff08; }.nav .say:hover { border-color: #89aacc; }
+        .hero { min-height: 900px; height: 100svh; display: grid; place-items: center; text-align: center; position: relative; overflow: hidden; }.orbital { width: 100%; height: 100%; position: absolute; inset: 0; pointer-events: none; }.orbits { transform-origin: 600px 450px; animation: orbit 35s linear infinite; }.hero::after { content: ""; pointer-events: none; position: absolute; inset: 60% 0 0; background: linear-gradient(transparent, var(--bg)); }.content { z-index: 2; position: relative; padding: 150px 25px 155px; }.eyebrow { color: var(--muted); letter-spacing: 3px; text-transform: uppercase; font-size: 10px; margin: 0 0 35px; }h1 { font: italic 135px/.9 Georgia, serif; letter-spacing: -7px; margin: 0 0 29px; }.role-line { font-size: 19px; color: #999; margin: 0 0 31px; }#role { font: italic 25px Georgia, serif; display: inline-block; color: white; min-width: 103px; }.bio { max-width: 405px; color: #999; font-size: 13px; line-height: 1.8; margin: 0 auto; }.actions { margin-top: 37px; display: flex; gap: 13px; justify-content: center; }.button { padding: 14px 26px; border-radius: 100px; border: 1px solid #333; font-size: 12px; color: #f5f5f5; background: #0a0a0a; transition: transform .25s, border-color .25s; display: inline-block; }.button:hover { transform: scale(1.04); border-color: #89aacc; }.button.light { background: #f5f5f5; color: #0a0a0a; border-color: #f5f5f5; }.scroll { position: absolute; z-index: 3; bottom: 30px; left: 50%; transform: translateX(-50%); font-size: 8px; letter-spacing: 2px; color: #777; }.scroll i { display: block; height: 40px; width: 1px; background: #343434; margin: 12px auto 0; position: relative; }.scroll i::after { content: ""; height: 5px; width: 3px; background: #89aacc; position: absolute; left: -1px; top: 0; animation: down 1.5s infinite; }.edge { position: absolute; left: 37px; bottom: 35px; font-size: 8px; letter-spacing: 1.5px; color: #777; text-align: left; line-height: 1.8; }
+        .edge { z-index: 3; }
+        #work { max-width: 1050px; margin: auto; padding: 100px 40px; scroll-margin-top: 80px; }h2 { font: normal 57px/1.05 Georgia, serif; letter-spacing: -2px; margin: 10px 0 35px; }.work-head { display: flex; align-items: end; justify-content: space-between; gap: 30px; }.filters { display: flex; gap: 7px; margin-bottom: 35px; }.filters button { border: 1px solid #333; background: none; color: #999; border-radius: 100px; padding: 9px 14px; font-size: 10px; }.filters button[aria-pressed="true"] { color: #111; background: #eee; }.work-item { display: grid; grid-template-columns: 90px 1fr 1fr 30px; align-items: center; gap: 25px; width: 100%; padding: 27px 0; border: 0; border-top: 1px solid #2b2b2b; color: white; background: none; text-align: left; }.work-item:last-child { border-bottom: 1px solid #2b2b2b; }.work-item:hover { background: #ffffff04; }.thumbnail { height: 70px; border: 1px solid #607c91; background: #172431; display: grid; place-items: center; font: italic 31px Georgia, serif; }.work-item:nth-child(2) .thumbnail { background: #263733; border-color: #65796c; }.work-item:nth-child(3) .thumbnail { background: #332b26; border-color: #957d69; }.work-item strong { font-size: 22px; font-weight: 400; }.work-item small { color: #888; font-size: 11px; }.work-item > span:last-child { font-size: 23px; }
+        footer { max-width: 1050px; margin: auto; padding: 35px 40px; border-top: 1px solid var(--stroke); display: flex; justify-content: space-between; gap: 25px; font-size: 9px; color: #777; line-height: 1.8; }footer button { color: #aaa; border: 0; background: none; padding: 0; font: inherit; }footer a { text-decoration: underline; }
+        dialog { width: min(590px, calc(100% - 32px)); max-height: 88svh; overflow: auto; background: #141414; color: var(--text); border: 1px solid #444; border-radius: 18px; padding: 40px; }dialog::backdrop { background: #000a; backdrop-filter: blur(10px); }.close { position: absolute; top: 11px; right: 15px; color: #ddd; background: none; border: 0; font-size: 24px; padding: 8px; }dialog h2 { font-size: 44px; margin: 20px 0; }dialog p { color: #aaa; font-size: 13px; line-height: 1.8; }label { display: block; font-size: 12px; margin: 18px 0; }input, textarea { margin-top: 8px; width: 100%; padding: 12px; color: white; background: #222; border: 1px solid #444; border-radius: 7px; }textarea { resize: vertical; }.reveal { animation: enter 1.2s both; }.content .eyebrow { animation: enter 1s .1s both; }
+        @keyframes enter { from { opacity: 0; transform: translateY(35px); filter: blur(8px); } to { opacity: 1; transform: none; filter: none; } }@keyframes orbit { to { transform: rotate(360deg); } }@keyframes down { to { transform: translateY(35px); opacity: 0; } }
+        @media (max-width: 700px)
+        {
+            header { top: 20px; }.nav { gap: 0; padding: 6px; }.nav > a:not(.monogram), .nav button { font-size: 10px; padding: 10px 12px; }.divider { margin: 0 3px; }.divider:last-child { display: none; }.hero { min-height: 844px; }h1 { font-size: 78px; line-height: .96; letter-spacing: -4px; max-width: 350px; }.content { padding: 170px 23px; }.eyebrow { font-size: 8px; }.role-line { font-size: 14px; }#role { font-size: 21px; min-width: 85px; }.bio { font-size: 12px; max-width: 290px; }.actions { margin-top: 32px; }.button { padding: 13px 22px; font-size: 11px; }.orbital { width: 240%; left: -70%; }.edge { left: 24px; bottom: 28px; font-size: 7px; }#work { padding: 65px 24px; }.work-head { display: block; }h2 { font-size: 43px; }.work-item { grid-template-columns: 55px 1fr 20px; gap: 15px; }.thumbnail { height: 55px; font-size: 23px; }.work-item strong { font-size: 19px; }.work-item small { display: none; }footer { padding: 30px 24px; flex-wrap: wrap; }.loader > span { top: 30px; left: 25px; }.loader-word { font-size: 48px; }.counter { bottom: 30px; right: 25px; font-size: 80px; }dialog { padding: 33px 25px; }
+        }
+        @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; }* { animation: none !important; transition: none !important; }.loader { display: none; } }
+    </style>
+</head>
+<body>
+    <div class="loader" aria-label="Portfolio introduction"><span>Portfolio</span><div class="loader-word">Design</div><div class="counter">000</div><div class="progress"></div></div>
+    <header><nav class="nav" aria-label="Portfolio"><a class="monogram" href="#home" aria-label="Portfolio home"><span>JA</span></a><i class="divider"></i><a href="#home" aria-current="page">Home</a><a href="#work">Work</a><button id="resume">Resume</button><i class="divider"></i><button class="say" data-contact>Say hi ↗</button><i class="divider"></i></nav></header>
+    <main>
+        <section class="hero" id="home">
+            <svg class="orbital" viewBox="0 0 1200 900" fill="none" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Original blue orbital line composition"><defs><radialGradient id="aura"><stop stop-color="#234057" stop-opacity=".3"/><stop offset="1" stop-color="#0a0a0a" stop-opacity="0"/></radialGradient><linearGradient id="orbit-ink"><stop stop-color="#89aacc" stop-opacity=".5"/><stop offset=".5" stop-color="#4e85bf" stop-opacity=".06"/><stop offset="1" stop-color="#89aacc" stop-opacity=".4"/></linearGradient></defs><ellipse cx="600" cy="450" rx="600" ry="420" fill="url(#aura)"/><g class="orbits" stroke="url(#orbit-ink)" stroke-width=".7"><ellipse cx="600" cy="450" rx="540" ry="250" transform="rotate(-25 600 450)"/><ellipse cx="600" cy="450" rx="520" ry="230" transform="rotate(-25 600 450)"/><ellipse cx="600" cy="450" rx="500" ry="210" transform="rotate(-25 600 450)"/><ellipse cx="600" cy="450" rx="480" ry="190" transform="rotate(-25 600 450)"/><ellipse cx="600" cy="450" rx="460" ry="170" transform="rotate(-25 600 450)"/><ellipse cx="600" cy="450" rx="440" ry="150" transform="rotate(-25 600 450)"/><ellipse cx="600" cy="450" rx="540" ry="250" transform="rotate(35 600 450)"/><ellipse cx="600" cy="450" rx="520" ry="230" transform="rotate(35 600 450)"/><ellipse cx="600" cy="450" rx="500" ry="210" transform="rotate(35 600 450)"/><ellipse cx="600" cy="450" rx="480" ry="190" transform="rotate(35 600 450)"/><ellipse cx="600" cy="450" rx="460" ry="170" transform="rotate(35 600 450)"/></g></svg>
+            <div class="content"><p class="eyebrow">COLLECTION '26</p><h1 class="reveal">Michael Smith</h1><p class="role-line">A <span id="role">Creative</span> lives in Chicago.</p><p class="bio">Designing seamless digital interactions by focusing on the unique nuances which bring systems to life.</p><div class="actions"><a class="button light" href="#work">See Works ↗</a><button class="button" data-contact>Reach out...</button></div></div>
+            <a class="scroll" href="#work">SCROLL<i aria-hidden="true"></i></a><div class="edge">INDEPENDENT DESIGN &amp; DEVELOPMENT<br>CHICAGO, IL / OPEN TO THE WORLD</div>
+        </section>
+        <section id="work"><div class="work-head"><div><p class="eyebrow">Selected explorations / 2024–2026</p><h2>Small details.<br><em>Lasting impressions.</em></h2></div><div class="filters" aria-label="Filter work"><button aria-pressed="true" data-filter="All">All</button><button aria-pressed="false" data-filter="Product">Product</button><button aria-pressed="false" data-filter="Experiment">Experiments</button></div></div><div class="work-list"><button class="work-item" data-kind="Product" data-title="Common Ground"><span class="thumbnail">Cg</span><strong>Common Ground</strong><small>Product strategy &amp; interaction / 2026</small><span>↗</span></button><button class="work-item" data-kind="Product" data-title="Field Notes"><span class="thumbnail">Fn</span><strong>Field Notes</strong><small>Editorial platform / 2025</small><span>↗</span></button><button class="work-item" data-kind="Experiment" data-title="Soft Systems"><span class="thumbnail">Ss</span><strong>Soft Systems</strong><small>Motion experiments / 2024</small><span>↗</span></button></div></section>
+    </main>
+    <footer><span>© 2026 Michael Smith · Fictional portfolio and project studies.</span><span><button id="replay">Replay introduction</button> · <a href="NOTICE">Credits &amp; license</a></span></footer>
+    <dialog id="detail" aria-labelledby="detail-title"><button class="close" aria-label="Close detail">×</button><p class="eyebrow">Practice / Perspective</p><h2 id="detail-title"></h2><p id="detail-copy"></p><button class="button light" id="resume-download" hidden>Download concept resume</button></dialog>
+    <dialog id="contact" aria-labelledby="contact-title"><button class="close" aria-label="Close contact">×</button><p class="eyebrow">A conversation starts here</p><h2 id="contact-title">Make something<br><em>feel right.</em></h2><p>This local demo prepares an inquiry. It doesn't send email.</p><form><label>Email<input type="email" name="email" required></label><label>Your idea<textarea name="idea" rows="4" required minlength="10"></textarea></label><button class="button light" type="submit">Prepare inquiry ↗</button></form><p id="result" role="status"></p></dialog>
+    <script>
+        const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+        const loader = document.querySelector(".loader");
+        let frame;
+        function intro()
+        {
+            cancelAnimationFrame(frame);
+            loader.hidden = false;
+            loader.classList.remove("leaving");
+            if (reduced.matches)
+            {
+                loader.hidden = true;
+                return;
+            }
+            document.querySelector("main").inert = true;
+            const start = performance.now();
+            function tick(now)
+            {
+                const elapsed = now - start;
+                const progress = Math.min(1, elapsed / 2700);
+                document.querySelector(".counter").textContent = String(Math.round(progress * 100)).padStart(3, "0");
+                document.querySelector(".progress").style.transform = `scaleX(${progress})`;
+                document.querySelector(".loader-word").textContent = ["Design", "Create", "Inspire"][Math.min(2, Math.floor(elapsed / 900))];
+                if (elapsed < 3100) frame = requestAnimationFrame(tick);
+                else
+                {
+                    loader.classList.add("leaving");
+                    document.querySelector("main").inert = false;
+                    setTimeout(() => { loader.hidden = true; }, 620);
+                    document.querySelector("h1").animate([{ transform: "translateY(50px)", opacity: 0 }, { transform: "none", opacity: 1 }], { duration: 1200, easing: "cubic-bezier(.2,.8,.2,1)" });
+                }
+            }
+            frame = requestAnimationFrame(tick);
+        }
+        intro();
+        document.querySelector("#replay").addEventListener("click", intro);
+        const roles = ["Creative", "Fullstack", "Founder", "Scholar"];
+        let role = 0;
+        setInterval(() =>
+        {
+            if (reduced.matches || document.hidden) return;
+            role = (role + 1) % roles.length;
+            const element = document.querySelector("#role");
+            element.textContent = roles[role];
+            element.animate([{ opacity: 0, transform: "translateY(5px)" }, { opacity: 1, transform: "none" }], { duration: 350 });
+        }, 2000);
+        document.querySelectorAll("[data-filter]").forEach((button) => button.addEventListener("click", () =>
+        {
+            document.querySelectorAll("[data-filter]").forEach((other) => other.setAttribute("aria-pressed", String(other === button)));
+            document.querySelectorAll(".work-item").forEach((item) => { item.hidden = button.dataset.filter !== "All" && item.dataset.kind !== button.dataset.filter; });
+        }));
+        const detail = document.querySelector("#detail");
+        const descriptions =
+        {
+            "Common Ground": "A fictional workspace platform centered on shared context. A calmer navigation model, clear decisions and responsive collaboration patterns make complex team work feel natural.",
+            "Field Notes": "A fictional publishing experience for curious readers. Editorial rhythm, useful wayfinding and carefully paced interaction keep attention on the story.",
+            "Soft Systems": "An original exploration of motion as feedback. Orbital lines, gentle transitions and reduced-motion alternatives reveal how systems can feel alive without getting in the way."
+        };
+        document.querySelectorAll(".work-item").forEach((button) => button.addEventListener("click", () =>
+        {
+            document.querySelector("#detail-title").textContent = button.dataset.title;
+            document.querySelector("#detail-copy").textContent = descriptions[button.dataset.title];
+            document.querySelector("#resume-download").hidden = true;
+            detail.showModal();
+        }));
+        document.querySelector("#resume").addEventListener("click", () =>
+        {
+            document.querySelector("#detail-title").textContent = "Michael Smith";
+            document.querySelector("#detail-copy").textContent = "Independent creative developer based in Chicago. Focus: interaction design, front-end systems and thoughtful digital products. Selected fictional studies: Common Ground, Field Notes and Soft Systems. This is a concept resume, not a verified employment record.";
+            document.querySelector("#resume-download").hidden = false;
+            detail.showModal();
+        });
+        document.querySelector("#resume-download").addEventListener("click", () =>
+        {
+            const url = URL["createObjectURL"](new Blob([document.querySelector("#detail-copy").textContent], { type: "text/plain" }));
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "michael-smith-concept-resume.txt";
+            link.click();
+            setTimeout(() => URL["revokeObjectURL"](url), 1000);
+        });
+        document.querySelectorAll("[data-contact]").forEach((button) => button.addEventListener("click", () => document.querySelector("#contact").showModal()));
+        document.querySelectorAll(".close").forEach((button) => button.addEventListener("click", () => button.closest("dialog").close()));
+        document.querySelector("form").addEventListener("submit", (event) =>
+        {
+            event.preventDefault();
+            document.querySelector("#result").textContent = "Your inquiry is prepared on this device. Nothing has been sent.";
+            event.currentTarget.hidden = true;
+        });
+    </script>
+</body>
+</html>

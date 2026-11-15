@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Michael Smith — creative practice, digital interactions, selected work and visual explorations.">
+    <title>Michael Smith — Digital Interactions</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="loader" aria-label="Loading portfolio"><span>PORTFOLIO</span><em id="loading-word">Design</em><strong id="loading-count">000</strong><div class="loading-track"><div id="loading-progress"></div></div></div>
+    <nav class="navigation" aria-label="Main"><div class="nav-pill">
+        <a class="logo" href="#home" aria-label="Michael Smith home"><span>JA</span></a><i></i>
+        <a class="active" href="#home">Home</a><a href="#work">Work</a><button id="resume">Resume</button><i></i>
+        <a class="say-hi" href="#contact">Say hi <span>↗</span></a>
+    </div></nav>
+    <main>
+        <section class="hero" id="home">
+            <div class="cosmos"></div><div class="hero-shade"></div>
+            <div class="hero-content">
+                <p class="eyebrow blur-in">COLLECTION '26</p>
+                <h1 class="name-reveal">Michael Smith</h1>
+                <p class="role-line blur-in">A <em id="role">Creative</em> lives in Chicago.</p>
+                <p class="intro blur-in">Designing seamless digital interactions by focusing on the unique nuances which bring systems to life.</p>
+                <div class="actions blur-in"><a class="button solid" href="#work">See Works</a><a class="button outline" href="#contact">Reach out...</a></div>
+            </div>
+            <a class="scroll-hint" href="#work">SCROLL<span><i></i></span></a>
+        </section>
+        <section class="section work" id="work">
+            <header class="section-head reveal"><div><p class="eyebrow rule">Selected Work</p><h2>Featured <em>projects</em></h2><p>A selection of projects I've worked on, from concept to launch.</p></div><button class="button outline view-all">View all work →</button></header>
+            <div class="bento">
+                <button class="project reveal" data-project="0"><img src="automotive.svg" alt="Original sculptural automotive motion study"><span>View — <em>Automotive Motion</em></span><b>01 / AUTOMOTIVE MOTION</b></button>
+                <button class="project reveal" data-project="1"><img src="architecture.svg" alt="Original geometric urban architecture study"><span>View — <em>Urban Architecture</em></span><b>02 / URBAN ARCHITECTURE</b></button>
+                <button class="project reveal" data-project="2"><img src="perspective.svg" alt="Original human perspective illustration"><span>View — <em>Human Perspective</em></span><b>03 / HUMAN PERSPECTIVE</b></button>
+                <button class="project reveal" data-project="3"><img src="identity.svg" alt="Original electric-blue graphic identity"><span>View — <em>Brand Identity</em></span><b>04 / BRAND IDENTITY</b></button>
+            </div>
+        </section>
+        <section class="section journal" id="journal">
+            <header class="section-head reveal"><div><p class="eyebrow rule">Journal</p><h2>Recent <em>thoughts</em></h2><p>Notes from the space between design and technology.</p></div><button class="button outline" id="all-journal">View all →</button></header>
+            <div class="entries"></div>
+        </section>
+        <section class="explorations" id="explorations">
+            <div class="pinned"><p class="eyebrow">Explorations</p><h2>Visual <em>playground</em></h2><p>Little experiments. Unexpected directions.<br>A place to follow curiosity.</p><a class="button outline" href="https://dribbble.com/" target="_blank" rel="noopener">Dribbble ↗</a></div>
+            <div class="parallax-columns"><div></div><div></div></div>
+        </section>
+        <section class="section stats reveal"><div><strong>20+</strong><span>Years Experience</span></div><div><strong>95+</strong><span>Projects Done</span></div><div><strong>200%</strong><span>Satisfied Clients</span></div></section>
+        <footer id="contact">
+            <div class="footer-cosmos"></div>
+            <div class="marquee" aria-label="Building the future"><div aria-hidden="true"></div></div>
+            <div class="contact-inner"><p class="eyebrow">Have something in mind?</p><h2>Let's make it <em>matter.</em></h2><a class="button outline" href="mailto:hello@michaelsmith.com">hello@michaelsmith.com ↗</a>
+                <div class="footer-bar"><div><a href="https://x.com/" target="_blank" rel="noopener">Twitter</a><a href="https://linkedin.com/" target="_blank" rel="noopener">LinkedIn</a><a href="https://dribbble.com/" target="_blank" rel="noopener">Dribbble</a><a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></div><span class="available"><i></i>Available for projects</span></div>
+            </div>
+        </footer>
+    </main>
+    <dialog id="detail"><button class="close" aria-label="Close detail">×</button><p class="eyebrow" id="detail-label"></p><h2 id="detail-title"></h2><img id="detail-image" alt="Original portfolio concept artwork" hidden><div id="detail-copy"></div></dialog>
+    <dialog id="lightbox"><button class="close" aria-label="Close lightbox">×</button><img id="lightbox-image" alt="Original visual exploration"><div><button id="previous" aria-label="Previous exploration">←</button><span id="lightbox-count"></span><button id="next" aria-label="Next exploration">→</button></div></dialog>
+    <script src="app.js"></script>
+</body>
+</html>

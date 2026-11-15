@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#fd2601">
+    <title>Olivia — New design era</title>
+    <style>
+        * { box-sizing: border-box; }body { margin: 0; color: white; font-family: Arial, sans-serif; background: #fd2601; }::selection { background: white; color: #fd2601; }button, input, textarea, select { font: inherit; }button { cursor: pointer; }a { color: inherit; text-decoration: none; }:focus-visible { outline: 2px solid white; outline-offset: 6px; }
+        .hero { min-height: 900px; height: 100svh; position: relative; overflow: hidden; background: linear-gradient(#fd2601 5%, #f35712 70%, #f37e1c); display: flex; flex-direction: column; }.hero::before, .hero::after { content: ""; position: absolute; width: 600px; height: 300px; border-radius: 50%; background: #f4791b; filter: blur(80px); mix-blend-mode: screen; opacity: .6; bottom: -30px; left: -150px; }.hero::after { left: auto; right: -100px; width: 300px; }.ambient { position: absolute; top: 16%; left: 50%; transform: translateX(-50%); font: 30vw Impact, "Arial Narrow", sans-serif; letter-spacing: -10px; opacity: .08; filter: blur(4px); pointer-events: none; }
+        header { padding: 34px 42px; display: flex; justify-content: space-between; align-items: center; gap: 20px; position: relative; z-index: 4; }.logo { display: flex; align-items: center; gap: 10px; font-size: 15px; letter-spacing: 1.8px; font-weight: bold; }.star { width: 24px; height: 24px; }.star path { stroke: white; stroke-width: 4; }nav { display: flex; gap: 29px; }nav button { color: white; border: 0; background: none; padding: 8px 0; font-size: 10px; letter-spacing: 1.2px; }nav button:hover { opacity: .7; }.hire { display: flex; align-items: center; gap: 15px; border: 0; color: white; background: none; font-size: 10px; letter-spacing: 1px; }.circle { width: 39px; height: 39px; display: grid; place-items: center; border: 1px solid #ffffff99; border-radius: 50%; transition: background .2s, color .2s; font-size: 21px; }.hire:hover .circle { background: white; color: #fd2601; }
+        .composition { position: relative; height: 510px; flex: 1; min-height: 490px; margin-top: 40px; display: flex; align-items: center; justify-content: center; }h1 { font: 400 clamp(70px, 13.1vw, 190px)/1 Impact, "Arial Narrow", "Arial Black", sans-serif; white-space: nowrap; letter-spacing: -.5vw; margin: -20px 0 0; z-index: 1; transform: scaleX(.91); }.portrait { width: 365px; height: 540px; position: absolute; left: 50%; top: -25px; transform: translateX(-50%) rotate(-4deg); pointer-events: none; z-index: 2; filter: drop-shadow(15px 20px 30px #a3230044); }
+        .index { position: absolute; left: 44px; top: 55px; font-size: 9px; letter-spacing: 2px; }.vertical { position: absolute; right: 41px; top: 15px; writing-mode: vertical-rl; font-size: 9px; letter-spacing: 2px; }.hero-bottom { position: relative; z-index: 3; padding: 0 44px; display: flex; align-items: end; justify-content: space-between; margin-top: 15px; }.intro { width: 315px; font-size: 14px; line-height: 1.7; margin: 0; }.intro small { display: block; font-size: 9px; letter-spacing: 2px; margin-bottom: 12px; opacity: .8; }.intro span { display: block; margin-left: 22px; }.tagline { text-align: right; font-size: 14px; letter-spacing: .5px; line-height: 1.5; }.tagline small { display: block; margin-top: 15px; font-size: 9px; letter-spacing: 2px; opacity: .8; }.brands { margin: 54px 44px 0; padding: 26px 0 30px; border-top: 1px solid #ffffff4d; display: flex; align-items: center; justify-content: space-between; gap: 20px; opacity: .9; }.brands span { font: 27px Georgia, serif; letter-spacing: 2px; }.brands span:nth-child(4) { font-family: Arial, sans-serif; font-weight: bold; }.brands span:last-child { font: 20px Arial, sans-serif; letter-spacing: 4px; }
+        footer { display: flex; justify-content: space-between; gap: 20px; padding: 18px 44px; background: #f37e1c; font-size: 9px; line-height: 1.6; }footer a { text-decoration: underline; }
+        dialog { color: white; background: #e83a0e; width: min(660px, calc(100% - 32px)); max-height: 88svh; overflow: auto; border: 1px solid #ffffff88; padding: 43px; }dialog::backdrop { background: #83230288; backdrop-filter: blur(12px); }dialog h2 { font: 52px/1 Impact, "Arial Narrow", sans-serif; text-transform: uppercase; margin: 25px 0; }dialog p { font-size: 14px; line-height: 1.8; }dialog h3 { font: 25px Georgia, serif; }.close { position: absolute; right: 14px; top: 10px; border: 0; background: none; color: white; padding: 8px; font-size: 25px; }.tabs { display: flex; gap: 8px; flex-wrap: wrap; }.tabs button, .action { background: none; color: white; border: 1px solid #ffffff88; padding: 12px 17px; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; }.tabs button[aria-selected="true"], .action { background: white; color: #e83a0e; }.action { margin-top: 15px; }label { display: block; font-size: 11px; margin: 18px 0; }input, textarea, select { display: block; width: 100%; margin-top: 9px; padding: 12px; border: 1px solid #ffffff88; border-radius: 0; color: white; background: #ffffff0f; }select option { background: #c83612; }textarea { resize: vertical; }.eyebrow { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; }[hidden] { display: none !important; }
+        @media (max-width: 750px)
+        {
+            .hero { min-height: 1020px; height: auto; }header { padding: 24px; }.logo { font-size: 11px; letter-spacing: .8px; }.star { width: 19px; }.hire { gap: 8px; font-size: 8px; }.circle { width: 32px; height: 32px; }nav { display: none; }.composition { height: 530px; min-height: 530px; margin-top: 25px; display: block; flex: none; }h1 { white-space: normal; font-size: 114px; line-height: 1.1; text-align: center; letter-spacing: -4px; margin: 8px 0 0; transform: scaleX(.9); }h1 span { display: block; }.portrait { width: 265px; height: 390px; top: 105px; }.ambient { top: 200px; font-size: 70vw; }.index { top: -7px; left: 24px; font-size: 8px; }.vertical { top: -7px; right: 24px; font-size: 8px; }.hero-bottom { padding: 0 24px; margin-top: -1px; display: block; }.intro { width: auto; max-width: 315px; font-size: 13px; }.tagline { margin: 30px 0 0; text-align: left; font-size: 13px; }.tagline br { display: none; }.tagline small { margin-top: 12px; }.brands { flex-wrap: wrap; justify-content: center; margin: 28px 24px 0; padding: 23px 0; gap: 18px 25px; }.brands span { font-size: 21px; }.brands span:last-child { font-size: 15px; }footer { padding: 18px 24px; font-size: 8px; }dialog { padding: 34px 24px; }dialog h2 { font-size: 44px; }
+        }
+        @media (max-width: 750px)
+        {
+            h1 { z-index: auto; transform: none; font-size: 105px; }
+            h1 span:last-child { position: relative; z-index: 3; margin-top: 37px; }
+        }
+        @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+    </style>
+</head>
+<body>
+    <main class="hero">
+        <div class="ambient" aria-hidden="true">OLIVIA</div>
+        <header><a class="logo" href="#home"><svg class="star" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 0v24M0 12h24M3.5 3.5l17 17m-17 0l17-17"/></svg>VIKTORODDY</a><nav aria-label="Portfolio"><button data-panel="Projects">PROJECTS</button><button data-panel="Blog">BLOG</button><button data-panel="About">ABOUT</button><button data-panel="Resume">RESUME</button></nav><button class="hire" id="hire">// HIRE ME <span class="circle" aria-hidden="true">↗</span></button></header>
+        <section class="composition" id="home" aria-label="Olivia, new design era"><span class="index">INDEPENDENT DESIGNER / 2026</span><span class="vertical">AVAILABLE FOR SELECT PROJECTS</span><h1><span>NEW</span> <span>DESIGN</span> <span>ERA</span></h1>
+            <svg class="portrait" viewBox="0 0 365 540" role="img" aria-label="Original brush-cut illustration of Olivia in oversized glasses">
+                <defs><mask id="brush"><path d="M78 11 267 2 302 35 289 58 327 88 311 111 335 141 314 170 345 196 326 236 346 268 317 301 351 334 334 375 356 405 344 454 356 493 320 537 37 530 8 496 29 460 12 429 35 391 18 359 41 326 22 288 43 257 30 225 53 187 35 151 58 118 46 84 71 60 60 31Z" fill="white"/></mask><linearGradient id="coat" x2="1" y2="1"><stop stop-color="#ffefe0"/><stop offset=".6" stop-color="#e4bca3"/><stop offset="1" stop-color="#fff3df"/></linearGradient><linearGradient id="skin" x2="1" y2="1"><stop stop-color="#f8c5a5"/><stop offset="1" stop-color="#d47a55"/></linearGradient></defs>
+                <g mask="url(#brush)">
+                    <path d="M64 294C20 181 35 43 139 20c101-23 181 54 164 155l-16 149Z" fill="#6b2819"/>
+                    <path d="m148 240-5 72-73 33 97 120 102-124-61-32-3-74Z" fill="url(#skin)"/>
+                    <path d="M81 326 145 300l33 58 38-59 70 30c46 22 70 103 83 211H-7c13-123 33-193 88-214Z" fill="url(#coat)"/>
+                    <path d="m143 303-27 53 38 56-23 26 45 102 2-183Z" fill="#ffead5" stroke="#b88b73"/>
+                    <path d="m216 302 26 53-36 56 24 26-51 103V357Z" fill="#f3d9be" stroke="#b88b73"/>
+                    <path d="M98 98c-20 34-4 125 15 155 18 28 54 50 80 37 36-19 69-93 60-151l-25-57Z" fill="url(#skin)"/>
+                    <path d="M81 141c34-20 70-35 91-82 18 43 54 61 85 77l21-48-61-58-93 13-39 49Z" fill="#592316"/>
+                    <path d="M95 143c15-12 44-15 64-5l-3 40c-26 19-51 7-56-6Zm86-6c19-12 50-7 66 8l-9 29c-14 17-44 17-57 2Z" fill="#e84e22" fill-opacity=".72" stroke="#fff1d9" stroke-width="8"/>
+                    <path d="m159 145 22-1m-83 2-19-4m167 5 17 4" stroke="#fff1d9" stroke-width="6"/><path d="m174 161-7 40 14 2" fill="none" stroke="#b65c3c" stroke-width="3"/><path d="M151 230c14 8 30 10 43 0" fill="none" stroke="#a13e2b" stroke-width="4"/><path d="M147 221c17-2 30 1 43 7" fill="none" stroke="#e8a381" stroke-width="3"/>
+                    <ellipse cx="106" cy="210" rx="8" ry="15" fill="none" stroke="#fff0d6" stroke-width="4"/><path d="M83 338 58 540m236-198 26 198" stroke="#b78870" fill="none" stroke-width="2"/><path d="m183 395 2 145" stroke="#aa7d67" stroke-width="2"/><circle cx="185" cy="458" r="4" fill="#ac8069"/>
+                    <path d="M65 180C31 101 87 30 149 31M275 105c-2-29-24-54-57-67" stroke="#ae4d29" stroke-width="7" fill="none"/>
+                </g>
+            </svg>
+        </section>
+        <div class="hero-bottom"><p class="intro"><small>// A LITTLE ABOUT ME</small><span>I'm Olivia — a freelance UI/UX designer turning brave ideas into brands you can feel.</span></p><p class="tagline">// DESIGN THAT<br> SPEAKS YOUR BRAND<small>STRATEGY · IDENTITY · EXPERIENCE</small></p></div>
+        <div class="brands" aria-label="Illustrative brand inspirations"><span>GUCCI</span><span>ZARA</span><span>VOGUE</span><span>SONY</span><span>ZALORA</span></div>
+    </main>
+    <footer><span>© 2026 Olivia · Fictional designer concept. Brand names are inspirations, not client endorsements.</span><span style="display:flex;gap:12px;flex-wrap:wrap"><button data-panel="Projects" style="border:0;background:none;color:white;padding:0;font:inherit">Explore work ↗</button><button data-panel="Blog" style="border:0;background:none;color:white;padding:0;font:inherit">Blog</button><button data-panel="About" style="border:0;background:none;color:white;padding:0;font:inherit">About</button><button data-panel="Resume" style="border:0;background:none;color:white;padding:0;font:inherit">Resume</button><a href="NOTICE">Credits &amp; license</a></span></footer>
+    <dialog id="panel" aria-labelledby="panel-title"><button class="close" aria-label="Close portfolio panel">×</button><span class="eyebrow">// THE DESIGN PRACTICE</span><h2 id="panel-title"></h2><div id="panel-content"></div></dialog>
+    <dialog id="contact" aria-labelledby="contact-title"><button class="close" aria-label="Close inquiry">×</button><span class="eyebrow">// LET'S MAKE SOME NOISE</span><h2 id="contact-title">Your next big idea.</h2><p>Create a local inquiry. Nothing is sent from this concept page.</p><form><label>YOUR EMAIL<input type="email" name="email" required></label><label>PROJECT TYPE<select name="service"><option>UI/UX Design</option><option>Brand Identity</option><option>Digital Art Direction</option></select></label><label>THE BIG IDEA<textarea name="idea" rows="3" required minlength="10"></textarea></label><button class="action" type="submit">PREPARE INQUIRY ↗</button></form><p id="result" role="status"></p></dialog>
+    <script>
+        const panel = document.querySelector("#panel");
+        const contact = document.querySelector("#contact");
+        const projectData =
+        {
+            Forma: "A bold visual identity for an independent furniture studio. A modular grid and expressive type system make room for the objects to speak.",
+            Movo: "A clearer, more human fitness experience. An energetic interface connects daily movement with meaningful progress.",
+            Index: "An editorial platform for curious minds. Strong hierarchy and calm navigation keep the stories at the center."
+        };
+        function downloadResume()
+        {
+            const text = "OLIVIA / UI & UX DESIGNER\nFictional portfolio concept\n\nPractice: Strategy, identity and digital experience.\nSelected concept work: Forma / Movo / Index.\nTools: Research, prototyping, accessible interface design.\n\nThis is a demo resume, not a verified professional record.";
+            const url = URL["createObjectURL"](new Blob([text], { type: "text/plain" }));
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "olivia-concept-resume.txt";
+            link.click();
+            setTimeout(() => URL["revokeObjectURL"](url), 1000);
+        }
+        function showProject(name)
+        {
+            document.querySelector("#case-title").textContent = name;
+            document.querySelector("#case-copy").textContent = projectData[name];
+            document.querySelectorAll(".tabs button").forEach((button) => button.setAttribute("aria-selected", String(button.textContent === name)));
+        }
+        document.querySelectorAll("[data-panel]").forEach((button) => button.addEventListener("click", () =>
+        {
+            const name = button.dataset.panel;
+            document.querySelector("#panel-title").textContent = name;
+            const body = document.querySelector("#panel-content");
+            if (name === "Projects")
+            {
+                body.innerHTML = '<div class="tabs" role="tablist" aria-label="Project studies"></div><h3 id="case-title"></h3><p id="case-copy"></p><p class="eyebrow">Original fictional concept studies</p>';
+                Object.keys(projectData).forEach((project) =>
+                {
+                    const tab = document.createElement("button");
+                    tab.setAttribute("role", "tab");
+                    tab.textContent = project;
+                    tab.addEventListener("click", () => showProject(project));
+                    body.querySelector(".tabs").append(tab);
+                });
+                showProject("Forma");
+            }
+            else if (name === "Resume")
+            {
+                body.innerHTML = "<p>Olivia / Freelance UI/UX designer. Strategy, identity and digital experiences with clarity and character.</p><p>This fictional concept resume is available as a plain-text file.</p>";
+                const download = document.createElement("button");
+                download.className = "action";
+                download.textContent = "Download concept resume";
+                download.addEventListener("click", downloadResume);
+                body.append(download);
+            }
+            else
+            {
+                body.innerHTML = name === "Blog" ? "<h3>Make it mean something.</h3><p>Field note / Bold isn't just a color or a type size. It's knowing what you stand for, then removing everything that gets in the way.</p>" : "<h3>Clarity with character.</h3><p>I'm Olivia, an independent designer working where strategy, identity and digital experience meet. I partner closely with ambitious teams to make complex ideas feel instinctive.</p><p>Available for select projects. Fictional portfolio concept.</p>";
+            }
+            panel.showModal();
+        }));
+        document.querySelector("#hire").addEventListener("click", () => contact.showModal());
+        document.querySelectorAll(".close").forEach((button) => button.addEventListener("click", () => button.closest("dialog").close()));
+        document.querySelector("form").addEventListener("submit", (event) =>
+        {
+            event.preventDefault();
+            const data = new FormData(event.currentTarget);
+            document.querySelector("#result").textContent = `${data.get("service")} inquiry prepared for ${data.get("email")}. Your idea is ready; nothing has been sent.`;
+            event.currentTarget.hidden = true;
+        });
+    </script>
+</body>
+</html>

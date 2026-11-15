@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Adam Roberts - Design &amp; Engineering</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="background" aria-label="Original flowing cinematic ribbon artwork"></canvas>
+    <div class="content">
+        <nav class="top-nav" aria-label="Main">
+            <svg width="28" height="28" viewBox="0 0 256 256" aria-label="Grilled Pixels"><path d="M160 88 194 34 216 0H256V40L221.5 93.5 200 128H256V256H96V168L64.246 220 40 256H0V216L34 162 56 128H0V0H160Z" fill="white"/></svg>
+            <div class="desktop-links"><a href="#">ABOUT</a><a href="#">PROCESS</a><a href="#">PROJECTS</a><a href="#">CATALOG</a><a href="#">D.O.T</a><a href="#">TALK</a></div>
+            <button id="open-menu" aria-label="Open menu" aria-expanded="false"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" aria-hidden="true"><path d="M3 7h18M3 17h18"/></svg></button>
+        </nav>
+        <div class="meta-grid">
+            <div><h2>ADAM<br><span class="pixel surname">ROBERTS</span></h2><p class="asterisk">*</p><p class="pixel blurb">Grilled Pixels is my<br>personal brand - I came up<br>with it in 2004 based on<br>"cooking up ideas"</p></div>
+            <div class="right-mobile"><h2>DESIGN &amp;<br><span class="pixel surname">ENGINEERING</span></h2></div>
+            <div><h3 class="pixel">What I Do</h3><p class="what">I create the top 1% of experiences for brands and digital products</p></div>
+            <div class="right-mobile"><h3 class="pixel">Services</h3><ul><li>Branding</li><li>Creative Direction &amp; Strategy</li><li>UX/UI Design</li><li>Web Development (React/Nextjs)</li><li>3D, WebGL / Photography</li><li>Video &amp; Animation</li></ul></div>
+        </div>
+        <div class="spacer"></div>
+        <section class="bottom">
+            <div class="bottom-grid">
+                <h1>I BRING THE<br><span class="pixel">UNEXPECTED</span> TO<br>BRAND &amp; DIGITAL<br><span class="pixel">EXPERIENCES</span></h1>
+                <div class="right-bottom"><button id="showreel"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="m3 1 10 6-10 6Z" fill="white"/></svg>PLAY SHOWREEL</button><div class="awards"><span><strong>FWA</strong><small>x1</small></span><span><b>W.</b><small>x7</small></span><span><strong class="css-award">CSSDesignAwards</strong><small>x22</small></span></div></div>
+            </div>
+            <footer><p>Open to freelance, contract or full-time. <button id="schedule">Schedule a call</button></p><p>5 full cases • 82 archive fragments • 22 catalog items</p></footer>
+        </section>
+    </div>
+    <dialog id="menu" aria-label="Mobile navigation">
+        <header><svg width="28" height="28" viewBox="0 0 256 256" aria-label="Grilled Pixels"><path d="M160 88 194 34 216 0H256V40L221.5 93.5 200 128H256V256H96V168L64.246 220 40 256H0V216L34 162 56 128H0V0H160Z" fill="white"/></svg><button class="close" aria-label="Close menu">×</button></header>
+        <nav><a href="#">ABOUT</a><a href="#">PROCESS</a><a href="#">PROJECTS</a><a href="#">CATALOG</a><a href="#">D.O.T</a><a href="#">TALK</a></nav>
+    </dialog>
+    <dialog id="reel"><button class="close" aria-label="Close showreel">×</button><p class="pixel">ORIGINAL MOTION STUDY / LOCAL SHOWREEL</p><canvas id="reel-canvas" width="1000" height="600" aria-label="Original animated sculptural ribbon study"></canvas><button id="pause">Pause showreel</button></dialog>
+    <dialog id="call"><button class="close" aria-label="Close call request">×</button><h2>LET'S TALK.</h2><p>Local call-request preview. Nothing will be sent.</p><form><label>Email<input name="email" type="email" required></label><label>What are you building?<textarea name="project" required></textarea></label><button type="submit">Preview request ↗</button><p role="status" id="feedback"></p></form></dialog>
+    <script src="app.js"></script>
+</body>
+</html>

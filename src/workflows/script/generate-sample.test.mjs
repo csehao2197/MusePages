@@ -215,7 +215,7 @@ test("page and return links work when the host lists directories instead of serv
 
 test("prompt codebox preserves text, escapes markup, and fits desktop and mobile", async () =>
 {
-    const prompt = "# Prompt\n中文 & \"quotes\" 'text'\n</code></pre><script>window.injected = true</script>\n" + "long-content-".repeat(200);
+    const prompt = "# Prompt\n中文 & \"quotes\" 'text'\n</code></pre><script>window.injected = true</script>\n" + "long-content-".repeat(200) + "\nPrompt line".repeat(100);
     const title = '<img src="invalid" onerror="window.injected = true">';
     const browser = await chromium.launch(
     {
@@ -238,11 +238,86 @@ test("prompt codebox preserves text, escapes markup, and fits desktop and mobile
             assert.equal(await page.evaluate(() => "injected" in window), false);
             assert.equal(await page.locator("a").getAttribute("href"), "../../../index.html");
             assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), true);
+            assert.equal(await page.locator("pre").evaluate((element) =>
+                element.scrollHeight <= element.clientHeight && element.scrollWidth <= element.clientWidth), true);
+            assert.ok(await page.locator("pre").evaluate((element) => element.clientHeight) > 800);
+            const copy = page.getByRole("button", { name: "Copy prompt" });
+            assert.equal(await copy.innerText(), "");
+            assert.equal(await copy.locator("svg").count(), 1);
+            const control = await copy.boundingBox();
+            const header = await page.locator(".codebox-header").boundingBox();
+            assert.ok(control.x + control.width <= header.x + header.width);
+            assert.ok(control.x > header.x + header.width / 2);
             await page.getByRole("region",
             {
                 name: "Prompt text"
             }).focus();
             assert.equal(await page.locator("pre").evaluate((element) => element === document.activeElement), true);
+        }
+    }
+    finally
+    {
+        await browser.close();
+    }
+});
+
+test("prompt copy icon copies the full plain text using the clipboard", async () =>
+{
+    const prompt = "# Full prompt\n<markup> & \"quotes\"\n" + "Long prompt line\n".repeat(100);
+    const browser = await chromium.launch({ headless: true });
+    try
+    {
+        const context = await browser.newContext(
+        {
+            permissions: ["clipboard-read", "clipboard-write"]
+        });
+        const page = await context.newPage();
+        await page.route("http://localhost/prompt.html", (route) => route.fulfill(
+        {
+            contentType: "text/html",
+            body: PromptPageRenderer.renderPromptPage(prompt, "Copy test")
+        }));
+        await page.goto("http://localhost/prompt.html");
+        const copy = page.getByRole("button", { name: "Copy prompt" });
+        await copy.focus();
+        await page.keyboard.press("Enter");
+        await page.getByRole("status").filter({ hasText: "Prompt copied." }).waitFor();
+        const copied = await page.evaluate(() => navigator.clipboard.readText());
+        assert.equal(copied.replace(/\r\n?/g, "\n"), prompt);
+        assert.equal(await copy.getAttribute("title"), "Prompt copied");
+    }
+    finally
+    {
+        await browser.close();
+    }
+});
+
+test("prompt copy supports a legacy clipboard and reports failed copies", async () =>
+{
+    const prompt = "# Prompt\n<literal> & text\n";
+    const browser = await chromium.launch({ headless: true });
+    try
+    {
+        const page = await browser.newPage();
+        for (const succeeds of [true, false])
+        {
+            await page.setContent(PromptPageRenderer.renderPromptPage(prompt, "Copy test"));
+            await page.evaluate((succeeds) =>
+            {
+                Object.defineProperty(navigator, "clipboard", { configurable: true, value: undefined });
+                document.execCommand = (command) =>
+                {
+                    window.copiedText = command === "copy" ? document.activeElement.value : null;
+                    return succeeds;
+                };
+            }, succeeds);
+            const copy = page.getByRole("button", { name: "Copy prompt" });
+            await copy.click();
+            assert.equal(await page.evaluate(() => window.copiedText), prompt);
+            assert.equal(await page.getByRole("status").textContent(), succeeds ?
+                "Prompt copied." : "Unable to copy. Select the prompt text to copy it.");
+            assert.equal(await page.locator("textarea").count(), 0);
+            assert.equal(await copy.evaluate((element) => element === document.activeElement), true);
         }
     }
     finally

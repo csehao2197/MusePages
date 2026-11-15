@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ffffff">
+    <title>Aethera — Beyond silence</title>
+    <style>
+        :root { --ink: #111; --muted: #6f6f6f; --line: #dfdfdb; }
+        * { box-sizing: border-box; }
+        body { margin: 0; color: var(--ink); background: white; font-family: Arial, sans-serif; }
+        button, input, select, textarea { font: inherit; }
+        button, a { -webkit-tap-highlight-color: transparent; }
+        button { cursor: pointer; }
+        a { color: inherit; text-decoration: none; }
+        :focus-visible { outline: 2px solid #576878; outline-offset: 5px; }
+        .stage { min-height: 100svh; position: relative; overflow: hidden; }
+        header { max-width: 1330px; margin: auto; padding: 27px 48px; display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 3; }
+        .logo { font: 38px Georgia, serif; letter-spacing: -2px; }
+        sup { font: 12px Arial, sans-serif; vertical-align: top; display: inline-block; margin: 7px 0 0 3px; letter-spacing: 0; }
+        nav { display: flex; gap: 29px; font-size: 13px; align-items: center; }
+        nav button { background: none; border: 0; color: var(--muted); padding: 8px 0; }
+        nav a { padding: 8px 0; }
+        nav button:hover { color: black; }
+        .pill { border: 1px solid #111; border-radius: 40px; background: #111; color: white; padding: 14px 25px; transition: transform .25s; }
+        .pill:hover { transform: scale(1.03); }
+        .menu { display: none; background: white; border: 1px solid var(--line); border-radius: 30px; padding: 10px 16px; }
+        main { position: relative; z-index: 1; text-align: center; padding: 65px 24px 260px; }
+        .eyebrow { font-size: 10px; text-transform: uppercase; letter-spacing: 2.8px; margin: 0 0 29px; }
+        .eyebrow::before { content: ""; display: inline-block; width: 5px; height: 5px; background: #718477; border-radius: 50%; margin: 0 10px 2px 0; }
+        h1 { font: normal clamp(58px, 8.3vw, 106px)/.97 Georgia, serif; letter-spacing: -4px; max-width: 1040px; margin: auto; animation: rise .9s both; }
+        h1 em { font-weight: normal; color: var(--muted); }
+        .intro { max-width: 555px; font-size: 15px; line-height: 1.8; color: var(--muted); margin: 29px auto 0; animation: rise .9s .15s both; }
+        main .pill { margin-top: 32px; padding: 19px 49px; font-size: 14px; animation: rise .9s .3s both; }
+        .art { position: absolute; width: 130%; height: 490px; left: -15%; bottom: -65px; pointer-events: none; z-index: 0; }
+        .ribbon { transform-origin: 50% 70%; animation: breathe 13s ease-in-out infinite alternate; }
+        .edition { position: absolute; left: 48px; bottom: 42px; z-index: 2; font-size: 10px; letter-spacing: 1px; color: #777; }
+        .scroll-note { position: absolute; right: 48px; bottom: 40px; z-index: 2; font: italic 15px Georgia, serif; }
+        footer { padding: 18px 48px; font-size: 10px; color: #777; border-top: 1px solid #eee; display: flex; justify-content: space-between; }
+        footer a { text-decoration: underline; }
+        dialog { width: min(610px, calc(100% - 32px)); max-height: 88svh; border: 1px solid var(--line); border-radius: 3px; padding: 42px; color: var(--ink); overflow: auto; }
+        dialog::backdrop { background: #24292755; backdrop-filter: blur(9px); }
+        .close { position: absolute; right: 17px; top: 13px; border: 0; background: none; font-size: 24px; padding: 5px; }
+        dialog h2 { font: normal 44px/1.1 Georgia, serif; letter-spacing: -1.5px; margin: 16px 0; }
+        dialog p { color: var(--muted); line-height: 1.7; font-size: 14px; }
+        .panel-body article { padding: 18px 0; border-top: 1px solid var(--line); }
+        .panel-body h3 { font: normal 23px Georgia, serif; margin: 0; }
+        label { display: block; font-size: 12px; margin-top: 17px; }
+        input, select, textarea { width: 100%; padding: 13px; margin-top: 7px; background: #f8f8f6; border: 1px solid var(--line); border-radius: 0; }
+        textarea { resize: vertical; }
+        form .pill { margin-top: 22px; }
+        [hidden] { display: none !important; }
+        #confirmation { padding: 22px; background: #edf1ec; }
+        @keyframes rise { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes breathe { from { transform: translateY(10px) rotate(-3deg) scale(1); } to { transform: translateY(-18px) rotate(3deg) scale(1.04); } }
+        @media (max-width: 750px)
+        {
+            header { padding: 23px 23px; }
+            .logo { font-size: 32px; }
+            header > .pill { display: none; }
+            .menu { display: block; }
+            nav { display: none; position: absolute; right: 23px; left: 23px; top: 80px; background: #fff; padding: 23px; box-shadow: 0 12px 30px #0001; }
+            nav.open { display: flex; flex-direction: column; align-items: stretch; gap: 12px; }
+            nav button { text-align: left; }
+            main { padding: 69px 22px 280px; }
+            h1 { font-size: 59px; letter-spacing: -2.9px; }
+            .eyebrow { font-size: 8px; letter-spacing: 2px; margin-bottom: 25px; }
+            .intro { font-size: 13px; line-height: 1.8; max-width: 315px; }
+            main .pill { margin-top: 28px; }
+            .art { height: 350px; width: 220%; left: -60%; bottom: -14px; }
+            .edition { left: 23px; bottom: 25px; font-size: 8px; }
+            .scroll-note { right: 23px; bottom: 24px; font-size: 12px; }
+            footer { padding: 18px 23px; gap: 20px; line-height: 1.5; }
+            dialog { padding: 34px 25px; }
+            dialog h2 { font-size: 37px; }
+        }
+        @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+    </style>
+</head>
+<body>
+    <div class="stage">
+        <header>
+            <a class="logo" href="#home" aria-label="Aethera home">Aethera<sup>®</sup></a>
+            <button class="menu" aria-expanded="false" aria-controls="navigation">Menu +</button>
+            <nav id="navigation" aria-label="Main navigation">
+                <a href="#home" aria-current="page">Home</a>
+                <button data-panel="Studio">Studio</button><button data-panel="About">About</button>
+                <button data-panel="Journal">Journal</button><button data-journey>Reach Us</button>
+            </nav>
+            <button class="pill" data-journey>Begin Journey <span aria-hidden="true">↗</span></button>
+        </header>
+        <main id="home">
+            <p class="eyebrow">Independent minds. Enduring experiences.</p>            <h1>Beyond <em>silence,</em><br>we build <em>the eternal.</em></h1>
+            <p class="intro">Building platforms for brilliant minds, fearless makers, and thoughtful souls. Through the noise, we craft digital havens for deep work and pure flows.</p>
+            <button class="pill" data-journey>Begin Journey <span aria-hidden="true">↗</span></button>
+        </main>
+        <svg class="art" viewBox="0 0 1400 500" fill="none" aria-label="Original flowing silver glass ribbon" role="img">
+            <defs>
+                <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fafbf9"/><stop offset=".22" stop-color="#b5bfbe"/><stop offset=".35" stop-color="#eef3ef"/><stop offset=".5" stop-color="#667f83"/><stop offset=".54" stop-color="#fff"/><stop offset=".72" stop-color="#c5cecb"/><stop offset="1" stop-color="#fff"/></linearGradient>
+                <linearGradient id="edge"><stop stop-color="#bbc7c4" stop-opacity="0"/><stop offset=".5" stop-color="#8f9e9a"/><stop offset="1" stop-color="#fff"/></linearGradient>
+                <linearGradient id="veil" x2="0" y2="1"><stop stop-color="#fff"/><stop offset=".33" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity=".85"/></linearGradient>
+            </defs>
+            <g class="ribbon">
+                <path d="M-50 390C130 65 330 550 533 293S805-15 920 244s286 104 540-126v200c-230 184-405 211-536-33S746 168 570 367 160 220-50 480Z" fill="url(#glass)" stroke="#d7ddda"/>
+                <path d="M-20 394C175 105 344 565 552 311S801 44 913 263s322 88 537-119" stroke="url(#edge)" stroke-width="2"/>
+                <path d="M-50 445C158 165 330 610 558 361S800 90 907 302s314 82 550-110" stroke="#fff" stroke-width="2"/>
+            </g>
+            <path fill="url(#veil)" d="M0 0h1400v500H0z"/>
+        </svg>
+        <span class="edition">DIGITAL SANCTUARIES / EST. 2024</span><span class="scroll-note">A quieter kind of extraordinary.</span>
+    </div>
+    <footer><span>© Aethera Studio · Concept experience</span><a href="NOTICE">Credits &amp; license</a></footer>
+    <dialog id="panel" aria-labelledby="panel-title"><button class="close" aria-label="Close panel">×</button><p class="eyebrow">Aethera / Field notes</p><h2 id="panel-title"></h2><div class="panel-body"></div><button class="pill" data-journey>Start a conversation ↗</button></dialog>
+    <dialog id="journey" aria-labelledby="journey-title">
+        <button class="close" aria-label="Close journey">×</button><p class="eyebrow">A thoughtful beginning</p><h2 id="journey-title">What are you imagining?</h2>
+        <p>A few words can open a world. Create a brief to keep; this demo sends nothing.</p>
+        <form><label>Your name<input name="name" autocomplete="name" required maxlength="80"></label><label>Email<input type="email" name="email" autocomplete="email" required></label><label>Your focus<select name="focus"><option>Digital experience</option><option>Brand world</option><option>Creative partnership</option></select></label><label>The idea<textarea name="idea" rows="3" required minlength="10" maxlength="1500" placeholder="Tell us what deserves to exist."></textarea></label><button class="pill" type="submit">Create my brief ↗</button></form>
+        <div id="confirmation" role="status" hidden><h3>Your next chapter starts here.</h3><p>Your brief is ready on this device. Nothing has been sent.</p><button class="pill" id="download">Download brief</button></div>
+    </dialog>
+    <script>
+        const menu = document.querySelector(".menu");
+        const navigation = document.querySelector("nav");
+        const panel = document.querySelector("#panel");
+        const journey = document.querySelector("#journey");
+        const content =
+        {
+            Studio: ["Space for what matters.", "An independent digital studio shaping calm, considered experiences. Strategy, identity and interaction, brought together with intention.", "Our practice", "Discover deeply. Make deliberately. Refine until every interaction feels inevitable."],
+            About: ["Thoughtful by nature.", "We partner with people building meaningful things. Small teams, open conversations and an enduring belief that clarity is the most generous form of design.", "Less, but with purpose", "Our process creates room for curiosity, craft and a little unexpected wonder."],
+            Journal: ["Notes from the quiet.", "Ideas on making a more thoughtful digital world.", "The architecture of attention", "A field note: generous space, legible rhythm and fewer interruptions help people find their flow."]
+        };
+        menu.addEventListener("click", () =>
+        {
+            const expanded = menu.getAttribute("aria-expanded") !== "true";
+            menu.setAttribute("aria-expanded", expanded);
+            navigation.classList.toggle("open", expanded);
+        });
+        document.querySelectorAll("[data-panel]").forEach((button) => button.addEventListener("click", () =>
+        {
+            const values = content[button.dataset.panel];
+            document.querySelector("#panel-title").textContent = values[0];
+            const body = document.querySelector(".panel-body");
+            body.replaceChildren();
+            [1, 2, 3].forEach((index) =>
+            {
+                const element = document.createElement(index === 2 ? "h3" : "p");
+                element.textContent = values[index];
+                body.append(element);
+            });
+            panel.showModal();
+        }));
+        document.querySelectorAll("[data-journey]").forEach((button) => button.addEventListener("click", () =>
+        {
+            panel.close();
+            if (!journey.open) journey.showModal();
+        }));
+        document.querySelectorAll(".close").forEach((button) => button.addEventListener("click", () => button.closest("dialog").close()));
+        let brief = "";
+        document.querySelector("form").addEventListener("submit", (event) =>
+        {
+            event.preventDefault();
+            const data = new FormData(event.currentTarget);
+            brief = `Aethera project brief\nName: ${data.get("name")}\nEmail: ${data.get("email")}\nFocus: ${data.get("focus")}\n\n${data.get("idea")}\n\nLocal demo brief; not submitted.`;
+            event.currentTarget.hidden = true;
+            document.querySelector("#confirmation").hidden = false;
+        });
+        document.querySelector("#download").addEventListener("click", () =>
+        {
+            const url = URL["createObjectURL"](new Blob([brief], { type: "text/plain" }));
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "aethera-project-brief.txt";
+            link.click();
+            setTimeout(() => URL["revokeObjectURL"](url), 1000);
+        });
+    </script>
+</body>
+</html>

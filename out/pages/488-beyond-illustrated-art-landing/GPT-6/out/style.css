@@ -1,0 +1,150 @@
+*
+{
+    box-sizing: border-box;
+}
+html
+{
+    scroll-behavior: smooth;
+}
+body
+{
+    margin: 0;
+    background: #000;
+    font-family: Arial, sans-serif;
+}
+.hero
+{
+    height: 120vh;
+    position: relative;
+    overflow: clip;
+    background: #ec612c;
+}
+.sticky
+{
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    z-index: 5;
+}
+.title
+{
+    position: absolute;
+    top: 3vh;
+    left: 50%;
+    transform: translateX(-50%);
+    font: 900 clamp(7.5rem, 27vw, 28rem)/.85 Impact, "Arial Black", sans-serif;
+    letter-spacing: -.05em;
+    user-select: none;
+}
+.title span, h1
+{
+    display: block;
+    margin: 0;
+    font: inherit;
+}
+.title span
+{
+    position: absolute;
+    inset: 0;
+}
+.title span:nth-child(1)
+{
+    color: #89cff0;
+    transform: translateY(36px);
+}
+.title span:nth-child(2)
+{
+    color: #ec612c;
+    transform: translateY(24px);
+}
+.title span:nth-child(3)
+{
+    color: #90ee90;
+    transform: translateY(12px);
+}
+h1
+{
+    position: relative;
+    color: white;
+}
+.character
+{
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 115%;
+    max-height: 115%;
+    min-height: 80%;
+    width: auto;
+    max-width: none;
+    z-index: 10;
+    pointer-events: none;
+}
+.words
+{
+    position: absolute;
+    inset: 0;
+    bottom: -8vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 6vw;
+    pointer-events: none;
+}
+.words > div
+{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.right
+{
+    text-align: right;
+}
+.words span
+{
+    text-transform: uppercase;
+    font: 500 clamp(1.6rem, 7vw, 9rem)/1.1 Arial, sans-serif;
+    color: #fffc;
+    transition: transform .05s linear;
+}
+.marquee
+{
+    background: white;
+    overflow: hidden;
+    padding: 32px 0;
+}
+.marquee-track
+{
+    display: flex;
+    width: max-content;
+    white-space: nowrap;
+    animation: marquee-scroll 18s linear infinite;
+}
+.marquee-track span
+{
+    flex-shrink: 0;
+    padding-right: .25em;
+    font: 900 clamp(2.5rem, 6vw, 5rem)/1 Impact, "Arial Black", sans-serif;
+    color: #ec612c;
+}
+@keyframes marquee-scroll
+{
+    to { transform: translateX(-50%); }
+}
+@media (max-width: 767px)
+{
+    .title { top: 2vh; }
+    .title span:nth-child(1) { transform: translateY(18px); }
+    .title span:nth-child(2) { transform: translateY(12px); }
+    .title span:nth-child(3) { transform: translateY(6px); }
+    .words { padding-inline: 3vw; }
+    .words > div { gap: 4px; }
+    .character { height: 102%; }
+    .marquee { padding-block: 24px; }
+}
+@media (prefers-reduced-motion: reduce)
+{
+    .marquee-track { animation-play-state: paused; }
+}

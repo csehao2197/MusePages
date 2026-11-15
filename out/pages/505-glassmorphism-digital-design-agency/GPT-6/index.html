@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#010101">
+    <title>Form &amp; Future — Your vision, our digital reality</title>
+    <style>
+        :root { --background: #010101; --accent: linear-gradient(135deg, #fa93fa, #c967e8, #983ad6); --muted: #a7a0b0; }
+        * { box-sizing: border-box; }body { margin: 0; color: white; background: var(--background); font-family: Arial, sans-serif; }a { color: inherit; text-decoration: none; }button, input, select { font: inherit; }button { cursor: pointer; }:focus-visible { outline: 2px solid #e8a4ff; outline-offset: 5px; }
+        header { padding: 28px 48px; display: flex; justify-content: space-between; align-items: center; gap: 25px; position: relative; z-index: 3; }.logo { font-size: 15px; font-weight: 600; letter-spacing: -.5px; display: flex; align-items: center; gap: 9px; }.logo i { width: 23px; height: 23px; display: inline-block; border: 1px solid #e69bfb; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); box-shadow: inset 0 0 10px #d975ee66; }nav { display: flex; align-items: center; gap: 30px; }nav button { border: 0; background: none; color: #aaa; font-size: 11px; padding: 8px 0; }nav button:hover { color: white; }.availability { color: #c1b6c7; font-size: 10px; display: flex; align-items: center; gap: 7px; }.availability::before { content: ""; height: 4px; width: 4px; background: #d896ee; border-radius: 50%; box-shadow: 0 0 8px #d896ee; }
+        main { position: relative; overflow: hidden; }.hero { text-align: center; padding-top: 55px; position: relative; z-index: 2; }.announcement { display: inline-flex; align-items: center; gap: 10px; background: #1c1b2426; border: 1px solid #ffffff20; padding: 6px 15px 6px 6px; border-radius: 50px; color: #cfc8d5; font-size: 11px; backdrop-filter: blur(8px); }.zap { display: grid; place-items: center; width: 24px; height: 24px; background: var(--accent); border: 1px solid #ffffff30; border-radius: 50%; box-shadow: 0 0 18px #c967e855; }.zap svg { height: 13px; width: 13px; }h1 { font-size: clamp(46px, 6.7vw, 82px); letter-spacing: -4px; line-height: 1.07; font-weight: 500; margin: 27px 20px 24px; background: linear-gradient(170deg, #fff 20%, #f5dcfd 52%, #cb80ed 92%); color: transparent; background-clip: text; }.subtitle { max-width: 500px; font-size: 14px; color: #c3bdc8; line-height: 1.75; margin: 0 auto; padding: 0 20px; }.cta-wrap { display: inline-block; margin-top: 28px; padding: 6px; border-radius: 100px; border: 1px solid #ffffff1f; background: #ffffff08; box-shadow: 0 0 40px #d773f51a; }.cta { padding: 8px 8px 8px 24px; border: 0; border-radius: 100px; background: #faf8fc; color: #19111d; display: flex; gap: 22px; align-items: center; font-size: 12px; font-weight: 600; transition: transform .2s; }.cta:hover { transform: translateY(-2px); }.cta i { font-style: normal; font-size: 22px; color: white; background: var(--accent); width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; }.small-note { color: #7e7189; font-size: 9px; margin-top: 15px; }
+        .motion-art { margin-top: -150px; position: relative; z-index: 1; pointer-events: none; }.motion-art svg { width: 100%; height: auto; display: block; }.horizon { transform-origin: 700px 360px; animation: pulse 10s ease-in-out infinite alternate; }.logo-cloud { position: relative; z-index: 3; margin-top: -22px; display: flex; align-items: center; padding: 27px 48px; border-top: 1px solid #ffffff0d; border-bottom: 1px solid #ffffff0d; background: #0003; backdrop-filter: blur(4px); gap: 35px; }.cloud-label { font-size: 11px; color: #aaa; flex: 0 0 145px; line-height: 1.6; border-right: 1px solid #ffffff20; }.slider { overflow: hidden; flex: 1; mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent); }.track { display: flex; width: max-content; gap: 70px; animation: slide 30s linear infinite; }.track span { font-size: 20px; letter-spacing: -.5px; color: #d1ccd7; white-space: nowrap; }.track span:nth-child(3n) { font-family: Georgia, serif; font-weight: 600; }.logo-cloud:hover .track { animation-play-state: paused; }
+        footer { display: flex; justify-content: space-between; align-items: center; gap: 30px; padding: 22px 48px; color: #6d6277; font-size: 9px; line-height: 1.7; }footer a { color: #9c8da9; text-decoration: underline; }
+        dialog { width: min(660px, calc(100% - 32px)); max-height: 90svh; overflow: auto; padding: 38px; border: 1px solid #b46bd155; border-radius: 22px; background: #130f19; color: white; box-shadow: 0 0 100px #a95cdc15; }dialog::backdrop { background: #050208b8; backdrop-filter: blur(13px); }.close { position: absolute; top: 11px; right: 16px; font-size: 24px; background: none; border: 0; color: #c8b7d6; padding: 8px; }.eyebrow { font-size: 9px; letter-spacing: 2px; color: #d596eb; text-transform: uppercase; }dialog h2 { font-size: 37px; font-weight: 500; letter-spacing: -1.5px; margin: 22px 0; }dialog p { color: #a99db4; font-size: 13px; line-height: 1.8; }label { display: block; font-size: 11px; margin: 19px 0; }select, input { width: 100%; padding: 12px; color: #eee; background: #211929; border: 1px solid #44334e; border-radius: 8px; margin-top: 8px; }.days, .times { display: flex; gap: 9px; margin: 20px 0; flex-wrap: wrap; }.days button, .times button { color: #cebddd; background: #ffffff05; border: 1px solid #493351; border-radius: 10px; padding: 13px; font-size: 11px; }.days button[aria-pressed="true"], .times button[aria-pressed="true"] { border-color: #e098fa; background: #a14cc133; color: white; }.times button:disabled { opacity: .35; cursor: not-allowed; }.action { border: 1px solid #d990f1; border-radius: 50px; padding: 13px 22px; color: #1b1120; background: #ecd6f5; font-size: 12px; }.action:disabled { opacity: .4; cursor: not-allowed; }.back { border: 0; background: none; color: #c394d9; padding: 10px 0; font-size: 11px; }.summary { background: #d780f00d; border-left: 2px solid #c967e8; padding: 17px; }.process-step { display: flex; gap: 20px; border-top: 1px solid #38283f; padding: 22px 0; }.process-step b { color: #c28bd5; font-size: 11px; }.process-step h3 { margin: 0 0 8px; font-weight: 500; font-size: 18px; }.process-step p { margin: 0; }[hidden] { display: none !important; }
+        @keyframes pulse { from { transform: scale(.96) translateY(3px); } to { transform: scale(1.05) translateY(-3px); } }@keyframes slide { to { transform: translateX(-50%); } }
+        @media (max-width: 700px)
+        {
+            header { padding: 25px 24px; }.logo { font-size: 13px; }nav { gap: 17px; }nav button { font-size: 10px; }.availability { display: none; }.hero { padding-top: 60px; }.announcement { font-size: 9px; }h1 { font-size: 49px; letter-spacing: -2.7px; margin: 28px 18px 22px; }.subtitle { max-width: 335px; font-size: 12px; }.cta-wrap { margin-top: 28px; }.cta { font-size: 11px; }.motion-art { margin-top: -30px; }.motion-art svg { width: 180%; max-width: none; margin-left: -40%; }.logo-cloud { margin-top: -12px; padding: 23px 24px; display: block; }.cloud-label { border: 0; text-align: center; font-size: 9px; margin-bottom: 22px; }.cloud-label br { display: none; }.track { gap: 42px; }.track span { font-size: 18px; }footer { padding: 22px 24px; display: block; font-size: 8px; }footer a { display: inline-block; margin-top: 9px; }dialog { padding: 33px 24px; }dialog h2 { font-size: 32px; }.days button { flex: 1; padding: 13px 9px; }.times button { padding: 11px; }
+        }
+        @media (max-width: 700px) { .cloud-label small::before { content: " · "; } }
+        @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+    </style>
+</head>
+<body>
+    <header><a class="logo" href="#home"><i aria-hidden="true"></i>form &amp; future</a><nav aria-label="Studio"><button data-info="Work">Work</button><button data-info="Process">Our process</button></nav><span class="availability">Open for possibility</span></header>
+    <main id="home">
+        <section class="hero"><div class="announcement"><span class="zap"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m9 1-6 8h5l-1 6 6-9H8l1-5Z" stroke="white" stroke-linejoin="round"/></svg></span>Used by founders. Loved by devs.</div><h1>Your Vision<br>Our Digital Reality.</h1><p class="subtitle">We turn bold ideas into modern designs that don't just look amazing, they grow your business fast.</p><div class="cta-wrap"><button class="cta" id="book">Book a 15-min call <i aria-hidden="true">↗</i></button></div><p class="small-note">Big possibilities. A simple first conversation.</p></section>
+        <div class="motion-art"><svg viewBox="0 0 1400 590" role="img" aria-label="Original luminous pink and purple orbital horizon" fill="none"><defs><radialGradient id="halo"><stop stop-color="#f19bf5" stop-opacity=".8"/><stop offset=".18" stop-color="#c65ae3" stop-opacity=".5"/><stop offset=".55" stop-color="#7c25a6" stop-opacity=".25"/><stop offset="1" stop-color="#010101" stop-opacity="0"/></radialGradient><linearGradient id="rim"><stop stop-color="#983ad6" stop-opacity="0"/><stop offset=".3" stop-color="#d275ec"/><stop offset=".5" stop-color="#ffe4ff"/><stop offset=".7" stop-color="#d275ec"/><stop offset="1" stop-color="#983ad6" stop-opacity="0"/></linearGradient><linearGradient id="dark" x2="0" y2="1"><stop stop-color="#010101"/><stop offset=".3" stop-color="#010101" stop-opacity="0"/><stop offset=".85" stop-color="#010101" stop-opacity="0"/><stop offset="1" stop-color="#010101"/></linearGradient></defs><g class="horizon"><ellipse cx="700" cy="370" rx="680" ry="250" fill="url(#halo)"/><ellipse cx="700" cy="380" rx="580" ry="115" stroke="url(#rim)" stroke-width="2"/><ellipse cx="700" cy="382" rx="550" ry="90" stroke="url(#rim)" stroke-opacity=".5"/><ellipse cx="700" cy="384" rx="520" ry="68" stroke="url(#rim)" stroke-opacity=".35"/><path d="M75 380c250-110 1000-110 1250 0M125 387c300 70 850 70 1150 0M220 400c280 55 680 55 960 0" stroke="url(#rim)" stroke-opacity=".6"/><path d="M0 380h1400" stroke="url(#rim)" stroke-width="1"/><ellipse cx="700" cy="380" rx="280" ry="16" fill="#edb2ff" fill-opacity=".08"/></g><path fill="url(#dark)" d="M0 0h1400v590H0z"/></svg></div>
+        <section class="logo-cloud" aria-label="Illustrative technology inspirations"><div class="cloud-label">Powering the best teams<br><small>Our technology inspirations*</small></div><div class="slider"><div class="track" id="logos"></div></div></section>
+    </main>
+    <footer><span>© 2026 Form &amp; Future · Independent fictional studio concept.<br>*Brand references are inspirations, not clients or endorsements.</span><a href="NOTICE">Original artwork · Credits &amp; license</a></footer>
+    <dialog id="schedule" aria-labelledby="schedule-title"><button class="close" aria-label="Close call planner">×</button><p class="eyebrow">A little time. A lot of possibility.</p><h2 id="schedule-title">Meet your next chapter.</h2><p>15 minutes to talk about what you're building. This is a local scheduling demo; no meeting will be booked.</p><div id="choose"><label>TIME ZONE<select id="timezone"><option>UTC</option><option>America/New_York</option><option>Europe/London</option><option>Asia/Singapore</option></select></label><div class="days" aria-label="Choose a day"></div><p>Choose an available time <span id="zone-label">(UTC)</span></p><div class="times" aria-label="Choose a time"><button data-time="09:00" disabled aria-pressed="false">09:00</button><button data-time="11:00" disabled aria-pressed="false">11:00</button><button data-time="14:30" disabled aria-pressed="false">14:30</button><button disabled aria-label="16:00 unavailable">16:00</button></div><button class="action" id="continue" disabled>Continue →</button></div><form hidden><button type="button" class="back" id="back">← Change day or time</button><p class="summary" id="selection"></p><label>YOUR NAME<input name="name" required autocomplete="name"></label><label>EMAIL<input name="email" type="email" required autocomplete="email"></label><button class="action" type="submit">Create demo booking ↗</button></form><div id="confirmation" role="status" hidden><h3>Your conversation, imagined.</h3><p id="confirmation-copy"></p><p>No calendar invitation was sent. No data left this browser.</p><button class="action" id="restart">Choose another time</button></div></dialog>
+    <dialog id="information" aria-labelledby="info-title"><button class="close" aria-label="Close studio details">×</button><p class="eyebrow">Form &amp; Future / Studio notes</p><h2 id="info-title"></h2><div id="info-copy"></div></dialog>
+    <script>
+        const brands = ["OpenAI", "NVIDIA", "GitHub", "Linear", "Vercel", "Figma"];
+        for (let copy = 0; copy < 2; copy++)
+        {
+            brands.forEach((brand) =>
+            {
+                const span = document.createElement("span");
+                span.textContent = brand;
+                if (copy) span.setAttribute("aria-hidden", "true");
+                document.querySelector("#logos").append(span);
+            });
+        }
+        const schedule = document.querySelector("#schedule");
+        let day = "";
+        let time = "";
+        const start = new Date();
+        const dates = [];
+        for (let offset = 1; dates.length < 3; offset++)
+        {
+            const date = new Date(start);
+            date.setUTCDate(date.getUTCDate() + offset);
+            if ([0, 6].includes(date.getUTCDay())) continue;
+            dates.push(date);
+        }
+        dates.forEach((date) =>
+        {
+            const button = document.createElement("button");
+            const label = date.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", timeZone: "UTC" });
+            button.textContent = label;
+            button.setAttribute("aria-pressed", "false");
+            button.addEventListener("click", () =>
+            {
+                day = label;
+                time = "";
+                document.querySelectorAll(".days button").forEach((other) => other.setAttribute("aria-pressed", String(other === button)));
+                document.querySelectorAll("[data-time]").forEach((slot) =>
+                {
+                    slot.disabled = false;
+                    slot.setAttribute("aria-pressed", "false");
+                });
+                document.querySelector("#continue").disabled = true;
+            });
+            document.querySelector(".days").append(button);
+        });
+        document.querySelectorAll("[data-time]").forEach((button) => button.addEventListener("click", () =>
+        {
+            time = button.dataset.time;
+            document.querySelectorAll("[data-time]").forEach((other) => other.setAttribute("aria-pressed", String(other === button)));
+            document.querySelector("#continue").disabled = false;
+        }));
+        document.querySelector("#timezone").addEventListener("change", (event) => { document.querySelector("#zone-label").textContent = `(${event.currentTarget.value})`; });
+        document.querySelector("#book").addEventListener("click", () => schedule.showModal());
+        document.querySelector("#continue").addEventListener("click", () =>
+        {
+            document.querySelector("#selection").textContent = `${day} · ${time} · ${document.querySelector("#timezone").value} · 15 minutes`;
+            document.querySelector("#choose").hidden = true;
+            document.querySelector("form").hidden = false;
+        });
+        document.querySelector("#back").addEventListener("click", () =>
+        {
+            document.querySelector("#choose").hidden = false;
+            document.querySelector("form").hidden = true;
+        });
+        document.querySelector("form").addEventListener("submit", (event) =>
+        {
+            event.preventDefault();
+            const data = new FormData(event.currentTarget);
+            document.querySelector("#confirmation-copy").textContent = `${data.get("name")}, your demo selection is ${document.querySelector("#selection").textContent}. Email entered: ${data.get("email")}. This is not a real booking.`;
+            event.currentTarget.hidden = true;
+            document.querySelector("#confirmation").hidden = false;
+        });
+        document.querySelector("#restart").addEventListener("click", () =>
+        {
+            document.querySelector("#confirmation").hidden = true;
+            document.querySelector("#choose").hidden = false;
+        });
+        document.querySelectorAll("[data-info]").forEach((button) => button.addEventListener("click", () =>
+        {
+            const work = button.dataset.info === "Work";
+            document.querySelector("#info-title").textContent = work ? "Built with intention." : "Clarity before pixels.";
+            document.querySelector("#info-copy").innerHTML = work ? '<div class="process-step"><b>01</b><div><h3>Daylight / Product concept</h3><p>A calm workspace for thoughtful teams. Clear hierarchy and responsive interfaces turn complexity into flow.</p></div></div><div class="process-step"><b>02</b><div><h3>Bloom / Brand concept</h3><p>An expressive identity system for a new generation of makers. Fictional studies, not actual client work.</p></div></div>' : '<div class="process-step"><b>01</b><div><h3>Understand</h3><p>Your ambition, your audience and what success really means.</p></div></div><div class="process-step"><b>02</b><div><h3>Explore</h3><p>Distinctive directions built on a clear strategic foundation.</p></div></div><div class="process-step"><b>03</b><div><h3>Make it real</h3><p>A refined design system, accessible interactions and a thoughtful handoff.</p></div></div>';
+            document.querySelector("#information").showModal();
+        }));
+        document.querySelectorAll(".close").forEach((button) => button.addEventListener("click", () => button.closest("dialog").close()));
+    </script>
+</body>
+</html>

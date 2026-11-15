@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#000">
+    <title>Studio — The website your brand deserves</title>
+    <style>
+        :root { --ink: #fff; --muted: #9b9b9b; --line: #ffffff20; --blue: #88a6cc; }
+        * { box-sizing: border-box; }html { scroll-behavior: smooth; }body { margin: 0; background: #000; color: white; font-family: Arial, sans-serif; }a { color: inherit; text-decoration: none; }button, input, textarea, select { font: inherit; }button { cursor: pointer; }button, a { -webkit-tap-highlight-color: transparent; }:focus-visible { outline: 2px solid #a7d8df; outline-offset: 6px; }
+        .liquid-glass, .liquid-glass-strong { position: relative; overflow: hidden; background: #ffffff03; background-blend-mode: luminosity; backdrop-filter: blur(4px); border: 0; box-shadow: inset 0 1px 1px #ffffff1a; }.liquid-glass::before, .liquid-glass-strong::before { content: ""; pointer-events: none; position: absolute; inset: 0; border-radius: inherit; padding: 1.4px; background: linear-gradient(180deg,#ffffff73 0%,#ffffff26 20%,transparent 40%,transparent 60%,#ffffff26 80%,#ffffff73 100%); mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask-composite: exclude; }.liquid-glass-strong { backdrop-filter: blur(50px); box-shadow: 4px 4px 4px #0001, inset 0 1px 1px #ffffff26; }.liquid-glass-strong::before { background: linear-gradient(180deg,#ffffff80 0%,#ffffff33 20%,transparent 40%,transparent 60%,#ffffff33 80%,#ffffff80 100%); }
+        header { position: fixed; top: 20px; left: 35px; right: 35px; z-index: 20; display: flex; align-items: center; justify-content: center; gap: 20px; pointer-events: none; }.brand { position: absolute; left: 0; pointer-events: auto; width: 43px; height: 43px; }.brand svg { width: 43px; height: 43px; }nav { display: flex; gap: 1px; border-radius: 100px; padding: 7px; align-items: center; pointer-events: auto; background-color: #111a !important; }nav a, nav button { background: none; border: 0; color: #ddd; font-size: 11px; padding: 12px 17px; border-radius: 100px; }nav a:hover, nav button:hover { background: #ffffff10; }.start, nav .start { color: black; background: white; padding: 13px 22px; border: 0; border-radius: 100px; font-size: 11px; }.menu-toggle { display: none; color: white; background: #111; border: 1px solid #ffffff30; border-radius: 100px; padding: 12px 20px; pointer-events: auto; }
+        .hero { height: 1000px; position: relative; overflow: hidden; text-align: center; }.hero-copy { position: relative; z-index: 2; padding: 155px 24px 0; }.badge { display: inline-flex; align-items: center; gap: 10px; border-radius: 99px; padding: 7px 14px; color: #d3d3d3; font-size: 10px; }.badge .new { background: white; color: black; border-radius: 99px; padding: 5px 9px; font-size: 9px; }.hero h1 { font: italic 96px/.89 Georgia, serif; letter-spacing: -5px; max-width: 850px; margin: 30px auto 25px; }.hero h1 span { display: inline-block; animation: blur-in .7s both; }.hero-copy > p { max-width: 430px; margin: auto; font-size: 13px; color: #aaa; line-height: 1.8; }.hero .actions { margin-top: 29px; }.button { padding: 15px 26px; border-radius: 100px; color: white; font-size: 12px; transition: transform .2s; display: inline-flex; align-items: center; justify-content: center; gap: 14px; }.button:hover { transform: translateY(-2px); }.plain { background: none; border: 0; box-shadow: none; color: #ddd; font-size: 12px; padding: 15px 22px; }.plain svg { width: 13px; height: 13px; vertical-align: middle; margin-right: 7px; }.actions { display: flex; justify-content: center; gap: 12px; align-items: center; }.hero-art { position: absolute; top: 28%; left: -5%; width: 110%; height: auto; z-index: 0; }.glass-wave { transform-origin: 700px 360px; animation: float 15s ease-in-out infinite alternate; }.partners { position: absolute; bottom: 45px; left: 24px; right: 24px; z-index: 3; }.partners .badge { color: #aaa; font-size: 9px; }.partners-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 45px; margin: 26px 0 12px; }.partners-row span { font: italic 26px Georgia, serif; }.disclaimer { color: #767676; font-size: 9px; line-height: 1.8; }
+        section[id] { scroll-margin-top: 100px; }.process { padding: 150px 24px; text-align: center; position: relative; overflow: hidden; min-height: 650px; display: grid; place-items: center; background: radial-gradient(ellipse at 50% 70%, #1d383b80, transparent 65%); }.process::before { content: ""; pointer-events: none; position: absolute; width: 100%; height: 210px; border-radius: 50%; border: 1px solid #8cc2c22b; transform: rotate(-12deg); }.process > div { position: relative; max-width: 650px; }h2 { font: italic 62px/.95 Georgia, serif; letter-spacing: -2px; margin: 23px 0; }.section-copy { font-size: 13px; color: #999; line-height: 1.9; max-width: 500px; margin: 0 auto 30px; }.section { padding: 100px 6vw; max-width: 1400px; margin: auto; }.section-head { text-align: center; margin-bottom: 65px; }.feature-row { display: flex; gap: 70px; align-items: center; margin: 70px 0 110px; }.feature-row:nth-child(3) { flex-direction: row-reverse; }.feature-text { flex: 1; }.feature-text h3 { font: italic 44px/1 Georgia, serif; letter-spacing: -1px; margin: 0 0 22px; max-width: 420px; }.feature-text p { font-size: 13px; line-height: 1.9; color: #999; margin: 0 0 27px; }.feature-visual { flex: 1; width: 100%; min-height: 325px; border-radius: 22px; padding: 33px; display: grid; place-items: center; background-color: #0e171c; }.visual-ui { border: 1px solid #7d9ca650; border-radius: 12px; padding: 24px; background: #091013; width: 100%; }.ui-bar { display: flex; gap: 5px; margin-bottom: 22px; }.ui-bar i { width: 4px; height: 4px; background: #7a929b; border-radius: 50%; }.visual-ui small { font-size: 8px; color: #78949d; letter-spacing: 1px; }.visual-ui strong { display: block; font: 31px/1.1 Georgia, serif; margin: 16px 0; max-width: 230px; }.mini-chart { display: flex; gap: 8px; height: 70px; align-items: end; margin-top: 18px; }.mini-chart i { background: #789da8; width: 15%; height: 35%; border-radius: 3px 3px 0 0; }.mini-chart i:nth-child(2) { height: 45%; }.mini-chart i:nth-child(3) { height: 60%; }.mini-chart i:nth-child(4) { height: 75%; }.mini-chart i:nth-child(5) { height: 90%; }.mini-chart i:nth-child(6) { height: 100%; }.optimization { background-color: #15201d; }.optimization .visual-ui { border-color: #709b8150; background: #0c1511; }.optimization .visual-ui small { color: #8fac9a; }.progress-row { display: flex; justify-content: space-between; font-size: 10px; color: #9ab0a2; margin: 18px 0 8px; }.progress-track { height: 5px; background: #20352b; border-radius: 10px; }.progress-track i { display: block; height: 100%; width: 92%; background: #acc9b7; border-radius: 10px; }
+        .feature-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }.feature-card { border-radius: 20px; padding: 27px 23px; }.icon { display: grid; place-items: center; width: 39px; height: 39px; border-radius: 50%; margin-bottom: 29px; }.icon svg { width: 17px; height: 17px; }.feature-card h3 { font: italic 24px/1 Georgia, serif; margin: 0 0 16px; }.feature-card p { color: #999; font-size: 12px; line-height: 1.8; margin: 0; }.capability-note { margin: 25px auto 0; max-width: 650px; text-align: center; }
+        .stats-section { padding: 100px 6vw; background: radial-gradient(ellipse, #2228, transparent 65%); }.stats { max-width: 1200px; margin: auto; border-radius: 25px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; text-align: center; padding: 65px 40px; }.stats strong { font: italic 57px Georgia, serif; font-weight: normal; }.stats p { font-size: 11px; color: #999; margin: 12px 0 0; }.stats-section > p { text-align: center; margin-top: 20px; }.testimonials { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }.quote-card { border-radius: 20px; padding: 30px; }.quote-card blockquote { margin: 0 0 30px; font: italic 13px/1.9 Arial, sans-serif; color: #bbb; min-height: 100px; }.quote-card strong { display: block; font-size: 12px; font-weight: 400; }.quote-card p { color: #777; font-size: 10px; }
+        .closing { padding: 120px 24px 0; text-align: center; background: radial-gradient(ellipse at 50% 100%, #1a3035, transparent 70%); }.closing h2 { font-size: 73px; max-width: 650px; margin: 25px auto; }.closing > p { color: #999; font-size: 13px; margin-bottom: 30px; }.white { color: black; background: white; border: 1px solid white; }.closing footer { margin: 120px auto 0; max-width: 1200px; border-top: 1px solid var(--line); padding: 30px 0; display: flex; justify-content: space-between; gap: 20px; align-items: center; font-size: 9px; color: #888; }.footer-links { display: flex; gap: 20px; align-items: center; }.footer-links button { border: 0; color: #888; background: none; padding: 0; font-size: 9px; }.footer-links a { text-decoration: underline; }
+        dialog { width: min(670px, calc(100% - 32px)); max-height: 90svh; overflow: auto; padding: 40px; color: white; background: #101416; border: 1px solid #607c874d; border-radius: 23px; }dialog::backdrop { background: #000b; backdrop-filter: blur(12px); }.close { position: absolute; right: 15px; top: 10px; font-size: 25px; border: 0; border-radius: 50%; background: none; color: #bbb; padding: 8px; }dialog h2 { font-size: 43px; margin-top: 20px; }dialog p { color: #aaa; font-size: 13px; line-height: 1.8; }label { display: block; margin: 18px 0; font-size: 11px; }input, textarea, select { display: block; width: 100%; padding: 12px; margin-top: 8px; color: white; background: #1b2428; border: 1px solid #3c5159; border-radius: 8px; }textarea { resize: vertical; }.eyebrow { font-size: 9px; text-transform: uppercase; letter-spacing: 2px; color: #8cb4bf; }.tabs { display: flex; gap: 7px; margin: 25px 0; }.tabs button { border: 1px solid #41545b; padding: 11px 18px; color: #aaa; background: none; border-radius: 50px; font-size: 11px; }.tabs button[aria-selected="true"] { background: white; color: black; }.price { font: italic 65px Georgia, serif; }.price small { font: 12px Arial, sans-serif; color: #999; }.film-art { height: 200px; border-radius: 15px; background: radial-gradient(ellipse, #7199a533, #000); position: relative; overflow: hidden; display: grid; place-items: center; }.film-orbit { width: 180px; height: 120px; border: 20px solid #789ba5; border-radius: 50%; transform: rotate(-28deg); box-shadow: inset 3px 0 12px #fff9, 0 0 35px #8ac3ca30; }.film-counter { position: absolute; left: 18px; top: 18px; font: 9px monospace; color: #73909a; }.film-controls { display: flex; gap: 12px; justify-content: space-between; margin-top: 25px; }.film-controls button { border: 1px solid #42535a; background: none; color: white; border-radius: 50px; padding: 11px 18px; font-size: 11px; }[hidden] { display: none !important; }
+        @keyframes blur-in { from { opacity: 0; filter: blur(10px); transform: translateY(40px); } to { opacity: 1; filter: blur(0); transform: none; } }@keyframes float { from { transform: translateY(10px) rotate(-2deg); } to { transform: translateY(-12px) rotate(2deg); } }
+        @media (max-width: 750px)
+        {
+            header { top: 17px; left: 23px; right: 23px; justify-content: end; }.brand { width: 35px; height: 35px; }.brand svg { width: 35px; height: 35px; }.menu-toggle { display: block; }nav { display: none; position: absolute !important; top: 51px; left: 0; right: 0; border-radius: 20px; padding: 16px; background: #101416f5 !important; }nav.open { display: flex; flex-direction: column; align-items: stretch; }nav a, nav button { text-align: left; padding: 13px; }.hero { height: 900px; }.hero-copy { padding-top: 145px; }.badge { font-size: 9px; padding: 6px 11px; gap: 7px; }.badge .new { font-size: 8px; }.hero h1 { font-size: 61px; line-height: .96; letter-spacing: -3px; margin: 29px auto 24px; max-width: 345px; }.hero-copy > p { font-size: 12px; max-width: 300px; }.hero .actions { margin-top: 27px; gap: 6px; }.button { font-size: 11px; padding: 14px 22px; }.plain { font-size: 11px; padding: 14px 15px; }.hero-art { top: 48%; left: -65%; width: 230%; }.partners { bottom: 35px; }.partners-row { gap: 18px 25px; margin-top: 24px; }.partners-row span { font-size: 23px; }.partners .disclaimer { font-size: 8px; }.process { min-height: 560px; padding: 95px 24px; }h2 { font-size: 45px; }.section-copy { font-size: 12px; }.section { padding: 65px 24px; }.section-head { margin-bottom: 45px; }.feature-row, .feature-row:nth-child(3) { flex-direction: column; gap: 32px; margin: 45px 0 70px; }.feature-text h3 { font-size: 37px; }.feature-text p { font-size: 12px; }.feature-visual { min-height: 290px; padding: 25px; }.feature-grid { grid-template-columns: 1fr 1fr; gap: 13px; }.feature-card { padding: 22px 17px; }.feature-card h3 { font-size: 23px; line-height: 1.1; }.feature-card p { font-size: 11px; }.stats-section { padding: 60px 24px; }.stats { grid-template-columns: 1fr 1fr; padding: 40px 20px; gap: 40px 15px; }.stats strong { font-size: 45px; }.stats p { font-size: 10px; }.testimonials { grid-template-columns: 1fr; gap: 17px; }.quote-card blockquote { min-height: 0; }.closing { padding: 80px 24px 0; }.closing h2 { font-size: 54px; }.closing > p { font-size: 12px; }.closing footer { margin-top: 80px; display: block; text-align: left; }.footer-links { margin-top: 20px; gap: 18px; }dialog { padding: 33px 24px; }dialog h2 { font-size: 37px; }
+        }
+        @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; }* { animation: none !important; transition: none !important; } }
+    </style>
+</head>
+<body>
+    <header><a class="brand" href="#home" aria-label="Studio home"><svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><rect x="1" y="1" width="46" height="46" rx="14" stroke="#718a94"/><ellipse cx="24" cy="24" rx="16" ry="8" transform="rotate(-45 24 24)" stroke="white" stroke-width="2"/><ellipse cx="24" cy="24" rx="16" ry="8" transform="rotate(45 24 24)" stroke="white" stroke-width="2"/></svg></a><button class="menu-toggle" aria-expanded="false" aria-controls="main-nav">Menu +</button><nav class="liquid-glass" id="main-nav" aria-label="Main"><a href="#home">Home</a><a href="#services">Services</a><a href="#work">Work</a><a href="#process">Process</a><button data-pricing>Pricing</button><button class="start" data-inquiry="Project">Get Started ↗</button></nav></header>
+    <main>
+        <section class="hero" id="home"><div class="hero-copy"><span class="badge liquid-glass"><span class="new">New</span>Introducing AI-powered web design.</span><h1>The Website Your<br>Brand Deserves</h1><p>Stunning design. Blazing performance. Built by AI, refined by experts. This is web design, wildly reimagined.</p><div class="actions"><button class="button liquid-glass-strong" data-inquiry="Project">Get Started ↗</button><button class="plain" id="watch"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m5 3 8 5-8 5V3Z" stroke="white"/></svg>Watch the Film</button></div></div>
+            <svg class="hero-art" viewBox="0 0 1400 650" fill="none" role="img" aria-label="Original flowing translucent blue glass sculpture"><defs><linearGradient id="glass" x1="220" y1="170" x2="1050" y2="580" gradientUnits="userSpaceOnUse"><stop stop-color="#0b181e"/><stop offset=".22" stop-color="#3a6570"/><stop offset=".35" stop-color="#d4f1ef"/><stop offset=".39" stop-color="#678f99"/><stop offset=".55" stop-color="#101e29"/><stop offset=".69" stop-color="#7aabb1"/><stop offset=".73" stop-color="#e0f6ef"/><stop offset=".83" stop-color="#31515c"/><stop offset="1" stop-color="#050c13"/></linearGradient><linearGradient id="veil" x2="0" y2="1"><stop stop-color="#000"/><stop offset=".18" stop-color="#000" stop-opacity="0"/><stop offset=".63" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000"/></linearGradient></defs><g class="glass-wave"><path d="M-50 470C160 540 325 80 560 205S700 610 950 415s340-170 530-100v122c-200-72-352-42-510 76S705 660 568 411 269 371-50 595Z" fill="url(#glass)" stroke="#aacbd03d"/><path d="M-30 477C198 536 323 108 558 218S710 625 952 430s344-171 520-103M-25 500C200 550 318 155 557 255S724 640 959 460s350-158 510-104M-20 530C209 573 321 204 560 301S743 658 966 491s345-137 505-105" stroke="#cbefed" stroke-opacity=".23"/><path d="M-25 562C221 601 341 270 566 352S766 676 971 523s353-122 502-95" stroke="#cbefed" stroke-opacity=".5"/></g><path fill="url(#veil)" d="M0 0h1400v650H0z"/></svg>
+            <div class="partners"><span class="badge liquid-glass">Trusted by the teams behind*</span><div class="partners-row"><span>Stripe</span><span>Vercel</span><span>Linear</span><span>Notion</span><span>Figma</span></div><p class="disclaimer">*Illustrative brand references. This concept has no affiliation with these teams.</p></div>
+        </section>
+        <section class="process" id="process"><div><span class="badge liquid-glass">How It Works</span><h2>You dream it.<br>We ship it.</h2><p class="section-copy">Share your vision. Our AI handles the rest—wireframes, design, code, launch. All in days, not quarters.</p><button class="button liquid-glass-strong" data-inquiry="Project">Get Started ↗</button><p class="disclaimer">Fictional service concept. No AI service is connected to this demonstration.</p></div></section>
+        <section class="section" id="work"><div class="section-head"><span class="badge liquid-glass">Capabilities</span><h2>Pro features.<br>Zero complexity.</h2></div><article class="feature-row"><div class="feature-text"><h3>Designed to convert.<br>Built to perform.</h3><p>Every pixel is intentional. Our AI studies what works across thousands of top sites—then builds yours to outperform them all.*</p><button class="button liquid-glass-strong" data-info="Performance">Learn more ↗</button></div><div class="feature-visual liquid-glass"><div class="visual-ui"><div class="ui-bar"><i></i><i></i><i></i></div><small>FORM / FICTIONAL PRODUCT STUDY</small><strong>A clearer path<br>to what comes next.</strong><div class="mini-chart" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div></article><article class="feature-row"><div class="feature-text"><h3>It gets smarter.<br>Automatically.</h3><p>Your site evolves on its own. AI monitors every click, scroll, and conversion—then optimizes in real time. No manual updates. Ever.*</p><button class="button liquid-glass-strong" data-info="Optimization">See how it works ↗</button></div><div class="feature-visual optimization liquid-glass"><div class="visual-ui"><div class="ui-bar"><i></i><i></i><i></i></div><small>ADAPT / CONCEPT DASHBOARD</small><strong>Small improvements.<br>Better experiences.</strong><div class="progress-row"><span>Clarity</span><span>92</span></div><div class="progress-track"><i></i></div><div class="progress-row"><span>Performance</span><span>98</span></div><div class="progress-track"><i style="width:98%"></i></div></div></div></article></section>
+        <section class="section" id="services" style="padding-top:0"><div class="section-head"><span class="badge liquid-glass">Why Us</span><h2>The difference<br>is everything.</h2></div><div class="feature-grid">
+            <article class="feature-card liquid-glass"><span class="icon liquid-glass-strong"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" aria-hidden="true"><path d="m13 2-9 12h7l-1 8 10-13h-7l1-7Z"/></svg></span><h3>Days, Not Months</h3><p>Concept to launch at a pace that redefines fast.</p></article>
+            <article class="feature-card liquid-glass"><span class="icon liquid-glass-strong"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18h2a2 2 0 0 0 0-4h-1a2 2 0 0 1 0-4h3c6 0 5-10-4-10Z"/><circle cx="7" cy="9" r="1"/><circle cx="11" cy="6" r="1"/><circle cx="16" cy="7" r="1"/></svg></span><h3>Obsessively Crafted</h3><p>Every detail considered. Every element refined.</p></article>
+            <article class="feature-card liquid-glass"><span class="icon liquid-glass-strong"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" aria-hidden="true"><path d="M4 3v17h17M8 16v-4m5 4V8m5 8V5"/></svg></span><h3>Built to Convert</h3><p>Layouts informed by data. Decisions backed by performance.</p></article>
+            <article class="feature-card liquid-glass"><span class="icon liquid-glass-strong"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" aria-hidden="true"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z"/><path d="m8 12 3 3 5-6"/></svg></span><h3>Secure by Default</h3><p>Enterprise-grade protection comes standard.*</p></article>
+        </div><p class="disclaimer capability-note">*Concept capabilities, not implemented services or guarantees. This static page runs no AI, tracking, automatic optimization or enterprise security service.</p></section>
+        <section class="stats-section"><div class="stats liquid-glass"><div><strong>200+</strong><p>Sites launched</p></div><div><strong>98%</strong><p>Client satisfaction</p></div><div><strong>3.2x</strong><p>More conversions</p></div><div><strong>5 days</strong><p>Average delivery</p></div></div><p class="disclaimer">Illustrative statistics from the fictional service concept. No measured results are claimed.</p></section>
+        <section class="section"><div class="section-head"><span class="badge liquid-glass">What They Say</span><h2>Don't take<br>our word for it.</h2><p class="disclaimer">Fictional testimonials, presented as design content.</p></div><div class="testimonials"><article class="quote-card liquid-glass"><blockquote>“A complete rebuild in five days. The clarity and craft made our next chapter feel possible.”</blockquote><strong>Sarah Chen</strong><p>CEO / Luminary · Fictional</p></article><article class="quote-card liquid-glass"><blockquote>“Conversions up 4x. Every interaction finally felt like it belonged to the same brand.”</blockquote><strong>Marcus Webb</strong><p>Head of Growth / Arcline · Fictional</p></article><article class="quote-card liquid-glass"><blockquote>“They didn't just design our site. They gave our vision a digital world to live in.”</blockquote><strong>Elena Voss</strong><p>Brand Director / Helix · Fictional</p></article></div></section>
+        <section class="closing"><span class="badge liquid-glass">The beginning of something better</span><h2>Your next website<br>starts here.</h2><p>Book a free strategy call. See what AI-powered design can do.</p><div class="actions"><button class="button liquid-glass-strong" data-inquiry="Call">Book a Call ↗</button><button class="button white" data-pricing>View Pricing ↗</button></div><footer><span>© 2026 Studio · Fictional concept / Local browser demos</span><div class="footer-links"><button data-info="Privacy">Privacy</button><button data-info="Terms">Terms</button><button data-inquiry="Call">Contact</button><a href="NOTICE">Credits &amp; license</a></div></footer></section>
+    </main>
+    <dialog id="film" aria-labelledby="film-title"><button class="close" aria-label="Close film">×</button><span class="eyebrow">Original animated walkthrough / Not streamed video</span><h2 id="film-title"></h2><div class="film-art"><span class="film-counter"></span><div class="film-orbit" aria-hidden="true"></div></div><p id="film-copy"></p><div class="film-controls"><button id="film-prev" aria-label="Previous chapter">← Previous</button><button id="film-play" aria-pressed="false">Play</button><button id="film-next" aria-label="Next chapter">Next →</button></div></dialog>
+    <dialog id="pricing" aria-labelledby="pricing-title"><button class="close" aria-label="Close pricing">×</button><span class="eyebrow">An investment in what's next</span><h2 id="pricing-title">A clear way forward.</h2><div class="tabs" role="tablist" aria-label="Pricing options"><button data-plan="Project" role="tab" aria-selected="true">Project</button><button data-plan="Partnership" role="tab" aria-selected="false">Partnership</button></div><div class="price">$4,900 <small>/ project</small></div><p id="plan-copy">A focused website concept: strategy, design and a responsive front-end direction.</p><p class="disclaimer">Illustrative pricing. This is not a service offer or checkout.</p><button class="button white" id="choose-plan">Discuss this project ↗</button></dialog>
+    <dialog id="inquiry" aria-labelledby="inquiry-title"><button class="close" aria-label="Close inquiry">×</button><span class="eyebrow">Studio / Your next chapter</span><h2 id="inquiry-title">Tell us what you imagine.</h2><p>Build a local inquiry. Nothing is submitted and no call is booked.</p><form><label>Email<input type="email" name="email" required></label><label>Interested in<select name="service"><option>Project</option><option>Partnership</option><option>Call</option></select></label><label>Your vision<textarea name="vision" rows="4" required minlength="10" maxlength="2000"></textarea></label><button class="button white" type="submit">Prepare inquiry ↗</button></form><p id="inquiry-status" role="status"></p></dialog>
+    <dialog id="information" aria-labelledby="info-title"><button class="close" aria-label="Close information">×</button><span class="eyebrow">Studio / Behind the concept</span><h2 id="info-title"></h2><p id="info-copy"></p></dialog>
+    <script>
+        const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+        const heading = document.querySelector("h1");
+        const lines = heading.innerHTML.split("<br>");
+        heading.replaceChildren();
+        let wordIndex = 0;
+        lines.forEach((line, lineIndex) =>
+        {
+            line.split(" ").forEach((word) =>
+            {
+                const span = document.createElement("span");
+                span.textContent = word;
+                span.style.animationDelay = `${wordIndex++ * .1}s`;
+                heading.append(span, document.createTextNode(" "));
+            });
+            if (lineIndex === 0) heading.append(document.createElement("br"));
+        });
+        const toggle = document.querySelector(".menu-toggle");
+        const navigation = document.querySelector("nav");
+        toggle.addEventListener("click", () =>
+        {
+            const open = toggle.getAttribute("aria-expanded") !== "true";
+            toggle.setAttribute("aria-expanded", String(open));
+            navigation.classList.toggle("open", open);
+        });
+        navigation.querySelectorAll("a, button").forEach((element) => element.addEventListener("click", () =>
+        {
+            navigation.classList.remove("open");
+            toggle.setAttribute("aria-expanded", "false");
+        }));
+        const film = document.querySelector("#film");
+        const pricing = document.querySelector("#pricing");
+        const inquiry = document.querySelector("#inquiry");
+        const chapters =
+        [
+            ["01 / A spark of possibility.", "Start with a human problem, a clear ambition and the audience you want to reach. A useful brief gives every decision a direction."],
+            ["02 / Shape the experience.", "Explore structure, typography and interaction. Original visual directions become a coherent system, designed for clarity on every screen."],
+            ["03 / Refine the details.", "Test the real experience. Improve the small moments, respect accessibility and make every transition feel intentional. This is a concept process, not a connected AI service."]
+        ];
+        let chapter = 0;
+        let playing = false;
+        let rotation;
+        function renderChapter()
+        {
+            document.querySelector("#film-title").textContent = chapters[chapter][0];
+            document.querySelector("#film-copy").textContent = chapters[chapter][1];
+            document.querySelector(".film-counter").textContent = `0${chapter + 1} / 03`;
+            document.querySelector(".film-orbit").style.transform = `rotate(${-28 + chapter * 55}deg)`;
+        }
+        document.querySelector("#watch").addEventListener("click", () =>
+        {
+            renderChapter();
+            film.showModal();
+        });
+        document.querySelector("#film-prev").addEventListener("click", () =>
+        {
+            chapter = (chapter + 2) % 3;
+            renderChapter();
+        });
+        document.querySelector("#film-next").addEventListener("click", () =>
+        {
+            chapter = (chapter + 1) % 3;
+            renderChapter();
+        });
+        document.querySelector("#film-play").addEventListener("click", (event) =>
+        {
+            playing = !playing;
+            event.currentTarget.textContent = playing ? "Pause" : "Play";
+            event.currentTarget.setAttribute("aria-pressed", String(playing));
+            rotation?.cancel();
+            if (playing && !reduced.matches) rotation = document.querySelector(".film-orbit").animate([{ transform: "rotate(-28deg)" }, { transform: "rotate(332deg)" }], { duration: 5000, iterations: Infinity });
+        });
+        setInterval(() =>
+        {
+            if (film.open && playing && !document.hidden)
+            {
+                chapter = (chapter + 1) % 3;
+                renderChapter();
+            }
+        }, 5000);
+        film.addEventListener("close", () =>
+        {
+            playing = false;
+            rotation?.cancel();
+            document.querySelector("#film-play").textContent = "Play";
+            document.querySelector("#film-play").setAttribute("aria-pressed", "false");
+        });
+        let plan = "Project";
+        document.querySelectorAll("[data-pricing]").forEach((button) => button.addEventListener("click", () => pricing.showModal()));
+        document.querySelectorAll("[data-plan]").forEach((button) => button.addEventListener("click", () =>
+        {
+            plan = button.dataset.plan;
+            document.querySelectorAll("[data-plan]").forEach((other) => other.setAttribute("aria-selected", String(other === button)));
+            document.querySelector(".price").innerHTML = plan === "Project" ? "$4,900 <small>/ project</small>" : "$6,900 <small>/ month</small>";
+            document.querySelector("#plan-copy").textContent = plan === "Project" ? "A focused website concept: strategy, design and a responsive front-end direction." : "An ongoing creative partnership: one active design workstream, weekly review and a consistent digital direction.";
+            document.querySelector("#choose-plan").textContent = plan === "Project" ? "Discuss this project ↗" : "Discuss a partnership ↗";
+        }));
+        function openInquiry(service)
+        {
+            pricing.close();
+            document.querySelector('[name="service"]').value = service;
+            document.querySelector("form").hidden = false;
+            document.querySelector("#inquiry-status").textContent = "";
+            if (!inquiry.open) inquiry.showModal();
+        }
+        document.querySelector("#choose-plan").addEventListener("click", () => openInquiry(plan));
+        document.querySelectorAll("[data-inquiry]").forEach((button) => button.addEventListener("click", () => openInquiry(button.dataset.inquiry)));
+        document.querySelector("form").addEventListener("submit", (event) =>
+        {
+            event.preventDefault();
+            const data = new FormData(event.currentTarget);
+            document.querySelector("#inquiry-status").textContent = `${data.get("service")} inquiry prepared for ${data.get("email")}. Your vision is ready for discussion. Nothing was sent, purchased or booked.`;
+            event.currentTarget.hidden = true;
+        });
+        const information =
+        {
+            Performance: "The concept emphasizes clear content, purposeful hierarchy and responsive interaction. The sample chart is original illustrative artwork, not analytics. No AI research engine, conversion measurement or performance guarantee is implemented.",
+            Optimization: "This dashboard is a fictional visual study. No click tracking, background analytics or autonomous optimization runs on this page. In a real product, optimization requires consent, meaningful measurement and human review.",
+            Privacy: "This static concept does not submit form data, load third-party media, set cookies or run analytics. Inputs remain in browser memory until the page closes.",
+            Terms: "An independent visual concept, not a service contract. All pricing, claims, statistics, clients, testimonials and timelines are illustrative. No purchase, delivery, enterprise security or AI service is offered."
+        };
+        document.querySelectorAll("[data-info]").forEach((button) => button.addEventListener("click", () =>
+        {
+            document.querySelector("#info-title").textContent = button.dataset.info;
+            document.querySelector("#info-copy").textContent = information[button.dataset.info];
+            document.querySelector("#information").showModal();
+        }));
+        document.querySelectorAll(".close").forEach((button) => button.addEventListener("click", () => button.closest("dialog").close()));
+    </script>
+</body>
+</html>

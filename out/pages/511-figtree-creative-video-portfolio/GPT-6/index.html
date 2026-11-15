@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Viktor — independent designer crafting bold brands and purposeful digital experiences.">
+    <title>Viktor — Independent designer</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="./style.css">
+    <script defer src="./script.js"></script>
+</head>
+<body>
+    <div class="backgrounds" aria-hidden="true"><canvas id="water" class="active"></canvas><canvas id="grid"></canvas><canvas id="tunnel"></canvas></div>
+    <div class="shade"></div>
+    <header>
+        <nav class="desktop-nav" aria-label="Main navigation"><button data-panel="Works"><sup>01 /</sup> Works</button><button data-panel="Services"><sup>02 /</sup> Services</button><button data-panel="About"><sup>03 /</sup> About</button><button data-panel="Contact"><sup>04 /</sup> Contact</button></nav>
+        <button class="menu-toggle" aria-controls="mobile-menu" aria-expanded="false">Menu</button>
+        <div class="header-right"><a href="mailto:Davies@gmail.com">Davies@gmail.com</a><time id="clock" aria-label="Current Cupertino time">CUP —:—:—</time></div>
+        <div class="mobile-menu" id="mobile-menu" inert><nav aria-label="Mobile navigation"><button data-panel="Works">Works <span>01</span></button><button data-panel="Services">Services <span>02</span></button><button data-panel="About">About <span>03</span></button><button data-panel="Contact">Contact <span>04</span></button></nav></div>
+    </header>
+    <main>
+        <section class="hero" aria-label="Designer introduction">
+            <div class="upper"><div class="switcher" aria-label="Choose motion study"><button class="selected" data-scene="0" aria-pressed="true"><sup>01 /</sup> Water wave</button><button data-scene="1" aria-pressed="false"><sup>02 /</sup> Gridwave</button><button data-scene="2" aria-pressed="false"><sup>03 /</sup> Light tunnel</button></div><div class="availability"><span></span>Available for work</div></div>
+            <div class="lower"><h1>Viktor<span>.</span></h1><div class="pitch"><p>I craft bold brands and modern websites with purpose. Blending strategy, design and a little unexpected to make your next chapter stand out.</p><button class="start" data-panel="Contact">start a project <span>↗</span></button></div></div>
+        </section>
+        <div class="study-caption"><span id="study-name">MOTION STUDY / WATER WAVE</span><button id="pause" aria-pressed="false">Pause motion Ⅱ</button><span>ORIGINAL PROCEDURAL ART / CONCEPT PORTFOLIO</span></div>
+    </main>
+    <dialog id="panel"><button class="close" aria-label="Close panel">Close ×</button><p class="eyebrow">Independent by nature</p><h2 id="panel-title">Contact</h2><div id="panel-content"></div><form id="contact-form"><label for="name">Your name</label><input id="name" required maxlength="80" autocomplete="name"><label for="email">Your email</label><input id="email" type="email" required maxlength="160" autocomplete="email"><label for="message">What do you have in mind?</label><textarea id="message" rows="3" required minlength="10" maxlength="1600"></textarea><button type="submit" class="send">Prepare project note ↗</button><p class="form-note">Local demo — no message is transmitted.</p><p id="status" role="status"></p></form></dialog>
+</body>
+</html>
