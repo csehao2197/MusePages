@@ -792,13 +792,13 @@ export async function publishSite(workspace = root)
 {
     return withLock(workspace, async () =>
     {
-        const { categories } = JSON.parse(await readFile(path.join(workspace, "config.json"), "utf8"));
-        if (!Array.isArray(categories)) throw Error("config.json categories must be an array");
         const
         {
             config,
             inputs
         } = await synchronize(workspace);
+        const { categories = [] } = config;
+        if (!Array.isArray(categories)) throw Error("config.json categories must be an array");
         const selected = pageOptions(config).filter((page) => page.enabled)
             .sort((a, b) => config.pages[b.prompt].weight - config.pages[a.prompt].weight);
         const destinations = new Set();

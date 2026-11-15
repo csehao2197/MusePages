@@ -51,7 +51,14 @@ async function fixture(t)
         recursive: true
     });
     await copyFile(new URL("../../gallery/index.html", import.meta.url), path.join(workspace, "src", "gallery", "index.html"));
-    await copyFile(new URL("../../../config.json", import.meta.url), path.join(workspace, "config.json"));
+    const { categories } = JSON.parse(await readFile(new URL("../../../deploy/config.json", import.meta.url), "utf8"));
+    await mkdir(path.join(workspace, "deploy"));
+    await saveConfig(workspace,
+    {
+        version: 2,
+        categories,
+        pages: {}
+    });
     await mkdir(path.join(workspace, "data", "prompts"),
     {
         recursive: true
@@ -1195,9 +1202,12 @@ test("configured categories control both galleries and are reloaded without chan
     option.title = "Developer portfolio";
     option.tags = ["Portfolio", "Developer tools"];
     await saveConfig(workspace, config);
-    const categoriesFile = path.join(workspace, "config.json");
     const target = path.join(workspace, "deploy", "dist", "MusePages");
-    const configured = JSON.parse(await readFile(categoriesFile, "utf8")).categories;
+    const configured = config.categories;
+    await assert.rejects(lstat(path.join(workspace, "config.json")),
+    {
+        code: "ENOENT"
+    });
     await publishSite(workspace);
     for (const file of ["index.html", path.join("collections", "index.html")])
     {
@@ -1207,23 +1217,23 @@ test("configured categories control both galleries and are reloaded without chan
         assert.doesNotMatch(html, /data-filter="(?:portfolio|saas|editorial|developer)"/);
         assert.match(html, /data-categories="technology creative"/);
     }
-    await writeFile(categoriesFile, JSON.stringify(
-    {
-        categories: ["Creative", "Technology"]
-    }));
+    const published = await configFile(workspace);
+    published.categories = ["Creative", "Technology"];
+    await saveConfig(workspace, published);
     assert.equal((await publishSite(workspace)).changed, true);
     const html = await readFile(path.join(target, "index.html"), "utf8");
     assert.deepEqual([...html.matchAll(/data-filter="([^"]+)"[^>]*>([^<]*)<\/button>/g)].map((match) => match[2]),
         ["All websites", "Creative", "Technology"]);
     assert.match(html, /data-categories="creative technology"/);
     assert.equal((await configFile(workspace)).pages["001-example"].pages[0].enabled, true);
-    await writeFile(categoriesFile, JSON.stringify(
-    {
-        categories: []
-    }));
+    published.categories = [];
+    await saveConfig(workspace, published);
     await publishSite(workspace);
     assert.deepEqual([...(await readFile(path.join(target, "index.html"), "utf8")).matchAll(/<button[^>]*data-filter="([^"]+)"/g)]
         .map((match) => match[1]), ["all"]);
+    delete published.categories;
+    await saveConfig(workspace, published);
+    assert.equal((await publishSite(workspace)).changed, false);
 });
 
 test("configured categories escape labels, support custom names and reject invalid definitions", async () =>

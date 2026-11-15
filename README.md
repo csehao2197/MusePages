@@ -329,9 +329,11 @@ prompt 目录仅容纳模型结果目录。公开标题与 slug 保存在 `deplo
 
 `modelId` 记录真实生成模型，不能用目录名或 CLI 名称冒充；`tags` 描述该模型结果的风格。`staticDir` 相对于模型源码目录，新生成结果统一准备到 `out\`，历史结果迁移前以核验过的实际目录为准。
 
+每个标签优先使用 **一个准确、有意义的英文单词**；仅在表达完整主题或风格需要时使用两个单词，例如 `Real Estate`。标签与 prompt 的 `category` 保持不同。
+
 **每次生成页面必须生成 `tags`**：根据原始 prompt 与实际生成页面，为每个 prompt／模型组合填写至少一个有意义的标签，写入模型级 `metadata.json`，不能省略字段或以 `[]` 作为完成结果。标签应描述页面主题、类型或实际设计风格，例如 `["Travel", "Eco Tourism", "Nature"]`；`["Travel"]` 只是示例，不要求所有页面固定使用该值。每项必须是去除首尾空白后的非空字符串，标签不得重复，也不得包含 prompt 编号或未实现的功能。
 
-标签须在发布登记前核对，并保存在模型元数据中；发布配置使用 prompt 级 `category`。已有有效页面仅缺标签时，在获准修改元数据后补齐，保留已有源码；只读检查仅报告缺失。当前生成脚本仍可能初始化为 `tags: []`，登记脚本仍可能写入模型选项的 `tags`，执行生成任务的 Agent 须补齐并检查元数据标签。
+标签须在发布登记前核对，并保存在模型元数据和发布配置的模型选项中；prompt 级 `category` 保存共享分类。已有有效页面仅缺标签时，在获准修改元数据后补齐，保留已有源码；只读检查仅报告缺失。当前生成脚本仍可能初始化为 `tags: []`，执行生成任务的 Agent 须补齐并检查元数据标签。
 
 #### 元数据与状态
 
@@ -367,7 +369,7 @@ prompt 目录仅容纳模型结果目录。公开标题与 slug 保存在 `deplo
 {
   "version": 2,
   "siteUrl": "https://musepages.pages.dev/",
-  "categories": ["Lifestyle", "Tech", "Entertainment", "Business", "Education", "Health", "News", "Shopping", "Social", "Tools", "Other"],
+  "categories": ["Business", "Technology", "Commerce", "Finance", "Lifestyle", "Fashion", "Health", "Education", "Creative", "Media", "Entertainment", "Sports", "Travel", "Food", "Property", "Community", "Industry", "Services"],
   "pages": {
     "006-travel-agency-homepage": {
       "category": "Lifestyle",
@@ -379,6 +381,7 @@ prompt 目录仅容纳模型结果目录。公开标题与 slug 保存在 `deplo
           "deployed": false,
           "slug": "travel-agency-homepage",
           "title": "旅行社首页",
+          "tags": ["Travel Agency"],
           "staticDir": "out"
         },
         {
@@ -387,6 +390,7 @@ prompt 目录仅容纳模型结果目录。公开标题与 slug 保存在 `deplo
           "deployed": false,
           "slug": "travel-agency-homepage",
           "title": "旅行社首页",
+          "tags": ["Travel Agency"],
           "staticDir": "."
         }
       ]
@@ -397,7 +401,7 @@ prompt 目录仅容纳模型结果目录。公开标题与 slug 保存在 `deplo
 
 每个 prompt 对应一个 key，使用原始文件名。`pages[<prompt>].pages` 中的 `model` 对应实际模型目录，prompt key 及组内模型名忽略大小写后保持唯一。`weight` 为有限数值，默认 `1`；首页面板按权重降序排列，同权重沿用配置顺序，页面数组顺序决定面板内模型的轮播顺序。prompt 对象可保留其他自定义字段。新选项默认关闭，同步保留已有开关、权重和顺序，重复登记复用原项，源码临时缺失时保留旧配置。`slug` 使用去编号的公开名称，`staticDir` 相对于模型源码目录，指向实际静态产物。
 
-顶层 `categories` 定义可选分类；每个 `pages[<prompt>].category` 从中选择最匹配的一项，同一 prompt 的所有模型共享该分类。当前配置已移除模型选项的 `tags`。集合发布器目前仍从根目录 `config.json` 读取分类列表，并按标题和标签推断分类；使用此处显式分类的渲染接入仍待实现。
+`deploy\config.json` 顶层 `categories` 统一定义可选分类；每个 `pages[<prompt>].category` 从中选择最匹配的一项，同一 prompt 的所有模型共享该分类。每个模型选项的 `tags` 为数组，当前填写一个描述性标签，优先使用一个英文单词、最多两个单词，且与共享分类不同。集合发布器从同一发布配置读取分类列表，兼容缺少列表时显示全部作品，并按标题和标签推断分类；使用显式分类的渲染接入仍待实现。
 
 `deployed` 是布尔字段，旧配置缺少时补为 `false`，非布尔值会被拒绝。`deploy:sync`、`deploy:watch` 和生成登记不会将其标记成功，也不会覆盖已有状态。`npm run dist` 完成静态校验并成功替换本地网站后，将本次已纳入集合的模型选项设为 `deployed: true`，未选中并已从集合移除的项设为 `false`，再原子保存配置。发布失败保留旧状态；配置保存失败时尝试回滚网站，回滚失败则报告恢复路径。修改源码或开关不会自动改变该记录，仍须实际发布并核验版本。
 

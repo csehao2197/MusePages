@@ -55,7 +55,14 @@ async function sampleWorkspace()
     }
     await copyFile(new URL("../../../data/prompts/001-destination-guide/001-destination-guide.md", import.meta.url),
         path.join(input, "001-destination-guide.md"));
-    await copyFile(new URL("../../../config.json", import.meta.url), path.join(workspace, "config.json"));
+    const { categories } = JSON.parse(await readFile(new URL("../../../deploy/config.json", import.meta.url), "utf8"));
+    await mkdir(path.join(workspace, "deploy"));
+    await writeFile(path.join(workspace, "deploy", "config.json"), JSON.stringify(
+    {
+        version: 2,
+        categories,
+        pages: {}
+    }));
     return workspace;
 }
 
@@ -351,7 +358,7 @@ test("gallery groups models into stable, accessible carousels with synchronized 
             });
             await page.mouse.move(0, 0);
             await page.goto(`${base}/index.html`);
-            const configuredCategories = JSON.parse(await readFile(path.join(workspace, "config.json"), "utf8")).categories;
+            const configuredCategories = JSON.parse(await readFile(path.join(workspace, "deploy", "config.json"), "utf8")).categories;
             assert.deepEqual(await page.locator("#collections [data-filter]").allTextContents(),
                 ["All websites", ...configuredCategories]);
             assert.equal(await page.title(), "MusePages - AI Website Design Gallery");
