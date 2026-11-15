@@ -1,0 +1,61 @@
+import { audit } from "../../341-festival/GPT-6/serial-run.mjs";
+export async function verify()
+{
+    return audit("347-flower-shop", async (page, check, width) =>
+    {
+        check(await page.locator("figure img").evaluate((image) => image.naturalWidth > 0), `${width}: original blush botanical art`);
+        check(await page.locator(".product").count() === 6, `${width}: complete six-product collection`);
+        await page.locator("#category").selectOption("Everyday");
+        check(await page.locator(".product").count() === 2, `${width}: everyday collection`);
+        await page.locator("#search").fill("rose");
+        check(await page.locator(".product").count() === 1, `${width}: combined search and category`);
+        await page.locator("#search").fill("absent");
+        check(await page.locator("#empty").isVisible(), `${width}: no products state`);
+        await page.locator("#reset").click();
+        await page.locator("#choice-lily").selectOption("White vase");
+        await page.locator("[data-add='lily']").click();
+        await page.locator("#choice-lily").selectOption("Forest green vase");
+        await page.locator("[data-add='lily']").click();
+        await page.locator("#open-bag").click();
+        check(await page.locator(".cart-row").count() === 2 && await page.locator("#cart-total").textContent() === "£150", `${width}: vase variants remain separate`);
+        await page.locator("[data-key='lily:White vase'][data-delta='1']").click();
+        check(await page.locator("#cart-total").textContent() === "£225", `${width}: bag quantity arithmetic`);
+        await page.locator("[data-key='lily:White vase'][data-delta='-1']").click();
+        check(await page.locator("#cart-total").textContent() === "£150", `${width}: quantity decreases`);
+        await page.locator("[data-key='lily:White vase'][data-delta='remove']").click();
+        check(await page.locator("#cart-total").textContent() === "£75", `${width}: variant removal`);
+        await page.locator("#order-form button").click();
+        check((await page.locator("#order-result").textContent()).includes("future"), `${width}: empty delivery date rejected`);
+        await page.locator("#order-form [name='date']").fill("2030-07-12");
+        await page.locator("#order-form button").click();
+        check((await page.locator("#order-result").textContent()).includes("No order placed"), `${width}: truthful order preview`);
+        await page.locator("#clear-bag").click();
+        await page.locator("#order-form button").click();
+        check(await page.locator("#cart-empty").isVisible() && (await page.locator("#order-result").textContent()).includes("empty"), `${width}: clear and empty review`);
+        await page.keyboard.press("Escape");
+        await page.locator("#postcode-form button").click();
+        check((await page.locator("#postcode-result").textContent()).includes("valid UK"), `${width}: invalid postcode`);
+        await page.locator("#postcode").fill("SE1 0AA");
+        await page.locator("#postcode-form button").click();
+        check((await page.locator("#postcode-result").textContent()).includes("Within"), `${width}: local coverage case`);
+        await page.locator("#postcode").fill("NG7 3NR");
+        await page.locator("#postcode-form button").click();
+        check((await page.locator("#postcode-result").textContent()).includes("Outside"), `${width}: unsupported area`);
+        await page.locator("[data-inquiry='Wedding']").first().click();
+        await page.locator("#inquiry-form button").click();
+        check((await page.locator("#inquiry-result").textContent()).includes("valid email"), `${width}: empty inquiry rejected`);
+        await page.locator("#inquiry-form [name='name']").fill("Example Couple");
+        await page.locator("#inquiry-form [name='email']").fill("couple@example.test");
+        await page.locator("[name='vision']").fill("A garden ceremony with blush and ivory flowers.");
+        await page.locator("#inquiry-form [name='date']").fill("2020-01-01");
+        await page.locator("#inquiry-form button").click();
+        check((await page.locator("#inquiry-result").textContent()).includes("6 weeks"), `${width}: wedding lead time`);
+        await page.locator("#inquiry-form [name='date']").fill("2030-07-12");
+        await page.locator("#inquiry-form button").click();
+        check((await page.locator("#inquiry-result").textContent()).includes("Nothing sent"), `${width}: truthful wedding inquiry`);
+        await page.keyboard.press("Escape");
+        check(!await page.locator("#inquiry").isVisible(), `${width}: keyboard dialog dismissal`);
+        check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${width}: interactive states fit viewport`);
+    });
+}
+if (process.argv[1]?.endsWith("verify.mjs")) console.log(JSON.stringify(await verify()));

@@ -1,0 +1,33 @@
+{
+    "title": "The Lyric — The moment before the curtain rises",
+    "tags": ["Theatre Programme", "Velvet & Gold", "Performing Arts"],
+    "mocks": "Fictional theatre, dates, history and charity. Original illustrated teaser replaces video, ticket links show programme information, access dates and membership are illustrative.",
+    "tests": [
+        {"selector": "#trailer", "click": true},
+        {"selector": "#teaser", "visible": true},
+        {"selector": "#frame-count", "text": "Scene 1 of 3"},
+        {"selector": "#next-frame", "click": true},
+        {"selector": "#teaser-caption", "text": "family"},
+        {"selector": "#next-frame", "click": true},
+        {"selector": "#frame-count", "text": "Scene 3 of 3"},
+        {"selector": "#next-frame", "click": true},
+        {"selector": "#frame-count", "text": "Scene 1 of 3"},
+        {"selector": "#close", "click": true},
+        {"selector": "#teaser", "visible": false},
+        {"selector": "#now [data-show='Company']", "click": true},
+        {"selector": "#production", "value": "Company"},
+        {"selector": "#ticket-info", "text": "Musical"},
+        {"selector": "#production", "select": "Funny Peculiar"},
+        {"selector": "#ticket-info", "text": "Sundays in November"},
+        {"selector": "#access-results article", "count": 4},
+        {"selector": "#access-type", "select": "relaxed"},
+        {"selector": "#access-results article", "count": 1},
+        {"selector": "#access-results", "text": "A Christmas Carol"},
+        {"selector": "#access-type", "select": "audio"},
+        {"selector": "#access-results", "text": "Audio-described"},
+        {"selector": "#access-type", "select": "all"},
+        {"selector": "#access-results article", "count": 4},
+        {"selector": "#member-info", "click": true},
+        {"selector": "#member-status", "text": "no membership purchased"}
+    ]
+}

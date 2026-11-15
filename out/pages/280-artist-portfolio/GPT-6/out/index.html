@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#fdfcfa">
+    <title>Yuki Nakamura — Selected paintings</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="app.js"></script>
+</head>
+<body>
+    <aside class="spine" aria-hidden="true">Yuki Nakamura · Painting</aside>
+    <header>
+        <a class="wordmark" href="#home">Yuki Nakamura</a>
+        <button id="menu" aria-expanded="false" aria-controls="navigation">Menu +</button>
+        <nav id="navigation" aria-label="Main"><a href="#work">Work</a><a href="#series">Series</a><a href="#exhibitions">Exhibitions</a><a href="#about">About</a></nav>
+        <a href="#contact" class="contact-link">Contact ↗</a>
+    </header>
+    <main id="home">
+        <section class="hero" aria-label="Featured paintings">
+            <div class="hero-top"><span class="eyebrow">Tokyo / Berlin</span><h1>Selected paintings</h1><span class="eyebrow">2021 — 2025</span></div>
+            <button id="hero-art" class="artwork" aria-label="Open featured painting"></button>
+            <div class="caption"><div><h2 id="hero-title">Dissolution I</h2><p id="hero-medium">Oil on linen · 200 × 160 cm · 2025</p></div><div id="dots" aria-label="Choose painting"></div><div class="arrows"><span id="counter">1 / 6</span><button id="previous" aria-label="Previous painting">←</button><button id="next" aria-label="Next painting">→</button></div></div>
+        </section>
+        <section id="work">
+            <div class="section-heading"><div><span class="eyebrow red">An ongoing inquiry</span><h2>Selected <em>paintings.</em></h2></div><div class="chips" id="filters" aria-label="Filter medium"><button aria-pressed="true" data-medium="All">All</button><button aria-pressed="false" data-medium="Oil">Oil</button><button aria-pressed="false" data-medium="Acrylic">Acrylic</button><button aria-pressed="false" data-medium="Mixed media">Mixed media</button></div></div>
+            <p class="eyebrow" id="work-count" aria-live="polite"></p><div id="gallery" class="gallery"></div><button id="load" class="outline">Show all twelve paintings ↓</button>
+        </section>
+        <section id="series" class="surface">
+            <span class="eyebrow red">Bodies of work</span><h2><em>Series</em> in focus.</h2><div id="series-list"></div>
+        </section>
+        <section class="feature">
+            <button id="focus-art" class="artwork" aria-label="Open Dissolution IV"></button>
+            <div><span class="eyebrow red">In focus</span><h2>Dissolution IV</h2><dl><dt>Year</dt><dd>2025</dd><dt>Medium</dt><dd>Oil on linen</dd><dt>Dimensions</dt><dd>240 × 180 cm</dd><dt>Series</dt><dd>Dissolution (2024–2025)</dd><dt>Available</dt><dd>Private collection</dd></dl><p>Made over four months and entirely reworked twice. What remains is the third attempt to find what the painting was trying to be.</p><p>The ground is still visible in places — I wanted it to be.</p><button id="focus-open" class="solid">View full painting ↗</button></div>
+        </section>
+        <section id="exhibitions"><span class="eyebrow red">Selected presentations</span><div class="section-heading"><h2><em>Exhibition</em> history.</h2><div class="chips" id="exhibition-tabs"><button data-type="All" aria-pressed="true">All</button><button data-type="Solo" aria-pressed="false">Solo</button><button data-type="Group" aria-pressed="false">Group</button></div></div><div id="exhibition-list"></div></section>
+        <section id="about" class="about surface"><div><div class="studio-art" aria-label="Original illustration of a painter's studio"><div class="window"></div><div class="canvas"></div><span>THE STUDIO<br>TOKYO, 2025</span></div><p class="eyebrow">An imagined studio · Original illustration</p></div><div><span class="eyebrow red">The artist</span><h2>About <em>the work.</em></h2><p>Yuki Nakamura (b. 1986, Tokyo) is a painter working between Tokyo and Berlin. Her work explores the resistance of material — the way oil paint holds and refuses and surprises — and what happens when representation is taken to the point of its own dissolution.</p><p>She holds an MFA from the Städelschule, Frankfurt (2014) and has exhibited internationally since 2016.</p><p>Represented in this fictional portfolio by Sprüth Magers (Berlin/London) and STANDARD (OSLO).</p><button class="outline" id="cv">Read artist CV ↗</button><blockquote>“The point at which a form stops being recognisable. Where does the figure end and the field begin?”</blockquote><p class="eyebrow">Artist statement</p></div></section>
+        <section id="contact" class="contact"><div><span class="eyebrow red">Studio / Representation</span><h2>Get in <em>touch.</em></h2><p>Studio visits, acquisition enquiries, exhibition proposals, and everything in between.</p><div class="representative"><h3>Sprüth Magers</h3><span class="eyebrow">Berlin & London</span><a href="mailto:info@spruethmagers.com">info@spruethmagers.com ↗</a></div><div class="representative"><h3>STANDARD (OSLO)</h3><span class="eyebrow">Oslo</span><a href="mailto:mail@standardoslo.no">mail@standardoslo.no ↗</a></div><p class="small">Fictional artist and exhibition details from the brief. Original digital studies stand in for physical paintings.</p></div><form id="enquiry" novalidate><h3>Send a <em>message.</em></h3><label>Name<input name="name" autocomplete="name" required></label><label>Email<input name="email" type="email" autocomplete="email" required></label><label>Enquiry type<select name="type"><option>Studio visit</option><option>Acquisition</option><option>Exhibition proposal</option><option>Press</option><option>Other</option></select></label><label>Message<textarea name="message" rows="5" required></textarea></label><button class="solid">Prepare enquiry →</button><p id="form-status" role="status">Browser-only draft. Nothing is sent.</p></form></section>
+    </main>
+    <footer><a class="wordmark" href="#home">Yuki Nakamura</a><span>Painting, as a way of paying attention.</span><span>© 2026 · Concept portfolio</span></footer>
+    <dialog id="lightbox"><button id="close" aria-label="Close painting">Close ×</button><div id="lightbox-art"></div><h2 id="lightbox-title"></h2><p id="lightbox-medium"></p><button id="lightbox-prev" aria-label="Previous work">←</button><button id="lightbox-next" aria-label="Next work">→</button></dialog>
+    <dialog id="cv-dialog"><button id="cv-close">Close ×</button><h2>Yuki Nakamura</h2><p>Born Tokyo, 1986. Lives and works in Tokyo and Berlin.</p><p>MFA, Städelschule, Frankfurt, 2014.</p><h3>Selected solo exhibitions</h3><p>Dissolution — Berlin, 2025<br>Night Archive — London, 2024<br>Evidence — Oslo, 2023</p><p>Demonstration CV supplied by the fictional brief.</p></dialog>
+</body>
+</html>

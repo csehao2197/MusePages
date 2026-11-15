@@ -1,0 +1,31 @@
+{
+    "title": "Clarity Therapy — A little space to be yourself",
+    "tags": ["Therapy Practice Concept", "Sage Editorial", "Nature Illustration"],
+    "mocks": "Fictional clinician, credentials, testimonials, fees and contact. Free 20-minute call follows fees/process. Local enquiry only; no treatment, guarantees or clinical service.",
+    "tests": [
+        {"selector": "[data-topic='Grief & Loss']", "click": true},
+        {"selector": "#topic", "value": "Grief & Loss"},
+        {"selector": "#support-status", "text": "No health details"},
+        {"selector": "#fee-total", "text": "£320"},
+        {"selector": "#fee-type", "select": "100"},
+        {"selector": "#fee-total", "text": "£400"},
+        {"selector": "#sessions", "fill": ""},
+        {"selector": "#fee-total", "text": "whole number"},
+        {"selector": "#sessions", "fill": "13", "valid": false},
+        {"selector": "#sessions", "fill": "1.5", "valid": false},
+        {"selector": "#sessions", "fill": "2", "valid": true},
+        {"selector": "#fee-type", "select": "55"},
+        {"selector": "#fee-total", "text": "From £110"},
+        {"selector": "#email", "valid": false},
+        {"selector": "#email", "fill": "invalid", "valid": false},
+        {"selector": "#email", "fill": "person@example.test", "valid": true},
+        {"selector": "#consent", "valid": false},
+        {"selector": "#consent", "click": true},
+        {"selector": "#contact-form button", "click": true},
+        {"selector": "#contact-status", "text": "Nothing sent or stored"},
+        {"selector": "#privacy", "click": true},
+        {"selector": "#privacy-dialog", "visible": true, "text": "not a confidential clinical channel"},
+        {"selector": "#close", "click": true},
+        {"selector": "#privacy-dialog", "visible": false}
+    ]
+}

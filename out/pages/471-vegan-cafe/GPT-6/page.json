@@ -1,0 +1,19 @@
+{
+    "title": "Little Sprig | Brunch worth getting up for",
+    "tags": ["Plant Based Café", "Lemon & Leaf", "Bright Food Illustration"],
+    "mocks": "Fictional café and unverified sample business/roaster copy from original. Original food/interior SVG illustrations replace photography; system grotesk fallback. Cake enquiry opens an explicitly marked .example mailto address; no ordering, payment, transmission or live allergen guarantee.",
+    "tests": [
+        {"selector": "#allergens p", "visible": false},
+        {"selector": "#allergens summary", "click": true},
+        {"selector": "#allergens p", "visible": true, "text": "does not mean allergen free"},
+        {"selector": "#allergens summary", "click": true},
+        {"selector": "#allergens p", "visible": false},
+        {"selector": "#today article", "count": 3},
+        {"selector": "#food article", "count": 10},
+        {"selector": "#coffee dd", "count": 5},
+        {"selector": "#cakes .button", "text": "Email us about a cake"},
+        {"selector": "#cakes .fine", "text": "cannot receive orders"},
+        {"selector": "#social", "click": true},
+        {"selector": "#social-note", "text": "no live Instagram"}
+    ]
+}

@@ -1,0 +1,466 @@
+:root
+{
+    --navy: #1a2a4a;
+    --blue: #226bb6;
+    --surface: #f1f5f8;
+}
+*
+{
+    box-sizing: border-box;
+}
+body
+{
+    margin: 0;
+    color: var(--navy);
+    background: white;
+    font: 15px/1.75 Arial, sans-serif;
+}
+a
+{
+    color: inherit;
+}
+header
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 5%;
+    border-bottom: 1px solid #e0e5eb;
+}
+.brand
+{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 23px;
+    font-weight: 800;
+    text-decoration: none;
+}
+.brand svg
+{
+    width: 30px;
+    color: var(--blue);
+}
+nav, .actions
+{
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+nav a
+{
+    text-decoration: none;
+    font-size: 12px;
+}
+.button
+{
+    display: inline-block;
+    background: var(--navy);
+    color: white;
+    padding: 14px 21px;
+    border: 0;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 13px;
+}
+section
+{
+    padding: 85px max(5%, calc((100% - 1120px) / 2));
+}
+.hero
+{
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 50px;
+    padding-top: 60px;
+}
+.label
+{
+    font-size: 10px;
+    letter-spacing: 1.7px;
+    font-weight: 700;
+    color: var(--blue);
+}
+h1
+{
+    font-size: clamp(42px, 5.4vw, 72px);
+    line-height: 1.08;
+    letter-spacing: -3px;
+    margin: 25px 0;
+}
+h1 span, h2 span
+{
+    color: var(--blue);
+}
+.lead
+{
+    font-size: 17px;
+    color: #607087;
+    max-width: 430px;
+    margin-bottom: 25px;
+}
+.credentials, .fine
+{
+    font-size: 11px;
+    color: #596a7d;
+}
+aside
+{
+    margin-top: 32px;
+    padding: 20px;
+    border: 1px solid #d5e0e8;
+    border-radius: 12px;
+    display: flex;
+    gap: 18px;
+    max-width: 380px;
+}
+aside h2
+{
+    font-size: 14px;
+    margin: 0;
+}
+aside p, aside button
+{
+    font-size: 12px;
+}
+.plus
+{
+    color: var(--blue);
+    font-size: 35px;
+    line-height: 1;
+}
+button
+{
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    background: none;
+    border: 0;
+}
+aside button
+{
+    color: var(--blue);
+    padding: 0;
+    font-weight: 700;
+}
+.hero figure
+{
+    margin: 0;
+}
+.hero img
+{
+    width: 100%;
+    height: 610px;
+    object-fit: cover;
+    border-radius: 18px;
+}
+figcaption
+{
+    text-align: right;
+    font-size: 9px;
+    letter-spacing: 2px;
+    margin-top: 12px;
+}
+h2
+{
+    font-size: 39px;
+    line-height: 1.2;
+    letter-spacing: -1.5px;
+    margin: 20px 0 35px;
+}
+.section-head
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.section-head > p
+{
+    color: #61728a;
+}
+.conditions
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+.conditions button
+{
+    border: 1px solid #dce4ec;
+    padding: 28px;
+    text-align: left;
+    border-radius: 10px;
+}
+.conditions b, .conditions span, .conditions i
+{
+    display: block;
+}
+.conditions b
+{
+    font-size: 17px;
+}
+.conditions span
+{
+    color: #61728a;
+    font-size: 13px;
+    margin-block: 10px 24px;
+}
+.conditions i
+{
+    color: var(--blue);
+    font-size: 12px;
+    font-style: normal;
+}
+.surface
+{
+    background: var(--surface);
+}
+.service
+{
+    display: grid;
+    grid-template-columns: 1.3fr 1fr auto;
+    gap: 25px;
+    align-items: center;
+    width: 100%;
+    padding: 30px 0;
+    border-bottom: 1px solid #ccd7e0;
+    text-align: left;
+}
+.service strong
+{
+    font-size: 22px;
+}
+.service span
+{
+    font-size: 13px;
+    color: #61728a;
+}
+.service b
+{
+    color: var(--blue);
+    font-size: 13px;
+}
+.why, .booking
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 75px;
+    align-items: center;
+}
+.why img
+{
+    width: 100%;
+    border-radius: 12px;
+}
+.why li
+{
+    padding: 7px 0;
+}
+.team, .journey
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+.avatar
+{
+    background: #d7e4eb;
+    color: #55778c;
+    height: 180px;
+    display: grid;
+    place-items: center;
+    font: 65px Georgia, serif;
+    border-radius: 12px;
+}
+.a2
+{
+    background: #c4d6e3;
+}
+.a3
+{
+    background: #e0e8ed;
+}
+.team p
+{
+    font-size: 13px;
+}
+.journey
+{
+    grid-template-columns: repeat(4, 1fr);
+}
+.journey span
+{
+    color: #a7bfd5;
+    font-size: 54px;
+    font-weight: 800;
+}
+.journey h3
+{
+    margin-top: 0;
+}
+.journey p
+{
+    font-size: 13px;
+    color: #61728a;
+}
+.quote
+{
+    text-align: center;
+}
+blockquote
+{
+    font-size: 30px;
+    font-weight: 600;
+    max-width: 750px;
+    margin: 25px auto;
+}
+.booking
+{
+    background: var(--navy);
+    color: white;
+}
+.booking .label
+{
+    color: #a5d5ff;
+}
+.safety
+{
+    font-size: 12px;
+    color: #cbd9ed;
+    border-top: 1px solid #ffffff44;
+    padding-top: 20px;
+}
+form
+{
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    color: var(--navy);
+}
+label
+{
+    display: block;
+    font-size: 12px;
+    margin-bottom: 18px;
+}
+input, select
+{
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #bdcbd8;
+    background: white;
+    font: inherit;
+    color: inherit;
+    margin-top: 7px;
+}
+.consent
+{
+    display: flex;
+    align-items: start;
+    gap: 10px;
+}
+.consent input
+{
+    width: auto;
+    flex-shrink: 0;
+}
+footer
+{
+    padding: 50px 5%;
+    background: #101c30;
+    color: #d4dfec;
+    font-size: 12px;
+}
+dialog
+{
+    width: min(600px, 90%);
+    border: 0;
+    border-radius: 12px;
+    color: var(--navy);
+    padding: 35px;
+}
+dialog::backdrop
+{
+    background: #10233bcc;
+}
+#close
+{
+    float: right;
+}
+:focus-visible
+{
+    outline: 3px solid #439be9;
+    outline-offset: 4px;
+}
+@media (max-width: 767px)
+{
+    header
+    {
+        padding: 20px;
+        gap: 10px;
+    }
+    .brand
+    {
+        font-size: 18px;
+        gap: 7px;
+    }
+    nav a:not(.button)
+    {
+        display: none;
+    }
+    nav .button
+    {
+        padding: 10px;
+        font-size: 10px;
+    }
+    section
+    {
+        padding: 60px 24px;
+    }
+    .hero, .why, .booking, .team, .conditions
+    {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+    .hero figure
+    {
+        order: -1;
+    }
+    .hero img
+    {
+        height: 310px;
+    }
+    h1
+    {
+        font-size: 47px;
+        letter-spacing: -2px;
+    }
+    h2
+    {
+        font-size: 33px;
+    }
+    .actions
+    {
+        gap: 15px;
+        font-size: 12px;
+    }
+    .section-head
+    {
+        display: block;
+    }
+    .service
+    {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    .journey
+    {
+        grid-template-columns: 1fr 1fr;
+    }
+    form
+    {
+        padding: 22px;
+    }
+}

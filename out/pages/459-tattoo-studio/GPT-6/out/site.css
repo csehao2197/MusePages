@@ -1,0 +1,556 @@
+:root
+{
+    --paper: #ede8de;
+    --ink: #0a0a0a;
+    --sage: #91aa88;
+    --line: #30312c;
+    color-scheme: dark;
+    font: 15px/1.7 Arial, sans-serif;
+}
+*
+{
+    box-sizing: border-box;
+}
+html
+{
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+}
+body
+{
+    margin: 0;
+    color: var(--paper);
+    background: var(--ink);
+}
+a
+{
+    color: inherit;
+    text-decoration: none;
+}
+button, input, select, textarea
+{
+    font: inherit;
+}
+button, a
+{
+    -webkit-tap-highlight-color: transparent;
+}
+button
+{
+    cursor: pointer;
+    color: inherit;
+}
+button:focus-visible, a:focus-visible, summary:focus-visible
+{
+    outline: 2px solid var(--sage);
+    outline-offset: 5px;
+}
+.wrap
+{
+    width: min(1120px, calc(100% - 80px));
+    margin: auto;
+}
+.narrow
+{
+    width: min(740px, calc(100% - 80px));
+    margin: auto;
+}
+header
+{
+    height: 92px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    border-bottom: 1px solid var(--line);
+}
+.brand
+{
+    font-size: 24px;
+    letter-spacing: 3px;
+    font-weight: 900;
+}
+.brand span
+{
+    display: block;
+    font-size: 8px;
+    letter-spacing: 2px;
+    font-weight: 400;
+}
+nav, .actions, .filters
+{
+    display: flex;
+    gap: 28px;
+    align-items: center;
+}
+nav, .eyebrow, .button, .outline, .filters button
+{
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+.eyebrow
+{
+    color: var(--sage);
+}
+.button, .outline
+{
+    display: inline-flex;
+    min-height: 46px;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border: 1px solid var(--sage);
+}
+.button
+{
+    background: var(--sage);
+    color: #0a0a0a;
+    font-weight: bold;
+}
+.outline
+{
+    background: transparent;
+    border-color: #8c8a80;
+}
+#menu
+{
+    display: none;
+}
+.hero
+{
+    padding: 0;
+    overflow: hidden;
+}
+.hero-inner
+{
+    height: 660px;
+    position: relative;
+    padding-top: 36px;
+}
+.hero-art
+{
+    position: absolute;
+    width: 58%;
+    height: 96%;
+    top: 0;
+    right: -25px;
+    background: #171914;
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, black 25%, black 90%, transparent);
+}
+.hero-art img
+{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    opacity: .8;
+    transform: rotate(-12deg) scale(1.15);
+}
+.hero-copy
+{
+    position: relative;
+    padding-top: 65px;
+}
+h1
+{
+    font: 900 clamp(64px, 8.6vw, 110px)/.93 Impact, "Arial Narrow", sans-serif;
+    letter-spacing: -3px;
+    margin: 15px 0 25px;
+}
+h1 em
+{
+    font-family: Georgia, serif;
+    font-weight: 400;
+    color: var(--sage);
+}
+.serif
+{
+    font: italic 22px/1.5 Georgia, serif;
+    color: #b7b4a9;
+}
+.actions
+{
+    margin-top: 30px;
+    gap: 14px;
+}
+.hero-note
+{
+    position: absolute;
+    right: 0;
+    bottom: 25px;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-align: right;
+}
+section
+{
+    padding: 85px 0;
+}
+.stats
+{
+    background: #151612;
+    border-block: 1px solid var(--line);
+    padding: 25px 0;
+}
+.stats .wrap, .artists, .polaroids
+{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 26px;
+}
+.stats p
+{
+    text-align: center;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+.stats strong
+{
+    display: block;
+    font: 40px/1.5 Impact, sans-serif;
+    letter-spacing: 0;
+}
+h2
+{
+    font: 48px/1.1 Georgia, serif;
+    font-weight: 400;
+    margin: 12px 0 38px;
+}
+h2 i
+{
+    color: var(--sage);
+}
+h3
+{
+    line-height: 1.2;
+}
+.polaroids article
+{
+    background: var(--paper);
+    color: #24261f;
+    padding: 10px 10px 18px;
+    transform: rotate(-2deg);
+}
+.polaroids article:nth-child(even)
+{
+    transform: rotate(2deg);
+}
+.polaroids img
+{
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+}
+.polaroids h3
+{
+    font: italic 19px Georgia, serif;
+}
+.polaroids p
+{
+    font-size: 12px;
+}
+.muted
+{
+    background: #151612;
+}
+.artists article
+{
+    border-bottom: 1px solid var(--line);
+    padding: 18px 0;
+}
+.artists span
+{
+    font: italic 74px Georgia, serif;
+    display: block;
+    color: #73806b;
+}
+.artists p
+{
+    font-size: 11px;
+    color: var(--sage);
+}
+.artists button, .filters button
+{
+    background: none;
+    border: 0;
+    padding: 12px 0;
+    border-bottom: 1px solid transparent;
+}
+.filters
+{
+    flex-wrap: wrap;
+    gap: 22px;
+}
+.filters .active
+{
+    color: var(--sage);
+    border-color: var(--sage);
+}
+#gallery-status
+{
+    color: #aaa99d;
+    font-size: 12px;
+}
+.gallery
+{
+    columns: 4;
+    column-gap: 12px;
+}
+.study
+{
+    width: 100%;
+    display: block;
+    margin: 0 0 12px;
+    padding: 0;
+    break-inside: avoid;
+    border: 0;
+    background: #25271f;
+    position: relative;
+    overflow: hidden;
+}
+.study img
+{
+    width: 100%;
+    display: block;
+    transition: transform .3s;
+}
+.study:nth-child(3n) img
+{
+    aspect-ratio: 1;
+    object-fit: cover;
+}
+.study:hover img
+{
+    transform: scale(1.04);
+}
+.study span
+{
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    padding: 3px 8px;
+    background: #0a0a0a;
+    color: var(--paper);
+    font-size: 10px;
+}
+.values
+{
+    border-block: 1px solid var(--line);
+}
+.values .wrap
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
+}
+.values h2
+{
+    font-size: 35px;
+    font-style: italic;
+}
+details
+{
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+}
+summary
+{
+    cursor: pointer;
+    font: italic 23px Georgia, serif;
+}
+details p, .values p, #booking > div > p
+{
+    color: #bbb9ae;
+}
+form
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 35px;
+}
+label
+{
+    font-size: 12px;
+}
+input, select, textarea
+{
+    width: 100%;
+    display: block;
+    background: #10110e;
+    border: 1px solid #494b40;
+    padding: 13px;
+    color: var(--paper);
+    margin-top: 5px;
+}
+.wide
+{
+    grid-column: 1 / -1;
+}
+.consent
+{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.consent input
+{
+    width: 18px;
+}
+.footer-type
+{
+    font: 900 16vw/.95 Impact, sans-serif;
+    text-align: center;
+    color: #292b23;
+    padding-top: 60px;
+}
+.footer-info
+{
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    padding-bottom: 40px;
+}
+dialog
+{
+    width: min(500px, calc(100% - 30px));
+    background: #151612;
+    color: var(--paper);
+    border: 1px solid var(--sage);
+    padding: 30px;
+}
+dialog img
+{
+    display: block;
+    max-height: 280px;
+    margin: auto;
+}
+dialog::backdrop
+{
+    background: #000c;
+}
+.close
+{
+    float: right;
+    font-size: 28px;
+    background: none;
+    border: 0;
+}
+@media (max-width: 700px)
+{
+    .wrap, .narrow
+    {
+        width: calc(100% - 40px);
+    }
+    header
+    {
+        height: 80px;
+    }
+    .brand
+    {
+        font-size: 19px;
+    }
+    header > .outline
+    {
+        display: none;
+    }
+    #menu
+    {
+        display: block;
+        background: none;
+        border: 1px solid var(--line);
+        padding: 8px 14px;
+    }
+    nav
+    {
+        display: none;
+        position: absolute;
+        inset: 80px 0 auto;
+        background: #171914;
+        z-index: 20;
+        padding: 30px;
+    }
+    nav.open
+    {
+        display: flex;
+        flex-direction: column;
+    }
+    .hero-inner
+    {
+        height: 650px;
+    }
+    .hero-art
+    {
+        width: 100%;
+        opacity: .5;
+        right: -70px;
+    }
+    .hero-copy
+    {
+        padding-top: 145px;
+    }
+    h1
+    {
+        font-size: 18vw;
+        letter-spacing: -2px;
+    }
+    .serif
+    {
+        font-size: 18px;
+    }
+    .actions
+    {
+        gap: 10px;
+    }
+    .button, .outline
+    {
+        padding: 12px 15px;
+        font-size: 9px;
+        letter-spacing: 1px;
+    }
+    .hero-note
+    {
+        display: none;
+    }
+    section
+    {
+        padding: 60px 0;
+    }
+    .stats .wrap, .artists
+    {
+        grid-template-columns: 1fr 1fr;
+    }
+    .polaroids, .values .wrap, form
+    {
+        grid-template-columns: 1fr;
+    }
+    .polaroids article, .polaroids article:nth-child(even)
+    {
+        transform: none;
+    }
+    h2
+    {
+        font-size: 38px;
+    }
+    .gallery
+    {
+        columns: 2;
+    }
+    .footer-info
+    {
+        display: block;
+    }
+}
+@media (prefers-reduced-motion: reduce)
+{
+    html
+    {
+        scroll-behavior: auto;
+    }
+    *
+    {
+        transition: none !important;
+    }
+}

@@ -1,0 +1,31 @@
+{
+    "title": "Margin | A little more of your week.",
+    "tags": ["Personal Virtual Assistant", "Ink Blue Notebook", "Animated Week Grid"],
+    "mocks": "Fictional assistant, experience, client count, quote, contact and offers. Weekly grid is an illustrative 11-hour engagement distinct from monthly packages. Original portrait illustration and system fonts. Local introduction planner; no booking system, calculator, credentials, account access or transmission.",
+    "tests": [
+        {"selector": "#show-week", "click": true},
+        {"selector": "#hours-count", "text": "11"},
+        {"selector": ".hour", "count": 50},
+        {"selector": ".hour.filled", "count": 11},
+        {"selector": ".hero .call", "click": true},
+        {"selector": "#call-dialog", "visible": true},
+        {"selector": "#name", "valid": false},
+        {"selector": "#name", "fill": "Rae"},
+        {"selector": "#email", "fill": "bad", "valid": false},
+        {"selector": "#email", "fill": "founder@example.test", "valid": true},
+        {"selector": "#task", "fill": "               "},
+        {"selector": "#call-form button", "click": true},
+        {"selector": "#call-status", "text": "15 non-space"},
+        {"selector": "#task", "fill": "Inbox triage and supplier renewals take up every Friday."},
+        {"selector": "#call-form button", "click": true},
+        {"selector": "#call-status", "text": "Nothing sent and no call booked"},
+        {"selector": "#task", "fill": "Diary management and travel planning take up every afternoon."},
+        {"selector": "#call-status", "visible": false},
+        {"selector": "#call-dialog .close", "click": true},
+        {"selector": "#call-dialog", "visible": false},
+        {"selector": "#privacy", "click": true},
+        {"selector": "#privacy-dialog", "visible": true, "text": "no analytics"},
+        {"selector": "#privacy-dialog button", "click": true},
+        {"selector": "#privacy-dialog", "visible": false}
+    ]
+}

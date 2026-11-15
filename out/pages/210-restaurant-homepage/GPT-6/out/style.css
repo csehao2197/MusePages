@@ -1,0 +1,682 @@
+@font-face
+{
+    font-family: Playfair;
+    src: url("playfair.ttf") format("truetype");
+    font-display: swap;
+}
+@font-face
+{
+    font-family: Lato;
+    src: url("lato.ttf") format("truetype");
+    font-display: swap;
+}
+:root
+{
+    --wine: #651f2b;
+    --cream: #f7f3e9;
+    --gold: #c8a86d;
+    --ink: #3e352c;
+}
+*
+{
+    box-sizing: border-box;
+}
+body
+{
+    margin: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font: 14px/1.7 Lato, Arial, sans-serif;
+}
+button, input, select
+{
+    font: inherit;
+}
+button, a
+{
+    cursor: pointer;
+    color: inherit;
+}
+a
+{
+    text-decoration: none;
+}
+header
+{
+    padding: 23px 6%;
+    background: var(--cream);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.brand
+{
+    font: 29px Playfair, Georgia, serif;
+    color: var(--wine);
+}
+.brand span
+{
+    font: 7px Lato, Arial, sans-serif;
+    letter-spacing: 3px;
+    display: block;
+    margin-top: 6px;
+    text-align: center;
+}
+nav
+{
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    font-size: 11px;
+}
+nav button
+{
+    border: 0;
+    background: none;
+    padding: 0;
+    font-size: inherit;
+}
+.outline, .cream, .burgundy
+{
+    border: 1px solid #b4986e;
+    padding: 13px 22px;
+    font-size: 10px;
+    display: inline-block;
+    background: none;
+}
+header .outline
+{
+    color: var(--wine);
+}
+.cream
+{
+    background: var(--cream);
+    color: var(--wine);
+    border-color: var(--cream);
+}
+.burgundy
+{
+    color: white;
+    background: var(--wine);
+    border-color: var(--wine);
+}
+.hero
+{
+    text-align: center;
+    padding: 85px 20px 24px;
+    background: linear-gradient(#1b100d80, #1b100dbb), url("pasta.jpg") center 50%/cover;
+    color: white;
+    min-height: 580px;
+}
+.eyebrow
+{
+    font-size: 9px;
+    letter-spacing: 2.5px;
+    font-weight: bold;
+    color: #88572e;
+}
+.hero .eyebrow
+{
+    color: #e4c69a;
+}
+h1
+{
+    font: 86px/1.1 Playfair, Georgia, serif;
+    margin: 22px 0;
+}
+.tagline
+{
+    font: italic 22px Playfair, Georgia, serif;
+    color: #f1dfbf;
+}
+.hero > p:not(.eyebrow):not(.tagline)
+{
+    font-size: 12px;
+}
+.hero-actions
+{
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 28px 0 40px;
+}
+.scroll-hint
+{
+    font-size: 7px;
+    letter-spacing: 2px;
+    color: #e4c69a;
+}
+.scroll-hint span
+{
+    display: block;
+    font-size: 23px;
+    animation: drift 2s infinite;
+}
+@keyframes drift
+{
+    50%
+    {
+        transform: translateY(6px);
+    }
+}
+.section
+{
+    padding: 80px 8%;
+}
+h2
+{
+    font: 42px/1.18 Playfair, Georgia, serif;
+    font-weight: normal;
+    letter-spacing: -1px;
+    margin: 17px 0 25px;
+    color: var(--wine);
+}
+.story
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+}
+.story-image
+{
+    position: relative;
+    margin-right: 20px;
+}
+.story-image img
+{
+    width: 100%;
+    height: 390px;
+    object-fit: cover;
+    border-radius: 48% 48% 0 0;
+}
+.story-image > span
+{
+    position: absolute;
+    right: -25px;
+    bottom: 25px;
+    background: #e8ddc4;
+    color: var(--wine);
+    width: 115px;
+    height: 115px;
+    border-radius: 50%;
+    display: grid;
+    place-content: center;
+    text-align: center;
+    font-size: 7px;
+    letter-spacing: 1px;
+    outline: 1px solid #b4986e;
+    outline-offset: -7px;
+}
+.story-image b
+{
+    font: italic 21px Playfair, Georgia, serif;
+}
+.story p:not(.eyebrow)
+{
+    font-size: 12px;
+    color: #736859;
+}
+blockquote
+{
+    margin: 25px 0;
+    font: italic 22px/1.5 Playfair, Georgia, serif;
+    color: var(--wine);
+}
+.chef-credit
+{
+    font-size: 9px !important;
+    letter-spacing: 1px;
+}
+.chef-credit span
+{
+    display: block;
+    font-size: 7px;
+    margin-top: 6px;
+}
+.signatures
+{
+    text-align: center;
+    background: #eee8db;
+}
+.section-heading
+{
+    text-align: center;
+}
+.section-heading > p:not(.eyebrow)
+{
+    color: #736859;
+    font-size: 12px;
+}
+.dish-grid
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin: 45px 0 35px;
+    text-align: left;
+}
+.dish-link
+{
+    padding: 0;
+    border: 0;
+    background: none;
+    text-align: left;
+    color: inherit;
+    width: 100%;
+}
+.dish-link img
+{
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+}
+.dish-link h3
+{
+    font: 19px Playfair, Georgia, serif;
+    color: var(--wine);
+}
+.dish-link h3 span
+{
+    float: right;
+    font-size: 15px;
+}
+.dish-link p
+{
+    color: #736859;
+    font-size: 11px;
+}
+.gallery
+{
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 18px;
+    margin-top: 40px;
+}
+.gallery button
+{
+    position: relative;
+    height: 260px;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+}
+.gallery img
+{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .3s;
+}
+.gallery button:hover img
+{
+    transform: scale(1.04);
+}
+.gallery button span
+{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    color: white;
+    background: linear-gradient(transparent, #20130bd9);
+    padding: 30px 20px 15px;
+    text-align: left;
+    font-size: 11px;
+}
+.reservation
+{
+    background: var(--wine);
+    color: #f2e8d8;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 70px;
+    align-items: center;
+}
+.reservation h2
+{
+    color: #f2e8d8;
+}
+.reservation .eyebrow
+{
+    color: #d7bb8e;
+}
+.hours
+{
+    font-size: 11px;
+    color: #dcc8bd;
+    margin: 25px 0;
+}
+.reservation a
+{
+    font-size: 11px;
+}
+#reserve-form
+{
+    border: 1px solid #c5a77b66;
+    padding: 30px;
+}
+.form-label
+{
+    font-size: 9px;
+    letter-spacing: 1px;
+    margin: 0 0 25px;
+}
+.form-label span
+{
+    display: block;
+    color: #d7bb8e;
+    font-size: 8px;
+}
+.fields
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+label
+{
+    font-size: 10px;
+}
+input, select
+{
+    width: 100%;
+    min-width: 0;
+    background: #ffffff0d;
+    border: 1px solid #d6bdad77;
+    color: inherit;
+    padding: 12px;
+    margin: 7px 0 15px;
+    border-radius: 0;
+}
+select option
+{
+    color: #3e352c;
+    background: var(--cream);
+}
+#reserve-form > button
+{
+    width: 100%;
+    margin-top: 12px;
+}
+#reservation-result
+{
+    font-size: 10px;
+    margin-bottom: 0;
+}
+.reviews
+{
+    text-align: center;
+}
+.review-grid
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin: 45px 0 25px;
+}
+.review-grid article > span
+{
+    color: #947036;
+    letter-spacing: 4px;
+    font-size: 12px;
+}
+.review-grid blockquote
+{
+    font-size: 20px;
+}
+.review-grid p
+{
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+.review-grid small
+{
+    display: block;
+    color: #736859;
+    letter-spacing: 0;
+    font-size: 9px;
+    margin-top: 6px;
+}
+.small
+{
+    font-size: 10px;
+    color: #736859;
+}
+.visit
+{
+    background: #eee8db;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 70px;
+    align-items: center;
+}
+.map-art
+{
+    position: relative;
+}
+.map-art svg
+{
+    width: 100%;
+    display: block;
+}
+.map-art a
+{
+    display: block;
+    padding: 12px;
+    color: var(--wine);
+    background: #f9f5eb;
+    text-align: center;
+    font-size: 11px;
+}
+footer
+{
+    background: #2a2420;
+    color: #e6ddcc;
+    padding: 55px 8% 25px;
+    display: grid;
+    grid-template-columns: 1fr .6fr 1.2fr;
+    gap: 35px;
+    font-size: 11px;
+}
+footer .brand
+{
+    color: #e6ddcc;
+}
+footer button, footer > div > a:not(.brand)
+{
+    background: none;
+    border: 0;
+    padding: 3px 0;
+    font-size: 11px;
+    display: block;
+}
+.socials
+{
+    display: flex;
+    gap: 13px;
+    flex-wrap: wrap;
+}
+footer h3
+{
+    font: 18px Playfair, Georgia, serif;
+    margin-top: 0;
+}
+footer small
+{
+    grid-column: 1/-1;
+    border-top: 1px solid #ffffff22;
+    padding-top: 25px;
+    font-size: 9px;
+}
+#newsletter > div
+{
+    display: flex;
+    border-bottom: 1px solid #ae9b81;
+}
+#newsletter input
+{
+    border: 0;
+    background: none;
+    margin: 0;
+    flex: 1;
+}
+#newsletter > div button
+{
+    font-size: 22px;
+    padding: 0 10px;
+}
+dialog
+{
+    width: min(660px, 94vw);
+    max-height: 90vh;
+    padding: 35px;
+    border: 1px solid #b4986e;
+    background: var(--cream);
+    color: var(--ink);
+}
+dialog::backdrop
+{
+    background: #1b100dc9;
+}
+.close
+{
+    float: right;
+    border: 0;
+    background: none;
+    font-size: 25px;
+}
+.menu-tabs
+{
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.menu-tabs button
+{
+    border: 1px solid #b4986e;
+    background: none;
+    padding: 10px 20px;
+}
+.menu-tabs button[aria-pressed="true"]
+{
+    background: var(--wine);
+    color: var(--cream);
+}
+.menu-row
+{
+    border-bottom: 1px solid #d4c8b3;
+    padding: 12px 0;
+}
+.menu-row strong
+{
+    float: right;
+}
+.menu-row small
+{
+    display: block;
+    color: #736859;
+}
+#large-photo
+{
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+}
+#lightbox > button:not(.close)
+{
+    padding: 9px 20px;
+    border: 1px solid #b4986e;
+    background: none;
+}
+@media (max-width: 700px)
+{
+    nav
+    {
+        display: none;
+    }
+    header
+    {
+        padding: 20px 5%;
+    }
+    .brand
+    {
+        font-size: 25px;
+    }
+    header .outline
+    {
+        font-size: 9px;
+        padding: 10px;
+    }
+    .hero
+    {
+        padding-top: 75px;
+        min-height: 555px;
+    }
+    h1
+    {
+        font-size: 59px;
+    }
+    .tagline
+    {
+        font-size: 17px;
+    }
+    .hero .eyebrow
+    {
+        font-size: 7px;
+    }
+    .section
+    {
+        padding: 55px 6%;
+    }
+    .story, .dish-grid, .reservation, .review-grid, .visit, footer
+    {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    h2
+    {
+        font-size: 34px;
+    }
+    .story-image img
+    {
+        height: 340px;
+    }
+    .dish-link img
+    {
+        height: 260px;
+    }
+    .gallery
+    {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+    .gallery button
+    {
+        height: 210px;
+    }
+    .gallery button span
+    {
+        font-size: 9px;
+        padding: 25px 10px 10px;
+    }
+    #reserve-form
+    {
+        padding: 20px;
+    }
+    #large-photo
+    {
+        height: 240px;
+    }
+}
+@media (prefers-reduced-motion: reduce)
+{
+    .scroll-hint span
+    {
+        animation: none;
+    }
+    .gallery img
+    {
+        transition: none;
+    }
+}

@@ -1,0 +1,93 @@
+import { audit } from "../../351-game-studio/GPT-6/serial-run.mjs";
+export async function verify()
+{
+    return audit("360-health-saas", async (page, check, width) =>
+    {
+        check(await page.locator("[data-tab]").count() === 7, `${width}: seven working workspace views`);
+        check(await page.locator(".chart-bar").count() === 14, `${width}: full synthetic series`);
+        await page.locator(".chart-bar").first().focus();
+        check((await page.locator("#chart-reading").textContent()).includes("51 ms"), `${width}: keyboard reveals actual HRV sample`);
+        await page.locator("#chart-range").selectOption("7");
+        check(await page.locator(".chart-bar").count() === 7 && (await page.locator("#chart-reading").textContent()).includes("64.0 ms"), `${width}: window changes sample and average`);
+        await page.locator("[data-tab='Sleep']").click();
+        check((await page.locator("#chart-reading").textContent()).includes("hours"), `${width}: sleep units and data`);
+        await page.locator("[data-tab='Activity']").click();
+        await page.locator(".chart-bar").last().focus();
+        check((await page.locator("#chart-reading").textContent()).includes("8400 steps"), `${width}: actual activity data`);
+        await page.locator("[data-tab='Biomarkers']").click();
+        await page.locator("#marker-search").fill("FERR");
+        check(await page.locator("#marker-rows tr").count() === 1 && (await page.locator("#marker-rows").textContent()).includes("ng/mL"), `${width}: marker search retains units`);
+        await page.locator("#marker-search").fill("absent");
+        check(await page.locator("#marker-empty").isVisible() && await page.locator("#marker-rows tr").count() === 0, `${width}: marker empty state`);
+        await page.locator("#marker-search").fill("");
+        check(await page.locator("#marker-rows tr").count() === 3, `${width}: marker search reset`);
+        await page.locator("[data-tab='AI Insights']").click();
+        check((await page.locator(".workspace-list").textContent()).includes("No model is running") && (await page.locator(".workspace-list").textContent()).includes("All notes are authored examples"), `${width}: explicit scripted-notes limit`);
+        await page.locator("[data-tab='Reports']").click();
+        let pending = page.waitForEvent("download");
+        await page.locator("#report-csv").click();
+        let download = await pending;
+        check(download.suggestedFilename() === "meridian-synthetic-sample.csv", `${width}: real CSV download`);
+        const stream = await download.createReadStream();
+        const chunks = [];
+        for await (const chunk of stream) chunks.push(chunk);
+        const csv = Buffer.concat(chunks).toString();
+        check(csv.includes("SYNTHETIC DEMO DATA") && csv.split("\n").length === 16 && csv.includes("2026-09-14,68,7.4,8400"), `${width}: exact exported rows and synthetic label`);
+        pending = page.waitForEvent("download");
+        await page.locator("#report-json").click();
+        download = await pending;
+        check(download.suggestedFilename() === "meridian-synthetic-sample.json", `${width}: real JSON download`);
+        await page.locator("[data-kind='Lab']").click();
+        check(await page.locator(".integration").count() === 2, `${width}: lab source filter`);
+        await page.locator("[data-connect='LabCorp']").click();
+        check((await page.locator("#integration-count").textContent()).includes("1 simulated"), `${width}: connection is local simulation`);
+        await page.locator("#integration-search").fill("unknown");
+        check(await page.locator("#integration-empty").isVisible(), `${width}: source empty state`);
+        await page.locator("#reset-integrations").click();
+        check(await page.locator(".integration").count() === 8 && await page.locator(".integration.connected").count() === 1, `${width}: reset filters preserves selected source`);
+        await page.locator("[data-tab='Settings']").click();
+        await page.locator("#anonymous").check();
+        check((await page.locator("#sample-name").textContent()).includes("Sample member"), `${width}: memory display preference`);
+        await page.locator("#compact").check();
+        await page.locator("[data-tab='Overview']").click();
+        check(await page.locator(".insight-card").count() === 0, `${width}: actual overview note preference`);
+        await page.locator("[data-tab='Settings']").click();
+        await page.locator("#reset-demo").click();
+        check((await page.locator("#settings-result").textContent()).includes("reset") && await page.locator(".integration.connected").count() === 0, `${width}: settings and connections reset`);
+        await page.locator("#watch-demo").click();
+        check(await page.locator("#demo-back").isDisabled(), `${width}: guide starts at first step`);
+        await page.locator("#demo-next").click();
+        await page.locator("#demo-back").click();
+        check((await page.locator("#demo-step").textContent()).includes("1 of 4"), `${width}: guide backward state`);
+        for (let i = 0; i < 4; i++) await page.locator("#demo-next").click();
+        check(!await page.locator("#demo-dialog").isVisible() && await page.locator("#view-title").textContent() === "Biomarkers", `${width}: guide completion opens working lab view`);
+        await page.locator("#billing").selectOption("annual");
+        check((await page.locator(".price-card.featured .price-value").textContent()).includes("$228"), `${width}: annual plan arithmetic`);
+        await page.locator(".price-card.featured [data-plan='Core']").click();
+        await page.locator("#signup button").click();
+        check((await page.locator("#signup-result").textContent()).includes("valid email"), `${width}: empty plan form rejected`);
+        await page.locator("#signup [name='name']").fill("Example Visitor");
+        await page.locator("#signup [name='email']").fill("person@example.test");
+        await page.locator("#signup button").click();
+        check((await page.locator("#signup-result").textContent()).includes("Confirm"), `${width}: no-health-service acknowledgement`);
+        await page.locator("[name='understand']").check();
+        await page.locator("#signup button").click();
+        check((await page.locator("#signup-result").textContent()).includes("Core preview") && (await page.locator("#signup-result").textContent()).includes("No account opened"), `${width}: honest selected plan state`);
+        await page.keyboard.press("Escape");
+        await page.locator(".faq-list summary").first().click();
+        check((await page.locator(".faq-list details").first().textContent()).includes("makes no HIPAA"), `${width}: no invented compliance claim`);
+        await page.locator("[data-info='method']").first().click();
+        check((await page.locator("#info-copy").textContent()).includes("not a diagnosis"), `${width}: meaningful method limits`);
+        await page.keyboard.press("Escape");
+        if (width < 768)
+        {
+            check(await page.locator("#price-grid").evaluate((el) => el.scrollWidth > el.clientWidth), `${width}: contained mobile plan scrolling`);
+            await page.locator("#menu-button").click();
+            await page.locator("#mobile-menu a[href='#integrations']").click();
+            check(!await page.locator("#mobile-menu").isVisible(), `${width}: mobile navigation`);
+        }
+        check(await page.evaluate(() => localStorage.length === 0 && document.cookie === ""), `${width}: no cookies or health-data storage`);
+        check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${width}: dashboard and interaction states fit viewport`);
+    });
+}
+if (process.argv[1]?.endsWith("verify.mjs")) console.log(JSON.stringify(await verify()));

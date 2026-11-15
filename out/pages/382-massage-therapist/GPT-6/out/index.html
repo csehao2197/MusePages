@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Solace, a fictional private massage studio. Explore treatments and make a local session plan.">
+    <title>SOLACE — A little space to return to yourself</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <header>
+        <a class="wordmark" href="#home">SOLACE<span>MASSAGE THERAPY · LONDON</span></a>
+        <button id="menu" aria-expanded="false" aria-controls="nav" aria-label="Toggle navigation">☰</button>
+        <nav id="nav" aria-label="Main"><a href="#treatments">Treatments</a><a href="#about">The studio</a><a href="#pricing">Pricing</a><a class="button small" href="#booking">Book a session ↗</a></nav>
+    </header>
+    <main>
+        <section class="hero" id="home">
+            <div class="steam" aria-hidden="true"></div>
+            <p class="eyebrow">PRIVATE MASSAGE THERAPY STUDIO</p>
+            <h1>Restore.<br><em>Release.</em> Return.</h1>
+            <p class="intro">A quieter kind of care. Thoughtful, individually tailored<br class="desktop"> bodywork in a sanctuary-style London studio.</p>
+            <div class="actions"><a class="button" href="#booking">Find your moment ↗</a><a class="text-link" href="#treatments">Explore treatments ↓</a></div>
+            <p class="hero-note">60 min from £65 <span>·</span> Hot Stone from £95 <span>·</span> Couples £170</p>
+            <img class="still-life" src="sanctuary.svg" alt="Original illustration of folded linen, a candle and warm basalt stones">
+            <p class="vertical">WHERE REST IS TAKEN SERIOUSLY</p>
+            <p class="demo">Fictional studio · interactive local preview</p>
+        </section>
+        <section class="treatments section" id="treatments">
+            <div class="section-top"><div><p class="eyebrow">THE ART OF SLOWING DOWN</p><h2>Tailored treatments<br>for <em>every body.</em></h2></div><p>Choose the time you need.<br>We’ll help you plan the rest.</p></div>
+            <div class="treatment-grid">
+                <article><span class="number">I / SIGNATURE</span><h3>Swedish Massage</h3><p>Long, flowing strokes and a gentler pace. An invitation to soften, unwind and return to the present.</p><button data-treatment="swedish-60">60 min · £65 ↗</button><button data-treatment="swedish-90">90 min · £85 ↗</button></article>
+                <article><span class="number">II / THERAPEUTIC</span><h3>Deep Tissue</h3><p>Focused, considered bodywork for tired shoulders and persistent tension. Pressure guided by your comfort.</p><button data-treatment="deep-60">60 min · £70 ↗</button><button data-treatment="deep-90">90 min · £90 ↗</button></article>
+                <article><span class="number">III / WARMING RITUAL</span><h3>Hot Stone</h3><p>Smooth, warmed basalt stones and unhurried touch. A deeply comforting ritual for a cooler day.</p><button data-treatment="hotstone-90">90 min · £95 ↗</button></article>
+                <article><span class="number">IV / SHARED EXPERIENCE</span><h3>Couples Massage</h3><p>Two tables, one peaceful space. Set aside a little time together, away from everything else.</p><button data-treatment="couples-90">90 min · £170 per couple ↗</button></article>
+            </div>
+        </section>
+        <section class="about section" id="about">
+            <div class="about-art"><img src="sanctuary.svg" alt="Linen, candlelight and stones in a warm illustrated studio"><span>THE SMALL DETAILS MATTER.</span></div>
+            <div><p class="eyebrow">MEET YOUR THERAPIST</p><h2>Care begins<br>with <em>listening.</em></h2><h3>Emma Walsh</h3><p>SOLACE is a fictional studio concept built around a simple idea: thoughtful bodywork should feel personal, never routine. Your preferred pressure, pace and comfort come first.</p><p>This demonstration adapts the original therapist story. Professional qualifications, registration, eight years of practice and client ratings have not been independently verified and are not claimed here.</p><a class="text-link" href="#booking">Plan a session with Emma ↗</a></div>
+        </section>
+        <section class="pricing section" id="pricing">
+            <div><p class="eyebrow">TIME WELL SPENT</p><h2>Simple,<br><em>transparent</em> pricing.</h2><p>All prices are illustrative. No payments are taken.</p><table><caption>Individual sessions</caption><tbody><tr><th>Swedish · 60 / 90 min</th><td>£65 / £85</td></tr><tr><th>Deep Tissue · 60 / 90 min</th><td>£70 / £90</td></tr><tr><th>Hot Stone · 90 min</th><td>£95</td></tr><tr><th>Couples · 90 min</th><td>£170</td></tr></tbody></table></div>
+            <aside><p class="eyebrow">A REGULAR MOMENT OF REST</p><h3>5-Session Package</h3><p class="price">£290</p><p>Five 60-minute treatments. Mix Swedish and Deep Tissue. Valid for six months for one person.</p><p>Save £35 compared with five £65 Swedish sessions; savings vary for mixed treatments.</p><button class="button light" id="package">Explore package interest ↗</button><p class="fine">Local planner only · nothing purchased</p></aside>
+        </section>
+        <section class="booking section" id="booking">
+            <div><p class="eyebrow">MAKE ROOM FOR YOURSELF</p><h2>Ready to<br><em>begin?</em></h2><p>Tuesday–Saturday · 9am–7pm<br>London · by appointment</p><p class="notice">This is a local planning demo, not a booking service. Use example details only. Please keep health information private and discuss suitability with a qualified professional.</p><p id="package-note" hidden>Package interest selected. Choose a 60-minute Swedish or Deep Tissue session to begin your example plan.</p></div>
+            <form id="booking-form" novalidate>
+                <div class="fields"><label>Full name<input name="name" autocomplete="off" placeholder="Example name" maxlength="80"></label><label>Email address<input name="email" type="email" autocomplete="off" placeholder="you@example.test"></label></div>
+                <label>Phone number (optional)<input name="phone" type="tel" autocomplete="off" placeholder="Example number"></label>
+                <label>Treatment<select id="treatment" name="treatment"><option value="">Select a treatment</option><option value="swedish-60">Swedish — 60 min (£65)</option><option value="swedish-90">Swedish — 90 min (£85)</option><option value="deep-60">Deep Tissue — 60 min (£70)</option><option value="deep-90">Deep Tissue — 90 min (£90)</option><option value="hotstone-90">Hot Stone — 90 min (£95)</option><option value="couples-90">Couples — 90 min (£170)</option></select></label>
+                <label>Preferred date<input type="date" name="date" id="date"></label>
+                <label>Comfort preferences (optional)<textarea name="notes" rows="2" maxlength="250" placeholder="Example: a quieter session. No health details, please."></textarea></label>
+                <label class="checkbox"><input type="checkbox" name="ack"> I understand this creates a local example only.</label>
+                <div class="actions"><button class="button" type="submit">Preview appointment request ↗</button><button type="reset" class="text-link">Clear</button></div>
+                <p id="result" role="status" aria-live="polite"></p>
+            </form>
+        </section>
+        <section class="journal section"><p class="eyebrow">A NOTE ON TRUST</p><h2>Space for a <em>real experience.</em></h2><p>The original brief includes client testimonials and ratings. This fictional studio has no verified reviews; instead, explore the care principles behind the concept.</p><div class="principles"><p><b>Your pace.</b><br>Unhurried time to settle in.</p><p><b>Your comfort.</b><br>Pressure and draping discussed together.</p><p><b>Your choice.</b><br>Pause or end a session at any time.</p></div></section>
+        <section class="faq section" id="faq"><p class="eyebrow">A FEW THINGS TO KNOW</p><h2>Common <em>questions.</em></h2><details><summary>How should I prepare?</summary><p>For a real appointment, ask the provider about arrival time, clothing, draping and preparation. Your comfort and consent should guide the session.</p></details><details><summary>What if I have a medical condition?</summary><p>Massage is not medical diagnosis or treatment. Discuss suitability with a qualified clinician and the provider privately. This demo does not collect health information or promise safety or results.</p></details><details><summary>Can I give a gift voucher?</summary><p>The concept offers 12-month gift vouchers. Select package interest above to explore an example; vouchers cannot be purchased or redeemed here.</p></details><details><summary>What is the cancellation policy?</summary><p>The sample policy requests 24 hours’ notice; late cancellations may incur 50% of the treatment price. No appointment or charge is created here.</p></details><details><summary>Is the studio accessible?</summary><p>The brief describes ground-floor, step-free access and an adjustable table. These facilities are fictional; confirm accessibility directly with a real provider.</p></details></section>
+    </main>
+    <footer><a class="wordmark" href="#home">SOLACE</a><p>Where rest is taken seriously.</p><div><a href="#treatments">Treatments</a><a href="#booking">Plan a session</a><a href="#faq">Questions</a></div><p class="fine">Fictional London studio · no enquiries transmitted · no payment or medical service<br>© 2026 SOLACE concept. Original illustration; system typefaces.</p></footer>
+</body>
+</html>

@@ -1,0 +1,9 @@
+# Ellipse Dance Studio
+
+Original: `data\prompts\320-dance-studio-ellipse\320-dance-studio-ellipse.md`; applied full `DESIGN.md`. Generator **gpt-6.1-sol**, label **GPT-6**. HTML/CSS/JS static adaptation using system italic serif/sans, original stage dancer SVG and instructor movement monograms. Source here, independent export `out`, public path `pages/dance-studio-ellipse/GPT-6/index.html`.
+
+Features: style/instructor-to-timetable routing, combined style/level filters, disabled full slots, contextual trial planner with weekday/experience/guardian checks, and showcase dialogs. Classes/credentials/trial offer are illustrative; all-level sessions participate in level filters. Showcase years unconfirmed, with no ticket sales. No bookings, payments, suitability assessments or live capacity API. Adult contact details stay in page memory. Environment variables: none. Original local art replaces photography; framework motion adapted to reduced-motion-aware CSS.
+
+Root verification: `node out\pages\320-dance-studio-ellipse\GPT-6\verify.mjs`. Export contains homepage/assets/preview. No builds, installs or publication.
+
+Actual QA: 53 browser/export assertions and 3 registration/preservation checks passed. Desktop 1200×900 and mobile 390×844 full-page screenshots opened and inspected: Viewed both final full-page desktop 1200x900 and mobile 390x844 PNGs after contact/map refinement. Warm stage-lit original dancer and italic ivory/copper hierarchy are clear; full-width class rows and compact timetable align on desktop, with timetable scroll contained on mobile. Instructor movement monograms, performance cards and deep-rose enquiry form stack cleanly. Contact/navigation and footer remain aligned; no clipped copy or document overflow observed. Mobile hero uses intentional dancer crop. Evidence: `.checks\qa.json`, desktop/mobile PNGs. Registered disabled/undeployed. No build, install, dist or publication.

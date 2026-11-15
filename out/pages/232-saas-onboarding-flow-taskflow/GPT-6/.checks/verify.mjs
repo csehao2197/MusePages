@@ -1,0 +1,250 @@
+import { chromium } from "@playwright/test";
+import { createServer } from "node:http";
+import { readFile, writeFile } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
+import path from "node:path";
+import assert from "node:assert/strict";
+
+const checks = path.dirname(fileURLToPath(import.meta.url));
+const folder = path.dirname(checks);
+const slug = path.basename(path.dirname(folder)).replace(/^\d+-/, "");
+const prefix = `/pages/${slug}/GPT-6/`;
+let assertions = 0;
+const errors = [];
+const check = (condition, message) =>
+{
+    assert.ok(condition, message);
+    assertions++;
+};
+const server = createServer(async (request, response) =>
+{
+    try
+    {
+        const url = new URL(request.url, "http://localhost");
+        if (!url.pathname.startsWith(prefix)) throw Error("Outside public subpath");
+        const relative = decodeURIComponent(url.pathname.slice(prefix.length)) || "index.html";
+        const file = path.resolve(folder, "out", relative);
+        if (!file.startsWith(path.join(folder, "out") + path.sep)) throw Error("Traversal");
+        const data = await readFile(file);
+        const type = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript", ".webm": "video/webm", ".png": "image/png" }[path.extname(file)] ?? "application/octet-stream";
+        response.writeHead(200, { "Content-Type": type, "Content-Length": data.length });
+        response.end(data);
+    }
+    catch
+    {
+        response.writeHead(404);
+        response.end("Not found");
+    }
+});
+await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
+const browser = await chromium.launch({ headless: true });
+try
+{
+    const page = await browser.newPage({ viewport: { width: 1200, height: 900 }, reducedMotion: "reduce", colorScheme: "light" });
+    page.on("pageerror", (error) => errors.push(error.message));
+    page.on("response", (response) =>
+    {
+        if (response.status() >= 400) errors.push(`${response.status()} ${response.url()}`);
+    });
+    page.on("requestfailed", (request) =>
+    {
+        if (!request.failure()?.errorText.includes("ERR_ABORTED")) errors.push(request.url());
+    });
+    const url = `http://127.0.0.1:${server.address().port}${prefix}index.html`;
+    const go = () => page.locator("#continue").click();
+    const step = async (number) => (await page.locator("#step-label").innerText()) === `STEP ${number} OF 4`;
+    const response = await page.goto(url);
+    check(response.status() === 200, "Static homepage under eventual public path");
+    check((await page.title()).includes("TaskFlow"), "Public title");
+    check(await step(1), "Initial step 1");
+    check(await page.locator(".step:visible").count() === 1, "One focused screen at a time");
+    check(await page.locator("#tips").isChecked() === false, "Email tips opt-in defaults off");
+    check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), "Desktop fits viewport");
+    await page.screenshot({ path: path.join(checks, "desktop.png") });
+    await page.setViewportSize({ width: 390, height: 844 });
+    check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), "Initial mobile fits viewport");
+    await page.screenshot({ path: path.join(checks, "mobile.png") });
+    await page.screenshot({ path: path.join(checks, "mobile-full.png"), fullPage: true });
+    await page.setViewportSize({ width: 1200, height: 900 });
+    await go();
+    check(await step(1), "Required workspace blocks continuation");
+    check((await page.locator("#form-error").innerText()).includes("name"), "Workspace error is actionable");
+    await page.locator("#workspace").fill("   ");
+    await go();
+    check(await step(1), "Whitespace-only workspace rejected");
+    await page.locator("#workspace").fill("Studio North");
+    check(await page.locator("#form-error").innerText() === "", "Correcting input clears stale validation state");
+    await go();
+    check((await page.locator("#form-error").innerText()).includes("role"), "Role required");
+    await page.locator("#role").selectOption("Designer");
+    await page.locator("#logo-upload").setInputFiles({ name: "notes.txt", mimeType: "text/plain", buffer: Buffer.from("Not an image") });
+    check((await page.locator("#logo-status").innerText()).includes("Choose a PNG"), "Invalid image type rejected");
+    await page.locator("#logo-upload").setInputFiles({ name: "large.png", mimeType: "image/png", buffer: Buffer.alloc(2 * 1024 * 1024 + 1) });
+    check((await page.locator("#logo-status").innerText()).includes("smaller than 2 MB"), "Oversized logo rejected");
+    await page.locator("#logo-upload").setInputFiles({ name: "broken.png", mimeType: "image/png", buffer: Buffer.from("Not a decoded image") });
+    await page.waitForFunction(() => document.querySelector("#logo-status").textContent.includes("could not be read"));
+    check((await page.locator("#logo-status").innerText()).includes("could not be read"), "Corrupt logo rejected");
+    const logo = await page.screenshot({ clip: { x: 0, y: 0, width: 20, height: 20 } });
+    await page.locator("#logo-upload").setInputFiles({ name: "studio.png", mimeType: "image/png", buffer: logo });
+    await page.waitForFunction(() => document.querySelector("#logo-preview img")?.complete);
+    check(await page.locator("#logo-preview img").count() === 1, "Logo decoded into preview");
+    check(await page.locator("#mini-logo img").count() === 1, "Logo appears in workspace illustration");
+    await page.locator("#remove-logo").click();
+    check(await page.locator("#logo-preview img").count() === 0, "Remove logo clears image");
+    await page.locator("#logo-upload").setInputFiles({ name: "studio.png", mimeType: "image/png", buffer: logo });
+    await page.waitForFunction(() => document.querySelector("#logo-preview img")?.complete);
+    await go();
+    check(await step(2), "Workspace continues to team");
+    check(await page.locator('#progress li[aria-current="step"] b').innerText() === "Your team", "Accessible current progress");
+    await go();
+    check((await page.locator("#form-error").innerText()).includes("Add a teammate"), "Empty invites require explicit skip");
+    await page.locator(".invite-row input").fill("bad-email");
+    await go();
+    check((await page.locator("#form-error").innerText()).includes("email address"), "Invalid individual email rejected");
+    await page.locator(".invite-row input").fill("alex@studio.com");
+    await page.locator(".invite-row select").selectOption("Admin");
+    await page.locator("#add-invite").click();
+    check(await page.locator(".invite-row").count() === 2, "Add another creates a teammate row");
+    await page.locator(".invite-row input").nth(1).fill("ALEX@studio.com");
+    await go();
+    check((await page.locator("#form-error").innerText()).includes("unique email"), "Case-insensitive duplicates rejected");
+    await page.getByRole("button", { name: "Remove teammate 2", exact: true }).click();
+    check(await page.locator(".invite-row").count() === 1, "Individual remove works");
+    await page.locator("summary").click();
+    await page.locator("#bulk-emails").fill("invalid-email, jamie@studio.com");
+    await page.locator("#bulk-add").click();
+    check(await page.locator(".invite-row").count() === 1, "Invalid bulk list is atomic");
+    check((await page.locator("#bulk-status").innerText()).includes("No addresses were added"), "Bulk error explains atomic behavior");
+    await page.locator("#bulk-emails").fill("alex@studio.com, ALEX@studio.com; jamie@studio.com\npat@studio.com");
+    await page.locator("#bulk-add").click();
+    check(await page.locator(".invite-row").count() === 3, "Bulk parser handles separators and deduplicates");
+    check((await page.locator("#bulk-status").innerText()).includes("2 teammates added"), "Bulk count accurate");
+    await page.locator(".invite-row select").nth(1).selectOption("Viewer");
+    await page.getByRole("button", { name: "Remove teammate 3", exact: true }).click();
+    await page.locator("#bulk-emails").fill(Array.from({ length: 21 }, (_, index) => `person${index}@studio.com`).join(","));
+    await page.locator("#bulk-add").click();
+    check(await page.locator(".invite-row").count() === 2, "Teammate limit preserves existing list");
+    await page.screenshot({ path: path.join(checks, "team.png") });
+    await go();
+    check(await step(3), "Team continues to project");
+    await go();
+    check((await page.locator("#form-error").innerText()).includes("project"), "Project name required");
+    for (const [template, count] of [["blank", 0], ["marketing", 4], ["launch", 4], ["software", 4], ["client", 4]])
+    {
+        await page.locator(`[data-template="${template}"]`).click();
+        check(await page.locator("#template-tasks li").count() === count, `${template} previews included tasks`);
+        check(await page.locator(`[data-template="${template}"]`).getAttribute("aria-pressed") === "true", `${template} selection accessible`);
+    }
+    await page.locator('[data-template="software"]').click();
+    await page.locator("#project-name").fill("Website refresh");
+    check((await page.locator("#mini-tasks").innerText()).includes("Plan the sprint"), "Context illustration mirrors selected template");
+    await page.screenshot({ path: path.join(checks, "project.png") });
+    await page.locator("#back").click();
+    check(await page.locator(".invite-row input").first().inputValue() === "alex@studio.com", "Back preserves teammate email");
+    check(await page.locator(".invite-row select").nth(1).inputValue() === "Viewer", "Back preserves teammate role");
+    await page.locator("#back").click();
+    check(await page.locator("#workspace").inputValue() === "Studio North", "Back preserves workspace");
+    check(await page.locator("#logo-preview img").count() === 1, "Back preserves logo");
+    await go();
+    await go();
+    check(await page.locator("#project-name").inputValue() === "Website refresh", "Back preserves project name");
+    await go();
+    check(await step(4), "Project continues to personalization");
+    await page.locator("#notify-digest").check();
+    await page.locator("#notify-mentions").uncheck();
+    await page.locator('[data-theme-option="dark"]').click();
+    check(await page.locator("html").getAttribute("data-theme") === "dark", "Dark preference changes actual page appearance");
+    await page.screenshot({ path: path.join(checks, "dark-theme.png") });
+    await page.reload();
+    check(await step(4), "Reload restores current step");
+    check(await page.locator("html").getAttribute("data-theme") === "dark", "Reload restores dark theme");
+    check(await page.locator("#notify-digest").isChecked(), "Reload restores notification preference");
+    check(!await page.locator("#notify-mentions").isChecked(), "Reload restores disabled preference");
+    await page.locator('[data-theme-option="system"]').click();
+    check(await page.locator("html").getAttribute("data-theme") === "light", "System follows light browser setting");
+    await page.emulateMedia({ colorScheme: "dark" });
+    await page.waitForFunction(() => document.documentElement.dataset.theme === "dark");
+    check(await page.locator("html").getAttribute("data-theme") === "dark", "System reacts to browser theme changes");
+    await page.locator('[data-theme-option="light"]').click();
+    await page.keyboard.press("?");
+    check(await page.locator("#info-dialog").isVisible(), "Enabled shortcut opens keyboard guide");
+    await page.keyboard.press("Escape");
+    await page.locator("#shortcuts").uncheck();
+    await page.keyboard.press("?");
+    check(!await page.locator("#info-dialog").isVisible(), "Disabled shortcut stays off");
+    await page.locator("#tips").check();
+    await page.screenshot({ path: path.join(checks, "personalize.png") });
+    await go();
+    check(await page.locator("#completion").isVisible(), "Completion appears");
+    check((await page.locator("#setup-summary").innerText()).includes("Studio North · Designer"), "Completion workspace summary accurate");
+    check((await page.locator("#setup-summary").innerText()).includes("2 invitations prepared · not sent"), "Completion truthful invitation count");
+    check((await page.locator("#setup-summary").innerText()).includes("Website refresh · Software Development"), "Completion selected template summary");
+    check((await page.locator("#setup-summary").innerText()).includes("shortcuts off · email tips on"), "Completion preference summary");
+    await page.screenshot({ path: path.join(checks, "completion.png") });
+    await page.locator("#watch-tour").click();
+    await page.waitForFunction(() => document.querySelector("#tour").currentTime > .1);
+    check(await page.locator("#tour").evaluate((video) => video.videoWidth === 800 && !video.paused), "Real original walkthrough video plays");
+    await page.screenshot({ path: path.join(checks, "tour.png") });
+    await page.locator("#tour-dialog .close").click();
+    await page.waitForFunction(() => document.querySelector("#tour").paused);
+    check(await page.locator("#tour").evaluate((video) => video.paused), "Closing tour pauses media");
+    await page.locator("#dashboard-button").click();
+    check(await page.locator("#dashboard").isVisible(), "Dashboard CTA opens functional local workspace");
+    check(await page.locator(".task-row").count() === 4, "Selected software template seeds four tasks");
+    check((await page.locator("#dashboard-team").innerText()).includes("jamie@studio.com (Viewer)"), "Prepared team role carried to dashboard");
+    await page.locator(".task-row input").first().check();
+    check(await page.locator("#task-count").innerText() === "1 / 4 complete", "Task completion updates count");
+    await page.locator("#new-task").fill("<b>Review with the team</b>");
+    await page.getByRole("button", { name: "Add task", exact: true }).click();
+    check(await page.locator(".task-row").count() === 5, "Dashboard adds task");
+    check((await page.locator(".task-row").last().innerText()).includes("<b>Review with the team</b>"), "Task input treated as text");
+    await page.locator(".task-row button").last().click();
+    check(await page.locator(".task-row").count() === 4, "Dashboard deletes task");
+    await page.reload();
+    check(await page.locator("#dashboard").isVisible(), "Reload restores dashboard phase");
+    check(await page.locator(".task-row input").first().isChecked(), "Task completion survives reload");
+    await page.screenshot({ path: path.join(checks, "dashboard.png") });
+    await page.setViewportSize({ width: 390, height: 844 });
+    check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), "Mobile dashboard fits viewport");
+    await page.screenshot({ path: path.join(checks, "mobile-dashboard.png"), fullPage: true });
+    await page.locator("#edit-setup").click();
+    check(await step(1), "Edit setup returns to workspace");
+    await go();
+    await go();
+    await go();
+    await go();
+    await page.locator("#dashboard-button").click();
+    check(await page.locator(".task-row input").first().isChecked(), "Editing unchanged template preserves completed work");
+    await page.locator("#reset").click();
+    check(await step(1) && await page.locator("#workspace").inputValue() === "", "Reset clears draft and returns to beginning");
+    check(await page.evaluate(() => sessionStorage.getItem("taskflow-onboarding-v1") === null), "Reset clears session storage");
+    check(await page.locator("#logo-status").innerText() === "" && await page.locator("#bulk-emails").inputValue() === "", "Reset clears ancillary upload and invitation draft state");
+    await page.locator("#workspace").fill("Solo Studio");
+    await page.locator("#role").selectOption("Founder");
+    await go();
+    await page.locator("#skip").click();
+    check(await step(3), "Team skip is functional");
+    await page.locator("#project-name").fill("Fresh start");
+    await go();
+    await page.locator("#skip").click();
+    check((await page.locator("#setup-summary").innerText()).includes("0 invitations prepared"), "Skip keeps accurate zero invitation summary");
+    check((await page.locator("#setup-summary").innerText()).includes("email tips off"), "Skipping personalization retains safe opt-in defaults");
+    await page.locator("#dashboard-button").click();
+    check(await page.locator(".empty-tasks").isVisible(), "Blank template has an intentional empty state");
+    await page.locator("#privacy").click();
+    check((await page.locator("#info-content").innerText()).includes("Nothing is uploaded or sent"), "Privacy action explains actual local data behavior");
+    await page.keyboard.press("Escape");
+    await page.locator("#terms").click();
+    check((await page.locator("#info-content").innerText()).includes("fictional"), "Terms explain concept scope");
+    await page.keyboard.press("Escape");
+    await page.locator("#help").click();
+    check((await page.locator("#info-content").innerText()).includes("Workspace:"), "Help opens useful onboarding guidance");
+    check(errors.length === 0, `Browser and resource errors: ${errors.join("; ")}`);
+    await writeFile(path.join(checks, "results.json"), JSON.stringify({ assertions, desktop: "1200x900", mobile: "390x844", publicPath: `${prefix}index.html`, browserErrors: errors, testedAt: new Date().toISOString(), serverClosedAfterRun: true, coverage: ["All four steps", "Back/reload persistence", "Logo type/size/decode validation", "Bulk invitation parsing and deduplication", "Five templates", "Real theme changes", "Opt-in and shortcuts", "Completion", "Video playback", "Task CRUD and reset", "Skip paths"] }, null, 4));
+    console.log(`PASS ${assertions} assertions`);
+}
+finally
+{
+    await browser.close();
+    await new Promise((resolve) => server.close(resolve));
+}

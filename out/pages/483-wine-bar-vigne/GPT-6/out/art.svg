@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1100" viewBox="0 0 1600 1100">
+    <defs>
+        <radialGradient id="light"><stop stop-color="#f8be68" stop-opacity=".6"/><stop offset="1" stop-color="#b7793e" stop-opacity="0"/></radialGradient>
+        <linearGradient id="wall" x2="1" y2=".2"><stop stop-color="#302327"/><stop offset=".5" stop-color="#826246"/><stop offset="1" stop-color="#2a1923"/></linearGradient>
+        <linearGradient id="floor" x2="0" y2="1"><stop stop-color="#67503c"/><stop offset="1" stop-color="#1b131a"/></linearGradient>
+        <linearGradient id="barrel"><stop stop-color="#231c1c"/><stop offset=".45" stop-color="#7c4c30"/><stop offset=".7" stop-color="#5a3829"/><stop offset="1" stop-color="#20181a"/></linearGradient>
+        <pattern id="stone" width="175" height="100" patternUnits="userSpaceOnUse"><path d="M2 3h170v94H2z" fill="#6d5444" stroke="#3b2d2c" stroke-width="6"/><path d="M8 11h154v75H8" stroke="#947654" stroke-width="2" fill="none" opacity=".4"/></pattern>
+        <g id="cask"><ellipse cx="0" cy="0" rx="120" ry="107" fill="url(#barrel)" stroke="#251e1d" stroke-width="7"/><path d="M-83-77q-30 70-2 154M-40-99q-23 96-3 198M3-104v208M46-99q20 96 3 198M87-77q22 80-3 154" stroke="#b37c48" stroke-width="2" fill="none" opacity=".5"/><ellipse rx="91" ry="104" fill="none" stroke="#272525" stroke-width="10"/><ellipse rx="48" ry="107" fill="none" stroke="#242222" stroke-width="9"/><ellipse cx="-2" cy="2" rx="10" ry="7" fill="#20191a"/></g>
+        <filter id="grain"><feTurbulence baseFrequency=".65" numOctaves="3" seed="3" type="fractalNoise"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".06"/></feComponentTransfer><feBlend in="SourceGraphic" mode="soft-light"/></filter>
+    </defs>
+    <g filter="url(#grain)">
+        <rect width="1600" height="1100" fill="#20151f"/>
+        <path d="M0 0h1600L1050 740H550z" fill="#4a3733"/>
+        <path d="M0 0L550 420v320L0 1100z" fill="url(#stone)"/>
+        <path d="M1600 0l-550 420v320l550 360z" fill="url(#stone)"/>
+        <path d="M550 420q250-340 500 0v340H550z" fill="url(#wall)"/>
+        <path d="M0 1100l550-360h500l550 360z" fill="url(#floor)"/>
+        <path d="M190-20q610-590 1220 0M350 170q450-420 900 0M475 350q325-330 650 0M550 420q250-290 500 0" fill="none" stroke="#a1835a" stroke-width="38" opacity=".4"/>
+        <path d="M198-20q602-570 1204 0M358 170q442-400 884 0M483 350q317-310 634 0" fill="none" stroke="#3a2a2a" stroke-width="12"/>
+        <path d="M689 740V436a111 111 0 01222 0v304" fill="#1e171c" stroke="#8c704a" stroke-width="22"/>
+        <path d="M718 740V444a82 82 0 01164 0v296" fill="#291b20"/>
+        <path d="M750 467h101v153H750z" fill="#59412b"/>
+        <path d="M745 486h112M745 521h112M745 556h112M745 591h112" stroke="#21191b" stroke-width="10"/>
+        <g fill="#283629"><path d="M765 478v-12h6v12l5 8v22h-16v-22zM791 478v-12h6v12l5 8v22h-16v-22zM817 478v-12h6v12l5 8v22h-16v-22z"/></g>
+        <path d="M1215 248v-93q0-30 30-30t30 30v143z" fill="#c68e4c"/>
+        <path d="M1245 127v147M1216 203l60 36" stroke="#483229" stroke-width="8"/>
+        <path d="M1240 261l-210 457 420 41z" fill="#f3bd7240"/>
+        <circle cx="800" cy="427" r="420" fill="url(#light)"/>
+        <path d="M800 0v250" stroke="#21181b" stroke-width="6"/>
+        <path d="M752 306l26-58h44l27 58z" fill="#5a3c2b"/>
+        <ellipse cx="800" cy="308" rx="48" ry="12" fill="#f7c37a"/>
+        <circle cx="800" cy="322" r="12" fill="#ffdc8d"/>
+        <g transform="translate(52 765) rotate(-6)"><use href="#cask" transform="scale(2)"/><use href="#cask" transform="translate(222-65) scale(1.45)"/><use href="#cask" transform="translate(387-108) scale(.95)"/><use href="#cask" transform="translate(487-130) scale(.55)"/></g>
+        <g transform="translate(1548 765) rotate(6)"><use href="#cask" transform="scale(2)"/><use href="#cask" transform="translate(-222-65) scale(1.45)"/><use href="#cask" transform="translate(-387-108) scale(.95)"/><use href="#cask" transform="translate(-487-130) scale(.55)"/></g>
+        <path d="M156 1040l491-298M440 1100l280-358M1440 1040l-491-298M1160 1100L880 742M800 1100V742" stroke="#8e6a4050" stroke-width="3"/>
+        <path d="M520 900h560M385 1000h830" stroke="#23191b" stroke-width="4"/>
+    </g>
+</svg>

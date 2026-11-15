@@ -1,0 +1,611 @@
+:root
+{
+    --bg: #121212; --ink: #f2efec; --red: #d82c3d; --muted: #b0aaa3; --line: #393532; --card: #1c1b1a;
+    color: var(--ink); background: var(--bg); font-family: Arial, Helvetica, sans-serif;
+}
+*
+{
+    box-sizing: border-box;
+}
+body
+{
+    margin: 0;
+}
+html
+{
+    scroll-behavior: smooth; scroll-padding-top: 100px;
+}
+a
+{
+    color: inherit; text-decoration: none;
+}
+button, input, select
+{
+    font: inherit;
+}
+button, summary
+{
+    cursor: pointer;
+}
+:focus-visible
+{
+    outline: 2px solid #e6d5aa; outline-offset: 4px;
+}
+header
+{
+    position: sticky; top: 0; z-index: 20; background: #121212f5; display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 21px 5%; border-bottom: 2px solid #7e2027;
+}
+.brand
+{
+    font: 900 29px Impact, "Arial Narrow", sans-serif; letter-spacing: 1.5px; white-space: nowrap;
+}
+.brand span
+{
+    display: block; font: 7px/2 Arial, sans-serif; color: var(--muted); letter-spacing: 2.7px; border-top: 1px solid var(--red); margin-top: 5px;
+}
+nav
+{
+    display: flex; gap: 24px; font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
+}
+.button
+{
+    display: inline-block; background: #c4232f; color: white; padding: 17px 22px; border: 0; font-size: 11px; font-weight: 700;
+}
+.mini
+{
+    font-size: 10px; padding: 14px 18px;
+}
+#menu
+{
+    display: none;
+}
+.wrap
+{
+    width: min(1120px, calc(100% - 64px)); margin: auto;
+}
+.hero
+{
+    position: relative; min-height: 760px; overflow: hidden;
+}
+.gym
+{
+    position: absolute; width: 100%; height: 100%; object-fit: cover; opacity: .7;
+}
+.hero::after
+{
+    content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, #121212e8, #12121277 60%, #12121222);
+}
+.hero-copy
+{
+    padding: 75px 0 45px; position: relative; z-index: 2;
+}
+.eyebrow
+{
+    color: #ef7c85; font-size: 9px; font-weight: 700; letter-spacing: 1.7px; line-height: 1.9;
+}
+h1, h2, h3
+{
+    font-family: Impact, "Arial Narrow", Arial, sans-serif; font-weight: 700;
+}
+h1
+{
+    font-size: clamp(62px, 8.5vw, 112px); line-height: .96; letter-spacing: -1.5px; margin: 30px 0;
+}
+h1 span, h2 span
+{
+    color: var(--red);
+}
+h2
+{
+    font-size: clamp(38px, 4.8vw, 62px); line-height: 1.02; letter-spacing: .3px; margin: 22px 0 35px;
+}
+h3
+{
+    font-size: 23px; letter-spacing: .5px; line-height: 1.2;
+}
+p
+{
+    font-size: 14px; line-height: 1.8;
+}
+.hero p:not(.eyebrow)
+{
+    color: #d0c8bf; font-size: 16px;
+}
+.actions
+{
+    display: flex; gap: 20px; align-items: center; margin: 30px 0;
+}
+.outline
+{
+    display: inline-block; border: 1px solid #b5a99a; padding: 16px 21px; font-size: 11px;
+}
+.hero-notes
+{
+    display: flex; gap: 35px; border-top: 1px solid #5b5148; padding-top: 25px; margin-top: 35px; max-width: 700px; font-size: 8px; letter-spacing: 1px;
+}
+.art-label
+{
+    position: absolute; right: 20px; bottom: 20px; font: 7px monospace; color: #d0c8bf; z-index: 2;
+}
+.slash
+{
+    height: 65px; background: #c4232f; clip-path: polygon(0 0, 100% 50%, 100% 100%, 0 50%); margin-top: -1px;
+}
+.section
+{
+    padding-top: 75px; padding-bottom: 75px;
+}
+.disciplines
+{
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 40px;
+}
+.disciplines article
+{
+    background: var(--card); padding: 25px; border: 1px solid var(--line); border-top: 3px solid #6c2c32;
+}
+.disciplines article:hover
+{
+    border-top-color: var(--red);
+}
+.disciplines article > span
+{
+    font: 8px monospace; color: #ef7c85;
+}
+.disciplines p
+{
+    color: var(--muted); font-size: 12px;
+}
+.disciplines .best
+{
+    color: #dfbbb2; font-size: 11px;
+}
+.disciplines button, .coach-grid button, .text-button
+{
+    background: none; border: 0; border-bottom: 1px solid #8e3f46; color: #ef7c85; font-size: 10px; line-height: 1.6; padding: 12px 0; text-align: left;
+}
+.path, .coaches, .pricing
+{
+    background: var(--card);
+}
+.section-head
+{
+    display: flex; justify-content: space-between; gap: 40px; align-items: center;
+}
+.section-head > p
+{
+    color: var(--muted); font-size: 12px;
+}
+.belts
+{
+    display: grid; grid-template-columns: repeat(5, 1fr); margin: 35px 0; border-top: 1px solid #716458; padding-top: 20px;
+}
+.belts button
+{
+    background: none; border: 1px solid transparent; color: var(--ink); padding: 15px; text-align: center;
+}
+.belts button[aria-pressed="true"]
+{
+    border-color: #9c8b78;
+}
+.belts i
+{
+    display: block; height: 15px; width: 45px; margin: 0 auto 15px; background: #f2efec; border-right: 8px solid #2b2522;
+}
+.belts button:nth-child(2) i
+{
+    background: #396dae;
+}
+.belts button:nth-child(3) i
+{
+    background: #8753b1;
+}
+.belts button:nth-child(4) i
+{
+    background: #95663d;
+}
+.belts button:nth-child(5) i
+{
+    background: #111; border: 1px solid #a48d73; border-right: 8px solid #b92b34;
+}
+.belts b
+{
+    display: block; font: 20px Impact, "Arial Narrow", sans-serif; letter-spacing: 1px;
+}
+.belts span
+{
+    display: block; font-size: 10px; color: var(--muted); margin-top: 8px;
+}
+output
+{
+    display: block; background: #252220; border-left: 2px solid var(--red); padding: 20px; line-height: 1.8; font-size: 12px; margin-top: 25px; overflow-wrap: anywhere;
+}
+.fine
+{
+    color: var(--muted); font-size: 10px; line-height: 1.9;
+}
+.schedule-tools
+{
+    display: flex; justify-content: space-between; gap: 20px; align-items: center; margin: 35px 0 25px;
+}
+.days
+{
+    display: flex; gap: 8px; overflow-x: auto;
+}
+.days button
+{
+    color: var(--muted); background: none; border: 1px solid var(--line); padding: 13px 17px; font: 16px Impact, "Arial Narrow", sans-serif; letter-spacing: .5px;
+}
+.days button[aria-pressed="true"]
+{
+    color: white; border-color: #c4232f; background: #c4232f;
+}
+.schedule-tools label
+{
+    margin: 0; font-size: 10px;
+}
+.schedule-tools select
+{
+    margin-top: 5px; padding: 10px;
+}
+.class-row
+{
+    display: grid; grid-template-columns: 90px 1.6fr 1fr 100px 100px; gap: 20px; align-items: center; padding: 24px 18px; border-bottom: 1px solid var(--line);
+}
+.class-row:nth-child(odd)
+{
+    background: #1a1918;
+}
+.class-row time
+{
+    font: 22px Impact, "Arial Narrow", sans-serif;
+}
+.class-row h3
+{
+    margin: 0; font-size: 21px;
+}
+.class-row > span
+{
+    font-size: 11px; color: var(--muted);
+}
+.class-row small
+{
+    color: #efb6ba; font-size: 9px;
+}
+.class-row button
+{
+    background: none; color: var(--ink); border: 1px solid #79665b; padding: 11px 8px; font-size: 9px;
+}
+.class-row button:disabled
+{
+    color: #908b86; border-color: #3e3833; cursor: default;
+}
+.coach-grid
+{
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 35px; margin-top: 40px;
+}
+.coach-art
+{
+    height: 280px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #302e2a; border-bottom: 5px solid #a62632; color: #a7a094; font: italic 90px Georgia, serif; position: relative; overflow: hidden;
+}
+.coach-art::before
+{
+    content: ""; width: 240px; height: 40px; background: #a626321f; transform: rotate(-35deg); position: absolute;
+}
+.coach-art span
+{
+    margin-top: 35px; font: 7px monospace; letter-spacing: 1px; color: #c7bdb0; position: relative;
+}
+.second
+{
+    background: #292c29;
+}
+.third
+{
+    background: #2e2929;
+}
+.coach-grid .role
+{
+    font-size: 9px; color: #ef7c85; letter-spacing: 1px;
+}
+.coach-grid p
+{
+    color: var(--muted); font-size: 12px;
+}
+.beginner-section, .trial-grid
+{
+    display: grid; grid-template-columns: 1fr 1fr; gap: 85px; align-items: start;
+}
+.beginner-section p
+{
+    color: var(--muted);
+}
+details
+{
+    padding: 22px 0; border-bottom: 1px solid var(--line);
+}
+summary
+{
+    font-size: 14px; line-height: 1.7;
+}
+details p
+{
+    font-size: 12px;
+}
+.plans
+{
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-top: 50px;
+}
+.plans article
+{
+    border: 1px solid var(--line); padding: 30px; background: var(--bg); position: relative;
+}
+.plans article > p
+{
+    font-size: 12px; letter-spacing: 1px; font-weight: 700;
+}
+.plans strong
+{
+    font: 58px Impact, "Arial Narrow", sans-serif;
+}
+.plans strong small
+{
+    font: 12px Arial, sans-serif; color: var(--muted);
+}
+.plans ul
+{
+    padding-left: 17px; margin: 30px 0; font-size: 12px; color: var(--muted); line-height: 2.4;
+}
+.plans button
+{
+    width: 100%; border: 1px solid #8b4a4b; background: none; color: white; font-size: 10px; padding: 15px 10px;
+}
+.plans .popular
+{
+    border-color: #c4232f; transform: translateY(-10px);
+}
+.popular button
+{
+    background: #c4232f; border-color: #c4232f;
+}
+.ribbon
+{
+    display: block; position: absolute; left: -1px; right: -1px; top: -25px; background: #c4232f; color: white; padding: 7px; text-align: center; font-size: 8px; letter-spacing: 1px;
+}
+.voices > div
+{
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px;
+}
+blockquote
+{
+    margin: 20px 0; font-size: 20px; line-height: 1.7; border-top: 2px solid #8e3039; padding-top: 25px;
+}
+cite
+{
+    display: block; color: #ef7c85; font: 8px/1.8 Arial, sans-serif; margin-top: 25px; letter-spacing: .5px;
+}
+.trial
+{
+    background: #211b1b; border-top: 1px solid #6b292c;
+}
+form
+{
+    padding: 30px; background: var(--bg); border: 1px solid #5e3a3b;
+}
+label
+{
+    display: block; font-size: 10px; line-height: 1.8; margin-bottom: 18px; color: #c6bdb3;
+}
+input:not([type="checkbox"]), select
+{
+    display: block; width: 100%; min-width: 0; padding: 12px; background: #262322; color: var(--ink); border: 1px solid #74685f; margin-top: 8px;
+}
+.form-pair
+{
+    display: grid; grid-template-columns: 1fr 1fr; gap: 15px;
+}
+.checkbox
+{
+    display: flex; align-items: center; gap: 10px;
+}
+form .button
+{
+    width: 100%;
+}
+footer
+{
+    background: #090909; border-top: 2px solid #c4232f; padding: 45px 0;
+}
+.footer-grid
+{
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 45px;
+}
+footer p
+{
+    font-size: 10px; color: var(--muted);
+}
+.footer-grid > div:nth-child(2) a
+{
+    display: block; font-size: 11px; margin-bottom: 15px;
+}
+dialog
+{
+    width: min(550px, calc(100% - 36px)); padding: 30px; color: var(--ink); background: var(--bg); border: 1px solid var(--red);
+}
+dialog::backdrop
+{
+    background: #000c;
+}
+#close-coach
+{
+    float: right; background: none; border: 0; color: white; font-size: 28px;
+}
+[hidden]
+{
+    display: none !important;
+}
+@media (max-width: 767px)
+{
+    header
+    {
+        padding: 17px 20px; gap: 12px; flex-wrap: wrap;
+    }
+    .brand
+    {
+        font-size: 23px;
+    }
+    .brand span
+    {
+        font-size: 6px; letter-spacing: 1.6px;
+    }
+    #menu
+    {
+        display: block; margin-left: auto; background: none; border: 0; color: #ef7c85;
+    }
+    .mini
+    {
+        font-size: 8px; padding: 12px;
+    }
+    nav
+    {
+        display: none; width: 100%; order: 4; flex-wrap: wrap; padding: 20px 0; gap: 25px; font-size: 15px;
+    }
+    nav.open
+    {
+        display: flex;
+    }
+    .wrap
+    {
+        width: calc(100% - 40px);
+    }
+    .hero
+    {
+        min-height: 720px;
+    }
+    .hero-copy
+    {
+        padding-top: 55px;
+    }
+    h1
+    {
+        font-size: 70px; line-height: 1; letter-spacing: -1px;
+    }
+    .hero p:not(.eyebrow)
+    {
+        font-size: 14px;
+    }
+    .actions
+    {
+        flex-direction: column; align-items: stretch; gap: 13px;
+    }
+    .actions a
+    {
+        text-align: center;
+    }
+    .hero-notes
+    {
+        gap: 13px; font-size: 7px; line-height: 1.7;
+    }
+    .art-label
+    {
+        font-size: 6px;
+    }
+    .slash
+    {
+        height: 45px;
+    }
+    .section
+    {
+        padding-top: 50px; padding-bottom: 50px;
+    }
+    .disciplines, .coach-grid, .beginner-section, .plans, .voices > div, .trial-grid, .footer-grid
+    {
+        grid-template-columns: 1fr; gap: 25px;
+    }
+    .section-head
+    {
+        display: block;
+    }
+    .belts button
+    {
+        padding: 12px 4px;
+    }
+    .belts i
+    {
+        width: 32px;
+    }
+    .belts b
+    {
+        font-size: 15px;
+    }
+    .belts span
+    {
+        font-size: 8px;
+    }
+    .schedule-tools
+    {
+        flex-wrap: wrap; gap: 20px;
+    }
+    .days
+    {
+        width: 100%; gap: 7px;
+    }
+    .days button
+    {
+        padding: 12px 14px; font-size: 14px;
+    }
+    .schedule-tools > label
+    {
+        width: calc(50% - 10px);
+    }
+    .class-row
+    {
+        grid-template-columns: 65px 1fr; gap: 14px; padding: 20px 15px;
+    }
+    .class-row h3
+    {
+        font-size: 20px;
+    }
+    .class-row > span
+    {
+        grid-column: 2;
+    }
+    .class-row small
+    {
+        grid-column: 2;
+    }
+    .class-row button
+    {
+        grid-column: 2;
+    }
+    .coach-art
+    {
+        height: 280px;
+    }
+    .plans
+    {
+        gap: 40px; margin-top: 60px;
+    }
+    .plans .popular
+    {
+        order: -1; transform: none;
+    }
+    .voices > div
+    {
+        gap: 0;
+    }
+    form
+    {
+        padding: 22px;
+    }
+    .form-pair
+    {
+        grid-template-columns: 1fr; gap: 0;
+    }
+}
+@media (prefers-reduced-motion: reduce)
+{
+    html
+    {
+        scroll-behavior: auto;
+    }
+}

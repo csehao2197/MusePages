@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0e2a3b">
+    <meta name="description" content="Col Bleu, a fictional English speaking ski school concept. Explore small group lessons, find your starting level and prepare a local lesson enquiry.">
+    <title>Col Bleu | Ski better by Wednesday.</title>
+    <link rel="icon" href="people.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <a class="skip" href="#lessons">Skip to lessons</a>
+    <header id="header">
+        <a class="logo" href="#" aria-label="Col Bleu home">Col Bleu<span>English speaking ski school</span></a>
+        <button id="menu-button" aria-expanded="false" aria-controls="navigation">Menu</button>
+        <nav id="navigation" aria-label="Main navigation">
+            <a href="#lessons">Lessons</a><a href="#levels">Levels</a><a href="#instructors">Instructors</a><a href="#day">Day</a><a href="#prices">Prices</a>
+        </nav>
+        <button class="pill nav-book" data-book="adult">Book lessons</button>
+    </header>
+    <main>
+        <section class="hero" aria-labelledby="headline">
+            <img class="hero-photo" src="piste.svg" alt="A sunlit ski slope winding through snowy Alpine peaks in Rastkogel, Austria. Illustrative location photography." width="1800" height="1200">
+            <div class="hero-copy">
+                <div class="wrap">
+                    <p class="eyebrow">Méribel · 3 Valleys</p>
+                    <h1 id="headline">Ski better<br>by Wednesday.</h1>
+                    <div class="hero-bottom"><p>Small group and private lessons in English, for nervous first timers, confident teenagers and everyone in between.</p><div class="actions"><button class="pill white" data-book="adult">Book lessons</button><a href="#levels">Find your level</a></div></div>
+                </div>
+            </div>
+        </section>
+        <section class="promise wrap" aria-label="What we promise">
+            <div><h2>Six</h2><p>Never more than six people in a group, so you ski more and queue less.</p></div>
+            <div><h2>English</h2><p>Every instructor is fully qualified and a native English speaker.</p></div>
+            <div><h2>Half</h2><p>Not improving by day three? Half the week back as a private lesson.</p></div>
+            <p class="concept-note">A fictional school concept. Qualifications, guarantees, prices and availability are illustrative, not verified offers.</p>
+        </section>
+        <section id="lessons" class="wrap section">
+            <div class="section-title"><div><p class="eyebrow">A little confidence goes a long way</p><h2>Your mountain.<br>Your kind of lesson.</h2></div><p>First turns or fresh tracks.<br>We start where you are.</p></div>
+            <article class="lesson reveal">
+                <figure><img src="practice.svg" alt="Skiers practising on Austria’s Hintertux Glacier, illustrative lesson photography." width="900" height="600" loading="lazy"><figcaption>Room to find your feet. Illustrative Alpine photography.</figcaption></figure>
+                <div class="lesson-copy"><p class="eyebrow">A good place to start</p><h3>Adult groups</h3><p>For adults from complete beginner to confident red runs.</p><p class="lesson-detail">Five mornings, 9:15 to 12:15 <strong>From £310</strong></p><ul><li>Grouped by level on Monday</li><li>Video feedback on day four</li></ul><button class="pill" data-book="adult">Explore adult groups</button></div>
+            </article>
+            <article class="lesson reverse reveal">
+                <figure class="kids-photo"><img src="practice.svg" alt="A closer crop of skiers learning on a glacier, not a photograph of the fictional kids club." width="900" height="600" loading="lazy"><figcaption>Small steps, big smiles. Location and participants are illustrative.</figcaption></figure>
+                <div class="lesson-copy"><p class="eyebrow">Their favourite part of the holiday</p><h3>Kids club</h3><p>For children aged 5 to 12, grouped by age and ability.</p><p class="lesson-detail">Five mornings, 9:30 to 12:00 <strong>From £280</strong></p><ul><li>A medal and report card on Friday</li><li>Helmets lent free</li></ul><button class="pill" data-book="kids">Explore kids club</button></div>
+            </article>
+            <article class="lesson reveal">
+                <figure><img class="private-photo" src="piste.svg" alt="An open snowy piste in Rastkogel, used as illustrative private lesson scenery." width="900" height="600" loading="lazy"><figcaption>More space to work on you. Austrian location photography.</figcaption></figure>
+                <div class="lesson-copy"><p class="eyebrow">All yours</p><h3>Private lessons</h3><p>For one to four people who want to move faster or ski off piste.</p><p class="lesson-detail">Two hours, any time <strong>From £180</strong></p><ul><li>Choose your instructor</li><li>Avalanche kit included off piste</li></ul><button class="pill" data-book="private">Explore private lessons</button><p class="small">Off piste skiing needs qualified local guidance and a current safety assessment. This demo provides neither.</p></div>
+            </article>
+        </section>
+        <section id="levels" class="wrap section">
+            <div class="level-panel">
+                <div><p class="eyebrow">No perfect turns required</p><h2>Find your level.</h2><p>Pick the description that feels like you. We will take it from there.</p><p class="small">A starting point for an enquiry, not an assessment of mountain safety or permission to ski a run.</p><button class="text-button" id="reset-level">Clear my choice</button></div>
+                <div class="level-list" role="group" aria-label="Choose your current level">
+                    <button class="level" data-level="First timer" aria-pressed="false"><span class="piste green">G</span><span><strong>First timer</strong><span>You have never skied, or want to start again properly. Start gently and build the basics.</span></span><span class="level-mark" aria-hidden="true">+</span></button>
+                    <button class="level" data-level="Getting there" aria-pressed="false"><span class="piste blue">B</span><span><strong>Getting there</strong><span>You snowplough turn on gentle runs and want your skis together. Make linked turns feel more natural.</span></span><span class="level-mark" aria-hidden="true">+</span></button>
+                    <button class="level" data-level="Confident" aria-pressed="false"><span class="piste red">R</span><span><strong>Confident</strong><span>You ski parallel on reds and want steeper slopes and poor snow. Work on control when conditions change.</span></span><span class="level-mark" aria-hidden="true">+</span></button>
+                    <button class="level" data-level="Strong" aria-pressed="false"><span class="piste black">S</span><span><strong>Strong</strong><span>You ski every piste and want bumps, powder or off piste. Discuss terrain and ambitions with an instructor.</span></span><span class="level-mark" aria-hidden="true">+</span></button>
+                </div>
+                <p id="level-status" class="level-status" role="status">No level selected. It is fine to be unsure.</p>
+            </div>
+        </section>
+        <section id="instructors" class="wrap section">
+            <div class="section-title"><div><p class="eyebrow">Good company on the chairlift</p><h2>Meet your people.</h2></div><p>British roots. Alpine hearts.<br>A shared love of the little breakthroughs.</p></div>
+            <div class="people">
+                <article><svg viewBox="0 0 400 500" role="img" aria-label="Original illustrated portrait of fictional instructor Hattie"><use href="people.svg#hattie"/></svg><h3>Hattie Morgan</h3><p class="person-meta">Keswick · 11 seasons</p><blockquote>“I teach nervous adults. Thursday is when they stop asking if it is too steep.”</blockquote><button class="text-button" data-instructor="Hattie Morgan">Ask about lessons with Hattie</button></article>
+                <article><svg viewBox="0 0 400 500" role="img" aria-label="Original illustrated portrait of fictional instructor Callum"><use href="people.svg#callum"/></svg><h3>Callum Reid</h3><p class="person-meta">Aviemore · 8 seasons</p><blockquote>“Kids learn by copying, so we play follow the leader.”</blockquote><button class="text-button" data-instructor="Callum Reid">Ask about lessons with Callum</button></article>
+                <article><svg viewBox="0 0 400 500" role="img" aria-label="Original illustrated portrait of fictional instructor Priya"><use href="people.svg#priya"/></svg><h3>Priya Shah</h3><p class="person-meta">Bristol · 6 seasons</p><blockquote>“I came for one winter in 2019 and stayed.”</blockquote><button class="text-button" data-instructor="Priya Shah">Ask about lessons with Priya</button></article>
+            </div>
+            <p class="small">Original illustrated portraits. All three instructors and their biographies are fictional.</p>
+        </section>
+        <section id="day" class="day-section">
+            <div class="wrap day-grid section"><div><p class="eyebrow">Fresh air. Fresh starts.</p><h2>One morning.<br>A lot of progress.</h2><img src="piste.svg" alt="Snowy Alpine landscape and clear blue sky." width="800" height="500" loading="lazy"><p class="small">A sample adult group morning. Kids club starts at 9:30.</p></div><ol class="timeline"><li><time>08:45</time><p>Coffee and boot fitting at our hut by the Chaudanne lift.</p></li><li><time>09:15</time><p>Warm up on the nursery slope, then up the lift as a group.</p></li><li><time>11:00</time><p>The skill of the day, on runs that suit the group.</p></li><li><time>12:15</time><p>Back at the hut with tips for the afternoon.</p></li></ol></div>
+        </section>
+        <section id="prices" class="wrap section">
+            <div class="price-panel"><div class="section-title"><div><p class="eyebrow">2026 to 27 season · concept rates</p><h2>Less guessing.<br>More skiing.</h2></div><p>Small groups.<br>Prices that are easy to follow.</p></div><div class="price-grid"><table><caption class="sr-only">Illustrative lesson prices per person</caption><thead><tr><th>Lesson</th><th>Length</th><th>Per person</th></tr></thead><tbody><tr><th>Adult group</th><td>Five mornings</td><td>£310</td></tr><tr><th>Kids club</th><td>Five mornings</td><td>£280</td></tr><tr><th>Private</th><td>Two hours</td><td>£180</td></tr><tr><th>First timer taster</th><td>One morning</td><td>£75</td></tr></tbody></table><aside><h3>The little extras.</h3><p>Prices are per person for the 2026 to 27 season. Lift passes and hire are extra, with 15 percent off hire at Ski Méribel Sport.</p><p class="small">The hire discount and all rates come from the fictional brief. Confirm actual prices, eligibility, equipment and safety arrangements with a real provider.</p><button class="text-button" data-book="taster">Prepare a taster enquiry</button></aside></div></div>
+        </section>
+        <section id="book" class="book-block"><div class="wrap"><p class="eyebrow">See you at the bottom</p><h2>First lift at<br>quarter past nine.</h2><p>Booking for the 2026 to 27 season is open. Christmas and February half term fill first.</p><button class="pill white" data-book="adult">Book lessons</button><p class="small">Concept copy only. This demonstration takes no bookings and checks no availability.</p></div></section>
+    </main>
+    <footer class="wrap">
+        <div class="footer-top"><a class="logo" href="#">Col Bleu<span>A little better, every morning.</span></a><address>Col Bleu Ski School<br>Route de la Chaudanne, 73550 Méribel, France<br>+44 20 5550 1872 · hello@colbleu.ski<br><span class="small">Fictional contact details. No enquiry is sent.</span></address></div>
+        <div class="footer-links"><button data-info="instagram">Instagram</button><button data-info="terms">Terms</button><button data-info="privacy">Privacy</button><button data-info="credits">Photo credits</button></div>
+        <p class="small">Col Bleu Snowsports Ltd, registered in England 11283746. Fictional school and company details supplied by the concept brief.</p>
+        <p class="small photo-credit">Photography: <a href="https://commons.wikimedia.org/wiki/File:Rastkogel_ski_slope.jpg" target="_blank" rel="noopener">Petr Novák, Wikipedia</a>, <a href="https://creativecommons.org/licenses/by-sa/2.5/" target="_blank" rel="noopener">CC BY SA 2.5</a>; <a href="https://commons.wikimedia.org/wiki/File:Ski_practicing.jpg" target="_blank" rel="noopener">Tiia Monto</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY SA 3.0</a>. Cropped Austrian scenes, not Méribel or our fictional instructors. Photo derivatives retain their respective licenses.</p>
+    </footer>
+    <button class="pill floating-book" data-book="adult">Book lessons</button>
+    <dialog id="booking" aria-labelledby="booking-title"><button class="close" aria-label="Close lesson planner">Close ×</button><p class="eyebrow">A little planning, locally</p><h2 id="booking-title">Before the first lift.</h2><p>Prepare a sample lesson enquiry. Nothing is sent, reserved or saved. We have no verified booking destination.</p><form id="planner">
+        <label>Lesson<select name="lesson"><option value="adult">Adult groups</option><option value="kids">Kids club</option><option value="private">Private lessons</option><option value="taster">First timer taster</option></select></label>
+        <div class="form-pair"><label>People<input name="people" type="number" min="1" max="6" step="1" value="1" required></label><label>Starting level<select name="level"><option value="">Not sure yet</option><option>First timer</option><option>Getting there</option><option>Confident</option><option>Strong</option></select></label></div>
+        <label id="age-field" hidden>Child age, 5 to 12<input name="age" type="number" min="5" max="12" step="1"></label>
+        <p id="instructor-choice" class="small">No instructor preference.</p>
+        <p id="planner-hint" class="small">Five mornings, 9:15 to 12:15. Up to six in a group.</p>
+        <button class="pill" type="submit">Make my enquiry summary</button>
+        <p id="planner-status" role="status"></p><div id="summary" hidden><h3>Your sample plan</h3><p id="summary-copy"></p><button class="text-button" type="button" id="download-plan">Download my sample plan</button><p class="small">No booking is made. Lift passes and hire are extra. Real provider confirmation is essential.</p><a class="text-link" href="https://www.meribel.net/en/" target="_blank" rel="noopener">Visit Méribel visitor information ↗</a></div>
+    </form></dialog>
+    <dialog id="information" aria-labelledby="info-title"><button class="close" aria-label="Close information">Close ×</button><h2 id="info-title"></h2><div id="info-body"></div></dialog>
+</body>
+</html>

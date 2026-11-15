@@ -1,0 +1,402 @@
+:root
+{
+    --cream: #fffbef; --ink: #292a21; --pink: #efa8b5; --green: #c3d6af;
+}
+*
+{
+    box-sizing: border-box;
+}
+body
+{
+    margin: 0; background: var(--cream); color: var(--ink); font: 15px/1.7 "Segoe UI", sans-serif;
+}
+html
+{
+    scroll-behavior: smooth; scroll-padding-top: 20px;
+}
+button, input, select
+{
+    font: inherit;
+}
+a
+{
+    color: inherit; text-decoration: none;
+}
+button, summary
+{
+    cursor: pointer;
+}
+.wrap
+{
+    width: min(1060px, calc(100% - 48px)); margin-inline: auto;
+}
+.top
+{
+    background: var(--green); text-align: center; padding: 8px; font-size: 9px; letter-spacing: .16em;
+}
+header, nav, .actions, .filters
+{
+    display: flex; align-items: center; gap: 28px;
+}
+header
+{
+    height: 100px; justify-content: space-between;
+}
+.logo
+{
+    font: italic bold 47px Georgia, serif; letter-spacing: -.08em;
+}
+.logo span
+{
+    font: 12px Arial; vertical-align: top; letter-spacing: 0;
+}
+nav
+{
+    font-size: 12px;
+}
+.button
+{
+    background: var(--pink); color: var(--ink); border: 1px solid transparent; border-radius: 50px; padding: 13px 22px; display: inline-block; font-size: 12px; font-weight: 600;
+}
+.button:hover
+{
+    border-color: var(--ink);
+}
+.hero
+{
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: center; padding: 55px 0 70px;
+}
+.eyebrow
+{
+    letter-spacing: .18em; font-size: 10px; font-weight: 600;
+}
+h1, h2, h3
+{
+    font-family: Georgia, serif; font-style: italic; line-height: 1.04; letter-spacing: -.055em;
+}
+h1
+{
+    font-size: clamp(55px, 6.7vw, 82px); margin: 25px 0;
+}
+h1 span
+{
+    color: #b74964;
+}
+.intro
+{
+    color: #6b6a5e; font-size: 15px; line-height: 1.8;
+}
+.actions
+{
+    gap: 22px; margin-block: 25px; font-size: 12px;
+}
+#daily
+{
+    border: 1px dashed #aa8063; border-radius: 14px; padding: 17px 22px; background: #f7e5c7; text-align: left; width: min(100%, 340px); transform: rotate(-2deg);
+}
+#daily small
+{
+    display: block; font-size: 8px; letter-spacing: .1em; margin-bottom: 8px;
+}
+#daily strong
+{
+    font: italic bold 20px Georgia, serif;
+}
+.cone
+{
+    position: relative; background: #f8d8dc; border-radius: 48% 48% 43% 43%; min-width: 0;
+}
+.cone img
+{
+    width: 100%; height: 535px; object-fit: contain; display: block;
+}
+.stamp
+{
+    position: absolute; top: 10px; right: -15px; border: 1px solid #6c7856; background: var(--green); border-radius: 50%; width: 110px; height: 110px; display: grid; place-content: center; text-align: center; font-size: 10px; transform: rotate(12deg); line-height: 1.4;
+}
+.stamp b
+{
+    font: italic bold 28px Georgia, serif;
+}
+.hand
+{
+    position: absolute; bottom: 20px; right: 0; font: italic 17px Georgia, serif; transform: rotate(-8deg);
+}
+.ribbon
+{
+    background: var(--pink); padding: 18px 20px; text-align: center; font-size: 12px; letter-spacing: .18em; border-block: 1px solid #b9848c;
+}
+.ribbon span
+{
+    margin-inline: 25px;
+}
+section:not(.hero)
+{
+    padding-block: 75px;
+}
+h2
+{
+    font-size: clamp(34px, 4vw, 52px); margin: 16px 0;
+}
+h3
+{
+    font-size: 26px; margin: 18px 0;
+}
+.filters
+{
+    margin-block: 26px;
+}
+label
+{
+    display: grid; font-size: 12px; gap: 7px; margin-block: 12px;
+}
+input, select
+{
+    background: white; border: 1px solid #c9c6b6; padding: 10px 12px; border-radius: 7px; min-width: 0; width: 100%;
+}
+.note
+{
+    font-size: 11px; color: #626253;
+}
+#flavour-grid
+{
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 30px;
+}
+.flavour
+{
+    border-bottom: 1px solid #d2cbb8; padding: 10px 0 26px;
+}
+.scoop
+{
+    width: 90px; height: 78px; border-radius: 48% 52% 38% 40%; box-shadow: inset -10px -8px 0 #0001; border-bottom: 5px solid #0001; margin: 10px auto 28px; position: relative;
+}
+.scoop::after
+{
+    content: ""; position: absolute; bottom: -16px; height: 18px; width: 110px; border-radius: 50%; background: #0000000a; left: -10px;
+}
+.flavour p, article p
+{
+    font-size: 13px; color: #666658;
+}
+.flavour button
+{
+    border: 0; padding: 5px 0; background: none; font-size: 12px; text-decoration: underline;
+}
+.pistachio
+{
+    background: #e7eddc;
+}
+.builder
+{
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; align-items: center; margin-top: 35px;
+}
+#wheel
+{
+    width: 100%;
+}
+#wheel [role="button"]
+{
+    cursor: pointer;
+}
+#wheel [role="button"]:hover
+{
+    opacity: .7;
+}
+#choices
+{
+    display: none;
+}
+aside
+{
+    background: var(--cream); padding: 32px; border-radius: 25px; border: 1px solid #cad4ba;
+}
+#cup p
+{
+    border-bottom: 1px solid #ddd7c8; padding-bottom: 12px; font-size: 13px;
+}
+#cup button
+{
+    float: right; background: none; border: 0;
+}
+[role="status"]
+{
+    font-size: 13px;
+}
+.text-button
+{
+    border: 0; background: none; padding: 12px; font-size: 12px; text-decoration: underline;
+}
+.process, .event-grid, #gift-options
+{
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 35px; margin-top: 40px;
+}
+.process b
+{
+    font-size: 10px; letter-spacing: .14em;
+}
+.pink
+{
+    background: #f8e1e3;
+}
+.visit
+{
+    display: grid; grid-template-columns: 1fr 1fr; gap: 90px;
+}
+address
+{
+    font-style: normal; font-size: 20px;
+}
+.hours p
+{
+    border-bottom: 1px solid #d8b8ba; padding-bottom: 14px; display: flex; justify-content: space-between; gap: 16px;
+}
+.event-grid
+{
+    grid-template-columns: 1fr 1fr;
+}
+.event-grid article
+{
+    padding: 30px; border: 1px solid #d4cbb8; border-radius: 18px;
+}
+.gift
+{
+    background: #f4e8d6; text-align: center;
+}
+#gift-options button
+{
+    border: 0; background: var(--pink); border-radius: 14px; padding: 25px; text-align: left; font: italic bold 25px Georgia, serif; transform: rotate(-3deg);
+}
+#gift-options button:nth-child(2)
+{
+    background: var(--green); transform: rotate(2deg);
+}
+#gift-options button:nth-child(3)
+{
+    background: #e9b87f; transform: rotate(-1deg);
+}
+#gift-options strong
+{
+    display: block; font-size: 46px; margin-top: 20px;
+}
+.faq
+{
+    max-width: 740px;
+}
+details
+{
+    padding: 20px 0; border-bottom: 1px solid #d3ccba;
+}
+details p
+{
+    font-size: 13px;
+}
+footer
+{
+    background: #292e24; color: var(--cream); padding-block: 50px;
+}
+footer .note
+{
+    color: #bfc6b5;
+}
+dialog
+{
+    width: min(500px, calc(100% - 32px)); max-height: 90vh; overflow-y: auto; border: 0; border-radius: 20px; background: var(--cream); padding: 30px;
+}
+dialog::backdrop
+{
+    background: #292e2499;
+}
+:focus-visible
+{
+    outline: 3px solid #ad3658; outline-offset: 4px;
+}
+@media (max-width: 767px)
+{
+    header
+    {
+        height: auto; padding-block: 20px; flex-wrap: wrap; gap: 16px;
+    }
+    header nav
+    {
+        order: 3; width: 100%; justify-content: space-between; gap: 10px; font-size: 11px;
+    }
+    header .button
+    {
+        padding: 10px 15px;
+    }
+    .hero, .builder, .visit, .event-grid
+    {
+        grid-template-columns: 1fr; gap: 40px;
+    }
+    .hero
+    {
+        padding-top: 25px;
+    }
+    h1
+    {
+        font-size: 59px;
+    }
+    .cone
+    {
+        margin: 20px 10px;
+    }
+    .cone img
+    {
+        height: 430px;
+    }
+    .stamp
+    {
+        width: 90px; height: 90px; right: -10px;
+    }
+    .filters
+    {
+        display: block;
+    }
+    #flavour-grid, .process
+    {
+        grid-template-columns: 1fr;
+    }
+    .flavour
+    {
+        padding: 10px 10px 24px;
+    }
+    #choices
+    {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    }
+    #choices button
+    {
+        border: 1px solid #aeb99e; border-radius: 12px; padding: 15px; background: var(--cream); font-size: 12px;
+    }
+    #choices button[aria-pressed="true"]
+    {
+        background: var(--pink); border-color: var(--ink);
+    }
+    #wheel
+    {
+        display: none;
+    }
+    #gift-options
+    {
+        gap: 10px;
+    }
+    #gift-options button
+    {
+        padding: 15px 10px; font-size: 18px;
+    }
+    #gift-options strong
+    {
+        font-size: 32px;
+    }
+    section:not(.hero)
+    {
+        padding-block: 55px;
+    }
+}
+@media (prefers-reduced-motion: reduce)
+{
+    html
+    {
+        scroll-behavior: auto;
+    }
+}

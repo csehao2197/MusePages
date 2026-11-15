@@ -1,0 +1,67 @@
+import { audit } from "../../341-festival/GPT-6/serial-run.mjs";
+export async function verify()
+{
+    return audit("350-furniture-store", async (page, check, width) =>
+    {
+        check(await page.locator(".hero > img").evaluate((image) => image.naturalWidth > 0), `${width}: original room art loads`);
+        check(await page.locator("#products .product").count() === 8 && await page.locator("#best-products .product").count() === 4, `${width}: complete catalogue and favourites`);
+        await page.locator("[data-room='Bedroom']").focus();
+        check((await page.locator("#room-art use").getAttribute("href")).includes("#bed"), `${width}: keyboard room preview changes actual art`);
+        await page.locator("[data-room='Bedroom']").click();
+        check(await page.locator("#products .product").count() === 1, `${width}: bedroom browsing`);
+        await page.locator("#reset").click();
+        await page.locator("#budget").selectOption("1500");
+        check(await page.locator("#products .product").count() === 3, `${width}: budget filter`);
+        await page.locator("#search").fill("chair");
+        check(await page.locator("#products .product").count() === 2, `${width}: combined budget search`);
+        await page.locator("#search").fill("absent");
+        check(await page.locator("#empty").isVisible(), `${width}: empty catalogue state`);
+        await page.locator("#reset").click();
+        await page.locator("#products [data-save='alden']").click();
+        check(await page.locator("#saved-count").textContent() === "1", `${width}: saved count`);
+        await page.locator("#saved-button").click();
+        check(await page.locator("#products .product").count() === 1, `${width}: saved-only filter`);
+        await page.locator("#products [data-save='alden']").click();
+        check(await page.locator("#empty").isVisible(), `${width}: empty saved view`);
+        await page.locator("#reset").click();
+        await page.locator("#products [data-id='alden'][data-finish='Sage']").click();
+        check((await page.locator("#products [data-product='alden'] svg").getAttribute("style")).includes("#98a18a"), `${width}: swatch changes rendered upholstery colour`);
+        await page.locator("#products [data-details='alden']").click();
+        check((await page.locator("#detail-spec").textContent()).includes("Sage") && (await page.locator("#detail-dimensions").textContent()).includes("78 × D 82"), `${width}: finish and dimensions in details`);
+        await page.locator("#detail-add").click();
+        check((await page.locator("#detail-result").textContent()).includes("No purchase"), `${width}: truthful local add`);
+        await page.keyboard.press("Escape");
+        await page.locator("#bag-button").click();
+        check(await page.locator("#cart-total").textContent() === "$1,290", `${width}: bag total`);
+        await page.locator("[data-cart='alden:Sage'][data-delta='1']").click();
+        check(await page.locator("#cart-total").textContent() === "$2,580", `${width}: quantity arithmetic`);
+        await page.locator("[data-cart='alden:Sage'][data-delta='-1']").click();
+        check(await page.locator("#cart-total").textContent() === "$1,290", `${width}: decrease quantity`);
+        await page.locator("[data-cart='alden:Sage'][data-delta='remove']").click();
+        check(await page.locator("#bag-empty").isVisible() && await page.locator("#bag-count").textContent() === "0", `${width}: removal restores empty bag`);
+        await page.keyboard.press("Escape");
+        await page.locator("#material-choice").selectOption("Walnut");
+        check((await page.locator("#material-note").textContent()).includes("deeper brown"), `${width}: useful material comparison`);
+        await page.locator("#visit-form button").click();
+        check((await page.locator("#visit-result").textContent()).includes("valid email"), `${width}: empty visit form`);
+        await page.locator("#visit-form [name='name']").fill("Example Visitor");
+        await page.locator("#visit-form [name='email']").fill("visitor@example.test");
+        await page.locator("#visit-form [name='date']").fill("2020-01-01");
+        await page.locator("#visit-form button").click();
+        check((await page.locator("#visit-result").textContent()).includes("future"), `${width}: past visit rejected`);
+        await page.locator("#visit-form [name='date']").fill("2030-07-14");
+        check(await page.locator("#visit-form [name='time'] option").count() === 6 && await page.locator("#visit-form [name='time'] option").first().textContent() === "11:00", `${width}: Sunday opening hours`);
+        await page.locator("#visit-form button").click();
+        check((await page.locator("#visit-result").textContent()).includes("no appointment reserved"), `${width}: truthful consultation preview`);
+        await page.locator("#newsletter button").click();
+        check((await page.locator("#newsletter-result").textContent()).includes("valid email"), `${width}: newsletter invalid state`);
+        await page.locator("#newsletter [name='email']").fill("reader@example.test");
+        await page.locator("#newsletter button").click();
+        check((await page.locator("#newsletter-result").textContent()).includes("no subscription"), `${width}: truthful newsletter preview`);
+        await page.locator("#care summary").click();
+        check(await page.locator("#care details").getAttribute("open") !== null, `${width}: care guide disclosure`);
+        check(await page.evaluate(() => localStorage.length === 0), `${width}: no data persisted`);
+        check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${width}: interactive states fit viewport`);
+    });
+}
+if (process.argv[1]?.endsWith("verify.mjs")) console.log(JSON.stringify(await verify()));

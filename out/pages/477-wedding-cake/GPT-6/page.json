@@ -1,0 +1,25 @@
+{
+    "title": "Sugar & Salt | The cake is the last course.",
+    "tags": ["Wedding Cake Studio", "Dusty Rose Editorial", "Single Line Cake"],
+    "mocks": "Fictional bakery, capacity, venue commissions, reviews, hygiene/council claims, rates, deposits and availability. Original cake SVG illustrations replace photos. Email enquiries use labelled .example mailto links only. No orders, cake builder, dietary guarantees, booking or payment.",
+    "tests": [
+        {"selector": "#flavours details", "count": 6},
+        {"selector": "#flavours details:first-of-type p", "visible": false},
+        {"selector": "#flavours details:first-of-type summary", "click": true},
+        {"selector": "#flavours details:first-of-type p", "visible": true, "text": "mascarpone"},
+        {"selector": "#flavours details:first-of-type summary", "click": true},
+        {"selector": "#flavours details:first-of-type p", "visible": false},
+        {"selector": "#flavours details:nth-of-type(4) summary", "click": true},
+        {"selector": "#flavours details:nth-of-type(4) p", "text": "Almond sponge"},
+        {"selector": "#sizes .size-row", "count": 4},
+        {"selector": "#tasting .small", "text": "No payment taken"},
+        {"selector": "#recent [data-cake]", "count": 6},
+        {"selector": "[data-cake='Hales Hall, August']", "click": true},
+        {"selector": "#cake-dialog", "visible": true},
+        {"selector": "#cake-caption", "text": "HALES HALL, AUGUST"},
+        {"selector": "#close-cake", "click": true},
+        {"selector": "#cake-dialog", "visible": false},
+        {"selector": "#dates .date-row", "count": 4},
+        {"selector": "#dates > div:first-child .small", "text": "holds no dates"}
+    ]
+}

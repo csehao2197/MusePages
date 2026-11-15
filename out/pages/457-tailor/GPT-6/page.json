@@ -1,0 +1,26 @@
+{
+    "title": "Thread & Chalk | A pattern of your own",
+    "tags": ["Bespoke Tailoring", "Charcoal & Chalk", "Craft Editorial"],
+    "mocks": "Standalone HTML/system fonts and original workshop, fitting room, pattern and cloth artwork replace framework, remote fonts and photography. Workshop, production, service and mill claims are supplied unverified concept data. Price review is indicative, including four-shirt minimum calculation. Fitting enquiry is browser-only; no measurements, photographs, booking, deposit, persistence or transmission.",
+    "tests": [
+        { "selector": ".stages article", "count": 5 },
+        { "selector": "[data-cloth]", "count": 6 },
+        { "selector": "[data-cloth='Drago']", "click": true },
+        { "selector": "[data-cloth][aria-pressed='true']", "count": 1 },
+        { "selector": "#cloth-status", "text": "Drago selected" },
+        { "selector": "#garment", "select": "shirts" },
+        { "selector": "#price-estimate", "text": "£1,120" },
+        { "selector": "#price-estimate", "text": "£1,280" },
+        { "selector": "#garment", "select": "suit" },
+        { "selector": "#price-estimate", "text": "£3,200" },
+        { "selector": "#city", "valid": false },
+        { "selector": "#purpose", "valid": false },
+        { "selector": "#city", "select": "London" },
+        { "selector": "#purpose", "select": "Bespoke consultation" },
+        { "selector": "#email", "fill": "bad", "valid": false },
+        { "selector": "#email", "fill": "client@example.test", "valid": true },
+        { "selector": "#fitting-form button", "click": true },
+        { "selector": "#fitting-status", "text": "Bespoke consultation in London / Drago" },
+        { "selector": "#fitting-status", "text": "nothing sent or stored" }
+    ]
+}

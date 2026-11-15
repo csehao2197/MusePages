@@ -1,0 +1,9 @@
+# Luxury property details
+
+- Original: `data\prompts\204-property-details-page\204-property-details-page.md`; design: `src\workflows\AI Agent\DESIGN.md`.
+- Actual model `gpt-6.1-sol`; label `GPT-6`. Standalone `index.html`/`app.js`, three original architectural SVGs and original `walkthrough.webm`.
+- Features: thumbnail/fullscreen gallery with arrows/swipe, illustrated tour, real local video controls, local saved favorite, share/copy/email link, print styles, sticky actions, room/feature disclosures, category map mock, commute estimate, mortgage slider/rate calculation, four-comparable carousel and local showing date form.
+- Serve with an existing static server. Validate: `node out\pages\204-property-details-page\GPT-6\.checks\verify.mjs`. Actual desktop/mobile screenshots and results in `.checks`; assertions cover gallery/video, storage, share fallback, print invocation, map/commute, mortgage, carousel, form, overflow and browser/resources. Clip reproducible with `.checks\make-clip.mjs`.
+- Independent static export: `out\`; expected path `pages/property-details-page/GPT-6/index.html`, real 1200×900 preview. Registered disabled after validation; no build/publication.
+- Mock: prompt property/MLS ID, history, financial assumptions and comparables are illustrative, not verified listing data. Artwork/montage are not property photos or recorded walkthroughs; virtual tour is an illustration viewer. No real geodata, street view, schools/ratings, scores, agent contact or live showing availability. Mortgage is simplified fixed-rate estimation, PMI 0.5% annually below 20% down. Favorite persists only in this browser; enquiry/contact never send or store personal data. No backend/env.
+- Review checklist: mobile gallery/swipe, keyboard/Escape/focus, sticky actions, room-table scrolling, honest imagery and local contact behavior.

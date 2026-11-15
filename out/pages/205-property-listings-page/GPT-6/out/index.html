@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="HomeHub's interactive sample property search: detailed filters, grid/list/map views, local saved searches and browser-only tour enquiries.">
+    <title>Find your next chapter — HomeHub</title>
+    <link rel="icon" href="data:,">
+    <style>
+        :root { --ink:#213b40; --teal:#0d9488; --dark:#08786e; --muted:#75848a; --line:#dce5e3; --paper:#f7faf9; }
+        * { box-sizing:border-box; }
+        [hidden] { display:none !important; }
+        body { margin:0; color:var(--ink); background:var(--paper); font:13px/1.6 system-ui,sans-serif; }
+        a { color:inherit; text-underline-offset:5px; }
+        button,input,select { font:inherit; }
+        button { cursor:pointer; }
+        :focus-visible { outline:3px solid #bb8135; outline-offset:4px; }
+        .wrap { max-width:1200px; margin:auto; padding:0 40px; }
+        header { padding:22px 0; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--line); }
+        .brand { display:flex; align-items:center; gap:7px; font-size:24px; font-weight:750; letter-spacing:-1.1px; text-decoration:none; }
+        .brand svg { width:27px; height:27px; color:var(--teal); }
+        nav { display:flex; align-items:center; gap:27px; font-size:11px; }
+        nav a { text-decoration:none; }
+        .btn { padding:10px 17px; color:white; background:var(--dark); border:1px solid var(--dark); border-radius:5px; text-decoration:none; display:inline-block; }
+        .btn.light { color:var(--ink); background:white; border-color:#c4d2d0; }
+        .intro { padding:27px 0 22px; display:flex; justify-content:space-between; align-items:center; gap:25px; }
+        .eyebrow { font-size:9px; font-weight:650; letter-spacing:1.6px; color:var(--dark); text-transform:uppercase; }
+        h1 { font-size:35px; letter-spacing:-1.6px; font-weight:550; margin:9px 0 5px; line-height:1.2; }
+        .intro p { color:var(--muted); font-size:12px; margin:8px 0; }
+        .search-bar { display:flex; align-items:center; gap:13px; padding:17px; background:white; border:1px solid var(--line); border-radius:7px; margin-bottom:25px; }
+        .market { display:flex; border:1px solid var(--line); padding:3px; border-radius:4px; }
+        .market button { padding:8px 14px; border:0; color:var(--muted); background:none; font-size:11px; }
+        .market button[aria-pressed=true] { background:#e4f3ef; color:var(--dark); border-radius:3px; }
+        .location { display:flex; gap:8px; flex:1; min-width:0; }
+        .location label { flex:1; min-width:0; position:relative; }
+        .location input { padding:10px 13px; width:100%; min-width:0; border:1px solid #c8d6d3; border-radius:4px; color:var(--ink); background:#fafcfb; }
+        .search-actions { display:flex; gap:8px; }
+        .search-actions button { padding:9px 12px; font-size:10px; white-space:nowrap; }
+        .layout { display:grid; grid-template-columns:215px 1fr; gap:27px; align-items:start; }
+        aside { background:white; padding:19px; border:1px solid var(--line); border-radius:6px; }
+        .filter-title { display:flex; justify-content:space-between; align-items:center; margin-bottom:17px; }
+        .filter-title h2 { margin:0; font-size:14px; }
+        #filter-count { background:#e2f2ed; color:var(--dark); padding:2px 6px; border-radius:10px; font-size:9px; }
+        #clear { padding:0; border:0; color:var(--dark); background:none; font-size:10px; text-decoration:underline; }
+        label { display:grid; gap:5px; font-size:10px; font-weight:550; }
+        .field { margin-bottom:17px; }
+        .two { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+        input,select { width:100%; min-width:0; padding:8px; border:1px solid #c8d6d3; border-radius:4px; background:white; color:var(--ink); }
+        .field > span { display:block; font-size:10px; font-weight:550; margin-bottom:5px; }
+        .types { display:grid; gap:7px; }
+        .types label { display:flex; align-items:center; gap:8px; font-weight:400; }
+        input[type=checkbox] { width:13px; accent-color:var(--dark); margin:0; }
+        input[type=range] { accent-color:var(--dark); padding:0; }
+        details { border-top:1px solid var(--line); padding:13px 0; margin-top:10px; }
+        summary { font-size:11px; cursor:pointer; font-weight:550; }
+        details .field:first-of-type { margin-top:14px; }
+        #apply { width:100%; margin-top:5px; }
+        .filter-note { font-size:9px; color:var(--muted); margin:14px 0 0; }
+        .results { min-width:0; }
+        .results-head { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:14px; flex-wrap:wrap; }
+        .results-head h2 { font-size:18px; font-weight:600; letter-spacing:-.4px; margin:0; }
+        .results-head p { font-size:9px; color:var(--muted); margin:4px 0 0; }
+        .sort { display:flex; align-items:center; gap:8px; }
+        .sort select { width:140px; padding:7px; font-size:10px; }
+        .view { display:flex; border:1px solid var(--line); padding:3px; background:white; border-radius:4px; }
+        .view button { padding:6px 9px; font-size:10px; border:0; background:none; color:var(--muted); }
+        .view button[aria-pressed=true] { background:#e8f1ed; color:var(--ink); border-radius:2px; }
+        .active-filters { display:flex; flex-wrap:wrap; gap:6px; margin:15px 0; }
+        .active-filters span { padding:4px 9px; background:#e7f2ef; font-size:9px; color:#376f63; border:1px solid #cee2d9; border-radius:20px; }
+        .cards { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
+        .card { position:relative; background:white; border:1px solid var(--line); border-radius:6px; overflow:hidden; min-width:0; }
+        .image { position:relative; height:190px; background:#d3e2d9; }
+        .image > button:first-of-type { width:100%; height:100%; border:0; padding:0; display:block; }
+        .image img { width:100%; height:100%; object-fit:cover; display:block; }
+        .tag { position:absolute; top:12px; left:12px; border-radius:3px; padding:4px 7px; background:white; color:#315b4c; font-size:8px; font-weight:600; pointer-events:none; text-transform:uppercase; letter-spacing:.5px; }
+        .favorite { position:absolute; right:11px; top:10px; border:0; border-radius:50%; width:30px; height:30px; background:#fffe; color:#245d52; font-size:17px; display:grid; place-items:center; }
+        .photo-counter { position:absolute; bottom:10px; left:10px; background:#173b39b0; color:white; padding:2px 6px; font-size:8px; pointer-events:none; }
+        .image .next-image { position:absolute; right:10px; bottom:10px; background:#fffe; border:0; border-radius:50%; width:25px; height:25px; color:var(--ink); }
+        .card-content { padding:17px; }
+        .card-content h3 { font-size:24px; font-weight:650; letter-spacing:-.7px; line-height:1; margin:0 0 10px; }
+        .address { font-size:12px; margin:0; font-weight:550; }
+        .city { color:var(--muted); font-size:10px; margin:2px 0 12px; }
+        .spec { font-size:11px; padding-bottom:12px; border-bottom:1px solid #e9edeb; }
+        .meta { display:flex; justify-content:space-between; gap:10px; color:var(--muted); font-size:9px; padding-top:11px; }
+        .card-bottom { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:12px; }
+        .card-bottom button { padding:6px 11px; color:var(--dark); border:1px solid #b2d8ca; background:#f6faf8; border-radius:4px; font-size:9px; }
+        .card-bottom small { color:var(--muted); font-size:8px; }
+        .description { display:none; color:var(--muted); font-size:11px; }
+        .cards.list { grid-template-columns:1fr; }
+        .cards.list .card { display:grid; grid-template-columns:1fr 1.15fr; }
+        .cards.list .image { height:100%; min-height:250px; }
+        .cards.list .description { display:block; }
+        .pagination { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; padding:24px 0; }
+        .pagination label { display:flex; align-items:center; gap:8px; font-size:10px; }
+        .pagination select { width:60px; padding:6px; }
+        #page-note { color:var(--muted); font-size:10px; }
+        #empty { padding:45px 25px; text-align:center; background:#eaf3ed; border:1px solid #d5e5db; }
+        #empty h2 { font-size:25px; font-weight:500; }
+        #empty p { color:var(--muted); font-size:12px; }
+        .map-panel { padding:15px; border:1px solid var(--line); background:white; margin-bottom:20px; }
+        .map-toolbar { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:12px; }
+        .map-toolbar button,.map-toolbar select { padding:6px 9px; font-size:9px; width:auto; }
+        .map-toolbar label { display:flex; align-items:center; gap:6px; font-size:9px; }
+        .map { position:relative; height:350px; background:#e1eadb; overflow:hidden; touch-action:none; }
+        .map > svg { width:100%; height:100%; position:absolute; inset:0; pointer-events:none; }
+        .marker { position:absolute; transform:translate(-50%,-50%); background:white; color:#166457; border:1px solid #73ac94; padding:4px 8px; font-size:10px; border-radius:14px; box-shadow:0 2px 7px #31514020; }
+        .marker:hover { background:#08786e; color:white; z-index:2; }
+        .map.drawing { cursor:crosshair; }
+        #selection { position:absolute; background:#0d94882b; border:2px dashed #08786e; pointer-events:none; }
+        .map-note { font-size:9px; color:var(--muted); margin-bottom:0; }
+        .layout.map-mode .cards { grid-template-columns:repeat(2,minmax(0,1fr)); }
+        footer { display:flex; justify-content:space-between; gap:20px; padding:25px 0; border-top:1px solid var(--line); font-size:10px; color:var(--muted); margin-top:25px; }
+        dialog { max-width:620px; width:calc(100% - 28px); max-height:88vh; overflow:auto; background:var(--paper); border:1px solid var(--line); border-radius:7px; padding:28px; color:var(--ink); }
+        dialog::backdrop { background:#193b3ba8; }
+        dialog h2 { font-size:25px; font-weight:550; }
+        dialog label { margin:13px 0; }
+        dialog form .btn { margin-top:8px; }
+        dialog p { color:var(--muted); font-size:12px; }
+        .saved-item { padding:12px 0; border-bottom:1px solid var(--line); }
+        .saved-item button { margin:5px 7px 0 0; font-size:10px; padding:5px 9px; }
+        .modal-close { float:right; border:1px solid var(--line); color:var(--ink); background:white; padding:6px 12px; }
+        [data-menu],#filter-toggle,#mobile-map { display:none; }
+        @media(max-width:850px)
+        {
+            .wrap { padding:0 23px; }
+            .search-bar { flex-wrap:wrap; }
+            .location { flex-basis:60%; }
+            .search-actions { margin-left:auto; }
+            .layout { grid-template-columns:195px 1fr; gap:18px; }
+            .cards { grid-template-columns:1fr; }
+            .layout.map-mode .cards { grid-template-columns:1fr; }
+        }
+        @media(max-width:600px)
+        {
+            header { flex-wrap:wrap; }
+            [data-menu] { display:block; padding:7px 10px; border:1px solid var(--line); background:none; }
+            nav { display:none; width:100%; padding-top:20px; flex-wrap:wrap; gap:17px; }
+            nav.open { display:flex; }
+            .intro { align-items:start; flex-direction:column; gap:8px; }
+            h1 { font-size:32px; }
+            .search-bar { padding:12px; gap:10px; }
+            .location { flex-basis:100%; }
+            .search-actions { margin:0; width:100%; }
+            .search-actions button { flex:1; }
+            .layout { display:block; }
+            aside { display:none; margin-bottom:20px; }
+            aside.open { display:block; }
+            #filter-toggle { display:block; width:100%; margin-bottom:15px; }
+            .results-head { gap:15px; }
+            .sort { flex-wrap:wrap; }
+            .cards.list .card { display:block; }
+            .cards.list .image { height:190px; min-height:0; }
+            .view { position:sticky; top:8px; z-index:4; box-shadow:0 2px 8px #183d3b0d; }
+            .map { height:290px; }
+            #mobile-map { display:block; position:fixed; left:50%; transform:translateX(-50%); bottom:20px; z-index:9; box-shadow:0 3px 14px #153d3b30; border-radius:24px; }
+            footer { flex-direction:column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <header><a href="#" class="brand"><svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M3 14L15 3L27 14V27H18V19H12V27H3Z"/></svg>HomeHub<span style="color:#0d9488">.</span></a><button data-menu aria-controls="nav" aria-expanded="false">Menu</button><nav id="nav"><a href="#search">Find a home</a><a href="#results">Explore properties</a><button class="btn light" id="manage">Saved searches <span id="saved-count">0</span></button></nav></header>
+        <main>
+            <section class="intro"><div><span class="eyebrow">A place for your next chapter</span><h1>Find a little more you.</h1><p>Room to grow. Space to slow down. A place to call your own.</p></div><span class="eyebrow">Illustrative listings / original artwork</span></section>
+            <section class="search-bar" id="search"><div class="market" aria-label="Listing market"><button data-market="Buy" aria-pressed="true">Buy</button><button data-market="Rent" aria-pressed="false">Rent</button><button data-market="Sold" aria-pressed="false">Sold</button></div><form class="location"><label aria-label="Location"><input id="location" list="locations" value="Bayview" placeholder="City, neighborhood or address" aria-label="Location search" autocomplete="off"><datalist id="locations"><option value="Bayview"></option><option value="Riverbend"></option><option value="All areas"></option></datalist></label><button class="btn" aria-label="Search location">Search</button></form><div class="search-actions"><button class="btn light" id="save-search">♡ Save search</button><button class="btn light" id="share-search">Share ↗</button></div></section>
+            <button class="btn light" id="filter-toggle" aria-expanded="false" aria-controls="filters">Filters &amp; preferences</button>
+            <div class="layout"><aside id="filters"><form id="filter-form"><div class="filter-title"><h2>Filters <span id="filter-count">0</span></h2><button type="button" id="clear">Clear all</button></div><div class="field"><span>Price range ($)</span><div class="two"><label>Minimum<input name="min" type="number" min="0" placeholder="No min"></label><label>Maximum<input name="max" type="number" min="0" placeholder="No max"></label></div></div><div class="two field"><label>Bedrooms<select name="beds"><option value="0">Any beds</option><option value="1">1+</option><option value="2">2+</option><option value="3">3+</option><option value="4">4+</option><option value="5">5+</option></select></label><label>Bathrooms<select name="baths"><option value="0">Any baths</option><option value="1">1+</option><option value="2">2+</option><option value="3">3+</option></select></label></div><div class="field"><span>Property type</span><div class="types"><label><input type="checkbox" name="type" value="House">House</label><label><input type="checkbox" name="type" value="Condo">Condo</label><label><input type="checkbox" name="type" value="Townhouse">Townhouse</label><label><input type="checkbox" name="type" value="Multi-family">Multi-family</label><label><input type="checkbox" name="type" value="Land">Land</label></div></div><div class="field"><label>Keywords<input name="keywords" placeholder="Pool, garage, waterfront…"></label></div><details><summary>More filters</summary><div class="field"><span>Square feet</span><div class="two"><label>Minimum<input name="sqmin" type="number" min="0"></label><label>Maximum<input name="sqmax" type="number" min="0"></label></div></div><div class="field"><span>Lot size / acres</span><div class="two"><label>Minimum<input name="lotmin" type="number" min="0" step=".01"></label><label>Maximum<input name="lotmax" type="number" min="0" step=".01"></label></div></div><div class="field"><label>Built since <span id="year-label">1900</span><input name="yearmin" type="range" min="1900" max="2026" value="1900"></label><label>Built before<input name="yearmax" type="number" min="1900" max="2026" value="2026"></label></div><div class="field"><label>Days on market<select name="days"><option value="0">Any time</option><option value="7">Less than 7</option><option value="14">Less than 14</option><option value="30">Less than 30</option></select></label></div><div class="two field"><label>HOA<select name="hoa"><option value="">Any</option><option value="yes">Yes</option><option value="no">No</option></select></label><label>Parking<select name="parking"><option value="0">Any</option><option value="1">1+</option><option value="2">2+</option><option value="3">3+</option></select></label></div></details><button class="btn" id="apply">Apply filters</button><p class="filter-note" id="filter-error" role="alert"></p><p class="filter-note">Sample data only. No live MLS, real availability or geographic claims.</p></form></aside>
+                <section class="results" id="results"><div class="results-head"><div><h2 id="result-title"></h2><p id="result-subtitle">A thoughtfully curated sample collection. All prices and addresses are illustrative.</p></div><div class="sort"><label aria-label="Sort results"><select id="sort"><option value="new">Newest first</option><option value="low">Price: Low to High</option><option value="high">Price: High to Low</option><option value="beds">Most bedrooms</option><option value="size">Largest size</option></select></label><div class="view" aria-label="Results view"><button data-view="grid" aria-pressed="true">Grid</button><button data-view="list" aria-pressed="false">List</button><button data-view="map" aria-pressed="false">Map</button></div></div></div><div class="active-filters" id="active-filters"></div>
+                    <section class="map-panel" hidden><div class="map-toolbar"><label><input id="move-search" type="checkbox">Search as I move this demo map</label><button class="btn light" id="west">← Move west</button><button class="btn light" id="east">Move east →</button><button class="btn light" id="draw" aria-pressed="false">Draw area</button><button class="btn light" id="reset-map">Reset map</button><button class="btn light" id="zoom">Expand clusters</button><label>Area<select id="map-area"><option value="">All</option><option value="west">West</option><option value="east">East</option></select></label></div><div class="map" aria-label="Interactive illustrative property map"><svg viewBox="0 0 800 350" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70L800 290M0 250L800 60M120 0L390 350M640 0L390 350" stroke="#fffdf3" stroke-width="19" fill="none"/><path d="M700 0Q570 130 730 350" stroke="#b6d6d7" stroke-width="90" fill="none"/><path d="M440 20H530V100H440Z" fill="#b7cba7"/></svg><div id="markers"></div><div id="selection" hidden></div></div><p class="map-note" id="map-note">Illustrative coordinates, not real geography. Draw a rectangle or use the keyboard-accessible West/East area selector. Price markers follow the current filters.</p></section>
+                    <div class="cards" id="cards"></div><div id="empty" hidden><span class="eyebrow">A little more room to explore</span><h2>Your next place is still out there.</h2><p>Try a wider price range, fewer preferences or All areas.</p><button class="btn" id="broaden">Broaden my search</button> <button class="btn light" id="empty-alert">Create demo alert</button></div><div class="pagination"><label>Per page<select id="per-page"><option value="4">4</option><option value="8">8</option></select></label><span id="page-note"></span><button class="btn light" id="load">Load more homes ↓</button></div>
+                </section>
+            </div>
+        </main>
+        <button class="btn" id="mobile-map" aria-pressed="false">Map view</button>
+        <footer><span>HomeHub / Find a place that feels like you.</span><span>Demo data · Local-only favorites &amp; saved searches · GPT-6</span></footer>
+    </div>
+    <dialog aria-labelledby="modal-title"><button class="modal-close" id="close">Close</button><h2 id="modal-title"></h2><p id="modal-note"></p><section id="save-panel" hidden><form id="save-form"><label>Search name<input name="searchname" value="My next chapter" required maxlength="80"></label><label>Alert preference<select name="frequency"><option>Off</option><option>Daily / demo</option><option>Weekly / demo</option></select></label><button class="btn">Save on this browser</button></form><div id="saved-list"></div></section><section id="share-panel" hidden><label>Search link<input id="share-link" readonly></label><button class="btn" id="copy">Copy search link</button><p id="copy-result" role="status"></p></section><section id="tour-panel" hidden><form id="tour-form"><label>Your name<input name="name" required></label><label>Email<input name="email" type="email" required></label><label>Preferred date<input name="date" type="date" required></label><button class="btn">Request demo tour</button><p id="tour-result" role="status"></p></form></section></dialog>
+    <script src="app.js"></script>
+</body>
+</html>

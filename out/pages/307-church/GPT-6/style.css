@@ -1,0 +1,599 @@
+:root
+{
+    --stone: #f8f4ee;
+    --ink: #2e2823;
+    --clay: #79563b;
+    --gold: #c69a4f;
+    --card: #eee7dc;
+    --muted: #6b6259;
+    --line: #d3c7b5;
+}
+*
+{
+    box-sizing: border-box;
+}
+body
+{
+    margin: 0;
+    background: var(--stone);
+    color: var(--ink);
+    font: 16px/1.8 Arial, sans-serif;
+}
+html
+{
+    scroll-padding-top: 85px;
+}
+a
+{
+    text-decoration: none;
+    color: inherit;
+}
+button, select, input
+{
+    font: inherit;
+}
+button, .button
+{
+    cursor: pointer;
+    display: inline-block;
+    border: 1px solid var(--clay);
+    border-radius: 30px;
+    background: var(--clay);
+    color: white;
+    padding: 12px 22px;
+    font-size: 12px;
+}
+:focus-visible
+{
+    outline: 3px solid var(--gold);
+    outline-offset: 4px;
+}
+header
+{
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    padding: 19px 4%;
+    border-bottom: 1px solid var(--line);
+}
+.brand
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font: 18px Georgia, serif;
+    letter-spacing: 1px;
+}
+.brand svg
+{
+    width: 25px;
+    height: 32px;
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 2px;
+}
+nav
+{
+    display: flex;
+    align-items: center;
+    gap: 23px;
+    margin-left: auto;
+    font-size: 12px;
+}
+nav button
+{
+    padding: 0;
+    background: transparent;
+    color: var(--ink);
+    border: 0;
+}
+#menu
+{
+    display: none;
+}
+section
+{
+    padding: 85px 6%;
+}
+.hero
+{
+    background: #433c31 url("arches.svg") center/cover;
+    text-align: center;
+    color: white;
+    padding: 90px 20px 125px;
+    min-height: 640px;
+}
+.label, .fine
+{
+    font-size: 11px;
+    line-height: 1.8;
+}
+.label
+{
+    color: var(--clay);
+    letter-spacing: 1.8px;
+    font-weight: 600;
+}
+.hero .label
+{
+    color: #ecd39e;
+}
+h1, h2
+{
+    font-family: Georgia, serif;
+    font-weight: 400;
+}
+h1
+{
+    font-size: clamp(45px, 5.5vw, 75px);
+    line-height: 1.12;
+    letter-spacing: -2px;
+    margin: 25px 0;
+}
+em
+{
+    color: var(--clay);
+}
+.hero em
+{
+    color: #f2d89e;
+}
+h2
+{
+    font-size: clamp(35px, 4vw, 52px);
+    line-height: 1.18;
+    letter-spacing: -1px;
+    margin: 22px 0;
+}
+h3
+{
+    font-size: 21px;
+    line-height: 1.3;
+}
+p
+{
+    color: var(--muted);
+}
+.hero p
+{
+    color: #f0e9df;
+}
+.hero .actions
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 35px;
+}
+.gold
+{
+    background: var(--gold);
+    color: var(--ink);
+    border-color: var(--gold);
+}
+.hero-link
+{
+    font-size: 12px;
+    border-bottom: 1px solid #d5c6a9;
+    padding-bottom: 5px;
+}
+.art-caption
+{
+    font-size: 8px;
+    letter-spacing: 2px;
+    margin-top: 45px;
+}
+.service-times
+{
+    position: relative;
+    max-width: 800px;
+    margin: -65px auto 0;
+    padding: 35px 30px;
+    text-align: center;
+    border: 2px solid var(--gold);
+    border-radius: 18px;
+    background: var(--card);
+}
+.service-times > div
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 55px;
+}
+.service-times strong
+{
+    font: 55px Georgia, serif;
+}
+.service-times strong span
+{
+    font-size: 22px;
+}
+.service-times article p
+{
+    margin: 6px 0;
+    font-size: 13px;
+}
+.service-times > p:not(.label), .service-times small
+{
+    font-size: 12px;
+    color: var(--muted);
+}
+.time-divider
+{
+    height: 70px;
+    width: 1px;
+    background: var(--line);
+}
+.expect
+{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    margin-top: 40px;
+}
+.expect article
+{
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+}
+.expect span
+{
+    color: var(--clay);
+    font: italic 30px Georgia, serif;
+}
+.expect p
+{
+    font-size: 14px;
+}
+.teaching, .serve
+{
+    background: var(--card);
+}
+.section-top
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+}
+label
+{
+    display: block;
+    font-size: 12px;
+}
+input:not([type=checkbox]), select
+{
+    display: block;
+    padding: 12px;
+    width: 100%;
+    border: 1px solid #a49178;
+    background: var(--stone);
+    color: var(--ink);
+    margin: 7px 0 20px;
+    border-radius: 5px;
+}
+.series
+{
+    background: #e2d6c3;
+    padding: 25px 30px;
+    border-radius: 12px;
+    margin: 30px 0;
+}
+.series span
+{
+    font-size: 10px;
+    letter-spacing: 1.5px;
+}
+.series h3
+{
+    font: 34px Georgia, serif;
+    margin: 12px 0;
+}
+.series p
+{
+    margin: 0;
+    font-size: 14px;
+}
+.sermon
+{
+    border-bottom: 1px solid #c8b99f;
+    padding: 20px 0;
+}
+.sermon summary
+{
+    cursor: pointer;
+    font-size: 18px;
+}
+.sermon small
+{
+    display: block;
+    font-size: 12px;
+    color: var(--muted);
+    padding-left: 20px;
+}
+.sermon p
+{
+    max-width: 760px;
+    font: 20px/1.7 Georgia, serif;
+}
+.groups
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 35px;
+    margin-top: 35px;
+}
+.groups article
+{
+    border-top: 1px solid var(--line);
+    padding-top: 25px;
+}
+.group-mark
+{
+    display: grid;
+    place-items: center;
+    height: 100px;
+    font: italic 70px Georgia, serif;
+    background: #e9deca;
+    color: #89744c;
+    border-radius: 70px 70px 0 0;
+}
+.groups article p
+{
+    font-size: 14px;
+}
+.groups small, .groups a
+{
+    display: block;
+    font-size: 12px;
+}
+.groups a
+{
+    color: var(--clay);
+    margin-top: 15px;
+}
+.groups [hidden]
+{
+    display: none;
+}
+.beliefs
+{
+    background: var(--ink);
+    color: var(--stone);
+    text-align: center;
+}
+.beliefs .label, .beliefs em
+{
+    color: #dfb86e;
+}
+.beliefs > div
+{
+    max-width: 730px;
+    margin: 35px auto 0;
+}
+.beliefs p:not(.label)
+{
+    color: #e3d8c6;
+    border-top: 1px solid #756342;
+    padding: 20px 0 0;
+    font: 21px/1.6 Georgia, serif;
+}
+.events
+{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+    margin-top: 30px;
+}
+.events details
+{
+    border: 1px solid var(--line);
+    padding: 20px;
+    border-radius: 8px;
+}
+.events summary
+{
+    cursor: pointer;
+    list-style: none;
+}
+.events summary > span
+{
+    display: inline-block;
+    text-align: center;
+    background: #e5c992;
+    padding: 7px 18px;
+    font-size: 10px;
+}
+.events b
+{
+    font: 32px Georgia, serif;
+}
+.events strong, .events small
+{
+    display: block;
+    line-height: 1.5;
+    margin-top: 16px;
+}
+.events small, .events p
+{
+    font-size: 12px;
+}
+.serve, .visit
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+}
+.serve > div:last-child
+{
+    border-left: 1px solid var(--line);
+    padding-left: 50px;
+}
+.text-link
+{
+    border-bottom: 1px solid;
+    color: var(--clay);
+    font-size: 14px;
+}
+#visit form
+{
+    background: var(--card);
+    padding: 35px;
+    border-radius: 15px;
+}
+#visit form button
+{
+    margin-top: 25px;
+}
+#status
+{
+    color: var(--clay);
+    font-size: 14px;
+}
+footer
+{
+    background: var(--ink);
+    padding: 50px 6%;
+    color: var(--stone);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 25px;
+    font-size: 13px;
+}
+footer p, footer small
+{
+    color: #ded0bc;
+}
+footer small
+{
+    flex-basis: 100%;
+    font-size: 11px;
+}
+dialog
+{
+    width: min(94vw, 560px);
+    max-height: 90vh;
+    overflow: auto;
+    padding: 30px;
+    background: var(--stone);
+    border: 1px solid var(--clay);
+    color: var(--ink);
+    border-radius: 15px;
+}
+dialog::backdrop
+{
+    background: #2e282399;
+}
+#close
+{
+    float: right;
+}
+@media (max-width: 760px)
+{
+    header
+    {
+        padding: 20px 24px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    .brand
+    {
+        font-size: 15px;
+    }
+    header > .button
+    {
+        display: none;
+    }
+    #menu
+    {
+        display: block;
+        margin-left: auto;
+        padding: 6px 12px;
+    }
+    nav
+    {
+        display: none;
+        width: 100%;
+        margin: 0;
+        flex-direction: column;
+        align-items: start;
+    }
+    nav.open
+    {
+        display: flex;
+    }
+    section
+    {
+        padding: 55px 25px;
+    }
+    .hero
+    {
+        padding: 65px 25px;
+        min-height: 580px;
+    }
+    h1
+    {
+        font-size: 46px;
+    }
+    .service-times
+    {
+        margin: 20px 20px 0;
+        padding: 30px 20px;
+    }
+    .service-times > div
+    {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .time-divider
+    {
+        width: 80px;
+        height: 1px;
+    }
+    .expect
+    {
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+    }
+    .expect h3
+    {
+        font-size: 18px;
+    }
+    .groups, .serve, .visit
+    {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+    .section-top
+    {
+        display: block;
+    }
+    .events
+    {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 15px;
+    }
+    .events details
+    {
+        flex: 0 0 230px;
+        scroll-snap-align: start;
+    }
+    .serve > div:last-child
+    {
+        border-left: 0;
+        padding-left: 0;
+        border-top: 1px solid var(--line);
+        padding-top: 25px;
+    }
+    #visit form
+    {
+        padding: 25px;
+    }
+}

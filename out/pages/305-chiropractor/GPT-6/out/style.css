@@ -1,0 +1,521 @@
+:root
+{
+    --navy: #1a2440;
+    --blue: #116fab;
+    --grey: #f3f5f8;
+    --muted: #59637a;
+    --line: #d7dce5;
+}
+*
+{
+    box-sizing: border-box;
+}
+body
+{
+    margin: 0;
+    background: white;
+    color: var(--navy);
+    font: 16px/1.7 Arial, sans-serif;
+}
+html
+{
+    scroll-padding-top: 85px;
+}
+a
+{
+    color: inherit;
+    text-decoration: none;
+}
+button, select, input
+{
+    font: inherit;
+}
+button, .button, .outline
+{
+    cursor: pointer;
+    display: inline-block;
+    padding: 13px 22px;
+    border-radius: 6px;
+    border: 1px solid var(--navy);
+    background: transparent;
+    color: var(--navy);
+    font-size: 12px;
+}
+.button, button:hover
+{
+    color: white;
+    background: var(--navy);
+}
+:focus-visible
+{
+    outline: 3px solid #1688c9;
+    outline-offset: 4px;
+}
+header
+{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding: 20px 5%;
+    border-bottom: 1px solid var(--line);
+}
+.brand
+{
+    font: 32px Georgia, serif;
+    white-space: nowrap;
+}
+.brand span
+{
+    font: 24px Arial, sans-serif;
+    padding-left: 6px;
+}
+.brand i
+{
+    font: 25px Arial, sans-serif;
+    color: var(--blue);
+    margin-left: 8px;
+}
+nav
+{
+    margin-left: auto;
+    display: flex;
+    gap: 25px;
+    font-size: 12px;
+}
+#menu
+{
+    display: none;
+}
+section
+{
+    padding: 85px 6%;
+}
+.hero
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0;
+    min-height: 700px;
+}
+.hero > div
+{
+    padding: 65px 11%;
+}
+.label, .fine
+{
+    font-size: 11px;
+    line-height: 1.8;
+}
+.label
+{
+    color: var(--blue);
+    letter-spacing: 1.3px;
+    font-weight: 700;
+}
+h1, h2, h3
+{
+    font-family: Georgia, serif;
+    font-weight: 400;
+}
+h1
+{
+    font-size: clamp(56px, 6vw, 82px);
+    line-height: 1.02;
+    letter-spacing: -3px;
+    margin: 25px 0;
+}
+em
+{
+    color: var(--blue);
+    font-style: normal;
+}
+h2
+{
+    font-size: clamp(36px, 4vw, 55px);
+    line-height: 1.12;
+    letter-spacing: -1px;
+    margin: 22px 0;
+}
+h3
+{
+    font-size: 26px;
+}
+p
+{
+    color: var(--muted);
+}
+.actions
+{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 30px;
+}
+.intro-card
+{
+    padding: 22px;
+    border: 1px solid var(--line);
+    border-left: 3px solid #1688c9;
+    border-radius: 8px;
+    margin-top: 32px;
+}
+.intro-card span
+{
+    display: block;
+    color: var(--blue);
+    font-size: 9px;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+.intro-card strong
+{
+    font-size: 14px;
+}
+.intro-card p
+{
+    font-size: 11px;
+    margin-bottom: 0;
+}
+figure
+{
+    margin: 0;
+    background: #e4edf3;
+    position: relative;
+    overflow: hidden;
+}
+figure img
+{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+figcaption
+{
+    position: absolute;
+    left: 25px;
+    bottom: 20px;
+    font-size: 8px;
+    letter-spacing: 2px;
+}
+.figure-note
+{
+    position: absolute;
+    bottom: 80px;
+    right: 40px;
+    font: 27px/1.2 Georgia, serif;
+}
+.principles
+{
+    display: flex;
+    justify-content: space-around;
+    background: var(--navy);
+    color: white;
+    padding: 23px;
+    gap: 20px;
+    font-size: 12px;
+}
+.grey
+{
+    background: var(--grey);
+}
+.section-top
+{
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 40px;
+}
+.section-top p
+{
+    font-size: 14px;
+}
+.conditions
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 35px;
+}
+.conditions button
+{
+    text-align: left;
+    border-color: var(--line);
+    background: white;
+    font-size: 17px;
+    padding: 25px;
+}
+.conditions button span
+{
+    display: block;
+    color: var(--blue);
+    font-size: 11px;
+    margin-bottom: 15px;
+}
+.conditions button[aria-pressed=true]
+{
+    background: var(--blue);
+    color: white;
+}
+.conditions button[aria-pressed=true] span
+{
+    color: white;
+}
+.condition-detail
+{
+    padding: 25px 0 15px;
+    max-width: 760px;
+}
+.text-link
+{
+    color: var(--blue);
+    border-bottom: 1px solid;
+    font-size: 13px;
+}
+.safety
+{
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+    font-size: 12px;
+}
+.steps, .team
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-top: 40px;
+}
+.steps article > span
+{
+    font-size: 65px;
+    color: #b6c4d2;
+}
+.steps article p
+{
+    font-size: 14px;
+}
+.steps small
+{
+    color: var(--blue);
+    font-size: 12px;
+}
+.team article > div
+{
+    height: 170px;
+    display: grid;
+    place-items: center;
+    background: #dce5ee;
+    color: #72889d;
+    font: 64px Georgia, serif;
+}
+.team p
+{
+    font-size: 13px;
+}
+.team button
+{
+    padding: 10px 12px;
+    border-color: var(--line);
+}
+.pricing
+{
+    max-width: 900px;
+    margin: auto;
+}
+.pricing article
+{
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    align-items: center;
+    border-top: 1px solid var(--line);
+    padding: 18px 0;
+}
+.pricing h3
+{
+    margin: 5px 0;
+}
+.pricing p
+{
+    font-size: 12px;
+}
+.pricing strong
+{
+    white-space: nowrap;
+    color: var(--blue);
+}
+.booking
+{
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 75px;
+    background: var(--navy);
+    color: white;
+}
+.booking p, .booking .label
+{
+    color: #c4d0e3;
+}
+.booking em
+{
+    color: #71c5f8;
+}
+.contact
+{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-block: 35px;
+}
+.two
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+label
+{
+    display: block;
+    font-size: 12px;
+}
+input:not([type=checkbox]), select
+{
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin: 7px 0 20px;
+    border: 1px solid #aebbd0;
+    border-radius: 4px;
+    color: var(--navy);
+    background: white;
+}
+.booking button
+{
+    background: #167dbd;
+    color: white;
+}
+.accept
+{
+    margin: 20px 0;
+}
+#status
+{
+    color: #b9e8ff;
+}
+details
+{
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+}
+summary
+{
+    cursor: pointer;
+}
+details p
+{
+    font-size: 14px;
+}
+footer
+{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 35px;
+    justify-content: space-between;
+    padding: 45px 6%;
+    border-top: 1px solid var(--line);
+    font-size: 12px;
+}
+footer small
+{
+    flex-basis: 100%;
+    color: var(--muted);
+    font-size: 11px;
+}
+@media (max-width: 760px)
+{
+    header
+    {
+        padding: 18px 24px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    header > .button
+    {
+        display: none;
+    }
+    #menu
+    {
+        display: block;
+        margin-left: auto;
+        padding: 6px 12px;
+    }
+    nav
+    {
+        display: none;
+        width: 100%;
+        margin: 0;
+        flex-direction: column;
+    }
+    nav.open
+    {
+        display: flex;
+    }
+    section
+    {
+        padding: 55px 25px;
+    }
+    .hero, .steps, .team, .booking, .two
+    {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    .hero figure
+    {
+        grid-row: 1;
+        height: 370px;
+    }
+    .hero > div
+    {
+        padding: 30px 25px 50px;
+    }
+    .figure-note
+    {
+        font-size: 22px;
+        right: 25px;
+        bottom: 50px;
+    }
+    h1
+    {
+        font-size: 65px;
+    }
+    .conditions
+    {
+        grid-template-columns: 1fr 1fr;
+    }
+    .conditions button
+    {
+        font-size: 15px;
+        padding: 17px;
+    }
+    .section-top
+    {
+        display: block;
+    }
+    .principles
+    {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        font-size: 11px;
+    }
+    .two
+    {
+        gap: 0;
+    }
+    .pricing h3
+    {
+        font-size: 23px;
+    }
+    .pricing strong
+    {
+        font-size: 14px;
+    }
+}

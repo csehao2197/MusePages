@@ -1,0 +1,26 @@
+{
+    "title": "Rose City Rovers | Every kid gets a game",
+    "tags": ["Community Soccer", "Pitch Green", "Sports Club"],
+    "mocks": "Static HTML with original poster and pitch illustrations instead of requested photos. Teams, figures, fixtures, reviews and fees are supplied concept data; dates are not live. Interest form is an ephemeral browser-only draft; no registration or personal data transmission. Policy disclosures are not official club policies.",
+    "tests": [
+        { "selector": ".teams article", "count": 8 },
+        { "selector": "#team-filter", "select": "U12 Rovers" },
+        { "selector": "#fixture-list article:not([hidden])", "count": 1 },
+        { "selector": "#result-list article:not([hidden])", "count": 1 },
+        { "selector": "#filter-status", "text": "Showing U12 Rovers." },
+        { "selector": "#team-filter", "select": "U8 Mixed" },
+        { "selector": "#fixtures-empty", "visible": true },
+        { "selector": "#results-empty", "visible": true },
+        { "selector": "#team-filter", "select": "all" },
+        { "selector": "#fixture-list article:not([hidden])", "count": 5 },
+        { "selector": "#interest-team", "valid": false },
+        { "selector": "[data-team='U10 Girls']", "click": true },
+        { "selector": "#interest-team", "value": "U10 Girls" },
+        { "selector": "#email", "fill": "bad", "valid": false },
+        { "selector": "#email", "fill": "parent@example.test", "valid": true },
+        { "selector": "#interest button", "click": true },
+        { "selector": "#interest-status", "text": "Nothing sent or reserved" },
+        { "selector": "footer details:nth-child(2) summary", "click": true },
+        { "selector": "footer details:nth-child(2) p", "visible": true, "text": "not an official safeguarding policy" }
+    ]
+}

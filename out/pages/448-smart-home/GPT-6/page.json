@@ -1,0 +1,19 @@
+{
+    "title": "Threshold | Lighting and control",
+    "tags": ["Architecture", "Smart Home", "Swiss Editorial"],
+    "mocks": "Original flat architectural artwork replaces photography; system fonts and static HTML replace framework. Projects, quote, pricing, lead times and credentials are supplied unverified concept copy. Plan playback is illustrative, with no smart device integration. Enquiry opens mail/phone apps only.",
+    "tests": [
+        { "selector": "[data-room]", "count": 6 },
+        { "selector": "#replay", "click": true },
+        { "selector": "#scene-status", "text": "Evening scene complete." },
+        { "selector": ".project-grid article", "count": 5 },
+        { "selector": ".project-grid article:first-child summary", "click": true },
+        { "selector": ".project-grid article:first-child details p", "visible": true, "text": "not a verified installation" },
+        { "selector": ".project-grid article:first-child summary", "click": true },
+        { "selector": ".project-grid article:first-child details p", "visible": false },
+        { "selector": ".stages article", "count": 5 },
+        { "selector": ".honest li", "count": 5 },
+        { "selector": ".enquiry .disclaimer", "text": "no enquiry or drawings are submitted" },
+        { "selector": "a[href^='mailto:']", "count": 2 }
+    ]
+}

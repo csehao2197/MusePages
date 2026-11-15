@@ -1,0 +1,21 @@
+{
+    "title": "Beacon Towing — Bristol & the M4 / M5",
+    "tags": ["Roadside Recovery", "Amber & Asphalt", "Phone-first"],
+    "mocks": "Sample telephone number and fictional service, response statistics, fleet, reviews, licensing and insurance. No real calls, dispatch or live availability.",
+    "tests": [
+        {"selector": "a[href='tel:08005550199']", "count": 13},
+        {"selector": "form", "count": 0},
+        {"selector": "#price-details", "visible": true},
+        {"selector": "#price-details summary", "click": true},
+        {"selector": "#price-details p", "visible": true, "text": "priced per job"},
+        {"selector": "#price-details summary", "click": true},
+        {"selector": "#price-details p", "visible": false},
+        {"selector": "#safety details:nth-child(2) summary", "click": true},
+        {"selector": "#safety details:nth-child(2) p", "visible": true, "text": "cannot exit safely"},
+        {"selector": "#safety details:nth-child(1) p", "visible": false},
+        {"selector": "#safety details:nth-child(4) summary", "click": true},
+        {"selector": "#safety details:nth-child(4) p", "visible": true, "text": "Do not walk along a motorway"},
+        {"selector": "#safety details:nth-child(2) p", "visible": false},
+        {"selector": "#coverage .towns span", "count": 12}
+    ]
+}

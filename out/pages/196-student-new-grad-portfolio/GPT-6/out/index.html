@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A sample new graduate interaction design portfolio: thoughtful experiments, transparent project notes and an accessible working approach.">
+    <meta property="og:title" content="Alex Morgan — Sample design portfolio">
+    <meta property="og:description" content="Self-directed concepts, process notes and a fresh perspective. Demonstration identity; no client or credential claims.">
+    <title>Alex Morgan — Sample design portfolio</title>
+    <link rel="icon" href="data:,">
+    <style>
+        :root { --ink:#24232c; --paper:#f8f7f2; --purple:#6356c7; --line:#dddbd3; }
+        * { box-sizing:border-box; }
+        html { scroll-behavior:smooth; }
+        body { margin:0; color:var(--ink); background:var(--paper); font:16px/1.6 system-ui,sans-serif; }
+        a { color:inherit; text-underline-offset:5px; }
+        button,input,textarea { font:inherit; }
+        button,a { -webkit-tap-highlight-color:transparent; }
+        button { cursor:pointer; }
+        :focus-visible { outline:3px solid var(--purple); outline-offset:5px; }
+        .wrap { max-width:1100px; margin:auto; padding:0 40px; }
+        header { display:flex; align-items:center; justify-content:space-between; padding:25px 0; border-bottom:1px solid var(--line); }
+        .brand { text-decoration:none; font-weight:750; font-size:19px; letter-spacing:-.7px; }
+        .brand span { color:var(--purple); }
+        nav { display:flex; gap:30px; align-items:center; font-size:14px; }
+        nav a { text-decoration:none; }
+        .pill { font:12px/1.3 ui-monospace,monospace; padding:9px 13px; border:1px solid var(--line); border-radius:30px; display:inline-block; }
+        .hero { display:grid; grid-template-columns:1.2fr 1fr; gap:35px; align-items:center; padding:65px 0 60px; }
+        .eyebrow { font:12px ui-monospace,monospace; text-transform:uppercase; letter-spacing:1.6px; color:#5f5a70; }
+        h1 { font-size:clamp(43px,5.6vw,70px); letter-spacing:-4px; line-height:1.06; font-weight:550; margin:23px 0; }
+        h1 em { font-family:Georgia,serif; font-weight:400; color:var(--purple); }
+        .intro { max-width:420px; color:#62616b; }
+        .primary { display:inline-block; background:var(--ink); color:white; border:0; padding:14px 22px; border-radius:5px; text-decoration:none; margin-top:15px; }
+        .art { position:relative; height:345px; background:#e9e5fa; border-radius:50% 50% 8px 8px; overflow:hidden; }
+        .orbit { position:absolute; width:270px; height:270px; border:1px solid #b5a9e5; border-radius:50%; top:34px; left:63px; }
+        .paper { transform:rotate(-9deg); position:absolute; left:65px; top:54px; width:230px; background:#fffef9; box-shadow:12px 14px 0 #c6bced; padding:24px; height:265px; }
+        .paper b { font-size:12px; color:#726d81; letter-spacing:2px; }
+        .drawing { margin-top:20px; height:125px; background:#ffbe87; border-radius:70px 70px 9px 9px; display:flex; align-items:center; justify-content:center; }
+        .drawing svg { width:95px; height:95px; }
+        .note { position:absolute; right:6px; bottom:25px; padding:12px 16px; background:#f7ec9b; transform:rotate(7deg); font:italic 17px Georgia,serif; }
+        .section-head { display:flex; align-items:center; justify-content:space-between; gap:15px; border-top:1px solid var(--line); padding-top:25px; }
+        h2 { font-size:29px; font-weight:550; letter-spacing:-1px; margin:10px 0 20px; }
+        .filters { display:flex; gap:8px; flex-wrap:wrap; }
+        .filters button { border:1px solid var(--line); background:transparent; border-radius:20px; padding:7px 14px; font-size:12px; color:var(--ink); }
+        .filters button[aria-pressed=true] { background:var(--ink); color:white; }
+        .projects { display:grid; grid-template-columns:1fr 1fr; gap:26px; padding:12px 0 50px; }
+        .project-art { height:235px; padding:28px; display:flex; justify-content:center; align-items:center; background:#dbe9df; overflow:hidden; }
+        .project-art.alt { background:#ebe1d6; }
+        .phone { width:116px; padding:13px; border:5px solid #273c33; border-radius:20px; background:#fcfff9; transform:rotate(-9deg); font-size:10px; height:190px; }
+        .phone strong { font:22px Georgia,serif; display:block; line-height:1.1; margin:17px 0; }
+        .phone i { display:block; height:12px; border-radius:4px; background:#a7c7ae; margin:9px 0; }
+        .poster { padding:18px; width:225px; height:175px; background:#bf5338; color:#fff9e7; transform:rotate(5deg); font:40px/1 Georgia,serif; }
+        .poster small { font:10px system-ui; display:block; margin-top:22px; }
+        article h3 { margin:16px 0 5px; font-size:20px; font-weight:600; }
+        article p { color:#65616c; font-size:14px; }
+        article[hidden] { display:none; }
+        details { border-bottom:1px solid var(--line); padding:12px 0; font-size:14px; }
+        summary { cursor:pointer; font-weight:650; }
+        .about { display:grid; grid-template-columns:1fr 1fr; gap:50px; padding:40px 0; border-top:1px solid var(--line); }
+        .about p { color:#64616a; }
+        .contact { background:#e9e5fa; padding:32px; border-radius:7px; margin:25px 0 50px; }
+        form { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+        label { display:grid; gap:5px; font-size:13px; }
+        input,textarea { width:100%; min-width:0; padding:11px; border:1px solid #bcb4d5; border-radius:4px; background:#fffefb; }
+        .wide { grid-column:1/-1; }
+        form button { justify-self:start; margin:0; }
+        footer { display:flex; justify-content:space-between; gap:20px; padding:22px 0; color:#6a6674; font-size:12px; border-top:1px solid var(--line); }
+        [data-menu] { display:none; }
+        @media(max-width:650px)
+        {
+            .wrap { padding:0 22px; }
+            [data-menu] { display:block; border:1px solid var(--line); background:transparent; padding:7px 12px; }
+            header { flex-wrap:wrap; }
+            nav { display:none; width:100%; padding-top:20px; }
+            nav.open { display:flex; }
+            .hero { grid-template-columns:1fr; padding:40px 0; }
+            h1 { letter-spacing:-2.5px; }
+            .art { height:310px; }
+            .paper { left:40px; }
+            .orbit { left:35px; }
+            .section-head { align-items:start; flex-direction:column; }
+            .projects,.about,form { grid-template-columns:1fr; }
+            .about { gap:15px; }
+            .contact { padding:22px; }
+            footer { flex-direction:column; }
+        }
+        @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <header>
+            <a class="brand" href="#">alex morgan<span> ✳</span></a>
+            <button data-menu aria-expanded="false" aria-controls="navigation">Menu</button>
+            <nav id="navigation"><a href="#work">Work</a><a href="#about">About</a><a href="#contact">Let's talk ↗</a></nav>
+        </header>
+        <main>
+            <section class="hero">
+                <div>
+                    <span class="pill">A sample new-grad portfolio</span>
+                    <h1>Small details.<br><em>Thoughtful</em><br>experiences.</h1>
+                    <p class="intro">Exploring interaction design through clear interfaces, curious questions and hands-on experiments.</p>
+                    <a class="primary" href="#work">Explore selected work ↓</a>
+                </div>
+                <div class="art" role="img" aria-label="Original illustration of a design notebook with a friendly geometric flower">
+                    <div class="orbit"></div><div class="paper"><b>IDEAS IN PROGRESS</b><div class="drawing"><svg viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M50 10C80 0 100 40 77 51C101 81 60 105 50 79C25 105-3 72 22 51C-5 25 27 0 50 10Z" fill="#6554b6"/><circle cx="50" cy="49" r="13" fill="#fff5c9"/></svg></div><p>Make it useful. Make it kind.</p></div><span class="note">Always a work in progress.</span>
+                </div>
+            </section>
+            <section id="work">
+                <div class="section-head"><div><span class="eyebrow">Learning by making</span><h2>Selected explorations</h2></div><div class="filters" aria-label="Project filters"><button aria-pressed="true" data-filter="all">All work</button><button aria-pressed="false" data-filter="product">Product</button><button aria-pressed="false" data-filter="visual">Visual</button></div></div>
+                <p class="eyebrow">Illustrative concepts · not commercial client work</p>
+                <div class="projects">
+                    <article data-kind="product"><div class="project-art"><div class="phone"><small>SPROUT / CONCEPT</small><strong>A little room to grow.</strong><i></i><i></i><small>Your daily garden ritual</small></div></div><h3>Sprout — a gentler daily habit</h3><p>Self-directed product concept · Interaction design<br>Exploring a calmer way to remember plant care.</p><details><summary>Open project notes ↗</summary><p><b>Problem:</b> plant-care schedules can feel overwhelming. <b>Contribution:</b> an illustrative reminder flow, hierarchy and wireframes. <b>Tools:</b> paper sketches and HTML/CSS. <b>Constraint:</b> no field research or production app. <b>Learning:</b> show the next useful action, not every possible action. <b>Outcome:</b> a visual concept; usability remains untested.</p></details></article>
+                    <article data-kind="visual"><div class="project-art alt"><div class="poster">Outside<br>the lines.<small>A SELF-DIRECTED EDITORIAL STUDY</small></div></div><h3>Outside — space for fresh ideas</h3><p>Personal visual study · Typography &amp; layout<br>An editorial experiment in scale and rhythm.</p><details><summary>Open project notes ↗</summary><p><b>Context:</b> a sample personal exercise, not a course credential. <b>Problem:</b> creating hierarchy with a limited palette. <b>Contribution:</b> type scale, layout and original CSS artwork. <b>Tools:</b> browser and CSS. <b>Constraint:</b> system fonts only. <b>Learning:</b> contrast and space can carry a composition. <b>Outcome:</b> two responsive compositions, no commercial results claimed.</p></details></article>
+                </div>
+            </section>
+            <section id="about" class="about"><div><span class="eyebrow">A little context</span><h2>Curiosity is a good<br>place to start.</h2><p>Alex Morgan is a demonstration identity. This portfolio shows how a new designer can communicate process without overstating experience.</p></div><div><h3>How I approach the work</h3><p>Understand the question. Sketch a few directions. Build something small. Make room for feedback.</p><details><summary>Experience &amp; hiring essentials</summary><p>Internships, volunteering, clubs, dates and qualifications are awaiting owner-supplied details. Interests: accessible interfaces and editorial design. Location, remote preference and professional contact are not supplied.</p></details><a href="sample-cv.txt" download>Download accessible sample CV ↗</a></div></section>
+            <section id="contact" class="contact"><span class="eyebrow">Start a conversation</span><h2>Good work starts with hello.</h2><p>Demo form · nothing is sent or saved. A professional address and response window will be added by the portfolio owner.</p><form><label>Your email<input type="email" name="email" required autocomplete="email"></label><label>Your name<input name="name" required autocomplete="name"></label><label class="wide">What are you thinking?<textarea name="message" rows="3" required></textarea></label><button class="primary" type="submit">Try demo message ↗</button><p class="wide" role="status" id="feedback"></p></form></section>
+        </main>
+        <footer><span>Alex Morgan / Sample portfolio</span><span>Concept work only · Generated with GPT-6</span></footer>
+    </div>
+    <script>
+        const menu = document.querySelector("[data-menu]");
+        menu.addEventListener("click", () =>
+        {
+            const open = menu.getAttribute("aria-expanded") !== "true";
+            menu.setAttribute("aria-expanded", String(open));
+            document.querySelector("nav").classList.toggle("open", open);
+        });
+        document.querySelectorAll("[data-filter]").forEach(button => button.addEventListener("click", () =>
+        {
+            document.querySelectorAll("[data-filter]").forEach(item => item.setAttribute("aria-pressed", String(item === button)));
+            document.querySelectorAll("[data-kind]").forEach(project => project.hidden = button.dataset.filter !== "all" && project.dataset.kind !== button.dataset.filter);
+        }));
+        document.querySelector("form").addEventListener("submit", event =>
+        {
+            event.preventDefault();
+            document.querySelector("#feedback").textContent = "Demo complete — your message was validated locally. Nothing was sent or saved.";
+        });
+    </script>
+</body>
+</html>

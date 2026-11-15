@@ -1,0 +1,9 @@
+# Roadline Rentals
+
+Read original `data\prompts\299-car-rental\299-car-rental.md` and DESIGN. Actual **gpt-6.1-sol**, label **GPT-6**. HTML/CSS/JS with system Arial; original bright hatchback artwork is a shared class illustration, not an exact model photograph.
+
+Live date/age estimate, branch/return search, combined class/availability filters, unavailable/empty states, young-driver eligibility and surcharge, Sunday pickup checks, itemised cover/child-seat/extra-driver/one-way estimate and separate credit-card hold. Date-only rentals use whole calendar days; pickup times and 24-hour cancellation cutoff require direct confirmation. Up to 30 days in short-term planner; longer stays use monthly enquiry. Standard includes one additional driver and VAT. Optional extras are separate. One-way over 300 miles and Ireland travel require direct quotes. EV fuel/charge terms require confirmation.
+
+Browser-only fictional fleet, branches, registration and underwriter. No live stock, payment, real reservation, insurance purchase or email submission. Source here, `out\` export, eventual `pages\car-rental\GPT-6\index.html`. Static HTTP; QA `node out\pages\299-car-rental\GPT-6\verify.mjs`. No env/build/install/publication. `.checks` evidence. Original art/code, source rights retained.
+
+Actual QA: 56 browser/export assertions plus registration/preservation checks. Desktop 1200×900 and mobile 390×844 full-page screenshots were opened and inspected: Opened full desktop/mobile PNGs. Bright cobalt/white search-first layout and original hatchback artwork distinguish rental from showroom/detailing. Eight class cards have aligned rates, visible specs and clear actions. Cover/excess table, included/excluded pricing and branches are readable. Mobile search, stacked cover cards, monthly chooser and FAQs remain contained without horizontal overflow. Evidence: `.checks\qa.json`, desktop/mobile PNGs. Registered disabled/undeployed; no build, install, dist or publication.

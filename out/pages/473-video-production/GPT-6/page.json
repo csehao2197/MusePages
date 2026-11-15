@@ -1,0 +1,31 @@
+{
+    "title": "Northline | We film the part nobody sees.",
+    "tags": ["Manchester Film Studio", "Architectural Portfolio", "Olive Swiss Grid"],
+    "mocks": "Fictional studio, team, rates, quote and source-named client projects. Original illustrated stills, no playable film or claimed client relationships. Local project brief, downloadable sample rate card and crew notes. System font fallbacks; no backend or transmission.",
+    "tests": [
+        {"selector": "#work [data-film]", "count": 6},
+        {"selector": "[data-film='Pennine NHS Trust']", "click": true},
+        {"selector": "#film-title", "text": "PENNINE NHS TRUST"},
+        {"selector": "#film-dialog", "visible": true, "text": "No playable film"},
+        {"selector": "#close-film", "click": true},
+        {"selector": "#film-dialog", "visible": false},
+        {"selector": "[data-person='Hannah Bruce']", "click": true},
+        {"selector": "#team-note", "text": "PERMISSIONS"},
+        {"selector": "#budgets .rate-download", "download": "northline-rate-card.txt"},
+        {"selector": "#email", "fill": "bad", "valid": false},
+        {"selector": "#email", "fill": "producer@example.test", "valid": true},
+        {"selector": "#name", "fill": "Rae"},
+        {"selector": "#story", "fill": "                    "},
+        {"selector": "#project-form button", "click": true},
+        {"selector": "#project-status", "text": "20 non-space"},
+        {"selector": "#story", "fill": "A documentary about the people who make our ceramics."},
+        {"selector": "#budget", "select": "Not sure yet"},
+        {"selector": "#project-form button", "click": true},
+        {"selector": "#project-status", "text": "Budget: Not sure yet"},
+        {"selector": "#project-status", "text": "Nothing sent"},
+        {"selector": "#story", "fill": "A revised documentary about our local makers and their workshop."},
+        {"selector": "#project-status", "visible": false},
+        {"selector": "#vimeo", "click": true},
+        {"selector": "#vimeo-status", "text": "No live Vimeo"}
+    ]
+}

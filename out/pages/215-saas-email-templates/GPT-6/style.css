@@ -1,0 +1,617 @@
+:root
+{
+    --violet: #6358d8;
+    --ink: #292b3e;
+    --muted: #8a8c9c;
+    --line: #e9e9f0;
+}
+*
+{
+    box-sizing: border-box;
+}
+body
+{
+    margin: 0;
+    color: var(--ink);
+    background: #fafafb;
+    font: 13px/1.6 Arial, sans-serif;
+}
+button, input, textarea
+{
+    font: inherit;
+}
+a, button
+{
+    color: inherit;
+    cursor: pointer;
+}
+a
+{
+    text-decoration: none;
+}
+header
+{
+    height: 83px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 35px;
+    background: white;
+    border-bottom: 1px solid var(--line);
+}
+.brand
+{
+    font-size: 25px;
+    letter-spacing: -1px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+.brand > span
+{
+    color: var(--violet);
+    font-size: 32px;
+}
+.brand b
+{
+    color: #a4a1bf;
+    font-size: 22px;
+    font-weight: normal;
+    border-left: 1px solid #e6e5ee;
+    padding-left: 12px;
+    margin-left: 4px;
+}
+.header-caption
+{
+    font-size: 8px;
+    color: #9898aa;
+    letter-spacing: 2px;
+}
+header button
+{
+    background: none;
+    border: 0;
+    font-size: 10px;
+    color: #79738e;
+}
+.studio
+{
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
+}
+aside
+{
+    background: white;
+    border-right: 1px solid var(--line);
+    padding: 33px 21px;
+}
+.eyebrow
+{
+    color: #9c97bb;
+    font-size: 7px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+}
+.sidebar-title
+{
+    padding: 0 10px;
+}
+.sidebar-title h2
+{
+    font-size: 22px;
+    font-weight: normal;
+    letter-spacing: -.5px;
+    line-height: 1.2;
+    margin: 17px 0;
+}
+.sidebar-title > p:last-child
+{
+    font-size: 10px;
+    color: #9695a5;
+}
+nav
+{
+    display: grid;
+    gap: 7px;
+    margin-top: 30px;
+}
+.template-button
+{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    border: 1px solid transparent;
+    background: none;
+    border-radius: 6px;
+    padding: 12px 10px;
+    text-align: left;
+}
+.template-button > span
+{
+    width: 26px;
+    height: 26px;
+    display: grid;
+    place-content: center;
+    border: 1px solid #e8e7ef;
+    border-radius: 5px;
+    color: #b0abbd;
+    font-size: 14px;
+}
+.template-button strong
+{
+    display: block;
+    font-size: 11px;
+    font-weight: normal;
+}
+.template-button small
+{
+    font-size: 8px;
+    color: #a3a0b0;
+}
+.template-button[aria-pressed="true"]
+{
+    background: #f4f2fe;
+    border-color: #e9e5fc;
+    color: var(--violet);
+}
+.template-button[aria-pressed="true"] > span
+{
+    background: white;
+    border-color: #ded8f4;
+    color: var(--violet);
+}
+.personalize
+{
+    padding: 25px 10px 0;
+    margin-top: 25px;
+    border-top: 1px solid var(--line);
+}
+label
+{
+    font-size: 9px;
+    display: block;
+    color: #8c879c;
+    margin: 15px 0;
+}
+input
+{
+    display: block;
+    width: 100%;
+    min-width: 0;
+    background: #fcfcfe;
+    border: 1px solid #e7e5ef;
+    color: #6a647e;
+    padding: 10px;
+    margin-top: 7px;
+    border-radius: 4px;
+    font-size: 10px;
+}
+.apply
+{
+    background: none;
+    color: #8d81bd;
+    border: 1px solid #e7e2f5;
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 9px;
+}
+.privacy-note
+{
+    font-size: 8px;
+    color: #aaa5b7;
+    padding: 20px 10px;
+}
+.privacy-note > span
+{
+    color: #8eac98;
+}
+main
+{
+    padding: 34px 40px 0;
+    max-width: 1200px;
+    min-width: 0;
+    width: 100%;
+    margin: auto;
+}
+.page-heading
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+}
+h1
+{
+    font-size: 35px;
+    line-height: 1.15;
+    font-weight: 500;
+    letter-spacing: -1.2px;
+    margin: 15px 0;
+}
+.page-heading > div > p:last-child
+{
+    font-size: 10px;
+    color: #9791a5;
+}
+.collection-badge
+{
+    border: 1px solid #e2ddef;
+    border-radius: 50%;
+    width: 105px;
+    height: 105px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #9c8fb0;
+    font-size: 10px;
+    letter-spacing: 1px;
+    transform: rotate(12deg);
+}
+.collection-badge b
+{
+    font-size: 5px;
+    font-weight: normal;
+    margin-top: 3px;
+}
+.preview-toolbar
+{
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    align-items: center;
+    margin-top: 30px;
+    padding: 15px 0;
+    border-top: 1px solid var(--line);
+}
+.preview-size
+{
+    display: flex;
+    gap: 4px;
+    padding: 3px;
+    border-radius: 5px;
+    background: #eeedf3;
+}
+.preview-size button
+{
+    background: none;
+    border: 0;
+    border-radius: 3px;
+    padding: 6px 12px;
+    color: #a6a0b4;
+    font-size: 9px;
+}
+.preview-size [aria-pressed="true"]
+{
+    background: white;
+    color: #81749c;
+    box-shadow: 0 1px 3px #292b3e0a;
+}
+.export-actions
+{
+    display: flex;
+    gap: 8px;
+}
+.export-actions button
+{
+    background: white;
+    color: #877c9f;
+    border: 1px solid #e7e2ee;
+    border-radius: 5px;
+    padding: 9px 13px;
+    font-size: 9px;
+}
+.export-actions .primary, .primary
+{
+    background: var(--violet);
+    color: white;
+    border: 1px solid var(--violet);
+    border-radius: 5px;
+    padding: 10px 16px;
+    font-size: 10px;
+}
+#action-status
+{
+    font-size: 9px;
+    color: #7c9a89;
+    min-height: 16px;
+    margin: 0 0 10px;
+}
+.email-stage
+{
+    border: 1px solid #e6e3ec;
+    border-radius: 7px;
+    overflow: hidden;
+    background: #efedf4;
+    padding-bottom: 25px;
+}
+.subject-bar
+{
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    padding: 18px 20px;
+    background: white;
+    border-bottom: 1px solid #e6e3ec;
+}
+.mail-icon
+{
+    width: 29px;
+    height: 29px;
+    border: 1px solid #e9e5f1;
+    border-radius: 50%;
+    color: #a199b9;
+    display: grid;
+    place-content: center;
+}
+.subject-bar p
+{
+    font-size: 6px;
+    letter-spacing: 1px;
+    color: #b1aabc;
+    margin: 3px 0;
+}
+.subject-bar b, .subject-bar strong
+{
+    letter-spacing: 0;
+    color: #8f839f;
+    font-size: 8px;
+    font-weight: normal;
+    margin-left: 8px;
+}
+.subject-bar .recipient
+{
+    font-size: 7px;
+    letter-spacing: 0;
+    margin-top: 6px;
+}
+.mail-tag
+{
+    font-size: 6px;
+    color: #b1a4bf;
+    border: 1px solid #ece6f0;
+    padding: 3px 6px;
+    border-radius: 3px;
+    margin-left: auto;
+    white-space: nowrap;
+}
+iframe
+{
+    display: block;
+    width: 100%;
+    max-width: 600px;
+    height: 850px;
+    border: 0;
+    margin: 25px auto 0;
+    background: #f4f3f8;
+}
+iframe.mobile
+{
+    max-width: 320px;
+}
+.quality-strip
+{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 22px 0;
+    color: #a39aad;
+    font-size: 7px;
+    flex-wrap: wrap;
+}
+.notes
+{
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+    padding: 25px 0;
+}
+.notes h2
+{
+    font-size: 16px;
+    font-weight: normal;
+    margin: 0 0 8px;
+}
+.notes p
+{
+    font-size: 9px;
+    color: #a097ab;
+    max-width: 450px;
+    margin: 0;
+}
+.notes a
+{
+    font-size: 8px;
+    color: #9c8cb5;
+    white-space: nowrap;
+}
+footer
+{
+    padding: 25px 0;
+    font-size: 7px;
+    color: #aaa0b5;
+}
+footer span
+{
+    float: right;
+}
+dialog
+{
+    width: min(520px, 94vw);
+    max-height: 90vh;
+    border: 1px solid #e5dfef;
+    border-radius: 10px;
+    color: var(--ink);
+    padding: 30px;
+}
+dialog::backdrop
+{
+    background: #292b3e99;
+}
+dialog h2
+{
+    font-size: 26px;
+    font-weight: normal;
+    line-height: 1.2;
+}
+.close
+{
+    float: right;
+    font-size: 25px;
+    border: 0;
+    background: none;
+}
+dialog textarea
+{
+    width: 100%;
+    height: 220px;
+    font-size: 10px;
+}
+#dialog-status
+{
+    color: #779181;
+}
+@media (max-width: 700px)
+{
+    header
+    {
+        padding: 0 20px;
+        height: 75px;
+    }
+    .header-caption
+    {
+        display: none;
+    }
+    .brand
+    {
+        font-size: 23px;
+    }
+    .studio
+    {
+        display: block;
+    }
+    aside
+    {
+        padding: 20px;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+    }
+    .sidebar-title
+    {
+        padding: 0;
+    }
+    .sidebar-title h2, .sidebar-title > p:last-child, .privacy-note
+    {
+        display: none;
+    }
+    nav
+    {
+        display: flex;
+        overflow: auto;
+        margin-top: 15px;
+    }
+    .template-button
+    {
+        min-width: 150px;
+        padding: 10px;
+    }
+    .personalize
+    {
+        padding: 15px 0 0;
+        margin-top: 15px;
+    }
+    #personalize
+    {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 12px;
+    }
+    #personalize label
+    {
+        margin: 8px 0;
+    }
+    .apply
+    {
+        margin: 30px 0 8px;
+    }
+    main
+    {
+        padding: 25px 16px 0;
+    }
+    h1
+    {
+        font-size: 31px;
+    }
+    .collection-badge
+    {
+        display: none;
+    }
+    .page-heading .eyebrow
+    {
+        font-size: 6px;
+    }
+    .preview-toolbar
+    {
+        flex-wrap: wrap;
+        margin-top: 25px;
+        gap: 12px;
+    }
+    .preview-size button, .export-actions button
+    {
+        min-height: 38px;
+        padding: 8px 12px;
+    }
+    .email-stage
+    {
+        padding-bottom: 12px;
+    }
+    .subject-bar
+    {
+        padding: 15px 12px;
+        gap: 8px;
+        align-items: flex-start;
+    }
+    .subject-bar .mail-icon, .mail-tag
+    {
+        display: none;
+    }
+    .subject-bar strong
+    {
+        display: block;
+        margin: 4px 0 0;
+        font-size: 10px;
+    }
+    .subject-bar b
+    {
+        font-size: 9px;
+    }
+    iframe
+    {
+        margin-top: 12px;
+        height: 1010px;
+    }
+    .quality-strip
+    {
+        justify-content: flex-start;
+        gap: 10px 20px;
+        font-size: 8px;
+    }
+    .notes
+    {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    footer span
+    {
+        float: none;
+        display: block;
+        margin-top: 8px;
+    }
+}

@@ -1,0 +1,9 @@
+# Mortgage calculator
+
+- Original: `data\prompts\203-mortgage-calculator-page\203-mortgage-calculator-page.md`; design: `src\workflows\AI Agent\DESIGN.md`.
+- Actual `gpt-6.1-sol`; display `GPT-6`. Standalone HTML source with browser `app.js` and pure math `calculator.mjs`.
+- Features: live price slider/input, preserved dollar/percent down-payment conversion, term/rate controls, cost breakdown/donut, automatic PMI estimate, payoff/LTV/interest summary, comparisons, accelerated-payoff calculations, monthly/yearly amortization, interactive month exploration and SVG lines, simplified related tools, educational disclosures and local lead demo.
+- Serve with an existing static server (ES modules require HTTP). Validate from root: `node out\pages\203-mortgage-calculator-page\GPT-6\.checks\verify.mjs`. Checks include exact default/zero-rate values, principal conservation, PMI, 100% down, invalid input, extra payments, schedule/detail, tools/forms, mobile overflow and browser/resources. Evidence: `.checks`.
+- Independent static export: `out\`; expected path `pages/mortgage-calculator-page/GPT-6/index.html`, real 1200×900 preview. Registered disabled after checks; no build/publication.
+- Estimates assume fixed-rate monthly payments beginning next month, constant ancillary costs and immediate extra principal. PMI uses 0.5% of original loan/year below 20% down without cancellation modeling. Total P&I excludes down payment/other costs; comparisons show P&I only. Loan rates are brief-supplied illustrations, not current/daily lender data. Related tools are explicitly simplified. No advice, loan offer or approval; lead/search demos send/store nothing. No backend/env.
+- Review checklist: readable mobile inputs/chart/table scrolling, keyboard controls, meaningful errors, honest rate/lead limitations.

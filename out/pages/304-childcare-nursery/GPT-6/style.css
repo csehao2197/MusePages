@@ -1,0 +1,548 @@
+:root
+{
+    --paper: #faf8f2;
+    --ink: #1c3739;
+    --teal: #2a6b73;
+    --yellow: #f0d060;
+    --coral: #d4805a;
+    --muted: #526669;
+}
+*
+{
+    box-sizing: border-box;
+}
+body
+{
+    margin: 0;
+    color: var(--ink);
+    background: var(--paper);
+    font: 16px/1.7 "Segoe UI", Arial, sans-serif;
+}
+html
+{
+    scroll-padding-top: 85px;
+}
+a
+{
+    color: inherit;
+    text-decoration: none;
+}
+button, input, select
+{
+    font: inherit;
+}
+button, .button
+{
+    cursor: pointer;
+    border: 0;
+    display: inline-block;
+    padding: 14px 23px;
+    border-radius: 7px;
+    background: var(--teal);
+    color: white;
+    font-weight: 600;
+    font-size: 13px;
+}
+button:hover, .button:hover
+{
+    background: #1b4e55;
+}
+:focus-visible
+{
+    outline: 3px solid var(--coral);
+    outline-offset: 4px;
+}
+header
+{
+    display: flex;
+    align-items: center;
+    padding: 22px 5%;
+    gap: 30px;
+    border-bottom: 1px solid #dcded3;
+}
+.brand
+{
+    font-weight: 800;
+    font-size: 29px;
+    letter-spacing: -1px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+.brand svg
+{
+    width: 31px;
+    height: 31px;
+    fill: var(--yellow);
+    stroke: #b89325;
+    stroke-width: 2px;
+}
+nav
+{
+    display: flex;
+    gap: 24px;
+    margin-left: auto;
+    font-size: 12px;
+}
+#menu
+{
+    display: none;
+}
+section
+{
+    padding: 85px 6%;
+}
+.hero
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4%;
+    padding: 45px 0 0 6%;
+    overflow: hidden;
+}
+.hero > div
+{
+    padding: 35px 0;
+    align-self: center;
+}
+.label, .fine
+{
+    font-size: 11px;
+    line-height: 1.8;
+}
+.label
+{
+    font-weight: 700;
+    color: var(--teal);
+    letter-spacing: 1.6px;
+}
+h1, h2, h3
+{
+    font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+    font-weight: 800;
+}
+h1
+{
+    font-size: clamp(44px, 5vw, 67px);
+    line-height: 1.07;
+    letter-spacing: -2px;
+    border-left: 4px solid var(--yellow);
+    padding-left: 20px;
+    margin: 25px 0;
+}
+em
+{
+    font-style: normal;
+    color: var(--teal);
+}
+h2
+{
+    font-size: clamp(35px, 4vw, 51px);
+    line-height: 1.15;
+    letter-spacing: -1px;
+    margin: 22px 0;
+}
+h3
+{
+    font-size: 25px;
+    line-height: 1.2;
+}
+p
+{
+    color: var(--muted);
+}
+.lead
+{
+    font-size: 20px;
+}
+.actions
+{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 23px;
+    align-items: center;
+    margin: 30px 0;
+}
+.text-link
+{
+    color: var(--teal);
+    border-bottom: 1px solid;
+    font-size: 13px;
+}
+.facts
+{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 10px;
+}
+.facts span
+{
+    background: #eee9da;
+    padding: 6px 10px;
+    border-radius: 4px;
+}
+figure
+{
+    margin: 0;
+    position: relative;
+    background: #d4dfcb;
+    border-radius: 140px 0 0;
+}
+figure img
+{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+}
+figcaption
+{
+    position: absolute;
+    bottom: 20px;
+    left: 30px;
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+.sun-note
+{
+    position: absolute;
+    bottom: 90px;
+    left: -40px;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background: var(--yellow);
+    font: 800 24px/1.05 "Trebuchet MS", sans-serif;
+    padding: 26px;
+    transform: rotate(-10deg);
+}
+.stages
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 35px;
+    margin-top: 40px;
+}
+.stages article
+{
+    border-top: 1px solid #bcc9bf;
+    padding-top: 25px;
+}
+.stages p:not(.label)
+{
+    min-height: 83px;
+    font-size: 14px;
+}
+.stage-art
+{
+    width: 74px;
+    height: 74px;
+    display: grid;
+    place-items: center;
+    font: 800 50px/1 Georgia, serif;
+    border-radius: 45% 45% 12% 12%;
+    background: var(--yellow);
+    color: #68591b;
+}
+.toddler
+{
+    background: #e6b29a;
+    color: #75412f;
+    border-radius: 50%;
+}
+.preschool
+{
+    background: #c3d7c6;
+    color: #36573b;
+    border-radius: 10px;
+}
+.stages button
+{
+    background: transparent;
+    border: 1px solid var(--teal);
+    color: var(--teal);
+}
+.stages button[aria-pressed=true]
+{
+    background: var(--teal);
+    color: white;
+}
+.curriculum
+{
+    padding: 30px;
+    border-radius: 12px;
+    background: #ecf0e5;
+    margin-top: 40px;
+}
+.curriculum h3
+{
+    margin: 10px 0;
+}
+.day, .approach, .fees, .visit
+{
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 70px;
+}
+.day
+{
+    background: #eeeade;
+}
+ol
+{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+ol li
+{
+    display: flex;
+    gap: 25px;
+    border-bottom: 1px solid #c9cbbb;
+    padding: 20px 0;
+}
+ol b
+{
+    color: var(--teal);
+    padding-top: 7px;
+}
+ol h3
+{
+    margin: 0;
+    font-size: 23px;
+}
+ol p
+{
+    font-size: 14px;
+    margin: 10px 0;
+}
+.letter-garden
+{
+    background: var(--yellow);
+    border-radius: 140px 140px 12px 12px;
+    color: var(--teal);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 460px;
+}
+.letter-garden span
+{
+    font: 800 95px "Trebuchet MS", sans-serif;
+    letter-spacing: -5px;
+    transform: rotate(-7deg);
+}
+.letter-garden i
+{
+    font: 28px/1.4 Georgia, serif;
+    text-align: center;
+}
+.letter-garden b
+{
+    font-size: 90px;
+}
+ul
+{
+    list-style: none;
+    padding: 0;
+    font-size: 14px;
+}
+ul li
+{
+    padding: 5px 0;
+}
+ul li::before
+{
+    content: "✓";
+    color: var(--teal);
+    margin-right: 10px;
+}
+.fees
+{
+    background: #ecf0e5;
+}
+.fee-panel
+{
+    background: var(--paper);
+    padding: 32px;
+    border-radius: 14px;
+}
+.fee-row
+{
+    border-bottom: 1px solid #c9cbbb;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+}
+.fee-row h3
+{
+    margin: 0;
+    font-size: 22px;
+}
+.fee-row span
+{
+    font-size: 12px;
+}
+label
+{
+    font-size: 13px;
+    display: block;
+}
+input:not([type=checkbox]), select
+{
+    display: block;
+    width: 100%;
+    border: 1px solid #96aaa5;
+    border-radius: 5px;
+    padding: 12px;
+    background: var(--paper);
+    color: var(--ink);
+    margin: 7px 0 20px;
+}
+.estimate
+{
+    font: 800 35px "Trebuchet MS", sans-serif;
+    color: var(--teal);
+}
+.visit
+{
+    background: var(--teal);
+    color: white;
+}
+.visit p, .visit em, .visit .label
+{
+    color: white;
+}
+.visit em
+{
+    color: var(--yellow);
+}
+.visit button
+{
+    background: var(--yellow);
+    color: var(--ink);
+}
+.two
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.accept
+{
+    margin-bottom: 20px;
+}
+#status
+{
+    color: #fff3bb;
+}
+footer
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    flex-wrap: wrap;
+    padding: 45px 6%;
+    background: #1c3739;
+    color: white;
+}
+footer p, footer small
+{
+    color: #d1e1dc;
+    font-size: 12px;
+}
+footer small
+{
+    flex-basis: 100%;
+}
+@media (max-width: 760px)
+{
+    header
+    {
+        padding: 20px 24px;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    header > .button
+    {
+        display: none;
+    }
+    #menu
+    {
+        display: block;
+        margin-left: auto;
+        padding: 7px 12px;
+    }
+    nav
+    {
+        display: none;
+        width: 100%;
+        margin: 0;
+        flex-direction: column;
+    }
+    nav.open
+    {
+        display: flex;
+    }
+    section
+    {
+        padding: 55px 25px;
+    }
+    .hero, .stages, .day, .approach, .fees, .visit, .two
+    {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    .hero
+    {
+        padding: 0;
+    }
+    .hero figure
+    {
+        grid-row: 1;
+        height: 350px;
+        border-radius: 0;
+    }
+    .hero > div
+    {
+        padding: 25px 25px 40px;
+    }
+    .sun-note
+    {
+        left: 24px;
+        bottom: -25px;
+        width: 100px;
+        height: 100px;
+        font-size: 20px;
+        padding: 20px;
+    }
+    figcaption
+    {
+        left: auto;
+        right: 12px;
+        font-size: 7px;
+    }
+    h1
+    {
+        font-size: 45px;
+    }
+    .stages p:not(.label)
+    {
+        min-height: 0;
+    }
+    .two
+    {
+        gap: 0;
+    }
+    .fee-panel
+    {
+        padding: 24px;
+    }
+}

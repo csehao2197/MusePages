@@ -1,0 +1,361 @@
+:root
+{
+    --ink: #1e2028; --orange: #f5622d; --gray: #f0f1f3; --line: #d6d8dd;
+}
+*
+{
+    box-sizing: border-box;
+}
+html
+{
+    scroll-behavior: smooth; scroll-padding-top: 85px;
+}
+body
+{
+    margin: 0; color: var(--ink); background: white; font: 16px/1.65 "Segoe UI", Arial, sans-serif;
+}
+a
+{
+    color: inherit;
+}
+header
+{
+    position: sticky; top: 0; z-index: 20; background: white; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 4%;
+}
+.brand
+{
+    font-weight: 900; font-size: 23px; letter-spacing: -.05em; text-decoration: none; line-height: 1.15;
+}
+.brand small
+{
+    display: block; font-size: 9px; letter-spacing: .19em; font-weight: 500; margin-top: 7px;
+}
+.wheel
+{
+    color: #c33b10; font-size: 28px;
+}
+nav
+{
+    display: flex; gap: 20px; font-size: 13px;
+}
+nav a
+{
+    text-decoration: none;
+}
+.button, button
+{
+    background: var(--ink); color: white; border: 0; border-radius: 30px; padding: 14px 23px; font: 600 14px "Segoe UI", sans-serif; text-decoration: none; display: inline-block; cursor: pointer;
+}
+.button:hover, button:hover
+{
+    background: #be390d; color: white;
+}
+header .button, .hero .button
+{
+    background: #c64117;
+}
+#menu
+{
+    display: none;
+}
+h1, h2, h3
+{
+    font-weight: 850; line-height: 1.07; letter-spacing: -.055em; margin: 15px 0 25px;
+}
+h1
+{
+    font-size: clamp(46px, 5.8vw, 78px);
+}
+h1 span
+{
+    color: #ca4015;
+}
+h2
+{
+    font-size: clamp(32px, 4vw, 49px);
+}
+h3
+{
+    font-size: 28px;
+}
+p
+{
+    margin: 0 0 24px;
+}
+.eyebrow
+{
+    font-size: 11px; font-weight: 700; letter-spacing: .16em;
+}
+.hero
+{
+    display: grid; grid-template-columns: 1.1fr 1fr; min-height: 690px;
+}
+.hero-copy
+{
+    padding: 75px 7% 50px 9%;
+}
+.hero-copy > p:not(.eyebrow)
+{
+    color: #575e68;
+}
+.actions
+{
+    display: flex; gap: 20px; align-items: center; font-size: 13px;
+}
+.stats
+{
+    display: flex; gap: 25px; padding: 30px 0 18px; border-top: 1px solid var(--line); margin-top: 35px;
+}
+.stats strong, .stats b
+{
+    font-size: 36px; line-height: 1.2; color: #bd3b12; letter-spacing: -.04em;
+}
+.stats small
+{
+    display: block; font-size: 11px; max-width: 120px;
+}
+.fine
+{
+    font-size: 12px;
+}
+.hero-image
+{
+    position: relative; background: #e8ebee; overflow: hidden; display: flex; flex-direction: column; justify-content: center;
+}
+.hero-image img
+{
+    width: 100%; display: block;
+}
+.image-label
+{
+    position: absolute; top: 45px; left: 35px; font-weight: 800; font-size: 12px; letter-spacing: .12em;
+}
+.road-tag
+{
+    display: flex; align-items: center; gap: 18px; position: absolute; bottom: 40px; left: 30px; right: 30px; background: white; padding: 18px 23px; border-radius: 12px;
+}
+.road-tag span
+{
+    color: #c43d13; font-size: 42px; font-weight: 800; border: 1px solid var(--line); padding: 0 15px;
+}
+.road-tag p
+{
+    margin: 0; font-size: 14px;
+}
+.wrap
+{
+    max-width: 1140px; margin: auto; padding: 85px 35px;
+}
+.gray
+{
+    background: var(--gray);
+}
+.courses
+{
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 23px; margin-top: 45px;
+}
+.courses article
+{
+    background: white; padding: 30px; border-radius: 16px; position: relative; display: flex; flex-direction: column; border: 1px solid var(--line);
+}
+.courses article.popular
+{
+    border: 2px solid #db4e22;
+}
+.number
+{
+    font-size: 35px; color: #c63e12; font-weight: 850; margin-bottom: 25px;
+}
+.rate
+{
+    font-size: 11px; letter-spacing: .06em; margin: 0;
+}
+.courses p, .courses li
+{
+    font-size: 14px;
+}
+.courses ul
+{
+    padding-left: 18px; margin-bottom: 30px;
+}
+.courses button
+{
+    margin-top: auto; text-align: left;
+}
+.ribbon
+{
+    position: absolute; top: -13px; right: 18px; color: white; background: #c13c12; padding: 4px 13px; border-radius: 30px; font-size: 10px;
+}
+.track
+{
+    border-top: 2px dashed #c3c6cd; margin: 65px 40px 30px; position: relative;
+}
+#road-car
+{
+    position: absolute; top: -25px; font-size: 35px; color: #c54117; left: 0;
+}
+.steps
+{
+    display: grid; grid-template-columns: repeat(4, 1fr); list-style: none; padding: 0; gap: 30px;
+}
+.steps b
+{
+    color: #be3b12;
+}
+.steps h3
+{
+    font-size: 20px;
+}
+.steps p
+{
+    font-size: 14px;
+}
+.instructors, .reviews, .pricing, .theory
+{
+    display: grid; grid-template-columns: 1fr 1fr; gap: 30px;
+}
+.instructors article
+{
+    display: flex; align-items: flex-start; background: white; border-radius: 16px; padding: 28px; gap: 20px;
+}
+.instructors p
+{
+    font-size: 14px;
+}
+.initial
+{
+    flex-shrink: 0; width: 65px; height: 75px; background: #f4d2c5; display: grid; place-items: center; font-size: 25px; font-weight: 700; border-radius: 50% 50% 12px 12px;
+}
+.orange
+{
+    background: var(--orange); text-align: center; padding: 65px 25px; color: #28170f;
+}
+.orange strong
+{
+    font-size: 130px; letter-spacing: -.08em; line-height: 1;
+}
+.orange h2
+{
+    font-size: 30px;
+}
+blockquote
+{
+    margin: 0; padding: 30px; background: var(--gray); border-radius: 14px; font-size: 19px;
+}
+cite
+{
+    display: block; margin-top: 20px; font-size: 12px; font-style: normal;
+}
+dl
+{
+    margin: 0; background: white; border-radius: 16px; padding: 25px;
+}
+dl div
+{
+    display: flex; justify-content: space-between; gap: 15px; border-bottom: 1px solid var(--line); padding: 14px 0;
+}
+dt small
+{
+    display: block; color: #62656c;
+}
+dd
+{
+    color: #b7370f; margin: 0; font-weight: 800; white-space: nowrap;
+}
+.quiz
+{
+    background: var(--gray); border-radius: 16px; padding: 30px;
+}
+.quiz button
+{
+    display: block; width: 100%; text-align: left; margin-bottom: 12px;
+}
+#quiz-result
+{
+    margin: 20px 0 0; font-size: 14px;
+}
+.booking
+{
+    background: var(--ink); color: white; padding: 65px max(35px, calc((100vw - 1070px) / 2)); display: grid; grid-template-columns: 1fr 1fr; gap: 50px;
+}
+.booking h2
+{
+    font-size: 43px;
+}
+form
+{
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+}
+label
+{
+    font-size: 13px;
+}
+input, select
+{
+    width: 100%; min-width: 0; display: block; padding: 13px 10px; border: 1px solid #7d818b; border-radius: 7px; background: white; color: var(--ink); margin-top: 6px; font: 15px "Segoe UI", sans-serif;
+}
+form button
+{
+    align-self: end; border-radius: 7px; background: #f5622d; color: #25160f;
+}
+.full
+{
+    grid-column: 1 / -1; margin: 0;
+}
+[aria-invalid="true"]
+{
+    outline: 2px solid #f5622d;
+}
+.faq
+{
+    max-width: 850px;
+}
+details
+{
+    border-bottom: 1px solid var(--line); padding: 20px 0;
+}
+summary
+{
+    font-weight: 650; cursor: pointer;
+}
+details p
+{
+    margin: 15px 0;
+}
+footer
+{
+    padding: 40px 5%; border-top: 1px solid var(--line); display: flex; gap: 35px; justify-content: space-between; font-size: 12px;
+}
+:focus-visible
+{
+    outline: 3px solid #ec8e54; outline-offset: 4px;
+}
+@media (max-width: 800px)
+{
+    header { padding: 15px 20px; flex-wrap: wrap; }
+    header > .button { display: none; }
+    #menu { display: block; padding: 10px 18px; }
+    nav { display: none; width: 100%; flex-direction: column; }
+    nav.open { display: flex; }
+    .hero, .courses, .instructors, .pricing, .theory, .booking { grid-template-columns: 1fr; }
+    .hero-copy { padding: 45px 24px; }
+    .hero-image { min-height: 480px; }
+    .hero-image img { margin-top: 30px; }
+    .image-label { top: 25px; left: 24px; }
+    .road-tag { bottom: 20px; left: 24px; right: 24px; }
+    .stats { gap: 20px; }
+    .stats strong, .stats b { font-size: 30px; }
+    .actions { flex-direction: column; align-items: flex-start; }
+    .wrap { padding: 55px 24px; }
+    .steps { grid-template-columns: 1fr; border-left: 2px dashed #b6b9c1; padding-left: 25px; }
+    .track { display: none; }
+    .reviews { grid-template-columns: 1fr; }
+    .booking { padding: 50px 24px; gap: 20px; }
+    form { grid-template-columns: 1fr; }
+    .booking h2 { font-size: 38px; }
+    footer { flex-direction: column; padding: 35px 24px; gap: 15px; }
+}
+@media (prefers-reduced-motion: reduce)
+{
+    html { scroll-behavior: auto; }
+}

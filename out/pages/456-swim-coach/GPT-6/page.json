@@ -1,0 +1,28 @@
+{
+    "title": "Novak Swim | Technique first",
+    "tags": ["Private Swim Coaching", "Minimal White", "Technique First"],
+    "mocks": "Standalone HTML/system fonts and original poolside coach artwork replace framework, fonts and photography. Programmes, rates, claims, credentials, venue and testimonials are supplied fictional content. Rate differences are flagged. Contact details are placeholders. Trial and pricing controls prepare ephemeral browser-only enquiries; no booking, checkout, health data, backend or transmission.",
+    "tests": [
+        { "selector": ".program-list article", "count": 6 },
+        { "selector": "#program", "valid": false },
+        { "selector": "[data-program='Adult Beginner']", "click": true },
+        { "selector": "#program", "value": "Adult Beginner" },
+        { "selector": "#program-note", "text": "Starting from zero" },
+        { "selector": "#email", "fill": "", "valid": false },
+        { "selector": "#email", "fill": "invalid", "valid": false },
+        { "selector": "#email", "fill": "adult@example.test", "valid": true },
+        { "selector": "#trial button", "click": true },
+        { "selector": "#trial-status", "text": "No booking created" },
+        { "selector": "[data-rate='Package']", "click": true },
+        { "selector": "#rate", "value": "Package" },
+        { "selector": "#trial-status", "text": "not a purchase" },
+        { "selector": "#trial button", "click": true },
+        { "selector": "#trial-status", "text": "Adult Beginner / Package" },
+        { "selector": "#program", "select": "" },
+        { "selector": "#program-note", "text": "Choose a program" },
+        { "selector": "#program", "valid": false },
+        { "selector": "#faq details:nth-child(3) summary", "click": true },
+        { "selector": "#faq details:nth-child(3) p", "visible": true, "text": "No venue or availability is verified" },
+        { "selector": "#faq details", "count": 6 }
+    ]
+}

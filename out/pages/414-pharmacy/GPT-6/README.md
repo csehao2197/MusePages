@@ -1,0 +1,11 @@
+# Harbourside Pharmacy
+
+Original: `data\prompts\414-pharmacy\414-pharmacy.md`; complete `DESIGN.md` applied. Actual model **gpt-6.1-sol**, label **GPT-6**. HTML/CSS/JavaScript with system fonts, original counter SVG and monogram profiles; static framework adaptation.
+
+Features: three-route chooser, eight services, five sample clinics, three fictional staff profiles, four-step repeat explainer, delivery, general advice dialogs, full-week hours, schematic location, logistics-only prescription checklist and date-based clinic preparation. Status uses `Europe/London`, weekday lunch 13:00–13:30, Saturday close 13:00 and Sunday closure; updates each minute. It describes example hours, not real live opening or bank holidays.
+
+All registrations, staff credentials, NHS affiliation, fees and service promises are unverified brief content. No medical/personal fields, symptoms, medication uploads, Rx orders, GP contact, eligibility decisions, prescriptions, care, bookings or backend. Values remain in memory. Sample CT5/CT2 match confirms neither the three-mile radius nor delivery. Same-day delivery is described only for a ready prescription; 48-hour dispensing remains unconfirmed. General advice is not diagnosis or individual care. Actual provider/eligibility and accessibility need verification. No environment variables.
+
+Source: this folder. Export: `out\`; intended public entry `pages/pharmacy/GPT-6/index.html`. Serve here: `python -m http.server 8080 --directory out`. Root verification: `node out\pages\414-pharmacy\GPT-6\verify.mjs`. No build, install or publication.
+
+Verified: 61 browser/export checks, 3 registration/preservation checks and 21 final audit checks. Both desktop/mobile PNGs opened and inspected: Opened final desktop and mobile full-page PNGs. Calm white/mint healthcare hierarchy, original bright counter art and three clear service routes read cleanly. Service directory, clinic table/cards, profile placeholders and logistics-only forms align without clipping. Mobile photo-first layout, stacked clinics, London-hours pill and intentional pinned repeat link remain legible; registration and no-care disclaimers are visible. Evidence: `.checks`. Registered disabled/undeployed. No build, install, dist or publication.

@@ -1,0 +1,740 @@
+:root
+{
+    --bg: #141210;
+    --cream: #f0e6c8;
+    --amber: #cf913f;
+    --card: #1d1b18;
+    --muted: #b7a98c;
+    --line: #453b2c;
+}
+*
+{
+    box-sizing: border-box;
+}
+html
+{
+    scroll-behavior: smooth;
+    scroll-padding-top: 85px;
+}
+body
+{
+    margin: 0;
+    background: var(--bg);
+    color: var(--cream);
+    font: 16px/1.75 Arial, sans-serif;
+}
+a
+{
+    color: inherit;
+    text-decoration: none;
+}
+button, input, select
+{
+    font: inherit;
+}
+button, summary
+{
+    cursor: pointer;
+}
+:focus-visible
+{
+    outline: 2px solid #efb969;
+    outline-offset: 4px;
+}
+header
+{
+    padding: 18px 5%;
+    background: #141210f5;
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.brand
+{
+    font: bold 22px Georgia, serif;
+    letter-spacing: 1px;
+}
+.brand span
+{
+    display: block;
+    font: 8px Arial, sans-serif;
+    color: var(--amber);
+    letter-spacing: 4px;
+    margin-top: 7px;
+}
+nav, .actions
+{
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+nav
+{
+    font-size: 12px;
+}
+.button, .outline
+{
+    display: inline-block;
+    padding: 13px 22px;
+    background: var(--amber);
+    color: var(--bg);
+    border: 1px solid var(--amber);
+    font-size: 12px;
+}
+.outline
+{
+    background: transparent;
+    color: var(--cream);
+    border-color: #9c815b;
+}
+.button:hover, .outline:hover
+{
+    background: #eab46c;
+    color: var(--bg);
+}
+#menu
+{
+    display: none;
+}
+.hero
+{
+    display: grid;
+    grid-template-columns: 58% 42%;
+    min-height: 790px;
+}
+.hero-copy
+{
+    padding: 75px 10%;
+}
+.hero-copy > p:not(.eyebrow)
+{
+    color: var(--muted);
+    max-width: 470px;
+}
+.hero > img
+{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.eyebrow
+{
+    color: var(--amber);
+    font-size: 10px;
+    letter-spacing: 3px;
+}
+h1, h2, h3
+{
+    font-family: Georgia, serif;
+    line-height: 1.05;
+    margin: 25px 0;
+}
+h1
+{
+    font-size: clamp(52px, 6.4vw, 88px);
+    letter-spacing: -3px;
+}
+h1 em
+{
+    color: var(--amber);
+}
+h2
+{
+    font-size: clamp(38px, 4.7vw, 66px);
+    letter-spacing: -2px;
+}
+h3
+{
+    font-size: 26px;
+}
+.actions
+{
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 30px;
+}
+.pour
+{
+    height: 3px;
+    background: linear-gradient(90deg, #8a5a1a, var(--amber), #cf913f50);
+    margin: 40px 0 20px;
+    animation: pour 2s .5s both;
+    transform-origin: left;
+}
+@keyframes pour
+{
+    from
+    {
+        transform: scaleX(0);
+    }
+}
+.hero-caption
+{
+    font-size: 8px;
+    color: var(--muted);
+    letter-spacing: 2px;
+}
+.section
+{
+    padding: 96px 6%;
+}
+.alternate
+{
+    background: var(--card);
+}
+.heading
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 25px;
+    margin-bottom: 30px;
+}
+.heading > p, .split p, .process p
+{
+    color: var(--muted);
+}
+.tools, .form-grid
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+.tools
+{
+    max-width: 600px;
+}
+label
+{
+    display: block;
+    font-size: 12px;
+}
+input, select
+{
+    display: block;
+    width: 100%;
+    min-width: 0;
+    padding: 12px;
+    background: #141210;
+    color: var(--cream);
+    border: 1px solid #7d6848;
+    border-radius: 0;
+    margin: 6px 0 16px;
+    color-scheme: dark;
+}
+.beer-grid
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 25px;
+}
+.beer
+{
+    height: 290px;
+    perspective: 1000px;
+    border: 0;
+    background: none;
+    color: var(--cream);
+    padding: 0;
+    text-align: left;
+}
+.beer-inner
+{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform .5s;
+}
+.beer.flipped .beer-inner
+{
+    transform: rotateY(180deg);
+}
+.beer-front, .beer-back
+{
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--bg);
+}
+.beer-back
+{
+    transform: rotateY(180deg);
+    background: #35291a;
+    border-color: #aa7a38;
+}
+.beer h3
+{
+    margin: 0 0 10px;
+}
+.beer strong
+{
+    font: 45px Arial, sans-serif;
+    color: var(--amber);
+}
+.beer small
+{
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+.beer-back p
+{
+    font: italic 15px/1.65 Georgia, serif;
+    margin: 12px 0;
+}
+.beer-back span
+{
+    color: var(--amber);
+    font-size: 12px;
+}
+@media (hover: hover)
+{
+    .beer:hover .beer-inner
+    {
+        transform: rotateY(180deg);
+    }
+}
+.fine, [role="status"]
+{
+    font-size: 12px;
+    color: var(--muted);
+}
+.split
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 70px;
+    align-items: center;
+}
+table
+{
+    width: 100%;
+    border-collapse: collapse;
+    margin: 30px 0;
+    font-size: 13px;
+}
+caption
+{
+    text-align: left;
+    color: var(--amber);
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+th, td
+{
+    font-weight: normal;
+    border-bottom: 1px solid var(--line);
+    padding: 10px 0;
+}
+th
+{
+    text-align: left;
+    color: var(--muted);
+}
+td
+{
+    text-align: right;
+}
+.taproom-art
+{
+    min-height: 560px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: repeating-linear-gradient(0deg, #36281e 0 49px, #58412c 50px 52px);
+    padding: 35px;
+    border-bottom: 40px solid #624426;
+    text-align: center;
+}
+.taproom-art > span
+{
+    font: 80px Georgia, serif;
+    color: var(--amber);
+}
+.taps
+{
+    display: flex;
+    gap: 30px;
+    margin: 60px 0;
+}
+.taps i
+{
+    height: 80px;
+    width: 15px;
+    border-radius: 12px 12px 0 0;
+    background: #b58a49;
+    border-top: 20px solid #e1bd7c;
+}
+.taproom-art strong
+{
+    font-size: 13px;
+    letter-spacing: 5px;
+}
+.story
+{
+    text-align: center;
+}
+blockquote
+{
+    font: italic 32px/1.5 Georgia, serif;
+    padding: 35px;
+    border-left: 3px solid var(--amber);
+    max-width: 800px;
+    margin: 40px auto;
+    background: var(--bg);
+}
+cite
+{
+    display: block;
+    font: 10px Arial, sans-serif;
+    letter-spacing: 2px;
+    color: var(--amber);
+    margin-top: 20px;
+}
+.story-columns
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 45px;
+    text-align: left;
+    color: var(--muted);
+    max-width: 850px;
+    margin: auto;
+}
+.process, .merch
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 45px;
+}
+.process article
+{
+    border-top: 1px solid #76552d;
+    padding-top: 25px;
+}
+.process span
+{
+    color: var(--amber);
+    font: italic 45px Georgia, serif;
+}
+.process h3
+{
+    font-style: italic;
+}
+.events details
+{
+    border-bottom: 1px solid var(--line);
+    padding: 25px 0;
+}
+.events summary
+{
+    display: flex;
+    align-items: center;
+    gap: 35px;
+    list-style: none;
+}
+.events summary > span
+{
+    color: var(--amber);
+    font: 38px/1.1 Georgia, serif;
+    min-width: 70px;
+}
+.events small
+{
+    font: 10px Arial, sans-serif;
+    color: var(--muted);
+}
+.events h3
+{
+    margin: 5px 0 12px;
+}
+.events p
+{
+    color: var(--muted);
+    font-size: 13px;
+    margin: 0;
+}
+.events b
+{
+    margin-left: auto;
+    color: var(--amber);
+}
+.events details > p
+{
+    padding: 20px 0 0 105px;
+}
+#tour-form
+{
+    border: 1px solid var(--line);
+    padding: 30px;
+    border-radius: 12px;
+    margin-top: 45px;
+}
+.check
+{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 15px 0;
+}
+.check input
+{
+    width: 18px;
+    margin: 0;
+}
+.merch article
+{
+    border: 1px solid var(--line);
+    padding: 25px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--card);
+}
+.merch p
+{
+    font-size: 13px;
+    color: var(--muted);
+}
+.product-art
+{
+    height: 210px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background: #30271d;
+    margin: -25px -25px 25px;
+}
+.product-art i
+{
+    display: grid;
+    place-items: center;
+    font: 18px Georgia, serif;
+    color: #24201a;
+}
+.cans i
+{
+    width: 58px;
+    height: 110px;
+    border-radius: 8px;
+    background: var(--amber);
+    border-block: 5px solid #b2b1a2;
+}
+.glasses i
+{
+    width: 65px;
+    height: 120px;
+    border: 2px solid #d5bd85;
+    border-radius: 0 0 15px 15px;
+    background: #b77c2c50;
+    color: var(--cream);
+}
+.hoodie i
+{
+    width: 160px;
+    height: 145px;
+    background: #4a4941;
+    clip-path: polygon(20% 20%, 35% 20%, 35% 0, 65% 0, 65% 20%, 80% 20%, 100% 60%, 80% 75%, 75% 55%, 75% 100%, 25% 100%, 25% 55%, 20% 75%, 0 60%);
+    color: var(--amber);
+}
+.bag
+{
+    padding: 30px;
+    border: 1px solid #a87b3c;
+    border-radius: 12px;
+    margin-top: 35px;
+}
+.bag ul
+{
+    padding-left: 20px;
+}
+.bag li
+{
+    padding: 10px 0;
+    font-size: 13px;
+}
+.bag li button
+{
+    background: none;
+    border: 0;
+    color: var(--amber);
+    font-size: 12px;
+    text-decoration: underline;
+}
+.bag > div
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.bag strong
+{
+    margin-left: 15px;
+    font: 30px Georgia, serif;
+    color: var(--amber);
+}
+.amenities
+{
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+}
+.map
+{
+    min-height: 360px;
+    border: 1px solid #76552d;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: repeating-linear-gradient(30deg, transparent 0 60px, #d8c28e0b 61px 63px);
+    text-align: center;
+    padding: 25px;
+}
+.map > span
+{
+    font: 50px Georgia, serif;
+    color: var(--amber);
+}
+footer
+{
+    display: grid;
+    grid-template-columns: 1.5fr .7fr 1fr;
+    gap: 35px;
+    padding: 55px 6% 25px;
+    border-top: 1px solid var(--line);
+    font-size: 12px;
+    color: var(--muted);
+}
+footer a:not(.brand)
+{
+    display: block;
+    color: var(--amber);
+    margin-bottom: 12px;
+}
+.copyright
+{
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--line);
+    padding-top: 25px;
+}
+@media (max-width: 760px)
+{
+    #menu
+    {
+        display: block;
+        background: none;
+        border: 0;
+        color: var(--cream);
+        font-size: 24px;
+    }
+    .brand
+    {
+        font-size: 18px;
+    }
+    nav
+    {
+        display: none;
+        position: absolute;
+        inset-inline: 0;
+        top: 76px;
+        background: var(--bg);
+        padding: 25px;
+    }
+    nav.open
+    {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .hero, .beer-grid, .split, .story-columns, .process, .merch, footer
+    {
+        grid-template-columns: 1fr;
+    }
+    .hero-copy
+    {
+        padding: 60px 7%;
+    }
+    h1
+    {
+        font-size: 60px;
+    }
+    .hero > img
+    {
+        height: 360px;
+    }
+    .heading
+    {
+        display: block;
+    }
+    .tools, .form-grid
+    {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    .beer
+    {
+        height: 290px;
+    }
+    .split
+    {
+        gap: 40px;
+    }
+    .taproom-art
+    {
+        min-height: 400px;
+    }
+    .taps
+    {
+        gap: 22px;
+    }
+    blockquote
+    {
+        font-size: 26px;
+        padding: 25px;
+    }
+    .events summary
+    {
+        align-items: start;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    .events summary > div
+    {
+        width: 100%;
+        order: 2;
+    }
+    .events details > p
+    {
+        padding-left: 0;
+    }
+}
+@media (prefers-reduced-motion: reduce)
+{
+    html
+    {
+        scroll-behavior: auto;
+    }
+    *, *::before, *::after
+    {
+        animation: none !important;
+        transition: none !important;
+    }
+}

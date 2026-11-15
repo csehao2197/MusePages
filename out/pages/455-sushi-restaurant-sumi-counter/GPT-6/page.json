@@ -1,0 +1,24 @@
+{
+    "title": "Sumi Counter | Ten seats. One counter.",
+    "tags": ["Omakase", "Ink & Vermilion", "Quiet Dining"],
+    "mocks": "Original nigiri and hands illustrations replace photography; standalone HTML/system fonts replace framework and web fonts. Chef, sourcing, prices and policies are supplied fictional content. Sake list is illustrative. No live reservation provider; seating notes only, with phone link. No allergy, pregnancy or medical suitability guarantee.",
+    "tests": [
+        { "selector": ".courses li", "count": 9 },
+        { "selector": ".sake summary", "click": true },
+        { "selector": ".sake > div", "visible": true, "text": "not a live cellar list" },
+        { "selector": ".sake summary", "click": true },
+        { "selector": ".sake > div", "visible": false },
+        { "selector": "#lunch dl > div", "count": 5 },
+        { "selector": ".suppliers article", "count": 4 },
+        { "selector": "#reservation-notes", "click": true },
+        { "selector": "#reservation", "visible": true },
+        { "selector": "#sitting", "select": "20:30" },
+        { "selector": "#sitting-status", "text": "20:30 sitting selected" },
+        { "selector": "#sitting-status", "text": "no reservation made" },
+        { "selector": "#sitting", "select": "" },
+        { "selector": "#sitting-status", "text": "Choose a time" },
+        { "selector": "#close", "click": true },
+        { "selector": "#reservation", "visible": false },
+        { "selector": ".safety-note", "text": "not a medical or allergy safety guarantee" }
+    ]
+}

@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Eleanor Wells, an illustrative fiction writer and essayist portfolio. Original sample excerpts, imagined book concepts and a local newsletter demo.">
+    <title>Eleanor Wells — Fiction, essays &amp; small wonders</title>
+    <link rel="icon" href="data:,">
+    <style>
+        :root { --paper:#f7f2e7; --ink:#3b352d; --wine:#743e38; --muted:#7c7568; --line:#d8d0be; }
+        * { box-sizing:border-box; }
+        body { margin:0; color:var(--ink); background:var(--paper); font:15px/1.7 Georgia,serif; }
+        a { color:inherit; text-underline-offset:5px; }
+        button,input,select,textarea { font:13px/1.5 system-ui,sans-serif; }
+        button { cursor:pointer; }
+        :focus-visible { outline:3px solid #995a3d; outline-offset:5px; }
+        .wrap { max-width:1100px; margin:auto; padding:0 40px; }
+        header { padding:24px 0; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); }
+        .brand { text-decoration:none; font-size:25px; letter-spacing:-.7px; }
+        nav { display:flex; gap:25px; font:12px system-ui,sans-serif; align-items:center; }
+        nav a { text-decoration:none; }
+        .btn { display:inline-block; padding:12px 21px; background:var(--wine); border:1px solid var(--wine); color:#fff9ed; text-decoration:none; font:12px/1.5 system-ui,sans-serif; }
+        .btn.light { background:none; color:var(--wine); }
+        .hero { display:grid; grid-template-columns:1.2fr 1fr; gap:65px; align-items:center; padding:60px 0 55px; }
+        .eyebrow { font:10px/1.5 system-ui,sans-serif; letter-spacing:2px; text-transform:uppercase; color:var(--wine); }
+        h1 { font-size:clamp(44px,5.1vw,64px); font-weight:400; line-height:1.1; letter-spacing:-2px; margin:22px 0; }
+        h1 em { color:var(--wine); }
+        .hero p { color:var(--muted); max-width:420px; }
+        .hero blockquote { margin:25px 0; padding-left:19px; border-left:2px solid #b69a7a; font-size:19px; color:#615749; }
+        .book-scene { background:#e9dfcb; min-height:430px; padding:35px; display:grid; place-items:center; position:relative; }
+        .book { width:220px; height:350px; padding:24px; background:#6b3834; color:#f4e3c2; border-left:9px solid #472722; box-shadow:15px 15px 0 #d5c9b0; text-align:center; transform:rotate(7deg); }
+        .book small { font:9px system-ui,sans-serif; letter-spacing:2px; }
+        .book h3 { font:33px/1.1 Georgia,serif; margin:28px 0 8px; }
+        .book svg { width:100%; height:96px; }
+        .book .author { font:10px system-ui,sans-serif; letter-spacing:2px; display:block; margin-top:15px; }
+        .caption { font:10px system-ui,sans-serif; color:var(--muted); text-align:center; margin-top:15px; }
+        .newsletter { display:grid; grid-template-columns:1.1fr 1fr; align-items:center; gap:30px; border-block:1px solid var(--line); padding:25px 0; }
+        .newsletter h2 { font-size:26px; margin:0 0 5px; }
+        .newsletter p { margin:0; font-size:13px; color:var(--muted); }
+        .signup { display:flex; align-items:end; gap:8px; flex-wrap:wrap; }
+        label { display:grid; gap:5px; font:11px system-ui,sans-serif; flex:1; }
+        input,select,textarea { border:1px solid #bfb29a; padding:12px; min-width:0; width:100%; color:var(--ink); background:#fffbf2; border-radius:0; }
+        .status { flex-basis:100%; font:12px/1.6 system-ui,sans-serif; }
+        .head { margin:40px 0 22px; display:flex; justify-content:space-between; gap:20px; align-items:center; }
+        h2 { font:normal 35px/1.2 Georgia,serif; letter-spacing:-.8px; margin:10px 0; }
+        .toggle { display:flex; gap:5px; }
+        .toggle button { padding:7px 12px; border:1px solid var(--line); background:none; color:var(--ink); }
+        .toggle button[aria-pressed=true] { background:var(--wine); color:white; }
+        .books { display:grid; grid-template-columns:1fr 1fr; gap:30px; }
+        .book-row { display:flex; gap:24px; border-bottom:1px solid var(--line); padding-bottom:25px; align-items:center; }
+        .mini { width:110px; height:155px; flex-shrink:0; background:#743e38; color:#f4e3c2; padding:20px 10px; text-align:center; font:21px/1.15 Georgia,serif; border-left:5px solid #4f2c27; display:grid; place-content:center; }
+        .mini.blue { background:#586a6a; border-color:#3b4b4d; }
+        .book-row h3 { margin:0; font-size:22px; font-weight:400; }
+        .book-row p { font-size:13px; color:var(--muted); }
+        .book-row button { padding:0; border:0; background:none; color:var(--wine); text-decoration:underline; }
+        .books.list { grid-template-columns:1fr; }
+        .essays { border-top:1px solid var(--line); margin-top:40px; }
+        .essay { display:grid; grid-template-columns:110px 1fr auto; gap:20px; padding:22px 0; border-bottom:1px solid var(--line); align-items:center; }
+        .essay[hidden] { display:none; }
+        .essay h3 { margin:0; font:23px Georgia,serif; }
+        .essay p,.essay time { color:var(--muted); font-size:12px; margin:5px 0; }
+        .essay button { border:0; background:none; font-size:20px; color:var(--wine); }
+        .about { display:grid; grid-template-columns:1fr 1.4fr; gap:50px; padding:45px 0; }
+        .monogram { background:#e4dccb; min-height:230px; display:grid; place-items:center; font:100px Georgia,serif; color:#9b8c75; }
+        .about p { color:#6d6458; }
+        .contact { padding:30px; background:#ede5d4; margin:20px 0; }
+        .contact form { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+        .wide { grid-column:1/-1; }
+        .contact button { justify-self:start; }
+        details { padding:13px 0; border-bottom:1px solid var(--line); }
+        summary { cursor:pointer; }
+        footer { display:flex; justify-content:space-between; gap:20px; padding:30px 0; border-top:1px solid var(--line); font:11px system-ui,sans-serif; color:var(--muted); }
+        dialog { max-width:650px; width:calc(100% - 30px); max-height:85vh; overflow:auto; background:var(--paper); border:1px solid var(--line); padding:32px; color:var(--ink); }
+        dialog::backdrop { background:#3a2b20aa; }
+        [data-menu] { display:none; }
+        @media(max-width:650px)
+        {
+            .wrap { padding:0 22px; }
+            header { flex-wrap:wrap; }
+            [data-menu] { display:block; border:1px solid var(--line); padding:7px 10px; background:none; }
+            nav { display:none; width:100%; padding-top:20px; gap:18px; flex-wrap:wrap; }
+            nav.open { display:flex; }
+            .hero,.newsletter,.books,.about,.contact form { grid-template-columns:1fr; }
+            .hero { gap:30px; padding:38px 0; }
+            .book-scene { min-height:365px; }
+            .head { align-items:start; gap:15px; }
+            .head select { max-width:135px; }
+            .book-row { gap:18px; }
+            .essay { grid-template-columns:1fr auto; gap:10px; }
+            .essay time { grid-column:1/-1; }
+            .about { gap:22px; }
+            .contact { padding:23px; }
+            footer { flex-direction:column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <header><a class="brand" href="#">Eleanor Wells<span style="color:#9e7251">.</span></a><button data-menu aria-controls="nav" aria-expanded="false">Menu</button><nav id="nav"><a href="#books">Books</a><a href="#essays">Essays</a><a href="#about">About</a><a href="#contact">Get in touch ↗</a></nav></header>
+        <main>
+            <section class="hero"><div><span class="eyebrow">Fiction writer | Essayist | Storyteller</span><h1>For the stories<br>that <em>stay<br>with us.</em></h1><p>Exploring the quiet spaces between belonging and becoming, and the extraordinary tucked inside an ordinary day.</p><blockquote>“The house had kept the light on. Or perhaps that was only how she remembered it.”</blockquote><a href="#books" class="btn">Read my work →</a><p class="caption" style="text-align:left">Sample author identity · original demonstration prose</p></div><div><div class="book-scene"><div class="book" role="img" aria-label="Original concept cover: The Shape of Returning by Eleanor Wells"><small>A NOVEL / CONCEPT</small><h3>The Shape<br>of Returning</h3><svg viewBox="0 0 160 100" fill="none" stroke="#debf8e" aria-hidden="true"><path d="M25 95V43A55 55 0 0 1 135 43V95M45 95V45A35 35 0 0 1 115 45V95M65 95V48A15 15 0 0 1 95 48V95M80 48V95"/><path d="M0 94H160M0 99H160"/></svg><span class="author">ELEANOR WELLS</span></div></div><p class="caption">An imagined debut · no publication or purchase availability claimed</p></div></section>
+            <section class="newsletter"><div><h2>A letter, now and then.</h2><p>Notes from the writing desk. A quiet corner of your inbox.</p></div><form class="signup"><label>Email address<input name="email" type="email" placeholder="you@example.com" required></label><button class="btn">Try newsletter signup</button><span class="status" id="newsletter-status" role="status">Demo only · no subscription or email delivery</span></form></section>
+            <section id="books"><div class="head"><div><span class="eyebrow">On the bookshelf</span><h2>Books &amp; imagined worlds</h2></div><div class="toggle"><button id="grid" aria-pressed="true">Grid</button><button id="list" aria-pressed="false">List</button></div></div><div class="books"><article class="book-row"><div class="mini" role="img" aria-label="The Shape of Returning, concept cover">The Shape<br>of Returning</div><div><h3>The Shape of Returning</h3><p>Literary fiction · unpublished concept<br>A woman returns to a house that remembers differently.</p><button data-read="returning">Synopsis &amp; excerpt ↗</button></div></article><article class="book-row"><div class="mini blue" role="img" aria-label="A Map of Small Things, concept cover">A Map of<br>Small Things</div><div><h3>A Map of Small Things</h3><p>Essay collection · unpublished concept<br>Field notes on attention, memory and everyday rituals.</p><button data-read="small">Synopsis &amp; excerpt ↗</button></div></article></div></section>
+            <section class="essays" id="essays"><div class="head"><div><span class="eyebrow">From the notebook</span><h2>Selected essays</h2></div><label>Topic<select id="topic"><option value="">All topics</option><option>Place</option><option>Writing</option><option>Everyday life</option></select></label></div><article class="essay" data-topic="Place"><time>Undated sample<br>Personal notebook</time><div><h3>The geography of a doorstep</h3><p>On the places that teach us how to leave, and how to come back.</p></div><button data-read="doorstep" aria-label="Read The geography of a doorstep">↗</button></article><article class="essay" data-topic="Writing"><time>Undated sample<br>Personal notebook</time><div><h3>In praise of the unfinished</h3><p>A blank page is not an absence. It is an invitation.</p></div><button data-read="unfinished" aria-label="Read In praise of the unfinished">↗</button></article><article class="essay" data-topic="Everyday life"><time>Undated sample<br>Personal notebook</time><div><h3>The good cup</h3><p>A small ritual, and the room it makes in a hurried morning.</p></div><button data-read="cup" aria-label="Read The good cup">↗</button></article></section>
+            <section id="about" class="about"><div class="monogram" role="img" aria-label="EW typographic placeholder, not an author photograph">ew.</div><div><span class="eyebrow">A life in words</span><h2>Hello, I'm Eleanor.</h2><div class="toggle" aria-label="Biography length"><button data-bio="short" aria-pressed="true">Short bio</button><button data-bio="long" aria-pressed="false">Long bio</button></div><p id="bio">Eleanor Wells is an illustrative author identity for a bookish portfolio. All excerpts here are original demonstration writing.</p><p>Writing journey, influences, professional photo and credentials await owner-supplied details.</p><a href="press-kit.txt" download>Download sample press kit ↗</a></div></section>
+            <section><h2>For readers &amp; book clubs</h2><details><summary>Is the book available to buy?</summary><p>These are unpublished concepts. Retailer links, publication dates, reviews, awards and press will be added only when supplied. No purchase can be made here.</p></details><details><summary>A reading guide for The Shape of Returning</summary><p>What does a house remember? Which objects anchor the narrator to a place? Where does returning differ from belonging? These prompts refer to the short sample excerpt, not a finished book.</p></details><details><summary>Letters from the desk / sample archive</summary><p>Issue: Starting again — “I began with a window because it was easier than beginning with a person. By the third sentence, someone was already looking out.” Original sample; no newsletter has been sent.</p></details><details><summary>Media, events &amp; speaking</summary><p>No upcoming or past engagements, real fees, agent, interview availability, high-resolution portrait or social profiles have been supplied. Proposed topics include attention, place and the writing process. Contact for rates through an owner-configured channel; the form below is a demo.</p></details></section>
+            <section class="contact" id="contact"><span class="eyebrow">An invitation to connect</span><h2>Have a story in mind?</h2><p>For speaking, book clubs or general enquiries. Demo only; contact and literary agent details await the owner.</p><form id="enquiry"><label>Your email<input name="email" type="email" required></label><label>Enquiry type<select name="type"><option>Speaking request</option><option>Book club</option><option>Media / press</option><option>General enquiry</option></select></label><label class="wide">Your note<textarea rows="3" name="note" required></textarea></label><button class="btn">Preview enquiry →</button><span class="wide status" id="enquiry-status" role="status"></span></form></section>
+        </main>
+        <footer><span>Eleanor Wells / Illustrative author portfolio</span><span>Original prose &amp; cover concepts · GPT-6</span></footer>
+    </div>
+    <dialog aria-labelledby="read-title"><span class="eyebrow">Original demonstration writing</span><h2 id="read-title"></h2><p id="read-text"></p><p id="read-note"></p><button class="btn" id="close">Close reading</button></dialog>
+    <script>
+        const writing = {
+            returning:["The Shape of Returning","Synopsis: A woman returns to the house she left and finds that memory is less a map than a conversation. Sample opening: The house had kept the light on. Or perhaps that was only how she remembered it. At the gate, she set down her bag and listened to the pear tree moving against the roof. Nothing called her name. Nothing needed to.","Unpublished concept. No publication date, retailer, reviews, awards or press. Reading guide available below; related concept: A Map of Small Things."],
+            small:["A Map of Small Things","Synopsis: Brief essays follow the rituals that give shape to ordinary days. Sample opening: The cup was chipped on the side nobody saw. She always turned it toward the window, as though a little sunlight might make a missing piece less important.","Unpublished concept. No reviews or retailer links. Related concept: The Shape of Returning."],
+            doorstep:["The geography of a doorstep","A doorstep is a small country. It has its own weather: the damp edge of a morning, the warmth a wall keeps after sunset. We cross it without a passport, carrying bread or bad news, and each time it asks the same quiet question. Are you leaving, or have you come home?","Complete short sample / personal notebook / no external publication claimed."],
+            unfinished:["In praise of the unfinished","I left the last line empty. All afternoon it held the room open. A bird landed on the fence. The kettle cooled. When I returned, I understood that the sentence had needed a little more of the world before it could end.","Complete short sample / original prose."],
+            cup:["The good cup","Before the messages, there is the cup. Before the cup, the water. For a moment the whole morning is only this: something warming in your hands, something you do not have to answer.","Complete short sample / original prose."]
+        };
+        const dialog = document.querySelector("dialog");
+        document.querySelectorAll("[data-read]").forEach(button => button.addEventListener("click", () =>
+        {
+            const [title,text,note] = writing[button.dataset.read];
+            document.querySelector("#read-title").textContent = title;
+            document.querySelector("#read-text").textContent = text;
+            document.querySelector("#read-note").textContent = note;
+            dialog.showModal();
+        }));
+        document.querySelector("#close").addEventListener("click", () => dialog.close());
+        ["grid","list"].forEach(mode => document.querySelector(`#${mode}`).addEventListener("click", () =>
+        {
+            document.querySelector(".books").classList.toggle("list", mode === "list");
+            ["grid","list"].forEach(item => document.querySelector(`#${item}`).setAttribute("aria-pressed", String(item === mode)));
+        }));
+        document.querySelector("#topic").addEventListener("change", event => document.querySelectorAll("[data-topic]").forEach(item => item.hidden = Boolean(event.target.value) && item.dataset.topic !== event.target.value));
+        document.querySelectorAll("[data-bio]").forEach(button => button.addEventListener("click", () =>
+        {
+            document.querySelectorAll("[data-bio]").forEach(item => item.setAttribute("aria-pressed", String(item === button)));
+            document.querySelector("#bio").textContent = button.dataset.bio === "short" ? "Eleanor Wells is an illustrative author identity for a bookish portfolio. All excerpts here are original demonstration writing." : "Eleanor Wells is a sample identity, not a claim about a real author's career. This portfolio explores literary fiction, essays about place and the small rituals of everyday life. The two imagined books, their cover designs and every excerpt were created for this static demonstration. Biography, education, influences, publication history and professional representation await verified owner input.";
+        }));
+        document.querySelector(".signup").addEventListener("submit", event =>
+        {
+            event.preventDefault();
+            document.querySelector("#newsletter-status").textContent = "Demo signup checked locally. You are not subscribed; no email was sent or saved.";
+        });
+        document.querySelector("#enquiry").addEventListener("submit", event =>
+        {
+            event.preventDefault();
+            document.querySelector("#enquiry-status").textContent = "Demo enquiry previewed locally. Nothing sent or stored; no event booked.";
+        });
+        const menu = document.querySelector("[data-menu]");
+        menu.addEventListener("click", () =>
+        {
+            const open = menu.getAttribute("aria-expanded") !== "true";
+            menu.setAttribute("aria-expanded", String(open));
+            document.querySelector("nav").classList.toggle("open", open);
+        });
+    </script>
+</body>
+</html>

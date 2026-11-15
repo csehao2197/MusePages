@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Practical guides and friendly support for your everyday work in Folio.">
+    <title>Folio Help — How can we help?</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="app.js"></script>
+</head>
+<body>
+    <header><a class="brand" href="index.html"><span>f</span> folio <small>HELP CENTER</small></a><nav aria-label="Main"><a href="#articles">Browse articles</a><button data-support="Contact support">Contact support ↗</button></nav></header>
+    <main>
+        <section class="hero"><div class="eyebrow">A LITTLE GUIDANCE GOES A LONG WAY</div><h1>How can we <em>help?</em></h1><p>Answers, ideas, and a friendly nudge in the right direction.</p><label class="search"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input id="search" type="search" placeholder="Search for articles..." aria-label="Search for articles"><kbd>↵</kbd></label><div class="popular-tags">POPULAR <button data-search="workspace">Set up a workspace</button><button data-search="password">Reset password</button><button data-search="Slack">Connect Slack</button></div><div class="hero-art" aria-hidden="true"><div class="paper"><i></i><i></i><i></i></div><span class="orbit"></span><span class="small-dot"></span></div></section>
+        <section class="topics"><div class="section-title"><h2>Find your starting point.</h2><p>Good answers, neatly organized.</p></div><div id="categories" class="category-grid"></div></section>
+        <section id="articles"><div class="article-heading"><div><div class="eyebrow">THE SHORTCUT TO SORTED</div><h2 id="list-title">Most viewed articles</h2></div><button id="all">View all articles ↗</button></div><p id="results" role="status"></p><div id="article-list"></div><div id="empty" hidden><h3>No matching articles.</h3><p>Try a broader term like “workspace”, or browse all articles.</p><button id="reset">Reset search</button></div></section>
+        <section class="contact"><div class="eyebrow">HUMANS HELPING HUMANS</div><h2>Can’t find what<br>you’re looking for?</h2><p>That’s what we’re here for.</p><div class="contact-options"><button data-support="Live chat"><b>Let’s have a chat ↗</b><span>Live chat</span><small>Mon–Fri, 9am–6pm UTC</small></button><button data-support="Email support"><b>Drop us a line ↗</b><span>Email support</span><small>Usually within one business day</small></button><button data-support="Community forum"><b>Ask the community ↗</b><span>Community forum</span><small>Ideas, playbooks & friendly people</small></button></div></section>
+    </main>
+    <footer><a class="brand" href="index.html">folio</a><div><button data-support="Status page">Status page</button><button data-support="API docs">API docs</button><button data-support="Community forum">Community</button><button data-support="Share feedback">Feedback</button></div><p>Critical issue? <button data-support="Urgent support">Contact urgent support ↗</button><small>Demo knowledge base · no live service connection</small></p></footer>
+    <dialog id="support-dialog"><form method="dialog"><button class="close" aria-label="Close dialog">×</button></form><div class="eyebrow">WE’RE ALL EARS</div><h2 id="support-title"></h2><p id="support-copy"></p><form id="support-form"><label>Email<input type="email" required placeholder="you@company.com"></label><label>Your question<textarea required></textarea></label><button class="primary">Prepare request</button></form><p id="support-status" role="status"></p></dialog>
+</body>
+</html>

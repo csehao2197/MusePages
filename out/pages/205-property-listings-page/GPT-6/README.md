@@ -1,0 +1,9 @@
+# HomeHub property listings
+
+- Original: `data\prompts\205-property-listings-page\205-property-listings-page.md`; design: `src\workflows\AI Agent\DESIGN.md`.
+- Actual model `gpt-6.1-sol`; independent label `GPT-6`. Standalone `index.html`/`app.js` with three original local SVG illustrations.
+- Features: location suggestions, buy/rent/sold, detailed combined property filters and count, sort, grid/list/map, load-more/page size, image-view controls/hover, local favorites, tour demo, map price clusters/expand, search-as-move, rectangle/keyboard area selection, empty state, named saved searches/alert preferences/manage/delete, shareable criteria links.
+- Serve with an existing static server. Validate: `node out\pages\205-property-listings-page\GPT-6\.checks\verify.mjs`. Actual desktop/mobile screenshots and results in `.checks`; assertions cover filters/sort/pagination, map cluster/pan/drawing, saved-state persistence/deletion, sharing, tour form, overflow and browser/resources.
+- Independent export: `out\`; expected path `pages/property-listings-page/GPT-6/index.html`, real 1200×900 preview. Registered disabled after validation. No build/publication.
+- Eight fictional properties, not 156 live results. Addresses, prices, coordinates and availability are illustrative. Original artwork is not photography; alternate concept images are not actual property views. Map is a local coordinate simulation, not navigation/geodata. Favorites/searches persist in browser localStorage only and can be removed using their controls. Frequency choices do not run email alerts; no email collected for alerts. Tour/contact send/store nothing. No backend/env.
+- Review checklist: mobile filter collapse/menu, readable full-width cards, view controls, keyboard map-area alternative, honest no-results and local saved-search/tour behavior.

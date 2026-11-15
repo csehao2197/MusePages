@@ -1,0 +1,363 @@
+:root
+{
+    --ink: #1b2536; --blue: #21508c; --paper: #fbfcfd; --pale: #eff3f8; --line: #dce3eb;
+}
+*
+{
+    box-sizing: border-box;
+}
+html
+{
+    scroll-behavior: smooth; scroll-padding-top: 85px;
+}
+body
+{
+    margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.75 "Segoe UI", sans-serif;
+}
+a
+{
+    color: inherit;
+}
+.topline
+{
+    background: var(--ink); color: white; padding: 8px 5%; font-size: 10px; letter-spacing: .13em; display: flex; justify-content: space-between;
+}
+header
+{
+    display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px 5%; border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 20; background: var(--paper);
+}
+.brand
+{
+    font: 700 23px/1.2 "Segoe UI", sans-serif; letter-spacing: -.05em; text-decoration: none; white-space: nowrap;
+}
+.brand i
+{
+    font: italic 27px Georgia, serif; color: var(--blue);
+}
+nav
+{
+    display: flex; gap: 25px; font-size: 13px;
+}
+nav a
+{
+    text-decoration: none;
+}
+.button, button
+{
+    display: inline-block; background: var(--blue); color: white; border: 1px solid var(--blue); border-radius: 4px; padding: 13px 22px; font: 600 14px "Segoe UI", sans-serif; text-decoration: none; cursor: pointer;
+}
+.button:hover, button:hover
+{
+    background: #153b6b; color: white;
+}
+#menu
+{
+    display: none;
+}
+h1, h2, h3
+{
+    line-height: 1.15; letter-spacing: -.045em; margin: 12px 0 25px; font-weight: 650;
+}
+h1
+{
+    font-size: clamp(36px, 4.5vw, 58px);
+}
+h1 span
+{
+    color: var(--blue);
+}
+h2
+{
+    font-size: clamp(30px, 3.5vw, 43px);
+}
+h3
+{
+    font-size: 21px;
+}
+p
+{
+    margin: 0 0 24px;
+}
+.eyebrow
+{
+    color: var(--blue); font-size: 10px; letter-spacing: .16em; font-weight: 700;
+}
+.hero
+{
+    padding: 65px 5% 60px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 50px; align-items: center;
+}
+.hero p:not(.eyebrow)
+{
+    color: #566273;
+}
+.actions
+{
+    display: flex; gap: 23px; align-items: center; font-size: 13px;
+}
+.trust
+{
+    display: flex; flex-wrap: wrap; gap: 12px 20px; border-top: 1px solid var(--line); padding-top: 22px; margin-top: 32px; font-size: 11px;
+}
+.trust span::before
+{
+    content: "✓ "; color: var(--blue);
+}
+figure
+{
+    margin: 0; background: #e5ecf2; border-radius: 10px; overflow: hidden;
+}
+figure img
+{
+    display: block; width: 100%;
+}
+figcaption
+{
+    padding: 20px; font-size: 9px; letter-spacing: .15em; color: var(--blue);
+}
+.wrap, .speed-section
+{
+    max-width: 1140px; padding: 70px 30px; margin: auto;
+}
+.speed-section
+{
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+}
+.section-title
+{
+    display: flex; justify-content: space-between; gap: 40px; align-items: end;
+}
+.section-title > p
+{
+    font-size: 13px;
+}
+.speeds
+{
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin: 20px 0;
+}
+.speeds button
+{
+    padding: 25px; background: white; color: var(--ink); border: 1px solid #cbd6e3; text-align: left;
+}
+.speeds button[aria-pressed="true"]
+{
+    border: 2px solid var(--blue); background: var(--pale); transform: translateY(-3px);
+}
+.speeds b, .speeds small
+{
+    display: block;
+}
+.speeds b
+{
+    font-size: 28px; margin: 15px 0;
+}
+.speeds small
+{
+    font-size: 11px; font-weight: 400;
+}
+#delivery
+{
+    margin-top: 25px; color: var(--blue); font-weight: 650;
+}
+.fine
+{
+    font-size: 12px; color: #596575;
+}
+.prices
+{
+    display: grid; grid-template-columns: 1fr 1fr; column-gap: 55px;
+}
+.price-group h3
+{
+    border-bottom: 2px solid var(--ink); padding: 22px 0 14px;
+}
+.price-row
+{
+    display: grid; grid-template-columns: 1fr auto 32px; align-items: center; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 14px;
+}
+.price-row strong
+{
+    color: var(--blue); font-variant-numeric: tabular-nums;
+}
+.price-row button
+{
+    padding: 5px 8px; border: 1px solid var(--line); background: white; color: var(--blue);
+}
+.bag
+{
+    background: var(--pale); padding: 25px; margin-top: 35px; display: flex; align-items: center; gap: 20px;
+}
+.bag p
+{
+    font-size: 13px; margin: 5px 0 0;
+}
+.bag strong
+{
+    font-size: 25px; color: var(--blue); margin-left: auto;
+}
+.outline
+{
+    background: transparent; color: var(--blue);
+}
+.pickup
+{
+    background: var(--pale); padding: 65px max(35px, calc((100vw - 1080px) / 2)); display: grid; grid-template-columns: 1fr 1fr; gap: 70px;
+}
+.pickup h2
+{
+    font-size: 54px;
+}
+.pickup em
+{
+    font-family: Georgia, serif; color: var(--blue);
+}
+form
+{
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-content: center;
+}
+label
+{
+    font-size: 13px; font-weight: 600;
+}
+input, select
+{
+    display: block; width: 100%; min-width: 0; margin-top: 7px; padding: 13px 10px; border: 1px solid #b2c0d0; background: white; color: var(--ink); font: 16px "Segoe UI", sans-serif; border-radius: 3px;
+}
+form button, #pickup-result
+{
+    grid-column: 1 / -1;
+}
+#pickup-result
+{
+    margin: 0; font-size: 14px;
+}
+.services
+{
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 35px; margin-top: 40px;
+}
+.services svg
+{
+    width: 65px; height: 65px; fill: none; stroke: var(--blue); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round;
+}
+.services p
+{
+    font-size: 14px;
+}
+.process
+{
+    background: var(--ink); color: white;
+}
+.process .eyebrow
+{
+    color: #b7cce8;
+}
+.steps
+{
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 35px;
+}
+.steps b
+{
+    font-size: 46px; color: #b9cee8;
+}
+.steps p
+{
+    font-size: 14px;
+}
+.care
+{
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+}
+.business
+{
+    text-align: center; background: var(--pale); padding: 70px 24px;
+}
+.business > p
+{
+    max-width: 650px; margin: 20px auto;
+}
+.faq
+{
+    max-width: 850px;
+}
+details
+{
+    padding: 20px 0; border-bottom: 1px solid var(--line);
+}
+summary
+{
+    cursor: pointer; font-weight: 600;
+}
+details p
+{
+    margin: 15px 0;
+}
+.find, footer
+{
+    display: flex; gap: 35px; justify-content: space-between; padding: 45px 5%; background: var(--pale);
+}
+.find h2
+{
+    font-size: 30px;
+}
+address
+{
+    font-style: normal; font-size: 14px;
+}
+.find > p
+{
+    font-size: 13px;
+}
+footer
+{
+    background: var(--ink); color: white; align-items: start; font-size: 12px;
+}
+footer .brand i
+{
+    color: #b1c9e6;
+}
+.mobile-pickup
+{
+    display: none;
+}
+[aria-invalid="true"]
+{
+    outline: 2px solid #b44326;
+}
+:focus-visible
+{
+    outline: 3px solid #6889b5; outline-offset: 4px;
+}
+@media (max-width: 767px)
+{
+    body { padding-bottom: 60px; }
+    .topline span { display: none; }
+    header { padding: 18px 22px; flex-wrap: wrap; }
+    header .button { display: none; }
+    #menu { display: block; padding: 9px 14px; }
+    nav { display: none; flex-direction: column; width: 100%; }
+    nav.open { display: flex; }
+    .hero { display: flex; flex-direction: column-reverse; padding: 24px; gap: 30px; }
+    figure { width: 100%; }
+    figure img { max-height: 300px; }
+    .hero h1 { font-size: 36px; }
+    .hero .eyebrow { font-size: 9px; }
+    .wrap, .speed-section { padding: 50px 24px; }
+    .section-title { display: block; }
+    .speeds { display: flex; overflow-x: auto; padding: 5px 0 10px; }
+    .speeds button { min-width: 180px; }
+    .prices, .pickup, .care { grid-template-columns: 1fr; gap: 20px; }
+    .pickup { padding: 45px 24px; }
+    .pickup h2 { font-size: 42px; }
+    .bag { flex-wrap: wrap; padding: 20px; }
+    .bag strong { margin: 0; }
+    .bag .button { width: 100%; text-align: center; }
+    .services { grid-template-columns: 1fr 1fr; gap: 22px; }
+    .services h3 { font-size: 19px; }
+    .steps { grid-template-columns: 1fr 1fr; gap: 30px; }
+    .find, footer { flex-direction: column; padding: 35px 24px; gap: 20px; }
+    .mobile-pickup { display: block; position: fixed; bottom: 0; left: 0; right: 0; z-index: 30; border-radius: 0; text-align: center; padding: 18px; }
+    form { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce)
+{
+    html { scroll-behavior: auto; }
+}

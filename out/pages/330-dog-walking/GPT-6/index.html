@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Long Lead, a Sheffield dog walking website concept. Small groups, proper walks and a familiar face.">
+    <meta name="theme-color" content="#EFE9DC">
+    <title>Long Lead · Proper walks, small packs</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header>
+        <nav class="wrap" aria-label="Main navigation">
+            <a class="brand" href="#" aria-label="Long Lead home"><svg viewBox="0 0 22 36" aria-hidden="true"><path d="M10 34V22M7 4h7v17H7zM7 8H4v9h3M10 4V1" fill="none" stroke="currentColor" stroke-width="2"/></svg>LONG LEAD<span>PROPER WALKS. SMALL PACKS.</span></a>
+            <div class="navlinks"><a href="#walk">The walk</a><a href="#groups">Groups</a><a href="#prices">Prices</a></div>
+            <a class="pill" href="#meet">Meet first <b aria-hidden="true">↗</b></a>
+        </nav>
+    </header>
+    <svg class="lead" viewBox="0 0 80 5000" preserveAspectRatio="none" aria-hidden="true">
+        <path class="clip" d="M30 0v12h12V0M30 3h12M36 12v18"/>
+        <path id="lead-path" d="M36 30C36 220 70 220 54 420S14 650 34 850S65 1120 37 1350S9 1570 40 1770S62 2040 32 2280S12 2530 42 2750S62 3060 34 3280S15 3540 39 3780S64 4050 38 4300S24 4590 35 4780C58 4820 67 4880 39 4920C4 4960 12 4840 35 4880"/>
+    </svg>
+    <main id="main">
+        <section class="hero wrap">
+            <div class="hero-copy">
+                <p class="meta">DOG WALKING IN SHEFFIELD<br>GROUPS OF FOUR, NEVER MORE.</p>
+                <h1>An hour out,<br>properly <em>tired,</em><br>home again.</h1>
+                <p class="intro">Small group walks on the moor edge and in the woods, never more than four dogs, always the same face at the door.</p>
+                <div class="actions"><a class="pill" href="#meet">Meet first <b aria-hidden="true">↗</b></a><a class="textlink" href="tel:+441145550180">Call 0114 555 0180 ↗</a></div>
+            </div>
+            <figure class="hero-art"><img src="art.svg" alt="Original drawing of three different dogs and their walker on a winter woodland path"><figcaption class="meta">MOOR EDGE AIR. MUDDY PAWS. GOOD COMPANY.</figcaption></figure>
+        </section>
+        <section id="walk" class="wrap section walk">
+            <div class="section-head"><p class="meta">000/ THE HOUR</p><h2>A proper walk.<br>From door to <em>door.</em></h2></div>
+            <div class="hour-list">
+                <article><span class="meta">08:40</span><h3>Pickup.</h3><p>I let myself in, say hello properly, and check water and the back door before we go.</p></article>
+                <article><span class="meta">09:00</span><h3>The walk.</h3><p>Sixty minutes on the moor edge, in the woods or by the river, depending on weather and who is in the group.</p></article>
+                <article><span class="meta">10:05</span><h3>Towels and paws.</h3><p>A good towel down before the trip home. We aim to leave the mud outdoors.</p></article>
+                <article><span class="meta">10:20</span><h3>A message.</h3><p>A photograph, a line about how they were, and the distance we covered.</p></article>
+            </div>
+            <p class="small timing">An example morning, not a live schedule. Collection times are agreed together.</p>
+        </section>
+        <section id="groups" class="surface">
+            <div class="wrap section groups-layout">
+                <div><p class="meta">001/ GROUPS</p><h2>Find their<br><em>stride.</em></h2><p>No big packs.<br>No one left keeping up.</p></div>
+                <div class="groups">
+                    <button class="group active" data-group="steady" aria-pressed="true"><span><strong>The Steady Four.</strong><span>Older dogs and gentle walkers. Plenty of sniffing, no sprinting.</span></span><span class="meta">MAX 4 DOGS<br>60 MIN · £16 <b>↗</b></span></button>
+                    <button class="group" data-group="long" aria-pressed="false"><span><strong>The Long Ones.</strong><span>Young, fit dogs who need real distance. Moor edge, hills, two rivers.</span></span><span class="meta">MAX 4 DOGS<br>90 MIN · £22 <b>↗</b></span></button>
+                    <button class="group" data-group="solo" aria-pressed="false"><span><strong>Solo.</strong><span>Dogs who find groups hard, or need their own pace. Suitability discussed first.</span></span><span class="meta">ONE DOG<br>45 MIN · £24 <b>↗</b></span></button>
+                    <div class="group-note"><p id="group-detail" aria-live="polite"></p><a id="group-enquiry" class="textlink" href="#meet">Ask about this walk ↗</a></div>
+                </div>
+            </div>
+        </section>
+        <section id="pack" class="wrap section">
+            <div class="pack-heading"><div><p class="meta">002/ THE PACK</p><h2>A few familiar <em>faces.</em></h2></div><p>Six illustrated walking companions.<br>A sample pack, not a live attendance list.</p></div>
+            <div class="filters" role="group" aria-label="Filter pack by pace"><button data-filter="all" aria-pressed="true">Everyone</button><button data-filter="steady" aria-pressed="false">Gentle company</button><button data-filter="long" aria-pressed="false">Long legs</button></div>
+            <div id="pack-grid" class="pack-grid"></div>
+            <p id="pack-count" class="meta" aria-live="polite"></p>
+        </section>
+        <section class="report-panel">
+            <div class="wrap section report-grid">
+                <div><p class="meta">BACK HOME, IN THE LOOP</p><h2>A little mud.<br>A proper <em>update.</em></h2><p>A photograph from the walk.</p><p>A line about how they were, honestly, including the day they rolled in something.</p><p>The route and the distance, so you know what they have had.</p></div>
+                <div class="report">
+                    <div class="report-top"><span class="meta">AN EXAMPLE WALK NOTE</span><span aria-hidden="true">↗</span></div>
+                    <svg viewBox="0 0 320 150" role="img" aria-label="Illustrative winding walking route"><path d="M5 100Q60 45 100 90T190 70T315 45" class="river"/><path d="M60 120C15 45 95 5 150 45S265 155 280 60C300 0 180 5 145 105S50 145 60 120" class="route"/><circle cx="60" cy="120" r="6"/></svg>
+                    <div class="route-buttons" role="group" aria-label="Choose sample walking route"><button data-route="woods" aria-pressed="true">Woods</button><button data-route="moor" aria-pressed="false">Moor edge</button><button data-route="river" aria-pressed="false">River</button></div>
+                    <h3 id="route-title"></h3><p id="route-note" aria-live="polite"></p><p id="route-distance" class="meta"></p>
+                    <small>Illustrative report and route only. No live location data.</small>
+                </div>
+            </div>
+        </section>
+        <section id="insurance" class="wrap section">
+            <p class="meta">003/ THE DULL BUT IMPORTANT BIT</p><h2>Trust is in the <em>details.</em></h2>
+            <div class="index-columns">
+                <div><h3>What to ask to see.</h3><p class="small">This is a fictional service concept. Check actual documents with your walker before any handover.</p><ul><li>Public liability certificate and its limits</li><li>Care, custody and control cover</li><li>Current canine first aid certificate</li><li>Evidence of any stated DBS check</li></ul></div>
+                <div><h3>A simple key policy.</h3><p class="small">The proposed approach, to agree at your first meeting.</p><ul><li>Locked storage, coded tags, no address</li><li>Returned when you ask</li><li>Never copied</li><li>Alarm codes kept separately from keys</li></ul></div>
+            </div>
+        </section>
+        <section id="prices" class="wrap section prices">
+            <div><p class="meta">004/ PRICES</p><h2>Plain as a<br>muddy <em>paw.</em></h2><p>Pickup and drop off within four miles.<br>No charge for bank holidays you cancel.</p><p class="small">Illustrative prices. Confirm coverage, availability and suitability before agreeing a walk.</p></div>
+            <div class="price-list"><div><span>Single group walk</span><span class="meta">£16</span></div><div><span>Block of ten walks</span><span class="meta">£145</span></div><div><span>Puppy visit <small>30 minutes</small></span><span class="meta">£12</span></div><div><span>Solo walk</span><span class="meta">£24</span></div><div class="price-extra"><span>The Long Ones <small>90 minutes</small></span><span class="meta">£22</span></div></div>
+        </section>
+        <section class="surface quote"><div class="wrap"><p class="meta">THE FEELING WE ARE GOING FOR</p><blockquote>“He comes home muddy, exhausted and slightly smug. Exactly what we wanted.”</blockquote><p class="meta">ILLUSTRATIVE QUOTE FROM THE BRIEF, NOT A CUSTOMER REVIEW</p></div></section>
+        <section class="wrap section coverage">
+            <div><p class="meta">JUST ROUND THE CORNER?</p><h2>Sheffield, on our <em>doorstep.</em></h2><p>S7, S8, S11 and S17. Check your outward postcode to start a conversation.</p></div>
+            <form id="coverage-form" novalidate><label for="postcode">Your postcode</label><div class="postcode-row"><input id="postcode" name="postcode" autocomplete="postal-code" placeholder="e.g. S7 1AA" maxlength="12" aria-describedby="coverage-result" required><button type="submit" class="pill">Check area ↗</button></div><p id="coverage-result" aria-live="polite">A local check only. No address is saved or sent.</p></form>
+        </section>
+        <section id="meet" class="meet-panel">
+            <div class="wrap section"><p class="meta">SAME FACE. A FAMILIAR ROUTE.</p><h2>Come on a walk with us<br>before you book <em>anything.</em></h2><p id="meet-context">Start with a chat and a short walk. No booking calendar, no obligation.</p><div class="actions"><a id="meet-email" class="pill" href="mailto:hello@longlead.dog">Arrange a meet <b aria-hidden="true">↗</b></a><a class="textlink" href="tel:+441145550180">Call 0114 555 0180 ↗</a></div><p class="meta">THE FIRST MEET AND A SHORT WALK TOGETHER ARE FREE.</p><p class="small">Website concept. Contact details are examples. Email opens your mail app and does not send automatically.</p></div>
+        </section>
+    </main>
+    <footer><div class="wrap"><div class="footer-top"><p>Sheffield S7, S8, S11 and S17</p><div><a href="mailto:hello@longlead.dog">hello@longlead.dog</a><a href="tel:+441145550180">0114 555 0180</a></div><div><a href="#walk">The walk</a><a href="#prices">Prices</a><a href="#insurance">Insurance</a></div></div><div class="giant" aria-hidden="true">LONG LEAD</div><div class="footer-bottom"><span>© 2026 Long Lead. A dog walking concept.</span><a href="#main">Back to the top ↑</a></div></div></footer>
+    <dialog id="dog-dialog" aria-labelledby="dog-name"><div class="dialog-top"><span class="meta">MEET THE ILLUSTRATED PACK</span><button id="dialog-close" aria-label="Close dog profile">×</button></div><img id="dog-image" alt=""><h2 id="dog-name"></h2><p id="dog-detail"></p><a class="textlink" id="dog-walk" href="#groups">Explore their kind of walk ↗</a></dialog>
+</body>
+</html>
