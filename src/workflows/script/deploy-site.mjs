@@ -5,6 +5,7 @@ import
 from "node:fs";
 import
 {
+    createHash,
     randomUUID
 }
 from "node:crypto";
@@ -18,6 +19,7 @@ import
     readFile,
     readdir,
     rename,
+    rmdir,
     rm,
     unlink,
     writeFile
@@ -476,12 +478,33 @@ async function staticDirectory(source, relative)
     return current;
 }
 
-async function copyStatic(source, destination)
+async function validatePageState(source, page)
 {
-    await mkdir(destination,
+    const file = path.join(source, "metadata.json");
+    let metadata;
+    try
     {
-        recursive: true
-    });
+        const info = await lstat(file);
+        if (info.isSymbolicLink() || !info.isFile()) throw Error("Expected a regular metadata file");
+        metadata = JSON.parse(await readFile(file, "utf8"));
+    }
+    catch (error)
+    {
+        throw Error(`Cannot distribute ${page.prompt}/${page.model}: missing or invalid metadata at ${file}`,
+        {
+            cause: error
+        });
+    }
+    const incomplete = ["generated", "preview", "validated", "config_added"].filter((key) => metadata?.[key] !== true);
+    if (incomplete.length)
+    {
+        throw Error(`Cannot distribute ${page.prompt}/${page.model}: metadata fields must be true: ${incomplete.join(", ")}`);
+    }
+}
+
+async function collectStatic(source, destination, website)
+{
+    website.directories.add(destination);
     for (const entry of await readdir(source,
         {
             withFileTypes: true
@@ -493,14 +516,18 @@ async function copyStatic(source, destination)
         if (entry.isDirectory())
         {
             if (name.startsWith(".") || excludedDirectories.has(name)) continue;
-            await copyStatic(input, path.join(destination, entry.name));
+            await collectStatic(input, path.join(destination, entry.name), website);
         }
         else if (entry.isFile() && !name.startsWith(".") && name !== "package.json" &&
             name !== "package-lock.json" && name !== "result.json" && name !== "metadata.json" &&
             !/^(?:next|postcss|tailwind|playwright)\.config\./.test(name) &&
             (staticExtensions.has(path.extname(name)) || /^(?:licen[cs]e|notice)(?:\.md)?$/.test(name)))
         {
-            await copyFile(input, path.join(destination, entry.name));
+            website.files.set(path.join(destination, entry.name),
+            {
+                source: input,
+                hash: createHash("sha256").update(await readFile(input)).digest("hex")
+            });
         }
     }
 }
@@ -591,23 +618,27 @@ ${[...new Set(pages.map((page) => page.model))].map((model) =>
         .replace(marker, () => cards || '<p class="sample-note">No published pages yet.</p>');
 }
 
-async function validateLinks(staging, folder = staging)
+async function fileContents(file)
 {
-    for (const entry of await readdir(folder,
-        {
-            withFileTypes: true
-        }))
+    if (!file.source) return file.content;
+    const content = await readFile(file.source);
+    if (file.hash && createHash("sha256").update(content).digest("hex") !== file.hash)
     {
-        const file = path.join(folder, entry.name);
-        if (entry.isDirectory())
+        throw Error(`Static source changed during synchronization: ${file.source}`);
+    }
+    return content;
+}
+
+async function validateLinks(website)
+{
+    const baseDirectory = path.resolve("website");
+    for (const [name, entry] of website.files)
+    {
+        if (name.endsWith(".html"))
         {
-            await validateLinks(staging, file);
-        }
-        else if (entry.name.endsWith(".html"))
-        {
-            const html = await readFile(file, "utf8");
-            if (!html.trim()) throw Error(`Static page is empty: ${file}`);
-            const base = new URL(path.relative(staging, file).split(path.sep).map(encodeURIComponent).join("/"), "https://musepages.invalid/");
+            const html = (await fileContents(entry)).toString("utf8");
+            if (!html.trim()) throw Error(`Static page is empty: ${entry.source ?? name}`);
+            const base = new URL(name.split(path.sep).map(encodeURIComponent).join("/"), "https://musepages.invalid/");
             // Raw-text bodies can contain assignments and HTML templates, not document links.
             const markup = html.replace(/<!--[\s\S]*?-->|(<(script|style|textarea|title)\b(?:[^"'<>]|"[^"]*"|'[^']*')*>)[\s\S]*?(?:<\/\2\s*>|$)/gi,
                 (_match, opening) => opening ?? "");
@@ -621,84 +652,87 @@ async function validateLinks(staging, folder = staging)
                     if (!reference || reference.startsWith("#")) continue;
                     const url = new URL(reference, base);
                     if (url.origin !== base.origin) continue;
-                    const target = path.resolve(staging, decodeURIComponent(url.pathname).replace(/^\/+/, ""));
-                    const relative = path.relative(staging, target);
+                    const target = path.resolve(baseDirectory, decodeURIComponent(url.pathname).replace(/^\/+/, ""));
+                    const relative = path.relative(baseDirectory, target);
                     if (relative.startsWith("..") || path.isAbsolute(relative)) throw Error(`Static link escapes the website: ${reference}`);
-                    const candidates = [target, `${target}.html`, path.join(target, "index.html")];
-                    let found = false;
-                    for (const candidate of candidates)
+                    const candidates = [relative, `${relative}.html`, path.join(relative, "index.html")];
+                    if (!candidates.some((candidate) => website.files.has(candidate)))
                     {
-                        if (await exists(candidate) && (await lstat(candidate)).isFile())
-                        {
-                            found = true;
-                            break;
-                        }
+                        throw Error(`Missing static link in ${name}: ${reference}. Check export base paths and copied assets.`);
                     }
-                    if (!found) throw Error(`Missing static link in ${path.relative(staging, file)}: ${reference}. Check export base paths and copied assets.`);
                 }
             }
         }
     }
 }
 
-async function sameWebsite(staging, target, topLevel = true)
+async function readWebsite(target)
 {
-    if (!await exists(target)) return false;
-    await directory(target);
-    const expected = (await readdir(staging)).sort();
-    const actual = (await readdir(target)).filter((name) => !topLevel || !gitFiles.has(name)).sort();
-    if (expected.length !== actual.length || expected.some((name, index) => name !== actual[index])) return false;
-    for (const name of expected)
+    const website =
     {
-        const source = path.join(staging, name);
-        const destination = path.join(target, name);
-        const sourceInfo = await lstat(source);
-        const targetInfo = await lstat(destination);
-        if (targetInfo.isSymbolicLink()) return false;
-        if (sourceInfo.isDirectory())
+        files: new Map(),
+        directories: new Set()
+    };
+    async function visit(folder, relative = "")
+    {
+        await directory(folder);
+        for (const entry of await readdir(folder,
         {
-            if (!targetInfo.isDirectory() || !await sameWebsite(source, destination, false)) return false;
+            withFileTypes: true
+        }))
+        {
+            if (!relative && gitFiles.has(entry.name)) continue;
+            const name = path.join(relative, entry.name);
+            const source = path.join(folder, entry.name);
+            if (entry.isSymbolicLink()) throw Error(`Website entries cannot be symbolic links: ${source}`);
+            if (entry.isDirectory())
+            {
+                website.directories.add(name);
+                await visit(source, name);
+            }
+            else if (entry.isFile()) website.files.set(name,
+            {
+                source
+            });
+            else throw Error(`Unsupported website entry: ${source}`);
         }
-        else if (!targetInfo.isFile() || !(await readFile(source)).equals(await readFile(destination)))
+    }
+    if (await exists(target)) await visit(target);
+    return website;
+}
+
+async function sameWebsite(expected, actual, prefix = "")
+{
+    const inside = (name) => !prefix || name.startsWith(prefix + path.sep);
+    for (const kind of ["files", "directories"])
+    {
+        const names = [...expected[kind].keys()].filter(inside);
+        if (names.length !== [...actual[kind].keys()].filter(inside).length) return false;
+        for (const name of names)
         {
-            return false;
+            if (!actual[kind].has(name)) return false;
+            if (kind === "files" && !(await fileContents(expected.files.get(name))).equals(await fileContents(actual.files.get(name))))
+            {
+                return false;
+            }
         }
     }
     return true;
 }
 
-async function publishedPages(site)
+function publishedPages(site)
 {
-    const pages = new Map();
-    const folder = path.join(site, "pages");
-    if (!await exists(folder)) return pages;
-    const info = await lstat(folder);
-    if (info.isSymbolicLink() || !info.isDirectory()) return pages;
-    for (const slug of await readdir(folder,
-        {
-            withFileTypes: true
-        }))
+    return new Map([...site.directories].filter((name) =>
     {
-        if (!slug.isDirectory() || slug.isSymbolicLink()) continue;
-        const variants = path.join(folder, slug.name);
-        for (const model of await readdir(variants,
-            {
-                withFileTypes: true
-            }))
-        {
-            if (model.isDirectory() && !model.isSymbolicLink())
-            {
-                pages.set(`${slug.name}/${model.name}`, path.join(variants, model.name));
-            }
-        }
-    }
-    return pages;
+        const parts = name.split(path.sep);
+        return parts.length === 3 && parts[0] === "pages";
+    }).map((name) => [name.split(path.sep).slice(1).join("/"), name]));
 }
 
-async function publicationChanges(staging, target)
+async function publicationChanges(expected, actual)
 {
-    const before = await publishedPages(target);
-    const after = await publishedPages(staging);
+    const before = publishedPages(actual);
+    const after = publishedPages(expected);
     const changes = {
         added: 0,
         updated: 0,
@@ -708,7 +742,7 @@ async function publicationChanges(staging, target)
     for (const [key, folder] of after)
     {
         if (!before.has(key)) changes.added++;
-        else if (await sameWebsite(folder, before.get(key), false)) changes.unchanged++;
+        else if (await sameWebsite(expected, actual, folder)) changes.unchanged++;
         else changes.updated++;
     }
     for (const key of before.keys())
@@ -718,27 +752,64 @@ async function publicationChanges(staging, target)
     return changes;
 }
 
-async function replaceWebsite(target, staging, commit)
+async function syncWebsite(target, expected, actual, commit)
 {
     if (await exists(target)) await directory(target);
     else await mkdir(target);
     const backup = await mkdtemp(path.join(path.dirname(target), ".site-backup-"));
-    const old = [];
-    const installed = [];
+    const saved = new Set();
+    const touched = new Set();
+    const removedDirectories = [];
+    const createdDirectories = [];
     let cleanBackup = false;
     try
     {
-        for (const name of await readdir(target))
+        const changed = [];
+        for (const [name, file] of expected.files)
         {
-            if (gitFiles.has(name)) continue;
-            await rename(path.join(target, name), path.join(backup, name));
-            old.push(name);
+            if (!actual.files.has(name) ||
+                !(await fileContents(file)).equals(await fileContents(actual.files.get(name))))
+            {
+                changed.push(name);
+            }
         }
-        for (const name of await readdir(staging))
+        const removed = [...actual.files.keys()].filter((name) => !expected.files.has(name));
+        for (const name of new Set([...removed, ...changed.filter((name) => actual.files.has(name))]))
         {
-            await rename(path.join(staging, name), path.join(target, name));
-            installed.push(name);
+            const destination = path.join(backup, name);
+            await mkdir(path.dirname(destination),
+            {
+                recursive: true
+            });
+            await copyFile(path.join(target, name), destination);
+            saved.add(name);
         }
+        for (const name of removed)
+        {
+            await unlink(path.join(target, name));
+            touched.add(name);
+        }
+        for (const name of [...actual.directories].sort((a, b) => b.length - a.length))
+        {
+            if (expected.directories.has(name)) continue;
+            await rmdir(path.join(target, name));
+            removedDirectories.push(name);
+        }
+        for (const name of [...expected.directories].sort((a, b) => a.length - b.length))
+        {
+            if (actual.directories.has(name)) continue;
+            await mkdir(path.join(target, name));
+            createdDirectories.push(name);
+        }
+        for (const name of changed)
+        {
+            const file = expected.files.get(name);
+            const destination = path.join(target, name);
+            touched.add(name);
+            if (file.source) await copyFile(file.source, destination);
+            else await writeFile(destination, file.content);
+        }
+        if (!await sameWebsite(expected, await readWebsite(target))) throw Error("Website verification failed after synchronization");
         await commit();
         cleanBackup = true;
     }
@@ -746,13 +817,24 @@ async function replaceWebsite(target, staging, commit)
     {
         try
         {
-            for (const name of installed) await rename(path.join(target, name), path.join(staging, name));
-            for (const name of old) await rename(path.join(backup, name), path.join(target, name));
+            for (const name of touched)
+            {
+                if (expected.files.has(name)) await rm(path.join(target, name),
+                {
+                    force: true
+                });
+            }
+            for (const name of createdDirectories.reverse()) await rmdir(path.join(target, name));
+            for (const name of removedDirectories.reverse()) await mkdir(path.join(target, name));
+            for (const name of touched)
+            {
+                if (saved.has(name)) await copyFile(path.join(backup, name), path.join(target, name));
+            }
             cleanBackup = true;
         }
         catch (restoreError)
         {
-            throw new AggregateError([error, restoreError], `Publish and rollback failed. Recovery files remain in ${backup} and ${staging}`);
+            throw new AggregateError([error, restoreError], `Synchronization and rollback failed. Recovery files remain in ${backup}`);
         }
         throw error;
     }
@@ -786,99 +868,95 @@ export async function publishSite(workspace = root)
         const destinations = new Set();
         const slugOwners = new Map();
         const promptSlugs = new Map();
-        const staging = await mkdtemp(path.join(workspace, "deploy", ".site-build-"));
-        let keepRecovery = false;
-        try
+        const website =
         {
-            await mkdir(path.join(staging, "pages"));
+            files: new Map(),
+            directories: new Set(["pages", "collections"])
+        };
+        const generatedFile = (name, content) => website.files.set(name,
+        {
+            content: Buffer.from(content)
+        });
+        for (const page of selected)
+        {
+            const promptKey = page.prompt.toLowerCase();
+            const slugKey = page.slug.toLowerCase();
+            if ((slugOwners.has(slugKey) && slugOwners.get(slugKey) !== promptKey) ||
+                (promptSlugs.has(promptKey) && promptSlugs.get(promptKey) !== slugKey))
+            {
+                throw Error(`Conflicting public path: prompt/slug mapping for ${page.prompt}`);
+            }
+            slugOwners.set(slugKey, promptKey);
+            promptSlugs.set(promptKey, slugKey);
+            const key = `${page.slug}/${page.model}`.toLowerCase();
+            if (destinations.has(key)) throw Error(`Conflicting public path: ${key}`);
+            destinations.add(key);
+            const promptFile = inputs.get(page.prompt.toLowerCase());
+            if (!promptFile) throw Error(`Original prompt is missing: ${page.prompt}`);
+            const source = path.join(workspace, "out", "pages", page.prompt, page.model);
+            await directory(path.dirname(source));
+            const exported = await staticDirectory(source, page.staticDir);
+            await validatePageState(source, page);
+            const destination = path.join("pages", page.slug, page.model);
+            website.directories.add(path.dirname(destination));
+            await collectStatic(exported, destination, website);
+            if (!website.files.has(path.join(destination, "index.html")))
+            {
+                throw Error(`Static index.html is missing for ${page.prompt}/${page.model}; export it before publishing`);
+            }
+            generatedFile(path.join(destination, "prompt.html"),
+                PromptPageRenderer.renderPromptPage(await readFile(promptFile, "utf8"), page.title, "../../../index.html"));
+            page.preview = website.files.has(path.join(destination, "preview.png"));
+        }
+        const template = await readFile(path.join(workspace, "src", "gallery", "index.html"), "utf8");
+        generatedFile("index.html", renderGallery(template, selected,
+        {
+            categories
+        }));
+        generatedFile(path.join("collections", "index.html"), renderGallery(template, selected,
+        {
+            flat: true,
+            categories
+        }));
+        if (config.siteUrl)
+        {
+            const base = siteBaseUrl(config.siteUrl);
+            const urls = [base.href, ...selected.map((page) =>
+                new URL(`pages/${encodeURIComponent(page.slug)}/${encodeURIComponent(page.model)}/index.html`, base).href)];
+            generatedFile("sitemap.xml",
+                '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+                urls.map((url) => `  <url><loc>${PromptPageRenderer.escapeHtml(url)}</loc></url>`).join("\n") + "\n</urlset>\n");
+            generatedFile("robots.txt",
+                `User-agent: *\nAllow: /\n\nSitemap: ${new URL("sitemap.xml", base).href}\n`);
+        }
+        await validateLinks(website);
+        for (const group of Object.values(config.pages))
+        {
+            for (const page of group.pages) page.deployed = page.enabled;
+        }
+        const output = path.join(workspace, "deploy", "dist");
+        if (!await exists(output)) await mkdir(output);
+        await directory(output);
+        const target = path.join(output, "MusePages");
+        const actual = await readWebsite(target);
+        const changed = !await sameWebsite(website, actual);
+        const changes = await publicationChanges(website, actual);
+        const commit = async () =>
+        {
             for (const page of selected)
             {
-                const promptKey = page.prompt.toLowerCase();
-                const slugKey = page.slug.toLowerCase();
-                if ((slugOwners.has(slugKey) && slugOwners.get(slugKey) !== promptKey) ||
-                    (promptSlugs.has(promptKey) && promptSlugs.get(promptKey) !== slugKey))
-                {
-                    throw Error(`Conflicting public path: prompt/slug mapping for ${page.prompt}`);
-                }
-                slugOwners.set(slugKey, promptKey);
-                promptSlugs.set(promptKey, slugKey);
-                const key = `${page.slug}/${page.model}`.toLowerCase();
-                if (destinations.has(key)) throw Error(`Conflicting public path: ${key}`);
-                destinations.add(key);
-                const promptFile = inputs.get(page.prompt.toLowerCase());
-                if (!promptFile) throw Error(`Original prompt is missing: ${page.prompt}`);
-                const source = path.join(workspace, "out", "pages", page.prompt, page.model);
-                await directory(path.dirname(source));
-                const exported = await staticDirectory(source, page.staticDir);
-                const destination = path.join(staging, "pages", page.slug, page.model);
-                await copyStatic(exported, destination);
-                const index = path.join(destination, "index.html");
-                if (!await exists(index) || !(await lstat(index)).isFile())
-                {
-                    throw Error(`Static index.html is missing for ${page.prompt}/${page.model}; export it before publishing`);
-                }
-                await writeFile(path.join(destination, "prompt.html"),
-                    PromptPageRenderer.renderPromptPage(await readFile(promptFile, "utf8"), page.title, "../../../index.html"), "utf8");
-                page.preview = await exists(path.join(destination, "preview.png"));
+                await validatePageState(path.join(workspace, "out", "pages", page.prompt, page.model), page);
             }
-            const template = await readFile(path.join(workspace, "src", "gallery", "index.html"), "utf8");
-            await writeFile(path.join(staging, "index.html"), renderGallery(template, selected,
-            {
-                categories
-            }), "utf8");
-            await mkdir(path.join(staging, "collections"));
-            await writeFile(path.join(staging, "collections", "index.html"),
-                renderGallery(template, selected,
-                {
-                    flat: true,
-                    categories
-                }), "utf8");
-            if (config.siteUrl)
-            {
-                const base = siteBaseUrl(config.siteUrl);
-                const urls = [base.href, ...selected.map((page) =>
-                    new URL(`pages/${encodeURIComponent(page.slug)}/${encodeURIComponent(page.model)}/index.html`, base).href)];
-                await writeFile(path.join(staging, "sitemap.xml"),
-                    '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
-                    urls.map((url) => `  <url><loc>${PromptPageRenderer.escapeHtml(url)}</loc></url>`).join("\n") + "\n</urlset>\n", "utf8");
-                await writeFile(path.join(staging, "robots.txt"),
-                    `User-agent: *\nAllow: /\n\nSitemap: ${new URL("sitemap.xml", base).href}\n`, "utf8");
-            }
-            await validateLinks(staging);
-            for (const group of Object.values(config.pages))
-            {
-                for (const page of group.pages) page.deployed = page.enabled;
-            }
-            const output = path.join(workspace, "deploy", "dist");
-            if (!await exists(output)) await mkdir(output);
-            await directory(output);
-            const target = path.join(output, "MusePages");
-            const changed = !await sameWebsite(staging, target);
-            const changes = await publicationChanges(staging, target);
-            try
-            {
-                if (changed) await replaceWebsite(target, staging, () => writeConfig(workspace, config));
-                else await writeConfig(workspace, config);
-            }
-            catch (error)
-            {
-                if (error instanceof AggregateError) keepRecovery = true;
-                throw error;
-            }
-            return {
-                pages: selected.length,
-                prompts: new Set(selected.map((page) => page.prompt)).size,
-                changed,
-                changes
-            };
-        }
-        finally
-        {
-            if (!keepRecovery) await rm(staging,
-            {
-                recursive: true
-            });
-        }
+            await writeConfig(workspace, config);
+        };
+        if (changed) await syncWebsite(target, website, actual, commit);
+        else await commit();
+        return {
+            pages: selected.length,
+            prompts: new Set(selected.map((page) => page.prompt)).size,
+            changed,
+            changes
+        };
     });
 }
 

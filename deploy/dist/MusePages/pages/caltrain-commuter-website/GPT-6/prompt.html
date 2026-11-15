@@ -7,11 +7,15 @@
   <style>
     :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
     *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
-    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible,button:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
     h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
     .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
-    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
-    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    .codebox-header{display:flex;align-items:center;justify-content:space-between;padding:6px 12px 6px 20px;background:#edf2eb;border-bottom:1px solid var(--line)}
+    .codebox h2{margin:0;font:600 13px/1.5 system-ui,sans-serif}
+    .copy-prompt{display:grid;place-items:center;width:40px;height:40px;padding:8px;border:0;border-radius:6px;background:transparent;color:inherit;cursor:pointer}
+    .copy-prompt:hover{background:#dce1d8}.copy-prompt svg{width:20px;height:20px}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+    pre{margin:0;padding:20px;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
     code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
     @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
   </style>
@@ -20,9 +24,15 @@
   <main>
     <a href="../../../index.html">Back to MusePages</a>
     <h1>Loopline — A Clearer Commute</h1>
-    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <p class="intro">The original prompt, shown in full as plain text.</p>
     <section class="codebox" aria-labelledby="prompt-heading">
-      <h2 id="prompt-heading">Prompt</h2>
+      <div class="codebox-header">
+        <h2 id="prompt-heading">Prompt</h2>
+        <button class="copy-prompt" type="button" aria-label="Copy prompt" title="Copy prompt">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h3"/></svg>
+        </button>
+      </div>
+      <span class="sr-only" role="status" aria-live="polite"></span>
       <pre tabindex="0" role="region" aria-label="Prompt text"><code># Caltrain Commuter App - Product Requirements Document (Next.js)
 
 ## 1. Overview
@@ -412,5 +422,47 @@ The MVP is complete when:
 - [ ] Basic error handling is in place</code></pre>
     </section>
   </main>
+  <script>
+  {
+    const copyButton = document.querySelector(".copy-prompt");
+    const copyStatus = document.querySelector('[role="status"]');
+    copyButton.addEventListener("click", async () =>
+    {
+        copyStatus.textContent = "";
+        const text = document.querySelector("pre code").textContent;
+        try
+        {
+            if (navigator.clipboard && window.isSecureContext)
+            {
+                await navigator.clipboard.writeText(text);
+            }
+            else
+            {
+                const input = document.createElement("textarea");
+                input.value = text;
+                input.style.cssText = "position:fixed;opacity:0;pointer-events:none";
+                document.body.append(input);
+                try
+                {
+                    input.select();
+                    if (!document.execCommand("copy")) throw Error("Copy failed");
+                }
+                finally
+                {
+                    input.remove();
+                    copyButton.focus({ preventScroll: true });
+                }
+            }
+            copyStatus.textContent = "Prompt copied.";
+            copyButton.title = "Prompt copied";
+        }
+        catch
+        {
+            copyStatus.textContent = "Unable to copy. Select the prompt text to copy it.";
+            copyButton.title = "Unable to copy";
+        }
+    });
+  }
+  </script>
 </body>
 </html>

@@ -51,12 +51,11 @@ async function fixture(t)
         recursive: true
     });
     await copyFile(new URL("../../gallery/index.html", import.meta.url), path.join(workspace, "src", "gallery", "index.html"));
-    const { categories } = JSON.parse(await readFile(new URL("../../../deploy/config.json", import.meta.url), "utf8"));
     await mkdir(path.join(workspace, "deploy"));
     await saveConfig(workspace,
     {
         version: 2,
-        categories,
+        categories: ["Lifestyle", "Business", "Technology", "Commerce", "Creative", "Entertainment", "Education", "Services"],
         pages: {}
     });
     await mkdir(path.join(workspace, "data", "prompts"),
@@ -79,6 +78,13 @@ async function result(workspace, prompt, model, next = false)
     {
         recursive: true
     });
+    await writeFile(path.join(output, "metadata.json"), JSON.stringify(
+    {
+        generated: true,
+        preview: true,
+        validated: true,
+        config_added: true
+    }));
     if (next) await writeFile(path.join(output, "package.json"), JSON.stringify(
     {
         dependencies:
@@ -426,6 +432,9 @@ test("failure to save deployed flags rolls back the website and preserves the pr
         exported
     } = await result(workspace, "001-travel", "model-a");
     await result(workspace, "001-travel", "model-b");
+    await writeFile(path.join(exported, "expand.css"), "original file");
+    await mkdir(path.join(exported, "collapse.css"));
+    await writeFile(path.join(exported, "collapse.css", "nested.css"), "original nested file");
     let config = await syncDeployConfig(workspace);
     config.pages["001-travel"].pages[0].enabled = true;
     await saveConfig(workspace, config);
@@ -439,6 +448,11 @@ test("failure to save deployed flags rolls back the website and preserves the pr
     const target = path.join(workspace, "deploy", "dist", "MusePages", "pages", "travel");
     const oldPage = await readFile(path.join(target, "model-a", "index.html"), "utf8");
     await writeFile(path.join(exported, "index.html"), "<h1>Updated page</h1>");
+    await unlink(path.join(exported, "expand.css"));
+    await mkdir(path.join(exported, "expand.css"));
+    await writeFile(path.join(exported, "expand.css", "nested.css"), "new nested file");
+    await rm(path.join(exported, "collapse.css"), { recursive: true });
+    await writeFile(path.join(exported, "collapse.css"), "new file");
     const execution = spawnSync(process.execPath, ["--input-type=module", "--eval", `
     import assert from "node:assert/strict";
     import fs from "node:fs/promises";
@@ -462,7 +476,199 @@ test("failure to save deployed flags rolls back the website and preserves the pr
     assert.equal(await readFile(configPath, "utf8"), before);
     assert.deepEqual(await readdir(target), ["model-a"]);
     assert.equal(await readFile(path.join(target, "model-a", "index.html"), "utf8"), oldPage);
+    assert.equal(await readFile(path.join(target, "model-a", "expand.css"), "utf8"), "original file");
+    assert.equal(await readFile(path.join(target, "model-a", "collapse.css", "nested.css"), "utf8"), "original nested file");
     assert.deepEqual((await readdir(path.join(workspace, "deploy"))).sort(), ["config.json", "dist"]);
+    await publishSite(workspace);
+    assert.equal(await readFile(path.join(target, "model-a", "expand.css", "nested.css"), "utf8"), "new nested file");
+    assert.equal(await readFile(path.join(target, "model-a", "collapse.css"), "utf8"), "new file");
+});
+
+test("dist requires all four model metadata flags to be true before changing any selected page", async (t) =>
+{
+    const workspace = await fixture(t);
+    const first = await result(workspace, "001-travel", "model-a");
+    const second = await result(workspace, "001-travel", "model-b", true);
+    const config = await syncDeployConfig(workspace);
+    config.pages["001-travel"].pages[0].enabled = true;
+    await saveConfig(workspace, config);
+    await publishSite(workspace);
+    const target = path.join(workspace, "deploy", "dist", "MusePages", "pages", "travel");
+    const oldPage = await readFile(path.join(target, "model-a", "index.html"), "utf8");
+    await writeFile(path.join(first.exported, "index.html"), "<h1>Updated ready page</h1>");
+    const pending = await configFile(workspace);
+    pending.pages["001-travel"].pages[1].enabled = true;
+    await saveConfig(workspace, pending);
+    await syncDeployConfig(workspace);
+    const configPath = path.join(workspace, "deploy", "config.json");
+    const previousConfig = await readFile(configPath, "utf8");
+    const metadataFile = path.join(second.output, "metadata.json");
+    const ready = JSON.parse(await readFile(metadataFile, "utf8"));
+    await writeFile(path.join(second.exported, "metadata.json"), JSON.stringify(ready));
+    const unchanged = async () =>
+    {
+        assert.equal(await readFile(path.join(target, "model-a", "index.html"), "utf8"), oldPage);
+        assert.deepEqual(await readdir(target), ["model-a"]);
+        assert.equal(await readFile(configPath, "utf8"), previousConfig);
+        assert.deepEqual((await readdir(path.join(workspace, "deploy"))).sort(), ["config.json", "dist"]);
+    };
+    for (const flag of Object.keys(ready))
+    {
+        for (const value of [false, undefined, "true", 1, null])
+        {
+            await writeFile(metadataFile, JSON.stringify({ ...ready, [flag]: value }));
+            await assert.rejects(publishSite(workspace),
+                new RegExp(`Cannot distribute 001-travel/model-b:.*${flag}`));
+            await unchanged();
+        }
+    }
+    for (const content of ["{", "null", "[]"])
+    {
+        await writeFile(metadataFile, content);
+        await assert.rejects(publishSite(workspace), /Cannot distribute 001-travel\/model-b/);
+        await unchanged();
+    }
+    await unlink(metadataFile);
+    await assert.rejects(publishSite(workspace), /Cannot distribute 001-travel\/model-b: missing or invalid metadata/);
+    await unchanged();
+    await mkdir(metadataFile);
+    await assert.rejects(publishSite(workspace), /Cannot distribute 001-travel\/model-b: missing or invalid metadata/);
+    await unchanged();
+    await rm(metadataFile, { recursive: true });
+    pending.pages["001-travel"].pages[1].enabled = false;
+    await saveConfig(workspace, pending);
+    assert.equal((await publishSite(workspace)).pages, 1);
+    await writeFile(metadataFile, JSON.stringify(ready));
+    pending.pages["001-travel"].pages[1].enabled = true;
+    await saveConfig(workspace, pending);
+    assert.equal((await publishSite(workspace)).pages, 2);
+    assert.deepEqual(await readdir(target), ["model-a", "model-b"]);
+    assert.equal(await readFile(path.join(target, "model-a", "index.html"), "utf8"), "<h1>Updated ready page</h1>");
+    assert.deepEqual(JSON.parse(await readFile(metadataFile, "utf8")), ready);
+});
+
+test("dist copies directly from out without staging or directory renames and rolls back failed copies", async (t) =>
+{
+    for (const scenario of ["success", "copy-failure", "source-change", "state-change", "rollback-failure"])
+    {
+        await t.test(scenario, async (t) =>
+        {
+            const workspace = await fixture(t);
+            const { exported } = await result(workspace, "001-travel", "model-a");
+            const config = await syncDeployConfig(workspace);
+            config.pages["001-travel"].pages[0].enabled = true;
+            await saveConfig(workspace, config);
+            await publishSite(workspace);
+            const target = path.join(workspace, "deploy", "dist", "MusePages");
+            const page = path.join(target, "pages", "travel", "model-a", "index.html");
+            const before = await readFile(page, "utf8");
+            const configPath = path.join(workspace, "deploy", "config.json");
+            const previousConfig = await readFile(configPath, "utf8");
+            await mkdir(path.join(target, ".git"));
+            await writeFile(path.join(target, ".git", "HEAD"), "preserve repository");
+            const unchanged = path.join(target, "pages", "travel", "model-a", "style.css");
+            const timestamp = new Date("2001-01-01T00:00:00Z");
+            await utimes(unchanged, timestamp, timestamp);
+            const pagesFolder = path.join(target, "pages");
+            const originalDirectory = await lstat(pagesFolder);
+            await writeFile(path.join(exported, "index.html"), '<h1>Updated page</h1><img src="new.png">');
+            await writeFile(path.join(exported, "new.png"), "new asset");
+            const execution = spawnSync(process.execPath, ["--input-type=module", "--eval", `
+                import assert from "node:assert/strict";
+                import fs from "node:fs/promises";
+                import path from "node:path";
+                import { syncBuiltinESMExports } from "node:module";
+                const workspace = process.argv[1];
+                const scenario = process.argv[3];
+                const target = path.join(workspace, "deploy", "dist", "MusePages");
+                const sourcePage = path.join(workspace, "out", "pages", "001-travel", "model-a", "index.html");
+                const targetPage = path.join(target, "pages", "travel", "model-a", "index.html");
+                const copied = [];
+                const rename = fs.rename;
+                const copyFile = fs.copyFile;
+                const mkdtemp = fs.mkdtemp;
+                fs.rename = async (source, destination) =>
+                {
+                    assert.equal((await fs.lstat(source)).isDirectory(), false, "Must not rename website directories");
+                    return rename(source, destination);
+                };
+                fs.mkdtemp = async (prefix, ...args) =>
+                {
+                    assert.equal(path.basename(prefix).startsWith(".site-build-"), false, "Must not stage a website");
+                    return mkdtemp(prefix, ...args);
+                };
+                fs.copyFile = async (source, destination) =>
+                {
+                    if (scenario === "rollback-failure" && destination === targetPage &&
+                        source.includes(".site-backup-"))
+                    {
+                        throw Error("Simulated rollback failure");
+                    }
+                    if (destination === targetPage && source === sourcePage)
+                    {
+                        copied.push(source);
+                        if (scenario === "copy-failure" || scenario === "rollback-failure")
+                        {
+                            await fs.writeFile(destination, "partial copy");
+                            throw Error("Simulated copy failure");
+                        }
+                        if (scenario === "source-change")
+                        {
+                            await fs.writeFile(source, "<h1>Changed during sync</h1>");
+                        }
+                        if (scenario === "state-change")
+                        {
+                            await fs.writeFile(path.join(path.dirname(source), "metadata.json"),
+                                JSON.stringify({ generated: true, preview: false, validated: true, config_added: true }));
+                        }
+                    }
+                    return copyFile(source, destination);
+                };
+                syncBuiltinESMExports();
+                const { publishSite } = await import(process.argv[2]);
+                if (scenario === "success") assert.equal((await publishSite(workspace)).changed, true);
+                else if (scenario === "rollback-failure")
+                {
+                    await assert.rejects(publishSite(workspace), (error) =>
+                    {
+                        assert.ok(error instanceof AggregateError);
+                        assert.match(error.message, /Recovery files remain/);
+                        return true;
+                    });
+                }
+                else await assert.rejects(publishSite(workspace),
+                    scenario === "source-change" ? /Static source changed/ :
+                    scenario === "state-change" ? /metadata fields must be true: preview/ : /Simulated copy failure/);
+                assert.deepEqual(copied, [sourcePage]);
+            `, workspace, new URL("./deploy-site.mjs", import.meta.url).href, scenario],
+            {
+                encoding: "utf8",
+                timeout: 15000
+            });
+            assert.equal(execution.status, 0, execution.stderr);
+            if (scenario !== "rollback-failure")
+            {
+                assert.equal(await readFile(page, "utf8"), scenario === "success" ?
+                    '<h1>Updated page</h1><img src="new.png">' : before);
+                const newAsset = path.join(path.dirname(page), "new.png");
+                if (scenario === "success") assert.equal((await lstat(newAsset)).isFile(), true);
+                else await assert.rejects(lstat(newAsset), { code: "ENOENT" });
+            }
+            assert.equal(await readFile(configPath, "utf8"), previousConfig);
+            assert.equal(await readFile(path.join(target, ".git", "HEAD"), "utf8"), "preserve repository");
+            assert.equal((await lstat(unchanged)).mtimeMs, timestamp.getTime());
+            assert.equal((await lstat(pagesFolder)).ino, originalDirectory.ino);
+            assert.deepEqual((await readdir(path.join(workspace, "deploy"))).sort(), ["config.json", "dist"]);
+            const backups = (await readdir(path.join(workspace, "deploy", "dist"))).filter((name) => name.startsWith(".site-backup-"));
+            if (scenario === "rollback-failure")
+            {
+                assert.equal(backups.length, 1);
+                assert.equal(await readFile(path.join(workspace, "deploy", "dist", backups[0],
+                    "pages", "travel", "model-a", "index.html"), "utf8"), before);
+            }
+            else assert.deepEqual(backups, []);
+        });
+    }
 });
 
 test("group keys use the prompt filename rather than its parent directory or public slug", async (t) =>
