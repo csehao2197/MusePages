@@ -507,15 +507,42 @@ async function copyStatic(source, destination)
 
 export function renderGallery(template, pages,
 {
-    flat = false
+    flat = false,
+    categories = []
 } = {})
 {
-    const categories = [
-        ["portfolio", /portfolio|photograph|designer|architect|artist/i],
-        ["saas", /saas|software|dashboard|platform|subscription|cloud/i],
-        ["editorial", /editorial|blog|magazine|journal|newsletter|publication|author|writer/i],
-        ["developer", /developer|development|\bapi\b|documentation|programming|code|engineering|devops/i],
-    ];
+    if (!Array.isArray(categories) || categories.some((name) => typeof name !== "string" || !name.trim() || name !== name.trim() ||
+        name.toLowerCase() === "all") || new Set(categories.map((name) => name.toLowerCase())).size !== categories.length)
+    {
+        throw Error("config.json categories must be an array of unique, nonempty category names");
+    }
+    const topicsByCategory = {
+        business: /\b(?:business|agency|consulting|consultant|startup|recruitment)\b/i,
+        technology: /\b(?:saas|software|dashboard|platform|cloud|developer|development|api|documentation|programming|code|devops|smart home|it support)\b/i,
+        commerce: /\b(?:store|shop|retail|ecommerce|e-commerce|marketplace|shopping)\b/i,
+        finance: /\b(?:finance|financial|bank|banking|accountant|accounting|insurance|mortgage|investment|investing)\b/i,
+        lifestyle: /\b(?:lifestyle|personal|wedding|beauty|spa|wellness|pet|pets)\b/i,
+        fashion: /\b(?:fashion|clothing|apparel|footwear|shoe|shoes|jewelry|jewellery|tailor|stylist)\b/i,
+        health: /\b(?:health|medical|clinic|dental|dentist|therapist|therapy|physiotherapy|pharmacy|nutrition|skincare|vet|veterinary)\b/i,
+        education: /\b(?:education|school|course|learning|academy|tutor|tutoring|student|university|camp)\b/i,
+        creative: /\b(?:creative|portfolio|photography|photographer|designer|design|architect|architecture|artist|art|studio)\b/i,
+        media: /\b(?:media|editorial|blog|magazine|journal|newsletter|publication|author|writer|podcast|video|recording|voice.over)\b/i,
+        entertainment: /\b(?:entertainment|music|theater|theatre|cinema|game|gaming|nightclub|museum|paintball)\b/i,
+        sports: /\b(?:sport|sports|fitness|gym|trainer|tennis|soccer|swim|swimming|ski|yoga|pilates|padel|martial arts)\b/i,
+        travel: /\b(?:travel|tourism|tour|destination|vacation|rental|hotel|flight|airline|airport)\b/i,
+        food: /\b(?:food|restaurant|cafe|bakery|coffee|chef|cake|pizza|pizzeria|sushi|wine|winery|pub|bar|ice cream)\b/i,
+        property: /\b(?:property|real.?estate|home|housing|interior|landscaping|venue)\b/i,
+        community: /\b(?:community|nonprofit|non-profit|charity|donation|volunteer|membership|club)\b/i,
+        industry: /\b(?:industry|industrial|manufacturing|factory|logistics|trucking|construction)\b/i,
+        services: /\b(?:service|services|cleaning|repair|plumber|plumbing|hvac|locksmith|moving|removal|towing|roofing|mechanic|notary|lawyer|law firm|translation|virtual assistant)\b/i
+    };
+    const categoryGroups = categories.map((name) => (
+    {
+        name,
+        id: encodeURIComponent(name.toLowerCase()),
+        pattern: topicsByCategory[name.toLowerCase()] ??
+            new RegExp(`\\b${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i")
+    }));
     const arrow = '<svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>';
     const prompts = new Map();
     for (const page of pages)
@@ -534,7 +561,9 @@ export function renderGallery(template, pages,
                 `<img src="${href}/preview.png" alt="Preview of ${title}" width="1200" height="900" loading="lazy">` :
                 '<span class="preview-label">No preview provided</span>';
             const topics = `${page.title} ${page.tags.join(" ")}`;
-            const groups = categories.filter(([, pattern]) => pattern.test(topics)).map(([name]) => name).join(" ");
+            const groups = categoryGroups.filter(({ name, pattern }) =>
+                page.tags.some((tag) => tag.toLowerCase() === name.toLowerCase()) || pattern.test(topics))
+                .map(({ id }) => id).join(" ");
             const slideAttributes = flat ? "" : ` role="group" aria-roledescription="slide" aria-label="${index + 1} of ${models.length}: ${PromptPageRenderer.escapeHtml(page.model)}"`;
             return `<div class="slide"${slideAttributes} data-model="${PromptPageRenderer.escapeHtml(page.model)}" data-tags="${PromptPageRenderer.escapeHtml(JSON.stringify(page.tags))}" data-categories="${groups}"${index ? " hidden inert" : ""}>
       <a class="preview" href="${href}/index.html" aria-label="Open ${title}" draggable="false">${preview}<span class="preview-arrow">${arrow}</span></a>
@@ -578,7 +607,10 @@ ${[...new Set(pages.map((page) => page.model))].map((model) =>
     `        <button type="button" data-model="${PromptPageRenderer.escapeHtml(model)}" aria-pressed="false">${PromptPageRenderer.escapeHtml(model)}</button>`).join("\n")}
       </nav>` :
         "";
+    const categoryFilters = categoryGroups.map(({ name, id }) =>
+        `                <button type="button" data-filter="${PromptPageRenderer.escapeHtml(id)}" aria-pressed="false">${PromptPageRenderer.escapeHtml(name)}</button>`).join("\n");
     return template.replace("<!-- MODEL_FILTERS -->", () => modelFilters)
+        .replace("<!-- CATEGORY_FILTERS -->", () => categoryFilters)
         .replace(marker, () => cards || '<p class="sample-note">No published pages yet.</p>');
 }
 
@@ -760,6 +792,8 @@ export async function publishSite(workspace = root)
 {
     return withLock(workspace, async () =>
     {
+        const { categories } = JSON.parse(await readFile(path.join(workspace, "config.json"), "utf8"));
+        if (!Array.isArray(categories)) throw Error("config.json categories must be an array");
         const
         {
             config,
@@ -806,12 +840,16 @@ export async function publishSite(workspace = root)
                 page.preview = await exists(path.join(destination, "preview.png"));
             }
             const template = await readFile(path.join(workspace, "src", "gallery", "index.html"), "utf8");
-            await writeFile(path.join(staging, "index.html"), renderGallery(template, selected), "utf8");
+            await writeFile(path.join(staging, "index.html"), renderGallery(template, selected,
+            {
+                categories
+            }), "utf8");
             await mkdir(path.join(staging, "collections"));
             await writeFile(path.join(staging, "collections", "index.html"),
                 renderGallery(template, selected,
                 {
-                    flat: true
+                    flat: true,
+                    categories
                 }), "utf8");
             if (config.siteUrl)
             {

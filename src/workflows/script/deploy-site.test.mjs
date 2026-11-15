@@ -31,6 +31,7 @@ from "node:child_process";
 import
 {
     publishSite,
+    renderGallery,
     registerGeneratedPage,
     syncDeployConfig,
     watchDeployConfig
@@ -50,6 +51,7 @@ async function fixture(t)
         recursive: true
     });
     await copyFile(new URL("../../gallery/index.html", import.meta.url), path.join(workspace, "src", "gallery", "index.html"));
+    await copyFile(new URL("../../../config.json", import.meta.url), path.join(workspace, "config.json"));
     await mkdir(path.join(workspace, "data", "prompts"),
     {
         recursive: true
@@ -1181,6 +1183,75 @@ test("gallery keeps literal replacement characters and escapes user-edited title
     assert.match(html, /Title \$&amp; &lt;script&gt;/);
     assert.match(html, /\$&amp; &lt;tag&gt;/);
     assert.doesNotMatch(html, /<!-- RESULT_CARDS -->/);
+});
+
+test("configured categories control both galleries and are reloaded without changing deployment selections", async (t) =>
+{
+    const workspace = await fixture(t);
+    await result(workspace, "001-example", "model-a");
+    const config = await syncDeployConfig(workspace);
+    const option = config.pages["001-example"].pages[0];
+    option.enabled = true;
+    option.title = "Developer portfolio";
+    option.tags = ["Portfolio", "Developer tools"];
+    await saveConfig(workspace, config);
+    const categoriesFile = path.join(workspace, "config.json");
+    const target = path.join(workspace, "deploy", "dist", "MusePages");
+    const configured = JSON.parse(await readFile(categoriesFile, "utf8")).categories;
+    await publishSite(workspace);
+    for (const file of ["index.html", path.join("collections", "index.html")])
+    {
+        const html = await readFile(path.join(target, file), "utf8");
+        const labels = [...html.matchAll(/data-filter="([^"]+)"[^>]*>([^<]*)<\/button>/g)];
+        assert.deepEqual(labels.map((match) => match[2]), ["All websites", ...configured]);
+        assert.doesNotMatch(html, /data-filter="(?:portfolio|saas|editorial|developer)"/);
+        assert.match(html, /data-categories="technology creative"/);
+    }
+    await writeFile(categoriesFile, JSON.stringify(
+    {
+        categories: ["Creative", "Technology"]
+    }));
+    assert.equal((await publishSite(workspace)).changed, true);
+    const html = await readFile(path.join(target, "index.html"), "utf8");
+    assert.deepEqual([...html.matchAll(/data-filter="([^"]+)"[^>]*>([^<]*)<\/button>/g)].map((match) => match[2]),
+        ["All websites", "Creative", "Technology"]);
+    assert.match(html, /data-categories="creative technology"/);
+    assert.equal((await configFile(workspace)).pages["001-example"].pages[0].enabled, true);
+    await writeFile(categoriesFile, JSON.stringify(
+    {
+        categories: []
+    }));
+    await publishSite(workspace);
+    assert.deepEqual([...(await readFile(path.join(target, "index.html"), "utf8")).matchAll(/<button[^>]*data-filter="([^"]+)"/g)]
+        .map((match) => match[1]), ["all"]);
+});
+
+test("configured categories escape labels, support custom names and reject invalid definitions", async () =>
+{
+    const template = await readFile(new URL("../../gallery/index.html", import.meta.url), "utf8");
+    const pages = [
+        {
+            prompt: "001-example",
+            slug: "example",
+            model: "model-a",
+            title: "Example",
+            tags: ["Research & Design"],
+            preview: false
+        }
+    ];
+    const html = renderGallery(template, pages,
+    {
+        categories: ["Research & Design"]
+    });
+    assert.match(html, /data-filter="research%20%26%20design"[^>]*>Research &amp; Design<\/button>/);
+    assert.match(html, /data-categories="research%20%26%20design"/);
+    for (const categories of [null, "Food", [""], [" Food "], ["Food", "food"], [42], ["all"]])
+    {
+        assert.throws(() => renderGallery(template, pages,
+        {
+            categories
+        }), /config\.json categories/);
+    }
 });
 
 test("malformed config, traversal paths, duplicates and public path collisions fail explicitly", async (t) =>
