@@ -1,0 +1,982 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Drift House | Where the world slows down. | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Drift House | Where the world slows down.</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># DRIFT HOUSE — Vacation Rental Website Prompt
+## For Bolt, v0, Lovable, Claude — React + Vite + TypeScript + Tailwind CSS + Framer Motion + shadcn/ui + lucide-react
+
+---
+
+Build a complete, production-ready vacation rental website for **DRIFT HOUSE** — a premium privately owned coastal/lakeside property available for holiday rental. The brand is luxurious yet warmly personal, editorial in its photography references, and understated in tone. The website must be fully self-contained with all copy written out in full, all animations implemented with Framer Motion (`motion/react`), and no placeholder text anywhere.
+
+---
+
+## DESIGN SYSTEM
+
+### Colors — HSL custom properties in :root
+
+```css
+@import url(&#39;https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400;1,700&amp;family=Jost:wght@300;400&amp;display=swap&#39;);
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 207 40% 25%;
+  --primary: 207 40% 25%;
+  --primary-foreground: 0 0% 100%;
+  --accent: 36 80% 89%;
+  --muted: 36 50% 95%;
+  --card: 0 0% 100%;
+  --border: 207 20% 88%;
+  --muted-foreground: 207 20% 50%;
+}
+```
+
+### Typography
+- **Headings**: Cormorant Garamond — weights 400 italic, 700 italic, 600 upright. The quintessential luxe editorial serif. All major headings use italic variant.
+- **Body**: Jost — weights 300 (light, for body text) and 400 (regular, for labels, buttons). Clean, modern, unfussy.
+
+### Signature Animation: Hero Crossfade Gallery
+
+The hero section must implement a full-screen crossfading image gallery with the following behaviour:
+
+- **5 images**, each displayed for **4 seconds**, crossfading over **1 second** (so total loop = 25 seconds)
+- All 5 images are stacked with `position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;`
+- Only one image is visible at any given time (opacity 1), the others are opacity 0
+- Transition between images: `transition: opacity 1s ease-in-out`
+- A state variable `activeIndex` (0–4) cycles via `setInterval` every 4000ms in a `useEffect`
+- The active image gets `opacity-100`, all others get `opacity-0`
+- **Crossfade dot indicator**: a row of 5 circular dots `8px × 8px rounded-full` sits at `absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20`. Active dot: `bg-white`, inactive: `bg-white/40`. Clicking a dot sets `activeIndex` immediately.
+
+### Availability Widget
+A non-functional but fully styled UI widget for checking availability. It sits inside the hero as a glassmorphism card. It uses `&lt;input type=&quot;date&quot; /&gt;` and `&lt;select&gt;` elements styled with custom CSS to match the design. No real booking system — it is a mockup that looks and feels real. On &quot;Check Availability&quot; click: shows a toast or keeps state, does not navigate anywhere.
+
+---
+
+## SECTION 1: NAVBAR
+
+```tsx
+// Navbar component with scroll-aware styling
+
+// State: const [scrolled, setScrolled] = useState(false)
+// useEffect: window.addEventListener(&#39;scroll&#39;, () =&gt; setScrolled(window.scrollY &gt; 60))
+
+// Container: className=&quot;fixed top-0 left-0 right-0 z-50 transition-all duration-500&quot;
+// When not scrolled: className=&quot;bg-transparent&quot;
+// When scrolled: className=&quot;bg-white shadow-sm border-b border-[hsl(var(--border))]&quot;
+
+// Inner: max-w-7xl mx-auto px-6 h-20 flex items-center justify-between
+
+// LOGO (left):
+// Text: &quot;DRIFT HOUSE&quot;
+// Font: Cormorant Garamond 700 italic, 24px
+// Color: when not scrolled → text-white; when scrolled → text-[hsl(var(--foreground))]
+// Transition: transition-colors duration-500
+
+// NAV LINKS (center, hidden on mobile):
+// Items: The House | Amenities | Location | Gallery | Book
+// Font: Jost 400, text-sm, tracking-wider
+// Color: when not scrolled → text-white/80 hover:text-white; when scrolled → text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))]
+
+// CTA BUTTON (right):
+// Text: &quot;Check Availability&quot;
+// When not scrolled: border border-white text-white bg-transparent hover:bg-white hover:text-[hsl(var(--foreground))]
+// When scrolled: bg-[hsl(var(--primary))] text-white border-transparent hover:opacity-90
+// Shape: rounded-full px-5 py-2 Jost 400 text-sm transition-all duration-300
+
+// Mobile: hamburger icon (Menu from lucide-react) that opens a slide-down menu
+```
+
+---
+
+## SECTION 2: HERO
+
+```tsx
+// Full-screen hero with crossfading image gallery
+
+// Outer: &lt;section className=&quot;relative h-[100dvh] overflow-hidden&quot;&gt;
+
+// --- IMAGE LAYER ---
+// 5 images stacked, each: &lt;div className=&quot;absolute inset-0 transition-opacity duration-1000&quot;
+//   style={{ opacity: activeIndex === i ? 1 : 0 }}&gt;
+//   {/* Image: [description] */}
+//   &lt;img src=&quot;&quot; alt=&quot;...&quot; className=&quot;w-full h-full object-cover&quot; /&gt;
+// &lt;/div&gt;
+
+// Image 1: {/* Image: luxury coastal stone house at golden hour, dramatic clifftop setting with ocean panorama, warm amber sunset light flooding the facade, architectural editorial photography */}
+// &lt;img src=&quot;&quot; alt=&quot;Drift House exterior at golden hour, Cornish clifftop&quot; className=&quot;w-full h-full object-cover&quot; /&gt;
+
+// Image 2: {/* Image: bright airy open-plan living room with floor-to-ceiling glass windows revealing an uninterrupted ocean view, white walls, driftwood-toned furniture, scattered natural linen throws, warm morning light streaming in */}
+// &lt;img src=&quot;&quot; alt=&quot;Drift House living room with ocean view&quot; className=&quot;w-full h-full object-cover&quot; /&gt;
+
+// Image 3: {/* Image: private outdoor terrace with a glass-edged infinity pool merging visually with the ocean horizon, a couple lounging on sun chairs in the late afternoon golden light, champagne glasses on a stone ledge */}
+// &lt;img src=&quot;&quot; alt=&quot;Drift House private infinity pool terrace&quot; className=&quot;w-full h-full object-cover&quot; /&gt;
+
+// Image 4: {/* Image: luxury master bedroom with panoramic coastal view, king-sized bed dressed in crisp white linen, natural oak headboard and bedside tables, morning mist visible through the window, calm serene atmosphere */}
+// &lt;img src=&quot;&quot; alt=&quot;Drift House master bedroom with sea view&quot; className=&quot;w-full h-full object-cover&quot; /&gt;
+
+// Image 5: {/* Image: aerial drone shot looking down on a large stone coastal property surrounded by lush garden and clifftop landscape, turquoise sea visible, dramatic birds-eye perspective on a clear day */}
+// &lt;img src=&quot;&quot; alt=&quot;Drift House aerial view, Cornish coast&quot; className=&quot;w-full h-full object-cover&quot; /&gt;
+
+// --- GRADIENT OVERLAY ---
+// &lt;div className=&quot;absolute inset-0 bg-gradient-to-b from-[rgba(0,0,0,0.40)] via-[rgba(0,0,0,0.05)] to-[rgba(0,0,0,0.60)] z-10&quot; /&gt;
+
+// --- HERO CONTENT ---
+// &lt;div className=&quot;absolute inset-0 z-20 flex flex-col items-center justify-end pb-28 px-6 text-center text-white&quot;&gt;
+
+//   Location tag:
+//   &lt;motion.p
+//     initial={{ opacity: 0, y: 10 }}
+//     animate={{ opacity: 1, y: 0 }}
+//     transition={{ duration: 0.8, delay: 0.2 }}
+//     className=&quot;font-[Jost] font-light text-xs tracking-[0.35em] uppercase text-white/70 mb-4&quot;
+//   &gt;
+//     CORNISH COAST, UK
+//   &lt;/motion.p&gt;
+
+//   Headline:
+//   &lt;motion.h1
+//     initial={{ opacity: 0, filter: &#39;blur(16px)&#39; }}
+//     animate={{ opacity: 1, filter: &#39;blur(0px)&#39; }}
+//     transition={{ duration: 1.2, delay: 0.4 }}
+//     className=&quot;font-[Cormorant_Garamond] font-bold italic text-white leading-tight
+//                text-[80px] max-md:text-[52px] max-sm:text-[40px] mb-3&quot;
+//   &gt;
+//     Where the world slows down.
+//   &lt;/motion.h1&gt;
+
+//   Subheading:
+//   &lt;motion.p
+//     initial={{ opacity: 0 }}
+//     animate={{ opacity: 1 }}
+//     transition={{ duration: 1, delay: 0.9 }}
+//     className=&quot;font-[Jost] font-light text-lg text-white/80 max-w-xl leading-relaxed mb-8&quot;
+//   &gt;
+//     A privately owned retreat for those who believe a great holiday should feel effortless.
+//     Arrive. Breathe. Stay a while.
+//   &lt;/motion.p&gt;
+
+//   --- AVAILABILITY WIDGET (GLASSMORPHISM) ---
+//   &lt;motion.div
+//     initial={{ opacity: 0, y: 20 }}
+//     animate={{ opacity: 1, y: 0 }}
+//     transition={{ duration: 0.8, delay: 1.1 }}
+//     className=&quot;bg-white/10 backdrop-blur-md border border-white/25 rounded-2xl px-8 py-6
+//                inline-flex flex-wrap gap-6 items-end max-sm:flex-col max-sm:w-full max-sm:px-4&quot;
+//   &gt;
+//     {/* CHECK IN field */}
+//     &lt;div className=&quot;flex flex-col gap-1&quot;&gt;
+//       &lt;label className=&quot;font-[Jost] font-light text-[10px] tracking-[0.25em] uppercase text-white/60&quot;&gt;
+//         CHECK IN
+//       &lt;/label&gt;
+//       &lt;input
+//         type=&quot;date&quot;
+//         className=&quot;bg-transparent border-b border-white/40 text-white font-[Jost] text-sm
+//                    py-1 focus:outline-none focus:border-white cursor-pointer w-36
+//                    [color-scheme:dark]&quot;
+//       /&gt;
+//     &lt;/div&gt;
+
+//     {/* CHECK OUT field */}
+//     &lt;div className=&quot;flex flex-col gap-1&quot;&gt;
+//       &lt;label className=&quot;font-[Jost] font-light text-[10px] tracking-[0.25em] uppercase text-white/60&quot;&gt;
+//         CHECK OUT
+//       &lt;/label&gt;
+//       &lt;input
+//         type=&quot;date&quot;
+//         className=&quot;bg-transparent border-b border-white/40 text-white font-[Jost] text-sm
+//                    py-1 focus:outline-none focus:border-white cursor-pointer w-36
+//                    [color-scheme:dark]&quot;
+//       /&gt;
+//     &lt;/div&gt;
+
+//     {/* GUESTS select */}
+//     &lt;div className=&quot;flex flex-col gap-1&quot;&gt;
+//       &lt;label className=&quot;font-[Jost] font-light text-[10px] tracking-[0.25em] uppercase text-white/60&quot;&gt;
+//         GUESTS
+//       &lt;/label&gt;
+//       &lt;select
+//         className=&quot;bg-transparent border-b border-white/40 text-white font-[Jost] text-sm
+//                    py-1 focus:outline-none focus:border-white cursor-pointer w-24 appearance-none&quot;
+//       &gt;
+//         {[1,2,3,4,5,6,7,8,9,10].map(n =&gt; (
+//           &lt;option key={n} value={n} className=&quot;text-[hsl(var(--foreground))]&quot;&gt;{n} {n === 1 ? &#39;guest&#39; : &#39;guests&#39;}&lt;/option&gt;
+//         ))}
+//       &lt;/select&gt;
+//     &lt;/div&gt;
+
+//     {/* Check Availability button */}
+//     &lt;button
+//       className=&quot;bg-white text-[hsl(var(--foreground))] font-[Jost] font-normal text-sm
+//                  px-6 py-2.5 rounded-full hover:bg-[hsl(var(--accent))] transition-colors
+//                  duration-300 whitespace-nowrap max-sm:w-full&quot;
+//     &gt;
+//       Check Availability
+//     &lt;/button&gt;
+//   &lt;/motion.div&gt;
+
+// &lt;/div&gt;
+
+// --- CROSSFADE DOT INDICATORS ---
+// &lt;div className=&quot;absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20&quot;&gt;
+//   {[0,1,2,3,4].map(i =&gt; (
+//     &lt;button
+//       key={i}
+//       onClick={() =&gt; setActiveIndex(i)}
+//       className={`w-2 h-2 rounded-full transition-all duration-300 ${
+//         activeIndex === i ? &#39;bg-white scale-125&#39; : &#39;bg-white/40&#39;
+//       }`}
+//       aria-label={`View image ${i + 1}`}
+//     /&gt;
+//   ))}
+// &lt;/div&gt;
+```
+
+---
+
+## SECTION 3: THE HOUSE
+
+```tsx
+// py-24 bg-white
+// max-w-7xl mx-auto px-6
+// Desktop: grid grid-cols-2 gap-16 items-center
+// Mobile: flex flex-col gap-12
+
+// LEFT COLUMN — Text
+
+// Eyebrow:
+// &lt;p className=&quot;font-[Jost] font-light text-xs tracking-[0.3em] uppercase text-[hsl(var(--muted-foreground))] mb-4&quot;&gt;
+//   THE PROPERTY
+// &lt;/p&gt;
+
+// Heading:
+// &lt;motion.h2
+//   initial={{ opacity: 0, y: 30 }}
+//   whileInView={{ opacity: 1, y: 0 }}
+//   viewport={{ once: true }}
+//   transition={{ duration: 0.8 }}
+//   className=&quot;font-[Cormorant_Garamond] font-bold italic text-[52px] max-md:text-[38px]
+//              text-[hsl(var(--foreground))] leading-tight mb-6&quot;
+// &gt;
+//   A house made for gathering.
+// &lt;/motion.h2&gt;
+
+// Body:
+// &lt;p className=&quot;font-[Jost] font-light text-base leading-relaxed text-[hsl(var(--muted-foreground))] mb-8&quot;&gt;
+//   Drift House sits on three acres of coastal land with uninterrupted views from every room.
+//   Built by the current owners as a family retreat and opened to guests in 2021, it sleeps 10
+//   across five bedrooms, each styled individually using local materials, antiques, and
+//   custom-made furniture. The kitchen is large enough for a chef and a crowd. The garden
+//   runs to the clifftop. And on a clear day, you can see the sea from every window on the
+//   south side of the house.
+// &lt;/p&gt;
+
+// PROPERTY STATS — row of 6 stats
+// &lt;div className=&quot;grid grid-cols-3 gap-y-6 gap-x-4 border-t border-[hsl(var(--border))] pt-8&quot;&gt;
+//   {[
+//     { number: &#39;5&#39;, label: &#39;Bedrooms&#39; },
+//     { number: &#39;10&#39;, label: &#39;Sleeps&#39; },
+//     { number: &#39;3&#39;, label: &#39;Bathrooms&#39; },
+//     { number: &#39;∞&#39;, label: &#39;Sea Views&#39; },
+//     { number: &#39;1&#39;, label: &#39;Private Garden&#39; },
+//     { number: &#39;3&#39;, label: &#39;Acres&#39; },
+//   ].map(stat =&gt; (
+//     &lt;div key={stat.label} className=&quot;flex flex-col&quot;&gt;
+//       &lt;span className=&quot;font-[Cormorant_Garamond] font-bold italic text-4xl
+//                        text-[hsl(var(--primary))] leading-none&quot;&gt;
+//         {stat.number}
+//       &lt;/span&gt;
+//       &lt;span className=&quot;font-[Jost] font-light text-sm text-[hsl(var(--muted-foreground))] mt-1&quot;&gt;
+//         {stat.label}
+//       &lt;/span&gt;
+//     &lt;/div&gt;
+//   ))}
+// &lt;/div&gt;
+
+// RIGHT COLUMN — 2×2 image grid
+// &lt;div className=&quot;grid grid-cols-2 gap-3&quot;&gt;
+
+//   {/* Image 1 */}
+//   {/* Image: panoramic sea view framed by a house window, interior windowsill detail in soft foreground, editorial lifestyle photography with a serene coastal mood */}
+//   &lt;div className=&quot;rounded-xl overflow-hidden h-56&quot;&gt;
+//     &lt;img src=&quot;&quot; alt=&quot;Sea view from Drift House window&quot; className=&quot;w-full h-full object-cover hover:scale-105 transition-transform duration-700&quot; /&gt;
+//   &lt;/div&gt;
+
+//   {/* Image 2 */}
+//   {/* Image: traditional stone fireplace in a cosy sitting room, armchairs with linen cushions on either side, warm evening light with a fire beginning to catch, interior lifestyle photography */}
+//   &lt;div className=&quot;rounded-xl overflow-hidden h-56&quot;&gt;
+//     &lt;img src=&quot;&quot; alt=&quot;Stone fireplace in Drift House living room&quot; className=&quot;w-full h-full object-cover hover:scale-105 transition-transform duration-700&quot; /&gt;
+//   &lt;/div&gt;
+
+//   {/* Image 3 */}
+//   {/* Image: spacious coastal-style kitchen with marble island, open shelving with local ceramics, morning light through a large window, warm and inviting domestic interior photography */}
+//   &lt;div className=&quot;rounded-xl overflow-hidden h-56&quot;&gt;
+//     &lt;img src=&quot;&quot; alt=&quot;Drift House kitchen with marble island&quot; className=&quot;w-full h-full object-cover hover:scale-105 transition-transform duration-700&quot; /&gt;
+//   &lt;/div&gt;
+
+//   {/* Image 4 */}
+//   {/* Image: wide wooden outdoor dining table set for ten people on a stone terrace, coastal plants and wildflowers in the background, golden hour light, lifestyle summer holiday photography */}
+//   &lt;div className=&quot;rounded-xl overflow-hidden h-56&quot;&gt;
+//     &lt;img src=&quot;&quot; alt=&quot;Outdoor dining terrace at Drift House&quot; className=&quot;w-full h-full object-cover hover:scale-105 transition-transform duration-700&quot; /&gt;
+//   &lt;/div&gt;
+
+// &lt;/div&gt;
+```
+
+---
+
+## SECTION 4: AMENITIES
+
+```tsx
+// &lt;section className=&quot;py-24 bg-[hsl(var(--muted))]&quot;&gt;
+// &lt;div className=&quot;max-w-7xl mx-auto px-6&quot;&gt;
+
+// Heading:
+// &lt;motion.h2
+//   initial={{ opacity: 0, y: 20 }}
+//   whileInView={{ opacity: 1, y: 0 }}
+//   viewport={{ once: true }}
+//   transition={{ duration: 0.7 }}
+//   className=&quot;font-[Cormorant_Garamond] font-bold italic text-[48px] max-md:text-[36px]
+//              text-[hsl(var(--foreground))] leading-tight text-center mb-4&quot;
+// &gt;
+//   Everything included.
+// &lt;/motion.h2&gt;
+// &lt;p className=&quot;font-[Jost] font-light text-center text-[hsl(var(--muted-foreground))] mb-14 text-base&quot;&gt;
+//   Nothing you&#39;ll need to bring, nothing you&#39;ll have to think about.
+// &lt;/p&gt;
+
+// Grid: grid grid-cols-4 max-xl:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 gap-4
+
+const amenities = [
+  {
+    icon: &#39;Waves&#39;, // lucide-react Waves
+    label: &#39;Private Beach Path&#39;,
+    description: &#39;Beach access via private gate, 5-minute walk from the house.&#39;,
+  },
+  {
+    icon: &#39;Droplets&#39;, // lucide-react Droplets
+    label: &#39;Hot Tub&#39;,
+    description: &#39;Outdoor 8-person hot tub, heated year-round, open-to-the-sky.&#39;,
+  },
+  {
+    icon: &#39;Wifi&#39;, // lucide-react Wifi
+    label: &#39;Fast WiFi&#39;,
+    description: &#39;Gigabit broadband throughout the property — work-from-anywhere ready.&#39;,
+  },
+  {
+    icon: &#39;Zap&#39;, // lucide-react Zap
+    label: &#39;EV Charging&#39;,
+    description: &#39;Two dedicated EV charging spaces, Tesla and universal compatible.&#39;,
+  },
+  {
+    icon: &#39;ShoppingBasket&#39;, // lucide-react ShoppingBasket
+    label: &#39;Welcome Hamper&#39;,
+    description: &#39;Locally sourced provisions, wine, and fresh flowers await your arrival.&#39;,
+  },
+  {
+    icon: &#39;UtensilsCrossed&#39;, // lucide-react UtensilsCrossed
+    label: &#39;Full Kitchen&#39;,
+    description: &#39;Professional range, espresso machine, dishwasher, and everything in between.&#39;,
+  },
+  {
+    icon: &#39;Flame&#39;, // lucide-react Flame
+    label: &#39;Wood Burner&#39;,
+    description: &#39;Cast iron log burner in the sitting room — logs and kindling provided.&#39;,
+  },
+  {
+    icon: &#39;PawPrint&#39;, // lucide-react PawPrint
+    label: &#39;Pet Friendly&#39;,
+    description: &#39;Well-behaved dogs welcome. £30 supplement per stay, towels provided.&#39;,
+  },
+  {
+    icon: &#39;Tv&#39;, // lucide-react Tv
+    label: &#39;Smart TV&#39;,
+    description: &#39;Netflix, Prime Video, and HDMI in every bedroom and the main sitting room.&#39;,
+  },
+  {
+    icon: &#39;ChefHat&#39;, // lucide-react ChefHat
+    label: &#39;Outdoor Dining&#39;,
+    description: &#39;Covered stone terrace with a gas BBQ, seating for 12, and string lights.&#39;,
+  },
+  {
+    icon: &#39;Gamepad2&#39;, // lucide-react Gamepad2
+    label: &#39;Games Room&#39;,
+    description: &#39;Pool table, table tennis, board games, and a record player.&#39;,
+  },
+  {
+    icon: &#39;Star&#39;, // lucide-react Star
+    label: &#39;Concierge Service&#39;,
+    description: &#39;Restaurant bookings, surf lessons, local experiences — just ask.&#39;,
+  },
+]
+
+// Each card:
+// &lt;motion.div
+//   key={amenity.label}
+//   initial={{ opacity: 0, y: 20 }}
+//   whileInView={{ opacity: 1, y: 0 }}
+//   viewport={{ once: true }}
+//   transition={{ duration: 0.5, delay: index * 0.05 }}
+//   className=&quot;bg-white rounded-xl p-6 text-center border border-[hsl(var(--border))]
+//              hover:shadow-md hover:border-[hsl(var(--primary)/0.3)] transition-all duration-300&quot;
+// &gt;
+//   &lt;div className=&quot;flex justify-center mb-3&quot;&gt;
+//     &lt;Icon className=&quot;w-6 h-6 text-[hsl(var(--primary))]&quot; /&gt; {/* lucide icon by name */}
+//   &lt;/div&gt;
+//   &lt;h3 className=&quot;font-[Jost] font-normal text-sm text-[hsl(var(--foreground))] mb-1.5&quot;&gt;
+//     {amenity.label}
+//   &lt;/h3&gt;
+//   &lt;p className=&quot;font-[Jost] font-light text-xs text-[hsl(var(--muted-foreground))] leading-relaxed&quot;&gt;
+//     {amenity.description}
+//   &lt;/p&gt;
+// &lt;/motion.div&gt;
+```
+
+---
+
+## SECTION 5: GALLERY
+
+```tsx
+// &lt;section className=&quot;py-24 bg-white&quot;&gt;
+// &lt;div className=&quot;max-w-7xl mx-auto px-6&quot;&gt;
+
+// Heading:
+// &lt;h2 className=&quot;font-[Cormorant_Garamond] font-bold italic text-[48px] text-[hsl(var(--foreground))]
+//                leading-tight mb-2&quot;&gt;
+//   See for yourself.
+// &lt;/h2&gt;
+// &lt;p className=&quot;font-[Jost] font-light text-[hsl(var(--muted-foreground))] mb-12&quot;&gt;
+//   Every corner of Drift House has been considered.
+// &lt;/p&gt;
+
+// Masonry-style 4-column grid desktop, 2-column mobile, gap-4
+// &lt;div className=&quot;columns-4 max-lg:columns-3 max-md:columns-2 max-sm:columns-1 gap-4 space-y-4&quot;&gt;
+
+// 8 gallery images with varied heights:
+
+// {/* Image: master bedroom at Drift House — floor-to-ceiling panoramic windows with morning ocean mist view, king bed with crisp white linen, organic cotton cushions, calm serene dawn atmosphere, luxury coastal interiors photography */}
+// &lt;div className=&quot;rounded-2xl overflow-hidden break-inside-avoid mb-4 h-80&quot;&gt;
+//   &lt;img src=&quot;&quot; alt=&quot;Master bedroom with ocean view&quot; className=&quot;w-full h-full object-cover hover:scale-[1.02] transition-transform duration-300&quot; /&gt;
+// &lt;/div&gt;
+
+// {/* Image: clawfoot roll-top bathtub positioned beside a bathroom window overlooking the sea, candles lit on the bath ledge, bath salts and folded white towels, luxury spa home atmosphere */}
+// &lt;div className=&quot;rounded-2xl overflow-hidden break-inside-avoid mb-4 h-64&quot;&gt;
+//   &lt;img src=&quot;&quot; alt=&quot;Bathroom with sea view and clawfoot tub&quot; className=&quot;w-full h-full object-cover hover:scale-[1.02] transition-transform duration-300&quot; /&gt;
+// &lt;/div&gt;
+
+// {/* Image: architectural detail of a spiral wooden staircase inside the house, white walls and natural oak treads, dramatic natural light from a high skylight, coastal house interior architecture photography */}
+// &lt;div className=&quot;rounded-2xl overflow-hidden break-inside-avoid mb-4 h-48&quot;&gt;
+//   &lt;img src=&quot;&quot; alt=&quot;Spiral staircase interior detail&quot; className=&quot;w-full h-full object-cover hover:scale-[1.02] transition-transform duration-300&quot; /&gt;
+// &lt;/div&gt;
+
+// {/* Image: the outdoor hot tub at dusk with the water steaming, string lights suspended above in the garden, the distant sea visible on the horizon, atmospheric twilight lifestyle photography */}
+// &lt;div className=&quot;rounded-2xl overflow-hidden break-inside-avoid mb-4 h-80&quot;&gt;
+//   &lt;img src=&quot;&quot; alt=&quot;Hot tub at twilight with sea horizon&quot; className=&quot;w-full h-full object-cover hover:scale-[1.02] transition-transform duration-300&quot; /&gt;
+// &lt;/div&gt;
+
+// {/* Image: cosy window seat reading nook with a harbour view, a pile of well-thumbed books, a mug of tea on the ledge, soft afternoon light, interior lifestyle home photography */}
+// &lt;div className=&quot;rounded-2xl overflow-hidden break-inside-avoid mb-4 h-64&quot;&gt;
+//   &lt;img src=&quot;&quot; alt=&quot;Window reading nook with harbour view&quot; className=&quot;w-full h-full object-cover hover:scale-[1.02] transition-transform duration-300&quot; /&gt;
+// &lt;/div&gt;
+
+// {/* Image: two children running across a wide private lawn with the ocean in the background, one child carrying a kite, summer holiday lifestyle family photography, warm and joyful */}
+// &lt;div className=&quot;rounded-2xl overflow-hidden break-inside-avoid mb-4 h-56&quot;&gt;
+//   &lt;img src=&quot;&quot; alt=&quot;Children playing on Drift House lawn&quot; className=&quot;w-full h-full object-cover hover:scale-[1.02] transition-transform duration-300&quot; /&gt;
+// &lt;/div&gt;
+
+// {/* Image: aerial view of a Cornish coastal village at dusk from above — winding narrow streets, white-painted houses, fishing boats moored in a small harbour, golden evening light */}
+// &lt;div className=&quot;rounded-2xl overflow-hidden break-inside-avoid mb-4 h-72&quot;&gt;
+//   &lt;img src=&quot;&quot; alt=&quot;Cornish coastal village at dusk aerial view&quot; className=&quot;w-full h-full object-cover hover:scale-[1.02] transition-transform duration-300&quot; /&gt;
+// &lt;/div&gt;
+
+// {/* Image: outdoor terrace breakfast scene — a wooden table set with pastries, fresh berries, sliced fruit, and a French press coffee, morning sea view in the background, lifestyle food photography with a holiday mood */}
+// &lt;div className=&quot;rounded-2xl overflow-hidden break-inside-avoid mb-4 h-56&quot;&gt;
+//   &lt;img src=&quot;&quot; alt=&quot;Breakfast on the terrace with sea view&quot; className=&quot;w-full h-full object-cover hover:scale-[1.02] transition-transform duration-300&quot; /&gt;
+// &lt;/div&gt;
+
+// &lt;/div&gt;
+```
+
+---
+
+## SECTION 6: LOCATION
+
+```tsx
+// &lt;section className=&quot;py-24 bg-[hsl(var(--accent)/0.4)]&quot;&gt;
+// &lt;div className=&quot;max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center&quot;&gt;
+
+// LEFT — Map placeholder
+// &lt;div className=&quot;bg-[hsl(var(--foreground)/0.06)] rounded-3xl h-96 flex flex-col items-center
+//                 justify-center text-center gap-3 border border-[hsl(var(--border))]&quot;&gt;
+//   &lt;span className=&quot;text-4xl&quot;&gt;📍&lt;/span&gt;
+//   &lt;p className=&quot;font-[Cormorant_Garamond] italic text-xl text-[hsl(var(--foreground))]&quot;&gt;
+//     Mawgan Porth, Cornwall
+//   &lt;/p&gt;
+//   &lt;p className=&quot;font-[Jost] font-light text-sm text-[hsl(var(--muted-foreground))]&quot;&gt;
+//     TR8 4BA
+//   &lt;/p&gt;
+//   &lt;p className=&quot;font-[Jost] font-light text-xs text-[hsl(var(--muted-foreground))] mt-2 max-w-[200px]&quot;&gt;
+//     Interactive map available on booking confirmation
+//   &lt;/p&gt;
+// &lt;/div&gt;
+
+// RIGHT — Location text
+// &lt;div&gt;
+//   &lt;p className=&quot;font-[Jost] font-light text-xs tracking-[0.3em] uppercase
+//                 text-[hsl(var(--muted-foreground))] mb-4&quot;&gt;
+//     GETTING THERE
+//   &lt;/p&gt;
+//   &lt;h2 className=&quot;font-[Cormorant_Garamond] font-bold italic text-[48px] max-md:text-[36px]
+//                  text-[hsl(var(--foreground))] leading-tight mb-6&quot;&gt;
+//     Where you&#39;ll wake up.
+//   &lt;/h2&gt;
+//   &lt;p className=&quot;font-[Jost] font-light text-base leading-relaxed text-[hsl(var(--muted-foreground))] mb-8&quot;&gt;
+//     Set in Mawgan Porth on the north Cornish coast — one of the least developed, most
+//     spectacularly beautiful stretches of coastline in England. The nearest beach is a
+//     5-minute walk. The nearest pub is 4 minutes. And the nearest city feels very, very
+//     far away. That is, we think, the point.
+//   &lt;/p&gt;
+
+//   Nearby list:
+//   &lt;ul className=&quot;space-y-3&quot;&gt;
+//     {[
+//       { emoji: &#39;🏖️&#39;, place: &#39;Mawgan Porth Beach&#39;, time: &#39;5 min walk&#39; },
+//       { emoji: &#39;🍺&#39;, place: &#39;The Merrymoor Inn&#39;, time: &#39;4 min walk&#39; },
+//       { emoji: &#39;☕&#39;, place: &#39;Retorrick Mill café&#39;, time: &#39;8 min drive&#39; },
+//       { emoji: &#39;🛒&#39;, place: &#39;Newquay (Tesco, restaurants)&#39;, time: &#39;12 min drive&#39; },
+//       { emoji: &#39;🏄&#39;, place: &#39;Surf hire &amp; lessons&#39;, time: &#39;15 min drive&#39; },
+//       { emoji: &#39;🏰&#39;, place: &#39;Tintagel Castle&#39;, time: &#39;40 min drive&#39; },
+//     ].map(item =&gt; (
+//       &lt;li key={item.place} className=&quot;flex items-center gap-3&quot;&gt;
+//         &lt;span className=&quot;text-lg&quot;&gt;{item.emoji}&lt;/span&gt;
+//         &lt;span className=&quot;font-[Jost] font-light text-sm text-[hsl(var(--foreground))]&quot;&gt;
+//           {item.place}
+//         &lt;/span&gt;
+//         &lt;span className=&quot;ml-auto font-[Jost] font-light text-xs text-[hsl(var(--muted-foreground))] whitespace-nowrap&quot;&gt;
+//           {item.time}
+//         &lt;/span&gt;
+//       &lt;/li&gt;
+//     ))}
+//   &lt;/ul&gt;
+
+// &lt;/div&gt;
+```
+
+---
+
+## SECTION 7: RATES &amp; AVAILABILITY
+
+```tsx
+// &lt;section className=&quot;py-24 bg-white&quot;&gt;
+// &lt;div className=&quot;max-w-4xl mx-auto px-6&quot;&gt;
+
+// Heading:
+// &lt;h2 className=&quot;font-[Cormorant_Garamond] font-bold italic text-[48px] text-[hsl(var(--foreground))]
+//                leading-tight mb-4&quot;&gt;
+//   Rates &amp; booking.
+// &lt;/h2&gt;
+// &lt;p className=&quot;font-[Jost] font-light text-[hsl(var(--muted-foreground))] mb-12 text-base leading-relaxed&quot;&gt;
+//   Drift House is available exclusively as a whole-property rental — no room shares, no
+//   other guests. What you see is what you get, from the first key to the last glass of wine.
+// &lt;/p&gt;
+
+// PRICING TABLE
+// &lt;div className=&quot;border border-[hsl(var(--border))] rounded-2xl overflow-hidden mb-8&quot;&gt;
+//   {[
+//     { season: &#39;Low Season&#39;, months: &#39;January – March, November&#39;, price: &#39;from £950&#39;, unit: &#39;/ week&#39; },
+//     { season: &#39;Mid Season&#39;, months: &#39;April – June, September – October&#39;, price: &#39;from £1,450&#39;, unit: &#39;/ week&#39; },
+//     { season: &#39;High Season&#39;, months: &#39;July – August&#39;, price: &#39;from £2,100&#39;, unit: &#39;/ week&#39; },
+//     { season: &#39;Christmas / New Year&#39;, months: &#39;Min. 4 nights&#39;, price: &#39;from £2,800&#39;, unit: &#39;/ stay&#39;, highlight: true },
+//   ].map((row, i) =&gt; (
+//     &lt;div
+//       key={row.season}
+//       className={`flex items-center justify-between px-8 py-6 border-b border-[hsl(var(--border))] last:border-b-0
+//         ${row.highlight ? &#39;bg-[hsl(var(--accent)/0.3)]&#39; : &#39;&#39;}`}
+//     &gt;
+//       &lt;div&gt;
+//         &lt;p className=&quot;font-[Cormorant_Garamond] font-semibold text-xl text-[hsl(var(--foreground))]&quot;&gt;
+//           {row.season}
+//         &lt;/p&gt;
+//         &lt;p className=&quot;font-[Jost] font-light text-sm text-[hsl(var(--muted-foreground))] mt-0.5&quot;&gt;
+//           {row.months}
+//         &lt;/p&gt;
+//       &lt;/div&gt;
+//       &lt;div className=&quot;text-right&quot;&gt;
+//         &lt;span className=&quot;font-[Cormorant_Garamond] font-bold italic text-3xl text-[hsl(var(--primary))]&quot;&gt;
+//           {row.price}
+//         &lt;/span&gt;
+//         &lt;span className=&quot;font-[Jost] font-light text-sm text-[hsl(var(--muted-foreground))] ml-1&quot;&gt;
+//           {row.unit}
+//         &lt;/span&gt;
+//       &lt;/div&gt;
+//     &lt;/div&gt;
+//   ))}
+// &lt;/div&gt;
+
+// Notes:
+// &lt;p className=&quot;font-[Jost] font-light text-sm text-[hsl(var(--muted-foreground))] leading-relaxed mb-10&quot;&gt;
+//   Prices based on whole-property rental (sleeps up to 10). Weekend breaks (3 nights minimum)
+//   available October through March — contact us for pricing. Cleaning fee: £180. Refundable
+//   damage deposit: £500, held until 48 hours after departure.
+// &lt;/p&gt;
+
+// CTAs:
+// &lt;div className=&quot;flex flex-wrap gap-4&quot;&gt;
+//   &lt;button className=&quot;bg-[hsl(var(--primary))] text-white font-[Jost] font-normal px-8 py-3
+//                      rounded-full text-base hover:opacity-90 transition-opacity&quot;&gt;
+//     Check Availability
+//   &lt;/button&gt;
+//   &lt;button className=&quot;border border-[hsl(var(--primary))] text-[hsl(var(--primary))] font-[Jost]
+//                      font-normal px-8 py-3 rounded-full text-base hover:bg-[hsl(var(--accent)/0.3)]
+//                      transition-colors&quot;&gt;
+//     Make an Enquiry
+//   &lt;/button&gt;
+// &lt;/div&gt;
+```
+
+---
+
+## SECTION 8: GUEST REVIEWS
+
+```tsx
+// &lt;section className=&quot;py-24 bg-[hsl(var(--muted))]&quot;&gt;
+// &lt;div className=&quot;max-w-7xl mx-auto px-6&quot;&gt;
+
+// Heading:
+// &lt;h2 className=&quot;font-[Cormorant_Garamond] font-bold italic text-[48px] max-md:text-[36px]
+//                text-[hsl(var(--foreground))] leading-tight text-center mb-14&quot;&gt;
+//   What our guests say.
+// &lt;/h2&gt;
+
+// 3-column grid desktop, 1-col mobile
+// &lt;div className=&quot;grid grid-cols-3 max-lg:grid-cols-1 gap-6&quot;&gt;
+
+const reviews = [
+  {
+    stars: 5,
+    quote: &quot;We booked Drift House for a milestone birthday and it was everything we hoped for. The house is even more beautiful than the photographs — the light that comes through those windows in the morning is something else entirely. The hot tub is a revelation, the location is just stunning, and we were a group of nine with room to breathe everywhere. We&#39;ve already looked at dates for next year.&quot;,
+    reviewer: &quot;The Morrison Family&quot;,
+    date: &quot;August&quot;,
+    context: &quot;Birthday celebration, 9 guests&quot;
+  },
+  {
+    stars: 5,
+    quote: &quot;We&#39;ve done a great many holiday lets over the years and this is, without question, the finest we&#39;ve ever stayed in. The beds are extraordinary — we haven&#39;t slept that well in years. The kitchen has everything you could want. And the view from the sitting room window is something that stays with you. We genuinely did not want to leave.&quot;,
+    reviewer: &quot;James &amp; Catherine W.&quot;,
+    date: &quot;September&quot;,
+    context: &quot;Anniversary stay&quot;
+  },
+  {
+    stars: 5,
+    quote: &quot;We brought our two dogs (the owners are brilliant about it — they left dog towels, water bowls, and a little note about the local dog-friendly beaches, which we thought was a lovely touch). The coastal walk from the front gate is spectacular. We can&#39;t recommend Drift House highly enough to anyone who loves the Cornish coast.&quot;,
+    reviewer: &quot;The Keller family&quot;,
+    date: &quot;October&quot;,
+    context: &quot;Family holiday with dogs&quot;
+  },
+]
+
+// Each card:
+// &lt;motion.div
+//   key={review.reviewer}
+//   initial={{ opacity: 0, y: 20 }}
+//   whileInView={{ opacity: 1, y: 0 }}
+//   viewport={{ once: true }}
+//   transition={{ duration: 0.6, delay: index * 0.15 }}
+//   className=&quot;bg-white rounded-2xl p-8 shadow-sm border border-[hsl(var(--border))]&quot;
+// &gt;
+//   {/* Stars */}
+//   &lt;div className=&quot;flex gap-1 mb-5&quot;&gt;
+//     {[...Array(review.stars)].map((_, s) =&gt; (
+//       &lt;Star key={s} className=&quot;w-4 h-4 fill-[hsl(var(--accent))] text-[hsl(var(--accent))]&quot; /&gt;
+//     ))}
+//   &lt;/div&gt;
+//   {/* Quote */}
+//   &lt;p className=&quot;font-[Jost] font-light italic text-base text-[hsl(var(--foreground))] leading-relaxed mb-6&quot;&gt;
+//     &quot;{review.quote}&quot;
+//   &lt;/p&gt;
+//   {/* Reviewer */}
+//   &lt;div className=&quot;border-t border-[hsl(var(--border))] pt-4&quot;&gt;
+//     &lt;p className=&quot;font-[Jost] font-normal text-sm text-[hsl(var(--foreground))]&quot;&gt;
+//       {review.reviewer}
+//     &lt;/p&gt;
+//     &lt;p className=&quot;font-[Jost] font-light text-xs text-[hsl(var(--muted-foreground))] mt-0.5&quot;&gt;
+//       {review.context} · {review.date}
+//     &lt;/p&gt;
+//   &lt;/div&gt;
+// &lt;/motion.div&gt;
+```
+
+---
+
+## SECTION 9: ENQUIRY / CONTACT
+
+```tsx
+// &lt;section className=&quot;py-24 bg-[hsl(var(--accent)/0.3)]&quot;&gt;
+// &lt;div className=&quot;max-w-xl mx-auto px-6 text-center&quot;&gt;
+
+// Heading:
+// &lt;h2 className=&quot;font-[Cormorant_Garamond] font-bold italic text-[48px] max-md:text-[36px]
+//                text-[hsl(var(--foreground))] leading-tight mb-4&quot;&gt;
+//   Plan your stay.
+// &lt;/h2&gt;
+// &lt;p className=&quot;font-[Jost] font-light text-base text-[hsl(var(--muted-foreground))] leading-relaxed mb-10&quot;&gt;
+//   Tell us a little about what you&#39;re planning and we&#39;ll get back to you within 24 hours.
+//   We love hearing about the occasion — whether it&#39;s a landmark birthday, a family reunion,
+//   or simply a long overdue escape.
+// &lt;/p&gt;
+
+// FORM — all fields left-aligned, labels above inputs
+// &lt;form className=&quot;text-left space-y-5&quot;&gt;
+
+//   Name:
+//   &lt;div&gt;
+//     &lt;label className=&quot;font-[Jost] font-light text-xs tracking-[0.2em] uppercase
+//                        text-[hsl(var(--muted-foreground))] block mb-1.5&quot;&gt;Name&lt;/label&gt;
+//     &lt;input type=&quot;text&quot; placeholder=&quot;Your full name&quot;
+//            className=&quot;w-full border border-[hsl(var(--border))] rounded-lg px-4 py-3
+//                       font-[Jost] font-light text-sm focus:outline-none
+//                       focus:border-[hsl(var(--primary))] transition-colors bg-white&quot; /&gt;
+//   &lt;/div&gt;
+
+//   Email:
+//   &lt;div&gt;
+//     &lt;label className=&quot;font-[Jost] font-light text-xs tracking-[0.2em] uppercase
+//                        text-[hsl(var(--muted-foreground))] block mb-1.5&quot;&gt;Email address&lt;/label&gt;
+//     &lt;input type=&quot;email&quot; placeholder=&quot;hello@yourname.com&quot;
+//            className=&quot;w-full border border-[hsl(var(--border))] rounded-lg px-4 py-3
+//                       font-[Jost] font-light text-sm focus:outline-none
+//                       focus:border-[hsl(var(--primary))] transition-colors bg-white&quot; /&gt;
+//   &lt;/div&gt;
+
+//   Phone:
+//   &lt;div&gt;
+//     &lt;label className=&quot;font-[Jost] font-light text-xs tracking-[0.2em] uppercase
+//                        text-[hsl(var(--muted-foreground))] block mb-1.5&quot;&gt;Phone number&lt;/label&gt;
+//     &lt;input type=&quot;tel&quot; placeholder=&quot;+44 7700 000000&quot;
+//            className=&quot;w-full border border-[hsl(var(--border))] rounded-lg px-4 py-3
+//                       font-[Jost] font-light text-sm focus:outline-none
+//                       focus:border-[hsl(var(--primary))] transition-colors bg-white&quot; /&gt;
+//   &lt;/div&gt;
+
+//   Two-column row: Arrival date + Departure date
+//   &lt;div className=&quot;grid grid-cols-2 gap-4&quot;&gt;
+//     &lt;div&gt;
+//       &lt;label className=&quot;font-[Jost] font-light text-xs tracking-[0.2em] uppercase
+//                          text-[hsl(var(--muted-foreground))] block mb-1.5&quot;&gt;Arrival date&lt;/label&gt;
+//       &lt;input type=&quot;date&quot;
+//              className=&quot;w-full border border-[hsl(var(--border))] rounded-lg px-4 py-3
+//                         font-[Jost] font-light text-sm focus:outline-none
+//                         focus:border-[hsl(var(--primary))] transition-colors bg-white&quot; /&gt;
+//     &lt;/div&gt;
+//     &lt;div&gt;
+//       &lt;label className=&quot;font-[Jost] font-light text-xs tracking-[0.2em] uppercase
+//                          text-[hsl(var(--muted-foreground))] block mb-1.5&quot;&gt;Departure date&lt;/label&gt;
+//       &lt;input type=&quot;date&quot;
+//              className=&quot;w-full border border-[hsl(var(--border))] rounded-lg px-4 py-3
+//                         font-[Jost] font-light text-sm focus:outline-none
+//                         focus:border-[hsl(var(--primary))] transition-colors bg-white&quot; /&gt;
+//     &lt;/div&gt;
+//   &lt;/div&gt;
+
+//   Guests:
+//   &lt;div&gt;
+//     &lt;label className=&quot;font-[Jost] font-light text-xs tracking-[0.2em] uppercase
+//                        text-[hsl(var(--muted-foreground))] block mb-1.5&quot;&gt;Number of guests&lt;/label&gt;
+//     &lt;select className=&quot;w-full border border-[hsl(var(--border))] rounded-lg px-4 py-3
+//                        font-[Jost] font-light text-sm focus:outline-none
+//                        focus:border-[hsl(var(--primary))] transition-colors bg-white appearance-none&quot;&gt;
+//       {[2,3,4,5,6,7,8,9,10].map(n =&gt; (
+//         &lt;option key={n}&gt;{n} guests&lt;/option&gt;
+//       ))}
+//     &lt;/select&gt;
+//   &lt;/div&gt;
+
+//   How did you hear:
+//   &lt;div&gt;
+//     &lt;label className=&quot;font-[Jost] font-light text-xs tracking-[0.2em] uppercase
+//                        text-[hsl(var(--muted-foreground))] block mb-1.5&quot;&gt;How did you hear about us?&lt;/label&gt;
+//     &lt;select className=&quot;w-full border border-[hsl(var(--border))] rounded-lg px-4 py-3
+//                        font-[Jost] font-light text-sm focus:outline-none
+//                        focus:border-[hsl(var(--primary))] transition-colors bg-white appearance-none&quot;&gt;
+//       &lt;option&gt;Airbnb listing&lt;/option&gt;
+//       &lt;option&gt;Instagram&lt;/option&gt;
+//       &lt;option&gt;Word of mouth / friend recommendation&lt;/option&gt;
+//       &lt;option&gt;Google search&lt;/option&gt;
+//       &lt;option&gt;Cornwall holiday guide&lt;/option&gt;
+//       &lt;option&gt;Other&lt;/option&gt;
+//     &lt;/select&gt;
+//   &lt;/div&gt;
+
+//   Message:
+//   &lt;div&gt;
+//     &lt;label className=&quot;font-[Jost] font-light text-xs tracking-[0.2em] uppercase
+//                        text-[hsl(var(--muted-foreground))] block mb-1.5&quot;&gt;
+//       Tell us about your stay (optional)
+//     &lt;/label&gt;
+//     &lt;textarea rows={4}
+//               placeholder=&quot;Is it a special occasion? Are you bringing children or dogs? Any questions about the property or the area?&quot;
+//               className=&quot;w-full border border-[hsl(var(--border))] rounded-lg px-4 py-3
+//                          font-[Jost] font-light text-sm focus:outline-none
+//                          focus:border-[hsl(var(--primary))] transition-colors bg-white resize-none&quot; /&gt;
+//   &lt;/div&gt;
+
+//   Submit:
+//   &lt;button type=&quot;submit&quot;
+//           className=&quot;w-full bg-[hsl(var(--primary))] text-white font-[Jost] font-normal
+//                      text-base py-4 rounded-full hover:opacity-90 transition-opacity mt-2&quot;&gt;
+//     Send Enquiry
+//   &lt;/button&gt;
+
+// &lt;/form&gt;
+```
+
+---
+
+## SECTION 10: FOOTER
+
+```tsx
+// &lt;footer className=&quot;bg-[hsl(var(--foreground))] text-[hsl(var(--accent))] py-16&quot;&gt;
+// &lt;div className=&quot;max-w-7xl mx-auto px-6&quot;&gt;
+
+//   Top row: logo + tagline left, links right
+//   &lt;div className=&quot;flex flex-col lg:flex-row justify-between items-start gap-12 pb-12
+//                   border-b border-white/10&quot;&gt;
+
+//     {/* Brand */}
+//     &lt;div className=&quot;max-w-xs&quot;&gt;
+//       &lt;p className=&quot;font-[Cormorant_Garamond] font-bold italic text-[hsl(var(--accent))] text-3xl mb-2&quot;&gt;
+//         DRIFT HOUSE
+//       &lt;/p&gt;
+//       &lt;p className=&quot;font-[Jost] font-light text-sm text-white/50 leading-relaxed&quot;&gt;
+//         Where the world slows down.
+//       &lt;/p&gt;
+//       &lt;p className=&quot;font-[Jost] font-light text-sm text-white/40 mt-4&quot;&gt;
+//         A privately owned holiday property on the Cornish coast, available for whole-house rental.
+//       &lt;/p&gt;
+//     &lt;/div&gt;
+
+//     {/* Nav links */}
+//     &lt;nav className=&quot;flex flex-wrap gap-x-10 gap-y-3&quot;&gt;
+//       {[&#39;The House&#39;, &#39;Amenities&#39;, &#39;Location&#39;, &#39;Gallery&#39;, &#39;Reviews&#39;, &#39;Enquire&#39;].map(link =&gt; (
+//         &lt;a key={link} href=&quot;#&quot;
+//            className=&quot;font-[Jost] font-light text-sm text-white/60 hover:text-[hsl(var(--accent))]
+//                       transition-colors&quot;&gt;
+//           {link}
+//         &lt;/a&gt;
+//       ))}
+//     &lt;/nav&gt;
+
+//   &lt;/div&gt;
+
+//   Bottom row:
+//   &lt;div className=&quot;flex flex-col md:flex-row justify-between items-center gap-4 pt-8&quot;&gt;
+
+//     {/* Address */}
+//     &lt;p className=&quot;font-[Jost] font-light text-xs text-white/40&quot;&gt;
+//       📍 Mawgan Porth, Cornwall, TR8 4BA
+//     &lt;/p&gt;
+
+//     {/* Social icons */}
+//     &lt;div className=&quot;flex items-center gap-5&quot;&gt;
+//       &lt;a href=&quot;#&quot; aria-label=&quot;Instagram&quot;
+//          className=&quot;text-white/40 hover:text-[hsl(var(--accent))] transition-colors&quot;&gt;
+//         &lt;Instagram className=&quot;w-5 h-5&quot; /&gt;
+//       &lt;/a&gt;
+//       &lt;a href=&quot;#&quot; aria-label=&quot;Airbnb listing&quot;
+//          className=&quot;font-[Jost] font-light text-xs text-white/40 hover:text-[hsl(var(--accent))] transition-colors&quot;&gt;
+//         Airbnb listing →
+//       &lt;/a&gt;
+//     &lt;/div&gt;
+
+//     {/* Copyright */}
+//     &lt;p className=&quot;font-[Jost] font-light text-xs text-white/30&quot;&gt;
+//       © 2025 Drift House. All rights reserved.
+//     &lt;/p&gt;
+
+//   &lt;/div&gt;
+
+// &lt;/div&gt;
+```
+
+---
+
+## COMPLETE IMPLEMENTATION NOTES
+
+### Dependencies to install:
+```bash
+npm install framer-motion lucide-react
+npx shadcn-ui@latest init
+npx shadcn-ui@latest add button input select textarea card accordion toast
+```
+
+### Key React state variables:
+```tsx
+const [activeIndex, setActiveIndex] = useState(0)        // Hero gallery
+const [scrolled, setScrolled] = useState(false)           // Navbar scroll state
+const [navOpen, setNavOpen] = useState(false)             // Mobile nav
+```
+
+### Hero gallery interval:
+```tsx
+useEffect(() =&gt; {
+  const interval = setInterval(() =&gt; {
+    setActiveIndex(prev =&gt; (prev + 1) % 5)
+  }, 4000) // 4 seconds per image
+  return () =&gt; clearInterval(interval)
+}, [])
+```
+
+### Scroll listener:
+```tsx
+useEffect(() =&gt; {
+  const handleScroll = () =&gt; setScrolled(window.scrollY &gt; 60)
+  window.addEventListener(&#39;scroll&#39;, handleScroll, { passive: true })
+  return () =&gt; window.removeEventListener(&#39;scroll&#39;, handleScroll)
+}, [])
+```
+
+### Global CSS additions:
+```css
+* { font-family: &#39;Jost&#39;, sans-serif; }
+h1, h2, h3, .heading { font-family: &#39;Cormorant Garamond&#39;, serif; }
+html { scroll-behavior: smooth; }
+```
+
+### Performance notes:
+- Preload the first hero image with `&lt;link rel=&quot;preload&quot; as=&quot;image&quot; href=&quot;&quot; /&gt;`
+- Use `loading=&quot;lazy&quot;` on all gallery images below the fold
+- The crossfade gallery uses CSS opacity transitions — no JS animation library needed for this effect
+- Framer Motion used only for entrance animations (whileInView, initial/animate)
+
+### Accessibility:
+- All images have descriptive `alt` text
+- Dot indicators have `aria-label` props
+- Form fields all have associated `&lt;label&gt;` elements
+- Focus states are visible on all interactive elements
+- Colour contrast ratios meet WCAG AA on all text/background combinations
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

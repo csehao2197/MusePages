@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Seren. | The art of coming back to yourself | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Seren. | The art of coming back to yourself</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Spa &amp; Wellness Website — SEREN
+
+Build a luxury spa and wellness center website called &quot;SEREN&quot; — warm cream background, terracotta accent (#B5694A), Cormorant Garamond serif italic display typography mixed with Inter. Airy, feminine, premium. Oval-cropped service images, split-layout sections, and a tabbed booking/pricing section. Inspired by high-end Russian wellness clinics and European day spas.
+
+---
+
+## Tech Stack
+
+```
+React + Vite + TypeScript + Tailwind CSS + Framer Motion (motion/react) + lucide-react
+```
+
+---
+
+## Design System
+
+```css
+:root {
+  --background: 36 40% 97%;         /* warm cream #FAF8F5 */
+  --foreground: 20 35% 11%;         /* deep warm brown #231710 */
+  --primary: 18 43% 50%;            /* terracotta #B5694A */
+  --primary-foreground: 36 40% 97%;
+  --muted: 32 30% 91%;              /* warm sand #F0EBE3 */
+  --muted-foreground: 20 12% 49%;   /* warm taupe #8A7A72 */
+  --border: 25 20% 87%;             /* soft warm border #E5DDD5 */
+  --card: 36 35% 95%;
+}
+```
+
+---
+
+## Typography
+
+```html
+&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&amp;family=Inter:wght@400;500;600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+```
+
+- **Display headings**: Cormorant Garamond — mix regular + italic within same heading for editorial contrast
+- **Section headings**: Cormorant Garamond 600, not italic
+- **Body / UI / labels**: Inter 400–500
+- **Accent labels**: Inter 500, uppercase, tracking-[0.18em], text-xs, text-primary
+
+**Heading mix pattern** (key visual signature of this design):
+```tsx
+// Regular word + italic word in same line — creates editorial luxury feel
+&lt;h2 className=&quot;font-[&#39;Cormorant_Garamond&#39;] text-5xl leading-tight&quot;&gt;
+  Philosophy of{&quot; &quot;}
+  &lt;em className=&quot;italic font-light&quot;&gt;perfection&lt;/em&gt;
+&lt;/h2&gt;
+```
+
+---
+
+## Button System — Apply to every button, no exceptions
+
+```tsx
+// Small — navbar, links
+className=&quot;h-10 px-6 rounded-full inline-flex items-center justify-center gap-2 shrink-0 whitespace-nowrap text-sm font-medium transition-all duration-200&quot;
+
+// Default CTA — section buttons
+className=&quot;h-12 px-8 rounded-full inline-flex items-center justify-center gap-2 shrink-0 whitespace-nowrap text-sm font-medium transition-all duration-200&quot;
+
+// Large CTA — hero, booking
+className=&quot;h-13 px-10 rounded-full inline-flex items-center justify-center gap-2 shrink-0 whitespace-nowrap text-base font-medium transition-all duration-200&quot;
+```
+
+Note: use `rounded-full` throughout — pill buttons suit the spa aesthetic. Never `rounded-xl` or `rounded-lg` in this design.
+- Always explicit `h-{n}` height — never rely on padding alone
+- Always `inline-flex items-center justify-center`
+- Always `shrink-0 whitespace-nowrap`
+- Icons: `w-4 h-4 shrink-0`
+
+---
+
+## Visual Effects
+
+### 1. Oval image treatment — services section signature
+
+```tsx
+// Portrait oval: aspect-ratio 3/4, fully rounded
+&lt;div className=&quot;w-[200px] aspect-[3/4] rounded-[50%] overflow-hidden shrink-0&quot;&gt;
+  &lt;img src=&quot;&quot; alt=&quot;...&quot; className=&quot;w-full h-full object-cover object-center&quot; /&gt;
+&lt;/div&gt;
+
+// Landscape oval: aspect-ratio 4/3, fully rounded
+&lt;div className=&quot;w-[260px] aspect-[4/3] rounded-[50%] overflow-hidden shrink-0&quot;&gt;
+  &lt;img src=&quot;&quot; alt=&quot;...&quot; className=&quot;w-full h-full object-cover object-center&quot; /&gt;
+&lt;/div&gt;
+```
+
+### 2. Staggered fade-up (Framer Motion)
+
+```tsx
+initial={{ opacity: 0, y: 24 }}
+whileInView={{ opacity: 1, y: 0 }}
+transition={{ duration: 0.6, ease: &quot;easeOut&quot;, delay: index * 0.1 }}
+viewport={{ once: true, margin: &quot;-60px&quot; }}
+```
+
+### 3. Horizontal services scroll (desktop + mobile)
+
+```tsx
+// Scrollable row of oval-cropped service images
+// Desktop: overflow-x-auto, snap-x snap-mandatory, scrollbar hidden
+// Mobile: same behavior, touch-pan-x
+&lt;div className=&quot;flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-hide&quot;&gt;
+  {services.map(s =&gt; (
+    &lt;div key={s} className=&quot;flex flex-col items-center gap-4 shrink-0 snap-start&quot;&gt;
+      {/* oval image */}
+      {/* service name label below */}
+    &lt;/div&gt;
+  ))}
+&lt;/div&gt;
+```
+
+### 4. Warm gradient hero overlay
+
+```tsx
+// On hero image — warm cream fades in from bottom, not black
+&lt;div className=&quot;absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[hsl(var(--background))]&quot; /&gt;
+&lt;div className=&quot;absolute inset-0 bg-gradient-to-r from-[hsl(var(--background))/80] to-transparent&quot; /&gt;
+```
+
+### 5. Tabbed pricing section
+
+```tsx
+// Three tabs: Silver | Diamond | Gold
+// Active tab: bottom border-b-2 border-primary, text-foreground
+// Inactive: text-muted-foreground, hover:text-foreground
+// Tab content animates: opacity 0 → 1, y 8 → 0 on tab switch, duration 0.3s
+const [activeTab, setActiveTab] = useState(&quot;Diamond&quot;)
+```
+
+---
+
+## Component Breakdown
+
+### 1 — Navbar
+
+- Fixed top, h-[64px], z-50, bg-[hsl(var(--background))]/90 backdrop-blur-md
+- Border-bottom: 1px solid hsl(var(--border))
+- max-w-[1120px] mx-auto px-6, flex justify-between items-center
+- Left: `&lt;span className=&quot;font-[&#39;Cormorant_Garamond&#39;] text-xl font-semibold italic tracking-wide text-[hsl(var(--foreground))]&quot;&gt;Seren.&lt;/span&gt;`
+- Center (desktop): nav links `text-sm font-medium text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] transition-colors` — &quot;Home · Services · Specialists · Blog · Wellness · Contact&quot;
+- Right:
+  ```tsx
+  &lt;button className=&quot;h-10 px-6 rounded-full inline-flex items-center justify-center gap-2 shrink-0 whitespace-nowrap bg-[hsl(var(--primary))] text-white text-sm font-medium hover:opacity-90 transition-opacity&quot;&gt;
+    Book Now
+  &lt;/button&gt;
+  ```
+- Mobile: logo left + Book Now button right, center nav hidden
+
+---
+
+### 2 — Hero
+
+- `min-h-[90vh] relative flex items-center overflow-hidden`
+
+```tsx
+{/* Image: woman receiving luxury facial treatment in elegant spa, warm golden light, cream and beige tones, soft focus background, serene expression, professional wellness photography */}
+&lt;img
+  src=&quot;&quot;
+  alt=&quot;Luxury spa facial treatment&quot;
+  className=&quot;absolute inset-0 w-full h-full object-cover object-center&quot;
+/&gt;
+{/* Warm overlay — cream from bottom, soft left panel */}
+&lt;div className=&quot;absolute inset-0 bg-gradient-to-b from-transparent via-[hsl(36,40%,97%,0.1)] to-[hsl(var(--background))]&quot; /&gt;
+&lt;div className=&quot;absolute inset-0 bg-gradient-to-r from-[hsl(var(--background))/85] via-[hsl(var(--background))/40] to-transparent&quot; /&gt;
+```
+
+- Content: `relative z-10 max-w-[1120px] mx-auto px-6 w-full`
+- Inner: `max-w-[560px]`
+
+**Label:** `text-xs font-medium uppercase tracking-[0.2em] text-[hsl(var(--primary))] mb-6` — &quot;Wellness Center &amp; Clinic&quot;
+
+**H1:**
+```tsx
+&lt;h1 className=&quot;font-[&#39;Cormorant_Garamond&#39;] font-medium leading-[1.08] text-[hsl(var(--foreground))]&quot;
+    style={{ fontSize: &quot;clamp(3rem, 6vw, 5.5rem)&quot; }}&gt;
+  Center of complete&lt;br /&gt;
+  beauty, recovery&lt;br /&gt;
+  and &lt;em className=&quot;italic font-light text-[hsl(var(--primary))]&quot;&gt;rejuvenation.&lt;/em&gt;
+&lt;/h1&gt;
+```
+
+**Sub:** `text-sm text-[hsl(var(--muted-foreground))] mt-6 leading-relaxed max-w-[380px]` — &quot;We help you create a culture of care and a new approach to balance and genuine love for yourself.&quot;
+
+**CTAs:** `flex gap-3 mt-9 flex-wrap`
+```tsx
+&lt;button className=&quot;h-12 px-8 rounded-full inline-flex items-center justify-center gap-2 shrink-0 whitespace-nowrap bg-[hsl(var(--primary))] text-white text-sm font-medium hover:opacity-90 transition-opacity&quot;&gt;
+  Book a Session
+&lt;/button&gt;
+&lt;button className=&quot;h-12 px-8 rounded-full inline-flex items-center justify-center gap-2 shrink-0 whitespace-nowrap border border-[hsl(var(--border))] text-[hsl(var(--foreground))] text-sm font-medium hover:border-[hsl(var(--primary))] transition-colors&quot;&gt;
+  Our Services
+&lt;/button&gt;
+```
+
+**Small image grid** — floating bottom-right on desktop (hidden mobile):
+```tsx
+&lt;div className=&quot;absolute bottom-8 right-8 grid grid-cols-2 gap-2 hidden md:grid&quot;&gt;
+  {/* 4 small oval images: massage hands, facial close-up, spa interior, skincare products */}
+  {/* Each: w-24 h-28 rounded-[50%] overflow-hidden */}
+  {[
+    &quot;close-up of therapist hands performing back massage, warm spa lighting, soft focus&quot;,
+    &quot;woman relaxing during facial treatment, cucumber on eyes, white towel, serene spa&quot;,
+    &quot;luxury spa interior with candles, stone basins, warm amber lighting, zen atmosphere&quot;,
+    &quot;premium skincare products arranged on marble surface, cream and gold packaging&quot;
+  ].map((desc, i) =&gt; (
+    &lt;div key={i} className=&quot;w-24 h-28 rounded-[50%] overflow-hidden border-2 border-[hsl(var(--background))]&quot;&gt;
+      {/* Image: {desc} */}
+      &lt;img src=&quot;&quot; alt=&quot;Spa detail&quot; className=&quot;w-full h-full object-cover object-center&quot; /&gt;
+    &lt;/div&gt;
+  ))}
+&lt;/div&gt;
+```
+
+---
+
+### 3 — About / Philosophy
+
+- `py-24 md:py-32 bg-[hsl(var(--background))]`
+- max-w-[1120px] mx-auto px-6
+- `grid grid-cols-1 md:grid-cols-2 gap-16 items-center`
+
+**Left — text:**
+- Label: `text-xs font-medium uppercase tracking-[0.2em] text-[hsl(var(--primary))] mb-5` — &quot;About Us&quot;
+- H2:
+  ```tsx
+  &lt;h2 className=&quot;font-[&#39;Cormorant_Garamond&#39;] font-medium leading-tight text-[hsl(var(--foreground))]&quot;
+      style={{ fontSize: &quot;clamp(2.4rem,4vw,3.8rem)&quot; }}&gt;
+    Philosophy of perfection&lt;br /&gt;
+    and a new approach to the{&quot; &quot;}
+    &lt;em className=&quot;italic font-light&quot;&gt;balance of life&lt;/em&gt;
+  &lt;/h2&gt;
+  ```
+- Body: `text-sm text-[hsl(var(--muted-foreground))] leading-relaxed mt-6` — &quot;We help create a culture of care and a new approach to balance — and genuine love for yourself. Each visit is a step toward the best version of you.&quot;
+- CTA:
+  ```tsx
+  &lt;button className=&quot;mt-8 h-12 px-8 rounded-full inline-flex items-center justify-center gap-2 shrink-0 whitespace-nowrap border border-[hsl(var(--primary))] text-[hsl(var(--primary))] text-sm font-medium hover:bg-[hsl(var(--primary))] hover:text-white transition-all&quot;&gt;
+    Book a Session
+  &lt;/button&gt;
+  ```
+
+**Right — 4 feature rows:**
+```tsx
+&lt;div className=&quot;flex flex-col gap-5&quot;&gt;
+  {features.map((f, i) =&gt; (
+    &lt;div key={i} className=&quot;flex gap-4 p-4 rounded-2xl bg-[hsl(var(--muted))] border border-[hsl(var(--border))]&quot;&gt;
+      {/* small oval image */}
+      &lt;div className=&quot;w-14 h-16 rounded-[50%] overflow-hidden shrink-0&quot;&gt;
+        &lt;img src=&quot;&quot; alt={f.title} className=&quot;w-full h-full object-cover object-center&quot; /&gt;
+      &lt;/div&gt;
+      &lt;div&gt;
+        &lt;p className=&quot;text-sm font-semibold text-[hsl(var(--foreground))] mb-1&quot;&gt;{f.title}&lt;/p&gt;
+        &lt;p className=&quot;text-xs text-[hsl(var(--muted-foreground))] leading-relaxed&quot;&gt;{f.body}&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  ))}
+&lt;/div&gt;
+```
+
+Feature rows data (4 items):
+
+| Title | Body | Image brief |
+|---|---|---|
+| Signature &amp; Personalized Method | Correction methodology HN Maros | therapist applying facial serum, close-up skilled hands, warm spa lighting |
+| Wide Range of Procedures | Over 60 unique aesthetic and medical procedures | range of professional beauty tools on white marble, organized, clean |
+| Innovative Equipment | Premium European medical grade equipment | modern spa treatment device, clinical aesthetic, clean white tones |
+| Premium Cosmetology | Linda Kristel, Thalasso, Ren, JULIETTE ARMAND | luxury skincare brand products, elegant bottles, warm cream tones |
+
+---
+
+### 4 — Services
+
+- `py-24 md:py-32 bg-[hsl(var(--muted))]`
+- max-w-[1120px] mx-auto px-6
+- Label + H2 left-aligned:
+  - Label: &quot;Our Services&quot;
+  - H2: `font-[&#39;Cormorant_Garamond&#39;] font-medium text-4xl md:text-5xl` — `Our top &lt;em className=&quot;italic font-light&quot;&gt;services&lt;/em&gt;`
+- Top-right: `&lt;button className=&quot;h-10 px-6 rounded-full inline-flex items-center justify-center gap-2 shrink-0 whitespace-nowrap border border-[hsl(var(--border))] text-sm font-medium hover:border-[hsl(var(--primary))] transition-colors&quot;&gt;All services&lt;/button&gt;`
+- Horizontal scroll row — `mt-12 flex gap-8 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-hide`
+
+Each service item: `flex flex-col items-center gap-3 shrink-0 snap-start cursor-pointer group`
+- Oval image: `w-[190px] h-[240px] rounded-[50%] overflow-hidden group-hover:opacity-90 transition-opacity`
+- Label: `text-sm font-medium text-[hsl(var(--foreground))] text-center`
+
+Services (8 items):
+
+| Name | Image brief |
+|---|---|
+| Facials | woman receiving facial massage, eyes closed, serene, white spa towel, soft warm lighting |
+| Swedish Massage | therapist performing back massage, hotel spa setting, warm amber candles |
+| Body Scrubs | body scrub treatment hands on back, exfoliation, warm spa, natural textures |
+| Manicure | close-up elegant manicure hands, neutral nails, clean spa aesthetic |
+| Injectable Cosmetology | clinical aesthetic treatment close-up, professional medical spa setting |
+| Yoga &amp; Pilates | woman in elegant yoga pose, studio with natural light, white and wood tones |
+| IV Therapy | wellness drip therapy, clean clinical spa setting, soft light |
+| Diagnostics | wellness consultation, professional spa clinic, calm and organized space |
+
+---
+
+### 5 — Team / Specialists
+
+- `py-24 md:py-32 bg-[hsl(var(--background))]`
+- max-w-[1120px] mx-auto px-6
+- Header row: `flex justify-between items-end mb-12`
+  - H2: `font-[&#39;Cormorant_Garamond&#39;] font-medium text-4xl md:text-5xl` — `Team of leading &lt;em className=&quot;italic font-light&quot;&gt;professionals&lt;/em&gt;`
+  - Arrow buttons: `flex gap-2` — two `&lt;button&gt;` each `w-10 h-10 rounded-full inline-flex items-center justify-center border border-[hsl(var(--border))] hover:border-[hsl(var(--primary))] transition-colors shrink-0`
+    - lucide `ChevronLeft` and `ChevronRight`, `w-4 h-4`
+- Horizontal scroll: `flex gap-6 overflow-x-auto scrollbar-hide pb-2`
+
+Specialist card: `shrink-0 w-[200px]`
+- Portrait photo: `w-full h-[260px] rounded-2xl overflow-hidden mb-3`
+  ```tsx
+  {/* Image: professional female spa therapist, white uniform, warm neutral studio background, clean portrait photography */}
+  &lt;img src=&quot;&quot; alt=&quot;Spa specialist&quot; className=&quot;w-full h-full object-cover object-center&quot; /&gt;
+  ```
+- Name: `text-sm font-semibold text-[hsl(var(--foreground))]`
+- Role: `text-xs text-[hsl(var(--muted-foreground))] mt-0.5`
+
+Specialists (6):
+
+| Name | Role |
+|---|---|
+| Tatyana Merzaeva | Head Cosmetologist |
+| Polina Voronova | Massage Therapist |
+| Liliya Khusnutdinova | Yoga &amp; Wellness Coach |
+| Luiza Murzagalieva | Injectable Specialist |
+| Oksana Timchenko | Aesthetic Nurse |
+| Alina Saifulina | Beauty Therapist |
+
+---
+
+### 6 — Booking / Pricing
+
+- `py-24 md:py-32 bg-[hsl(var(--muted))]`
+- max-w-[1120px] mx-auto px-6 text-center
+- H2: `font-[&#39;Cormorant_Garamond&#39;] font-medium text-4xl md:text-5xl mb-12` — `Book an &lt;em className=&quot;italic font-light&quot;&gt;appointment&lt;/em&gt;`
+- Tabs row: `flex justify-center gap-8 border-b border-[hsl(var(--border))] mb-12`
+  - Each tab: `pb-3 text-sm font-medium cursor-pointer transition-colors border-b-2 -mb-px`
+  - Active: `border-[hsl(var(--primary))] text-[hsl(var(--foreground))]`
+  - Inactive: `border-transparent text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))]`
+  - Tabs: &quot;Silver&quot; · &quot;Diamond&quot; · &quot;Gold&quot;
+- Tab content: `grid grid-cols-1 md:grid-cols-2 gap-12 items-center text-left`
+
+**Left — image:**
+```tsx
+&lt;div className=&quot;rounded-[2rem] overflow-hidden h-[420px]&quot;&gt;
+  {/* Image: luxury spa interior with arched doorway, indoor pool, candles, natural stone, warm atmospheric lighting */}
+  &lt;img src=&quot;&quot; alt=&quot;Luxury spa interior&quot; className=&quot;w-full h-full object-cover object-center&quot; /&gt;
+&lt;/div&gt;
+```
+
+**Right — package info:**
+- Package name: `font-[&#39;Cormorant_Garamond&#39;] font-semibold text-3xl text-[hsl(var(--foreground))] mb-4`
+- Description: `text-sm text-[hsl(var(--muted-foreground))] leading-relaxed mb-6`
+- Checklist: `flex flex-col gap-3 mb-8`
+  - Each item: `flex items-center gap-2 text-sm text-[hsl(var(--foreground))]`
+  - lucide `CircleCheck` `w-4 h-4 text-[hsl(var(--primary))] shrink-0`
+- Price: `font-[&#39;Cormorant_Garamond&#39;] font-semibold text-4xl text-[hsl(var(--foreground))] mb-6`
+- CTA:
+  ```tsx
+  &lt;button className=&quot;h-12 px-8 rounded-full inline-flex items-center justify-center gap-2 shrink-0 whitespace-nowrap bg-[hsl(var(--primary))] text-white text-sm font-medium hover:opacity-90 transition-opacity&quot;&gt;
+    Reserve
+  &lt;/button&gt;
+  ```
+
+Packages:
+
+| Tab | Description | Features | Price |
+|---|---|---|---|
+| Silver | A curated selection of our most loved treatments — perfect for a first visit or a regular wellness ritual. | Essential relaxation · Choice of 2 treatments · Refreshments included | $149.99 |
+| Diamond | Our signature full-day experience. A complete wellness journey from arrival to departure, fully personalized. | Comprehensive wellness · Luxury and exclusivity · Access to exclusive amenities | $325.99 |
+| Gold | The ultimate SEREN experience — every treatment, every amenity, every moment crafted around you. | All Diamond features · Private suite access · Personal therapist for the day | $580.00 |
+
+---
+
+### 7 — Testimonials
+
+- `py-24 md:py-32 bg-[hsl(var(--background))]`
+- max-w-[1120px] mx-auto px-6
+- H2: `font-[&#39;Cormorant_Garamond&#39;] font-medium text-4xl md:text-5xl mb-3` — `They trust us with what &lt;em className=&quot;italic font-light&quot;&gt;matters most&lt;/em&gt;`
+- Horizontal scroll: `flex gap-6 mt-12 overflow-x-auto scrollbar-hide pb-2`
+
+Testimonial card: `shrink-0 w-[360px] p-6 rounded-2xl bg-[hsl(var(--muted))] border border-[hsl(var(--border))]`
+- Author row top: `flex items-center gap-3 mb-4`
+  - Avatar: `w-10 h-10 rounded-full overflow-hidden shrink-0`
+    ```tsx
+    {/* Image: smiling woman portrait, warm natural light, clean background, friendly spa client */}
+    &lt;img src=&quot;&quot; alt=&quot;Client&quot; className=&quot;w-full h-full object-cover object-center&quot; /&gt;
+    ```
+  - Name: `text-sm font-semibold text-[hsl(var(--foreground))]` + date `text-xs text-[hsl(var(--muted-foreground))]`
+- Quote: `text-sm text-[hsl(var(--foreground))] leading-relaxed`
+- &quot;Read more&quot;: `text-xs font-medium text-[hsl(var(--primary))] mt-4 inline-flex items-center gap-1 hover:gap-2 transition-all`
+
+| Author | Date | Quote |
+|---|---|---|
+| Diana | 26.11.2021 | The result from 70 to 54 — from 21 January. Diana came to us at Irina Maros for face correction. By that moment she had already tried many procedures. Diana&#39;s results are the results that prove: our approach works. |
+| Kristina | 15.03.2022 | I want to thank the team for the care and attention. You literally changed my appearance. I always feel myself among the most professional staff. Highly recommend every detail — the atmosphere, service, and warmth. |
+| Maria | 04.07.2023 | Four visits later I can say — this is the most honest professional care I&#39;ve ever received. The results are visible and lasting. SEREN is not just a spa, it&#39;s a place where you feel genuinely seen. |
+
+---
+
+## Animations
+
+```
+Navbar: opacity 0 → 1, duration 0.4s
+Hero label: opacity 0, y 12 → 0, delay 0.1s, duration 0.5s
+Hero H1 (per line): delay 0.2s + index*0.12, duration 0.65s
+Hero sub: delay 0.55s, duration 0.5s
+Hero CTAs: delay 0.7s, y 16 → 0, opacity 0 → 1
+Hero floating grid: opacity 0 → 1, x 20 → 0, delay 0.9s, duration 0.6s
+About section: left text stagger 0.1s, right feature rows stagger 0.12s, both on scroll
+Services row: clip-path reveal on section enter, then individual ovals fade-in stagger 0.08s
+Team cards: horizontal stagger 0.07s per card, y 20 → 0
+Pricing tabs: content opacity 0 → 1, y 8 → 0, duration 0.3s on tab change
+Testimonials: horizontal stagger 0.09s per card, y 20 → 0
+All sections: useInView once:true, margin &quot;-60px&quot;
+```
+
+---
+
+## Responsive
+
+```
+Navbar: full links desktop → logo + Book Now button mobile
+Hero: full layout desktop → stacked mobile, floating grid hidden mobile
+Hero H1: clamp(3rem, 6vw, 5.5rem) auto-scales
+Hero CTAs: flex-row desktop → flex-col w-full max-w-[280px] mx-auto mobile
+About: 2-col desktop → 1-col mobile (text first, feature rows below)
+Services scroll: same behavior desktop + mobile, touch-friendly
+Team scroll: same behavior desktop + mobile
+Pricing: 2-col desktop → 1-col mobile (image above content)
+Testimonials scroll: same behavior, card w-[320px] mobile
+```
+
+---
+
+## Full Copy
+
+| Element | Copy |
+|---|---|
+| Brand | Seren. |
+| Nav links | Home · Services · Specialists · Blog · Wellness · Contact |
+| Nav CTA | Book Now |
+| Hero label | Wellness Center &amp; Clinic |
+| Hero H1 | Center of complete beauty, recovery and rejuvenation. |
+| Hero sub | We help you create a culture of care and a new approach to balance — and genuine love for yourself. |
+| Hero CTA primary | Book a Session |
+| Hero CTA secondary | Our Services |
+| About label | About Us |
+| About H2 | Philosophy of perfection and a new approach to the balance of life |
+| About body | We help create a culture of care and a new approach to balance — and genuine love for yourself. Each visit is a step toward the best version of you. |
+| Features | Signature &amp; Personalized Method · Wide Range of Procedures · Innovative Equipment · Premium Cosmetology |
+| Services label | Our Services |
+| Services H2 | Our top services |
+| Services list | Facials · Swedish Massage · Body Scrubs · Manicure · Injectable Cosmetology · Yoga &amp; Pilates · IV Therapy · Diagnostics |
+| Team H2 | Team of leading professionals |
+| Pricing H2 | Book an appointment |
+| Tabs | Silver · Diamond · Gold |
+| Testimonials H2 | They trust us with what matters most |
+| Footer copyright | © 2025 SEREN Wellness Center |
+
+---
+
+## Key Dependencies
+
+```json
+{
+  &quot;motion&quot;: &quot;^12.x&quot;,
+  &quot;lucide-react&quot;: &quot;^0.4xx&quot;
+}
+```
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

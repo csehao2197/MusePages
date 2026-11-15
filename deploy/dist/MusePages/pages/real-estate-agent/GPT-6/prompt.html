@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Harlow Properties | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Harlow Properties</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Harlow Properties — Luxury Real Estate Agent Website Prompt
+
+## 1. Goal Statement
+Build an understated luxury real estate agent website for **Harlow Properties**, defined by a midnight navy and warm cream palette that communicates trust, discretion, and premium expertise in residential property.
+
+---
+
+## 2. Tech Stack
+```
+React + Vite + TypeScript + Tailwind CSS + Framer Motion (motion/react) + shadcn/ui + lucide-react
+```
+
+---
+
+## 3. Design System — Colors
+
+```css
+:root {
+  --background: hsl(220, 43%, 9%);          /* #0b1222 midnight navy */
+  --foreground: hsl(34, 33%, 92%);           /* #f4ede0 warm cream */
+  --primary: hsl(38, 48%, 60%);              /* #c9a96e antique gold */
+  --primary-foreground: hsl(220, 43%, 9%);   /* navy — text on gold buttons */
+  --muted-foreground: hsl(34, 20%, 65%);     /* muted warm grey */
+  --border: hsl(38, 30%, 22%);               /* dark gold border */
+  --card: hsl(220, 40%, 12%);                /* slightly lighter card bg */
+  --card-glass: rgba(244, 237, 224, 0.06);   /* glassmorphism card base */
+  --accent: hsl(38, 48%, 60%);               /* antique gold accent */
+}
+```
+
+---
+
+## 4. Typography
+
+```html
+&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&amp;family=Inter:wght@300;400;500;600&amp;display=swap&quot; rel=&quot;stylesheet&quot; /&gt;
+```
+
+- **H1 / H2 headings:** `font-family: &#39;Libre Baskerville&#39;, Georgia, serif;` weight 400 (normal), letter-spacing: -0.01em
+- **H3 / card titles:** `font-family: &#39;Libre Baskerville&#39;, serif;` italic, weight 400
+- **Body / paragraphs:** `font-family: &#39;Inter&#39;, sans-serif;` weight 300–400, line-height: 1.75, letter-spacing: 0.01em
+- **Navigation / UI labels / stats:** `font-family: &#39;Inter&#39;, sans-serif;` weight 500–600, letter-spacing: 0.06em, size: 12–13px
+- **Prices / gold accent text:** Inter 500, color: `--primary`
+- **Section eyebrows:** Inter 400, uppercase, letter-spacing: 0.2em, size: 11px, color: `--primary`
+
+---
+
+## 5. Visual Effects
+
+### Effect 1 — Split-Panel Hero with Parallax
+```jsx
+&lt;section className=&quot;relative h-screen flex overflow-hidden&quot;&gt;
+  {/* Left panel: navy dark text area */}
+  &lt;div className=&quot;relative z-20 w-full md:w-[55%] flex items-center px-8 md:px-16 lg:px-24 bg-[--background]&quot;&gt;
+    {/* Text content */}
+  &lt;/div&gt;
+
+  {/* Right panel: property photo with parallax */}
+  &lt;div className=&quot;hidden md:block absolute right-0 top-0 w-[50%] h-full overflow-hidden z-10&quot;&gt;
+    {/* Image: luxury residential exterior — modern white stone facade, large floor-to-ceiling windows, manicured garden, golden hour lighting, architectural photography, ultra-clean composition */}
+    &lt;img src=&quot;&quot; alt=&quot;Luxury property exterior at golden hour&quot; className=&quot;w-full h-full object-cover object-center scale-[1.15]&quot; style={{ willChange: &#39;transform&#39; }} /&gt;
+    &lt;div className=&quot;absolute inset-0&quot; style={{ background: &#39;linear-gradient(to right, rgba(11,18,34,1) 0%, rgba(11,18,34,0.2) 30%, transparent 60%)&#39; }} /&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+```
+
+### Effect 2 — Animated Stat Counters
+```tsx
+import { useEffect, useRef, useState } from &#39;react&#39;;
+import { useInView } from &#39;motion/react&#39;;
+
+function AnimatedCounter({ target, suffix = &#39;&#39;, prefix = &#39;&#39; }: { target: number; suffix?: string; prefix?: string }) {
+  const ref = useRef&lt;HTMLSpanElement&gt;(null);
+  const inView = useInView(ref, { once: true });
+  const [count, setCount] = useState(0);
+
+  useEffect(() =&gt; {
+    if (!inView) return;
+    let start = 0;
+    const duration = 2000;
+    const step = target / (duration / 16);
+    const timer = setInterval(() =&gt; {
+      start += step;
+      if (start &gt;= target) { setCount(target); clearInterval(timer); }
+      else setCount(Math.floor(start));
+    }, 16);
+    return () =&gt; clearInterval(timer);
+  }, [inView, target]);
+
+  return &lt;span ref={ref}&gt;{prefix}{count.toLocaleString()}{suffix}&lt;/span&gt;;
+}
+```
+
+### Effect 3 — Glassmorphism Property Listing Cards
+```tsx
+&lt;div
+  className=&quot;relative rounded-lg overflow-hidden group cursor-pointer&quot;
+  style={{
+    background: &#39;rgba(244,237,224,0.06)&#39;,
+    backdropFilter: &#39;blur(16px)&#39;,
+    WebkitBackdropFilter: &#39;blur(16px)&#39;,
+    border: &#39;1px solid rgba(201,169,110,0.18)&#39;,
+    transition: &#39;transform 0.35s ease, box-shadow 0.35s ease&#39;,
+  }}
+  onMouseEnter={e =&gt; {
+    (e.currentTarget as HTMLElement).style.transform = &#39;translateY(-6px)&#39;;
+    (e.currentTarget as HTMLElement).style.boxShadow = &#39;0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(201,169,110,0.3)&#39;;
+  }}
+  onMouseLeave={e =&gt; {
+    (e.currentTarget as HTMLElement).style.transform = &#39;translateY(0)&#39;;
+    (e.currentTarget as HTMLElement).style.boxShadow = &#39;none&#39;;
+  }}
+&gt;
+  {/* Card content */}
+&lt;/div&gt;
+```
+
+### Effect 4 — Staggered Testimonial Card Entrance
+```tsx
+const testimonials = [...];
+
+function TestimonialsSection() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: &#39;-80px&#39; });
+  return (
+    &lt;div ref={ref} className=&quot;grid grid-cols-1 md:grid-cols-3 gap-6&quot;&gt;
+      {testimonials.map((t, i) =&gt; (
+        &lt;motion.div
+          key={t.author}
+          initial={{ opacity: 0, y: 30, filter: &#39;blur(10px)&#39; }}
+          animate={inView ? { opacity: 1, y: 0, filter: &#39;blur(0px)&#39; } : {}}
+          transition={{ duration: 0.65, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
+        &gt;
+          {/* testimonial card */}
+        &lt;/motion.div&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}
+```
+
+### Effect 5 — Neighborhood Image Grid with Hover Name Overlay
+```tsx
+&lt;div className=&quot;grid grid-cols-2 md:grid-cols-3 gap-2&quot;&gt;
+  {neighborhoods.map(n =&gt; (
+    &lt;div key={n.name} className=&quot;relative overflow-hidden aspect-[4/3] group cursor-pointer&quot;&gt;
+      {/* Image per neighborhood — see copy section */}
+      &lt;img src=&quot;&quot; alt={n.name} className=&quot;w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-110&quot; /&gt;
+      &lt;div className=&quot;absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors duration-300&quot; /&gt;
+      &lt;div className=&quot;absolute bottom-0 left-0 right-0 p-4 translate-y-2 group-hover:translate-y-0 transition-transform duration-300&quot;&gt;
+        &lt;p className=&quot;text-cream font-serif text-lg&quot;&gt;{n.name}&lt;/p&gt;
+        &lt;p className=&quot;text-gold text-xs uppercase tracking-widest mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300&quot;&gt;{n.type}&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  ))}
+&lt;/div&gt;
+```
+
+---
+
+## 6. Component Breakdown
+
+### Section 1 — Navbar
+- **Height:** 76px desktop / 64px mobile
+- **Position:** `fixed top-0 left-0 right-0 z-40`
+- **Background:** transparent → `rgba(11,18,34,0.96) blur(16px)` on scroll
+- **Left:** Monogram &quot;H·P&quot; in small serif + &quot;HARLOW PROPERTIES&quot; small-caps, gold
+- **Center (desktop):** Properties / About / Neighborhoods / Process / Contact
+- **Right:** Phone number always visible: `+1 310 555 0147` in Inter 500 gold, then &quot;Schedule a Call&quot; outlined button
+- **Mobile:** hamburger → full overlay with phone number prominent at bottom
+
+### Section 2 — Hero (Split Panel)
+- **Left panel (55% desktop, 100% mobile):** navy background
+  - Eyebrow: `BEVERLY HILLS · BEL AIR · PACIFIC PALISADES`
+  - H1: `Where Home\nBegins` (Libre Baskerville, 64px–96px, cream)
+  - Subline: `Harlow Properties — boutique representation for buyers and sellers who expect more than a transaction.`
+  - CTA row: &quot;View Current Listings&quot; (gold filled) + &quot;Schedule a Consultation&quot; (ghost cream border)
+- **Right panel (50% desktop, hidden mobile):** full-bleed property photo with parallax
+- **Mobile background:** same property photo with dark overlay, hero content centered
+
+### Section 3 — Stats Bar
+- **Background:** slightly lighter navy `--card`
+- **Border top/bottom:** 1px `--border`
+- **Layout:** flex row, 3 stats centered, `py-12 px-8`
+- **Each stat:** AnimatedCounter (large number, gold, Libre Baskerville 48px) + label below (Inter small-caps cream)
+- **Dividers:** vertical 1px `--border` lines between stats (hidden mobile)
+
+### Section 4 — Featured Listings
+- **Padding:** `py-24 px-6 md:px-16`
+- **Heading:** &quot;Featured Properties&quot; with eyebrow &quot;CURRENTLY AVAILABLE&quot;
+- **Grid:** 3 glassmorphism cards, `grid grid-cols-1 md:grid-cols-3 gap-6`
+- **Each card:**
+  - Top: property photo (aspect-[16/9])
+  - Status badge: &quot;FOR SALE&quot; or &quot;JUST LISTED&quot; (small, gold, top-right overlay)
+  - Body: address (serif bold), neighborhood (small-caps gold), price (Inter 600 gold large), bed/bath/sqft row (icons + numbers)
+  - Footer: &quot;View Property →&quot; link in gold
+
+### Section 5 — About Agent
+- **Layout:** 2-col, image left / text right, `gap-16`
+- **Image:**
+  ```jsx
+  {/* Image: professional female real estate agent, approachable smile, dark blazer, warm natural studio lighting, clean white/cream background, headshot/portrait style, trust-building photography */}
+  &lt;img src=&quot;&quot; alt=&quot;Elena Harlow, founder of Harlow Properties&quot; className=&quot;w-full h-full object-cover object-center&quot; /&gt;
+  ```
+- **Text side:** eyebrow &quot;ABOUT ELENA HARLOW&quot;, H2 &quot;15 Years of\nMaking It Personal&quot;, bio paragraphs, credentials badges (NAR Member · CLHMS · Forbes 30u30)
+
+### Section 6 — Process
+- **Layout:** 4 numbered steps in a horizontal timeline (desktop), stacked (mobile)
+- **Each step:** large number (gold, Libre Baskerville, 80px, very light) behind card, step title (bold serif), short description
+- **Steps:** 01 Consultation · 02 Strategy · 03 Negotiation · 04 Closing
+- **Connecting line:** thin gold horizontal line between step numbers (desktop only)
+
+### Section 7 — Testimonials
+- **3-col grid** (desktop), stacked (mobile)
+- **Each card:** glassmorphism card, star rating (5 gold stars, lucide-react Star icon), quote text (serif italic), author name + case type below
+- **Staggered entrance animation**
+
+### Section 8 — Neighborhoods
+- **Heading:** &quot;Neighborhoods We Know&quot; with eyebrow &quot;LOCAL EXPERTISE&quot;
+- **6-image grid** with hover overlay (2x3 desktop, 2x3 mobile stacked)
+
+### Section 9 — Contact
+- **2-col layout:** form left, contact info right
+- **Form:** Name, Email, Phone, Message, &quot;I&#39;m looking to:&quot; (Buy / Sell / Both — radio buttons styled as toggle pills)
+- **Right col:** &quot;Let&#39;s connect&quot; heading, phone, email, office address, small map embed placeholder
+- **Submit button:** full-width gold &quot;Send Message&quot;
+
+### Section 10 — Footer
+- **4-col layout** (desktop), stacked (mobile)
+- **Gold top border 1px**
+- Wordmark / Nav links / Office info / Social (Instagram, LinkedIn, Facebook)
+- Bottom: © + DRE License number + equal housing logo
+
+---
+
+## 7. Animations
+
+### Hero Parallax
+```tsx
+const { scrollY } = useScroll();
+const rightPanelY = useTransform(scrollY, [0, 600], [0, -80]);
+// Apply to right panel via motion.div style={{ y: rightPanelY }}
+```
+
+### Navbar Transition
+- `window.scrollY &gt; 60` triggers class, `transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1)`
+
+### Counter Animation
+- Triggered by `useInView`, 2000ms duration, steps every 16ms (60fps)
+
+### Card Hover
+- `transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease`
+- Lift: `translateY(-6px)`, gold glow shadow
+
+### Process Steps Entrance
+```tsx
+// Each step reveals in sequence
+initial={{ opacity: 0, x: -20 }}
+animate={inView ? { opacity: 1, x: 0 } : {}}
+transition={{ delay: index * 0.15, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+```
+
+### Section reveals
+- `initial={{ opacity: 0, y: 40 }}` → `animate={{ opacity: 1, y: 0 }}`
+- triggered `useInView` once, duration 0.7s
+
+---
+
+## 8. Responsive
+
+### Mobile (&lt; 768px)
+- Hero: full-screen with property photo bg, dark overlay, all text centered
+- Stats bar: 3 stats stacked vertically (or 2+1 on wider mobile)
+- Listings: single column cards
+- Agent section: photo full-width top, text below
+- Process: 4 steps stacked vertically
+- Neighborhoods grid: 2x3 maintained at smaller size
+- Contact: stacked (form top, info below)
+- Navbar: hamburger icon
+
+### Desktop (&gt; 1024px)
+- Hero: split 55/50 panel
+- All grids at full width
+- Horizontal process timeline
+
+---
+
+## 9. Full Copy
+
+### Brand
+**HARLOW PROPERTIES**
+
+### Tagline
+&quot;Where Home Begins&quot;
+
+### Navbar
+- Properties
+- About
+- Neighborhoods
+- Process
+- Contact
+- `+1 310 555 0147`
+- [Button] Schedule a Call
+
+### Hero
+- Eyebrow: `BEVERLY HILLS · BEL AIR · PACIFIC PALISADES`
+- H1: `Where Home\nBegins`
+- Subline: `Harlow Properties — boutique representation for buyers and sellers who expect more than a transaction.`
+- CTA Primary: `View Current Listings`
+- CTA Secondary: `Schedule a Consultation`
+
+### Stats Bar
+- **247** — Homes Sold
+- **$4.2M** — Average Sale Price
+- **18 Days** — Average Time on Market
+
+### Featured Listings
+**Listing 1:**
+- Address: 2847 Mulholland Drive
+- Neighborhood: Bel Air
+- Price: $6,850,000
+- Beds: 5 · Baths: 6 · Sq Ft: 6,200
+- Status: FOR SALE
+
+**Listing 2:**
+- Address: 412 N Roxbury Drive
+- Neighborhood: Beverly Hills
+- Price: $4,250,000
+- Beds: 4 · Baths: 4.5 · Sq Ft: 4,100
+- Status: JUST LISTED
+
+**Listing 3:**
+- Address: 1705 Amalfi Drive
+- Neighborhood: Pacific Palisades
+- Price: $8,100,000
+- Beds: 6 · Baths: 7 · Sq Ft: 7,800
+- Status: FOR SALE
+
+Card CTA: `View Property →`
+
+### About Section
+- Eyebrow: `ABOUT ELENA HARLOW`
+- H2: `15 Years of Making It Personal`
+- Para 1: `Real estate is, at its core, about people — the transitions they&#39;re navigating, the lives they&#39;re building. Elena Harlow founded Harlow Properties on a simple premise: every client deserves an advisor, not just an agent.`
+- Para 2: `With over $1.2 billion in career sales across Bel Air, Beverly Hills, and the Palisades, Elena brings a depth of market knowledge that only comes from years of being genuinely present in every deal.`
+- Para 3: `Her approach is measured, transparent, and deeply personal. She returns every call. She knows every neighborhood block by block. And she stays with you long after the keys change hands.`
+- Credentials: NAR Member · CLHMS Certified · Forbes 30 Under 30 · LA Business Journal Top Agent
+
+### Process Section
+- Eyebrow: `HOW WE WORK`
+- Heading: `From First Call to Closing Day`
+
+Steps:
+1. **01 — Consultation** — We start by listening. A no-pressure conversation to understand your goals, timeline, and what home truly means to you.
+2. **02 — Strategy** — Every property is unique. We develop a tailored plan — pricing, positioning, and marketing — built specifically for your situation.
+3. **03 — Negotiation** — When the offers come in, you want an advocate, not a facilitator. Elena has negotiated hundreds of high-stakes deals. She protects your interests.
+4. **04 — Closing** — We manage every detail through escrow so the finish line is smooth, certain, and exactly what you expected.
+
+### Testimonials
+**Quote 1:**
+&gt; &quot;Elena found us our dream home in Bel Air in three weeks. What impressed us most wasn&#39;t the speed — it was how well she listened to what we actually wanted.&quot;
+&gt; — *David &amp; Sarah M., Buyers, Bel Air* ★★★★★
+
+**Quote 2:**
+&gt; &quot;We listed with Elena after a disappointing experience with another agent. She repositioned our property, staged it beautifully, and got us $400K over asking in 12 days.&quot;
+&gt; — *James K., Seller, Pacific Palisades* ★★★★★
+
+**Quote 3:**
+&gt; &quot;Working with Harlow Properties felt nothing like I expected from a real estate transaction. Personal, professional, and incredibly effective.&quot;
+&gt; — *Tanya R., Buyer, Beverly Hills* ★★★★★
+
+### Neighborhoods Section
+- Eyebrow: `LOCAL EXPERTISE`
+- Heading: `Neighborhoods We Know`
+
+Grid items:
+1. **Bel Air** — *Residential Estates*
+   ```jsx
+   {/* Image: sweeping aerial view of Bel Air residential hillside, lush canyon greenery, large luxury homes visible through tree canopy, golden afternoon light, Los Angeles in background */}
+   &lt;img src=&quot;&quot; alt=&quot;Bel Air luxury residential hillside&quot; className=&quot;w-full h-full object-cover object-center&quot; /&gt;
+   ```
+2. **Beverly Hills** — *City Prestige*
+   ```jsx
+   {/* Image: Rodeo Drive streetscape from above, palm tree-lined boulevard, architectural luxury homes in background, bright California sunshine, clean affluent atmosphere */}
+   &lt;img src=&quot;&quot; alt=&quot;Beverly Hills palm-lined boulevard&quot; className=&quot;w-full h-full object-cover object-center&quot; /&gt;
+   ```
+3. **Pacific Palisades** — *Coastal Living*
+   ```jsx
+   {/* Image: Pacific Palisades coastal bluff home overlooking Pacific Ocean, infinity pool, warm California sunset, modern architecture with ocean panorama */}
+   &lt;img src=&quot;&quot; alt=&quot;Pacific Palisades coastal bluff home&quot; className=&quot;w-full h-full object-cover object-center&quot; /&gt;
+   ```
+4. **Holmby Hills** — *Private Estates*
+5. **Malibu** — *Beach &amp; Canyon*
+6. **Hancock Park** — *Historic Elegance*
+
+### Contact Section
+- Eyebrow: `GET IN TOUCH`
+- H2: `Let&#39;s Find What You&#39;ve Been Looking For`
+- Form labels: Full Name / Email Address / Phone Number / Message
+- Toggle options: I&#39;m looking to: Buy · Sell · Both · Invest
+- CTA: `Send Message`
+- Right col: &quot;Or reach us directly&quot; / +1 310 555 0147 / elena@harlowproperties.com / 9465 Wilshire Blvd, Suite 300, Beverly Hills CA 90212
+
+### Footer
+- Tagline: &quot;Your next chapter starts here.&quot;
+- Nav: Properties · About · Process · Neighborhoods · Contact · Privacy Policy
+- DRE #01234567 · Equal Housing Opportunity
+- © 2024 Harlow Properties. All rights reserved.
+
+---
+
+## 10. Key Dependencies
+
+```json
+{
+  &quot;motion&quot;: &quot;^12.0.0&quot;,
+  &quot;lucide-react&quot;: &quot;^0.460.0&quot;,
+  &quot;@radix-ui/react-radio-group&quot;: &quot;^1.2.0&quot;,
+  &quot;@radix-ui/react-tabs&quot;: &quot;^1.1.0&quot;,
+  &quot;clsx&quot;: &quot;^2.1.0&quot;,
+  &quot;tailwind-merge&quot;: &quot;^2.5.0&quot;
+}
+```
+
+**Tailwind config additions:**
+```js
+module.exports = {
+  theme: {
+    extend: {
+      fontFamily: {
+        serif: [&#39;Libre Baskerville&#39;, &#39;Georgia&#39;, &#39;serif&#39;],
+        sans: [&#39;Inter&#39;, &#39;system-ui&#39;, &#39;sans-serif&#39;],
+      },
+      colors: {
+        &#39;harlow-navy&#39;: &#39;#0b1222&#39;,
+        &#39;harlow-cream&#39;: &#39;#f4ede0&#39;,
+        &#39;harlow-gold&#39;: &#39;#c9a96e&#39;,
+      },
+    },
+  },
+};
+```
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

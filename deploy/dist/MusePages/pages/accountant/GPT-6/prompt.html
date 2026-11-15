@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Harlow &amp; Co — Clear numbers, smart decisions | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Harlow &amp; Co — Clear numbers, smart decisions</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Accountant / Financial Advisor Website Prompt
+# websiteprompts.ai
+
+Build a clean, trust-focused accountant and financial advisor website called &quot;Harlow &amp; Co Accountants&quot; using React + Vite + TypeScript + Tailwind CSS + Framer Motion (motion/react) + shadcn/ui + lucide-react.
+
+## Design System
+
+### Colors
+```css
+:root {
+  --background: 0 0% 100%;
+  --foreground: 220 25% 12%;        /* deep navy-charcoal #0d1826 */
+  --primary: 218 68% 22%;           /* deep navy #0d1b3e */
+  --primary-foreground: 0 0% 100%;
+  --accent: 34 72% 50%;             /* warm amber #d4892a */
+  --surface: 216 20% 96%;
+  --surface-dark: 218 68% 22%;
+  --muted-foreground: 220 12% 52%;
+  --border: 216 18% 88%;
+}
+```
+
+### Typography
+- Import: `https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap`
+- All text: Plus Jakarta Sans
+- Headlines: Plus Jakarta Sans 700–800
+- Body: Plus Jakarta Sans 300–400
+- Labels/badges: Plus Jakarta Sans 600 uppercase 10px letter-spacing 0.12em
+
+## Sections
+
+### 1. Navbar
+- Sticky white bg, thin bottom border on scroll
+- Left: Plus Jakarta Sans 700 wordmark &quot;Harlow &amp; Co&quot; + &quot;Chartered Accountants&quot; in 300 muted
+- Right: Services · About · Resources · Contact + &quot;Book free consultation →&quot; navy button
+
+### 2. Hero
+- Split layout: left content (55%), right illustration/image (45%)
+- Left:
+  - Plus Jakarta Sans 600 uppercase 10px amber label: &quot;Chartered Accountants &amp; Financial Advisors&quot;
+  - Plus Jakarta Sans 800 `clamp(40px, 5vw, 72px)`: &quot;Clear Numbers.\nSmart Decisions.\nPeace of Mind.&quot;
+  - Plus Jakarta Sans 300 sub: &quot;Accounting, tax, and financial advice for UK small businesses and individuals — straightforward, jargon-free.&quot;
+  - Two CTAs: &quot;Book a free consultation →&quot; (navy filled) + &quot;See our services&quot; (ghost navy)
+  - Trust strip below CTAs: 3 chips — &quot;ICAEW Member · 200+ clients · Est. 2008&quot;
+
+{/* Image brief: clean modern accountancy office interior, light wood desk, laptop, natural light, professional but approachable, not corporate */}
+
+### 3. Trust Bar
+- Full-width navy `#0d1b3e` background, 72px tall
+- 4 white stats in Plus Jakarta Sans 700: &quot;200+ Clients&quot; · &quot;15 Years&quot; · &quot;4.9★ Google&quot; · &quot;ICAEW Registered&quot;
+- Amber dividers between stats
+- Framer Motion useSpring count-up triggered by IntersectionObserver
+
+### 4. Services Grid
+- &quot;What We Do&quot; in Plus Jakarta Sans 800 with amber underline rule (scaleX 0→1)
+- 6-service 3×2 grid:
+  - Accounts &amp; Bookkeeping · Tax Returns (Personal &amp; Business) · VAT Returns · Payroll · Business Start-Up · Financial Planning
+- Each card: amber lucide icon, Plus Jakarta Sans 700 service name, Plus Jakarta Sans 300 short description, &quot;Learn more →&quot; amber link
+- Hover: amber border + `box-shadow: 0 0 20px hsl(34 72% 50% / 0.10)`
+- Stagger fade-up on scroll
+
+### 5. Why Choose Us
+- Split: left text, right image
+- Plus Jakarta Sans 800: &quot;Straightforward Accounting — No Jargon&quot;
+- Plus Jakarta Sans 300: 2 paragraphs — personal service, dedicated account manager, proactive advice not just year-end filing
+- 4 check points with lucide Check icons in amber:
+  - &quot;Dedicated account manager — always the same person&quot;
+  - &quot;Fixed monthly fees — no surprise invoices&quot;
+  - &quot;Proactive tax planning, not just filing&quot;
+  - &quot;Response within 24 hours, guaranteed&quot;
+
+{/* Image brief: accountant at desk, reviewing documents, friendly professional expression, bright office, approachable not corporate */}
+
+### 6. Pricing
+- &quot;Simple, Fixed Pricing&quot; in Plus Jakarta Sans 800 with amber rule
+- 3 cards: Sole Trader (from £89/mo) · Limited Company (from £149/mo) · Growing Business (from £249/mo)
+- Each card: Plus Jakarta Sans 700 tier name, amber price, Plus Jakarta Sans 300 feature list with lucide Check icons
+- Middle &quot;Limited Company&quot; card: navy border + &quot;Most popular&quot; amber badge
+- Hover: navy border + soft navy glow
+
+### 7. Process
+- &quot;Getting Started Is Easy&quot; in Plus Jakarta Sans 800
+- 4-step row: Free Consultation → Onboarding Call → We Handle Everything → Monthly Reports
+- Large faded amber Plus Jakarta Sans 800 number (opacity 0.08) behind each step
+- Plus Jakarta Sans 300 description per step
+- Stagger fade-up on scroll
+
+### 8. Testimonials
+- Light surface section
+- 3 cards: 5-star row in amber, Plus Jakarta Sans 300 italic quote, client name + business type in Plus Jakarta Sans 10px muted
+- Stagger fade-up
+
+### 9. FAQ Teaser
+- &quot;Common Questions&quot; in Plus Jakarta Sans 800
+- 4 accordion items using shadcn/ui Accordion: each Q expands to reveal A
+  - &quot;Do I need an accountant if I use accounting software?&quot; · &quot;What&#39;s the difference between bookkeeping and accounting?&quot; · &quot;When do I need to register for VAT?&quot; · &quot;How quickly can you take over from my current accountant?&quot;
+- Plus Jakarta Sans 300 answers
+- Navy left border on open item
+
+### 10. CTA Banner
+- Full-width navy `#0d1b3e` background
+- Plus Jakarta Sans 800 white: &quot;Book Your Free 30-Minute Consultation&quot;
+- Plus Jakarta Sans 300 white sub: &quot;No commitment — just clear advice from a qualified accountant&quot;
+- Amber &quot;Book now →&quot; button
+- Plus Jakarta Sans 10px white muted: &quot;Spaces limited · Usually available within 3 working days&quot;
+
+### 11. Footer
+- Dark navy background, 3 columns: Brand + ICAEW badge · Services links · Contact (address, phone, email)
+- Plus Jakarta Sans 10px muted white: &quot;Harlow &amp; Co Accountants Ltd is registered with the Institute of Chartered Accountants in England and Wales (ICAEW). Company No. 08234567.&quot;
+- &quot;© 2026 Harlow &amp; Co Accountants&quot;
+
+## Animations
+- Trust bar: count-up on scroll
+- Service grid: stagger fade-up on scroll
+- Amber rules: scaleX 0→1, 0.5s
+- Accordion: smooth height transition via shadcn
+- All hover: 0.2s ease
+
+## Responsive
+- Mobile: single-column services, stacked hero, hamburger nav
+
+## Full Copy
+- Wordmark: &quot;Harlow &amp; Co Chartered Accountants&quot;
+- Tagline: &quot;Clear Numbers. Smart Decisions. Peace of Mind.&quot;
+- Hero sub: &quot;Accounting, tax, and financial advice for UK small businesses and individuals — straightforward, jargon-free.&quot;
+- Services: Accounts &amp; Bookkeeping · Tax Returns · VAT Returns · Payroll · Business Start-Up · Financial Planning
+- Pricing: Sole Trader from £89/mo · Limited Company from £149/mo · Growing Business from £249/mo
+- Trust: &quot;Dedicated account manager · Fixed monthly fees · Proactive tax planning · 24hr response guarantee&quot;
+- Testimonial: &quot;Harlow &amp; Co saved us thousands in our first year by catching tax reliefs our previous accountant had missed entirely.&quot; — Sarah T., e-commerce founder, 2025
+- CTA: &quot;Book Your Free 30-Minute Consultation&quot; / &quot;No commitment — just clear advice from a qualified accountant&quot;
+- Disclaimer: &quot;ICAEW registered · Company No. 08234567 · Registered in England &amp; Wales&quot;
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

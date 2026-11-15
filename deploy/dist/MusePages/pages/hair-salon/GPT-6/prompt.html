@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Studio Nora | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Studio Nora</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Hair Salon Website Prompt
+# websiteprompts.ai
+
+Build a dark, editorial women&#39;s hair salon website called &quot;Studio Nora&quot; using React + Vite + TypeScript + Tailwind CSS + Framer Motion (motion/react) + shadcn/ui + lucide-react.
+
+## Design System
+
+### Colors
+```css
+:root {
+  --background: 20 8% 7%;             /* near-black warm #130e0c */
+  --foreground: 38 18% 90%;           /* warm pearl */
+  --primary: 20 8% 7%;
+  --primary-foreground: 38 18% 90%;
+  --accent: 18 42% 55%;               /* terracotta #c17a54 */
+  --surface: 20 6% 11%;
+  --surface-raised: 20 5% 15%;
+  --muted-foreground: 38 8% 55%;
+  --border: 20 5% 18%;
+}
+```
+
+### Typography
+- Import: `https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Inter:wght@300;400;500&amp;display=swap`
+- Headlines: Bebas Neue — full condensed, maximum scale
+- Body: Inter 300–500
+- Labels: Inter 500 uppercase 10px letter-spacing 0.16em
+
+## Sections
+
+### 1. Navbar
+- Sticky near-black background, `backdrop-filter: blur(12px)`
+- Left: Inter 500 uppercase letter-spacing 0.2em wordmark &quot;STUDIO NORA&quot; in terracotta
+- Right: Services · Portfolio · About · Book + &quot;Book now →&quot; terracotta button
+
+### 2. Hero
+- Full-viewport height, near-black background
+- Full-bleed editorial portrait photography `position: absolute inset-0`, `object-fit: cover; object-position: center`
+- Composition-independent overlay: `linear-gradient(to right, rgba(19,14,12,0.96) 0%, rgba(19,14,12,0.75) 48%, rgba(19,14,12,0.20) 100%)`
+- Large background text: &quot;NORA&quot; in Bebas Neue `font-size: clamp(240px, 35vw, 500px)` at `opacity: 0.03`, `position: absolute`, centered vertically, `z-index: 1`
+- Content `z-index: 10` left-aligned `max-width: 560px padding-left: 6vw`:
+  - Inter 500 uppercase 10px terracotta label: &quot;Hair Studio · Notting Hill, London&quot;
+  - Bebas Neue `clamp(72px, 10vw, 140px)` pearl line-height 0.88: &quot;YOUR HAIR.\nYOUR STORY.\nOUR CRAFT.&quot;
+  - Terracotta accent on &quot;OUR CRAFT.&quot;
+  - Inter 300 muted pearl sub: &quot;Expert cuts, colour, and styling for women who know exactly what they want — and those still discovering it&quot;
+  - CTAs: &quot;Book an appointment →&quot; (terracotta filled, dark text) + &quot;See our work&quot; (ghost)
+  - Trust chips: &quot;10+ Years · Notting Hill · Walk-ins Welcome Mondays&quot;
+
+{/* Image brief: editorial portrait of woman with dramatic hair styling, dark moody studio background, fashion photography aesthetic, sharp lighting, high contrast black and white or warm tones */}
+
+- Hero: aggressive stagger fade-up (y: 40→0, 0.6s, 0.08s delay per element)
+
+### 3. Services
+- &quot;What We Do&quot; — Bebas Neue `clamp(52px, 7vw, 90px)` pearl
+- 6-service 3×2 grid, dark surface cards:
+  - Cut &amp; Style (from £65 — consultation included)
+  - Colour &amp; Balayage (from £95 — bespoke blending)
+  - Highlights (from £85 — foils and freehand)
+  - Blow-Dry (from £40 — in-salon finish)
+  - Keratin Treatment (from £150 — 12-week smoothing)
+  - Extensions (from £200 — tape, bonds, or clip)
+- Each card: Inter 500 service name, Inter 300 muted description, terracotta price tag, lucide icon
+- Hover: terracotta border + `box-shadow: 0 0 18px hsl(18 42% 55% / 0.12)`
+
+### 4. Portfolio
+- &quot;Our Work&quot; — Bebas Neue large pearl
+- 5-image horizontal strip, `height: 340px`, `min-width: 260px` per image, `overflow-x: auto` on mobile
+- Scale on hover 1.02, no border-radius, 2px gap
+- Stagger fade-in on scroll
+
+{/* Image brief: close-up of perfect balayage colour, warm blonde tones, editorial beauty photography */}
+{/* Image brief: sleek blow-dry finish on brunette, studio lighting, fashion-editorial quality */}
+{/* Image brief: curly hair transformation, vibrant and natural, warm light */}
+{/* Image brief: short precision cut, dramatic editorial, strong lighting */}
+{/* Image brief: hair colour close-up — rich red tones, high-gloss finish */}
+
+### 5. Why Studio Nora
+- Split: left text, right image
+- Bebas Neue large pearl: &quot;WE DON&#39;T DO CONVEYOR BELT HAIR&quot;
+- Inter 300 muted: 2 paragraphs — every appointment starts with a consultation, no rushed bookings, no double-stacking clients. Colour consultations always by the same stylist.
+- 4 terracotta check points (lucide Check): &quot;Dedicated stylist every visit · No hidden pricing · Colour consultations always free · Cancellation up to 24hrs&quot;
+
+{/* Image brief: stylist and client in consultation, intimate salon setting, warm light, genuine connection */}
+
+### 6. Team
+- &quot;Your Stylists&quot; — Bebas Neue large pearl
+- 3 stylist cards: portrait (square, no border-radius), Bebas Neue name, terracotta specialty chip, Inter 300 bio
+- Hover: terracotta border + glow
+
+{/* Image brief: female hair stylist, editorial headshot, dark studio background, professional and confident */}
+{/* Image brief: female stylist with scissors, blurred salon background, warm and approachable */}
+{/* Image brief: stylist at work, focus on hands and technique, artistic photography */}
+
+### 7. Testimonials
+- Surface-raised section
+- 3 cards: 5-star row in terracotta, Inter 300 italic pearl quote, client name + service in Inter 10px muted
+- Stagger fade-up on scroll
+
+### 8. Booking CTA
+- Full-width, `background: hsl(18 42% 55%)` terracotta
+- Bebas Neue `clamp(52px, 7vw, 90px)` dark: &quot;READY FOR YOUR BEST HAIR?&quot;
+- Inter 300 dark: &quot;Book online in 60 seconds — choose your service, stylist, and time&quot;
+- &quot;Book now →&quot; dark button
+- &quot;New clients welcome · Consultations always free · Walk-ins Mondays&quot; Inter 10px dark 70%
+
+### 9. Footer
+- Near-black background, Inter 500 uppercase &quot;STUDIO NORA&quot; in terracotta
+- Instagram · TikTok · Google
+- &quot;© 2026 Studio Nora · 14 Pembridge Road, Notting Hill, London W11 · Mon–Sat 9am–7pm&quot;
+
+## Animations
+- Hero text: aggressive stagger fade-up on mount (y: 40→0)
+- Background &quot;NORA&quot; text: fade in slowly 1.5s delay
+- Service grid: stagger fade-up on scroll
+- Gallery strip: stagger fade-in
+
+## Responsive
+- Mobile: stacked hero (photo visible behind overlay, text full width), single-column services, hamburger nav
+
+## Full Copy
+- Wordmark: &quot;STUDIO NORA&quot;
+- Hero: &quot;YOUR HAIR. YOUR STORY. OUR CRAFT.&quot; / &quot;Expert cuts, colour, and styling for women who know exactly what they want&quot;
+- Services: Cut from £65 · Colour from £95 · Highlights from £85 · Blow-Dry from £40 · Keratin from £150 · Extensions from £200
+- Testimonial: &quot;I&#39;ve been coming to Studio Nora for 3 years. The colour work is genuinely exceptional — I get compliments every time I leave.&quot; — Rachel S., Notting Hill
+- CTA: &quot;READY FOR YOUR BEST HAIR?&quot; / &quot;Book online in 60 seconds&quot;
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Street Burgers | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Street Burgers</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Street Burgers — Food Truck Website Prompt
+
+## Goal
+Build a bold, high-energy street food truck website with Bebas Neue display type, warm saffron accents on near-black, a floating menu preview card, location tracker, and count-up stats strip.
+
+## Tech Stack
+React + Vite + TypeScript + Tailwind CSS + Framer Motion (motion/react) + shadcn/ui + lucide-react
+
+## Design System
+
+### Colors
+```css
+:root {
+  --background: 0 0% 6%;
+  --foreground: 0 0% 96%;
+  --primary: 38 85% 56%;
+  --primary-foreground: 0 0% 4%;
+  --muted-foreground: 0 0% 58%;
+  --border: 0 0% 20%;
+  /* Raw hex reference */
+  /* warm-saffron: #f0a82a */
+  /* near-black: #0f0f0f */
+  /* warm-white: #fafafa */
+  /* deep-orange: #c47a1a */
+}
+```
+
+### Typography
+Google Fonts import: `https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Plus+Jakarta+Sans:wght@300;400&amp;display=swap`
+- Display: Bebas Neue 400 (all headlines, prices, labels, sections)
+- Body: Plus Jakarta Sans 400
+- Captions / prices: Plus Jakarta Sans 300
+
+## Visual Effects
+
+1. **&quot;STREET&quot; Background Text** — Bebas Neue at clamp(240px,34vw,500px), color: #f0a82a, opacity: 0.04, position: absolute, right: -2%, top: 50%, transform: translateY(-50%), z-index: 0, pointer-events: none
+2. **Floating Menu Preview Card** — absolute positioned below hero CTAs, near-black bg #1a1a1a, 1px saffron border, border-radius: 4px, Framer Motion scale 0.9→1 at 0.4s delay
+3. **Count-Up Stats Strip** — saffron bg, near-black text, 4 stats in Bebas Neue 72px, requestAnimationFrame over 1.6s
+4. **Signature Item Card Hover** — image scale 1.04 (0.25s), saffron 1px border appears (0.2s), translateY -4px
+
+## Component Breakdown
+
+### 1. Navbar
+```tsx
+// Sticky, bg: #0f0f0f, border-bottom: 1px solid #1f1f1f, height: 60px
+// Left: &quot;Street Burgers&quot; — Bebas Neue, 22px, letter-spacing: 0.06em, color: #fafafa
+// Center: Menu / Locations / About / Instagram — Plus Jakarta Sans 400, 14px, #c0c0c0
+// Right: &quot;Find Us&quot; — bg: #f0a82a, color: #0f0f0f, Plus Jakarta 400, 14px, px-5 py-2.5, border-radius: 3px
+// Framer Motion: y -60→0, 0.45s ease-out
+```
+
+### 2. Hero
+```tsx
+// Full-viewport, min-height: 100vh, position: relative, overflow: hidden, bg: #0f0f0f
+
+{/* Image: Street food truck photography — bold branded yellow-and-black Street Burgers food truck at street level, steam rising from the grill visible through the serving window, queue of happy customers waiting, city street setting at golden hour or at night with warm street light glow, vibrant and high-energy urban food scene */}
+&lt;img src=&quot;&quot; alt=&quot;Street Burgers food truck on city street with customers queuing&quot; style={{ position: &#39;absolute&#39;, inset: 0, width: &#39;100%&#39;, height: &#39;100%&#39;, objectFit: &#39;cover&#39;, objectPosition: &#39;center&#39; }} /&gt;
+
+// Gradient overlay — composition independent:
+// linear-gradient(to right, rgba(15,15,15,0.92) 0%, rgba(15,15,15,0.65) 55%, transparent 100%)
+// position: absolute; inset: 0; z-index: 1
+
+// Background text &quot;STREET&quot;:
+// Bebas Neue, clamp(240px,34vw,500px), color: #f0a82a, opacity: 0.04
+// position: absolute, right: -2%, top: 50%, transform: translateY(-50%), z-index: 0
+
+// Content panel: position absolute, left 0, top 0, height 100%, width 55%, z-index 10
+// padding-left: clamp(24px,6vw,96px), display flex flex-col justify-center
+
+// Kicker: Plus Jakarta 300, 12px, letter-spacing 0.16em, uppercase, color: #f0a82a, margin-bottom 12px
+// &quot;SMASH BURGERS · LONDON&quot;
+
+// Main headline: &quot;THE BEST BURGER YOU&#39;LL EAT ALL WEEK.&quot;
+// Bebas Neue, clamp(58px,8.5vw,145px), line-height: 0.92, color: #fafafa
+// Framer Motion: opacity 0→1, x -40→0, 0.7s ease-out, delay: 0.1s
+
+// Sub: Plus Jakarta Sans 300, 17px, color: #8c8c8c, margin-top 20px, max-width 440px, line-height 1.65
+// &quot;Premium smash burgers. Maximum flavour. Zero pretension. Five locations across London this week.&quot;
+// Framer Motion: opacity 0→1, y 20→0, 0.6s, delay 0.3s
+
+// CTAs (flex row, gap 12px, margin-top 28px):
+// &quot;See Full Menu&quot; — bg: #f0a82a, color: #0f0f0f, Plus Jakarta 400, 15px, px-7 py-3.5, border-radius: 3px
+// &quot;Find Us This Week&quot; — bg: transparent, border: 1px solid rgba(240,168,42,0.5), color: #fafafa, Plus Jakarta 400, 15px, px-7 py-3.5, border-radius: 3px
+// Framer Motion: opacity 0→1, y 20→0, 0.6s, delay 0.5s
+
+// Floating Menu Card — position relative z-20, margin-top 32px, display inline-block:
+// bg: #1a1a1a, border: 1px solid #f0a82a, border-radius: 4px, padding: 16px 20px, min-width: 220px
+// Framer Motion: initial scale 0.9, animate scale 1, delay 0.4s, duration 0.5s, ease [0.34,1.56,0.64,1]
+
+// Card header: Bebas Neue, 16px, letter-spacing 0.08em, color: #f0a82a: &quot;TODAY&#39;S TOP PICKS&quot;
+// Divider: 1px solid #2a2a2a, margin 8px 0
+
+// 3 menu items (each: flex justify-between align-center, padding: 6px 0):
+// Left: Plus Jakarta 300, 14px, #fafafa — item name
+// Right: Plus Jakarta 300, 13px, #f0a82a — price
+
+// Item 1: &quot;The Classic&quot; / &quot;£11&quot;
+// Item 2: &quot;The Smash BBQ&quot; / &quot;£13&quot;
+// Item 3: &quot;The Vegan&quot; / &quot;£11&quot;
+
+// Card footer: saffron &quot;See Full Menu →&quot; Plus Jakarta 300, 12px, #f0a82a, margin-top 10px
+```
+
+### 3. Menu Category Rows
+```tsx
+// Section bg: #0f0f0f, padding: 80px clamp(24px,6vw,96px)
+// Section label: Plus Jakarta 300, 12px, letter-spacing 0.16em, uppercase, color: #f0a82a, margin-bottom 8px: &quot;THE MENU&quot;
+// Headline: Bebas Neue, clamp(36px,5vw,80px), #fafafa, margin-bottom 48px: &quot;WHAT WE SERVE&quot;
+
+// 4 category rows, each: border-top 1px solid rgba(255,255,255,0.12), padding 28px 0
+// flex justify-between align-center, cursor pointer
+// Hover (Framer Motion whileHover): y -3px (0.2s), border-left: 4px solid #f0a82a, padding-left 16px, box-shadow: 0 4px 20px rgba(240,168,42,0.25)
+
+// Left: Bebas Neue, 28px, #fafafa — category name
+//       Plus Jakarta 400, 14px, #8c8c8c, margin-top 4px — description
+// Right: Plus Jakarta 300, 14px, #7a7a7a — &quot;from £9&quot;
+//        Saffron &quot;→&quot; Bebas Neue, 24px, #f0a82a, margin-left 12px
+
+// Row 1: &quot;Signature Burgers&quot; / &quot;Our smash burger line-up. Every one made fresh to order.&quot; / &quot;from £11&quot;
+// Row 2: &quot;Loaded Fries&quot; / &quot;Skin-on fries, four ways. A meal on their own.&quot; / &quot;from £5&quot;
+// Row 3: &quot;Drinks&quot; / &quot;Fanta floats, Mexican Coke, fresh lemonade, iced tea.&quot; / &quot;from £2.50&quot;
+// Row 4: &quot;Weekly Specials&quot; / &quot;A different special every week. Always worth it.&quot; / &quot;from £12&quot;
+```
+
+### 4. Signature Items
+```tsx
+// Section bg: #0f0f0f, padding: 80px clamp(24px,6vw,96px)
+// Headline: Bebas Neue, clamp(32px,4.5vw,72px), #fafafa, margin-bottom 48px: &quot;THE SIGNATURES&quot;
+
+// 3-column flex, gap 24px
+
+// Each card: bg: #111, border: 1px solid #1f1f1f, border-radius: 4px, overflow hidden
+// Hover: Framer Motion (image scale 1.04, border-color #f0a82a, 0.25s ease-out)
+
+// Card 1 — The Classic:
+{/* Image: Close-up overhead photography of a double smash burger — two thin crispy-edged smash patties, melted American cheese, pickles, mustard, ketchup, glossy brioche bun, served on parchment in a dark metal tray, dramatic side lighting showing texture and juiciness, steam visible */}
+&lt;img src=&quot;&quot; alt=&quot;The Classic double smash burger with American cheese and pickles&quot; style={{ width: &#39;100%&#39;, aspectRatio: &#39;4/3&#39;, objectFit: &#39;cover&#39;, objectPosition: &#39;center&#39; }} /&gt;
+// Card body, padding 20px
+// Bebas Neue, 28px, #fafafa: &quot;THE CLASSIC&quot;
+// Plus Jakarta 300, 13px, #8c8c8c, margin-top 6px: &quot;Double smash patty · American cheese · Pickles · Mustard · Ketchup · Brioche&quot;
+// Saffron price, Bebas Neue 24px, #f0a82a, margin-top 12px: &quot;£11&quot;
+
+// Card 2 — The Smash BBQ:
+{/* Image: Side-angle close-up of The Smash BBQ burger — two smash patties with crispy bacon rasher visible, glossy BBQ sauce dripping, crispy fried onions on top, brioche bun, dramatic backlighting, dark moody food photography */}
+&lt;img src=&quot;&quot; alt=&quot;The Smash BBQ burger with bacon and house BBQ sauce&quot; style={{ width: &#39;100%&#39;, aspectRatio: &#39;4/3&#39;, objectFit: &#39;cover&#39;, objectPosition: &#39;center&#39; }} /&gt;
+// &quot;THE SMASH BBQ&quot; / &quot;Double smash patty · Smoked streaky bacon · House BBQ · Crispy fried onions · Brioche&quot; / &quot;£13&quot;
+
+// Card 3 — The Vegan:
+{/* Image: Overhead shot of The Vegan burger — Beyond Beef smash patty, vegan cheese, vivid pickled red onion slices, shredded green iceberg lettuce, vegan mayo, brioche bun, shot on dark slate surface with vibrant colour contrast */}
+&lt;img src=&quot;&quot; alt=&quot;The Vegan Beyond Beef smash burger with pickled red onion&quot; style={{ width: &#39;100%&#39;, aspectRatio: &#39;4/3&#39;, objectFit: &#39;cover&#39;, objectPosition: &#39;center&#39; }} /&gt;
+// &quot;THE VEGAN&quot; / &quot;Beyond Beef smash patty · Vegan cheese · Pickled red onion · Shredded iceberg · Vegan mayo · Brioche&quot; / &quot;£11&quot;
+```
+
+### 5. Location Tracker
+```tsx
+// Section bg: #0f0f0f, padding: 80px clamp(24px,6vw,96px)
+// Inner card: bg: #111, border: 1px solid #1f1f1f, border-radius: 4px, padding: 40px 40px
+
+// Bebas Neue, clamp(28px,4vw,56px), #fafafa: &quot;THIS WEEK&#39;S LOCATIONS.&quot;
+// Plus Jakarta 300, 14px, #8c8c8c, margin-bottom 32px: &quot;We move. Check Instagram for same-day updates.&quot;
+
+// 3 location chips (flex-col, gap 16px):
+// Each: bg #1a1a1a, border 1px solid #2a2a2a, border-radius 4px, padding 16px 20px
+// flex align-center gap 16px
+
+// Left icon: MapPin lucide, 18px, #f0a82a
+// Center: flex flex-col
+//   Bebas Neue, 18px, #fafafa — location name
+//   Plus Jakarta 300, 13px, #8c8c8c — days and times
+// Right: saffron chip (flex align-center, bg rgba(240,168,42,0.12), border 1px solid rgba(240,168,42,0.3), border-radius 2px, px-3 py-1)
+//   Plus Jakarta 300, 12px, #f0a82a — status
+
+// Location 1: &quot;Shoreditch Market&quot; / &quot;Tue–Fri · 12pm–9pm&quot; / &quot;OPEN NOW&quot;
+// Location 2: &quot;Brixton Market&quot; / &quot;Sat · 11am–8pm&quot; / &quot;SAT ONLY&quot;
+// Location 3: &quot;Peckham Rye&quot; / &quot;Sun · 12pm–7pm&quot; / &quot;SUN ONLY&quot;
+
+// Instagram follow prompt below:
+// flex align-center gap 8px, margin-top 24px
+// Instagram icon (lucide), 18px, #f0a82a
+// Plus Jakarta 300, 14px, #8c8c8c: &quot;Follow &quot;
+// Plus Jakarta 400, 14px, #f0a82a: &quot;@streetburgers&quot;
+// Plus Jakarta 300, 14px, #8c8c8c: &quot; for daily location updates.&quot;
+
+// Framer Motion: card whileInView scale 0.97→1, opacity 0→1, 0.5s ease-out
+```
+
+### 6. Count-Up Stats Strip
+```tsx
+// Full-width section, bg: #f0a82a, padding: 48px clamp(24px,6vw,96px)
+// flex flex-wrap justify-around align-center gap-x-16 gap-y-8
+
+// 4 stats, each: flex-col align-center text-align center
+// Value: Bebas Neue, 72px, #0f0f0f, line-height 1
+// Label: Plus Jakarta Sans 300, 14px, #3a2a00, letter-spacing 0.06em, text-transform uppercase, margin-top 4px
+
+// Stat 1: count-up &quot;50K+&quot; / &quot;Burgers Served&quot;
+// Stat 2: &quot;Since 2019&quot; (no count-up — static text in Bebas 56px)
+// Stat 3: count-up &quot;4.9★&quot; / &quot;Google Rating&quot;
+// Stat 4: count-up &quot;5&quot; / &quot;Weekly Locations&quot;
+
+// Count-up: IntersectionObserver + requestAnimationFrame, 1600ms easeOutQuart
+```
+
+### 7. Full Menu Detail
+```tsx
+// Section bg: #0f0f0f, padding: 80px clamp(24px,6vw,96px)
+// Headline: Bebas Neue clamp(32px,4.5vw,68px) #fafafa &quot;THE FULL MENU&quot;
+
+// 4 menu sections, each with:
+// Bebas Neue, 20px, letter-spacing 0.1em, color: #f0a82a, margin-bottom 20px — section name
+// list of items, each: flex justify-between, border-bottom 1px solid rgba(255,255,255,0.08), padding 12px 0
+
+// SIGNATURE BURGERS
+// &quot;The Classic — Two thin smash patties. American cheese. Pickles. Mustard. Ketchup. Brioche. That&#39;s it.&quot; / &quot;£11&quot;
+// &quot;The Smash BBQ — Two smash patties, smoked streaky bacon, house BBQ, crispy fried onions, brioche.&quot; / &quot;£13&quot;
+// &quot;The Vegan — Beyond Beef smash patty. Vegan cheese. Pickled red onion. Shredded iceberg. Vegan mayo. Brioche.&quot; / &quot;£11&quot;
+// &quot;The Double Classic — Four patties. Four slices American cheese. The same brioche (barely).&quot; / &quot;£15&quot;
+
+// LOADED FRIES
+// &quot;Classic Cheese Fries&quot; / &quot;£5&quot;
+// &quot;Bacon &amp; Cheese Fries&quot; / &quot;£6.50&quot;
+// &quot;Truffle Fries&quot; / &quot;£6&quot;
+// &quot;Chilli Cheese Fries&quot; / &quot;£6.50&quot;
+
+// DRINKS
+// &quot;Fanta Float&quot; / &quot;£3&quot;
+// &quot;Mexican Coke&quot; / &quot;£3.50&quot;
+// &quot;Lemonade&quot; / &quot;£2.50&quot;
+// &quot;Iced Tea&quot; / &quot;£2.50&quot;
+
+// WEEKLY SPECIAL (saffron bg section):
+// bg: rgba(240,168,42,0.08), border: 1px solid rgba(240,168,42,0.2), border-radius: 4px, padding 20px
+// Bebas Neue 16px #f0a82a &quot;THIS WEEK&#39;S SPECIAL&quot;
+// Plus Jakarta 400 18px #fafafa &quot;The Korean Smash&quot;
+// Plus Jakarta 300 14px #8c8c8c &quot;Gochujang mayo, kimchi, smash patty, sesame slaw. It&#39;ll be gone by Saturday.&quot;
+// Bebas Neue 24px #f0a82a &quot;£14&quot;
+```
+
+### 8. About Strip
+```tsx
+// Section bg: #111, padding: 64px clamp(24px,6vw,96px)
+// 2 columns, gap 48px
+
+// Left: Bebas Neue clamp(28px,4vw,56px) #fafafa &quot;FOUR YEARS. 50,000 BURGERS.&quot;
+// Right: Plus Jakarta 400, 16px, #8c8c8c, line-height 1.7
+// &quot;Street Burgers started with one truck and one obsession: the perfect smash burger. Four years and 50,000 burgers later, it&#39;s still the same obsession. No restaurant deals. No franchises. Just us, the truck, and the queue.&quot;
+// Plus Jakarta 300, 14px, #f0a82a, margin-top 16px: &quot;Est. 2019 · London · @streetburgers&quot;
+```
+
+### 9. Saffron CTA
+```tsx
+// Section bg: #f0a82a, padding: 64px clamp(24px,6vw,96px), text-align center
+// Bebas Neue, clamp(48px,7vw,110px), #0f0f0f: &quot;HUNGRY?&quot;
+// Plus Jakarta 400, 17px, #3a2a00, margin-top 12px: &quot;Find our schedule above or follow us on Instagram for daily updates and surprise locations.&quot;
+// Button: bg #0f0f0f, color #fafafa, Plus Jakarta 400, 15px, px-8 py-4, border-radius 3px, margin-top 32px
+// &quot;Follow @streetburgers&quot;
+// Hover: bg #1a1a1a, 0.2s
+```
+
+### 10. Footer
+```tsx
+// bg: #0a0a0a, border-top: 1px solid #1f1f1f, padding: 40px clamp(24px,6vw,96px) 24px
+// 3 columns: Brand / Menu / Find Us
+// &quot;STREET BURGERS&quot; Bebas Neue 20px #f0a82a + Plus Jakarta 300 13px #555 &quot;London Smash Burgers · Est. 2019&quot;
+// Menu: Plus Jakarta 300 14px #6a6a6a — Signature Burgers / Loaded Fries / Drinks / Weekly Special
+// Find Us: Plus Jakarta 300 14px #6a6a6a — Shoreditch Market / Brixton Market / Peckham Rye / Instagram
+// Copyright: &quot;© 2025 Street Burgers. Follow us @streetburgers&quot; Plus Jakarta 300 12px #333
+```
+
+## Animations
+
+| Element | Animation | Duration | Delay | Easing |
+|---|---|---|---|---|
+| Navbar | y: -60→0 | 0.45s | 0s | ease-out |
+| Hero headline | opacity 0→1, x -40→0 | 0.7s | 0.1s | ease-out |
+| Hero sub | opacity 0→1, y 20→0 | 0.6s | 0.3s | ease-out |
+| Hero CTAs | opacity 0→1, y 20→0 | 0.6s | 0.5s | ease-out |
+| Floating menu card | scale 0.9→1 | 0.5s | 0.4s | spring [0.34,1.56,0.64,1] |
+| Category rows | whileHover y:-3px, saffron border+glow | 0.2s | 0s | ease-out |
+| Signature cards | whileHover img scale 1.04, amber border | 0.25s | 0s | ease-out |
+| Location card | whileInView scale 0.97→1, opacity 0→1 | 0.5s | scroll | ease-out |
+| Count-up stats | 0→target, rAF | 1.6s | on scroll entry | easeOutQuart |
+| CTA button | whileHover bg darken | 0.2s | 0s | ease-out |
+
+## Responsive
+
+- **Mobile (&lt;768px)**: Hero single column, background text hidden, floating card full-width below CTAs, category rows simplify, signature cards 1-col, location chips full-width, stats 2×2
+- **Tablet**: Signature cards 2+1, stats row 2×2, location chips full-width
+- **Desktop**: Full layout as described
+
+## Full Copy
+
+**Brand**: Street Burgers
+
+**Navbar**: Street / Menu / Locations / About / Instagram
+
+**Hero**:
+- Kicker: &quot;SMASH BURGERS · LONDON&quot;
+- Headline: &quot;THE BEST BURGER YOU&#39;LL EAT ALL WEEK.&quot;
+- Sub: &quot;Premium smash burgers. Maximum flavour. Zero pretension. Five locations across London this week.&quot;
+- CTA 1: &quot;See Full Menu&quot;
+- CTA 2: &quot;Find Us This Week&quot;
+
+**Floating card**: &quot;TODAY&#39;S TOP PICKS&quot; / The Classic £11 / The Smash BBQ £13 / The Vegan £11 / &quot;See Full Menu →&quot;
+
+**Menu categories**:
+- Signature Burgers: &quot;Our smash burger line-up. Every one made fresh to order.&quot; — from £11
+- Loaded Fries: &quot;Skin-on fries, four ways. A meal on their own.&quot; — from £5
+- Drinks: &quot;Fanta floats, Mexican Coke, fresh lemonade, iced tea.&quot; — from £2.50
+- Weekly Specials: &quot;A different special every week. Always worth it.&quot; — from £12
+
+**Full Menu**:
+- The Classic £11: &quot;Two thin smash patties. American cheese. Pickles. Mustard. Ketchup. Brioche. That&#39;s it.&quot;
+- The Smash BBQ £13: &quot;Two smash patties, smoked streaky bacon, house BBQ, crispy fried onions, brioche.&quot;
+- The Vegan £11: &quot;Beyond Beef smash patty. Vegan cheese. Pickled red onion. Shredded iceberg. Vegan mayo. Brioche.&quot;
+- The Double Classic £15: &quot;Four patties. Four slices American cheese. The same brioche (barely).&quot;
+- Loaded Fries: Classic Cheese £5 / Bacon &amp; Cheese £6.50 / Truffle £6 / Chilli Cheese £6.50
+- Drinks: Fanta Float £3 / Mexican Coke £3.50 / Lemonade £2.50 / Iced Tea £2.50
+- This Week&#39;s Special: &quot;The Korean Smash — Gochujang mayo, kimchi, smash patty, sesame slaw. It&#39;ll be gone by Saturday.&quot; £14
+
+**Locations**:
+- Shoreditch Market · Tue–Fri · 12pm–9pm · OPEN NOW
+- Brixton Market · Sat · 11am–8pm · SAT ONLY
+- Peckham Rye · Sun · 12pm–7pm · SUN ONLY
+- &quot;Follow @streetburgers for daily location updates.&quot;
+
+**Stats**: 50K+ Burgers Served / Since 2019 / 4.9★ Google / 5 Weekly Locations
+
+**About**: &quot;Street Burgers started with one truck and one obsession: the perfect smash burger. Four years and 50,000 burgers later, it&#39;s still the same obsession. No restaurant deals. No franchises. Just us, the truck, and the queue.&quot; / &quot;Est. 2019 · London · @streetburgers&quot;
+
+**CTA**: &quot;HUNGRY?&quot; / &quot;Find our schedule above or follow us on Instagram for daily updates and surprise locations.&quot; / &quot;Follow @streetburgers&quot;
+
+## Key Dependencies
+```json
+{
+  &quot;dependencies&quot;: {
+    &quot;react&quot;: &quot;^18&quot;,
+    &quot;framer-motion&quot;: &quot;^11&quot;,
+    &quot;lucide-react&quot;: &quot;latest&quot;,
+    &quot;@shadcn/ui&quot;: &quot;latest&quot;,
+    &quot;tailwindcss&quot;: &quot;^3&quot;
+  }
+}
+```
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clearpath Mortgages | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Clearpath Mortgages</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Mortgage Broker Website Prompt
+# websiteprompts.ai
+
+Build a clean, trustworthy mortgage broker and financial advisor website called &quot;Clearpath Mortgages&quot; using React + Vite + TypeScript + Tailwind CSS + Framer Motion (motion/react) + shadcn/ui + lucide-react.
+
+## Design System
+
+### Colors
+```css
+:root {
+  --background: 0 0% 100%;
+  --foreground: 215 30% 12%;        /* deep navy near-black */
+  --primary: 215 52% 28%;           /* deep navy #1e3a5f */
+  --primary-foreground: 0 0% 100%;
+  --accent: 42 60% 55%;             /* warm gold #c9a55a */
+  --surface: 215 15% 96%;           /* light blue-grey */
+  --surface-navy: 215 30% 92%;      /* navy tint */
+  --muted-foreground: 215 12% 52%;
+  --border: 215 16% 88%;
+}
+```
+
+### Typography
+- Import: `https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap`
+- All text: Plus Jakarta Sans
+- Headlines: Plus Jakarta Sans 700–800
+- Body: Plus Jakarta Sans 300–400
+- Labels: Plus Jakarta Sans 600 uppercase 10px letter-spacing 0.12em
+
+## Sections
+
+### 1. Navbar
+- Sticky white bg, thin navy bottom border on scroll
+- Left: Plus Jakarta Sans 700 wordmark &quot;Clearpath&quot; + small lucide Home icon in navy
+- Right: Services · How It Works · About · Contact + &quot;Get a quote →&quot; navy button
+
+### 2. Hero
+- Split layout: left content (55%), right large image (45%, rounded-2xl)
+- Left:
+  - Plus Jakarta Sans 600 uppercase 10px navy label: &quot;Independent Mortgage Broker&quot;
+  - Plus Jakarta Sans 800 `clamp(38px, 5vw, 70px)`: &quot;Your Mortgage,\nMade Simple.&quot;
+  - Plus Jakarta Sans 300 sub: &quot;Access to over 90 lenders, whole-of-market advice, and a fee-free service — finding you the right deal in days, not weeks&quot;
+  - CTAs: &quot;Get a free quote →&quot; (navy filled) + &quot;How it works&quot; (ghost navy)
+  - Trust chips: &quot;CeMAP Qualified · FCA Regulated · Whole of Market&quot;
+
+{/* Image brief: couple at home reviewing documents at kitchen table, warm light, relaxed and happy, homeownership milestone moment */}
+
+### 3. Trust Bar
+- Full-width navy `#1e3a5f` background, 72px
+- 4 white stats in Plus Jakarta Sans 700: &quot;90+ Lenders&quot; · &quot;£800M+ Arranged&quot; · &quot;4.9★ Google&quot; · &quot;Fee Free Service&quot;
+- Framer Motion useSpring count-up on scroll, white dividers
+
+### 4. Services
+- &quot;How We Can Help&quot; — Plus Jakarta Sans 800 with navy underline rule
+- 6-service 3×2 grid:
+  - First-Time Buyer (we handle everything, from AIP to completion)
+  - Home Mover (seamless transition, best rate for your situation)
+  - Remortgage (save money when your fixed rate ends)
+  - Buy-to-Let (landlord mortgages for portfolio and first-time landlords)
+  - Self-Employed (complex income? We find lenders who understand it)
+  - Protection (life insurance, critical illness, income protection)
+- Each card: navy lucide icon, Plus Jakarta Sans 700 service name, Plus Jakarta Sans 300 description, &quot;Learn more →&quot; navy link
+- Hover: navy border + navy glow `0 0 20px hsl(215 52% 28% / 0.10)`
+
+### 5. How It Works
+- &quot;The Clearpath Process&quot; — Plus Jakarta Sans 800
+- 4-step: Free Consultation → Whole Market Search → Mortgage Application → Completion
+- Large faded navy number (opacity 0.07) behind each step
+- Plus Jakarta Sans 300 muted description per step, stagger fade-up on scroll
+
+### 6. Why Choose Clearpath
+- Split: left text, right image
+- Plus Jakarta Sans 800: &quot;We Work for You, Not the Lenders&quot;
+- Plus Jakarta Sans 300: 2 paragraphs — whole-of-market means no bias, fee-free means our income comes from lenders, not you. CeMAP qualified. FCA regulated.
+- 4 check points with lucide Check in navy:
+  - &quot;Whole of market — 90+ lenders compared&quot;
+  - &quot;Completely fee-free advice&quot;
+  - &quot;CeMAP qualified advisors&quot;
+  - &quot;FCA regulated and fully insured&quot;
+
+{/* Image brief: mortgage advisor at desk with client, professional warm office setting, documents visible, trust and expertise conveyed */}
+
+### 7. Meet the Team
+- &quot;Your Advisors&quot; — Plus Jakarta Sans 800
+- 3 advisor cards: portrait (square, rounded-xl), Plus Jakarta Sans 700 name, navy specialty chip (CeMAP Qualified / FCA ARN), short bio
+- Hover: soft navy glow
+
+{/* Image brief: professional male mortgage advisor, business casual, warm office background, approachable expression */}
+{/* Image brief: female financial advisor, professional headshot, modern office, confident and friendly */}
+{/* Image brief: male advisor headshot, professional setting, warm smile, trustworthy */}
+
+### 8. Reviews
+- Light navy surface section
+- 3 cards: 5-star row in gold, Plus Jakarta Sans 300 italic quote, client name + mortgage type in Plus Jakarta Sans 10px muted
+- Stagger fade-up on scroll
+
+### 9. FAQ Accordion
+- &quot;Common Questions&quot; — Plus Jakarta Sans 800
+- 4 items via shadcn/ui:
+  - &quot;How long does the mortgage process take?&quot;
+  - &quot;Do I need a big deposit to get a mortgage?&quot;
+  - &quot;Can I get a mortgage if I&#39;m self-employed?&quot;
+  - &quot;What documents will I need?&quot;
+- Navy left border on open item
+
+### 10. CTA Banner
+- Full-width navy `#1e3a5f` background
+- Plus Jakarta Sans 800 white: &quot;Find Out How Much You Could Borrow&quot;
+- Plus Jakarta Sans 300 white: &quot;Free consultation · No obligation · Whole market comparison in 24 hours&quot;
+- &quot;Get a free quote →&quot; white bg navy text button
+- &quot;FCA regulated · Fee-free · Available evenings and weekends&quot; muted below
+
+### 11. Footer
+- Deep navy background, 3 columns
+- &quot;Clearpath Mortgages Ltd is authorised and regulated by the Financial Conduct Authority. FCA No. 123456. Your home may be repossessed if you do not keep up repayments on your mortgage.&quot; Plus Jakarta Sans 10px muted
+- &quot;© 2026 Clearpath Mortgages · London &amp; Remote&quot;
+
+## Animations
+- Trust bar: count-up on scroll
+- Service grid: stagger fade-up on scroll
+- Process steps: stagger fade-up on scroll
+- Navy rules: scaleX 0→1, 0.5s
+
+## Responsive
+- Mobile: split hero stacks, single-column service grid, hamburger nav
+
+## Full Copy
+- Wordmark: &quot;Clearpath&quot;
+- Hero: &quot;Your Mortgage, Made Simple.&quot; / &quot;Access to over 90 lenders, whole-of-market advice, and a fee-free service&quot;
+- Services: First-Time Buyer · Home Mover · Remortgage · Buy-to-Let · Self-Employed · Protection
+- Stats: 90+ Lenders · £800M+ Arranged · 4.9★ Google · Fee Free
+- Testimonial: &quot;Clearpath found us a rate 0.4% lower than our bank&#39;s best offer. The process was completely stress-free and they handled everything.&quot; — James &amp; Priya, first-time buyers
+- CTA: &quot;Find Out How Much You Could Borrow&quot; / &quot;Free consultation · No obligation&quot;
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sunbeam Nursery | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Sunbeam Nursery</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Childcare / Nursery Website Prompt
+# websiteprompts.ai
+
+Build a warm, premium childcare and nursery website called &quot;Sunbeam Nursery&quot; using React + Vite + TypeScript + Tailwind CSS + Framer Motion (motion/react) + shadcn/ui + lucide-react.
+
+## Design System
+
+### Colors
+```css
+:root {
+  --background: 42 22% 97%;           /* warm white #faf8f2 */
+  --foreground: 185 22% 14%;          /* deep teal near-black */
+  --primary: 185 38% 35%;             /* deep teal #2a6b73 */
+  --primary-foreground: 0 0% 100%;
+  --accent: 48 72% 65%;               /* warm yellow #f0d060 */
+  --accent-warm: 18 55% 65%;          /* warm coral #d4805a */
+  --surface: 42 18% 92%;
+  --muted-foreground: 185 10% 52%;
+  --border: 42 14% 84%;
+}
+```
+
+### Typography
+- Import: `https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;family=Inter:wght@300;400;500&amp;display=swap`
+- Headlines: Nunito 700–800 — rounded, warm, but strong
+- Body: Inter 300–400
+- Labels: Inter 500 uppercase 10px letter-spacing 0.10em
+
+## Sections
+
+### 1. Navbar
+- Sticky warm white, `backdrop-filter: blur(10px)`
+- Left: Nunito 800 &quot;Sunbeam&quot; + small lucide Sun icon in warm yellow
+- Right: Ages &amp; Stages · Day in the Life · Our Team · Visit + &quot;Book a visit →&quot; teal button
+
+### 2. Hero
+- Full-viewport height, warm white background
+- Full-bleed photography occupies right 58% of viewport: `position: absolute; right: 0; top: 0; width: 58%; height: 100%; object-fit: cover; object-position: center left`
+- Left content panel: `position: absolute; left: 0; top: 0; width: 50%; height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 0 5vw`
+  `background: linear-gradient(to right, rgba(250,248,242,1) 0%, rgba(250,248,242,0.95) 80%, transparent 100%)`
+- Content inside panel:
+  - Inter 500 uppercase 10px teal label: &quot;Nursery &amp; Pre-School · Chiswick, London&quot;
+  - Nunito 800 `clamp(38px, 5vw, 65px)` foreground, line-height 1.05: &quot;Where Every\nDay Feels Like\nan Adventure.&quot;
+  - Warm yellow accent: small `3px solid #f0d060` left-border on headline, `padding-left: 1rem`
+  - Inter 300 muted sub: &quot;Full and part-time childcare for children aged 6 weeks to 5 years — Ofsted Outstanding, warm, and genuinely fun&quot;
+  - CTAs: &quot;Book a visit →&quot; (teal filled) + &quot;Learn about our approach&quot; (ghost)
+  - Trust chips: &quot;Ofsted Outstanding · Ages 6 weeks–5 years · Nursery Funding Accepted&quot;
+
+{/* Image brief: young child painting in bright nursery classroom, warm natural light, colourful but not cluttered environment, child focused and happy, genuine editorial photography not stock */}
+
+- Stagger fade-up on mount (panel content)
+
+### 3. Age Groups
+- &quot;Tailored to Every Stage&quot; — Nunito 800
+- 3 cards, horizontal: Babies (6 weeks–18 months) · Toddlers (18 months–3 years) · Pre-School (3–5 years)
+- Each card: large teal age group icon, Nunito 700 name, Inter 300 description, warm surface background, teal &quot;See curriculum →&quot; link
+- Framer Motion stagger fade-up on scroll, scale 0.95→1
+
+### 4. A Day at Sunbeam
+- &quot;What a Day Looks Like&quot; — Nunito 800
+- Horizontal timeline, 5 key times:
+  - 8:00 Morning Welcome (settling activity, free play)
+  - 9:30 Structured Learning (phonics, numeracy, creativity)
+  - 11:30 Outdoor Play (garden, nature, movement)
+  - 12:30 Lunch (freshly cooked on-site, dietary requirements always catered)
+  - 14:00 Rest, Story &amp; Afternoon Activity
+- Each: Nunito 700 time in teal, Inter 300 muted activity description
+
+### 5. Our Approach
+- &quot;Learning Through Play&quot; — Nunito 800
+- Split: left text, right image
+- Inter 300 muted: 2 paragraphs — EYFS curriculum delivered through play-based learning. Small key-worker groups. Every child&#39;s development tracked and shared with parents weekly.
+- 4 teal checkpoints: &quot;Ofsted Outstanding · EYFS qualified staff · Key-worker system · Weekly parent updates&quot;
+
+{/* Image brief: nursery teacher reading to small group of toddlers, warm classroom, engaged children, natural light */}
+
+### 6. Our Team
+- &quot;Meet Your Child&#39;s Key Workers&quot; — Nunito 800
+- 3 team member cards: portrait (square, rounded-2xl), Nunito 700 name, teal qualification chip (EYFS / Level 3 qualified / Paediatric First Aid), Inter 300 short bio
+- Hover: soft yellow border
+
+{/* Image brief: nursery teacher with warm smile, indoor classroom, child-safe environment, professional and approachable */}
+{/* Image brief: male nursery worker reading with child, warm and caring, natural light */}
+{/* Image brief: nursery key worker headshot, warm professional, classroom background */}
+
+### 7. Fees &amp; Funding
+- &quot;Fees &amp; Funding&quot; — Nunito 800
+- 3 clean rows: Full Day (8am–6pm, from £82/day) · Half Day (8am–1pm or 1pm–6pm, from £46/session) · Nursery Funding (15–30 hours government funding accepted)
+- Nunito 700 tier name left, Inter 300 description right, teal price right-aligned
+- Border-bottom separators
+- &quot;Check your funding eligibility →&quot; teal link
+
+### 8. Testimonials
+- Warm surface section
+- 3 cards: 5-star teal row, Inter 300 italic quote, parent name + child age in Inter 10px muted
+- Stagger fade-up on scroll
+
+### 9. Visit CTA
+- Full-width deep teal `#2a6b73` background
+- Nunito 800 white: &quot;Come and See for Yourself&quot;
+- Inter 300 white: &quot;We offer informal show-arounds every week — bring your little one, ask every question, and see if Sunbeam feels right&quot;
+- &quot;Book a visit →&quot; ivory button
+- &quot;Ofsted Outstanding · Places Available · Chiswick, London&quot; Inter 10px ivory 70%
+
+### 10. Footer
+- Near-black, Nunito 800 &quot;Sunbeam&quot; + Sun icon in yellow
+- Facebook · Instagram · Google
+- &quot;© 2026 Sunbeam Nursery · 18 Devonshire Road, Chiswick, London W4 · Mon–Fri 8am–6pm · Ofsted Outstanding&quot;
+
+## Animations
+- Hero: stagger fade-up on mount (panel content)
+- Age group cards: stagger scale 0.95→1 + fade-up on scroll
+- Timeline: stagger slide-in from left
+- Team cards: stagger fade-up
+
+## Responsive
+- Mobile: stacked hero (photo top, text panel below), single-column age groups, hamburger nav
+
+## Full Copy
+- Wordmark: &quot;Sunbeam&quot;
+- Hero: &quot;Where Every Day Feels Like an Adventure.&quot; / &quot;Full and part-time childcare for children aged 6 weeks to 5 years — Ofsted Outstanding&quot;
+- Ages: Babies 6wks–18m · Toddlers 18m–3yr · Pre-School 3–5yr
+- Fees: Full Day from £82 · Half Day from £46 · 15–30hr Funding Accepted
+- Testimonial: &quot;Sunbeam has been a second home for our son since he was 8 months old. The staff genuinely know and love him — we can see it every day.&quot; — Sophie &amp; Tom R., Chiswick
+- CTA: &quot;Come and See for Yourself&quot; / &quot;Show-arounds every week&quot;
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

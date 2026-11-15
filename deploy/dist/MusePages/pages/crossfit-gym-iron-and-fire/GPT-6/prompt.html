@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Iron &amp; Fire CrossFit | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Iron &amp; Fire CrossFit</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Iron &amp; Fire CrossFit — CrossFit Gym Website Prompt
+
+## Goal
+Build a raw, high-intensity CrossFit box website with zero border-radius, signal red accents, Bebas Neue display type, and count-up stats that communicates elite coaching and community.
+
+## Tech Stack
+React + Vite + TypeScript + Tailwind CSS + Framer Motion (motion/react) + shadcn/ui + lucide-react
+
+## Design System
+
+### Colors
+```css
+:root {
+  --background: 0 0% 4%;
+  --foreground: 0 0% 100%;
+  --primary: 4 76% 50%;
+  --primary-foreground: 0 0% 100%;
+  --muted-foreground: 0 0% 55%;
+  --border: 0 0% 22%;
+  /* Raw hex reference */
+  /* pure-black: #0a0a0a */
+  /* signal-red: #d42a1a */
+  /* concrete-grey: #3a3a3a */
+  /* white: #ffffff */
+}
+
+/* CRITICAL: 0px border-radius on EVERY element without exception */
+* {
+  border-radius: 0px !important;
+}
+```
+
+### Typography
+Google Fonts import: `https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Inter:wght@300;400&amp;display=swap`
+- Display: Bebas Neue 400, letter-spacing: 0.04em (ALL display text, section headlines, stats, labels)
+- Body: Inter 400
+- Captions: Inter 300
+
+## Visual Effects
+
+1. **&quot;ELITE&quot; Background Text** — Bebas Neue at clamp(280px,40vw,560px), color: #3a3a3a (concrete grey), opacity: 0.03, position: absolute, right: -4%, top: 50%, transform: translateY(-50%), z-index: 0, pointer-events: none, user-select: none
+2. **Count-Up Stats Row** — 4 stats in signal red, useEffect with requestAnimationFrame counter: 0→target over 1.8s, triggered on scroll entry via Intersection Observer, Bebas Neue 64px
+3. **Schedule Grid Hover Fill** — available cells: hover triggers bg: #d42a1a transition 0.1s instant fill; cursor: pointer; full cell colour flip from transparent to red
+4. **Coach Card Red Top Border** — hover: border-top: 4px solid #d42a1a appears with transition 0.15s, translateY: -4px, 0.15s ease-out
+
+## Component Breakdown
+
+### 1. Navbar
+```tsx
+// Sticky, bg: #0a0a0a, border-bottom: 1px solid #222, height: 64px
+// Left: &quot;Iron &amp; Fire CrossFit&quot; in Bebas Neue, 20px, letter-spacing: 0.04em, white
+// Center: Classes / Schedule / Membership / Coaches / Book — Inter 300, 14px, white
+// Right: &quot;Book Free Intro&quot; — bg: #d42a1a, color: white, Bebas Neue, 16px, px-6 py-3, border-radius: 0
+// Framer Motion: y -64→0, opacity 0→1, 0.5s ease-out on mount
+```
+
+### 2. Hero
+```tsx
+// Full-viewport, min-height: 100vh, position: relative, overflow: hidden, bg: #0a0a0a
+
+// Background image:
+{/* Image: Ultra-high-intensity CrossFit photography — athlete at maximum exertion performing a barbell overhead squat or heavy clean and jerk, gym chalk dust visible in the air, industrial warehouse ceiling with pendant lights, concrete floor, raw and gritty athletic power, dramatic low-key lighting */}
+&lt;img src=&quot;&quot; alt=&quot;CrossFit athlete at maximum exertion with barbell overhead&quot; style={{ position: &#39;absolute&#39;, inset: 0, width: &#39;100%&#39;, height: &#39;100%&#39;, objectFit: &#39;cover&#39;, objectPosition: &#39;center&#39; }} /&gt;
+
+// Gradient overlay — composition-independent:
+// background: linear-gradient(to right, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.65) 55%, transparent 100%);
+// position: absolute; inset: 0; z-index: 1;
+
+// Background text — &quot;ELITE&quot;:
+// Bebas Neue, clamp(280px,40vw,560px), color: #3a3a3a, opacity: 0.03
+// position: absolute, right: -4%, top: 50%, transform: translateY(-50%), z-index: 0
+
+// Content panel — position: absolute, left: 0, top: 0, height: 100%, width: 56%, z-index: 10
+// padding-left: clamp(24px,6vw,96px), display: flex, flex-direction: column, justify-content: center
+
+// Kicker label: Bebas Neue, 15px, letter-spacing: 0.1em, color: #d42a1a, margin-bottom: 12px
+// &quot;CENTRAL MANCHESTER · EST. 2016&quot;
+
+// Main headline: &quot;BUILT DIFFERENT.&quot;
+// Bebas Neue, clamp(72px,11vw,170px), line-height: 0.92, color: white, letter-spacing: 0.04em
+// Framer Motion: opacity 0→1, x -40→0, 0.7s ease-out, delay: 0.1s
+
+// Sub: Inter 300, 17px, color: #8c8c8c, margin-top: 20px, max-width: 480px, line-height: 1.6
+// &quot;CrossFit coaching for people who take their training seriously. 220+ members across 3 daily classes. Central Manchester.&quot;
+
+// CTAs (flex row, gap: 12px, margin-top: 32px):
+// &quot;Book a Free Intro&quot; — bg: #d42a1a, color: white, Bebas Neue, 18px, letter-spacing: 0.04em, px-8 py-4, border-radius: 0
+// &quot;Our Classes&quot; — bg: transparent, border: 1px solid white, color: white, Bebas Neue, 18px, px-8 py-4, border-radius: 0
+// Hover: scale 1.03, 0.15s
+
+// Count-up stats row (flex, gap: 40px, margin-top: 48px):
+// Each stat: flex-direction column
+// Value: Bebas Neue, 64px, color: #d42a1a, line-height: 1
+// Label: Inter 300, 13px, color: #8c8c8c, letter-spacing: 0.06em, text-transform: uppercase
+
+// Stat 1: count-up to &quot;220+&quot; / &quot;Members&quot;
+// Stat 2: count-up to &quot;3&quot; / &quot;Daily Classes&quot;
+// Stat 3: count-up to &quot;18+&quot; / &quot;WOD Types&quot;
+// Stat 4: count-up to &quot;94%&quot; / &quot;Retention&quot;
+
+// Count-up logic:
+// useEffect + Intersection Observer: when stats row enters viewport, start counter
+// requestAnimationFrame loop: duration 1800ms, easeOutQuart, value rounds to integer
+```
+
+### 3. Weekly Schedule Grid
+```tsx
+// Section bg: #0f0f0f, padding: 80px clamp(24px,6vw,96px)
+// Headline: Bebas Neue, clamp(36px,5vw,72px), white, letter-spacing: 0.04em, margin-bottom: 8px
+// &quot;THIS WEEK&#39;S SCHEDULE&quot;
+// Sub: Inter 300, 15px, #8c8c8c, margin-bottom: 48px: &quot;All classes 60 minutes. Scaled and Rx options available.&quot;
+
+// Grid: 7 columns header row (Time / Mon / Tue / Wed / Thu / Fri / Sat) + 3 rows
+// Header: Bebas Neue, 15px, #d42a1a, letter-spacing: 0.06em
+// Time column: Inter 400, 14px, white
+
+// Row 1 — &quot;6:00am&quot;
+// Mon: &quot;Available&quot; → hover red fill instant (0.1s)
+// Tue: &quot;Available&quot;
+// Wed: &quot;Full&quot; → bg: #222, Inter 300 14px #555, cursor: not-allowed
+// Thu: &quot;Available&quot;
+// Fri: &quot;Available&quot;
+// Sat: &quot;Open WOD&quot; → bg: #1a0a00, border: 1px solid #d42a1a, color: #d42a1a
+
+// Row 2 — &quot;12:00pm&quot;
+// Mon: &quot;Available&quot; / Tue: &quot;Full&quot; / Wed: &quot;Available&quot; / Thu: &quot;Available&quot; / Fri: &quot;Full&quot; / Sat: &quot;Open WOD&quot;
+
+// Row 3 — &quot;5:30pm&quot;
+// Mon: &quot;Full&quot; / Tue: &quot;Available&quot; / Wed: &quot;Available&quot; / Thu: &quot;Full&quot; / Fri: &quot;Available&quot; / Sat: &quot;Open WOD&quot;
+
+// Each available cell: bg: #1a1a1a, border: 1px solid #333, Inter 300, 14px, white, text-align: center, padding: 14px
+// Hover: bg: #d42a1a instantly (transition: background-color 0.1s), color: white
+// Framer Motion whileHover on available cells only
+```
+
+### 4. Membership Cards
+```tsx
+// Section bg: #0a0a0a, padding: 80px clamp(24px,6vw,96px)
+// Headline: Bebas Neue clamp(36px,5vw,72px) white &quot;JOIN IRON &amp; FIRE&quot;
+
+// 3-column flex, gap: 24px
+
+// Card 1 — Drop-In:
+// bg: #111, border: 1px solid #333, border-radius: 0, padding: 40px 32px
+// Bebas Neue 18px #d42a1a &quot;DROP-IN&quot;
+// Bebas Neue 72px white &quot;£20&quot; + Inter 300 16px #8c8c8c &quot;/session&quot;
+// Divider: 1px solid #333, margin: 24px 0
+// Inter 300 15px white list (no bullets — em dash instead):
+// — Single class, no booking required
+// — All equipment included
+// — Rx and Scaled options
+// — Guest friendly
+// Button: bg: transparent, border: 1px solid #d42a1a, color: #d42a1a, Bebas Neue 18px, px-6 py-3, border-radius: 0, margin-top: 32px
+// &quot;BOOK A CLASS&quot;
+
+// Card 2 — Monthly (BEST VALUE chip):
+// bg: #111, border: 2px solid #d42a1a, border-radius: 0, padding: 40px 32px
+// Top: Bebas Neue 13px letter-spacing 0.12em bg: #d42a1a px-3 py-1 color white inline &quot;BEST VALUE&quot;
+// Bebas Neue 18px #d42a1a &quot;MONTHLY&quot;
+// Bebas Neue 72px white &quot;£89&quot; + Inter 300 16px #8c8c8c &quot;/month&quot;
+// Divider: 1px solid #333
+// Inter 300 15px white list:
+// — Unlimited classes
+// — Open Gym access (Mon–Fri 6am–8pm)
+// — Progress tracking
+// — Member community app
+// — First month money-back guarantee
+// Button: bg: #d42a1a, color: white, Bebas Neue 18px, px-6 py-3, border-radius: 0
+// &quot;JOIN NOW&quot;
+// Framer Motion: scale 1.02 relative to siblings (always slightly larger)
+
+// Card 3 — Annual:
+// bg: #111, border: 1px solid #333, border-radius: 0, padding: 40px 32px
+// Bebas Neue 18px #d42a1a &quot;ANNUAL&quot;
+// Bebas Neue 72px white &quot;£79&quot; + Inter 300 16px #8c8c8c &quot;/month (billed annually)&quot;
+// Small red chip: &quot;SAVE £120/yr&quot;
+// Divider: 1px solid #333
+// Inter 300 15px list: — Everything in Monthly / — Competition entry discounts / — Nutrition coaching (4 sessions) / — Priority class booking
+// Button: bg: transparent, border: 1px solid white, color: white, Bebas Neue 18px, px-6 py-3, border-radius: 0
+// &quot;JOIN ANNUAL&quot;
+
+// All cards: whileHover scale 1.02, 0.2s ease-out, whileInView opacity 0→1 y 30→0 stagger 0.15s
+```
+
+### 5. Coaches
+```tsx
+// Section bg: #0f0f0f, padding: 80px clamp(24px,6vw,96px)
+// Headline: Bebas Neue clamp(36px,5vw,72px) white &quot;MEET THE COACHES&quot;
+
+// 3-column flex, gap: 32px
+
+// Each coach card: bg: #111, border: 1px solid #222, border-radius: 0
+// Hover: border-top: 4px solid #d42a1a (0.15s), translateY: -4px (0.15s ease-out)
+// Framer Motion whileHover: borderTopWidth &quot;4px&quot;, y: -4
+
+{/* Image: Square professional headshot of a CrossFit coach in gym setting, industrial background, confident direct gaze, wearing branded Iron &amp; Fire t-shirt, high-contrast lighting */}
+&lt;img src=&quot;&quot; alt=&quot;[Coach name] head coach Iron &amp; Fire CrossFit&quot; style={{ width: &#39;100%&#39;, aspectRatio: &#39;1/1&#39;, objectFit: &#39;cover&#39;, objectPosition: &#39;center&#39; }} /&gt;
+
+// Card body, padding: 24px
+// Bebas Neue 28px white — coach name
+// Inter 300 13px #d42a1a letter-spacing 0.08em — title
+// Inter 300 14px #8c8c8c line-height 1.6 margin-top 12px — bio
+
+// Coach 1: &quot;COACH MIKEY&quot; / &quot;Head Coach · L3 CrossFit&quot;
+// &quot;Coach Mikey founded Iron &amp; Fire in 2016 after 5 years competing at Regionals level. L3 CrossFit Coach. Specialist in Olympic lifting and strength programming.&quot;
+
+// Coach 2: &quot;COACH RACH&quot; / &quot;Olympic Lifting Specialist · L2 CrossFit&quot;
+// &quot;Coach Rach is a British Olympic Weightlifting Champion and CrossFit L2 trainer. Rach coaches all Olympic lifting sessions and runs the weekly technique clinic.&quot;
+
+// Coach 3: &quot;COACH DAZ&quot; / &quot;Conditioning &amp; Competition · Masters Athlete&quot;
+// &quot;Coach Daz specialises in conditioning and has competed at the CrossFit Open Masters every year since 2018. He runs our Saturday Open WOD and competition prep programme.&quot;
+```
+
+### 6. Community &amp; Competition
+```tsx
+// Section bg: #0a0a0a, padding: 80px clamp(24px,6vw,96px)
+// Headline: Bebas Neue clamp(36px,5vw,72px) white &quot;JOIN THE COMPETITION.&quot;
+// Sub: Inter 300, 16px, #8c8c8c, margin-bottom: 48px
+// &quot;Iron &amp; Fire athletes compete at throwdowns, the CrossFit Open, and sanctioned events throughout the year.&quot;
+
+// 2-column layout: left upcoming events, right team photo or comp action shot
+
+// Upcoming events (left):
+// &quot;UPCOMING THROWDOWNS&quot; — Bebas Neue 18px #d42a1a letter-spacing 0.08em
+
+// 3 event rows, each: flex justify-between, border-bottom 1px solid #222, padding: 16px 0
+// Left: date chip (bg: #d42a1a, Bebas Neue 14px white, px-2 py-1) + event name Inter 400 15px white margin-left 12px
+// Right: Inter 300 13px #8c8c8c location
+
+// Event 1: &quot;15 MAR&quot; chip + &quot;North West CrossFit Throwdown&quot; / &quot;Manchester&quot;
+// Event 2: &quot;29 MAR&quot; chip + &quot;Iron &amp; Fire In-House Competition&quot; / &quot;Our Box&quot;
+// Event 3: &quot;12 APR&quot; chip + &quot;Battle of the Box&quot; / &quot;Liverpool&quot;
+
+{/* Image: CrossFit competition photograph — team of athletes celebrating after a competition, Rx jerseys visible, raw energy and camaraderie, industrial venue setting */}
+&lt;img src=&quot;&quot; alt=&quot;Iron &amp; Fire CrossFit team at competition&quot; style={{ width: &#39;100%&#39;, aspectRatio: &#39;16/9&#39;, objectFit: &#39;cover&#39;, objectPosition: &#39;center&#39; }} /&gt;
+```
+
+### 7. Red CTA
+```tsx
+// Full-width section bg: #d42a1a, padding: 80px clamp(24px,6vw,96px), text-align: center
+// Bebas Neue clamp(48px,7vw,120px) white letter-spacing 0.04em
+// &quot;YOUR FREE INTRO.&quot;
+// Bebas Neue clamp(36px,5vw,84px) white letter-spacing 0.04em — below, slightly smaller
+// &quot;ZERO EXCUSES.&quot;
+// Inter 300 17px rgba(255,255,255,0.8) margin-top 24px
+// &quot;45 minutes. See the box, meet a coach, and do a workout. No cost, no commitment.&quot;
+// Button: bg: white, color: #d42a1a, Bebas Neue 20px letter-spacing 0.04em, px-10 py-5, border-radius: 0, margin-top: 40px
+// &quot;BOOK FREE INTRO&quot;
+// Hover: bg: #0a0a0a, color: white, 0.2s
+```
+
+### 8. Footer
+```tsx
+// bg: #0a0a0a, border-top: 1px solid #222, padding: 48px clamp(24px,6vw,96px) 32px
+// 3 columns: Brand / Navigation / Contact
+// &quot;IRON &amp; FIRE CROSSFIT&quot; Bebas Neue 20px white letter-spacing 0.06em
+// Inter 300 14px #555: &quot;Est. 2016 · Central Manchester&quot;
+// Nav: Inter 300 14px #8c8c8c — Classes / Schedule / Membership / Coaches / Book / Privacy
+// Contact: Inter 300 14px #8c8c8c — address / phone / email / Instagram @ironandfireboxmcr
+// Copyright: &quot;© 2025 Iron &amp; Fire CrossFit&quot; Inter 300 12px #444
+```
+
+## Animations
+
+| Element | Animation | Duration | Delay | Easing |
+|---|---|---|---|---|
+| Navbar | y: -64→0, opacity 0→1 | 0.5s | 0s | ease-out |
+| Hero headline | opacity 0→1, x -40→0 | 0.7s | 0.1s | ease-out |
+| Hero sub | opacity 0→1, y 20→0 | 0.6s | 0.35s | ease-out |
+| Hero CTAs | opacity 0→1, y 20→0 | 0.6s | 0.5s | ease-out |
+| Count-up stats | 0→target, requestAnimationFrame | 1.8s | on scroll entry | easeOutQuart |
+| Schedule cells | bg: transparent→#d42a1a on hover | 0.1s | 0s | linear (instant) |
+| Membership cards | opacity 0→1, y 30→0, stagger 0.15s | 0.6s | scroll | ease-out |
+| Membership hover | scale 1.02 | 0.2s | 0s | ease-out |
+| Coach hover | y: -4px, borderTopWidth 0→4px | 0.15s | 0s | ease-out |
+| CTA section | whileInView opacity 0→1, y 24→0 | 0.6s | scroll | ease-out |
+
+## Responsive
+
+- **Mobile (&lt;768px)**: Hero single column, background text &quot;ELITE&quot; hidden, CTAs stack, stats 2×2 grid, schedule scrolls horizontally, membership cards stack, coaches stack
+- **Tablet (768–1024px)**: Schedule may horizontally scroll, 3-col coaches becomes 2-col + 1 below
+- **Desktop**: Full layout. Never any border-radius anywhere.
+
+## Full Copy
+
+**Brand**: Iron &amp; Fire CrossFit
+
+**Navbar**: Iron &amp; Fire / Classes / Schedule / Membership / Coaches / Book
+
+**Hero**:
+- Kicker: &quot;CENTRAL MANCHESTER · EST. 2016&quot;
+- Headline: &quot;BUILT DIFFERENT.&quot;
+- Sub: &quot;CrossFit coaching for people who take their training seriously. 220+ members across 3 daily classes. Central Manchester.&quot;
+- CTA 1: &quot;Book a Free Intro&quot;
+- CTA 2: &quot;Our Classes&quot;
+
+**Stats**: 220+ Members / 3 Daily Classes / 18+ WOD Types / 94% Retention
+
+**Schedule sub**: &quot;All classes 60 minutes. Scaled and Rx options available.&quot;
+
+**WOD Types** (for context section): Strength / Power Lifting / Olympic Lifting / AMRAP / EMOM / Chipper / Hero WODs / Benchmark WODs / Gymnastics / Open Training
+
+**Membership**:
+- Drop-In (£20/session): Single class no booking required / All equipment included / Rx and Scaled options / Guest friendly
+- Monthly (£89/month): Unlimited classes / Open Gym access (Mon–Fri 6am–8pm) / Progress tracking / Member community app / First month money-back guarantee
+- Annual (£79/month billed annually): Everything in Monthly / Competition entry discounts / Nutrition coaching (4 sessions) / Priority class booking
+
+**Coaches**:
+- Coach Mikey: &quot;Head Coach · L3 CrossFit&quot; — &quot;Coach Mikey founded Iron &amp; Fire in 2016 after 5 years competing at Regionals level. L3 CrossFit Coach. Specialist in Olympic lifting and strength programming.&quot;
+- Coach Rach: &quot;Olympic Lifting Specialist · L2 CrossFit&quot; — &quot;Coach Rach is a British Olympic Weightlifting Champion and CrossFit L2 trainer. Rach coaches all Olympic lifting sessions and runs the weekly technique clinic.&quot;
+- Coach Daz: &quot;Conditioning &amp; Competition · Masters Athlete&quot; — &quot;Coach Daz specialises in conditioning and has competed at the CrossFit Open Masters every year since 2018. He runs our Saturday Open WOD and competition prep programme.&quot;
+
+**Competition events**:
+- 15 MAR / North West CrossFit Throwdown / Manchester
+- 29 MAR / Iron &amp; Fire In-House Competition / Our Box
+- 12 APR / Battle of the Box / Liverpool
+
+**Competition sub**: &quot;Iron &amp; Fire athletes compete at throwdowns, the CrossFit Open, and sanctioned events throughout the year.&quot;
+
+**Red CTA**: &quot;YOUR FREE INTRO. / ZERO EXCUSES.&quot; / &quot;45 minutes. See the box, meet a coach, and do a workout. No cost, no commitment.&quot; / &quot;BOOK FREE INTRO&quot;
+
+**Testimonial**: &quot;First time doing CrossFit properly in 4 years of going to commercial gyms. Iron &amp; Fire is a completely different thing.&quot; — Tom W.
+
+**Contact**: [Box address, Central Manchester] / hello@ironandfire.co.uk / @ironandfireboxmcr
+
+## Key Dependencies
+```json
+{
+  &quot;dependencies&quot;: {
+    &quot;react&quot;: &quot;^18&quot;,
+    &quot;framer-motion&quot;: &quot;^11&quot;,
+    &quot;lucide-react&quot;: &quot;latest&quot;,
+    &quot;@shadcn/ui&quot;: &quot;latest&quot;,
+    &quot;tailwindcss&quot;: &quot;^3&quot;
+  }
+}
+```
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,546 @@
+:root
+{
+    --paper: #f0f0ee;
+    --ink: #121314;
+    --orange: #c2410c;
+    --surface: #e2e2df;
+    --muted: #585a58;
+    --line: #bfbfba;
+}
+*
+{
+    box-sizing: border-box;
+}
+[hidden]
+{
+    display: none !important;
+}
+body
+{
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 16px/1.65 Arial, sans-serif;
+}
+html
+{
+    scroll-padding-top: 85px;
+}
+a
+{
+    text-decoration: none;
+    color: inherit;
+}
+button, select, input
+{
+    font: inherit;
+}
+button, .pill
+{
+    display: inline-block;
+    cursor: pointer;
+    border: 1px solid var(--orange);
+    background: transparent;
+    color: var(--orange);
+    border-radius: 0;
+    padding: 11px 20px;
+    font-size: 14px;
+}
+.pill, button:hover
+{
+    background: var(--orange);
+    color: white;
+    border-radius: 28px;
+}
+:focus-visible
+{
+    outline: 3px solid #bc6537;
+    outline-offset: 4px;
+}
+header
+{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding: 18px 4%;
+    border-bottom: 1px solid var(--line);
+}
+.brand
+{
+    font-weight: 900;
+    font-size: 29px;
+    letter-spacing: -1px;
+    line-height: 1.15;
+}
+.brand span
+{
+    display: block;
+    font: 14px/1.6 "Courier New", monospace;
+    letter-spacing: 0;
+}
+nav
+{
+    display: flex;
+    gap: 30px;
+    margin-left: auto;
+    font-size: 14px;
+}
+#menu
+{
+    display: none;
+}
+section
+{
+    padding: 95px 6%;
+}
+.hero
+{
+    padding: 40px 5% 0;
+    min-height: 690px;
+    position: relative;
+    overflow: hidden;
+    background: #d3d4cf url("wall.svg") center/cover;
+}
+.hero > div
+{
+    position: relative;
+    z-index: 1;
+    max-width: 650px;
+}
+.meta, .fine
+{
+    font-size: 14px;
+    line-height: 1.65;
+}
+.meta
+{
+    font-family: "Courier New", monospace;
+    color: var(--orange);
+}
+.hero .meta
+{
+    color: #803519;
+}
+.hero-sentence
+{
+    font-weight: 700;
+    font-size: 29px;
+    line-height: 1.2;
+    color: var(--ink);
+}
+.actions
+{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 30px;
+}
+.text-link
+{
+    border-bottom: 1px solid;
+    font-size: 14px;
+}
+h1
+{
+    position: relative;
+    z-index: 1;
+    font-size: clamp(120px, 23vw, 350px);
+    font-weight: 900;
+    letter-spacing: -.075em;
+    line-height: .8;
+    margin: 95px 0 0;
+}
+.art-caption
+{
+    font-size: 14px;
+    margin: 28px 0 22px;
+    color: #3d4140;
+    position: relative;
+    z-index: 1;
+}
+h2
+{
+    font-size: clamp(40px, 5vw, 68px);
+    font-weight: 800;
+    letter-spacing: -3px;
+    line-height: .98;
+    margin: 25px 0;
+}
+h2 span
+{
+    color: var(--orange);
+}
+h3
+{
+    font-size: 25px;
+    letter-spacing: -.5px;
+    line-height: 1.15;
+}
+p
+{
+    color: var(--muted);
+}
+.route-section
+{
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 80px;
+    background: var(--surface);
+}
+.wall
+{
+    position: relative;
+    min-height: 450px;
+    background: #d1d1cb;
+    border: 1px solid #92968d;
+    overflow: hidden;
+}
+.wall-grid
+{
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(#a0a49a 1px, transparent 1px);
+    background-size: 35px 35px;
+}
+.hold
+{
+    position: absolute;
+    width: 35px;
+    height: 23px;
+    border: 1.5px solid #555b53;
+    border-radius: 60% 30% 50% 30%;
+    transform: rotate(var(--angle, -20deg));
+}
+.hold.on
+{
+    background: var(--orange);
+    border-color: #9e3107;
+}
+.route-top, .route-start
+{
+    position: absolute;
+    font: 14px "Courier New", monospace;
+    color: #353d33;
+}
+.route-top
+{
+    right: 15px;
+    top: 20px;
+}
+.route-start
+{
+    left: 20px;
+    bottom: 20px;
+}
+.first, .prices, .grades, .coaching, .planner, .visit
+{
+    display: grid;
+    grid-template-columns: 1fr 1.8fr;
+    gap: 70px;
+}
+.first > div > p:first-of-type
+{
+    font-size: 22px;
+    line-height: 1.6;
+    color: var(--ink);
+}
+.prices
+{
+    padding-top: 20px;
+}
+.prices article
+{
+    display: grid;
+    grid-template-columns: 1.2fr 1.8fr .4fr;
+    gap: 20px;
+    align-items: center;
+    border-top: 1px solid var(--line);
+    padding: 20px 0;
+}
+.prices h3
+{
+    font-size: 21px;
+    margin: 0;
+}
+.prices p, .prices strong
+{
+    font-size: 14px;
+}
+.prices strong
+{
+    font-family: "Courier New", monospace;
+    text-align: right;
+}
+.hour
+{
+    background: var(--ink);
+    color: var(--paper);
+    margin: 0 16px;
+    border-radius: 24px;
+}
+.hour .meta, .hour h2 span
+{
+    color: #edac83;
+}
+.hour article
+{
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 2fr;
+    gap: 30px;
+    align-items: center;
+    border-top: 1px solid #605f58;
+    padding: 20px 0;
+}
+.hour article > span
+{
+    font: 14px "Courier New", monospace;
+    color: #d3d2c8;
+}
+.hour article p
+{
+    color: #d3d2c8;
+    font-size: 15px;
+}
+.grade-buttons
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+.grade-buttons button
+{
+    text-align: left;
+    color: var(--ink);
+    border-color: #92968d;
+}
+.grade-buttons button[aria-pressed=true]
+{
+    color: white;
+    background: var(--ink);
+}
+.grade-copy
+{
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    margin-top: 30px;
+}
+.coaching
+{
+    padding-top: 20px;
+}
+.coaching article
+{
+    border-top: 1px solid var(--line);
+    padding: 22px 0;
+}
+.coaching article > span
+{
+    display: block;
+    font: 14px "Courier New", monospace;
+    margin-bottom: 20px;
+}
+.planner
+{
+    margin: 16px;
+    border-radius: 24px;
+    background: var(--orange);
+    color: white;
+    grid-template-columns: 1fr 1fr;
+}
+.planner p, .planner .meta, .planner h2 span
+{
+    color: white;
+}
+label
+{
+    font-size: 14px;
+    display: block;
+}
+input:not([type=checkbox]), select
+{
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 22px;
+    border: 1px solid white;
+    color: var(--ink);
+    background: var(--paper);
+}
+.two
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.accept
+{
+    margin: 15px 0 25px;
+}
+.planner button
+{
+    background: var(--paper);
+    color: var(--orange);
+    border-color: var(--paper);
+}
+.estimate
+{
+    font-size: 50px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 15px 0;
+}
+.visit
+{
+    grid-template-columns: 1.2fr 1fr;
+}
+.visit article
+{
+    border-top: 1px solid var(--line);
+    padding: 22px 0;
+}
+.visit article > span
+{
+    display: block;
+    font: 14px "Courier New", monospace;
+}
+.visit strong
+{
+    font-size: 36px;
+}
+details
+{
+    border-top: 1px solid var(--line);
+    padding: 20px 0;
+}
+summary
+{
+    cursor: pointer;
+}
+footer
+{
+    background: var(--ink);
+    color: var(--paper);
+    padding: 60px 5% 40px;
+    overflow: hidden;
+}
+.footer-word
+{
+    display: block;
+    font-size: clamp(100px, 25vw, 350px);
+    font-weight: 900;
+    line-height: .8;
+    letter-spacing: -.075em;
+    margin-bottom: 50px;
+}
+footer > div
+{
+    display: flex;
+    justify-content: space-between;
+    gap: 25px;
+    flex-wrap: wrap;
+    font-size: 14px;
+}
+footer p
+{
+    color: #d3d2c8;
+}
+@media (max-width: 760px)
+{
+    header
+    {
+        padding: 18px 24px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    .brand span
+    {
+        font-size: 14px;
+    }
+    header > .pill
+    {
+        display: none;
+    }
+    #menu
+    {
+        display: block;
+        margin-left: auto;
+        padding: 6px 12px;
+    }
+    nav
+    {
+        display: none;
+        width: 100%;
+        margin: 0;
+        flex-direction: column;
+    }
+    nav.open
+    {
+        display: flex;
+    }
+    section
+    {
+        padding: 60px 25px;
+    }
+    .hero
+    {
+        min-height: 600px;
+        padding: 35px 25px 0;
+    }
+    .hero-sentence
+    {
+        font-size: 25px;
+    }
+    h1
+    {
+        font-size: 25vw;
+        margin-top: 130px;
+    }
+    .hero .meta, .art-caption
+    {
+        font-size: 14px;
+    }
+    h2
+    {
+        font-size: 48px;
+        letter-spacing: -2px;
+    }
+    .route-section, .first, .prices, .grades, .coaching, .planner, .visit
+    {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+    .wall
+    {
+        min-height: 300px;
+    }
+    .prices article
+    {
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+    }
+    .prices article p
+    {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        margin: 0;
+    }
+    .prices strong
+    {
+        grid-column: 2;
+        grid-row: 1;
+    }
+    .hour article
+    {
+        grid-template-columns: 1fr;
+        gap: 0;
+        padding-top: 25px;
+    }
+    .hour h3
+    {
+        margin: 18px 0 0;
+    }
+    .planner
+    {
+        padding-inline: 24px;
+    }
+}

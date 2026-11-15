@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Studio Noma | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Studio Noma</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Studio Noma — Interior Design Studio Website Prompt
+
+## 1. Goal Statement
+Build a portfolio-forward, editorial interior design studio website for **Studio Noma**, defined by a warm linen and charcoal palette with terracotta accents, generous whitespace, and a masonry grid that makes every project feel like a gallery piece.
+
+---
+
+## 2. Tech Stack
+```
+React + Vite + TypeScript + Tailwind CSS + Framer Motion (motion/react) + shadcn/ui + lucide-react
+```
+
+---
+
+## 3. Design System — Colors
+
+```css
+:root {
+  --background: hsl(36, 30%, 95%);          /* #f4efe8 warm linen */
+  --foreground: hsl(30, 8%, 16%);            /* #2a2825 deep charcoal */
+  --primary: hsl(16, 51%, 49%);              /* #c4673c terracotta */
+  --primary-foreground: hsl(36, 30%, 95%);   /* linen — text on terracotta */
+  --muted-foreground: hsl(30, 8%, 50%);      /* medium grey-brown */
+  --border: hsl(30, 12%, 85%);               /* soft warm grey border */
+  --card: hsl(36, 25%, 98%);                 /* near-white card bg */
+  --accent: hsl(16, 51%, 49%);               /* terracotta accent */
+  --overlay: rgba(42, 40, 37, 0.85);         /* charcoal overlay for hover */
+}
+```
+
+---
+
+## 4. Typography
+
+```html
+&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&amp;display=swap&quot; rel=&quot;stylesheet&quot; /&gt;
+```
+
+- **H1 / hero display:** `font-family: &#39;Playfair Display&#39;, serif;` weight 700–900, italic variant for emphasis, letter-spacing: -0.02em
+- **H2 / section headings:** `font-family: &#39;Playfair Display&#39;, serif;` weight 700, letter-spacing: -0.01em
+- **H3 / card titles:** `font-family: &#39;Playfair Display&#39;, serif;` italic 700, size 20–24px
+- **Body / paragraphs:** `font-family: &#39;DM Sans&#39;, sans-serif;` weight 300, line-height: 1.8, letter-spacing: 0.01em
+- **UI labels / nav / section eyebrows:** DM Sans 400–500, uppercase, letter-spacing: 0.15em, size: 11–12px
+- **Terracotta accents:** terracotta color on dates, years, accent numbers
+
+---
+
+## 5. Visual Effects
+
+### Effect 1 — Masonry Portfolio Grid with Hover Reveal
+```tsx
+// CSS columns masonry approach
+&lt;div
+  className=&quot;w-full&quot;
+  style={{
+    columnCount: 3,
+    columnGap: &#39;12px&#39;,
+  }}
+&gt;
+  {portfolioItems.map((item, i) =&gt; (
+    &lt;motion.div
+      key={item.id}
+      className=&quot;relative overflow-hidden break-inside-avoid mb-3 group cursor-pointer&quot;
+      initial={{ opacity: 0, filter: &#39;blur(10px)&#39;, y: 30 }}
+      animate={inView ? { opacity: 1, filter: &#39;blur(0px)&#39;, y: 0 } : {}}
+      transition={{ delay: i * 0.07, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+    &gt;
+      &lt;img src=&quot;&quot; alt={item.name} className=&quot;w-full block transition-transform duration-700 group-hover:scale-105&quot; style={{ display: &#39;block&#39; }} /&gt;
+      {/* Hover overlay */}
+      &lt;div className=&quot;absolute inset-0 flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-400&quot; style={{ background: &#39;var(--overlay)&#39; }}&gt;
+        &lt;p className=&quot;text-[var(--primary)] text-xs uppercase tracking-widest font-sans mb-1&quot;&gt;{item.year}&lt;/p&gt;
+        &lt;h3 className=&quot;text-white font-serif italic text-xl leading-tight&quot;&gt;{item.name}&lt;/h3&gt;
+        &lt;p className=&quot;text-white/70 text-sm font-sans font-light mt-1&quot;&gt;{item.type}&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/motion.div&gt;
+  ))}
+&lt;/div&gt;
+```
+
+### Effect 2 — Editorial Hero with Wide Letter-Spacing Fade-In
+```tsx
+// Hero headline fades in word by word
+const words = [&#39;Space&#39;, &#39;Shaped&#39;, &#39;with&#39;, &#39;Intention&#39;];
+
+function HeroHeadline() {
+  return (
+    &lt;h1 className=&quot;text-[clamp(52px,10vw,140px)] font-serif font-black leading-none tracking-tight&quot; style={{ letterSpacing: &#39;-0.02em&#39; }}&gt;
+      {words.map((word, i) =&gt; (
+        &lt;motion.span
+          key={word}
+          className=&quot;inline-block mr-[0.2em]&quot;
+          initial={{ opacity: 0, y: 40, filter: &#39;blur(8px)&#39; }}
+          animate={{ opacity: 1, y: 0, filter: &#39;blur(0px)&#39; }}
+          transition={{ delay: 0.3 + i * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        &gt;
+          {i === 2 ? &lt;em className=&quot;not-italic&quot; style={{ color: &#39;var(--primary)&#39; }}&gt;{word}&lt;/em&gt; : word}
+        &lt;/motion.span&gt;
+      ))}
+    &lt;/h1&gt;
+  );
+}
+```
+
+### Effect 3 — Horizontal Scroll Process Section
+```tsx
+&lt;section className=&quot;py-24&quot;&gt;
+  &lt;div className=&quot;px-6 md:px-16 mb-12&quot;&gt;
+    &lt;h2&gt;Our Process&lt;/h2&gt;
+  &lt;/div&gt;
+  &lt;div
+    className=&quot;flex gap-8 overflow-x-auto snap-x snap-mandatory pb-8 px-6 md:px-16 scrollbar-hide&quot;
+    style={{ scrollbarWidth: &#39;none&#39;, msOverflowStyle: &#39;none&#39; }}
+  &gt;
+    {processSteps.map((step, i) =&gt; (
+      &lt;div
+        key={step.num}
+        className=&quot;flex-shrink-0 w-[80vw] md:w-[420px] snap-start&quot;
+      &gt;
+        &lt;div className=&quot;border-t-2 border-[var(--primary)] pt-6&quot;&gt;
+          &lt;span className=&quot;text-[80px] font-serif font-black text-[var(--foreground)] opacity-[0.06] leading-none block&quot;&gt;{step.num}&lt;/span&gt;
+          &lt;h3 className=&quot;font-serif italic text-2xl mt-2 text-[var(--foreground)]&quot;&gt;{step.title}&lt;/h3&gt;
+          &lt;p className=&quot;font-sans font-light text-[var(--muted-foreground)] mt-4 leading-relaxed&quot;&gt;{step.description}&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    ))}
+  &lt;/div&gt;
+&lt;/section&gt;
+```
+
+### Effect 4 — Terracotta Accent Line on About Section
+```tsx
+// Animated terracotta vertical line on About
+&lt;motion.div
+  initial={{ scaleY: 0 }}
+  animate={inView ? { scaleY: 1 } : {}}
+  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+  style={{
+    originY: 0,
+    width: &#39;3px&#39;,
+    backgroundColor: &#39;var(--primary)&#39;,
+    height: &#39;80px&#39;,
+    marginBottom: &#39;32px&#39;,
+  }}
+/&gt;
+```
+
+### Effect 5 — Press Logo Row with Subtle Hover
+```tsx
+// Grayscale logos, terracotta on hover
+&lt;div className=&quot;flex flex-wrap justify-center items-center gap-10 md:gap-16&quot;&gt;
+  {pressLogos.map(logo =&gt; (
+    &lt;img
+      key={logo}
+      src=&quot;&quot;
+      alt={logo}
+      className=&quot;h-6 opacity-40 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-400 cursor-default&quot;
+      style={{ filter: &#39;grayscale(1)&#39;, transition: &#39;filter 0.4s ease, opacity 0.4s ease&#39; }}
+      onMouseEnter={e =&gt; { (e.target as HTMLImageElement).style.filter = &#39;none&#39;; }}
+      onMouseLeave={e =&gt; { (e.target as HTMLImageElement).style.filter = &#39;grayscale(1)&#39;; }}
+    /&gt;
+  ))}
+&lt;/div&gt;
+```
+
+---
+
+## 6. Component Breakdown
+
+### Section 1 — Navbar (Wordmark Only, Minimal)
+- **Height:** 72px
+- **Position:** `fixed top-0 left-0 right-0 z-40`
+- **Background:** `rgba(244,239,232,0.92)` with `backdrop-filter: blur(16px)` always (linen semi-transparent)
+- **Bottom border:** 1px `--border`
+- **Left:** &quot;STUDIO NOMA&quot; in DM Sans 500, uppercase, letter-spacing: 0.25em, size: 13px, charcoal
+- **Right:** Portfolio · Services · Process · About · Contact — DM Sans 400, 12px uppercase, tracking-wider
+- **Far right:** &quot;Get in Touch&quot; — small terracotta text link with `→` arrow
+- **Mobile:** wordmark only + hamburger, slide-in right-side drawer
+
+### Section 2 — Hero
+- **Background:** warm linen `--background`
+- **Layout:** two sub-areas stacked:
+  - Top text area (full-width, padding: 140px top 48px bottom left 64px)
+  - Bottom hero image (full-width, `h-[60vh] md:h-[75vh]`, no padding)
+- **Text area content:**
+  - Small label (DM Sans, terracotta): `INTERIOR DESIGN STUDIO — AMSTERDAM`
+  - H1: (see Effect 2) — `Space Shaped with Intention`
+  - Tagline below: `We design spaces that feel inevitable.`
+  - Two CTAs inline: &quot;View Our Work&quot; (terracotta button) + &quot;Contact Studio&quot; (text link with arrow)
+- **Hero image:**
+  ```jsx
+  {/* Image: beautifully designed Scandinavian-influenced living room, warm linen upholstery sofa, terracotta ceramic vases, oak shelving with books and objects, warm natural light from tall windows, interior design editorial photography, Kinfolk magazine aesthetic */}
+  &lt;img src=&quot;&quot; alt=&quot;Studio Noma signature living space with linen and terracotta tones&quot; className=&quot;w-full h-full object-cover object-center&quot; /&gt;
+  ```
+
+### Section 3 — Portfolio Masonry Grid
+- **Padding:** `py-24 px-4 md:px-8`
+- **Heading area:** left-aligned, &quot;Selected Work&quot; + &quot;01 — 12&quot; counter (muted, terracotta), filter tabs above (All / Residential / Commercial / Staging)
+- **Grid:** 3 columns desktop, 2 columns tablet, 1 column mobile
+- **12 portfolio images** with staggered reveal
+- **Below grid:** &quot;View All Projects →&quot; centered terracotta link
+
+### Section 4 — Services
+- **Background:** slightly lighter linen `--card`
+- **Layout:** 3 cards in a row (`grid grid-cols-1 md:grid-cols-3 gap-0` with dividers between)
+- **Each card:** top terracotta thin line (2px), large number (faded, serif), service name (Playfair italic), short description, &quot;Learn more →&quot;
+
+### Section 5 — Process (Horizontal Scroll)
+- **Background:** warm linen `--background`
+- **Header:** left-padded, &quot;How We Work&quot; heading
+- **5 horizontally scrolling steps** (see Effect 3)
+- **Drag hint:** small &quot;→ scroll to explore&quot; label fades out after first scroll
+
+### Section 6 — About
+- **Layout:** 2-col, 50/50, `gap-0`
+- **Left col:**
+  - Animated terracotta vertical line (Effect 4)
+  - Eyebrow: &quot;FOUNDER — SARA ERIKSSON&quot;
+  - H2: &quot;Design That Starts\nWith Listening&quot;
+  - 3 paragraphs
+  - &quot;Read our story →&quot; terracotta link
+- **Right col:**
+  ```jsx
+  {/* Image: female interior designer in her studio, surrounded by material samples and design boards, natural light from skylight, warm minimalist workspace with plants and objects, candid editorial portrait */}
+  &lt;img src=&quot;&quot; alt=&quot;Studio founder Sara Eriksson in her Amsterdam design studio&quot; className=&quot;w-full h-full object-cover object-center&quot; /&gt;
+  ```
+
+### Section 7 — Testimonials
+- **2-col layout** on desktop, 1-col mobile
+- **Large quotation mark** in terracotta (Playfair Display, 120px) as decorative element
+- **Quote text:** Playfair italic, 24px, charcoal
+- **Attribution:** DM Sans 400, small, muted
+
+### Section 8 — Press / As Seen In
+- **Background:** charcoal `--foreground`
+- **Label:** &quot;AS SEEN IN&quot; in DM Sans uppercase, cream/muted
+- **Logo row:** grayscale publication logos with hover effect
+
+### Section 9 — Contact
+- **Background:** warm linen
+- **Layout:** centered, max-width 640px
+- **Heading:** &quot;Let&#39;s Create\nSomething Together&quot;
+- **Minimal form:** Name, Email, Project Type (dropdown), Message
+- **CTA:** &quot;Send Message&quot; — full-width terracotta button
+- **Below:** &quot;Or email us directly: hello@studionoma.com&quot;
+
+### Section 10 — Footer
+- **Background:** deep charcoal `--foreground`
+- **Text:** cream foreground
+- **Layout:** 3-col (desktop), stacked (mobile)
+- **Terracotta top border line 2px**
+- Col 1: STUDIO NOMA + tagline
+- Col 2: Nav links
+- Col 3: Address + Social (Instagram, Pinterest)
+
+---
+
+## 7. Animations
+
+### Hero Text Fade-In (word by word)
+- Stagger: 0.3s initial delay, 0.1s between words
+- Each word: `opacity: 0, y: 40, filter: blur(8px)` → `opacity: 1, y: 0, filter: blur(0)`
+- Duration: 0.8s, ease: `[0.22, 1, 0.36, 1]`
+
+### Hero Image Reveal
+- `initial={{ clipPath: &#39;inset(0 100% 0 0)&#39; }}` → `animate={{ clipPath: &#39;inset(0 0% 0 0)&#39; }}`
+- Duration: 1.2s, ease: `[0.77, 0, 0.18, 1]`, delay: 0.6s
+
+### Portfolio Grid Stagger
+- 12 items, each: `delay: i * 0.07`
+- `opacity: 0, y: 30, filter: blur(10px)` → reversed
+- Triggered by `useInView({ once: true, margin: &#39;-60px&#39; })`
+
+### Masonry Hover Overlay
+- Overlay `opacity: 0 → 1`, duration: 0.35s ease
+- Image `scale: 1 → 1.05`, duration: 0.7s ease
+
+### Process Horizontal Scroll
+- Touch/mouse drag enabled natively via overflow-x
+- Snap points: `scroll-snap-type: x mandatory`, each item `scroll-snap-align: start`
+
+### Terracotta Line (About)
+- `scaleY: 0 → 1`, origin top, duration: 0.7s, ease: `[0.22, 1, 0.36, 1]`
+
+### Section Reveals (all non-hero sections)
+- `opacity: 0, y: 24` → `opacity: 1, y: 0`
+- Duration: 0.65s, ease: `[0.22, 1, 0.36, 1]`
+- Triggered once per section on scroll entry
+
+---
+
+## 8. Responsive
+
+### Mobile (&lt; 768px)
+- Navbar: wordmark + hamburger; slide-in right drawer with all links, staggered entrance
+- Hero: text area padding 24px 20px, H1 clamped to 52px, image below full-width h-[50vw]
+- Portfolio: 1-column, all 12 items listed
+- Services: 1-column stacked cards with terracotta top border
+- Process: horizontal scroll maintained, cards 88vw wide
+- About: image full-width on top, text below
+- Testimonials: 1-column
+
+### Tablet (768px–1024px)
+- Portfolio: 2-column masonry
+- Services: 2-col (first 2) + 1 below, or 3-col tight
+- About: 2-col maintained
+
+### Desktop (&gt; 1024px)
+- Portfolio: 3-column masonry
+- Everything at full spec
+
+---
+
+## 9. Full Copy
+
+### Brand
+**STUDIO NOMA**
+
+### Tagline
+&quot;Space Shaped with Intention&quot;
+
+### Navbar
+- Portfolio
+- Services
+- Process
+- About
+- Contact
+- [Text link] Get in Touch →
+
+### Hero Section
+- Label: `INTERIOR DESIGN STUDIO — AMSTERDAM`
+- H1: `Space Shaped\nwith Intention`
+- Subline: `We design spaces that feel inevitable.`
+- CTA Primary: `View Our Work`
+- CTA Secondary: `Contact Studio →`
+
+### Portfolio Section
+- Eyebrow: `SELECTED WORK`
+- Heading: `What We&#39;ve Built`
+- Counter: `01 — 12`
+- Filter tabs: All / Residential / Commercial / Staging
+- Link below: `View All Projects →`
+
+**Portfolio item names (for hover overlays):**
+1. The Prinsengracht Residence — 2024 — Residential
+2. Studio Zwart — 2023 — Commercial
+3. Villa Oud-Zuid — 2024 — Residential
+4. Café Marges — 2023 — Commercial
+5. The Jordaan Loft — 2024 — Residential
+6. Haarlemmerstraat Showroom — 2022 — Commercial
+7. The Canal House — 2024 — Residential
+8. Hotel Bereken — 2023 — Commercial
+9. Vondelpark Villa — 2023 — Residential
+10. Studio De Pijp — 2024 — Commercial
+11. The Stagings — Maasdam Street — 2024 — Staging
+12. The Herengracht Apartment — 2022 — Residential
+
+**Portfolio image briefs (one per item):**
+```jsx
+{/* Image 1: bright Scandinavian living room with floor-to-ceiling bookshelves, linen sofa, warm afternoon light, oak herringbone floor, editorial interior design photography */}
+{/* Image 2: minimalist commercial studio interior, concrete floors, natural wood desk, terracotta accent wall, soft diffused skylight */}
+{/* Image 3: large villa living area, double-height ceilings, exposed wooden beams, white walls, natural linen curtains, stone fireplace, warm and airy feel */}
+{/* Image 4: intimate café interior, warm clay plaster walls, rattan chairs, handcrafted ceramic tableware, ambient evening lighting, cozy European atmosphere */}
+{/* Image 5: industrial loft conversion, exposed brick, tall windows, mid-century furniture, warm textile layering, styled bookshelf */}
+{/* Image 6: high-end retail showroom, floating display shelves, warm track lighting, neutral palette with terracotta product accents */}
+{/* Image 7: renovated Amsterdam canal house interior, original wooden floors, modern linen furniture, dramatic window light reflecting off canal */}
+{/* Image 8: boutique hotel lobby, organic textured walls, hand-knotted rug, sculptural lighting fixtures, warm amber ambience */}
+{/* Image 9: garden-facing villa kitchen, Shaker white cabinetry, integrated brass hardware, stone island, blooming garden view through large window */}
+{/* Image 10: creative agency office, Scandinavian furniture, moss green accent partition, natural materials, diffused natural light */}
+{/* Image 11: staged bedroom interior, crisp linen bedding, terracotta throw pillow, oak bedside, soft morning light, clean and aspirational */}
+{/* Image 12: classic Amsterdam apartment, arched doorways, warm parquet floor, artwork on walls, curated styling objects, elevated minimalism */}
+```
+
+### Services Section
+- Eyebrow: `WHAT WE DO`
+- Heading: `Our Services`
+
+**Card 1 — Residential Design**
+- Number: 01
+- Description: Full-service interior design for homes and apartments. From concept to completion — we handle everything: spatial planning, material selection, furnishing, lighting, and styling.
+
+**Card 2 — Commercial Interiors**
+- Number: 02
+- Description: Offices, studios, hospitality spaces, and retail environments designed to reflect your brand and create experiences your clients and teams will remember.
+
+**Card 3 — Property Staging**
+- Number: 03
+- Description: Strategic staging that makes buyers fall in love. We transform empty or dated spaces into homes that photograph beautifully and sell faster, at better prices.
+
+### Process Section
+- Eyebrow: `HOW WE WORK`
+- Heading: `Five Steps to a Space You Love`
+
+Steps:
+1. **01 — Discovery** — We begin with a deep conversation. Your lifestyle, aesthetic instincts, how you move through space — all of it shapes what comes next. No templates. No formulas.
+2. **02 — Concept** — We develop a visual and spatial concept: mood boards, material palettes, spatial plans. A clear direction before a single item is purchased or a single wall is painted.
+3. **03 — Design Development** — Full technical drawings, supplier sourcing, custom piece briefing. Everything is specified and documented before your project enters execution.
+4. **04 — Execution** — We coordinate every contractor, supplier, and delivery. Our project manager is on-site throughout. You don&#39;t have to manage anything.
+5. **05 — Reveal &amp; Styling** — Final install, art placement, object curation. We hand over a space that is complete — not just finished.
+
+- Scroll hint: `→ scroll to explore`
+
+### About Section
+- Eyebrow: `FOUNDER — SARA ERIKSSON`
+- H2: `Design That Starts\nWith Listening`
+- Para 1: `Studio Noma was founded in Amsterdam in 2017 by Sara Eriksson, a Swedish-born designer trained at the Royal College of Art in London. Sara started the studio with a single conviction: good design is always preceded by good listening.`
+- Para 2: `We work slowly and intentionally. Our studio takes on a limited number of projects each year so that every client receives our full attention — not a delegated version of it.`
+- Para 3: `Our aesthetic is warm, restrained, and deeply considered. We love natural materials, imperfect textures, and rooms that feel lived-in before they&#39;re ever slept in. We design for real life — not for the photograph.`
+- Link: `Read our studio story →`
+
+### Testimonials Section
+- Eyebrow: `CLIENT WORDS`
+- Heading: `What Our Clients Say`
+
+**Quote 1:**
+&gt; &quot;Sara and the Noma team understood our home from the first visit. They didn&#39;t impose a style — they drew out what was already there and made it coherent. It&#39;s more &#39;us&#39; than it&#39;s ever been.&quot;
+&gt; — *Lena &amp; Thomas B., Jordaan Residence, Amsterdam*
+
+**Quote 2:**
+&gt; &quot;Our office went from a blank white box to the most beautiful creative space I&#39;ve been in. Our team is more energized. Our clients notice immediately.&quot;
+&gt; — *Marijn V., Studio Zwart, Amsterdam*
+
+### Press Section
+- Label: `AS SEEN IN`
+- Publications: Architectural Digest · Kinfolk · Dezeen · Elle Decoration · Wallpaper* · Frame Magazine
+
+### Contact Section
+- Eyebrow: `START A PROJECT`
+- H2: `Let&#39;s Create\nSomething Together`
+- Subline: `Every room tells a story — we help you find yours.`
+- Form labels: Your Name / Email Address / Project Type / Tell Us About Your Project
+- Project types: Residential · Commercial · Staging · Not Sure Yet
+- CTA: `Send Message`
+- Email fallback: `Or email us directly: hello@studionoma.com`
+
+### Footer
+- Tagline: &quot;Every space deserves intention.&quot;
+- Links: Portfolio · Services · Process · About · Contact · Privacy
+- Address: Prinsengracht 417, 1016 HP Amsterdam, The Netherlands
+- © 2024 Studio Noma. All rights reserved.
+
+---
+
+## 10. Key Dependencies
+
+```json
+{
+  &quot;motion&quot;: &quot;^12.0.0&quot;,
+  &quot;lucide-react&quot;: &quot;^0.460.0&quot;,
+  &quot;@radix-ui/react-select&quot;: &quot;^2.1.0&quot;,
+  &quot;@radix-ui/react-tabs&quot;: &quot;^1.1.0&quot;,
+  &quot;clsx&quot;: &quot;^2.1.0&quot;,
+  &quot;tailwind-merge&quot;: &quot;^2.5.0&quot;
+}
+```
+
+**Tailwind config additions:**
+```js
+module.exports = {
+  theme: {
+    extend: {
+      fontFamily: {
+        serif: [&#39;Playfair Display&#39;, &#39;Georgia&#39;, &#39;serif&#39;],
+        sans: [&#39;DM Sans&#39;, &#39;system-ui&#39;, &#39;sans-serif&#39;],
+      },
+      colors: {
+        &#39;noma-linen&#39;: &#39;#f4efe8&#39;,
+        &#39;noma-charcoal&#39;: &#39;#2a2825&#39;,
+        &#39;noma-terracotta&#39;: &#39;#c4673c&#39;,
+      },
+    },
+  },
+};
+```
+
+**CSS utility (hide scrollbar for horizontal process scroll):**
+```css
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+```
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,959 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gleam Auto Spa | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Gleam Auto Spa</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Gleam Auto Spa — Car Wash Website Prompt
+### websiteprompts.ai — Production-Ready for Lovable, Bolt, v0, Claude, Cursor
+
+---
+
+## 1. GOAL STATEMENT
+
+Build a full-featured premium car wash and auto detailing website for **Gleam Auto Spa** — a clean, precise, high-conversion single-page site in deep navy and electric cyan that communicates professional quality, drives online bookings, and upsells service packages.
+
+---
+
+## 2. TECH STACK
+
+- **React 18 + Vite 5 + TypeScript**
+- **Tailwind CSS v3** (JIT mode)
+- **Framer Motion** — import exclusively from `motion/react`
+- **shadcn/ui** — Card, Badge, Button components
+- **lucide-react** — icons (Check, ChevronRight, MapPin, Clock, Star, Phone, Droplets, Car, Zap, Shield)
+- **Google Fonts** — Space Grotesk + Inter
+
+---
+
+## 3. DESIGN SYSTEM
+
+Add this to your global CSS (`index.css` or `globals.css`):
+
+```css
+:root {
+  /* Core palette */
+  --color-navy:          8 24 40;       /* #081828 — deep background */
+  --color-navy-mid:      12 34 56;      /* #0c2238 — card backgrounds */
+  --color-navy-lift:     16 44 72;      /* #102c48 — elevated surfaces */
+  --color-navy-light:    20 56 90;      /* #14385a — borders/dividers */
+  --color-cyan:          0 180 204;     /* #00b4cc — primary accent */
+  --color-cyan-bright:   0 210 240;     /* #00d2f0 — hover states */
+  --color-cyan-pale:     0 180 204;     /* same, used at low opacity */
+  --color-white:         240 248 255;   /* #f0f8ff — primary text */
+  --color-white-muted:   180 210 230;   /* #b4d2e6 — secondary text */
+  --color-white-faint:   100 140 170;   /* #648caa — muted text */
+
+  /* Semantic tokens */
+  --bg-page:             rgb(var(--color-navy));
+  --bg-card:             rgb(var(--color-navy-mid));
+  --bg-card-hover:       rgb(var(--color-navy-lift));
+  --text-primary:        rgb(var(--color-white));
+  --text-secondary:      rgb(var(--color-white-muted));
+  --text-muted:          rgb(var(--color-white-faint));
+  --accent:              rgb(var(--color-cyan));
+  --accent-hover:        rgb(var(--color-cyan-bright));
+  --border-subtle:       rgba(var(--color-cyan) / 0.12);
+  --border-cyan:         rgba(var(--color-cyan) / 0.5);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  font-family: &#39;Inter&#39;, sans-serif;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+```
+
+---
+
+## 4. TYPOGRAPHY
+
+**Google Fonts import** — place in `&lt;head&gt;` or via `@import` at top of CSS:
+
+```html
+&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot; /&gt;
+&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin /&gt;
+&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;800&amp;family=Inter:wght@300;400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot; /&gt;
+```
+
+**Usage rules:**
+
+| Element | Font | Weight | Size |
+|---|---|---|---|
+| All `&lt;h1&gt;` | Space Grotesk | 800 | clamp(52px, 8vw, 140px) |
+| All `&lt;h2&gt;` | Space Grotesk | 800 | clamp(36px, 4.5vw, 72px) |
+| `&lt;h3&gt;` section subtitles | Space Grotesk | 700 | clamp(24px, 2.5vw, 40px) |
+| Body copy | Inter | 300 | 17px / 1.7 line-height |
+| Labels, tags, nav | Inter | 500 | 12–13px tracking-[0.08em] uppercase |
+| Prices | Space Grotesk | 800 | inherit size |
+| Stats numbers | Space Grotesk | 800 | clamp(56px, 8vw, 100px) |
+| Step numbers (bg) | Inter | 800 | 80px |
+| Watermark | Space Grotesk | 800 | clamp(200px, 30vw, 460px) |
+
+---
+
+## 5. VISUAL EFFECTS
+
+### Effect 1 — Animated CSS Water Droplet (Signature Hero Element)
+
+A single animated water droplet falls from top to bottom of the hero content area, then splits into three smaller droplets that fan outward and fade. Pure CSS `@keyframes` — no JS. Runs on a 4-second interval loop.
+
+```css
+/* Add to global CSS */
+
+@keyframes droplet-fall {
+  0%   { transform: translateY(0) scale(1);   opacity: 0; }
+  5%   { opacity: 0.8; }
+  80%  { transform: translateY(280px) scale(1); opacity: 0.8; }
+  100% { transform: translateY(300px) scale(1); opacity: 0; }
+}
+
+@keyframes droplet-split-left {
+  0%   { transform: translate(0, 0) scale(1);        opacity: 0; }
+  10%  { opacity: 0.6; }
+  100% { transform: translate(-28px, 30px) scale(0.5); opacity: 0; }
+}
+
+@keyframes droplet-split-center {
+  0%   { transform: translate(0, 0) scale(1);       opacity: 0; }
+  10%  { opacity: 0.6; }
+  100% { transform: translate(0, 42px) scale(0.4);  opacity: 0; }
+}
+
+@keyframes droplet-split-right {
+  0%   { transform: translate(0, 0) scale(1);        opacity: 0; }
+  10%  { opacity: 0.6; }
+  100% { transform: translate(28px, 30px) scale(0.5); opacity: 0; }
+}
+
+.droplet-container {
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  pointer-events: none;
+  animation: droplet-fall 4s ease-in infinite;
+}
+
+.droplet-main {
+  width: 14px;
+  height: 18px;
+  background: rgb(0, 180, 204);
+  border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+  margin: 0 auto;
+  opacity: 0.7;
+}
+
+.droplet-split-group {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  animation: none;
+}
+
+/* Trigger split group at 80% of 4s = 3.2s */
+.droplet-container:nth-child(1) .droplet-split-group {
+  animation: droplet-split-center 0.8s ease-out 3.2s infinite;
+}
+```
+
+Full implementation in TSX:
+
+```tsx
+// components/WaterDroplet.tsx
+export function WaterDroplet() {
+  return (
+    &lt;div className=&quot;absolute inset-0 overflow-hidden pointer-events-none&quot; aria-hidden=&quot;true&quot;&gt;
+      &lt;div className=&quot;droplet-container&quot;&gt;
+        &lt;div className=&quot;droplet-main&quot; /&gt;
+      &lt;/div&gt;
+      {/* Split droplets — absolutely positioned at impact point */}
+      &lt;div className=&quot;absolute pointer-events-none&quot;
+           style={{ top: &quot;calc(60px + 300px)&quot;, left: &quot;50%&quot;, transform: &quot;translateX(-50%)&quot; }}&gt;
+        &lt;div style={{
+          position: &quot;absolute&quot;,
+          width: &quot;8px&quot;, height: &quot;10px&quot;,
+          background: &quot;rgb(0,180,204)&quot;,
+          borderRadius: &quot;50% 50% 50% 50% / 40% 40% 60% 60%&quot;,
+          animation: &quot;droplet-split-left 0.7s ease-out 3.18s infinite&quot;,
+          opacity: 0,
+        }} /&gt;
+        &lt;div style={{
+          position: &quot;absolute&quot;,
+          width: &quot;8px&quot;, height: &quot;10px&quot;,
+          background: &quot;rgb(0,180,204)&quot;,
+          borderRadius: &quot;50% 50% 50% 50% / 40% 40% 60% 60%&quot;,
+          animation: &quot;droplet-split-center 0.7s ease-out 3.18s infinite&quot;,
+          opacity: 0,
+        }} /&gt;
+        &lt;div style={{
+          position: &quot;absolute&quot;,
+          width: &quot;8px&quot;, height: &quot;10px&quot;,
+          background: &quot;rgb(0,180,204)&quot;,
+          borderRadius: &quot;50% 50% 50% 50% / 40% 40% 60% 60%&quot;,
+          animation: &quot;droplet-split-right 0.7s ease-out 3.18s infinite&quot;,
+          opacity: 0,
+        }} /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}
+```
+
+### Effect 2 — Background Watermark Text
+
+Render &quot;GLEAM&quot; in Space Grotesk 800 at `clamp(200px, 30vw, 460px)`, cyan at 2.5% opacity, right side of the hero, partially off-screen.
+
+```tsx
+&lt;span
+  aria-hidden=&quot;true&quot;
+  className=&quot;absolute top-1/2 right-0 -translate-y-1/2 select-none pointer-events-none font-space font-extrabold leading-none&quot;
+  style={{
+    fontSize: &quot;clamp(200px, 30vw, 460px)&quot;,
+    color: &quot;rgba(0, 180, 204, 0.025)&quot;,
+    transform: &quot;translateY(-50%) translateX(18%)&quot;,
+    lineHeight: 0.9,
+  }}
+&gt;
+  GLEAM
+&lt;/span&gt;
+```
+
+### Effect 3 — Faded Step Numbers Behind How It Works
+
+Large Inter 800 numerals (&quot;01&quot;, &quot;02&quot;, &quot;03&quot;) at 80px, cyan at 6% opacity, rendered absolutely behind each step card:
+
+```tsx
+&lt;div className=&quot;relative&quot;&gt;
+  &lt;span
+    aria-hidden=&quot;true&quot;
+    className=&quot;absolute -top-6 -left-4 font-inter font-extrabold leading-none select-none pointer-events-none&quot;
+    style={{ fontSize: &quot;80px&quot;, color: &quot;rgba(0,180,204,0.06)&quot;, zIndex: 0 }}
+  &gt;
+    {String(index + 1).padStart(2, &quot;0&quot;)}
+  &lt;/span&gt;
+  &lt;div className=&quot;relative z-10&quot;&gt;{/* step content */}&lt;/div&gt;
+&lt;/div&gt;
+```
+
+### Effect 4 — Pulsing Cyan Dot (Wait Time Card)
+
+A continuously pulsing cyan dot indicating live status, using Framer Motion:
+
+```tsx
+&lt;motion.span
+  className=&quot;inline-block rounded-full&quot;
+  style={{ width: &quot;8px&quot;, height: &quot;8px&quot;, background: &quot;rgb(0,180,204)&quot; }}
+  animate={{ scale: [1, 1.6, 1], opacity: [1, 0.4, 1] }}
+  transition={{ duration: 1.8, repeat: Infinity, ease: &quot;easeInOut&quot; }}
+/&gt;
+```
+
+### Effect 5 — Staggered Scale Entry for Service Cards
+
+Service package cards animate from scale 0.95 + opacity 0 → scale 1 + opacity 1 using Framer Motion stagger:
+
+```tsx
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.12 }
+  }
+};
+const cardVariants = {
+  hidden:  { opacity: 0, scale: 0.95, y: 20 },
+  visible: { opacity: 1, scale: 1,    y: 0,
+    transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }
+  }
+};
+```
+
+### Effect 6 — Count-Up Stats on Scroll (Cyan Background)
+
+Same `useCountUp` hook as standard — triggers once via `useInView`, easeOutCubic over 1600ms, staggered 150ms per stat. Applied to the Trust Stats strip with cyan background.
+
+```tsx
+function useCountUp(target: number, duration = 1600, delay = 0): number {
+  const [count, setCount] = React.useState(0);
+  React.useEffect(() =&gt; {
+    const timeout = setTimeout(() =&gt; {
+      const start = performance.now();
+      const step = (now: number) =&gt; {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        setCount(Math.round(eased * target));
+        if (progress &lt; 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }, delay);
+    return () =&gt; clearTimeout(timeout);
+  }, [target, duration, delay]);
+  return count;
+}
+```
+
+---
+
+## 6. COMPONENT BREAKDOWN
+
+---
+
+### SECTION 1 — NAVBAR
+
+**Layout:** Fixed top, `backdrop-blur-md`, background `rgba(8,24,40,0.88)`, border-bottom `rgba(0,180,204,0.12)`. Height: 72px desktop / 64px mobile. z-50.
+
+**Desktop structure (left → right):**
+```
+[Logo]   [flex-1]   [Nav links × 4]   [gap-8]   [CTA Button]
+```
+
+**Logo:** &quot;GLEAM&quot; in Space Grotesk 800, 24px, cyan. Followed by &quot;AUTO SPA&quot; in Inter 300, 14px, `var(--text-secondary)`, ml-1.5 aligned to baseline. Or render as one unit: `GLEAM AUTO SPA` with &quot;GLEAM&quot; in cyan and the rest in white-muted.
+
+**Nav links** (Inter 500, 13px, tracking-[0.07em], uppercase, white-muted, hover → cyan, transition 200ms):
+- Services
+- How It Works
+- Before &amp; After
+- Membership
+
+**CTA Button:** &quot;Book Now&quot; — background cyan `rgb(0,180,204)`, text navy `rgb(8,24,40)`, Space Grotesk 700, 13px uppercase tracking-[0.07em], px-6 py-2.5, border-radius 0 (sharp), hover: `rgb(0,210,240)`, transition 200ms. Add lucide `ChevronRight` icon (size-4) inline after text.
+
+**Mobile:** Hamburger (lucide `Menu`, 22px, white). Drawer from right, full-height, navy background, links stacked, py-5 each.
+
+---
+
+### SECTION 2 — HERO
+
+**Container:** `relative min-h-screen overflow-hidden flex flex-col justify-center px-6 md:px-20`
+
+**Background image:**
+```jsx
+{/* Image: Aerial overhead view of a luxury car being washed — deep navy vehicle with water cascading across the roof and bonnet, white soap suds creating abstract patterns on dark paint, high-contrast, studio-quality automotive photography, blue and white tones, precision and premium feel */}
+&lt;img
+  src=&quot;&quot;
+  alt=&quot;Premium car wash at Gleam Auto Spa&quot;
+  className=&quot;absolute inset-0 w-full h-full object-cover object-center&quot;
+/&gt;
+```
+
+**Gradient overlay:**
+```tsx
+{/* Left-to-right dark overlay keeping right side more visible */}
+&lt;div
+  className=&quot;absolute inset-0 z-[1]&quot;
+  style={{ background: &quot;linear-gradient(105deg, rgba(8,24,40,0.92) 0%, rgba(8,24,40,0.7) 45%, rgba(8,24,40,0.3) 100%)&quot; }}
+/&gt;
+{/* Bottom fade for any text overflow */}
+&lt;div
+  className=&quot;absolute bottom-0 left-0 right-0 h-32 z-[1]&quot;
+  style={{ background: &quot;linear-gradient(to top, rgb(8,24,40), transparent)&quot; }}
+/&gt;
+```
+
+**Water droplet animation (z-[2]):** `&lt;WaterDroplet /&gt;` — positioned over the left content area.
+
+**Content block (relative z-10, max-w-3xl):**
+```
+&lt;p style={{ fontFamily: &quot;Inter&quot;, fontWeight: 500, fontSize: &quot;13px&quot;, letterSpacing: &quot;0.08em&quot;, color: &quot;rgb(0,180,204)&quot;, textTransform: &quot;uppercase&quot;, marginBottom: &quot;20px&quot; }}&gt;
+  Premium Auto Care · Marlow, Berkshire
+&lt;/p&gt;
+&lt;h1 style={{ fontFamily: &quot;Space Grotesk&quot;, fontWeight: 800, fontSize: &quot;clamp(52px,8vw,140px)&quot;, color: &quot;rgb(240,248,255)&quot;, lineHeight: 0.92, letterSpacing: &quot;-0.02em&quot; }}&gt;
+  YOUR CAR DESERVES BETTER.
+&lt;/h1&gt;
+&lt;p style={{ fontFamily: &quot;Inter&quot;, fontWeight: 300, fontSize: &quot;18px&quot;, lineHeight: &quot;1.7&quot;, color: &quot;rgb(180,210,230)&quot;, marginTop: &quot;28px&quot;, maxWidth: &quot;460px&quot; }}&gt;
+  Professional car washing and detailing services with industry-leading products, zero shortcuts, and a guarantee you&#39;ll love the result.
+&lt;/p&gt;
+[Button row, mt-10, flex gap-4 flex-wrap]:
+  Button 1: &quot;Book a Wash&quot; — cyan bg, navy text, Space Grotesk 700, 14px uppercase, px-8 py-3.5, rounded-none
+  Button 2: &quot;View Packages&quot; — transparent, border 1px solid rgba(0,180,204,0.5), cyan text, same sizing, hover border-cyan
+```
+
+**Floating &quot;CURRENT WAIT TIME&quot; card (absolute bottom-8 right-6 md:right-10, z-20):**
+```tsx
+&lt;motion.div
+  initial={{ opacity: 0, scale: 0.9, y: 16 }}
+  animate={{ opacity: 1, scale: 1, y: 0 }}
+  transition={{ duration: 0.55, delay: 0.4, ease: [0.34, 1.56, 0.64, 1] }}
+  style={{
+    background: &quot;rgba(8,24,40,0.80)&quot;,
+    backdropFilter: &quot;blur(16px)&quot;,
+    border: &quot;1px solid rgba(0,180,204,0.25)&quot;,
+    padding: &quot;20px 24px&quot;,
+    minWidth: &quot;200px&quot;,
+  }}
+&gt;
+  &lt;div style={{ display: &quot;flex&quot;, alignItems: &quot;center&quot;, gap: &quot;8px&quot;, marginBottom: &quot;8px&quot; }}&gt;
+    {/* Pulsing cyan dot */}
+    &lt;motion.span
+      style={{ width: &quot;8px&quot;, height: &quot;8px&quot;, borderRadius: &quot;50%&quot;, background: &quot;rgb(0,180,204)&quot;, display: &quot;inline-block&quot; }}
+      animate={{ scale: [1, 1.6, 1], opacity: [1, 0.4, 1] }}
+      transition={{ duration: 1.8, repeat: Infinity, ease: &quot;easeInOut&quot; }}
+    /&gt;
+    &lt;span style={{ fontFamily: &quot;Inter&quot;, fontWeight: 500, fontSize: &quot;11px&quot;, letterSpacing: &quot;0.08em&quot;, color: &quot;rgb(0,180,204)&quot;, textTransform: &quot;uppercase&quot; }}&gt;
+      Current Wait Time
+    &lt;/span&gt;
+  &lt;/div&gt;
+  &lt;p style={{ fontFamily: &quot;Space Grotesk&quot;, fontWeight: 800, fontSize: &quot;36px&quot;, color: &quot;rgb(240,248,255)&quot;, lineHeight: 1, marginBottom: &quot;12px&quot; }}&gt;
+    ~8 &lt;span style={{ fontSize: &quot;16px&quot;, fontWeight: 400, fontFamily: &quot;Inter&quot;, color: &quot;rgb(180,210,230)&quot; }}&gt;minutes&lt;/span&gt;
+  &lt;/p&gt;
+  &lt;a href=&quot;#book&quot; style={{ fontFamily: &quot;Inter&quot;, fontWeight: 500, fontSize: &quot;13px&quot;, color: &quot;rgb(0,180,204)&quot;, textDecoration: &quot;none&quot;, display: &quot;flex&quot;, alignItems: &quot;center&quot;, gap: &quot;4px&quot; }}&gt;
+    Book ahead → 
+  &lt;/a&gt;
+&lt;/motion.div&gt;
+```
+
+**Watermark:** &quot;GLEAM&quot; — `absolute top-1/2 right-0`, -translateY-1/2, Space Grotesk 800, `clamp(200px,30vw,460px)`, `rgba(0,180,204,0.025)`, `translateX(18%)`, z-[1], pointer-events-none select-none.
+
+---
+
+### SECTION 3 — SERVICE PACKAGES
+
+**Layout:** Background `var(--bg-page)` (navy), py-24, px-6 md:px-20.
+
+**Section header (centered, mb-16):**
+```
+Label: &quot;CHOOSE YOUR SERVICE&quot; — Inter 500 11px cyan uppercase tracking-[0.08em] mb-4
+H2: &quot;Three Ways to Shine.&quot; — Space Grotesk 800 clamp(36px,4.5vw,72px) white
+Subline: &quot;From a quick refresh to a full showroom finish — every wash uses professional-grade products.&quot; — Inter 300 17px white-muted mt-4 max-w-xl mx-auto text-center
+```
+
+**3 cards in `grid grid-cols-1 md:grid-cols-3 gap-0` — no gap, cards share borders:**
+
+Apply Framer Motion `variants` for stagger entry (scale 0.95→1, opacity 0→1, y 20→0, 500ms, stagger 120ms).
+
+**Card base styling:**
+```
+background: rgb(12,34,56)    [navy-mid]
+border: 1px solid rgba(0,180,204,0.1)
+border-radius: 0  [sharp corners]
+padding: p-8 md:p-10
+position: relative
+overflow: hidden
+on hover: border-color rgba(0,180,204,0.5), transition 300ms
+```
+
+**Card — EXPRESS:**
+```
+Top chip: &quot;MOST POPULAR&quot; — hidden on this card
+Price row: &quot;£12&quot; in Space Grotesk 800, clamp(48px,5vw,72px), cyan + &quot;/wash&quot; Inter 300 16px white-muted self-end mb-1
+Name: &quot;Express Wash&quot; — Space Grotesk 700, 22px, white, mt-0
+Tagline: &quot;Clean, fast, done.&quot; — Inter 300, 14px, white-muted, mt-2 mb-6
+Divider: 1px rgba(0,180,204,0.15) horizontal line
+Features list (mt-6, flex flex-col gap-3):
+  ✓ Exterior hand wash
+  ✓ Wheel clean &amp; rinse
+  ✓ Window wipe
+  ✓ Air dry
+  [Check icon: lucide Check, size-4, cyan, mr-3]
+  [Feature text: Inter 300, 14px, white-muted]
+CTA button (mt-8): &quot;Book Express&quot; — border 1px solid rgba(0,180,204,0.4), cyan text, Inter 500 13px uppercase tracking-[0.07em], px-6 py-3, rounded-none, w-full, hover: bg-cyan text-navy
+```
+
+**Card — SIGNATURE (featured, middle):**
+```
+Top chip (absolute top-4 right-4): &quot;MOST POPULAR&quot; — cyan bg, navy text, Inter 500 10px uppercase tracking-[0.07em], px-3 py-1, rounded-none
+Background: rgb(16,44,72) [navy-lift, slightly elevated]
+Border: 1px solid rgba(0,180,204,0.35)
+Price: &quot;£22&quot; same styling as above
+Name: &quot;Signature Wash&quot; — Space Grotesk 700, 22px, white
+Tagline: &quot;Our full exterior service.&quot; — Inter 300, 14px, white-muted, mt-2 mb-6
+Features list:
+  ✓ Full exterior hand wash
+  ✓ Wheel &amp; tyre clean
+  ✓ Glass clean inside &amp; out
+  ✓ Door sill wipe
+  ✓ Tyre dressing
+  ✓ Hand dry with microfibre
+CTA button: &quot;Book Signature&quot; — solid cyan bg, navy text, hover bg-cyan-bright, w-full
+```
+
+**Card — FULL DETAIL:**
+```
+Price: &quot;£45&quot; same styling
+Name: &quot;Full Detail&quot; — Space Grotesk 700, 22px, white
+Tagline: &quot;Showroom finish, guaranteed.&quot; — Inter 300, 14px, white-muted
+Features list:
+  ✓ Everything in Signature
+  ✓ Full interior vacuum
+  ✓ Leather / fabric wipe
+  ✓ Dashboard &amp; console clean
+  ✓ Air freshener
+  ✓ Wax &amp; paint sealant
+  ✓ Ceramic coat option (+£35)
+CTA button: &quot;Book Detail&quot; — border style, same as Express
+```
+
+---
+
+### SECTION 4 — HOW IT WORKS
+
+**Layout:** Background `rgb(12,34,56)` (navy-mid), py-24, px-6 md:px-20.
+
+**Section header (centered, mb-20):**
+```
+Label: &quot;THE PROCESS&quot; — Inter 500 11px cyan uppercase tracking-[0.08em] mb-4
+H2: &quot;Simple. Fast. Spotless.&quot; — Space Grotesk 800 clamp(36px,4.5vw,64px) white
+```
+
+**3 steps in `grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-6`:**
+
+Each step — `relative`:
+```
+Background faded number (absolute -top-6 -left-4, z-0):
+  &quot;01&quot; / &quot;02&quot; / &quot;03&quot; — Inter 800, 80px, rgba(0,180,204,0.06), pointer-events-none
+Step content (relative z-10):
+  Icon circle: 52px × 52px, border 1px solid rgba(0,180,204,0.3), rounded-none, flex items-center justify-center mb-6
+    lucide icon (size-6, cyan stroke, strokeWidth 1.5)
+  Step label: Inter 500, 11px, cyan, uppercase, tracking-[0.08em], mb-3
+    &quot;STEP 01&quot; / &quot;STEP 02&quot; / &quot;STEP 03&quot;
+  Heading: Space Grotesk 700, 22px, white, mb-4
+  Body: Inter 300, 15px, white-muted, leading-[1.75]
+```
+
+**Step 1:** Icon: `Car` (lucide). Heading: &quot;Drive In.&quot; Body: &quot;Pull straight into one of our 12 bays — no appointment needed for Express or Signature washes. Just show up.&quot;
+
+**Step 2:** Icon: `Droplets` (lucide). Heading: &quot;We Get to Work.&quot; Body: &quot;Our trained team gets started immediately with pH-neutral shampoos, microfibre mitts, and professional tools. No brushes, no scratches.&quot;
+
+**Step 3:** Icon: `Zap` (lucide). Heading: &quot;Drive Away Clean.&quot; Body: &quot;Pick up your keys and go. Express washes take 12 minutes. Full Details are typically ready in 90 minutes.&quot;
+
+Entry animation per step: opacity 0→1, y 30→0, 600ms, stagger 150ms, easeOut, triggered once on scroll inView.
+
+---
+
+### SECTION 5 — BEFORE / AFTER
+
+**Layout:** Background `var(--bg-page)` (navy), py-24, px-6 md:px-20.
+
+**Section header (centered, mb-16):**
+```
+Label: &quot;THE DIFFERENCE&quot; — Inter 500 11px cyan uppercase tracking-[0.08em] mb-4
+H2: &quot;See It for Yourself.&quot; — Space Grotesk 800 clamp(36px,4.5vw,64px) white
+```
+
+**Two-column comparison block:** `grid grid-cols-2 gap-0 relative max-w-4xl mx-auto` — the two panels sit side by side. A vertical cyan line (1px, full height of the grid, absolute center) separates them.
+
+```tsx
+&lt;div className=&quot;relative max-w-4xl mx-auto grid grid-cols-2&quot;&gt;
+  {/* Vertical divider */}
+  &lt;div
+    className=&quot;absolute top-0 bottom-0 left-1/2 -translate-x-1/2 z-10&quot;
+    style={{ width: &quot;1px&quot;, background: &quot;rgb(0,180,204)&quot; }}
+  /&gt;
+
+  {/* BEFORE panel */}
+  &lt;div className=&quot;relative overflow-hidden&quot; style={{ aspectRatio: &quot;4/3&quot; }}&gt;
+    {/* Image: Dusty unwashed car — grey sedan with visible road grime, dust, and mud splatter across panels and windows, flat overcast lighting, realistic and unsatisfying, documentary photography */}
+    &lt;img src=&quot;&quot; alt=&quot;Car before professional wash at Gleam Auto Spa&quot; className=&quot;w-full h-full object-cover object-center&quot; /&gt;
+    {/* Label chip */}
+    &lt;div className=&quot;absolute top-4 left-4 z-10&quot; style={{ background: &quot;rgba(8,24,40,0.85)&quot;, border: &quot;1px solid rgba(255,255,255,0.15)&quot;, padding: &quot;6px 14px&quot; }}&gt;
+      &lt;span style={{ fontFamily: &quot;Inter&quot;, fontWeight: 500, fontSize: &quot;11px&quot;, letterSpacing: &quot;0.08em&quot;, color: &quot;rgb(240,248,255)&quot;, textTransform: &quot;uppercase&quot; }}&gt;BEFORE&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  {/* AFTER panel */}
+  &lt;div className=&quot;relative overflow-hidden&quot; style={{ aspectRatio: &quot;4/3&quot; }}&gt;
+    {/* Image: Gleaming freshly-washed car — same grey sedan now spotless and reflective, droplets of water glistening on paint, bright clean studio lighting, high-contrast automotive photography, premium and satisfying */}
+    &lt;img src=&quot;&quot; alt=&quot;Car after professional wash at Gleam Auto Spa&quot; className=&quot;w-full h-full object-cover object-center&quot; /&gt;
+    {/* Cyan overlay tint to reinforce &quot;clean&quot; feeling */}
+    &lt;div className=&quot;absolute inset-0&quot; style={{ background: &quot;rgba(0,180,204,0.04)&quot; }} /&gt;
+    {/* Label chip */}
+    &lt;div className=&quot;absolute top-4 right-4 z-10&quot; style={{ background: &quot;rgb(0,180,204)&quot;, padding: &quot;6px 14px&quot; }}&gt;
+      &lt;span style={{ fontFamily: &quot;Inter&quot;, fontWeight: 500, fontSize: &quot;11px&quot;, letterSpacing: &quot;0.08em&quot;, color: &quot;rgb(8,24,40)&quot;, textTransform: &quot;uppercase&quot; }}&gt;AFTER&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+```
+
+**Below the comparison (mt-12, text-center):**
+```
+P: &quot;Every car gets the same care whether it&#39;s a hatchback or a supercar. That&#39;s the Gleam guarantee.&quot; — Inter 300 16px white-muted max-w-lg mx-auto
+CTA link: &quot;Book Your Wash →&quot; — Inter 500 14px cyan hover:underline
+```
+
+---
+
+### SECTION 6 — TRUST STATS (CYAN BACKGROUND)
+
+**Layout:** Full-width, background `rgb(0,180,204)` (cyan), py-20, px-6.
+
+**4 stats in `flex flex-row justify-center flex-wrap gap-16 md:gap-24`:**
+
+| Value | Label |
+|---|---|
+| 5,000 | &quot;Cars Washed Monthly&quot; |
+| 99 | &quot;% Satisfaction Rate&quot; |
+| 2018 | &quot;Established&quot; |
+| 12 | &quot;Professional Bays&quot; |
+
+**Per-stat:**
+```tsx
+&lt;div className=&quot;text-center&quot;&gt;
+  &lt;p
+    className=&quot;font-space font-extrabold leading-none&quot;
+    style={{ fontSize: &quot;clamp(56px,8vw,100px)&quot;, color: &quot;rgb(8,24,40)&quot;, letterSpacing: &quot;-0.02em&quot; }}
+  &gt;
+    {count}{suffix}
+  &lt;/p&gt;
+  &lt;p className=&quot;mt-3 font-inter font-medium text-xs uppercase tracking-[0.08em]&quot;
+     style={{ color: &quot;rgba(8,24,40,0.65)&quot; }}&gt;
+    {label}
+  &lt;/p&gt;
+&lt;/div&gt;
+```
+
+Suffixes: &quot;5,000+&quot; has the &quot;+&quot; appended; &quot;99&quot; has &quot;%&quot; appended; &quot;2018&quot; and &quot;12&quot; bare numbers.
+
+Count-up: fires once on scroll inView, easeOutCubic 1600ms, stagger 0/150/300/450ms. For &quot;2018&quot; animate from 2000→2018 (not from 0). For &quot;5,000&quot; animate 0→5000 then display as &quot;5,000+&quot;.
+
+Mobile: 2×2 grid, gap-10, py-14.
+
+---
+
+### SECTION 7 — ADD-ONS
+
+**Layout:** Background `rgb(12,34,56)` (navy-mid), py-20, px-6 md:px-20.
+
+**Section header (left-aligned, mb-10):**
+```
+Label: &quot;EXTRA SERVICES&quot; — Inter 500 11px cyan uppercase tracking-[0.08em] mb-4
+H2: &quot;Upgrade Your Wash.&quot; — Space Grotesk 800 clamp(28px,3vw,52px) white
+P: &quot;Add any of these to any package at checkout or on arrival.&quot; — Inter 300 16px white-muted mt-3
+```
+
+**Horizontal scrolling chip row:** `overflow-x-auto flex gap-3 pb-3 scrollbar-hide mt-8`
+
+Each chip:
+```
+background: rgb(16,44,72)
+border: 1px solid rgba(0,180,204,0.2)
+padding: px-5 py-3
+border-radius: 0
+on hover: border-color rgba(0,180,204,0.6), bg-navy-lift
+flex-shrink: 0
+```
+
+Inside each chip:
+```
+[service name — Inter 500 14px white]
+[price — Inter 500 14px cyan ml-3]
+```
+
+**Add-ons (7 chips):**
+- Interior Vacuum · +£8
+- Tyre Shine · +£6
+- Air Freshener · +£3
+- Ceramic Coat · +£35
+- Wax Polish · +£15
+- Leather Conditioning · +£20
+- Engine Bay Clean · +£25
+
+Mobile: chips scroll horizontally, no wrapping.
+
+---
+
+### SECTION 8 — MONTHLY MEMBERSHIP CTA
+
+**Layout:** Full-width, background `var(--bg-page)` (navy), py-24, px-6 md:px-20. Max-w-4xl mx-auto.
+
+**Content block (centered):**
+```
+Label: &quot;UNLIMITED WASHES&quot; — Inter 500 11px cyan uppercase tracking-[0.08em] mb-6
+H2: &quot;Wash More. Pay Less.&quot; — Space Grotesk 800 clamp(36px,5vw,80px) cyan
+P: &quot;Our monthly membership gives you unlimited Signature Washes for one fixed monthly fee. Cancel any time, no contracts.&quot; — Inter 300 17px white-muted mt-6 mb-12 max-w-2xl mx-auto text-center
+```
+
+**3 membership tiers in `grid grid-cols-1 md:grid-cols-3 gap-6 mt-12`:**
+
+**BASIC — £19/mo:**
+```
+background: rgb(12,34,56), border 1px solid rgba(0,180,204,0.15), p-8, rounded-none
+Name: &quot;Basic&quot; — Space Grotesk 700, 18px, white, mb-2
+Price: &quot;£19&quot; — Space Grotesk 800, 48px, white + &quot;/mo&quot; Inter 300 16px white-muted
+Features: Unlimited Express Washes · 10% off Add-Ons
+CTA: &quot;Start Basic&quot; — border cyan, cyan text, w-full, px-6 py-3, rounded-none, hover bg-cyan text-navy
+```
+
+**SIGNATURE — £29/mo (featured):**
+```
+background: rgb(0,180,204), p-8, rounded-none
+Name: &quot;Signature&quot; — Space Grotesk 700, 18px, navy, mb-2
+&quot;MOST VALUE&quot; chip — navy bg, cyan text, 10px uppercase, px-3 py-1, absolute top-4 right-4
+Price: &quot;£29&quot; — Space Grotesk 800, 48px, navy + &quot;/mo&quot; Inter 300 16px rgba(8,24,40,0.6)
+Features (navy text): Unlimited Signature Washes · 15% off Add-Ons · Priority Queue
+CTA: &quot;Start Signature&quot; — navy bg, white text, w-full, px-6 py-3, rounded-none, hover bg-navy-lift text-white
+```
+
+**DETAIL PASS — £49/mo:**
+```
+background: rgb(12,34,56), border 1px solid rgba(0,180,204,0.15), p-8
+Name: &quot;Detail Pass&quot; — Space Grotesk 700, 18px, white
+Price: &quot;£49&quot; — same as Basic
+Features: 1× Full Detail/month · Unlimited Signature Washes · 20% off Add-Ons · Priority Queue · Free Air Freshener
+CTA: &quot;Start Detail Pass&quot; — border cyan, cyan text, same as Basic CTA
+```
+
+**Below tiers (mt-10, text-center):**
+```
+&quot;No contracts. Cancel any time. Membership begins the day you sign up.&quot; — Inter 300 14px white-muted
+```
+
+---
+
+### SECTION 9 — FOOTER
+
+**Layout:** 3-column grid `grid-cols-1 md:grid-cols-3 gap-12`, background `rgb(6,18,30)` (deeper navy), border-top `1px solid rgba(0,180,204,0.1)`, pt-14 pb-10, px-6 md:px-20.
+
+**Column 1 — Brand:**
+```
+Logo: &quot;GLEAM AUTO SPA&quot; — Space Grotesk 800, 20px. &quot;GLEAM&quot; in cyan, &quot;AUTO SPA&quot; in white-muted
+Tagline: &quot;Premium car washing and detailing in Marlow, Berkshire. Professional products, guaranteed results.&quot; — Inter 300 14px white-muted mt-4 max-w-xs leading-relaxed
+Social icons (mt-6, flex gap-4): Instagram, Facebook (lucide icons, size-5, white-muted, hover → cyan, transition 200ms)
+```
+
+**Column 2 — Location &amp; Hours:**
+```
+Heading: &quot;FIND US&quot; — Inter 500 11px cyan uppercase tracking-[0.08em] mb-4
+Address (Inter 300 14px white-muted leading-loose):
+  Gleam Auto Spa
+  River Road Business Park
+  Marlow, SL7 1QT
+
+Hours:
+  Mon–Fri:  8:00am – 7:00pm
+  Saturday: 8:00am – 6:00pm
+  Sunday:   9:00am – 5:00pm
+
+Note: &quot;Last car accepted 30 minutes before close&quot;
+```
+
+**Column 3 — Quick Links:**
+```
+Heading: &quot;QUICK LINKS&quot; — Inter 500 11px cyan uppercase tracking-[0.08em] mb-4
+Links (flex flex-col gap-3, Inter 300 14px white-muted hover:white transition 200ms):
+  Services / How It Works / Add-Ons / Memberships / Book Now / Gift Vouchers / Contact Us
+```
+
+**Footer bar (mt-12, pt-8, border-top rgba(0,180,204,0.06)):**
+```
+flex justify-between flex-wrap gap-4
+Left: &quot;© 2024 Gleam Auto Spa. All rights reserved.&quot; — 12px, color rgba(100,140,170,0.7)
+Right: &quot;Privacy Policy · Terms&quot; — 12px, same color, hover white-muted
+```
+
+---
+
+## 7. ANIMATIONS — COMPLETE SPECIFICATION
+
+| Element | Initial | Final | Duration | Delay | Easing | Trigger |
+|---|---|---|---|---|---|---|
+| Navbar | opacity 0, y -12 | opacity 1, y 0 | 400ms | 0ms | easeOut | page load |
+| Hero label | opacity 0, y 12 | opacity 1, y 0 | 500ms | 100ms | easeOut | page load |
+| Hero h1 | opacity 0, y 40 | opacity 1, y 0 | 800ms | 250ms | [0.25,0.1,0.25,1] | page load |
+| Hero subline | opacity 0, y 24 | opacity 1, y 0 | 650ms | 500ms | easeOut | page load |
+| Hero buttons | opacity 0, y 16 | opacity 1, y 0 | 550ms | 700ms | easeOut | page load |
+| Wait time card | opacity 0, scale 0.9, y 16 | opacity 1, scale 1, y 0 | 550ms | 400ms | spring [0.34,1.56,0.64,1] | page load |
+| Pulsing dot | scale 1, opacity 1 | scale [1,1.6,1], opacity [1,0.4,1] | 1800ms | 0ms | easeInOut | infinite |
+| Water droplet | translateY 0, opacity 0 | translateY 300px, opacity [0,0.8,0] | 4000ms | 0ms | ease-in | infinite |
+| Droplet splits | at 3.2s mark | fan out + fade | 700ms | 3.18s | easeOut | triggered at 80% of fall |
+| Section headings | opacity 0, y 28 | opacity 1, y 0 | 650ms | 0ms | [0.25,0.1,0.25,1] | scroll inView once |
+| Service cards | opacity 0, scale 0.95, y 20 | opacity 1, scale 1, y 0 | 500ms | 120ms stagger | [0.25,0.1,0.25,1] | scroll inView |
+| Service card hover | border rgba(0,180,204,0.1) | border rgba(0,180,204,0.5) | 300ms | — | easeOut | hover |
+| How It Works steps | opacity 0, y 30 | opacity 1, y 0 | 600ms | 150ms stagger | easeOut | scroll inView |
+| Before/After panels | opacity 0, x ±30 | opacity 1, x 0 | 700ms | 0/200ms | easeOut | scroll inView |
+| Stats count-up | 0 | target | 1600ms | 0/150/300/450ms stagger | easeOutCubic | scroll inView once |
+| Add-on chips | opacity 0, x 20 | opacity 1, x 0 | 400ms | 50ms stagger | easeOut | scroll inView |
+| Membership cards | opacity 0, y 30 | opacity 1, y 0 | 600ms | 100ms stagger | easeOut | scroll inView |
+| Nav links | color white-muted | color cyan | 200ms | — | easeOut | hover |
+| CTA button | — | brightness +8% | 200ms | — | easeOut | hover |
+
+---
+
+## 8. RESPONSIVE DESIGN
+
+### Desktop (≥1280px)
+- Container: max-w-7xl mx-auto px-6 md:px-12 lg:px-20
+- Hero: min-h-screen, content center-aligned with max-w-3xl
+- Service Packages: 3-column grid, no gap
+- How It Works: 3-column grid
+- Before/After: 2-column side-by-side, max-w-4xl centered
+- Trust Stats: 4-column flex row
+- Membership: 3-column grid
+- Footer: 3-column grid
+
+### Tablet (768px–1279px)
+- Service Packages: keep 3-column, reduce padding to p-6
+- How It Works: keep 3-column
+- Before/After: 2-column, reduce aspect-ratio to 3/2
+- Trust Stats: 2×2 grid
+- Membership: keep 3-column, reduce padding
+- Footer: keep 3-column, reduce gap
+
+### Mobile (&lt;768px)
+- Navbar: logo + hamburger, drawer from right
+- Hero: min-h-screen; wait time card moves to bottom-left, full-width style; water droplet animation disabled (hide via `hidden md:block`)
+- Service Packages: 1-column stack
+- How It Works: 1-column stack, background numbers smaller (48px)
+- Before/After: keep 2-column side-by-side, shorter aspect (1/1 square)
+- Trust Stats: 2×2 grid, stat number clamp floor 48px, py-12
+- Add-ons: horizontal scroll (scrollbar-hide)
+- Membership: 1-column stack
+- Footer: 1-column stack, gap-10
+
+---
+
+## 9. FULL COPY
+
+### Brand &amp; Core
+- **Name:** Gleam Auto Spa
+- **Tagline:** Your Car Deserves Better.
+- **Location:** River Road Business Park, Marlow, SL7 1QT, Berkshire
+- **Phone:** 01628 551 007
+- **Email:** book@gleamautospa.co.uk
+
+### Navigation
+Services · How It Works · Before &amp; After · Membership · Book Now
+
+### Hero
+- **Pre-headline:** Premium Auto Care · Marlow, Berkshire
+- **H1:** YOUR CAR DESERVES BETTER.
+- **Subline:** Professional car washing and detailing services with industry-leading products, zero shortcuts, and a guarantee you&#39;ll love the result.
+- **CTA 1:** Book a Wash
+- **CTA 2:** View Packages
+
+### Wait Time Card
+- Status label: CURRENT WAIT TIME (with pulsing dot)
+- Value: ~8 minutes
+- Link: Book ahead →
+
+### Service Packages
+- **Label:** CHOOSE YOUR SERVICE
+- **H2:** Three Ways to Shine.
+- **Subline:** From a quick refresh to a full showroom finish — every wash uses professional-grade products.
+- **Express:** £12 · &quot;Clean, fast, done.&quot; · Book Express
+- **Signature:** £22 · &quot;Our full exterior service.&quot; · Book Signature · MOST POPULAR chip
+- **Full Detail:** £45 · &quot;Showroom finish, guaranteed.&quot; · Book Detail
+
+### How It Works
+- **Label:** THE PROCESS
+- **H2:** Simple. Fast. Spotless.
+- Step 1: Drive In — &quot;Pull straight into one of our 12 bays — no appointment needed for Express or Signature washes. Just show up.&quot;
+- Step 2: We Get to Work — &quot;Our trained team gets started immediately with pH-neutral shampoos, microfibre mitts, and professional tools. No brushes, no scratches.&quot;
+- Step 3: Drive Away Clean — &quot;Pick up your keys and go. Express washes take 12 minutes. Full Details are typically ready in 90 minutes.&quot;
+
+### Before / After
+- **Label:** THE DIFFERENCE
+- **H2:** See It for Yourself.
+- Quote: &quot;Every car gets the same care whether it&#39;s a hatchback or a supercar. That&#39;s the Gleam guarantee.&quot;
+- CTA: Book Your Wash →
+
+### Trust Stats
+- 5,000+ · Cars Washed Monthly
+- 99% · Satisfaction Rate
+- Since 2018 · Established
+- 12 · Professional Bays
+
+### Add-Ons
+- **Label:** EXTRA SERVICES
+- **H2:** Upgrade Your Wash.
+- **Subline:** Add any of these to any package at checkout or on arrival.
+- Interior Vacuum +£8 / Tyre Shine +£6 / Air Freshener +£3 / Ceramic Coat +£35 / Wax Polish +£15 / Leather Conditioning +£20 / Engine Bay Clean +£25
+
+### Membership
+- **Label:** UNLIMITED WASHES
+- **H2:** Wash More. Pay Less.
+- **Subline:** Our monthly membership gives you unlimited Signature Washes for one fixed monthly fee. Cancel any time, no contracts.
+- Basic £19/mo / Signature £29/mo — MOST VALUE / Detail Pass £49/mo
+- Footer note: No contracts. Cancel any time. Membership begins the day you sign up.
+
+### Footer
+- **Tagline:** Premium car washing and detailing in Marlow, Berkshire. Professional products, guaranteed results.
+- **Copyright:** © 2024 Gleam Auto Spa. All rights reserved.
+- **Legal:** Privacy Policy · Terms
+
+---
+
+## 10. KEY DEPENDENCIES
+
+```json
+{
+  &quot;dependencies&quot;: {
+    &quot;react&quot;: &quot;^18.3.1&quot;,
+    &quot;react-dom&quot;: &quot;^18.3.1&quot;,
+    &quot;motion&quot;: &quot;^11.11.0&quot;,
+    &quot;tailwindcss&quot;: &quot;^3.4.0&quot;,
+    &quot;lucide-react&quot;: &quot;^0.460.0&quot;,
+    &quot;@shadcn/ui&quot;: &quot;latest&quot;
+  },
+  &quot;devDependencies&quot;: {
+    &quot;typescript&quot;: &quot;^5.6.0&quot;,
+    &quot;vite&quot;: &quot;^5.4.0&quot;,
+    &quot;@vitejs/plugin-react&quot;: &quot;^4.3.0&quot;,
+    &quot;autoprefixer&quot;: &quot;^10.4.20&quot;,
+    &quot;postcss&quot;: &quot;^8.4.47&quot;
+  }
+}
+```
+
+**shadcn/ui components to install:**
+```bash
+npx shadcn@latest add card badge button
+```
+
+**Tailwind `fontFamily` extension (`tailwind.config.ts`):**
+```ts
+theme: {
+  extend: {
+    fontFamily: {
+      space: [&#39;&quot;Space Grotesk&quot;&#39;, &#39;sans-serif&#39;],
+      inter: [&#39;Inter&#39;, &#39;sans-serif&#39;],
+    },
+  },
+}
+```
+
+**Framer Motion import — always use this, never `framer-motion`:**
+```tsx
+import { motion, useInView, useAnimation, AnimatePresence } from &quot;motion/react&quot;;
+```
+
+**Custom CSS `scrollbar-hide` utility:**
+```css
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+```
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

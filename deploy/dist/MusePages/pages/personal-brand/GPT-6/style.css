@@ -1,0 +1,514 @@
+:root
+{
+    --bg:#0f0f0f; --ink:#f2eee9; --coral:#f66b50; --muted:#a19b96; --line:#303030;
+}
+*
+{
+    box-sizing:border-box;
+}
+html
+{
+    scroll-behavior:smooth; scroll-padding-top:25px;
+}
+body
+{
+    margin:0; color:var(--ink); background:var(--bg); font:16px/1.7 "Segoe UI",sans-serif;
+}
+a
+{
+    color:inherit; text-decoration:none;
+}
+button
+{
+    font:inherit; color:inherit; cursor:pointer; background:none; border:0;
+}
+a:focus-visible, button:focus-visible
+{
+    outline:2px solid var(--coral); outline-offset:6px;
+}
+header
+{
+    height:85px; display:flex; align-items:center; gap:35px; padding:0 45px;
+}
+.monogram
+{
+    margin-right:auto; font-size:22px; font-weight:900; letter-spacing:-2px;
+}
+nav
+{
+    display:flex; gap:30px; text-transform:uppercase; font-size:10px; letter-spacing:2px;
+}
+.pill
+{
+    border-radius:30px; background:var(--coral); color:#111; font-size:10px; padding:10px 24px; letter-spacing:1px;
+}
+#menu
+{
+    display:none;
+}
+.label
+{
+    font-size:10px; letter-spacing:2.5px; color:var(--coral); font-weight:500;
+}
+.hero
+{
+    text-align:center; margin:0; padding:30px 0 25px; border:0;
+}
+.name-stage
+{
+    position:relative; height:570px; max-width:1100px; margin:45px auto 0;
+}
+h1
+{
+    font-size:clamp(100px,18vw,225px); letter-spacing:-12px; line-height:.83; margin:0; font-weight:900;
+}
+h1 span
+{
+    display:block;
+}
+h1 span:last-child
+{
+    margin-top:105px;
+}
+.name-stage img
+{
+    position:absolute; z-index:1; height:520px; width:440px; object-fit:contain; top:-10px; left:50%; transform:translateX(-50%);
+}
+.front-name
+{
+    position:absolute; top:291px; left:0; right:0; font-size:clamp(100px,18vw,225px); font-weight:900; letter-spacing:-12px; line-height:.83; z-index:2;
+}
+.side-note
+{
+    position:absolute; right:8%; top:230px; text-align:left; font-size:8px; line-height:1.6; letter-spacing:1px; color:var(--muted);
+}
+.statement
+{
+    margin:-25px 20px 20px; font-size:19px; position:relative; z-index:3;
+}
+.scroll
+{
+    color:var(--coral); font-size:30px;
+}
+.marquee
+{
+    overflow:hidden; padding:25px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); white-space:nowrap; color:#aaa;
+}
+.marquee > div
+{
+    width:max-content; word-spacing:25px; font:25px Georgia,serif; animation:marquee 30s linear infinite;
+}
+.marquee b
+{
+    font-family:"Segoe UI",sans-serif;
+}
+section
+{
+    margin:0 45px; padding:105px 0; border-bottom:1px solid var(--line);
+}
+h2
+{
+    font-size:clamp(30px,4vw,55px); line-height:1.08; letter-spacing:-2px; margin:24px 0 35px; font-weight:600;
+}
+.offerings
+{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:60px;
+}
+.offerings h2
+{
+    font-size:32px; letter-spacing:-1px;
+}
+.offerings p
+{
+    font-size:14px; color:var(--muted);
+}
+.offerings a, .text-button
+{
+    display:inline-block; font-size:9px; letter-spacing:1px; border-bottom:1px solid var(--coral); padding:10px 0;
+}
+.talks button
+{
+    display:flex; align-items:center; width:100%; text-align:left; padding:30px 0; gap:25px; border-top:1px solid var(--line);
+}
+.talks button > span
+{
+    flex:1;
+}
+.talks strong
+{
+    display:block; font-size:29px; line-height:1.2; max-width:600px; letter-spacing:-1px; transition:transform .3s;
+}
+.talks small
+{
+    display:block; font-size:12px; color:var(--muted); margin-top:12px;
+}
+.talks em
+{
+    font-size:10px; color:var(--muted); max-width:150px; font-style:normal;
+}
+.talks b
+{
+    font-size:34px; color:var(--coral); transition:transform .3s;
+}
+.talks button:hover strong, .talks button:hover b
+{
+    transform:translateX(6px);
+}
+.section-title
+{
+    display:flex; align-items:center; justify-content:space-between;
+}
+em
+{
+    color:var(--coral); font-style:normal;
+}
+.projects
+{
+    display:grid; grid-template-columns:1fr 1fr; gap:50px 35px;
+}
+.project-art
+{
+    height:340px; padding:35px; overflow:hidden; transition:transform .6s; display:flex; flex-direction:column; justify-content:space-between; color:#171717;
+}
+.project-art i
+{
+    font-style:normal; font-size:55px; font-weight:900; line-height:.95; letter-spacing:-3px;
+}
+.project-art span
+{
+    font-size:12px;
+}
+.board
+{
+    background:#d3d0be; display:grid; grid-template-columns:1fr 1fr; gap:15px;
+}
+.board i
+{
+    grid-column:1/-1;
+}
+.board span
+{
+    padding:15px; background:#e9df7e; transform:rotate(-4deg); align-self:center;
+}
+.board span:last-child
+{
+    transform:rotate(5deg); background:#e1a58b;
+}
+.workshop
+{
+    background:var(--coral);
+}
+.stage
+{
+    background:linear-gradient(120deg,#5b4b92,#242434);
+    color:#e7e0f6;
+}
+.framework
+{
+    background:#b9cbb8;
+}
+.framework i
+{
+    text-align:center; font-size:70px; line-height:.9;
+}
+.projects h3
+{
+    font-size:21px; margin:20px 0 6px;
+}
+.project-name
+{
+    padding:0; width:100%; text-align:left; font-weight:600;
+}
+.projects h3 span
+{
+    float:right; color:var(--coral);
+}
+.projects p, .disclaimer
+{
+    font-size:12px; color:var(--muted);
+}
+.disclaimer
+{
+    margin-top:35px; font-size:10px;
+}
+.essays button
+{
+    width:100%; display:grid; grid-template-columns:1.8fr 1fr .4fr; gap:20px; padding:25px 0; text-align:left; border-top:1px solid var(--line); align-items:center;
+}
+.essays strong
+{
+    font-weight:400;
+}
+.essays span, .essays b
+{
+    font-size:11px; color:var(--muted); font-weight:400;
+}
+.essays b
+{
+    text-align:right;
+}
+.numbers
+{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:20px; padding:70px 0;
+}
+.numbers strong
+{
+    display:block; font-size:clamp(36px,5vw,70px); letter-spacing:-3px; color:var(--coral); font-weight:500;
+}
+.numbers span
+{
+    font-size:12px; color:var(--muted);
+}
+blockquote
+{
+    margin:35px 0; font-size:clamp(30px,4.7vw,65px); line-height:1.18; letter-spacing:-2px;
+}
+.quote > p:last-child
+{
+    font-size:12px;
+}
+.quote > p:last-child span
+{
+    margin-left:20px; color:var(--muted);
+}
+.bio
+{
+    display:grid; grid-template-columns:.8fr 1fr; gap:90px; align-items:center;
+}
+.bio-photo
+{
+    height:560px; background:#2c2d2b; border-radius:180px 180px 0 0; position:relative; overflow:hidden;
+}
+.bio-photo img
+{
+    width:100%; height:100%; object-fit:contain;
+}
+.bio-photo span
+{
+    position:absolute; left:25px; bottom:20px;
+}
+.bio p
+{
+    color:var(--muted); font-size:14px;
+}
+.text-button
+{
+    margin-right:12px;
+}
+.bio small
+{
+    display:block; color:var(--muted); font-size:9px; margin-top:15px;
+}
+.booking
+{
+    margin:0; padding:90px 8%; background:var(--coral); color:#111;
+}
+.booking .label
+{
+    color:#111;
+}
+.booking h2
+{
+    font-size:clamp(45px,7vw,90px); letter-spacing:-4px;
+}
+.booking > div
+{
+    max-width:650px;
+}
+.booking > a
+{
+    display:block; font-size:clamp(20px,4vw,52px); border-bottom:1px solid #111; margin-top:40px; padding-bottom:15px; letter-spacing:-1px;
+}
+.booking > a span
+{
+    float:right;
+}
+.booking small
+{
+    font-size:10px;
+}
+footer
+{
+    display:flex; align-items:center; flex-wrap:wrap; gap:30px; padding:35px 45px; font-size:10px;
+}
+footer > span
+{
+    margin-left:auto; color:var(--muted);
+}
+footer button
+{
+    font-size:10px;
+}
+dialog
+{
+    background:#181818; color:var(--ink); border:1px solid var(--coral); padding:55px; width:90%; max-width:700px;
+}
+dialog::backdrop
+{
+    background:#000c;
+}
+#close
+{
+    position:absolute; right:15px; top:10px; font-size:28px;
+}
+dialog a
+{
+    color:var(--coral); font-size:12px;
+}
+#cursor
+{
+    display:none;
+}
+@media(hover:hover) and (pointer:fine)
+{
+    #cursor
+    {
+        display:grid; position:fixed; width:10px; height:10px; border-radius:50%; background:var(--coral); top:-50px; left:-50px; pointer-events:none; z-index:20; place-items:center; color:#111; font-size:12px; transition:width .2s,height .2s; transform:translate(-50%,-50%);
+    }
+}
+@keyframes marquee
+{
+    to { transform:translateX(-28%); }
+}
+@media(max-width:767px)
+{
+    header
+    {
+        padding:0 22px; height:78px;
+    }
+    .monogram
+    {
+        margin-right:auto;
+    }
+    #menu
+    {
+        display:block; font-size:9px; letter-spacing:1px; z-index:11;
+    }
+    .pill
+    {
+        padding:10px 15px; z-index:11; white-space:nowrap;
+    }
+    header nav
+    {
+        display:none; position:fixed; inset:0; z-index:10; background:#0f0f0f; padding:130px 40px; font-size:30px;
+    }
+    header nav.open
+    {
+        display:flex; flex-direction:column;
+    }
+    .hero
+    {
+        padding-top:20px;
+    }
+    .name-stage
+    {
+        height:auto; margin:35px 22px 0;
+    }
+    h1
+    {
+        font-size:70px; line-height:.9; letter-spacing:-4px;
+    }
+    h1 span:last-child
+    {
+        margin-top:5px;
+    }
+    .name-stage img
+    {
+        position:relative; top:0; left:0; transform:none; height:350px; width:100%; margin-top:20px;
+    }
+    .front-name, .side-note
+    {
+        display:none;
+    }
+    .statement
+    {
+        margin:15px 25px; font-size:16px;
+    }
+    section
+    {
+        margin:0 22px; padding:65px 0;
+    }
+    .offerings, .projects, .bio
+    {
+        grid-template-columns:1fr; gap:40px;
+    }
+    .offerings article
+    {
+        padding-bottom:20px;
+    }
+    .talks button
+    {
+        gap:10px;
+    }
+    .talks strong
+    {
+        font-size:24px;
+    }
+    .talks em
+    {
+        display:none;
+    }
+    .talks small
+    {
+        font-size:11px;
+    }
+    .section-title
+    {
+        display:block; margin-bottom:30px;
+    }
+    .project-art
+    {
+        height:320px; padding:25px;
+    }
+    .project-art i
+    {
+        font-size:45px;
+    }
+    .essays button
+    {
+        grid-template-columns:1fr auto; gap:10px;
+    }
+    .essays strong
+    {
+        grid-column:1/-1;
+    }
+    .numbers
+    {
+        grid-template-columns:1fr 1fr; gap:30px;
+    }
+    .numbers strong
+    {
+        font-size:45px;
+    }
+    .bio-photo
+    {
+        height:440px;
+    }
+    .booking
+    {
+        padding:65px 25px;
+    }
+    .booking h2
+    {
+        letter-spacing:-2px;
+    }
+    footer
+    {
+        padding:30px 22px; gap:20px;
+    }
+    footer > span
+    {
+        margin-left:0;
+    }
+    dialog
+    {
+        padding:40px 25px;
+    }
+}
+@media(prefers-reduced-motion:reduce)
+{
+    *
+    {
+        animation:none!important; transition:none!important; scroll-behavior:auto!important;
+    }
+}

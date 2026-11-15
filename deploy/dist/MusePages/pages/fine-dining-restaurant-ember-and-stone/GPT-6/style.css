@@ -1,0 +1,622 @@
+:root
+{
+    --bg: #0d0905;
+    --cream: #f5f0e8;
+    --gold: #c9973e;
+    --muted: #b7aca0;
+    --line: #c9973e55;
+}
+*
+{
+    box-sizing: border-box;
+}
+html
+{
+    scroll-behavior: smooth;
+    scroll-padding-top: 85px;
+}
+body
+{
+    margin: 0;
+    background: var(--bg);
+    color: var(--cream);
+    font: 15px/1.8 "Helvetica Neue", Arial, sans-serif;
+}
+button, input, select, textarea
+{
+    font: inherit;
+}
+a
+{
+    color: inherit;
+    text-decoration: none;
+}
+button, a
+{
+    cursor: pointer;
+}
+a:hover
+{
+    color: var(--gold);
+}
+:focus-visible
+{
+    outline: 2px solid var(--gold);
+    outline-offset: 5px;
+}
+header
+{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 23px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 20;
+    gap: 20px;
+    transition: background .4s;
+}
+header.scrolled
+{
+    background: #0d0905f5;
+    border-bottom: 1px solid var(--line);
+}
+.wordmark
+{
+    font: 21px Georgia, serif;
+    letter-spacing: 3px;
+    white-space: nowrap;
+}
+.wordmark i
+{
+    color: var(--gold);
+}
+nav
+{
+    display: flex;
+    gap: 28px;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+.button
+{
+    display: inline-block;
+    background: var(--gold);
+    color: var(--bg);
+    padding: 16px 27px;
+    border: 1px solid var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 1.6px;
+    font-size: 11px;
+    font-weight: 600;
+    transition: background .2s;
+}
+.button:hover
+{
+    color: var(--bg);
+    background: #dfb465;
+}
+.outline
+{
+    background: transparent;
+    color: var(--cream);
+}
+#menu-toggle
+{
+    display: none;
+}
+.hero
+{
+    min-height: 820px;
+    height: 100vh;
+    max-height: 1100px;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+}
+.hero > img
+{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 64% center;
+}
+.hero::after
+{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #0d0905e8, #0d090588 42%, #0d090500 75%), linear-gradient(0deg, #0d0905, transparent 40%);
+}
+.hero-copy
+{
+    position: absolute;
+    bottom: 110px;
+    left: 5%;
+    z-index: 1;
+    max-width: 700px;
+}
+.eyebrow
+{
+    color: var(--gold);
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    font-weight: 500;
+}
+h1, h2, h3
+{
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 400;
+}
+h1
+{
+    font-size: clamp(58px, 7.3vw, 110px);
+    line-height: 1.08;
+    letter-spacing: -3px;
+    margin: 24px 0;
+}
+h1 i, h2 i
+{
+    color: #d7b574;
+    font-weight: 400;
+}
+.hero-copy > p
+{
+    max-width: 400px;
+    font-size: 16px;
+}
+p
+{
+    color: var(--muted);
+}
+.actions
+{
+    display: flex;
+    gap: 16px;
+    margin-top: 30px;
+}
+.scroll, .art-label
+{
+    position: absolute;
+    bottom: 30px;
+    left: 5%;
+    z-index: 1;
+    color: var(--gold);
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+.art-label
+{
+    left: auto;
+    right: 5%;
+    color: var(--muted);
+}
+section
+{
+    padding: 100px max(5%, calc((100% - 1120px) / 2));
+}
+h2
+{
+    font-size: clamp(35px, 4.7vw, 62px);
+    line-height: 1.15;
+    margin: 18px 0 30px;
+    letter-spacing: -1px;
+}
+.philosophy, #private
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+}
+.philosophy h2
+{
+    width: fit-content;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--gold);
+}
+.fire-study
+{
+    background: #20160e;
+    min-height: 490px;
+    padding: 45px;
+    border: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+}
+.fire-study > span
+{
+    color: #a78657;
+    font: 43px/1.3 Georgia, serif;
+}
+.fire-study i
+{
+    display: block;
+    margin-top: 35px;
+    color: var(--cream);
+    font: italic 23px/1.5 Georgia, serif;
+}
+.ember-lines
+{
+    height: 80px;
+    margin-top: 45px;
+    background: repeating-linear-gradient(165deg, transparent 0 13px, #c9973e 14px 15px, transparent 16px 27px);
+}
+.section-title
+{
+    text-align: center;
+    max-width: 650px;
+    margin: 0 auto 45px;
+}
+.tabs
+{
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 0 0 35px;
+    border-bottom: 1px solid var(--line);
+}
+.tabs button
+{
+    background: transparent;
+    color: var(--muted);
+    border: 0;
+    border-bottom: 2px solid transparent;
+    padding: 16px 10px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+.tabs [aria-selected="true"]
+{
+    color: var(--gold);
+    border-color: var(--gold);
+}
+.menu-grid
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 55px;
+    min-height: 400px;
+}
+.dish
+{
+    border-bottom: 1px solid var(--line);
+    padding: 25px 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    transition: transform .3s;
+}
+.dish:hover
+{
+    transform: translateY(-2px);
+}
+.dish h3
+{
+    margin: 0 0 8px;
+    font-size: 21px;
+}
+.dish p
+{
+    font-size: 13px;
+    margin: 0;
+}
+.dish > span
+{
+    color: var(--gold);
+    font: italic 21px Georgia, serif;
+    white-space: nowrap;
+}
+.small
+{
+    font-size: 12px;
+}
+.chef
+{
+    background: #21170f;
+    position: relative;
+    overflow: hidden;
+}
+.chef > div
+{
+    position: relative;
+    z-index: 1;
+    max-width: 670px;
+}
+.chef-quote
+{
+    font: 34px/1.4 Georgia, serif;
+    color: var(--cream);
+}
+.chef-mark
+{
+    position: absolute;
+    right: 5%;
+    top: 10px;
+    font: 270px/.85 Georgia, serif;
+    color: #c9973e1a;
+}
+.detail
+{
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 1px;
+    margin: 28px 0;
+}
+.table-art
+{
+    min-height: 400px;
+    background: #1c130d;
+    border: 1px solid var(--line);
+    display: grid;
+    place-content: center;
+    padding: 40px;
+    text-align: center;
+}
+.table
+{
+    width: 240px;
+    height: 160px;
+    border: 4px double #c9973e77;
+    background: #4a2d18;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 34px 20px;
+    padding: 15px;
+}
+.table span
+{
+    border-radius: 50%;
+    border: 4px double #b2a08c;
+    background: #e8dfcb;
+    width: 45px;
+    height: 45px;
+}
+.table-art p
+{
+    letter-spacing: 3px;
+    font-size: 12px;
+    margin-bottom: 0;
+    margin-top: 35px;
+}
+.notes
+{
+    text-align: center;
+    background: #15100b;
+}
+.notes h2
+{
+    font-style: italic;
+}
+.dots
+{
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin: 25px 0;
+}
+.dots button
+{
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    padding: 0;
+    border: 1px solid var(--gold);
+    background: transparent;
+}
+.dots [aria-pressed="true"]
+{
+    background: var(--gold);
+}
+form
+{
+    max-width: 650px;
+    margin: auto;
+    padding: 40px;
+    border: 1px solid var(--line);
+    background: #15100be6;
+}
+.form-grid
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+label
+{
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+input:not([type="checkbox"]), select, textarea
+{
+    display: block;
+    width: 100%;
+    margin-top: 9px;
+    border: 0;
+    border-bottom: 1px solid var(--gold);
+    padding: 11px;
+    background: #ffffff08;
+    color: var(--cream);
+    border-radius: 0;
+    color-scheme: dark;
+    text-transform: none;
+    font-size: 15px;
+}
+select option
+{
+    background: var(--bg);
+}
+.wide
+{
+    grid-column: 1 / -1;
+}
+.consent
+{
+    display: block;
+    text-transform: none;
+    margin: 25px 0;
+    letter-spacing: 0;
+    font-size: 13px;
+    color: var(--muted);
+}
+form .button
+{
+    width: 100%;
+}
+#reservation-result
+{
+    font-size: 13px;
+}
+footer
+{
+    padding: 55px 5% 25px;
+    border-top: 1px solid var(--line);
+    background: #080604;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr 1fr;
+    gap: 35px;
+    font-size: 13px;
+}
+footer div > a:not(.wordmark)
+{
+    display: block;
+    margin: 8px 0;
+}
+.legal
+{
+    grid-column: 1 / -1;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    font-size: 11px;
+}
+@media (max-width: 767px)
+{
+    header
+    {
+        padding: 17px 6%;
+        background: #0d0905ee;
+    }
+    .wordmark
+    {
+        font-size: 17px;
+        letter-spacing: 2px;
+    }
+    #menu-toggle
+    {
+        display: block;
+        background: transparent;
+        color: var(--gold);
+        border: 1px solid var(--line);
+        padding: 6px 12px;
+    }
+    nav, .header-cta
+    {
+        display: none;
+    }
+    nav.open
+    {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 69px;
+        background: var(--bg);
+        padding: 30px;
+        font-size: 20px;
+        border-bottom: 1px solid var(--gold);
+    }
+    .hero
+    {
+        min-height: 760px;
+        height: 95vh;
+    }
+    .hero > img
+    {
+        object-position: 68% center;
+        opacity: .7;
+    }
+    .hero-copy
+    {
+        left: 6%;
+        right: 6%;
+        bottom: 100px;
+    }
+    h1
+    {
+        font-size: 56px;
+        letter-spacing: -2px;
+    }
+    .actions
+    {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .art-label
+    {
+        display: none;
+    }
+    section
+    {
+        padding: 65px 6%;
+    }
+    .philosophy, #private, .menu-grid, footer
+    {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    .fire-study
+    {
+        min-height: 400px;
+        padding: 30px;
+    }
+    .tabs
+    {
+        gap: 6px;
+        justify-content: space-between;
+    }
+    .tabs button
+    {
+        font-size: 10px;
+        letter-spacing: 1px;
+        padding: 15px 6px;
+    }
+    .menu-grid
+    {
+        gap: 0;
+    }
+    .chef-quote
+    {
+        font-size: 28px;
+    }
+    .chef-mark
+    {
+        font-size: 200px;
+    }
+    form
+    {
+        padding: 25px 20px;
+    }
+    .form-grid
+    {
+        grid-template-columns: 1fr;
+    }
+}
+@media (prefers-reduced-motion: reduce)
+{
+    html
+    {
+        scroll-behavior: auto;
+    }
+    *
+    {
+        transition: none !important;
+    }
+}

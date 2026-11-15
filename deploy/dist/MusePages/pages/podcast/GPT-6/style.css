@@ -1,0 +1,584 @@
+:root
+{
+    --amber: #d48c1a;
+    --muted: #a4a09a;
+}
+*
+{
+    box-sizing: border-box;
+}
+body
+{
+    margin: 0;
+    background: #0a0a0a;
+    color: #f5f5f5;
+    font: 15px/1.8 Arial, sans-serif;
+}
+a, button
+{
+    color: inherit;
+}
+header
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 21px 5%;
+    border-bottom: 1px solid #292724;
+}
+.brand
+{
+    font-size: 24px;
+    font-weight: 800;
+    text-decoration: none;
+    letter-spacing: -1px;
+}
+.brand span
+{
+    display: inline-block;
+    margin-left: 20px;
+    padding-left: 20px;
+    border-left: 1px solid #49433a;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0;
+}
+nav, .actions
+{
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+nav a
+{
+    font-size: 12px;
+    text-decoration: none;
+}
+.button
+{
+    display: inline-block;
+    border: 0;
+    border-radius: 4px;
+    padding: 13px 22px;
+    color: #0a0a0a;
+    background: var(--amber);
+    font: 13px/1.5 Arial, sans-serif;
+    text-decoration: none;
+    cursor: pointer;
+}
+.outline
+{
+    background: transparent;
+    color: #f5f5f5;
+    border: 1px solid #655a4a;
+}
+section
+{
+    padding: 85px max(5%, calc((100% - 1120px) / 2));
+}
+.hero
+{
+    position: relative;
+    min-height: 780px;
+    overflow: hidden;
+}
+.hero > img
+{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.hero > div
+{
+    position: relative;
+    max-width: 700px;
+}
+.label
+{
+    color: var(--amber);
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+h1
+{
+    font-size: clamp(47px, 6.5vw, 88px);
+    line-height: 1.02;
+    letter-spacing: -4px;
+    margin: 25px 0;
+}
+h1 span
+{
+    color: var(--amber);
+}
+#wave
+{
+    width: 200px;
+    height: 48px;
+    overflow: visible;
+    margin: 12px 0;
+}
+#wave rect
+{
+    transform-box: fill-box;
+    transform-origin: bottom;
+    animation: wave 2s ease-in-out infinite;
+}
+@keyframes wave
+{
+    0%, 100%
+    {
+        transform: scaleY(.4);
+    }
+    50%
+    {
+        transform: scaleY(1);
+    }
+}
+.lead
+{
+    color: #c3b9a9;
+    max-width: 410px;
+    font-size: 16px;
+}
+.actions
+{
+    margin-top: 25px;
+}
+.stats
+{
+    display: flex;
+    gap: 35px;
+    margin-top: 40px;
+}
+.stats b
+{
+    display: block;
+    font-size: 30px;
+    color: var(--amber);
+    line-height: 1.2;
+}
+.stats p, .fine
+{
+    color: #aaa194;
+    font-size: 11px;
+}
+h2
+{
+    font-size: clamp(32px, 4vw, 50px);
+    line-height: 1.15;
+    letter-spacing: -2px;
+    margin: 20px 0 35px;
+}
+.section-head
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+.search
+{
+    font-size: 11px;
+    color: var(--muted);
+    min-width: 230px;
+}
+input
+{
+    display: block;
+    font: inherit;
+    width: 100%;
+    border: 1px solid #524738;
+    background: #141311;
+    color: white;
+    padding: 13px;
+    margin-top: 6px;
+}
+#count
+{
+    color: #aaa194;
+    font-size: 11px;
+}
+#episode-grid
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+.episode-card
+{
+    padding: 0;
+    border: 1px solid #30291f;
+    background: #111;
+    color: white;
+    border-radius: 6px;
+    overflow: hidden;
+    text-align: left;
+    cursor: pointer;
+    font: inherit;
+}
+.episode-card:hover
+{
+    border-color: var(--amber);
+}
+.cover
+{
+    background: #272016;
+    height: 220px;
+    display: grid;
+    place-items: center;
+    position: relative;
+    overflow: hidden;
+}
+.cover::before
+{
+    content: "";
+    position: absolute;
+    width: 165px;
+    height: 165px;
+    border: 28px solid #b87a1e;
+    border-radius: 50%;
+    left: -45px;
+    top: -50px;
+}
+.cover b
+{
+    font-size: 93px;
+    letter-spacing: -8px;
+    z-index: 1;
+    color: #ebc786;
+}
+.episode-card:nth-child(even) .cover
+{
+    background: #30291f;
+}
+.episode-card:nth-child(3n) .cover::before
+{
+    border-radius: 0;
+    transform: rotate(45deg);
+}
+.card-body
+{
+    padding: 22px;
+}
+.card-body small, .card-body span
+{
+    color: var(--amber);
+    font-size: 11px;
+}
+.card-body h3
+{
+    font-size: 17px;
+    line-height: 1.4;
+    min-height: 48px;
+}
+.card-body p
+{
+    color: #aaa194;
+    font-size: 12px;
+}
+.text-button
+{
+    border: 0;
+    background: transparent;
+    color: var(--amber);
+    font: inherit;
+    font-size: 12px;
+    text-decoration: underline;
+    padding: 12px 0;
+    cursor: pointer;
+}
+.host
+{
+    background: #141311;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 70px;
+    align-items: center;
+}
+blockquote
+{
+    font-size: 29px;
+    line-height: 1.5;
+    font-weight: 300;
+    margin: 25px 0;
+}
+.host blockquote
+{
+    border-left: 3px solid var(--amber);
+    padding-left: 25px;
+}
+.chip
+{
+    color: #0a0a0a;
+    background: var(--amber);
+    padding: 7px 10px;
+    font-size: 10px;
+}
+.host-art
+{
+    background: #312719;
+    padding: 45px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.host-art span
+{
+    font-size: 42px;
+    line-height: 1.2;
+    font-weight: 800;
+    color: #d7af6a;
+}
+.host-art b
+{
+    font-size: 11px;
+    letter-spacing: 3px;
+}
+.pillars
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+.pillars article
+{
+    border: 1px solid #332a1f;
+    background: #111;
+    padding: 30px;
+}
+.pillars span
+{
+    font-size: 29px;
+    color: var(--amber);
+}
+.pillars p
+{
+    font-size: 13px;
+    color: var(--muted);
+}
+.companies
+{
+    background: #141311;
+    text-align: center;
+    padding-block: 35px;
+}
+.companies > div
+{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    color: #aaa194;
+    margin-top: 25px;
+    font-size: 18px;
+}
+.platforms, .quote, .newsletter
+{
+    text-align: center;
+}
+.platforms .actions
+{
+    justify-content: center;
+}
+#platform-status, .quote > p:last-child
+{
+    font-size: 11px;
+    color: var(--muted);
+}
+.quote
+{
+    background: #141311;
+}
+.newsletter
+{
+    background: var(--amber);
+    color: #171109;
+}
+.newsletter h2
+{
+    font-size: clamp(40px, 5.4vw, 70px);
+}
+.newsletter .label, .newsletter .fine
+{
+    color: #46310e;
+}
+form
+{
+    max-width: 590px;
+    margin: 30px auto;
+    text-align: left;
+}
+form > label
+{
+    font-size: 12px;
+}
+.email-row
+{
+    display: flex;
+    gap: 10px;
+}
+.email-row input
+{
+    margin: 0;
+    min-width: 0;
+    background: #0001;
+    color: #171109;
+    border-color: #775111;
+}
+.email-row .button
+{
+    background: #0a0a0a;
+    color: white;
+    flex-shrink: 0;
+}
+.consent
+{
+    display: flex;
+    align-items: start;
+    gap: 10px;
+    margin-top: 16px;
+}
+.consent input
+{
+    width: auto;
+}
+.newsletter .text-button
+{
+    color: #171109;
+}
+footer
+{
+    padding: 60px 5%;
+}
+footer .brand
+{
+    color: var(--amber);
+}
+footer p, footer small
+{
+    color: var(--muted);
+    font-size: 12px;
+}
+footer small
+{
+    display: block;
+    margin-top: 25px;
+}
+dialog
+{
+    width: min(650px, 92%);
+    max-height: 90vh;
+    background: #15120f;
+    color: white;
+    border: 1px solid var(--amber);
+    padding: 30px;
+}
+dialog::backdrop
+{
+    background: #000d;
+}
+#close
+{
+    float: right;
+}
+progress
+{
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    accent-color: var(--amber);
+}
+.player
+{
+    border-block: 1px solid #625033;
+    padding: 25px 0;
+    margin: 25px 0;
+}
+:focus-visible
+{
+    outline: 2px solid #f6bd5d;
+    outline-offset: 4px;
+}
+@media (max-width: 767px)
+{
+    header
+    {
+        padding: 20px 24px;
+    }
+    header nav, .brand span
+    {
+        display: none;
+    }
+    header .button
+    {
+        padding: 11px 15px;
+        font-size: 11px;
+    }
+    section
+    {
+        padding: 65px 24px;
+    }
+    .hero
+    {
+        min-height: 820px;
+    }
+    .hero > img
+    {
+        object-position: 65%;
+        opacity: .3;
+    }
+    h1
+    {
+        font-size: 44px;
+        letter-spacing: -2px;
+    }
+    .hero .actions
+    {
+        gap: 10px;
+    }
+    .stats
+    {
+        gap: 18px;
+    }
+    .stats b
+    {
+        font-size: 26px;
+    }
+    .section-head
+    {
+        display: block;
+    }
+    .search
+    {
+        display: block;
+        margin-bottom: 25px;
+    }
+    #episode-grid, .host, .pillars
+    {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    .platforms .actions
+    {
+        flex-direction: column;
+    }
+    .email-row
+    {
+        display: grid;
+    }
+    .host-art
+    {
+        padding: 30px;
+    }
+}
+@media (prefers-reduced-motion: reduce)
+{
+    #wave rect
+    {
+        animation: none;
+    }
+}

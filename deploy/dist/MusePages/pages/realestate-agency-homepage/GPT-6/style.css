@@ -1,0 +1,610 @@
+:root
+{
+    --navy: #1e3a5f;
+    --gold: #c9a962;
+    --paper: #f7f6f2;
+}
+*
+{
+    box-sizing: border-box;
+}
+html
+{
+    scroll-behavior: smooth;
+}
+body
+{
+    margin: 0;
+    color: var(--navy);
+    background: white;
+    font: 14px/1.6 Arial, sans-serif;
+}
+a
+{
+    color: inherit;
+    text-decoration: none;
+}
+button, input, select
+{
+    font: inherit;
+}
+button, a, input, select
+{
+    outline-offset: 5px;
+}
+button
+{
+    cursor: pointer;
+}
+header
+{
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+}
+.brand
+{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font: 20px Georgia, serif;
+    letter-spacing: 3px;
+}
+.mark
+{
+    border: 1px solid var(--gold);
+    padding: 8px 14px;
+    color: #a08240;
+    font-size: 30px;
+}
+.brand small
+{
+    display: block;
+    font: 9px Arial, sans-serif;
+    letter-spacing: 5px;
+    margin-top: 6px;
+}
+nav
+{
+    display: flex;
+    gap: 27px;
+    font-size: 12px;
+}
+.header-cta
+{
+    font-size: 12px;
+    border-bottom: 1px solid var(--gold);
+    padding: 10px 0;
+}
+.hero
+{
+    min-height: 565px;
+    color: white;
+    background: linear-gradient(90deg, #10243be8, #142b3c18), url("estate.jpg") center 58%/cover;
+    position: relative;
+    padding: 65px 8% 95px;
+}
+.eyebrow
+{
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 2.5px;
+}
+.hero .eyebrow
+{
+    color: #e2c788;
+}
+h1, h2, h3, p
+{
+    margin-top: 0;
+}
+h1
+{
+    font: 66px/1.07 Georgia, serif;
+    font-weight: normal;
+    margin-bottom: 24px;
+    letter-spacing: -2px;
+}
+h1 em
+{
+    font-weight: normal;
+    color: #ead9b3;
+}
+.hero p:not(.eyebrow)
+{
+    color: #ecece8;
+}
+.text-link
+{
+    display: inline-block;
+    margin-top: 15px;
+    border-bottom: 1px solid #c9a96288;
+    padding-bottom: 8px;
+    font-size: 12px;
+}
+.text-link span
+{
+    padding-left: 35px;
+}
+.hero-caption
+{
+    position: absolute;
+    bottom: 60px;
+    right: 6%;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-align: right;
+}
+.hero-caption span
+{
+    display: block;
+    font-size: 8px;
+    margin-top: 6px;
+}
+.search-wrap
+{
+    background: white;
+    margin: -38px 6% 0;
+    position: relative;
+    box-shadow: 0 8px 30px #152b4012;
+}
+.modes
+{
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e8e8e3;
+}
+.modes button
+{
+    padding: 14px 30px;
+    background: none;
+    border: 0;
+    color: var(--navy);
+}
+.modes button.active
+{
+    background: var(--navy);
+    color: white;
+}
+.modes span
+{
+    margin-left: auto;
+    margin-right: 24px;
+    color: #647284;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+}
+#search
+{
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr 1.2fr;
+    gap: 20px;
+    padding: 25px;
+    align-items: center;
+}
+label
+{
+    font-size: 9px;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+input, select
+{
+    display: block;
+    min-width: 0;
+    width: 100%;
+    color: var(--navy);
+    background: white;
+    border: 0;
+    border-bottom: 1px solid #d5d9de;
+    padding: 10px 0;
+    border-radius: 0;
+}
+input[type="range"]
+{
+    accent-color: var(--navy);
+    padding: 9px 0;
+}
+.gold
+{
+    padding: 17px 18px;
+    border: 0;
+    background: var(--gold);
+    color: #182b44;
+    font-size: 11px;
+    font-weight: bold;
+}
+.section
+{
+    padding: 78px 8%;
+}
+h2
+{
+    font: 41px/1.15 Georgia, serif;
+    letter-spacing: -.7px;
+    font-weight: normal;
+    margin-bottom: 25px;
+}
+.section-top
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+.section-top > p
+{
+    color: #74808b;
+    font-size: 12px;
+}
+.filters
+{
+    display: flex;
+    gap: 9px;
+    flex-wrap: wrap;
+    margin: 20px 0;
+}
+.filters button, .quote-controls button
+{
+    border: 1px solid #d8dfe5;
+    background: white;
+    color: var(--navy);
+    border-radius: 30px;
+    padding: 9px 16px;
+    font-size: 10px;
+}
+.filters .active
+{
+    background: var(--navy);
+    color: white;
+}
+#results
+{
+    font-size: 11px;
+    color: #647284;
+}
+.listings
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+.property .photo
+{
+    height: 205px;
+    background: url("estate.jpg") center/cover;
+    position: relative;
+}
+.property:nth-child(2n) .photo
+{
+    background-position: left;
+    filter: saturate(.75);
+}
+.property:nth-child(3n) .photo
+{
+    background-position: right;
+}
+.badge
+{
+    position: absolute;
+    top: 13px;
+    left: 13px;
+    background: white;
+    padding: 5px 10px;
+    font-size: 9px;
+}
+.save
+{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: 0;
+    border-radius: 50%;
+    background: white;
+    width: 32px;
+    height: 32px;
+    color: var(--navy);
+    font-size: 20px;
+}
+.save[aria-pressed="true"]
+{
+    background: var(--navy);
+    color: white;
+}
+.carousel
+{
+    position: absolute;
+    bottom: 8px;
+    left: 45%;
+    background: #ffffffc9;
+    border: 0;
+}
+.property h3
+{
+    font: 25px Georgia, serif;
+    margin: 15px 0 5px;
+}
+.property p
+{
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+.property small
+{
+    font-size: 10px;
+    color: #74808b;
+}
+.property .view
+{
+    background: none;
+    border: 0;
+    padding: 8px 0;
+    color: var(--navy);
+    font-size: 11px;
+}
+.heritage, .people
+{
+    background: var(--paper);
+}
+.stats
+{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 35px;
+    margin-top: 50px;
+}
+.stats strong
+{
+    font: 45px Georgia, serif;
+    color: #a28242;
+}
+.stats h3
+{
+    font-size: 13px;
+    margin-top: 15px;
+}
+.stats p
+{
+    font-size: 12px;
+    color: #66717c;
+}
+.neighborhoods, .agents
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+.neighborhoods article
+{
+    min-height: 265px;
+    padding: 30px;
+    background: linear-gradient(0deg, #102c48f0, #102c4833), url("estate.jpg") center/cover;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+.neighborhoods span
+{
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+.neighborhoods h3
+{
+    font: 32px Georgia, serif;
+    margin: 20px 0 5px;
+}
+.neighborhoods button
+{
+    text-align: left;
+    border: 0;
+    padding: 5px 0;
+    background: none;
+    color: #ead9b3;
+}
+.agents
+{
+    grid-template-columns: repeat(4, 1fr);
+}
+.agent-portrait
+{
+    aspect-ratio: 1;
+    background: #e2e0d8;
+    display: grid;
+    place-items: center;
+    font: 65px Georgia, serif;
+    color: #1e3a5f88;
+}
+.agents h3
+{
+    font: 21px Georgia, serif;
+    margin: 18px 0 6px;
+}
+.agents p
+{
+    font-size: 11px;
+}
+.outline
+{
+    background: none;
+    border: 1px solid #aeb9c4;
+    padding: 12px 18px;
+    color: var(--navy);
+}
+.testimonial
+{
+    text-align: center;
+    padding-top: 90px;
+    padding-bottom: 90px;
+}
+.testimonial h2
+{
+    font-size: 35px;
+}
+.stars
+{
+    color: #a28242;
+    letter-spacing: 5px;
+}
+.market
+{
+    background: #edf0f2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+}
+.market-grid
+{
+    display: flex;
+    gap: 40px;
+}
+.market-grid strong, .market-grid small
+{
+    display: block;
+}
+.market-grid strong
+{
+    font: 35px Georgia, serif;
+}
+.market-grid small
+{
+    color: #547a65;
+    margin-top: 10px;
+}
+.sell
+{
+    color: white;
+    background: var(--navy);
+    text-align: center;
+}
+#valuation
+{
+    max-width: 620px;
+    margin: 30px auto 0;
+    text-align: left;
+}
+#valuation > div
+{
+    display: flex;
+    background: white;
+    padding: 6px;
+    margin-top: 10px;
+}
+#address
+{
+    padding: 10px;
+    flex: 1;
+}
+#valuation button
+{
+    flex: 1;
+}
+#valuation-result
+{
+    margin-top: 20px;
+}
+footer
+{
+    padding: 55px 8%;
+    font-size: 11px;
+    display: grid;
+    gap: 20px;
+}
+dialog
+{
+    width: min(550px, 90vw);
+    border: 0;
+    padding: 40px;
+    color: var(--navy);
+}
+dialog::backdrop
+{
+    background: #10243bb3;
+}
+.close
+{
+    float: right;
+    border: 0;
+    background: none;
+    font-size: 25px;
+}
+@media (max-width: 700px)
+{
+    header
+    {
+        height: 80px;
+    }
+    nav, .header-cta, .modes span, .hero-caption
+    {
+        display: none;
+    }
+    .hero
+    {
+        min-height: 530px;
+        padding: 60px 7%;
+        background-position: 63% center;
+    }
+    h1
+    {
+        font-size: 52px;
+    }
+    .hero p
+    {
+        font-size: 12px;
+    }
+    .search-wrap
+    {
+        margin: -30px 5% 0;
+    }
+    #search
+    {
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+        padding: 20px;
+    }
+    #search button
+    {
+        min-height: 53px;
+    }
+    .section
+    {
+        padding: 55px 6%;
+    }
+    h2
+    {
+        font-size: 33px;
+    }
+    .section-top
+    {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0;
+    }
+    .listings, .neighborhoods, .market
+    {
+        grid-template-columns: 1fr;
+    }
+    .property .photo
+    {
+        height: 240px;
+    }
+    .stats, .agents
+    {
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+    }
+    .testimonial h2
+    {
+        font-size: 27px;
+    }
+    .market-grid
+    {
+        gap: 20px;
+    }
+    #valuation > div
+    {
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meridian Travel — The world on your terms | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Meridian Travel — The world on your terms</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Travel Agency Website Prompt
+# websiteprompts.ai
+
+Build a bold, cinematic luxury travel agency website called &quot;Meridian Travel&quot; using React + Vite + TypeScript + Tailwind CSS + Framer Motion (motion/react) + shadcn/ui + lucide-react.
+
+## Design System
+
+### Colors
+```css
+:root {
+  --background: 218 22% 10%;          /* deep slate #151c2c */
+  --foreground: 42 18% 90%;           /* warm pearl */
+  --primary: 218 22% 10%;
+  --primary-foreground: 42 18% 90%;
+  --accent: 185 52% 40%;              /* deep teal #1fa8b4 */
+  --accent-warm: 42 48% 60%;          /* warm sand #c9b47a */
+  --surface: 218 18% 14%;
+  --surface-raised: 218 16% 18%;
+  --muted-foreground: 42 8% 56%;
+  --border: 218 14% 22%;
+}
+```
+
+### Typography
+- Import: `https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Inter:wght@300;400;500&amp;display=swap`
+- Headlines: Bebas Neue — maximum condensed editorial
+- Body: Inter 300–400
+- Labels: Inter 500 uppercase 10px letter-spacing 0.14em
+
+## Sections
+
+### 1. Navbar
+- Sticky deep slate, `backdrop-filter: blur(12px)`
+- Left: Inter 600 uppercase letter-spacing 0.2em &quot;MERIDIAN&quot; in warm sand
+- Right: Destinations · Experiences · About · Contact + &quot;Plan your trip →&quot; teal outlined button
+
+### 2. Hero
+- Full-viewport height
+- Full-bleed landscape photography `position: absolute inset-0 w-full h-full object-cover object-center`
+- Composition-independent gradient: `linear-gradient(to right, rgba(21,28,44,0.96) 0%, rgba(21,28,44,0.65) 55%, rgba(21,28,44,0.2) 100%)`
+- Large background text: &quot;WORLD&quot; in Bebas Neue `font-size: clamp(280px, 40vw, 560px)` at `opacity: 0.04`, `position: absolute; right: -2%; bottom: -5%; z-index: 1`
+- Content `z-index: 10`, left-aligned `padding-left: 7vw; padding-top: 0`, centered vertically:
+  - Inter 500 uppercase 10px teal label: &quot;Luxury Travel · Since 2008&quot;
+  - Bebas Neue `clamp(70px, 10vw, 145px)` pearl, line-height 0.88: &quot;DISCOVER THE\nWORLD ON YOUR\nTERMS.&quot;
+  - Teal accent on &quot;YOUR\nTERMS.&quot;
+  - Inter 300 muted pearl sub: &quot;Bespoke itineraries, private guides, and handpicked stays for travellers who refuse the ordinary&quot;
+  - CTAs: &quot;Start planning →&quot; (teal filled, dark text) + &quot;See destinations&quot; (ghost pearl)
+  - Floating destination chips below CTAs, horizontal row: &quot;Morocco · Japan · Patagonia · Maldives · Iceland&quot; — each Inter 500 10px uppercase teal, separated by thin sand dividers, stagger fade-in 0.6s delay
+
+{/* Image brief: dramatic mountain landscape at golden hour — vast scale, lone traveller silhouetted against sky, cinematic wide-angle, adventure photography */}
+
+- Stagger fade-up on mount: label (0s), headline (0.12s), sub (0.26s), CTAs (0.4s), chips (0.6s)
+
+### 3. Destinations
+- &quot;Where We&#39;ll Take You&quot; — Bebas Neue `clamp(52px, 7vw, 90px)` pearl
+- 6-destination 3×2 grid, full-bleed image cards (no border-radius), hover scale 1.03:
+  - Morocco · Japan · Patagonia · Maldives · Iceland · Tanzania
+- Each card: `height: 320px`, Bebas Neue 28px white destination name bottom-left over dark gradient, Inter 300 10px muted sub (best season), teal &quot;Explore →&quot;
+- Stagger fade-up on scroll
+
+{/* Image brief: Moroccan medina at dusk, warm amber light, lanterns, narrow alleys */}
+{/* Image brief: Japanese mountain temple in autumn, red maples, mist, serene */}
+{/* Image brief: Patagonian glacier, dramatic peaks, turquoise water */}
+{/* Image brief: Maldives overwater villa at sunrise, crystal water, luxury */}
+{/* Image brief: Iceland Northern Lights over black sand landscape */}
+{/* Image brief: Tanzania savanna at golden hour, wildlife silhouettes */}
+
+### 4. What We Offer
+- &quot;The Meridian Difference&quot; — Bebas Neue large
+- 3 hover-raise rows:
+  - Bespoke Itineraries (every trip custom-built — zero off-the-shelf packages)
+  - Private &amp; Small-Group (no more than 8 — always your own guide)
+  - Handpicked Stays (every property personally vetted by our team)
+- Each: Bebas Neue large name left + Inter 300 muted description right + teal &quot;→&quot;
+- `border-bottom: 1px solid hsl(var(--border))`
+- Hover: surface-raised, text turns teal
+
+### 5. Stats Strip
+- Full-width teal `#1fa8b4` background, 72px
+- 4 dark Inter 700 stats: &quot;18 Years&quot; · &quot;60+ Destinations&quot; · &quot;4.9★ Trustpilot&quot; · &quot;100% Bespoke&quot;
+- Framer Motion count-up on scroll, dark dividers
+
+### 6. About
+- Split: left text, right image
+- Bebas Neue large pearl: &quot;WE&#39;VE BEEN WHERE YOU WANT TO GO&quot;
+- Inter 300 muted: 2 paragraphs — Meridian Travel founded 2008. Every destination researched first-hand. Our network of local guides goes far beyond guidebook recommendations.
+- Teal chips: &quot;Est. 2008 · ABTA Member · 60+ Destinations&quot;
+
+{/* Image brief: travel specialist at work, maps and destination photos on desk, warm professional setting */}
+
+### 7. Testimonials
+- 3 cards: Bebas Neue 18px pearl destination label, Inter 300 italic pearl quote, client name + trip in Inter 10px muted, 5-star teal row
+- Stagger fade-up on scroll
+
+### 8. Plan Your Trip CTA
+- Full-width warm sand `#c9b47a` background
+- Bebas Neue `clamp(52px, 7vw, 90px)` dark slate: &quot;WHERE DO YOU WANT TO GO?&quot;
+- Inter 300 dark: &quot;Tell us your dream trip in 60 seconds — we&#39;ll come back with a bespoke itinerary, no obligation&quot;
+- &quot;Start planning →&quot; dark slate button
+- &quot;No booking fees · ABTA protected · Available 7 days&quot; Inter 10px dark 70%
+
+### 9. Footer
+- Deep slate, Inter 600 uppercase &quot;MERIDIAN&quot; in sand
+- Instagram · Pinterest · LinkedIn
+- &quot;© 2026 Meridian Travel · Luxury Bespoke Travel · London · ABTA Member&quot;
+
+## Animations
+- Hero: aggressive stagger fade-up on mount
+- Background &quot;WORLD&quot; text: fade in 1.2s delay
+- Destination grid: stagger fade-up + scale 0.95→1 on scroll
+- Stats strip: count-up on scroll
+- All hover: 0.18s ease
+
+## Responsive
+- Mobile: stacked hero, single-column destinations, hamburger nav
+
+## Full Copy
+- Wordmark: &quot;MERIDIAN&quot;
+- Hero: &quot;DISCOVER THE WORLD ON YOUR TERMS.&quot; / &quot;Bespoke itineraries, private guides, and handpicked stays for travellers who refuse the ordinary&quot;
+- Destinations: Morocco · Japan · Patagonia · Maldives · Iceland · Tanzania
+- Stats: 18 Years · 60+ Destinations · 4.9★ Trustpilot · 100% Bespoke
+- Testimonial: &quot;Meridian built us a three-week Japan itinerary that covered things we would never have found ourselves. Not one moment felt like tourism.&quot; — David &amp; Clare H., London
+- CTA: &quot;WHERE DO YOU WANT TO GO?&quot; / &quot;Bespoke itinerary, no obligation&quot;
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Summit Roofing | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Summit Roofing</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Summit Roofing — Roofing Company Website Prompt
+
+## Goal
+Build a dark, authoritative premium roofing contractor website with Space Grotesk heavy display type, count-up stats, material type cards, and a prominent emergency roofing section.
+
+## Tech Stack
+React + Vite + TypeScript + Tailwind CSS + Framer Motion (motion/react) + shadcn/ui + lucide-react
+
+## Design System
+
+### Colors
+```css
+:root {
+  --background: 220 35% 8%;
+  --foreground: 0 0% 96%;
+  --primary: 220 68% 50%;
+  --primary-foreground: 0 0% 100%;
+  --muted-foreground: 220 15% 60%;
+  --border: 220 20% 18%;
+  /* Raw hex reference */
+  /* deep-slate: #0f1219 */
+  /* signal-blue: #2a5cd4 */
+  /* warm-white: #f5f5f5 */
+  /* mid-grey: #4a5568 */
+}
+```
+
+### Typography
+Google Fonts import: `https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800&amp;family=Plus+Jakarta+Sans:wght@300;400&amp;display=swap`
+- Hero headline: Space Grotesk 800
+- Section headlines: Space Grotesk 700
+- Body: Plus Jakarta Sans 400
+- Captions: Plus Jakarta Sans 300
+
+## Visual Effects
+
+1. **&quot;SUMMIT&quot; Background Text** — Space Grotesk 800 at clamp(220px,32vw,480px), opacity: 0.03, position: absolute, left 50%, translateX(-50%), top 50%, translateY(-50%), color: #f5f5f5, z-index: 0, pointer-events: none
+2. **Count-Up Stats Row in Blue** — 4 stats, useEffect + IntersectionObserver, requestAnimationFrame over 2s easeOutQuart, Bebas-weight Space Grotesk 700 at 56px in #2a5cd4
+3. **Service Row Hover** — y:-4px (0.2s), blue 3px left border (0.15s), blue glow box-shadow: 0 4px 20px rgba(42,92,212,0.25)
+4. **Trust Badges Strip** — full-width blue bg #2a5cd4, 6 trust items in white with vertical dividers, Plus Jakarta Sans 300
+
+## Component Breakdown
+
+### 1. Navbar
+```tsx
+// Sticky, bg: #0f1219, border-bottom: 1px solid rgba(42,92,212,0.2), height: 68px
+// Left: &quot;Summit Roofing&quot; — Space Grotesk 700, 17px, #f5f5f5
+// Center: Services / Materials / Emergency / About / Quote — Plus Jakarta Sans 400, 14px, #c0cce0
+// Right: &quot;Get a Free Quote&quot; — bg: #2a5cd4, color: white, Plus Jakarta 400, 14px, px-6 py-2.5, border-radius: 4px
+// Hover: scale 1.03, 0.15s
+// Framer Motion: y -68→0, 0.5s ease-out
+```
+
+### 2. Hero
+```tsx
+// Full-viewport, min-height: 100vh, position: relative, overflow: hidden, bg: #0f1219
+
+{/* Image: Professional aerial drone shot of a premium completed slate roof on a Victorian London terraced house, morning golden light, clean ridge line and chimney stacks visible, city rooftops stretching into background, high-quality construction photography showing craftsmanship */}
+&lt;img src=&quot;&quot; alt=&quot;Aerial view of premium slate roof installation on London terraced house&quot; style={{ position: &#39;absolute&#39;, inset: 0, width: &#39;100%&#39;, height: &#39;100%&#39;, objectFit: &#39;cover&#39;, objectPosition: &#39;center&#39; }} /&gt;
+
+// Gradient overlay — composition independent:
+// linear-gradient(to right, rgba(15,18,25,0.93) 0%, rgba(15,18,25,0.72) 55%, transparent 100%)
+// position: absolute; inset: 0; z-index: 1
+
+// Background text &quot;SUMMIT&quot;:
+// Space Grotesk 800, clamp(220px,32vw,480px), color: #f5f5f5, opacity: 0.03
+// position: absolute, left: 50%, top: 50%, transform: translateX(-50%) translateY(-50%), z-index: 0
+
+// Content panel: position absolute, left 0, top 0, height 100%, width 54%, z-index 10
+// padding-left: clamp(24px,6vw,96px), display flex flex-col justify-center
+
+// Kicker: Plus Jakarta Sans 300, 13px, letter-spacing 0.14em, text-transform uppercase, color: #7a9cd4
+// &quot;AWARD-WINNING ROOFING CONTRACTORS&quot;
+
+// Headline: &quot;YOUR HOME.&quot; line 1 + &quot;PROTECTED.&quot; line 2
+// Space Grotesk 800, clamp(50px,7vw,128px), line-height: 1.0, color: #f5f5f5
+// Framer Motion: opacity 0→1, y 40→0, 0.7s ease-out, delay 0.1s
+
+// Sub: Plus Jakarta Sans 400, 18px, color: #c0cce0, margin-top 20px, max-width 460px, line-height 1.6
+// &quot;Award-winning roofing contractors for London and the South East. 500+ roofs completed. 15-year workmanship guarantee.&quot;
+// Framer Motion: opacity 0→1, y 20→0, 0.6s, delay 0.3s
+
+// CTAs (flex row gap 12px, margin-top 32px):
+// &quot;Get a Free Quote&quot; — bg: #2a5cd4, color: white, Plus Jakarta 400, 15px, px-7 py-3.5, border-radius: 4px
+// &quot;Emergency Roofing →&quot; — bg: transparent, border: 1px solid rgba(255,255,255,0.4), color: #f5f5f5, Plus Jakarta 400, 15px, px-7 py-3.5, border-radius: 4px
+// Small red dot (width 6px height 6px bg: #e53e3e border-radius 50%) before the text on emergency button
+// Framer Motion: opacity 0→1, y 20→0, 0.6s, delay 0.5s
+
+// Count-up stats (flex row gap 48px, margin-top 48px):
+// Each: flex-col
+// Value: Space Grotesk 700, 56px, color: #2a5cd4, line-height 1
+// Label: Plus Jakarta Sans 300, 13px, color: #7a9cd4, letter-spacing 0.06em, uppercase
+
+// Stat 1: &quot;500+&quot; / &quot;Roofs Completed&quot;
+// Stat 2: &quot;15yr&quot; / &quot;Guarantee&quot;
+// Stat 3: &quot;48hr&quot; / &quot;Emergency&quot;
+// Stat 4: &quot;4.9★&quot; / &quot;Google Rating&quot;
+
+// Count-up: IntersectionObserver fires animation when row enters viewport
+// requestAnimationFrame over 2000ms, easeOutQuart
+```
+
+### 3. Services
+```tsx
+// Section bg: #0f1219, padding: 80px clamp(24px,6vw,96px)
+// Section label: Plus Jakarta 300, 12px, letter-spacing 0.14em, uppercase, color: #2a5cd4, margin-bottom 48px
+// &quot;OUR SERVICES&quot;
+// Section headline: Space Grotesk 700, clamp(32px,4vw,60px), #f5f5f5, margin-bottom 0
+
+// 4 service rows, each: border-top: 0.5px solid rgba(255,255,255,0.1), padding: 32px 0
+// flex justify-between align-center, cursor pointer
+// Hover (Framer Motion whileHover): y -4px (0.2s), transition
+
+// Row layout:
+// Left block: Space Grotesk 700, 22px, #f5f5f5 — service name
+//             Plus Jakarta 400, 15px, #8a9ab4, margin-top 6px — description
+// Right block: flex align-center gap 16px
+//   Plus Jakarta 300, 14px, #7a9cd4 — price range
+//   Color: #2a5cd4, font-size 24px — &quot;→&quot;
+// Hover state: border-left: 3px solid #2a5cd4, padding-left: 16px, box-shadow: 0 4px 20px rgba(42,92,212,0.25)
+
+// Row 1: &quot;New Roof Installation&quot;
+// &quot;Full new roof installation from groundwork to ridge tiles. All materials, felt, battens, and tiles included.&quot;
+// &quot;from £3,500&quot;
+
+// Row 2: &quot;Re-Roofing &amp; Replacement&quot;
+// &quot;Strip and re-lay on existing structure. New breathable felt, treated battens, and tiles to match or upgrade.&quot;
+// &quot;from £2,800&quot;
+
+// Row 3: &quot;Repairs &amp; Maintenance&quot;
+// &quot;Broken tiles, ridge issues, valleys, chimney lead flashings, and pointing. Same-week availability.&quot;
+// &quot;from £150&quot;
+
+// Row 4: &quot;Guttering &amp; Drainage&quot;
+// &quot;Full replacement, cleaning, and repair. UPVC, cast iron, and aluminium. Includes downpipes and brackets.&quot;
+// &quot;from £400&quot;
+```
+
+### 4. Material Cards
+```tsx
+// Section bg: #111827 (slightly lighter than main bg), padding: 80px clamp(24px,6vw,96px)
+// Headline: Space Grotesk 700, clamp(32px,4vw,60px), #f5f5f5, margin-bottom 48px
+// &quot;ROOFING MATERIALS&quot;
+
+// 3-column flex, gap: 24px
+
+// Each card: position relative, overflow hidden, border-radius: 8px, cursor pointer
+// Framer Motion whileHover: scale 1.02, box-shadow: 0 8px 40px rgba(42,92,212,0.3)
+
+// Card 1 — Concrete &amp; Clay Tiles:
+{/* Image: Close-up professional photography of pristine concrete roof tiles on a newly completed roof, warm morning light, smooth geometric tile pattern, grey-brown earthy tones, shallow depth of field showing tile texture and quality */}
+&lt;img src=&quot;&quot; alt=&quot;Concrete roof tiles close-up on completed roofing installation&quot; style={{ width: &#39;100%&#39;, aspectRatio: &#39;4/3&#39;, objectFit: &#39;cover&#39;, objectPosition: &#39;center&#39; }} /&gt;
+// Gradient overlay on bottom: linear-gradient(to top, rgba(15,18,25,0.92) 0%, transparent 60%)
+// Card body (absolute bottom 0, padding 24px, z-index 10):
+// Space Grotesk 700, 22px, #f5f5f5: &quot;Concrete &amp; Clay Tiles&quot;
+// Plus Jakarta 300, 14px, #8a9ab4: &quot;The most popular choice. 50yr lifespan. Available in 40+ colours.&quot;
+// Blue border bottom (Plus Jakarta 300, 13px, #2a5cd4, margin-top 8px): &quot;25–50 year lifespan&quot;
+// &quot;Book a Survey&quot; button: bg #2a5cd4, color white, Plus Jakarta 400, 13px, px-4 py-2, border-radius 4px, margin-top 12px
+
+// Card 2 — GRP Flat Roofing:
+{/* Image: Clean flat roof extension on a contemporary house, GRP fibreglass surface with smooth finish visible, afternoon light, modern domestic architecture, no joins or seams in the roofing surface */}
+&lt;img src=&quot;&quot; alt=&quot;GRP fibreglass flat roof on modern house extension&quot; style={{ width: &#39;100%&#39;, aspectRatio: &#39;4/3&#39;, objectFit: &#39;cover&#39;, objectPosition: &#39;center&#39; }} /&gt;
+// &quot;GRP Flat Roofing&quot; / &quot;Seamless fibreglass. Ideal for extensions, garages, and bay windows. 25-year guarantee.&quot; / &quot;25-year guarantee&quot; / &quot;Book a Survey&quot;
+
+// Card 3 — Welsh Slate:
+{/* Image: Premium natural Welsh slate roof on a period Victorian property, dramatic overcast sky, dark blue-grey slate texture with fine grain visible, ridge tile capping in crisp line, traditional craftsmanship */}
+&lt;img src=&quot;&quot; alt=&quot;Natural Welsh slate roof on Victorian period property&quot; style={{ width: &#39;100%&#39;, aspectRatio: &#39;4/3&#39;, objectFit: &#39;cover&#39;, objectPosition: &#39;center&#39; }} /&gt;
+// &quot;Welsh Slate&quot; / &quot;Natural Welsh slate. 100yr+ lifespan. The premium choice for period and prestige properties.&quot; / &quot;100yr+ lifespan&quot; / &quot;Book a Survey&quot;
+```
+
+### 5. Trust Badges Strip
+```tsx
+// Full-width, bg: #2a5cd4, padding: 24px clamp(24px,6vw,96px)
+// flex flex-wrap justify-center align-center gap-x-12 gap-y-4
+
+// 6 items, each: flex align-center gap 8px
+// Lucide icon (CheckCircle), 16px, white
+// Plus Jakarta Sans 300, 14px, white, letter-spacing 0.04em
+
+// Items:
+// NFRC Member · TrustMark Approved · Which? Trusted Trader · 15yr Guarantee · All Work Insured · 500+ Roofs
+
+// Between items: vertical dividers: 1px solid rgba(255,255,255,0.3), height 16px
+```
+
+### 6. Quote Process
+```tsx
+// Section bg: #0f1219, padding: 80px clamp(24px,6vw,96px)
+// Headline: Space Grotesk 700, clamp(32px,4vw,56px), #f5f5f5, margin-bottom 60px
+// &quot;HOW IT WORKS&quot;
+
+// 3-column flex, gap 0, position relative
+// Connecting horizontal line between steps: position absolute, top 40px, left 16.6%, right 16.6%, height 1px, bg: linear-gradient(to right, transparent, #2a5cd4, transparent)
+
+// Each step:
+// Faded number: Space Grotesk 800, 80px, color: #2a5cd4, opacity: 0.1, margin-bottom: -16px, line-height 1
+// Circle badge: 40px×40px, bg: #2a5cd4, border-radius: 50%, Plus Jakarta 400, 16px, white, text-align center
+// Step label: Plus Jakarta Sans 300, 13px, letter-spacing 0.1em, uppercase, color: #7a9cd4, margin-top 16px
+// Step name: Space Grotesk 700, 20px, #f5f5f5, margin-top 8px
+// Description: Plus Jakarta 400, 15px, #8a9ab4, line-height 1.6
+
+// Step 1: &quot;1&quot; faded / &quot;01&quot; circle / &quot;FIRST STEP&quot; / &quot;Free Survey&quot; / &quot;We visit your property, inspect the roof from ground and access point, and give you an honest assessment.&quot;
+// Step 2: &quot;2&quot; faded / &quot;02&quot; / &quot;SECOND STEP&quot; / &quot;Written Quote (24hrs)&quot; / &quot;You&#39;ll have a full written quote with materials, timeline, and total cost within 24 hours of the survey.&quot;
+// Step 3: &quot;3&quot; faded / &quot;03&quot; / &quot;THIRD STEP&quot; / &quot;Work Starts Within 2 Weeks&quot; / &quot;Our crew arrives on the agreed date. Fully insured, NFRC registered, and tidy throughout.&quot;
+
+// Framer Motion: each column whileInView opacity 0→1, y 24→0, stagger 0.18s
+```
+
+### 7. Emergency Section
+```tsx
+// Section bg: #0f1219, padding: 80px clamp(24px,6vw,96px), border-top: 2px solid #e53e3e
+// Small red badge: bg #e53e3e, Plus Jakarta 300, 12px, white, letter-spacing 0.14em uppercase, px-3 py-1, border-radius 2px, margin-bottom 20px
+// &quot;48HR EMERGENCY RESPONSE&quot;
+
+// Headline: Space Grotesk 700, clamp(32px,4.5vw,72px), #f5f5f5
+// &quot;EMERGENCY ROOFING — 48hr RESPONSE&quot;
+
+// Sub: Plus Jakarta 400, 17px, #8a9ab4, margin-top 16px, max-width 580px, line-height 1.7
+// &quot;Storm damage? Leak? Active water ingress? We know it can&#39;t wait. Call us now and we&#39;ll have a roofer with you within 48 hours — usually sooner.&quot;
+
+// Phone number: Space Grotesk 800, clamp(36px,5vw,80px), #f5f5f5, margin-top 32px
+// &quot;0800 123 4567&quot;
+// Plus Jakarta 300, 14px, #7a9cd4: &quot;Free to call · 8am–8pm Mon–Sat&quot;
+
+// Button: bg: #2a5cd4, color white, Plus Jakarta 400, 15px, px-8 py-4, border-radius 4px, margin-top 24px
+// &quot;Get Emergency Help&quot;
+// Hover: scale 1.04, 0.2s
+
+{/* Image: Storm damage close-up on a residential roof — displaced tiles, exposed felt, urgent situation, overcast sky, wet conditions, documentary photography style */}
+&lt;img src=&quot;&quot; alt=&quot;Storm damage to residential roof requiring emergency repair&quot; style={{ width: &#39;100%&#39;, aspectRatio: &#39;16/9&#39;, objectFit: &#39;cover&#39;, objectPosition: &#39;center&#39;, marginTop: &#39;48px&#39; }} /&gt;
+```
+
+### 8. Testimonial
+```tsx
+// Section bg: #111827, padding: 80px clamp(24px,6vw,96px)
+// Stars: 5× &quot;★&quot; in #2a5cd4, 20px, margin-bottom 24px
+// Quote: Space Grotesk 700, clamp(24px,3.5vw,48px), #f5f5f5, font-style italic, line-height 1.3
+// &quot;Summit re-roofed our Victorian terrace and the finish is exceptional. Tidy, professional, and on time.&quot;
+// Attribution: Plus Jakarta 300, 15px, #7a9cd4, margin-top 20px
+// &quot;— David K., Wimbledon&quot;
+```
+
+### 9. Blue CTA
+```tsx
+// Section bg: #2a5cd4, padding: 80px clamp(24px,6vw,96px), text-align center
+// Space Grotesk 800, clamp(40px,6vw,96px), white: &quot;GET YOUR FREE SURVEY&quot;
+// Plus Jakarta 400, 17px, rgba(255,255,255,0.85), margin-top 16px
+// &quot;No obligation. Written quote within 24 hours. Work guaranteed for 15 years.&quot;
+// Button: bg white, color #2a5cd4, Space Grotesk 700, 16px, px-10 py-5, border-radius 4px, margin-top 40px
+// &quot;Book Free Survey&quot;
+// Hover: bg #0f1219, color white, 0.2s
+// Small text below: Plus Jakarta 300, 13px, rgba(255,255,255,0.7): &quot;London and South East · 500+ roofs completed · NFRC registered&quot;
+```
+
+### 10. Footer
+```tsx
+// bg: #080c12, border-top: 1px solid rgba(42,92,212,0.2), padding: 48px clamp(24px,6vw,96px) 32px
+// 4 columns: Brand / Services / Coverage / Contact
+// Brand: &quot;Summit Roofing&quot; Space Grotesk 700, 17px, #f5f5f5 / Plus Jakarta 300, 14px, #4a5568
+// Services: Plus Jakarta 300, 14px, #6a7a94 — New Roofs / Re-Roofing / Repairs / Guttering / Emergency
+// Coverage: Plus Jakarta 300, 14px, #6a7a94 — London / Surrey / Kent / Sussex / Essex / Hertfordshire
+// Contact: Plus Jakarta 300, 14px, #6a7a94 — phone / email / address
+// Copyright: &quot;© 2025 Summit Roofing. All rights reserved.&quot; Plus Jakarta 300, 12px, #4a5568
+```
+
+## Animations
+
+| Element | Animation | Duration | Delay | Easing |
+|---|---|---|---|---|
+| Navbar | y: -68→0 | 0.5s | 0s | ease-out |
+| Hero headline | opacity 0→1, y 40→0 | 0.7s | 0.1s | ease-out |
+| Hero sub | opacity 0→1, y 20→0 | 0.6s | 0.3s | ease-out |
+| Hero CTAs | opacity 0→1, y 20→0 | 0.6s | 0.5s | ease-out |
+| Count-up stats | 0→target, rAF | 2s | on scroll entry | easeOutQuart |
+| Service rows | whileHover y:-4px, blue border+glow | 0.2s | 0s | ease-out |
+| Material cards | whileHover scale 1.02, blue glow | 0.25s | 0s | ease-out |
+| Process steps | whileInView opacity 0→1, y 24→0, stagger 0.18s | 0.6s | scroll | ease-out |
+| Emergency section | whileInView opacity 0→1 | 0.6s | scroll | ease-out |
+| CTA button | whileHover scale 1.04 | 0.2s | 0s | ease-out |
+
+## Responsive
+
+- **Mobile (&lt;768px)**: Hero single column, background text hidden, stats 2×2, services stack, material cards 1-col, process steps stack, emergency phone number smaller
+- **Tablet (768–1024px)**: Material cards 2+1, process horizontal
+- **Desktop**: Full layout as described
+
+## Full Copy
+
+**Brand**: Summit Roofing
+
+**Navbar**: Summit / Services / Materials / Emergency / About / Quote
+
+**Hero**:
+- Kicker: &quot;AWARD-WINNING ROOFING CONTRACTORS&quot;
+- Headline: &quot;YOUR HOME. PROTECTED.&quot;
+- Sub: &quot;Award-winning roofing contractors for London and the South East. 500+ roofs completed. 15-year workmanship guarantee.&quot;
+- CTA 1: &quot;Get a Free Quote&quot;
+- CTA 2: &quot;Emergency Roofing →&quot;
+
+**Stats**: 500+ Roofs Completed / 15yr Guarantee / 48hr Emergency / 4.9★ Google Rating
+
+**Services**:
+- New Roof Installation: &quot;Full new roof installation from groundwork to ridge tiles. All materials, felt, battens, and tiles included.&quot; — from £3,500
+- Re-Roofing &amp; Replacement: &quot;Strip and re-lay on existing structure. New breathable felt, treated battens, and tiles to match or upgrade.&quot; — from £2,800
+- Repairs &amp; Maintenance: &quot;Broken tiles, ridge issues, valleys, chimney lead flashings, and pointing. Same-week availability.&quot; — from £150
+- Guttering &amp; Drainage: &quot;Full replacement, cleaning, and repair. UPVC, cast iron, and aluminium. Includes downpipes and brackets.&quot; — from £400
+
+**Materials**:
+- Concrete &amp; Clay Tiles: &quot;The most popular choice. 50yr lifespan. Available in 40+ colours.&quot; / 25–50 year lifespan
+- GRP Flat Roofing: &quot;Seamless fibreglass. Ideal for extensions, garages, and bay windows. 25-year guarantee.&quot; / 25-year guarantee
+- Welsh Slate: &quot;Natural Welsh slate. 100yr+ lifespan. The premium choice for period and prestige properties.&quot; / 100yr+ lifespan
+
+**Trust badges**: NFRC Member · TrustMark Approved · Which? Trusted Trader · 15yr Guarantee · All Work Insured · 500+ Roofs
+
+**Process**:
+1. &quot;Free Survey&quot; — &quot;We visit your property, inspect the roof from ground and access point, and give you an honest assessment.&quot;
+2. &quot;Written Quote (24hrs)&quot; — &quot;You&#39;ll have a full written quote with materials, timeline, and total cost within 24 hours of the survey.&quot;
+3. &quot;Work Starts Within 2 Weeks&quot; — &quot;Our crew arrives on the agreed date. Fully insured, NFRC registered, and tidy throughout.&quot;
+
+**Emergency**: &quot;EMERGENCY ROOFING — 48hr RESPONSE&quot; / &quot;Storm damage? Leak? Active water ingress? We know it can&#39;t wait. Call us now and we&#39;ll have a roofer with you within 48 hours — usually sooner.&quot; / &quot;0800 123 4567&quot; / &quot;Free to call · 8am–8pm Mon–Sat&quot; / &quot;Get Emergency Help&quot;
+
+**Testimonial**: &quot;Summit re-roofed our Victorian terrace and the finish is exceptional. Tidy, professional, and on time.&quot; — David K., Wimbledon
+
+**CTA**: &quot;GET YOUR FREE SURVEY&quot; / &quot;No obligation. Written quote within 24 hours. Work guaranteed for 15 years.&quot; / &quot;Book Free Survey&quot; / &quot;London and South East · 500+ roofs completed · NFRC registered&quot;
+
+**Coverage**: London / Surrey / Kent / Sussex / Essex / Hertfordshire
+
+## Key Dependencies
+```json
+{
+  &quot;dependencies&quot;: {
+    &quot;react&quot;: &quot;^18&quot;,
+    &quot;framer-motion&quot;: &quot;^11&quot;,
+    &quot;lucide-react&quot;: &quot;latest&quot;,
+    &quot;@shadcn/ui&quot;: &quot;latest&quot;,
+    &quot;tailwindcss&quot;: &quot;^3&quot;
+  }
+}
+```
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

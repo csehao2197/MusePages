@@ -1,0 +1,861 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Solace Massage Studio | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Solace Massage Studio</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># SOLACE — Massage Therapy Studio Website Prompt
+
+**Tech Stack:** React + Vite + TypeScript + Tailwind CSS + Framer Motion (`motion/react`) + shadcn/ui + lucide-react
+**Niche:** Massage Therapist Studio
+
+---
+
+## Design System
+
+### Colors (HSL in :root CSS custom properties)
+
+```css
+:root {
+  --background: 38 50% 96%;      /* warm cream #FAF6EF */
+  --foreground: 20 8% 12%;       /* deep stone #2C1A10 */
+  --primary: 24 52% 61%;         /* amber #C8956C */
+  --primary-foreground: 38 50% 96%;
+  --secondary: 130 14% 60%;      /* sage #8FA68C */
+  --muted: 38 30% 92%;
+  --muted-foreground: 20 8% 40%;
+  --border: 38 20% 85%;
+  --card: 38 50% 98%;
+  --card-foreground: 20 8% 12%;
+  --radius: 1rem;
+}
+```
+
+### Typography
+
+```css
+@import url(&#39;https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,700&amp;family=Jost:wght@300;400&amp;display=swap&#39;);
+
+/* Headings: Cormorant Garamond (400, 600, 700 italic) */
+/* Body: Jost (300, 400) */
+```
+
+Apply globally:
+```css
+body {
+  font-family: &#39;Jost&#39;, sans-serif;
+  font-weight: 300;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+h1, h2, h3, h4 {
+  font-family: &#39;Cormorant Garamond&#39;, serif;
+}
+```
+
+---
+
+## Signature Animation: Steam Particles
+
+Implement 12 floating steam particles in the hero section. These are tiny cream/white dots (~4px) that drift upward slowly and fade out in an infinite loop. Use Framer Motion.
+
+```tsx
+// SteamParticles component
+// Create an array of 12 particles with randomised properties
+
+const particles = Array.from({ length: 12 }, (_, i) =&gt; ({
+  id: i,
+  x: Math.random() * 90 + 5,       // random % position across container width (5–95%)
+  delay: Math.random() * 4,          // random delay 0–4s
+  duration: Math.random() * 4 + 4,   // random duration 4–8s
+  size: Math.random() * 2 + 3,       // random size 3–5px
+}));
+
+// Each particle rendered as:
+&lt;motion.div
+  key={particle.id}
+  className=&quot;absolute rounded-full&quot;
+  style={{
+    left: `${particle.x}%`,
+    bottom: &#39;20%&#39;,
+    width: particle.size,
+    height: particle.size,
+    backgroundColor: &#39;hsl(38 50% 96% / 0.8)&#39;,
+  }}
+  animate={{
+    y: [0, -160],
+    opacity: [0, 0.7, 0],
+  }}
+  transition={{
+    duration: particle.duration,
+    delay: particle.delay,
+    repeat: Infinity,
+    ease: &#39;easeOut&#39;,
+  }}
+/&gt;
+
+// Wrapper: absolute inset-0 z-10 pointer-events-none overflow-hidden
+```
+
+---
+
+## Section 1: Navbar
+
+```tsx
+// Fixed top navbar
+// z-50, backdrop-blur-sm, bg-[hsl(var(--background)/0.9)]
+// Transitions: add shadow-sm when scrollY &gt; 20 (use useEffect + scroll listener)
+
+// Logo: &quot;SOLACE&quot; — font-family Cormorant Garamond, font-weight 700, font-style italic
+// Style: text-2xl tracking-wider text-[hsl(var(--foreground))]
+// No icon — typography-only logo
+
+// Desktop nav links (hidden on mobile, shown lg:flex):
+// &quot;Treatments&quot; | &quot;About&quot; | &quot;Pricing&quot; | &quot;Book Now&quot;
+// Style: font-family Jost, font-weight 300, text-sm, text-[hsl(var(--foreground)/0.7)]
+// Hover: text-[hsl(var(--foreground))] transition-colors
+
+// &quot;Book Now&quot; CTA button:
+// bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] px-5 py-2 rounded-lg
+// hover:opacity-90 transition-opacity font-family Jost font-weight 400 text-sm
+
+// Mobile: hamburger icon (Menu from lucide-react), onClick toggles mobile menu
+// Mobile menu: fixed top-[64px] left-0 right-0 bg-[hsl(var(--background))] shadow-lg
+// slides down with Framer Motion: initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
+// Contains all nav links stacked vertically, py-4 px-6, border-b border-[hsl(var(--border))]
+// Each link: py-3 border-b border-[hsl(var(--muted))] font-family Jost font-weight 300 text-base
+
+// Navbar height: 64px (h-16)
+// Max container width: max-w-7xl mx-auto px-4 sm:px-6 lg:px-8
+// Flex layout: justify-between items-center
+```
+
+---
+
+## Section 2: Hero
+
+```tsx
+// Full viewport height: h-[100dvh]
+// Position: relative overflow-hidden
+// Background: soft radial gradient
+// background: radial-gradient(ellipse at center, hsl(var(--muted)) 0%, hsl(var(--background)) 70%)
+
+// Layer 1 (z-10): SteamParticles component — absolute inset-0 pointer-events-none
+
+// Layer 2 (z-20): Main content
+// absolute inset-0 flex flex-col items-center justify-center
+// text-center px-6
+
+// Content max-w: max-w-2xl mx-auto
+
+// Pre-headline:
+// Text: &quot;Private Massage Therapy Studio&quot;
+// Style: font-family Jost, font-weight 300, text-sm, tracking-[0.2em], uppercase
+// Color: text-[hsl(var(--secondary))]
+// Margin: mb-6
+
+// Main headline:
+// Text: &quot;Restore. Release. Return.&quot;
+// Style: font-family Cormorant Garamond, font-weight 700, font-style italic
+// Size: text-[72px] leading-none (desktop) → text-[48px] (mobile: text-5xl)
+// Color: text-[hsl(var(--foreground))]
+// Margin: mb-6
+
+// Subtext:
+// Text: &quot;Experience the art of therapeutic touch in a private, sanctuary-style studio in the heart of London. Every session is tailored to you.&quot;
+// Style: font-family Jost, font-weight 300, text-lg, leading-relaxed
+// Color: text-[hsl(var(--foreground)/0.7)]
+// Max width: max-w-xl mx-auto
+// Margin: mb-10
+
+// CTA Buttons (flex gap-4 flex-wrap justify-center):
+// Primary: &quot;Book a Session&quot;
+//   bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] px-8 py-3 rounded-lg
+//   hover:opacity-90 transition-opacity font-family Jost font-weight 400
+// Ghost: &quot;View Treatments&quot;
+//   border border-[hsl(var(--foreground))] text-[hsl(var(--foreground))] px-8 py-3 rounded-lg
+//   hover:bg-[hsl(var(--foreground)/0.05)] transition-colors font-family Jost font-weight 300
+
+// Divider + stats row:
+// mt-12 pt-6 border-t border-[hsl(var(--border))/0.5] max-w-lg mx-auto
+// &quot;60 min from £65 · Hot Stone from £95 · Couples from £170&quot;
+// Style: font-family Jost, font-weight 300, text-sm, text-[hsl(var(--foreground)/0.5)]
+// tracking-wide
+
+// Decorative image (bottom-right corner):
+// Position: absolute right-0 bottom-0 w-72 h-72 lg:w-96 lg:h-96
+// Overflow: overflow-hidden opacity-60 pointer-events-none
+// Gradient overlay: gradient from transparent to hsl(var(--background)) on left and top edges
+{/* Image: spa treatment room with warm lighting, folded white towels and a lit candle on marble surface, soft amber glow, editorial wellness photography */}
+&lt;img src=&quot;&quot; alt=&quot;Massage therapy studio ambiance&quot; className=&quot;w-full h-full object-cover object-center&quot; /&gt;
+
+// Entrance animations (Framer Motion):
+// Headline:
+//   initial={{ opacity: 0, filter: &#39;blur(12px)&#39;, y: 20 }}
+//   animate={{ opacity: 1, filter: &#39;blur(0px)&#39;, y: 0 }}
+//   transition={{ duration: 0.9, ease: &#39;easeOut&#39;, delay: 0 }}
+// Subtext:
+//   transition: delay 0.3s, duration 0.7s
+// CTAs:
+//   transition: delay 0.5s, duration 0.7s
+// Stats row:
+//   transition: delay 0.7s, duration 0.7s
+```
+
+---
+
+## Section 3: Treatments
+
+```tsx
+// Background: bg-[hsl(var(--muted))]
+// Padding: py-24
+// Container: max-w-7xl mx-auto px-4 sm:px-6 lg:px-8
+
+// Section label:
+// Text: &quot;WHAT WE OFFER&quot;
+// Style: tracking-[0.3em] uppercase font-family Jost font-weight 300 text-xs
+// Color: text-[hsl(var(--secondary))]
+// Margin: mb-4
+
+// Heading:
+// Text: &quot;Tailored treatments for every body.&quot;
+// Style: font-family Cormorant Garamond font-weight 700 font-style italic
+// Size: text-5xl (desktop) → text-4xl (mobile)
+// Color: text-[hsl(var(--foreground))]
+// Margin: mb-12
+
+// Grid: grid grid-cols-1 md:grid-cols-2 gap-6
+
+// Treatment Card Component:
+// Container: bg-[hsl(var(--background))] rounded-2xl p-8 border border-[hsl(var(--border))]
+//   hover:shadow-lg transition-shadow duration-300
+// Use Framer Motion for scroll entrance:
+//   whileInView={{ opacity: 1, y: 0 }}
+//   initial={{ opacity: 0, y: 20 }}
+//   viewport={{ once: true }}
+//   transition={{ duration: 0.5, delay: index * 0.15 }}
+
+// Card image (top):
+// h-48 w-full rounded-xl overflow-hidden mb-6 object-cover
+
+// Card body:
+// Icon label (Jost 300 text-xs tracking-[0.2em] uppercase text-[hsl(var(--secondary))] mb-2)
+// Treatment name (Cormorant Garamond 700 italic text-2xl text-[hsl(var(--foreground))] mb-3)
+// Description (Jost 300 text-sm leading-relaxed text-[hsl(var(--foreground)/0.7)] mb-4)
+// Duration/Price row (Jost 400 text-sm text-[hsl(var(--primary))] font-weight 400)
+
+// CARD 1: Swedish Massage
+{/* Image: hands performing gentle Swedish massage on back, warm candlelit spa, soft focus, wellness photography */}
+&lt;img src=&quot;&quot; alt=&quot;Swedish massage at Solace studio&quot; className=&quot;w-full h-full object-cover&quot; /&gt;
+// Label: &quot;Signature Treatment&quot;
+// Name: &quot;Swedish Massage&quot;
+// Description: &quot;The original restorative. Long, flowing strokes encourage circulation, ease muscle tension, and melt stress. Perfect for first-time clients and regular maintenance. Emma&#39;s Swedish technique draws on eight years of refined practice — each stroke calibrated to your body&#39;s needs on the day.&quot;
+// Price: &quot;60 min — £65 · 90 min — £85&quot;
+
+// CARD 2: Deep Tissue
+{/* Image: focused deep tissue massage therapy on shoulders, professional spa setting, calm blue-green tones */}
+&lt;img src=&quot;&quot; alt=&quot;Deep tissue massage therapy&quot; className=&quot;w-full h-full object-cover&quot; /&gt;
+// Label: &quot;Therapeutic&quot;
+// Name: &quot;Deep Tissue&quot;
+// Description: &quot;Targeted pressure on deeper muscle layers to release chronic tension and postural strain. Ideal for active people, desk workers, or anyone carrying persistent tension. This treatment works with the body&#39;s deeper fascial structures — methodical, precise, and profoundly effective.&quot;
+// Price: &quot;60 min — £70 · 90 min — £90&quot;
+
+// CARD 3: Hot Stone
+{/* Image: hot stone massage with basalt stones lined along spine, warm amber lighting, dark towels, luxurious spa atmosphere */}
+&lt;img src=&quot;&quot; alt=&quot;Hot stone massage treatment&quot; className=&quot;w-full h-full object-cover&quot; /&gt;
+// Label: &quot;Signature Ritual&quot;
+// Name: &quot;Hot Stone&quot;
+// Description: &quot;Smooth volcanic basalt stones, heated to the perfect temperature, glide across the body — dissolving tension at its source. A deeply warming, meditative experience that creates a profound sense of calm in the nervous system. No other treatment achieves the same depth of relaxation.&quot;
+// Price: &quot;90 min — £95&quot;
+
+// CARD 4: Couples Massage
+{/* Image: couple&#39;s massage room with two treatment tables, rose petals, candles, warm romantic spa lighting */}
+&lt;img src=&quot;&quot; alt=&quot;Couples massage at Solace&quot; className=&quot;w-full h-full object-cover&quot; /&gt;
+// Label: &quot;Shared Experience&quot;
+// Name: &quot;Couples Massage&quot;
+// Description: &quot;Share the experience. Two therapists, two tables, one serene room. A perfect gift or anniversary treat for you and someone you love. The couples suite is thoughtfully designed — rose quartz diffuser, champagne on arrival, and a curated playlist that sets the perfect tone.&quot;
+// Price: &quot;90 min — £170 per couple&quot;
+```
+
+---
+
+## Section 4: Benefits Stats Bar
+
+```tsx
+// Background: bg-[hsl(var(--primary)/0.08)]
+// Border: border-y border-[hsl(var(--border))]
+// Padding: py-16
+
+// Container: max-w-7xl mx-auto px-4 sm:px-6 lg:px-8
+
+// Grid: grid grid-cols-2 lg:grid-cols-4 gap-8
+
+// Each stat item: text-center (with lg: vertical dividers using border-r border-[hsl(var(--border))] on first 3)
+
+// Stat value:
+// Font: Cormorant Garamond 700 italic
+// Size: text-5xl (desktop) → text-4xl (mobile)
+// Color: text-[hsl(var(--primary))]
+// Margin: mb-2
+
+// Stat label:
+// Font: Jost 300
+// Size: text-sm
+// Color: text-[hsl(var(--foreground)/0.6)]
+// Style: uppercase tracking-wider
+
+// 4 Stats:
+// &quot;500+&quot; — &quot;clients served&quot;
+// &quot;4.9★&quot; — &quot;average rating&quot;
+// &quot;8 years&quot; — &quot;in practice&quot;
+// &quot;100%&quot; — &quot;tailored sessions&quot;
+
+// Animate values on scroll with IntersectionObserver:
+// whileInView={{ opacity: 1, scale: 1 }}
+// initial={{ opacity: 0, scale: 0.8 }}
+// viewport={{ once: true }}
+// transition={{ duration: 0.4, delay: index * 0.1 }}
+```
+
+---
+
+## Section 5: About the Therapist
+
+```tsx
+// Background: bg-[hsl(var(--background))]
+// Padding: py-24
+// Container: max-w-6xl mx-auto px-4 sm:px-6 lg:px-8
+
+// Grid: grid grid-cols-1 lg:grid-cols-2 gap-16 items-center
+
+// LEFT COLUMN — Image:
+// rounded-3xl overflow-hidden aspect-[3/4] max-w-sm w-full
+// Framer Motion: whileInView={{ opacity: 1, x: 0 }} initial={{ opacity: 0, x: -30 }} viewport={{ once: true }} transition={{ duration: 0.7 }}
+{/* Image: professional portrait of female massage therapist, warm smile, spa uniform, soft natural light, confident and calming presence */}
+&lt;img src=&quot;&quot; alt=&quot;Solace massage therapist portrait&quot; className=&quot;w-full h-full object-cover&quot; /&gt;
+
+// RIGHT COLUMN — Text:
+// py-8
+// Framer Motion: whileInView={{ opacity: 1, x: 0 }} initial={{ opacity: 0, x: 30 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }}
+
+// Label: &quot;MEET YOUR THERAPIST&quot;
+// Style: Jost 300 text-xs tracking-[0.3em] uppercase text-[hsl(var(--secondary))] mb-4
+
+// Name: &quot;Emma Walsh&quot;
+// Style: Cormorant Garamond 700 italic text-5xl text-[hsl(var(--foreground))] mb-6 leading-tight
+
+// Bio paragraph 1:
+// &quot;With over eight years of dedicated practice, Emma brings a rare combination of clinical precision and intuitive care to every session. Trained at the London School of Massage and certified in Swedish, Deep Tissue, Hot Stone, and Myofascial Release techniques, she approaches each client as an individual — never applying a one-size-fits-all protocol to what is, by definition, a deeply personal experience.&quot;
+// Style: Jost 300 text-base leading-relaxed text-[hsl(var(--foreground)/0.75)] mb-4
+
+// Bio paragraph 2:
+// &quot;SOLACE was born from a simple belief: that everyone deserves access to professional, thoughtful bodywork in a space that feels genuinely calming — not clinical. Every detail of the studio, from the temperature of the room to the pressure of the stones, is intentional. Emma&#39;s approach is rooted in listening — to what you say, and to what your body tells her.&quot;
+// Style: same as paragraph 1, mb-8
+
+// Qualifications (flex flex-wrap gap-2 mb-8):
+// Each: bg-[hsl(var(--muted))] text-[hsl(var(--foreground)/0.7)] text-xs px-3 py-1.5 rounded-full border border-[hsl(var(--border))] font-family Jost font-weight 300
+// &quot;ITEC Level 3 Certified&quot; | &quot;CPD Accredited&quot; | &quot;CNHC Registered&quot; | &quot;First Aid Trained&quot;
+
+// CTA Link:
+// &quot;Book with Emma →&quot;
+// Style: Jost 400 text-sm text-[hsl(var(--primary))] hover:underline cursor-pointer transition-all
+```
+
+---
+
+## Section 6: Booking
+
+```tsx
+// Background: bg-[hsl(var(--muted))]
+// Padding: py-24
+// Container: max-w-2xl mx-auto px-4 sm:px-6 lg:px-8
+
+// Glassmorphism card:
+// bg-[hsl(var(--background)/0.7)] backdrop-blur-md
+// rounded-3xl p-8 lg:p-12
+// border border-[hsl(var(--border))]
+// shadow-xl
+
+// Heading: &quot;Ready to begin?&quot;
+// Style: Cormorant Garamond 700 italic text-5xl text-[hsl(var(--foreground))] mb-4 text-center
+
+// Subtext: &quot;Sessions available Tuesday–Saturday, 9am–7pm. Same-week appointments often available. New clients welcome.&quot;
+// Style: Jost 300 text-base text-[hsl(var(--foreground)/0.65)] mb-8 text-center leading-relaxed
+
+// Form (space-y-4):
+
+// Input base class: w-full px-4 py-3 rounded-xl border border-[hsl(var(--border))]
+//   bg-[hsl(var(--background))] text-[hsl(var(--foreground))]
+//   font-family Jost font-weight 300 text-sm
+//   focus:outline-none focus:ring-1 focus:ring-[hsl(var(--primary))]
+//   placeholder:text-[hsl(var(--foreground)/0.35)] transition-shadow
+
+// Field 1: Full Name
+// &lt;label&gt; &quot;Full Name&quot; Jost 300 text-xs text-[hsl(var(--foreground)/0.6)] uppercase tracking-wider mb-1
+// &lt;input type=&quot;text&quot; placeholder=&quot;Your full name&quot; /&gt;
+
+// Field 2: Email Address
+// &lt;label&gt; &quot;Email Address&quot;
+// &lt;input type=&quot;email&quot; placeholder=&quot;your@email.com&quot; /&gt;
+
+// Field 3: Phone Number
+// &lt;label&gt; &quot;Phone Number&quot;
+// &lt;input type=&quot;tel&quot; placeholder=&quot;+44 7700 000 000&quot; /&gt;
+
+// Field 4: Treatment (select)
+// &lt;label&gt; &quot;Treatment&quot;
+// &lt;select&gt;
+//   &lt;option value=&quot;&quot;&gt;Select a treatment...&lt;/option&gt;
+//   &lt;option value=&quot;swedish-60&quot;&gt;Swedish Massage — 60 min (£65)&lt;/option&gt;
+//   &lt;option value=&quot;swedish-90&quot;&gt;Swedish Massage — 90 min (£85)&lt;/option&gt;
+//   &lt;option value=&quot;deep-60&quot;&gt;Deep Tissue — 60 min (£70)&lt;/option&gt;
+//   &lt;option value=&quot;deep-90&quot;&gt;Deep Tissue — 90 min (£90)&lt;/option&gt;
+//   &lt;option value=&quot;hotstone-90&quot;&gt;Hot Stone Massage — 90 min (£95)&lt;/option&gt;
+//   &lt;option value=&quot;couples-90&quot;&gt;Couples Massage — 90 min (£170)&lt;/option&gt;
+// &lt;/select&gt;
+
+// Field 5: Preferred Date
+// &lt;label&gt; &quot;Preferred Date&quot;
+// &lt;input type=&quot;date&quot; min={today} /&gt;
+
+// Field 6: Message / Notes
+// &lt;label&gt; &quot;Additional Notes&quot;
+// &lt;textarea rows={3} placeholder=&quot;Any areas of focus, health conditions, or preferences we should know about?&quot; className=&quot;resize-none&quot; /&gt;
+
+// Submit button:
+// &quot;Request Appointment&quot;
+// className: w-full bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))]
+//   py-4 rounded-xl font-family Jost font-weight 400 text-base
+//   hover:opacity-90 transition-opacity mt-2 tracking-wide
+
+// Below form:
+// &quot;Or call us: 07700 900 123 · emma@solacestudio.co.uk&quot;
+// Style: Jost 300 text-sm text-[hsl(var(--foreground)/0.5)] text-center mt-6
+```
+
+---
+
+## Section 7: Testimonials
+
+```tsx
+// Background: bg-[hsl(var(--background))]
+// Padding: py-24
+// Container: max-w-6xl mx-auto px-4 sm:px-6 lg:px-8
+
+// Heading: &quot;What clients say.&quot;
+// Style: Cormorant Garamond 700 italic text-5xl text-[hsl(var(--foreground))] text-center mb-12
+
+// Grid: grid grid-cols-1 md:grid-cols-3 gap-6
+
+// Testimonial card:
+// bg-[hsl(var(--muted)/0.5)] rounded-2xl p-8 border border-[hsl(var(--border))]
+// Framer Motion: whileInView={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: 20 }} viewport={{ once: true }} transition={{ delay: index * 0.15 }}
+
+// Stars: &quot;★★★★★&quot; text-[hsl(var(--primary))] text-lg mb-4
+
+// Quote:
+// Jost 300 italic text-base leading-relaxed text-[hsl(var(--foreground)/0.8)] mb-6
+// Wrapped in: &lt;blockquote className=&quot;...&quot;&gt;
+
+// Attribution:
+// name: Jost 400 text-sm text-[hsl(var(--foreground))]
+// treatment: Jost 300 text-xs text-[hsl(var(--foreground)/0.5)] mt-1
+
+// TESTIMONIAL 1:
+// Quote: &quot;Emma has genuine magic in her hands. I came in with a shoulder I&#39;d been babying for weeks — I left pain-free and utterly relaxed. The studio itself is just beautiful. It doesn&#39;t feel like a medical setting at all — it feels like a sanctuary. I&#39;ve already booked again.&quot;
+// Name: &quot;Sarah T.&quot; | Treatment: &quot;Deep Tissue Massage&quot;
+
+// TESTIMONIAL 2:
+// Quote: &quot;I&#39;ve had massages at five-star hotels that didn&#39;t come close to this. The hot stone treatment is a full hour and a half of pure bliss. Emma explains everything she&#39;s doing, so you feel completely at ease throughout. I book monthly now and genuinely look forward to it.&quot;
+// Name: &quot;James R.&quot; | Treatment: &quot;Hot Stone Massage&quot;
+
+// TESTIMONIAL 3:
+// Quote: &quot;My husband and I booked the couples treatment for our anniversary. From the moment we walked in we felt totally at ease — the room, the music, the attention to detail. We&#39;ve already rebooked for next month. I cannot recommend SOLACE highly enough.&quot;
+// Name: &quot;Claire &amp; Mark B.&quot; | Treatment: &quot;Couples Massage&quot;
+```
+
+---
+
+## Section 8: Packages &amp; Pricing
+
+```tsx
+// Background: bg-[hsl(var(--muted))]
+// Padding: py-24
+// Container: max-w-6xl mx-auto px-4 sm:px-6 lg:px-8
+
+// Heading: &quot;Simple, transparent pricing.&quot;
+// Style: Cormorant Garamond 700 italic text-5xl text-[hsl(var(--foreground))] text-center mb-12
+
+// Grid: grid grid-cols-1 lg:grid-cols-2 gap-12 items-start
+
+// LEFT — Pricing Table:
+// bg-[hsl(var(--background))] rounded-2xl p-8 border border-[hsl(var(--border))]
+// &quot;Individual Sessions&quot; — Jost 400 text-sm uppercase tracking-wider text-[hsl(var(--foreground)/0.5)] mb-6
+
+// Table rows (divide-y divide-[hsl(var(--border))]):
+// Each row: flex justify-between items-center py-4
+// Treatment name: Jost 300 text-base text-[hsl(var(--foreground)/0.8)]
+// Price: Jost 400 text-base text-[hsl(var(--primary))]
+
+// Rows:
+// &quot;Swedish Massage — 60 min&quot; / &quot;£65&quot;
+// &quot;Swedish Massage — 90 min&quot; / &quot;£85&quot;
+// &quot;Deep Tissue — 60 min&quot; / &quot;£70&quot;
+// &quot;Deep Tissue — 90 min&quot; / &quot;£90&quot;
+// &quot;Hot Stone Massage — 90 min&quot; / &quot;£95&quot;
+// &quot;Couples Massage — 90 min&quot; / &quot;£170&quot;
+
+// RIGHT — Package Highlight Card:
+// bg-[hsl(var(--primary))] rounded-2xl p-10 text-[hsl(var(--primary-foreground))]
+// relative overflow-hidden
+
+// &quot;BEST VALUE&quot; badge:
+// absolute top-6 right-6
+// bg-[hsl(var(--background)/0.2)] text-[hsl(var(--primary-foreground))] text-xs px-3 py-1 rounded-full
+// Jost 400 tracking-wider uppercase
+
+// Package name: &quot;5-Session Package&quot;
+// Style: Cormorant Garamond 700 italic text-4xl mb-2
+
+// Price: &quot;£290&quot;
+// Style: Cormorant Garamond 700 text-7xl leading-none mb-2
+
+// Save line: &quot;Save £35 vs pay-as-you-go&quot;
+// Style: Jost 300 text-sm text-[hsl(var(--primary-foreground)/0.75)] mb-8
+
+// Includes list (space-y-3):
+// Each item: flex items-start gap-3
+// Check icon (CheckCircle2 from lucide-react, size 16, text-[hsl(var(--primary-foreground)/0.8)])
+// Text: Jost 300 text-sm text-[hsl(var(--primary-foreground)/0.85)]
+// Items:
+// &quot;Choose any 5 × 60-minute treatments&quot;
+// &quot;Mix and match Swedish &amp; Deep Tissue&quot;
+// &quot;Valid for 6 months from purchase date&quot;
+// &quot;Non-transferable · One client per package&quot;
+
+// CTA Button: &quot;Buy Package →&quot;
+// bg-[hsl(var(--background))] text-[hsl(var(--primary))] w-full py-3 rounded-xl mt-8
+// font-family Jost font-weight 400 hover:opacity-90 transition-opacity
+```
+
+---
+
+## Section 9: FAQ
+
+```tsx
+// Background: bg-[hsl(var(--background))]
+// Padding: py-24
+// Container: max-w-2xl mx-auto px-4 sm:px-6 lg:px-8
+
+// Heading: &quot;Common questions.&quot;
+// Style: Cormorant Garamond 700 italic text-5xl text-[hsl(var(--foreground))] text-center mb-12
+
+// Use shadcn/ui Accordion component:
+// import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from &#39;@/components/ui/accordion&#39;
+
+// Accordion: type=&quot;single&quot; collapsible className=&quot;w-full space-y-2&quot;
+
+// Each AccordionItem: border border-[hsl(var(--border))] rounded-xl px-6
+// AccordionTrigger: Jost 400 text-base text-[hsl(var(--foreground))] py-5
+// AccordionContent: Jost 300 text-sm leading-relaxed text-[hsl(var(--foreground)/0.7)] pb-5
+
+// Q1: &quot;How do I prepare for my first session?&quot;
+// A1: &quot;Please arrive 5 minutes early to complete a brief health intake form. Wear comfortable clothing — you&#39;ll undress to your comfort level and be modestly draped at all times during your treatment. Avoid heavy meals or alcohol for at least two hours beforehand. If you have any health conditions, injuries, or medications, please mention these when booking so Emma can adapt the session safely.&quot;
+
+// Q2: &quot;What should I do if I have a medical condition?&quot;
+// A2: &quot;Please mention any medical conditions, injuries, medications, or recent surgeries when booking. Emma will review your intake form before the session and adapt the treatment to ensure it&#39;s safe and beneficial for you. In some cases she may ask for GP clearance before proceeding — this is standard practice and always in your best interest.&quot;
+
+// Q3: &quot;Do you offer gift vouchers?&quot;
+// A3: &quot;Yes — gift vouchers for any treatment or a fixed monetary value are available to purchase online or directly in studio. They arrive in a beautifully presented envelope and make a thoughtful gift for birthdays, anniversaries, or simply someone who deserves a treat. Vouchers are valid for 12 months from purchase date.&quot;
+
+// Q4: &quot;What is your cancellation policy?&quot;
+// A4: &quot;We ask for 24 hours&#39; notice for cancellations or rescheduling. Late cancellations (under 24 hours) or no-shows may be charged at 50% of the treatment cost. We understand that life is unpredictable — if something comes up, please contact us as soon as possible and we will always try to find a solution.&quot;
+
+// Q5: &quot;Is the studio accessible?&quot;
+// A5: &quot;The studio is on the ground floor with step-free access from the street. A private changing room and shower are available for use before and after your treatment. The treatment table is height-adjustable. If you have any specific accessibility requirements, please contact us before booking so we can ensure everything is arranged for your comfort.&quot;
+```
+
+---
+
+## Section 10: Footer
+
+```tsx
+// Background: bg-[hsl(var(--foreground))]
+// Color: text-[hsl(var(--background))]
+// Padding: py-16
+
+// Container: max-w-7xl mx-auto px-4 sm:px-6 lg:px-8
+// Grid: grid grid-cols-1 md:grid-cols-3 gap-12
+
+// Column 1 — Logo + Tagline:
+// Logo: &quot;SOLACE&quot; — Cormorant Garamond 700 italic text-2xl text-[hsl(var(--background))] tracking-wider
+// Tagline: &quot;Private Massage Therapy Studio · London&quot; — Jost 300 text-sm text-[hsl(var(--background)/0.55)] mt-2 leading-relaxed
+// Strapline: &quot;Where rest is taken seriously.&quot; — Jost 300 italic text-sm text-[hsl(var(--background)/0.4)] mt-4
+
+// Column 2 — Navigation:
+// &quot;Navigation&quot; — Jost 300 text-xs tracking-[0.3em] uppercase text-[hsl(var(--background)/0.4)] mb-4
+// Links: &quot;Treatments&quot; | &quot;About Emma&quot; | &quot;Pricing&quot; | &quot;Book a Session&quot; | &quot;Gift Vouchers&quot;
+// Each: block Jost 300 text-sm text-[hsl(var(--background)/0.65)] hover:text-[hsl(var(--background))] py-1 transition-colors
+
+// Column 3 — Contact + Social:
+// &quot;Contact&quot; — same label style
+// &quot;07700 900 123&quot; — Jost 400 text-sm text-[hsl(var(--background)/0.65)] mb-1
+// &quot;emma@solacestudio.co.uk&quot; — same style mb-4
+// &quot;Tuesday – Saturday · 9am – 7pm&quot; — Jost 300 text-sm text-[hsl(var(--background)/0.5)] mb-6
+// Social icons: flex gap-4
+//   Instagram icon (from lucide-react) + Facebook icon
+//   Each: w-8 h-8 rounded-full border border-[hsl(var(--background)/0.2)] flex items-center justify-center
+//   hover:border-[hsl(var(--background)/0.5)] hover:text-[hsl(var(--background))] transition-colors
+//   Color: text-[hsl(var(--background)/0.5)]
+
+// Footer bottom:
+// mt-12 pt-8 border-t border-[hsl(var(--background)/0.1)]
+// flex flex-col sm:flex-row justify-between items-center gap-4
+// &quot;© 2025 SOLACE. All rights reserved.&quot; — Jost 300 text-xs text-[hsl(var(--background)/0.35)]
+// &quot;Made with care in London.&quot; — Jost 300 text-xs text-[hsl(var(--background)/0.25)]
+```
+
+---
+
+## Complete App Structure
+
+```
+src/
+├── App.tsx                          # Main app with all sections
+├── main.tsx                         # Entry point
+├── index.css                        # Global styles, CSS variables, font imports
+├── components/
+│   ├── Navbar.tsx                   # Fixed navbar with mobile menu
+│   ├── SteamParticles.tsx           # 12 animated steam particle dots
+│   ├── HeroSection.tsx              # Full-viewport hero
+│   ├── TreatmentsSection.tsx        # 4-card treatment grid
+│   ├── StatsBars.tsx                # 4-stat benefits bar
+│   ├── AboutSection.tsx             # Therapist bio 2-col layout
+│   ├── BookingSection.tsx           # Glassmorphism booking form
+│   ├── TestimonialsSection.tsx      # 3-card testimonials
+│   ├── PricingSection.tsx           # Table + package card
+│   ├── FAQSection.tsx               # shadcn Accordion FAQ
+│   └── Footer.tsx                   # Dark footer 3-col
+└── components/ui/                   # shadcn/ui components (accordion, button, input, etc.)
+```
+
+```tsx
+// index.css — paste this at the top:
+@import url(&#39;https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,700&amp;family=Jost:wght@300;400&amp;display=swap&#39;);
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 38 50% 96%;
+    --foreground: 20 8% 12%;
+    --primary: 24 52% 61%;
+    --primary-foreground: 38 50% 96%;
+    --secondary: 130 14% 60%;
+    --muted: 38 30% 92%;
+    --muted-foreground: 20 8% 40%;
+    --border: 38 20% 85%;
+    --card: 38 50% 98%;
+    --card-foreground: 20 8% 12%;
+    --radius: 1rem;
+  }
+  
+  body {
+    font-family: &#39;Jost&#39;, sans-serif;
+    font-weight: 300;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: &#39;Cormorant Garamond&#39;, serif;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+```
+
+```tsx
+// App.tsx
+import { useEffect } from &#39;react&#39;
+import { motion } from &#39;motion/react&#39;
+import Navbar from &#39;./components/Navbar&#39;
+import HeroSection from &#39;./components/HeroSection&#39;
+import TreatmentsSection from &#39;./components/TreatmentsSection&#39;
+import StatsBar from &#39;./components/StatsBar&#39;
+import AboutSection from &#39;./components/AboutSection&#39;
+import BookingSection from &#39;./components/BookingSection&#39;
+import TestimonialsSection from &#39;./components/TestimonialsSection&#39;
+import PricingSection from &#39;./components/PricingSection&#39;
+import FAQSection from &#39;./components/FAQSection&#39;
+import Footer from &#39;./components/Footer&#39;
+
+export default function App() {
+  return (
+    &lt;main className=&quot;min-h-screen bg-[hsl(var(--background))]&quot;&gt;
+      &lt;Navbar /&gt;
+      &lt;HeroSection /&gt;
+      &lt;TreatmentsSection /&gt;
+      &lt;StatsBar /&gt;
+      &lt;AboutSection /&gt;
+      &lt;BookingSection /&gt;
+      &lt;TestimonialsSection /&gt;
+      &lt;PricingSection /&gt;
+      &lt;FAQSection /&gt;
+      &lt;Footer /&gt;
+    &lt;/main&gt;
+  )
+}
+```
+
+---
+
+## Tailwind Config Additions
+
+```js
+// tailwind.config.js — extend colors to use CSS variables
+module.exports = {
+  content: [&#39;./index.html&#39;, &#39;./src/**/*.{ts,tsx}&#39;],
+  theme: {
+    extend: {
+      colors: {
+        background: &#39;hsl(var(--background))&#39;,
+        foreground: &#39;hsl(var(--foreground))&#39;,
+        primary: {
+          DEFAULT: &#39;hsl(var(--primary))&#39;,
+          foreground: &#39;hsl(var(--primary-foreground))&#39;,
+        },
+        secondary: {
+          DEFAULT: &#39;hsl(var(--secondary))&#39;,
+        },
+        muted: {
+          DEFAULT: &#39;hsl(var(--muted))&#39;,
+          foreground: &#39;hsl(var(--muted-foreground))&#39;,
+        },
+        border: &#39;hsl(var(--border))&#39;,
+        card: {
+          DEFAULT: &#39;hsl(var(--card))&#39;,
+          foreground: &#39;hsl(var(--card-foreground))&#39;,
+        },
+      },
+      fontFamily: {
+        display: [&#39;Cormorant Garamond&#39;, &#39;serif&#39;],
+        body: [&#39;Jost&#39;, &#39;sans-serif&#39;],
+      },
+      borderRadius: {
+        lg: &#39;var(--radius)&#39;,
+        md: &#39;calc(var(--radius) - 2px)&#39;,
+        sm: &#39;calc(var(--radius) - 4px)&#39;,
+      },
+    },
+  },
+  plugins: [],
+}
+```
+
+---
+
+## shadcn/ui Setup Commands
+
+```bash
+# 1. Create project
+npm create vite@latest solace-studio -- --template react-ts
+cd solace-studio
+npm install
+
+# 2. Install Tailwind
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+
+# 3. Install shadcn/ui
+npx shadcn-ui@latest init
+
+# 4. Add components used
+npx shadcn-ui@latest add accordion
+npx shadcn-ui@latest add button
+npx shadcn-ui@latest add input
+npx shadcn-ui@latest add select
+npx shadcn-ui@latest add textarea
+
+# 5. Install Framer Motion
+npm install motion
+
+# 6. Install lucide-react
+npm install lucide-react
+```
+
+---
+
+## Dependencies (package.json)
+
+```json
+{
+  &quot;dependencies&quot;: {
+    &quot;motion&quot;: &quot;^11.0.0&quot;,
+    &quot;lucide-react&quot;: &quot;^0.400.0&quot;,
+    &quot;react&quot;: &quot;^18.3.1&quot;,
+    &quot;react-dom&quot;: &quot;^18.3.1&quot;
+  },
+  &quot;devDependencies&quot;: {
+    &quot;@types/react&quot;: &quot;^18.3.3&quot;,
+    &quot;@types/react-dom&quot;: &quot;^18.3.0&quot;,
+    &quot;@vitejs/plugin-react&quot;: &quot;^4.3.1&quot;,
+    &quot;autoprefixer&quot;: &quot;^10.4.19&quot;,
+    &quot;postcss&quot;: &quot;^8.4.38&quot;,
+    &quot;tailwindcss&quot;: &quot;^3.4.4&quot;,
+    &quot;typescript&quot;: &quot;^5.2.2&quot;,
+    &quot;vite&quot;: &quot;^5.3.1&quot;
+  }
+}
+```
+
+---
+
+## Key Implementation Notes
+
+1. **Steam Particles**: The SteamParticles component should render outside the main content flow (absolute positioning, pointer-events-none) so it doesn&#39;t interfere with user interaction. Each particle uses Framer Motion&#39;s animate prop with repeat: Infinity.
+
+2. **Scroll-triggered Animations**: Use `whileInView` with `viewport={{ once: true, margin: &#39;-50px&#39; }}` for all section cards and content elements. This prevents re-animating on scroll back.
+
+3. **Navbar Shadow on Scroll**: In the Navbar component, use `useEffect` with a scroll event listener: `const handleScroll = () =&gt; setScrolled(window.scrollY &gt; 20)`. Apply `shadow-sm` class conditionally based on `scrolled` state.
+
+4. **Glassmorphism Booking Form**: The `backdrop-blur-md` class requires a translucent background to work. Ensure the parent section has a visual background that shows through — the `bg-[hsl(var(--muted))]` on the section handles this.
+
+5. **Mobile Responsiveness**: All grids use responsive prefixes (`md:grid-cols-2`, `lg:grid-cols-3`). The navbar collapses to a hamburger below `lg` breakpoint. Text sizes use responsive variants (`text-5xl md:text-6xl`).
+
+6. **Image Handling**: All `&lt;img&gt;` tags have empty `src=&quot;&quot;` attributes. The AI code generation tool will need these to be replaced with actual image URLs or image import statements. The descriptive comments above each image tag provide the exact visual context needed.
+
+7. **Form Submission**: The booking form uses controlled React state for each field. On submit, prevent default and optionally send to a mailto link or API endpoint. For a basic implementation: `window.location.href = &#39;mailto:emma@solacestudio.co.uk?subject=Appointment Request&#39;`.
+
+8. **Color Consistency**: Always reference colors using `hsl(var(--variable-name))` notation, never hardcode hex values. This ensures the design system remains editable from a single source of truth.
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

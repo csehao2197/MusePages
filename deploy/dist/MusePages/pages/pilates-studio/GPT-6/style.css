@@ -1,0 +1,442 @@
+:root
+{
+    --paper: #faf9f5;
+    --ink: #263d32;
+    --sage: #426d58;
+    --clay: #9c624e;
+    --linen: #eeece4;
+}
+*
+{
+    box-sizing: border-box;
+}
+body
+{
+    background: var(--paper);
+    color: var(--ink);
+    margin: 0;
+    font: 15px/1.8 Arial, sans-serif;
+}
+a, button
+{
+    color: inherit;
+}
+header
+{
+    padding: 22px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #d6dacd;
+}
+.brand
+{
+    font: italic 37px/1 Georgia, serif;
+    text-decoration: none;
+    color: var(--sage);
+}
+.brand span
+{
+    font: 8px Arial, sans-serif;
+    letter-spacing: 3px;
+    display: block;
+    text-align: center;
+    margin-top: 6px;
+}
+nav, .actions
+{
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+nav a
+{
+    text-decoration: none;
+    font-size: 12px;
+}
+.button
+{
+    display: inline-block;
+    padding: 13px 23px;
+    background: var(--sage);
+    color: white;
+    text-decoration: none;
+    border: 0;
+    font: 12px Arial, sans-serif;
+}
+section
+{
+    padding: 95px max(5%, calc((100% - 1120px) / 2));
+}
+.hero, .about, .intro
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+}
+.hero
+{
+    padding-block: 55px 85px;
+}
+.label, .class-grid article > span
+{
+    color: var(--sage);
+    font-size: 9px;
+    letter-spacing: 1.8px;
+    font-weight: 600;
+}
+h1, h2, h3, blockquote
+{
+    font-family: Georgia, serif;
+    font-weight: 400;
+}
+h1
+{
+    font-size: clamp(60px, 7.5vw, 94px);
+    line-height: 1.02;
+    letter-spacing: -3px;
+    margin: 30px 0;
+}
+em
+{
+    color: var(--clay);
+}
+.lead
+{
+    max-width: 380px;
+    color: #64746a;
+}
+.actions
+{
+    gap: 25px;
+    margin-top: 28px;
+    font-size: 12px;
+}
+.trust
+{
+    margin-top: 35px;
+}
+figure
+{
+    margin: 0;
+}
+.hero img
+{
+    height: 610px;
+    width: 100%;
+    object-fit: cover;
+}
+figcaption
+{
+    font-size: 8px;
+    letter-spacing: 2px;
+    text-align: right;
+    margin-top: 12px;
+}
+.linen
+{
+    background: var(--linen);
+}
+h2
+{
+    font-size: 46px;
+    line-height: 1.16;
+    letter-spacing: -1px;
+    margin: 20px 0 40px;
+}
+.class-grid
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 70px;
+}
+.class-grid article
+{
+    border-top: 1px solid #c8cbbb;
+    padding: 32px 0;
+}
+h3
+{
+    font-size: 28px;
+    margin: 14px 0;
+}
+button, select
+{
+    font: inherit;
+}
+button
+{
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    padding: 10px 0;
+}
+.class-grid button, .plans button
+{
+    color: var(--sage);
+    font-size: 12px;
+    border-bottom: 1px solid #8a9e8d;
+}
+.about img
+{
+    width: 100%;
+    height: 540px;
+    object-fit: cover;
+    object-position: 70%;
+}
+ul
+{
+    padding-left: 18px;
+}
+.fine
+{
+    font-size: 11px;
+    color: #607066;
+}
+.section-head
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.days
+{
+    display: flex;
+    gap: 10px;
+    overflow: auto;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #cad2c8;
+}
+.days button
+{
+    flex: 1;
+    min-width: 55px;
+    padding: 13px 10px;
+    font-size: 12px;
+}
+.days [aria-selected="true"]
+{
+    background: var(--sage);
+    color: white;
+}
+.class-row
+{
+    display: grid;
+    grid-template-columns: 90px 1fr 120px auto;
+    gap: 20px;
+    align-items: center;
+    padding: 24px 0;
+    border-bottom: 1px solid #cad2c8;
+}
+.class-row h3
+{
+    font-size: 23px;
+    margin: 0;
+}
+.class-row p, .class-row small
+{
+    font-size: 11px;
+    margin: 0;
+}
+.class-row button
+{
+    font-size: 12px;
+    color: var(--sage);
+    text-decoration: underline;
+}
+.teachers, .plans
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+.teachers article > div
+{
+    height: 200px;
+    display: grid;
+    place-items: center;
+    background: #d3d8c8;
+    font: italic 75px Georgia, serif;
+    color: #6c816e;
+}
+.teachers article:nth-child(2) > div
+{
+    background: #e2d3c7;
+}
+.teachers p
+{
+    font-size: 13px;
+}
+.plans article
+{
+    padding: 30px 25px;
+    border: 1px solid #c7d1c5;
+}
+.plans .featured
+{
+    border: 2px solid var(--sage);
+    background: #edf0e7;
+}
+.plans h3
+{
+    font-size: 32px;
+}
+.plans h3 span
+{
+    font-size: 14px;
+}
+.plans p:not(.label)
+{
+    font-size: 13px;
+    line-height: 2;
+}
+.quote
+{
+    text-align: center;
+}
+blockquote
+{
+    font-style: italic;
+    font-size: 47px;
+    line-height: 1.25;
+    margin: 30px auto;
+}
+.intro
+{
+    background: var(--sage);
+    color: var(--paper);
+}
+.intro .label, .intro .fine, .intro em
+{
+    color: #e2e8d9;
+}
+.intro h2
+{
+    font-size: 58px;
+}
+form
+{
+    padding: 30px;
+    background: var(--paper);
+    color: var(--ink);
+}
+label
+{
+    display: block;
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+select
+{
+    display: block;
+    width: 100%;
+    background: transparent;
+    color: inherit;
+    border: 1px solid #bdc9b9;
+    padding: 12px;
+    margin-top: 6px;
+}
+.check
+{
+    display: flex;
+    gap: 10px;
+    align-items: start;
+}
+.check input
+{
+    flex-shrink: 0;
+    margin-top: 5px;
+}
+footer
+{
+    background: #25372d;
+    color: #dbe1d2;
+    padding: 60px 5%;
+    font-size: 12px;
+}
+footer .brand
+{
+    color: #ccd7be;
+    display: inline-block;
+}
+footer small
+{
+    display: block;
+    margin-top: 30px;
+}
+:focus-visible
+{
+    outline: 3px solid #bd8d71;
+    outline-offset: 4px;
+}
+@media (max-width: 767px)
+{
+    header
+    {
+        padding: 20px 24px;
+    }
+    header nav
+    {
+        display: none;
+    }
+    section
+    {
+        padding: 60px 24px;
+    }
+    .hero, .about, .intro, .class-grid, .teachers, .plans
+    {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+    h1
+    {
+        font-size: 69px;
+    }
+    .hero img
+    {
+        height: 460px;
+    }
+    h2
+    {
+        font-size: 37px;
+    }
+    .about img
+    {
+        height: 400px;
+    }
+    .section-head
+    {
+        display: block;
+    }
+    .class-row
+    {
+        grid-template-columns: 60px 1fr;
+        gap: 10px;
+    }
+    .class-row h3
+    {
+        font-size: 21px;
+    }
+    .class-row > small
+    {
+        grid-column: 2;
+    }
+    .class-row button
+    {
+        grid-column: 2;
+        justify-self: start;
+    }
+    .intro h2
+    {
+        font-size: 44px;
+    }
+    blockquote
+    {
+        font-size: 34px;
+    }
+    form
+    {
+        padding: 24px;
+    }
+}

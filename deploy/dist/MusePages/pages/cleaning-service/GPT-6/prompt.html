@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pristine Cleaning | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Pristine Cleaning</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code>Build a full single-page cleaning service website called **PRISTINE** — professional, trustworthy, and conversion-optimized. Light background with deep navy and bright blue accent, clean sans-serif typography, and a floating booking form in the hero. The site should instantly communicate reliability and cleanliness — the kind of site that makes someone pick up the phone.
+
+---
+
+## Global Layout Rule — Centering
+
+**Every section must be horizontally centered on the page.** No section, form, or block should ever be flush-left or left-aligned to the viewport edge.
+
+```jsx
+&lt;section className=&quot;w-full px-6 md:px-12&quot;&gt;
+  &lt;div className=&quot;max-w-6xl mx-auto&quot;&gt;
+    {/* section content here */}
+  &lt;/div&gt;
+&lt;/section&gt;
+```
+
+Narrower content (text blocks, FAQ) uses `max-w-3xl mx-auto`. Forms use `max-w-lg mx-auto` when standalone. `mx-auto` is required on every container — never omit it.
+
+---
+
+## Tech Stack
+
+```
+React + Vite + TypeScript + Tailwind CSS + Framer Motion (motion/react) + lucide-react
+```
+
+---
+
+## Design System
+
+```css
+:root {
+  --background: 210 20% 98%;       /* near-white #F8FAFC */
+  --foreground: 222 47% 11%;       /* deep navy #0F1F3D */
+  --primary: 217 91% 50%;          /* bright blue #1D6FEB */
+  --primary-foreground: 0 0% 100%;
+  --primary-dark: 222 70% 20%;     /* dark navy #0A1F44 — for navbar, footer */
+  --muted: 210 16% 96%;            /* light grey #F1F5F9 — alternate sections */
+  --muted-foreground: 215 20% 45%; /* mid grey */
+  --border: 214 20% 88%;
+  --success: 142 71% 38%;          /* green #16A34A — checkmarks, trust badges */
+}
+```
+
+No texture overlay — this is a clean, light-mode site. All sections clearly separated by background color alternation (white → grey → white).
+
+---
+
+## Typography
+
+```html
+&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;
+```
+
+| Role | Font | Style |
+|------|------|-------|
+| H1 / hero headline | Plus Jakarta Sans | 800, 3rem–4.5rem |
+| Section headings H2 | Plus Jakarta Sans | 700, 2rem–3rem |
+| Sub-labels / tags | Inter | 500, 0.7rem, tracking-[0.2em] uppercase |
+| Body / descriptions | Inter | 400, 1rem, leading-relaxed |
+| Button text | Inter | 600, 0.875rem, tracking-[0.05em] |
+| Stats | Plus Jakarta Sans | 800, 3rem |
+
+---
+
+## Button System
+
+Three explicit button sizes — always `inline-flex items-center justify-center gap-2 shrink-0 whitespace-nowrap`:
+
+```jsx
+// Primary — bright blue fill
+&lt;button className=&quot;h-12 px-8 inline-flex items-center justify-center gap-2 shrink-0 whitespace-nowrap bg-[hsl(var(--primary))] text-white font-inter text-sm font-semibold rounded-lg shadow-[0_4px_16px_rgba(29,111,235,0.3)] hover:bg-blue-700 transition-colors&quot;&gt;
+  Book a Free Appointment
+&lt;/button&gt;
+
+// Secondary — navy outline
+&lt;button className=&quot;h-12 px-8 inline-flex items-center justify-center gap-2 shrink-0 whitespace-nowrap border-2 border-[hsl(var(--primary-dark))] text-[hsl(var(--primary-dark))] font-inter text-sm font-semibold rounded-lg hover:bg-[hsl(var(--primary-dark))] hover:text-white transition-colors&quot;&gt;
+  View All Services
+&lt;/button&gt;
+
+// Ghost / phone CTA
+&lt;button className=&quot;h-10 px-6 inline-flex items-center justify-center gap-2 shrink-0 whitespace-nowrap bg-white/15 border border-white/30 text-white font-inter text-sm font-medium rounded-full backdrop-blur-sm hover:bg-white/25 transition-colors&quot;&gt;
+  &lt;Phone className=&quot;w-4 h-4 shrink-0&quot; /&gt; Call Us Now
+&lt;/button&gt;
+```
+
+---
+
+## Visual Effects
+
+**Hero booking form card (glassmorphism on dark overlay):**
+```css
+.booking-card {
+  background: rgba(255,255,255,0.96);
+  border: 1px solid rgba(255,255,255,0.6);
+  border-radius: 16px;
+  box-shadow: 0 24px 64px rgba(15,31,61,0.2);
+}
+```
+
+**Trust badge pill:**
+```css
+.trust-pill {
+  background: white;
+  border: 1px solid hsl(var(--border));
+  border-radius: 9999px;
+  padding: 6px 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+```
+
+**Service card hover:**
+```
+translateY(-4px) + shadow increase
+transition: all 200ms ease-out
+border-top: 3px solid hsl(var(--primary)) appears on hover
+```
+
+**Stat counter animation:**
+```
+requestAnimationFrame count 0 → target
+duration: 1600ms, ease-out cubic
+triggered by IntersectionObserver on first entry
+```
+
+**Staggered section entrance:**
+```
+Each card: initial={{ opacity: 0, y: 24 }}
+animate={{ opacity: 1, y: 0 }}
+transition={{ duration: 0.5, ease: &#39;easeOut&#39;, delay: index * 0.1 }}
+triggered by IntersectionObserver
+```
+
+---
+
+## Component Breakdown
+
+### 1. Top Bar
+```
+bg-[hsl(var(--primary-dark))] py-2 px-6 text-white
+Layout: flex justify-between items-center text-sm
+
+Left: &quot;Mon–Fri 7am–7pm  ·  Sat 8am–5pm&quot; — Inter 300 text-xs text-white/70
+Right: phone number — Inter 500 text-sm text-white
+  &quot;+ 1 (800) 774-7846&quot; with Phone icon w-3.5 h-3.5 inline
+```
+
+### 2. Navbar
+```
+Position: sticky top-0 z-40 bg-white border-b border-[hsl(var(--border))]
+Padding: px-6 py-4
+Layout: flex justify-between items-center max-w-6xl mx-auto
+
+Left: Logo — &quot;PRISTINE&quot; Plus Jakarta Sans 700 text-xl text-[hsl(var(--primary-dark))]
+  + sparkle or leaf icon in blue before the text (lucide Sparkles)
+
+Center (desktop): nav links — Home · About · Services · Pricing · Contact
+  Inter 500 text-sm text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--primary))] transition-colors
+
+Right: &quot;Book Now&quot; primary button h-10 px-6 rounded-lg
+
+Mobile: hamburger → slide-down menu, nav links stacked
+```
+
+### 3. Hero
+```
+Position: relative overflow-hidden min-h-[620px] flex items-center
+Background: absolute inset-0 — full-bleed cleaning photography
+
+[Media brief: image | professional cleaning team working in a bright modern home — smiling cleaner in uniform vacuuming or mopping bright living room, large windows, natural light, clean and fresh atmosphere | any composition — gradient overlay handles legibility]
+
+Gradient overlay: absolute inset-0
+  linear-gradient(to right, rgba(15,31,61,0.85) 0%, rgba(15,31,61,0.65) 45%, rgba(15,31,61,0.2) 100%)
+
+Hero content: relative z-10 max-w-6xl mx-auto px-6 w-full
+  Layout: grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-20
+
+LEFT COLUMN (text):
+  Trust badge row: flex gap-2 mb-6
+    &quot;★ 4.9 Google Rating&quot; trust-pill — text-[hsl(var(--primary-dark))] text-xs
+    &quot;10,000+ Happy Clients&quot; trust-pill
+
+  H1: Plus Jakarta Sans 800, text-4xl md:text-5xl text-white leading-tight
+    &quot;Spotless Homes &amp;&quot;
+    &quot;Pristine Offices,&quot;
+    &quot;Guaranteed.&quot;
+
+  Subline: Inter 400, text-base text-white/75 mt-4 max-w-md
+    &quot;Professional cleaning services you can trust. Fully insured, background-checked cleaners, and a 100% satisfaction guarantee — every time.&quot;
+
+  Checklist row: flex flex-col gap-2 mt-6
+    3 items with CheckCircle icon in --success green:
+    &quot;Instant online booking — no phone tag&quot;
+    &quot;Eco-friendly products, pet and child safe&quot;
+    &quot;Cancel or reschedule anytime, no fees&quot;
+
+  CTA row: flex flex-wrap gap-3 mt-8
+    &quot;Book a Free Appointment&quot; (primary button h-12)
+    &quot;Call Us Now&quot; (ghost/phone button h-12) with Phone icon
+
+RIGHT COLUMN (booking form card):
+  .booking-card — white card, shadow, rounded-2xl p-6 lg:p-8
+
+  Heading: Plus Jakarta Sans 700 text-xl text-[hsl(var(--primary-dark))]
+    &quot;Book A Free Appointment&quot;
+  Sub: Inter 400 text-sm text-[hsl(var(--muted-foreground))] mt-1
+    &quot;Get a quote in under 2 minutes.&quot;
+
+  Form fields (mt-5 flex flex-col gap-3):
+    Full Name — h-11 input, rounded-lg border bg-[hsl(var(--muted))] px-4 text-sm
+    Email Address — h-11 input
+    Phone Number — h-11 input
+    Service Type — h-11 select:
+      options: House Cleaning / Office Cleaning / Deep Cleaning / Move-in/Move-out / Carpet Cleaning / Window Cleaning
+    Preferred Date — h-11 date input
+    Frequency — h-11 select: One-time / Weekly / Bi-weekly / Monthly
+
+  Submit: &quot;Book Free Appointment&quot; primary button h-12 w-full mt-2 rounded-lg
+
+  Trust line below button: Inter 300 text-xs text-[hsl(var(--muted-foreground))] text-center mt-3
+    &quot;🔒  No commitment. No credit card. We&#39;ll call within 2 hours.&quot;
+```
+
+### 4. Trust Bar / Logo Strip
+```
+Section: bg-white border-y border-[hsl(var(--border))] py-6
+Content: max-w-6xl mx-auto px-6
+
+Layout: flex flex-col md:flex-row items-center justify-between gap-6
+
+Left label: Inter 500 text-xs tracking-[0.2em] uppercase text-[hsl(var(--muted-foreground))]
+  &quot;TRUSTED &amp; REVIEWED ON&quot;
+
+Right: flex gap-8 items-center flex-wrap justify-center
+  3 review platform badges — each: flex items-center gap-2
+
+  Google Reviews: Google &quot;G&quot; colored icon + &quot;Google Reviews&quot; text + &quot;★★★★★&quot; in gold + &quot;4.9/5&quot;
+  Yelp: Yelp logo red + &quot;Yelp&quot; + &quot;★★★★★&quot; + &quot;4.8/5&quot;
+  Trustpilot: Trustpilot star icon green + &quot;Trustpilot&quot; + &quot;★★★★★&quot; + &quot;4.9/5&quot;
+
+  Each badge: trust-pill styling, flex items-center gap-2 text-sm font-medium
+```
+
+### 5. Stats Bar
+```
+Section: bg-[hsl(var(--primary))] py-14 px-6
+Content: max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white
+
+4 stats — counter animation on IntersectionObserver:
+  &quot;10,000+&quot; — &quot;Homes &amp; Offices Cleaned&quot;
+  &quot;98%&quot; — &quot;Client Satisfaction Rate&quot;
+  &quot;8 Yrs&quot; — &quot;In Business&quot;
+  &quot;50+&quot; — &quot;Trained Professionals&quot;
+
+Each stat:
+  Number: Plus Jakarta Sans 800 text-4xl md:text-5xl
+  Label: Inter 400 text-sm text-white/75 mt-1
+
+Thin dividers between columns on desktop: border-r border-white/20 last:border-0
+```
+
+### 6. About / Why Us
+```
+Section: bg-white py-24 px-6
+Content: max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center
+
+LEFT — image block:
+  Relative container, rounded-2xl overflow-hidden aspect-[4/3]
+  [Media brief: image | friendly professional cleaning team smiling in uniform, bright indoor setting, equipment in hand, warm and approachable | any composition]
+
+  Floating badge (absolute bottom-4 left-4):
+    White card, rounded-xl, shadow, px-4 py-3
+    &quot;★ 4.9 / 5.0&quot; in gold — Plus Jakarta Sans 700 text-lg
+    &quot;Based on 2,400+ reviews&quot; — Inter 300 text-xs text-grey
+
+RIGHT — text:
+  Section label: Inter 500 text-xs tracking-[0.2em] uppercase text-[hsl(var(--primary))] mb-3
+    &quot;WHY PRISTINE&quot;
+  H2: Plus Jakarta Sans 700 text-3xl md:text-4xl text-[hsl(var(--foreground))] leading-tight
+    &quot;Cleaning you can rely on. Every single visit.&quot;
+  Body: Inter 400 text-base text-[hsl(var(--muted-foreground))] mt-4 leading-relaxed
+    &quot;We started Pristine because we were tired of cleaning services that showed up late, rushed the job, and left streaks on the windows. Every cleaner on our team is background-checked, trained in-house, and held to a strict quality checklist after every visit.&quot;
+
+  4 feature items (mt-8 flex flex-col gap-4):
+    Each: flex items-start gap-3
+    Icon: CheckCircle, w-5 h-5 text-[hsl(var(--success))] shrink-0 mt-0.5
+    Title + body: Plus Jakarta Sans 600 text-sm + Inter 400 text-sm text-muted-foreground
+
+    &quot;Background-Checked &amp; Insured — Every cleaner passes a thorough vetting process before their first job.&quot;
+    &quot;Eco-Friendly Products — We use non-toxic, biodegradable cleaning solutions that are safe for kids and pets.&quot;
+    &quot;Satisfaction Guarantee — If you&#39;re not happy, we come back and re-clean within 24 hours. No questions asked.&quot;
+    &quot;Real-Time Notifications — We send a text when your cleaner is on their way and when the job is done.&quot;
+
+  &quot;Learn About Us&quot; secondary button h-11 mt-8
+```
+
+### 7. Services Grid
+```
+Section: bg-[hsl(var(--muted))] py-24 px-6
+Content: max-w-6xl mx-auto
+
+Section label + H2 (text-center):
+  &quot;OUR SERVICES&quot; / &quot;Everything clean, handled.&quot;
+  Subline: Inter 400 text-base text-muted-foreground max-w-xl mx-auto mt-3
+    &quot;Whether it&#39;s your home, your office, or a one-time deep clean — we&#39;ve got the crew and the tools.&quot;
+
+Grid: mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6
+
+6 service cards — hover: translateY(-4px) + blue top border:
+  bg-white rounded-2xl p-7 shadow-sm border border-[hsl(var(--border))] transition-all duration-200
+  hover:shadow-md hover:border-t-[hsl(var(--primary))] hover:border-t-[3px]
+
+  Icon: lucide icon in blue, w-10 h-10, bg-blue-50 rounded-xl p-2 mb-5
+  Title: Plus Jakarta Sans 700 text-base text-[hsl(var(--foreground))]
+  Body: Inter 400 text-sm text-muted-foreground mt-2 leading-relaxed
+  &quot;From $X&quot; label: Inter 600 text-sm text-[hsl(var(--primary))] mt-4
+
+  Card 1 — Home icon: &quot;House Cleaning&quot;
+    &quot;Regular maintenance cleaning for bedrooms, kitchens, bathrooms, and living areas. Weekly, bi-weekly, or monthly. From $89&quot;
+
+  Card 2 — Building icon: &quot;Office Cleaning&quot;
+    &quot;Commercial cleaning for offices, co-working spaces, and retail — before hours, after hours, or weekends. From $120&quot;
+
+  Card 3 — Zap icon: &quot;Deep Cleaning&quot;
+    &quot;Floor-to-ceiling detailed clean including inside appliances, baseboards, grout, and hard-to-reach spots. From $180&quot;
+
+  Card 4 — Truck icon: &quot;Move In / Move Out&quot;
+    &quot;Leave your old place spotless or arrive to a fresh start. Covers every surface, inside cabinets, and all fixtures. From $200&quot;
+
+  Card 5 — Layers icon: &quot;Carpet Cleaning&quot;
+    &quot;Hot water extraction removes deep-set dirt, stains, and allergens. Safe for all carpet types. From $75/room&quot;
+
+  Card 6 — Sun icon: &quot;Window Cleaning&quot;
+    &quot;Interior and exterior window cleaning for homes and offices. Streak-free finish guaranteed. From $60&quot;
+
+&quot;View All Services&quot; secondary button — centered below grid, mt-10
+```
+
+### 8. How It Works — 3 Steps
+```
+Section: bg-white py-24 px-6
+Content: max-w-6xl mx-auto
+
+Section label + H2 (text-center):
+  &quot;HOW IT WORKS&quot; / &quot;Effortless Cleaning in 3 Steps&quot;
+
+Grid: mt-14 grid grid-cols-1 md:grid-cols-3 gap-8 relative
+
+Connector line (desktop only): absolute top-10 left-[calc(16.67%+32px)] right-[calc(16.67%+32px)] h-px bg-[hsl(var(--border))]
+
+3 step cards (text-center):
+  Step number circle: w-16 h-16 rounded-full bg-[hsl(var(--primary))] text-white
+    Plus Jakarta Sans 800 text-2xl — &quot;01&quot; / &quot;02&quot; / &quot;03&quot;
+    mx-auto mb-5
+
+  Title: Plus Jakarta Sans 700 text-lg text-[hsl(var(--foreground))] mt-4
+  Body: Inter 400 text-sm text-muted-foreground mt-2 leading-relaxed max-w-xs mx-auto
+
+  Step 1 — &quot;Book Online&quot;
+    &quot;Choose your service, pick a date and time, and submit your details. Takes less than 2 minutes — no phone calls needed.&quot;
+
+  Step 2 — &quot;We Show Up&quot;
+    &quot;Your vetted, uniformed cleaning pro arrives on time with all equipment and supplies included. Nothing for you to prepare.&quot;
+
+  Step 3 — &quot;Enjoy the Clean&quot;
+    &quot;Sit back and relax while we take care of everything. You&#39;ll receive a completion summary and can rebook in one click.&quot;
+```
+
+### 9. Testimonials
+```
+Section: bg-[hsl(var(--muted))] py-24 px-6
+Content: max-w-6xl mx-auto
+
+Section label + H2 (text-center):
+  &quot;REVIEWS&quot; / &quot;What our clients say&quot;
+  Aggregate: &quot;★★★★★  4.9 out of 5 — from 2,400+ verified reviews&quot; — Inter 500 text-sm text-muted-foreground mt-2
+
+Grid: mt-12 grid grid-cols-1 md:grid-cols-3 gap-6
+
+3 testimonial cards — bg-white rounded-2xl p-7 shadow-sm border border-[hsl(var(--border))]:
+
+  Stars: &quot;★★★★★&quot; text-[#F59E0B] text-sm mb-4
+
+  Quote: Inter 400 text-sm text-[hsl(var(--foreground))] leading-relaxed italic
+  Attribution: flex items-center gap-3 mt-5
+    Avatar: w-10 h-10 rounded-full object-cover
+      [Media brief: image | friendly woman or man, casual portrait, smiling, neutral background, realistic photo]
+    Name: Plus Jakarta Sans 600 text-sm
+    Source: &quot;via Google&quot; or &quot;via Yelp&quot; — Inter 300 text-xs text-muted-foreground
+
+  Review 1:
+    &quot;I&#39;ve tried four different cleaning services in the past two years. Pristine is the only one I&#39;ve kept. They&#39;re on time, thorough, and the apartment actually smells clean when they leave — not just like chemicals.&quot;
+    — Sarah M., New York · via Google
+
+  Review 2:
+    &quot;Booked a deep clean before listing my apartment. The team did an incredible job — my realtor couldn&#39;t believe it wasn&#39;t freshly renovated. Worth every penny.&quot;
+    — James T., Chicago · via Yelp
+
+  Review 3:
+    &quot;We use Pristine for our office every Friday morning. It&#39;s the one thing on our facilities list I never have to think about. They&#39;re just reliable, which is rare.&quot;
+    — Elena R., Office Manager · via Trustpilot
+```
+
+### 10. Pricing (Optional — 3 tiers)
+```
+Section: bg-white py-24 px-6
+Content: max-w-5xl mx-auto
+
+Section label + H2 (text-center):
+  &quot;PRICING&quot; / &quot;Simple, transparent pricing.&quot;
+  Subline: &quot;No hidden fees. No surprises. Cancel anytime.&quot;
+
+Grid: mt-12 grid grid-cols-1 md:grid-cols-3 gap-6
+
+3 pricing cards:
+  Card 1 — &quot;Standard Clean&quot; — $89/visit
+    bg-white border border-[hsl(var(--border))] rounded-2xl p-8
+
+  Card 2 — &quot;Deep Clean&quot; — $180/visit (POPULAR — highlighted)
+    bg-[hsl(var(--primary))] text-white rounded-2xl p-8 shadow-[0_8px_32px_rgba(29,111,235,0.3)] scale-[1.02]
+    &quot;Most Popular&quot; pill badge top-center: bg-white text-[hsl(var(--primary))] rounded-full px-4 py-1 text-xs font-semibold
+
+  Card 3 — &quot;Move In/Out&quot; — $200/visit
+    bg-white border border-[hsl(var(--border))] rounded-2xl p-8
+
+  Each card:
+    Plan name: Plus Jakarta Sans 700 text-lg
+    Price: Plus Jakarta Sans 800 text-4xl — &quot;$XX&quot;
+    Per: Inter 400 text-sm — &quot;/visit&quot;
+    Feature list: mt-6 flex flex-col gap-3
+      Each: CheckCircle icon + Inter 400 text-sm
+    CTA button: h-11 w-full mt-8 — &quot;Book This Plan&quot;
+```
+
+### 11. FAQ Accordion
+```
+Section: bg-[hsl(var(--muted))] py-24 px-6
+Content: max-w-3xl mx-auto
+
+Section label + H2 (text-center):
+  &quot;FAQ&quot; / &quot;Common questions&quot;
+
+6 accordion items — AnimatePresence height animation:
+  Each: border-b border-[hsl(var(--border))] py-5
+  Question row: flex justify-between items-center cursor-pointer gap-4
+    Question: Plus Jakarta Sans 600 text-base text-[hsl(var(--foreground))]
+    Icon: ChevronDown, rotates 180° when open, text-[hsl(var(--primary))]
+  Answer: Inter 400 text-sm text-muted-foreground leading-relaxed mt-3
+
+  Q1: &quot;Do I need to be home during the cleaning?&quot;
+  A1: &quot;No — many of our clients leave a key or door code. We&#39;re background-checked and fully insured, so you can go about your day while we clean.&quot;
+
+  Q2: &quot;What&#39;s included in a standard clean?&quot;
+  A2: &quot;Standard cleaning covers all bedrooms, bathrooms, kitchen, and living areas — including vacuuming, mopping, surface wiping, bathroom sanitation, and kitchen surfaces. A full checklist is provided at booking.&quot;
+
+  Q3: &quot;Do you bring your own cleaning supplies?&quot;
+  A3: &quot;Yes. We bring all equipment and supplies — eco-friendly, non-toxic, and safe for children and pets. Just let us know if you have any product preferences or allergies.&quot;
+
+  Q4: &quot;What if I&#39;m not happy with the results?&quot;
+  A4: &quot;We offer a 100% satisfaction guarantee. If you&#39;re not happy with any area of your clean, contact us within 24 hours and we&#39;ll send a team back to re-clean it at no charge.&quot;
+
+  Q5: &quot;How far in advance do I need to book?&quot;
+  A5: &quot;We recommend 48 hours notice for standard cleans, and 72 hours for deep cleans. That said, we sometimes have same-day or next-day slots — check availability when you book.&quot;
+
+  Q6: &quot;Can I change or cancel my booking?&quot;
+  A6: &quot;Yes — you can reschedule or cancel up to 24 hours before your appointment with no fee. Cancellations within 24 hours may incur a small late-cancellation fee.&quot;
+```
+
+### 12. Final CTA Section
+```
+Section: bg-[hsl(var(--primary-dark))] py-24 px-6 relative overflow-hidden
+Decorative: absolute large circle shapes in blue/20 opacity, blurred, non-interactive — bg decoration only
+
+Content: max-w-3xl mx-auto text-center relative z-10
+
+H2: Plus Jakarta Sans 800 text-3xl md:text-5xl text-white leading-tight
+  &quot;Ready for a spotless&quot;
+  &quot;home or office?&quot;
+
+Body: Inter 400 text-base text-white/70 mt-4
+  &quot;Book in 2 minutes. No commitment. Our team is ready.&quot;
+
+CTA row: flex flex-col sm:flex-row gap-4 justify-center mt-10
+  &quot;Book Free Appointment&quot; — primary button h-13 px-10
+  &quot;Call (800) 774-7846&quot; — ghost/phone button h-12 px-8 text-white border-white/40
+
+Trust line: Inter 300 text-sm text-white/50 mt-6
+  &quot;✓ No credit card required  ·  ✓ Cancel anytime  ·  ✓ 100% satisfaction guarantee&quot;
+```
+
+### 13. Footer
+```
+Section: bg-[hsl(var(--primary-dark))] border-t border-white/10 py-12 px-6
+
+Content: max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10
+
+Col 1 — Brand:
+  &quot;PRISTINE&quot; Plus Jakarta Sans 700 text-lg text-white
+  &quot;Professional Cleaning Services&quot; Inter 300 text-sm text-white/50 mt-1
+  Phone + email: Inter 400 text-sm text-white/70 mt-4
+    &quot;(800) 774-7846&quot; / &quot;hello@pristineclean.com&quot;
+
+Col 2 — &quot;Services&quot;:
+  Label: Inter 500 text-xs tracking-[0.2em] uppercase text-white/40 mb-4
+  Links: House Cleaning, Office Cleaning, Deep Cleaning, Move In/Out, Carpet Cleaning, Window Cleaning
+  Inter 400 text-sm text-white/60 hover:text-white block mb-2
+
+Col 3 — &quot;Company&quot;:
+  About Us, Blog, Careers, Press, Contact
+
+Col 4 — &quot;Service Areas&quot;:
+  New York, Los Angeles, Chicago, Houston, Phoenix, Miami
+
+Bottom bar: mt-10 flex flex-col md:flex-row justify-between items-center border-t border-white/10 pt-6 gap-4
+  &quot;© 2026 Pristine Cleaning Services. All rights reserved.&quot; Inter 300 text-xs text-white/40
+  Social icons (Facebook, Instagram, TikTok) — white/40, hover:white
+  &quot;Schedule an Appointment Today →&quot; — Inter 500 text-sm text-[hsl(var(--primary))]
+```
+
+---
+
+## Animations Summary
+
+| Element | Animation | Trigger |
+|---------|-----------|---------|
+| Hero text + checklist | fade-up, staggered 0.1s per item | on load |
+| Booking form card | fade-in + slight scale-up, 0.4s delay | on load |
+| Stats counters | count 0 → target, 1600ms | IntersectionObserver |
+| Service cards | fade-up, staggered 0.1s | IntersectionObserver |
+| Step cards | fade-up, staggered | IntersectionObserver |
+| Testimonials | fade-up, staggered | IntersectionObserver |
+| Service card hover | translateY(-4px) + shadow | hover |
+| FAQ accordion | height expand + opacity | click |
+| Pricing card featured | scale(1.02) — static emphasis | always |
+
+---
+
+## Responsive
+
+**Mobile (&lt; 768px):**
+- Hero: single column — text first, booking form below
+- Stats: 2×2 grid
+- Services: single column
+- How It Works: stacked, connector line hidden
+- Testimonials: single column
+- Pricing: stacked, no scale effect on featured
+- Footer: stacked columns
+
+**Desktop (≥ 768px):**
+- Hero: 2-column with floating form card
+- Services: 3-column grid
+- Stats: 4-column
+- All grids as specified
+
+---
+
+## All Copy
+
+**Brand:** PRISTINE — Professional Cleaning Services
+**Tagline:** &quot;Spotless Homes &amp; Pristine Offices, Guaranteed.&quot;
+**Subline:** &quot;Professional cleaning services you can trust. Fully insured, background-checked cleaners, and a 100% satisfaction guarantee — every time.&quot;
+**Phone:** (800) 774-7846
+**Email:** hello@pristineclean.com
+**Hours:** Mon–Fri 7am–7pm · Sat 8am–5pm
+
+**Nav:** Home · About · Services · Pricing · Contact · Book Now
+
+**Hero checklist:** Instant online booking — no phone tag · Eco-friendly products, pet and child safe · Cancel or reschedule anytime, no fees
+
+**Stats:** 10,000+ Homes &amp; Offices Cleaned · 98% Client Satisfaction Rate · 8 Yrs In Business · 50+ Trained Professionals
+
+**Services:** House Cleaning ($89) · Office Cleaning ($120) · Deep Cleaning ($180) · Move In/Out ($200) · Carpet Cleaning ($75/room) · Window Cleaning ($60)
+
+**Steps:** Book Online · We Show Up · Enjoy the Clean
+
+**Pricing tiers:** Standard Clean ($89) · Deep Clean ($180, featured) · Move In/Out ($200)
+
+**Final CTA:** &quot;Ready for a spotless home or office?&quot; / &quot;Book in 2 minutes. No commitment.&quot;
+
+---
+
+## Key Dependencies
+
+```json
+{
+  &quot;motion&quot;: &quot;^12.x&quot;,
+  &quot;lucide-react&quot;: &quot;^0.4xx&quot;
+}
+```
+
+---
+
+*Quick notes:*
+- *Booking form in hero is the highest-converting pattern from the reference sites — keep it above the fold on desktop*
+- *Review badges (Google, Yelp, Trustpilot) use text + colored SVG icons — no external logo URLs needed*
+- *The pricing section is optional — remove if the client prefers quote-based pricing*
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

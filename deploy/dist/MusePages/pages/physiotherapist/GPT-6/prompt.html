@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Motion Clinic | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Motion Clinic</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Physiotherapist Website Prompt
+# websiteprompts.ai
+
+Build a clean, modern physiotherapy and sports rehab clinic website called &quot;Motion Clinic&quot; using React + Vite + TypeScript + Tailwind CSS + Framer Motion (motion/react) + shadcn/ui + lucide-react.
+
+## Design System
+
+### Colors
+```css
+:root {
+  --background: 0 0% 100%;
+  --foreground: 215 28% 12%;          /* deep navy near-black */
+  --primary: 215 60% 32%;             /* deep navy #1a2a4a */
+  --primary-foreground: 0 0% 100%;
+  --accent: 210 72% 50%;              /* electric blue #2a7dd4 */
+  --surface: 215 14% 96%;
+  --surface-raised: 215 12% 92%;
+  --muted-foreground: 215 10% 52%;
+  --border: 215 14% 88%;
+}
+```
+
+### Typography
+- Import: `https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap`
+- All text: Plus Jakarta Sans
+- Headlines: Plus Jakarta Sans 700–800
+- Body: Plus Jakarta Sans 300–400
+- Labels: Plus Jakarta Sans 600 uppercase 10px letter-spacing 0.12em
+
+## Sections
+
+### 1. Navbar
+- Sticky white, thin navy border on scroll
+- Left: Plus Jakarta Sans 700 &quot;Motion Clinic&quot; + small lucide Activity icon in electric blue
+- Right: Conditions · Services · Our Physios · Book + &quot;Book appointment →&quot; navy button
+
+### 2. Hero
+- Full-viewport height, white background
+- Split layout: left 55% content + floating UI card, right 45% photography
+- Left panel `padding: 0 4vw 0 7vw`:
+  - Plus Jakarta Sans 600 uppercase 10px blue label: &quot;Physiotherapy &amp; Sports Rehab · Shoreditch&quot;
+  - Plus Jakarta Sans 800 `clamp(38px, 5vw, 68px)` foreground: &quot;Get Back to\nWhat You Love.&quot;
+  - Plus Jakarta Sans 300 muted sub: &quot;Expert physiotherapy for sports injuries, chronic pain, and post-surgical rehab — same-week appointments available&quot;
+  - CTAs: &quot;Book assessment →&quot; (navy filled) + &quot;See our services&quot; (ghost)
+  - Trust chips: &quot;HCPC Registered · CSP Members · Same-Week Appointments&quot;
+  - Floating UI card below CTAs: `background: white; border: 0.5px solid #e2e8f0; border-radius: 12px; padding: 16px 20px; max-width: 320px; margin-top: 2rem`
+    - Plus Jakarta Sans 600 12px navy: &quot;Free Body Assessment&quot;
+    - Plus Jakarta Sans 300 13px muted: &quot;Book a 20-minute assessment and find out what&#39;s causing your pain&quot;
+    - Blue &quot;Book free →&quot; link
+    - Framer Motion: scale from 0.9, fade in at 0.5s delay
+- Right: close-up physiotherapy session photography, `object-fit: cover; object-position: center`, rounded-2xl
+
+{/* Image brief: physiotherapist working with athlete on treatment table, professional clinical setting, focused hands-on technique, bright clean environment */}
+
+- Hero stagger fade-up on mount
+
+### 3. Conditions
+- &quot;What We Treat&quot; — Plus Jakarta Sans 800
+- 6 condition chips in 3×2 grid:
+  - Back &amp; Neck Pain · Sports Injuries · Post-Surgical Rehab · Shoulder &amp; Knee · Running Injuries · Postural Pain
+- Each chip: navy lucide icon, Plus Jakarta Sans 700 condition, Plus Jakarta Sans 300 muted one-line description, &quot;Learn more →&quot; blue link
+- Hover: navy border + soft navy glow
+
+### 4. Services
+- &quot;How We Help&quot; — Plus Jakarta Sans 800
+- 3 hover-raise rows:
+  - 1-to-1 Physiotherapy (60-min assessment and treatment — from £85)
+  - Sports Massage (deep tissue and sports recovery — from £60)
+  - Biomechanical Assessment (full gait and movement analysis — from £120)
+- Each: Plus Jakarta Sans 700 large service left + 300 description right + blue &quot;→&quot; + price
+- `border-bottom: 1px solid hsl(var(--border))`
+- Hover: surface-raised background, service name turns blue
+
+### 5. Why Motion
+- &quot;Why Patients Choose Us&quot; — Plus Jakarta Sans 800
+- Split: left text, right image
+- Plus Jakarta Sans 300 2 paragraphs — no generic 30-minute slots. Every appointment is 60 minutes with the same physio. We explain every diagnosis and every decision.
+- 4 navy checkpoints: &quot;60-min sessions — always · HCPC registered · Same-week availability · Specialist sports rehab track&quot;
+
+{/* Image brief: physio and patient reviewing movement assessment, patient in athletic wear, bright clinical setting */}
+
+### 6. Our Physios
+- &quot;Your Clinicians&quot; — Plus Jakarta Sans 800
+- 3 physio cards: portrait (square, rounded-xl), Plus Jakarta Sans 700 name, blue HCPC chip, Plus Jakarta Sans 300 speciality bio
+- Hover: soft blue glow
+
+{/* Image brief: male physiotherapist, professional headshot, white clinical jacket, approachable expression */}
+{/* Image brief: female physio, clinical setting, sports rehab background, confident */}
+{/* Image brief: physio professional headshot, clean studio, warm smile */}
+
+### 7. Process
+- &quot;Your Recovery Journey&quot; — Plus Jakarta Sans 800
+- 4 steps: Book Assessment → Diagnosis &amp; Plan → Treatment → Return to Sport
+- Large faded navy number (opacity 0.07) behind each step
+- Plus Jakarta Sans 300 muted description, stagger fade-up on scroll
+
+### 8. Testimonials
+- Surface section
+- 3 cards: 5-star blue row, Plus Jakarta Sans 300 italic quote, client name + condition in 10px muted
+- Stagger fade-up on scroll
+
+### 9. Booking CTA
+- Full-width navy `#1a2a4a` background
+- Plus Jakarta Sans 800 white: &quot;Stop Managing Pain. Start Solving It.&quot;
+- Plus Jakarta Sans 300 white: &quot;Same-week appointments available — book online in under 60 seconds&quot;
+- &quot;Book appointment →&quot; white button
+- &quot;HCPC Registered · CSP Members · Shoreditch, London&quot; Plus Jakarta Sans 10px white 70%
+
+### 10. Footer
+- Near-black, Plus Jakarta Sans 700 &quot;Motion Clinic&quot; in electric blue
+- LinkedIn · Instagram · Google
+- &quot;© 2026 Motion Clinic · Physiotherapy &amp; Sports Rehab · 34 Curtain Road, Shoreditch EC2A · Mon–Sat 7am–8pm&quot;
+
+## Animations
+- Hero: stagger fade-up on mount, floating UI card scale 0.9→1 at 0.5s
+- Conditions grid: stagger fade-up on scroll
+- Process steps: stagger fade-up on scroll
+- Navy rules: scaleX 0→1, 0.5s
+
+## Responsive
+- Mobile: stacked hero (photo top, text below), single-column conditions, hamburger nav
+
+## Full Copy
+- Wordmark: &quot;Motion Clinic&quot;
+- Hero: &quot;Get Back to What You Love.&quot; / &quot;Expert physiotherapy for sports injuries, chronic pain, and post-surgical rehab&quot;
+- Conditions: Back Pain · Sports Injuries · Post-Surgical · Shoulder &amp; Knee · Running Injuries · Postural
+- Services: 1-to-1 from £85 · Sports Massage from £60 · Biomechanical from £120
+- Free Body Assessment: &quot;Book a 20-minute assessment — find out what&#39;s causing your pain&quot;
+- Testimonial: &quot;I had a knee injury that three other physios couldn&#39;t fix. Motion Clinic diagnosed it in the first session and had me back running in 6 weeks.&quot; — Tom R., marathon runner
+- CTA: &quot;Stop Managing Pain. Start Solving It.&quot;
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

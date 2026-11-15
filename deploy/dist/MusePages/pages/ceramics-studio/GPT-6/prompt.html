@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clay &amp; Form | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Clay &amp; Form</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Clay &amp; Form — Ceramics Studio Website Prompt
+
+## Goal
+Build a warm, intimate ceramics studio website with Cormorant Garamond italic headlines, a split hero layout, clay-colour left border accent, workshop booking cards, and a dark earth commission section.
+
+## Tech Stack
+React + Vite + TypeScript + Tailwind CSS + Framer Motion (motion/react) + shadcn/ui + lucide-react
+
+## Design System
+
+### Colors
+```css
+:root {
+  --background: 37 40% 97%;
+  --foreground: 22 62% 9%;
+  --primary: 18 46% 49%;
+  --primary-foreground: 37 40% 97%;
+  --muted-foreground: 37 18% 44%;
+  --border: 37 28% 80%;
+  /* Raw hex reference */
+  /* warm-white: #faf7f0 */
+  /* deep-earth: #221408 */
+  /* warm-clay: #b5694a */
+  /* warm-sand: #e8d8c0 */
+}
+```
+
+### Typography
+Google Fonts import: `https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,700&amp;family=Plus+Jakarta+Sans:wght@300;400&amp;display=swap`
+- Headlines: Cormorant Garamond 700 italic
+- Body text: Cormorant Garamond 300 italic
+- UI labels: Plus Jakarta Sans 400
+- Captions / prices: Plus Jakarta Sans 300
+
+## Visual Effects
+
+1. **Clay Left Border Headline Accent** — border-left: 4px solid #b5694a on the hero h1 element, padding-left: 16px, gives a handcrafted vertical accent to the main headline, no animation needed — pure CSS confidence
+2. **Workshop Card Scroll-In Stagger** — Framer Motion whileInView: scale 0.95→1, opacity 0→1, stagger 0.12s between the 3 workshop cards, ease: [0.25,0.46,0.45,0.94]
+3. **Collection Row Warm Hover** — whileHover y: -3px (0.2s), border-left: 3px solid #b5694a (0.15s transition), warm shadow: 0 4px 20px rgba(181,105,74,0.18)
+4. **Dark Earth Commission Section** — bg: #221408, an isolated dark section against the warm white — Cormorant italic white text, clay button — creates deep contrast on an otherwise warm-light page
+
+## Component Breakdown
+
+### 1. Navbar
+```tsx
+// Sticky, bg: #faf7f0, border-bottom: 1px solid #e8d8c0, height: 64px
+// Left: &quot;Clay &amp; Form&quot; — Cormorant Garamond 400 italic, 20px, letter-spacing: 0.04em, color: #221408
+// Center: Shop / Workshops / About / Commission — Plus Jakarta Sans 400, 13px, color: #7a6a58, letter-spacing: 0.04em
+// Right: &quot;Book a Workshop&quot; — bg: #b5694a, color: #faf7f0, Plus Jakarta 400, 13px, px-5 py-2.5, border-radius: 0
+// Hover: bg: #9a5038, 0.2s
+// Framer Motion: y -64→0, opacity 0→1, 0.5s ease-out
+```
+
+### 2. Hero — Split Layout
+```tsx
+// Full-viewport, min-height: 100vh, display: flex, flex-direction: row (on desktop)
+// No full-bleed photo behind content — instead a TRUE SPLIT LAYOUT
+
+// LEFT PANEL — 45% width, bg: #faf7f0, display flex flex-col justify-center
+// padding: clamp(48px,6vw,96px)
+// z-index: 10
+
+// Small kicker: Plus Jakarta 400, 11px, letter-spacing: 0.18em, text-transform: uppercase, color: #b5694a, margin-bottom 24px
+// &quot;Handmade Ceramics &amp; Pottery Workshops · Margate&quot;
+
+// Headline — WITH clay left border accent:
+// border-left: 4px solid #b5694a, padding-left: 16px
+// Cormorant Garamond 700 italic, clamp(40px,5.5vw,96px), color: #221408, line-height: 1.1
+// &quot;Every Piece Begins as Possibility.&quot;
+// Framer Motion: opacity 0→1, x -30→0, 0.7s ease-out, delay: 0.1s
+
+// Sub: Cormorant Garamond 300 italic, 19px, color: #7a6a58, margin-top: 20px, line-height: 1.75, max-width: 400px
+// &quot;Handmade ceramics and pottery workshops in Margate. Every piece thrown, hand-built, and glazed in the studio.&quot;
+// Framer Motion: opacity 0→1, y 20→0, 0.6s, delay: 0.3s
+
+// CTAs (flex row, gap: 12px, margin-top: 32px):
+// &quot;Browse the Shop&quot; — bg: #b5694a, color: #faf7f0, Plus Jakarta 400, 14px, px-7 py-3.5, border-radius: 0
+// &quot;Book a Workshop&quot; — bg: transparent, border: 1px solid #b5694a, color: #b5694a, Plus Jakarta 400, 14px, px-7 py-3.5, border-radius: 0
+// Framer Motion: opacity 0→1, y 20→0, 0.6s, delay: 0.5s
+
+// Small trust note: Plus Jakarta 300, 13px, #9a8a7a, margin-top 24px
+// &quot;Charlotte Reid · Studio open by appointment · Margate Old Town&quot;
+
+// RIGHT PANEL — 55% width, position: relative, overflow: hidden
+// Directional gradient from left: linear-gradient(to right, rgba(250,247,240,1) 0%, rgba(250,247,240,0.95) 0%, transparent 100%)
+// Wait — ONLY on the seam between left and right panels (8% width at left edge of photo)
+// gradient: linear-gradient(to right, #faf7f0 0%, transparent 12%), applied as overlay on left edge only
+
+{/* Image: Extreme close-up of hands shaping wet clay on a pottery wheel — fingers pressing into the clay, clay texture and finger grooves clearly visible, warm golden afternoon light from a large studio window to the left, very intimate close-up that conveys the tactile, handmade quality of the work, warm terracotta earth tones of the clay contrasting with the cool wheel surface */}
+&lt;img src=&quot;&quot; alt=&quot;Hands shaping clay on pottery wheel in ceramic studio&quot; style={{ position: &#39;absolute&#39;, inset: 0, width: &#39;100%&#39;, height: &#39;100%&#39;, objectFit: &#39;cover&#39;, objectPosition: &#39;center&#39; }} /&gt;
+
+// Left-edge gradient overlay to blend photo into left panel:
+// position: absolute, inset: 0, background: linear-gradient(to right, #faf7f0 0%, transparent 15%), z-index: 1
+```
+
+### 3. Workshop Cards
+```tsx
+// Section bg: #faf7f0, padding: 80px clamp(24px,6vw,96px)
+// Section label: Plus Jakarta 400, 11px, letter-spacing 0.18em, uppercase, color: #b5694a, margin-bottom 8px: &quot;BOOK A WORKSHOP&quot;
+// Headline: Cormorant Garamond 700 italic, clamp(32px,4.5vw,68px), #221408, margin-bottom 48px
+// &quot;Learn to Make.&quot;
+
+// 3-column flex, gap: 24px
+
+// Framer Motion: each card whileInView scale 0.95→1, opacity 0→1, stagger 0.12s, ease [0.25,0.46,0.45,0.94]
+
+// Each card: bg: #ffffff, border: 1px solid #e8d8c0, overflow hidden
+// Hover: y: -4px, box-shadow: 0 8px 32px rgba(181,105,74,0.12), 0.25s ease-out
+
+// Card photo (4:3 crop):
+// Card 1 — Wheel Throwing:
+{/* Image: Close-up photography of pottery wheel throwing in action — clay being centred on the wheel with water spray visible, hands cupped around the opening form, warm studio light, movement blur on the spinning wheel showing speed, intimate and focused */}
+&lt;img src=&quot;&quot; alt=&quot;Wheel throwing pottery workshop with hands on spinning clay&quot; style={{ width: &#39;100%&#39;, aspectRatio: &#39;4/3&#39;, objectFit: &#39;cover&#39;, objectPosition: &#39;center&#39; }} /&gt;
+
+// Card 2 — Hand Building:
+{/* Image: Hands carefully coiling clay rope to build a vessel wall — clay coils stacked in organic layers, natural light from studio window, worn wooden work surface, meditative and precise, warm clay and cream tones */}
+&lt;img src=&quot;&quot; alt=&quot;Hand building ceramics workshop with clay coil technique&quot; style={{ width: &#39;100%&#39;, aspectRatio: &#39;4/3&#39;, objectFit: &#39;cover&#39;, objectPosition: &#39;center&#39; }} /&gt;
+
+// Card 3 — Glazing &amp; Firing:
+{/* Image: Hands applying glaze to a bisqueware ceramic bowl with a wide soft brush — deep teal glaze colour against the pale bisqueware, glaze drip visible, studio shelf of other glazed pieces in soft background bokeh, thoughtful and creative atmosphere */}
+&lt;img src=&quot;&quot; alt=&quot;Glazing ceramics in pottery studio with soft brush application&quot; style={{ width: &#39;100%&#39;, aspectRatio: &#39;4/3&#39;, objectFit: &#39;cover&#39;, objectPosition: &#39;center&#39; }} /&gt;
+
+// Card body, padding: 24px
+// Price chip: bg: rgba(181,105,74,0.1), border: 1px solid rgba(181,105,74,0.25), Plus Jakarta 400, 12px, #b5694a, px-3 py-1 inline-block, margin-bottom 12px: &quot;£75/person&quot; / &quot;£65/person&quot; / &quot;£45/person&quot;
+// Cormorant Garamond 700 italic, 24px, #221408: workshop name
+// Plus Jakarta 300, 13px, #9a8a7a, margin-top 4px: duration + max group
+// Cormorant Garamond 300 italic, 15px, #6a5a48, margin-top 12px, line-height 1.7: description
+// &quot;Book →&quot; link: Plus Jakarta 400, 13px, #b5694a, margin-top 16px
+
+// Card 1: &quot;£75/person&quot; / &quot;Wheel Throwing&quot; / &quot;2hrs · Up to 6 people&quot;
+// &quot;The most popular workshop. Learn to centre clay, open, and throw your first pot on the wheel. You&#39;ll make 2-3 pieces to take home after firing.&quot; / &quot;Book →&quot;
+
+// Card 2: &quot;£65/person&quot; / &quot;Hand Building&quot; / &quot;2hrs · Up to 8 people&quot;
+// &quot;No wheel required. Pinch pots, coil building, and slab construction. Perfect for those who prefer a more meditative, tactile process.&quot; / &quot;Book →&quot;
+
+// Card 3: &quot;£45/person&quot; / &quot;Glazing &amp; Firing&quot; / &quot;1hr · Existing pieces&quot;
+// &quot;Bring existing unfired work, or use studio bisqueware. Experiment with our glaze palette and leave the rest to us.&quot; / &quot;Book →&quot;
+```
+
+### 4. Collection Rows
+```tsx
+// Section bg: #f0ece0 (warm sand, slightly warmer than bg), padding: 80px clamp(24px,6vw,96px)
+// Section label: Plus Jakarta 400, 11px, letter-spacing 0.18em, uppercase, color: #b5694a: &quot;THE SHOP&quot;
+// Headline: Cormorant Garamond 700 italic, clamp(32px,4.5vw,68px), #221408, margin-bottom 48px: &quot;Handmade to Last.&quot;
+
+// 3 collection rows, each: border-top: 1px solid #d8c8b0, padding: 28px 0
+// flex justify-between align-center, cursor pointer
+
+// Hover (Framer Motion whileHover): y -3px (0.2s), border-left: 3px solid #b5694a, padding-left 16px, box-shadow: 0 4px 20px rgba(181,105,74,0.18)
+
+// Left: Cormorant Garamond 700 italic, 24px, #221408 — collection name
+//       Cormorant Garamond 300 italic, 15px, #9a8a7a, margin-top 6px — description
+// Right: Plus Jakarta 300, 14px, #7a6a58 — &quot;from £28&quot; / &quot;from £45&quot; / &quot;from £120&quot;
+//        Clay &quot;→&quot; Cormorant 400, 24px, #b5694a, margin-left 12px
+
+// Row 1: &quot;Tableware&quot; / &quot;Bowls, mugs, plates, and platters. Made to be used daily. Dishwasher safe.&quot; / &quot;from £28&quot;
+// Row 2: &quot;Decorative Vessels&quot; / &quot;Vases, jugs, and storage jars. Each one unique from throwing.&quot; / &quot;from £45&quot;
+// Row 3: &quot;Sculptural Works&quot; / &quot;Wall pieces, sculptural forms, and one-off works.&quot; / &quot;from £120&quot;
+```
+
+### 5. Artist Statement Split
+```tsx
+// Section bg: #faf7f0, padding: 0 (full-bleed split), min-height: 520px
+// 2 columns, 50%/50%
+
+// Left 50%: position relative, overflow hidden
+{/* Image: Interior of a ceramics studio — shelves of finished ceramic pieces (bowls, vases, mugs) in warm earthy tones, late afternoon window light casting long warm shadows, thrown forms at different stages of drying, quiet and atmospheric, documentary photography feel */}
+&lt;img src=&quot;&quot; alt=&quot;Clay &amp; Form ceramics studio shelves with finished handmade pieces&quot; style={{ width: &#39;100%&#39;, height: &#39;100%&#39;, objectFit: &#39;cover&#39;, objectPosition: &#39;center&#39; }} /&gt;
+
+// Right 50%: bg: #faf7f0, padding: 64px clamp(32px,4vw,80px), display flex flex-col justify-center
+// Pull quote (Cormorant Garamond 700 italic, clamp(22px,3vw,40px), #221408, line-height 1.4, border-left 3px solid #b5694a, padding-left 20px):
+// &quot;I make work that holds things — water, light, memory.&quot;
+
+// Name chip: bg: #b5694a, color: #faf7f0, Plus Jakarta 400, 12px, letter-spacing 0.08em, px-3 py-1, inline-block, margin-top 20px
+// &quot;CHARLOTTE REID — POTTER &amp; FOUNDER&quot;
+
+// Bio: Cormorant Garamond 300 italic, 17px, #7a6a58, margin-top 20px, line-height 1.75
+// &quot;Every piece is made in my Margate studio. Thrown, trimmed, dried, bisque fired, glazed by hand, and kiln fired. No shortcuts. Just clay, time, and hands.&quot;
+
+// Second bio paragraph:
+// &quot;I&#39;m Charlotte Reid. I&#39;ve been making in Margate since 2018. Before ceramics, I worked in graphic design. I left that world to make things with my hands, and I haven&#39;t looked back.&quot;
+
+// Location note: Plus Jakarta 300, 13px, #9a8a7a, margin-top 16px: &quot;Studio visits by appointment · Margate Old Town · Margate, Kent&quot;
+```
+
+### 6. Class Schedule
+```tsx
+// Section bg: #f5f0e8, padding: 80px clamp(24px,6vw,96px)
+// Headline: Cormorant Garamond 700 italic, clamp(28px,4vw,56px), #221408, margin-bottom 48px: &quot;Upcoming Workshops&quot;
+
+// 2-column table layout: date column (40%) + details column (60%)
+// Header row: Plus Jakarta 400, 11px, uppercase, letter-spacing 0.14em, #9a8a7a, border-bottom 1px solid #d8c8b0, padding-bottom 12px
+// &quot;DATE&quot; / &quot;WORKSHOP · SPACES&quot;
+
+// 8 workshop rows, each: flex justify-between, border-bottom 1px solid #e8d8c0, padding 16px 0
+// Left: Cormorant Garamond 400, 16px, #221408 — date / Plus Jakarta 300, 13px, #9a8a7a — day
+// Center: Cormorant Garamond 400, 16px, #221408 — workshop name
+// Right: Plus Jakarta 300, 13px, #b5694a — spaces available + link &quot;Book&quot;
+
+// Row 1: &quot;15 Jan&quot; / Wed / &quot;Wheel Throwing&quot; / &quot;4 spaces · Book&quot;
+// Row 2: &quot;18 Jan&quot; / Sat / &quot;Hand Building&quot; / &quot;6 spaces · Book&quot;
+// Row 3: &quot;22 Jan&quot; / Wed / &quot;Wheel Throwing&quot; / &quot;2 spaces · Book&quot;
+// Row 4: &quot;25 Jan&quot; / Sat / &quot;Glazing &amp; Firing&quot; / &quot;3 spaces · Book&quot;
+// Row 5: &quot;29 Jan&quot; / Wed / &quot;Wheel Throwing&quot; / &quot;Full&quot;
+// Row 6: &quot;1 Feb&quot; / Sat / &quot;Hand Building&quot; / &quot;5 spaces · Book&quot;
+// Row 7: &quot;5 Feb&quot; / Wed / &quot;Wheel Throwing&quot; / &quot;6 spaces · Book&quot;
+// Row 8: &quot;8 Feb&quot; / Sat / &quot;Glazing &amp; Firing&quot; / &quot;Full&quot;
+
+// &quot;Full&quot; rows: color #c0a890, cursor: not-allowed
+// &quot;Book&quot; links: Plus Jakarta 400, 13px, #b5694a
+
+// Note below: Cormorant Garamond 300 italic, 15px, #9a8a7a: &quot;Gift vouchers available for all workshops.&quot;
+```
+
+### 7. Commission Section — Dark Earth
+```tsx
+// Section bg: #221408 (deep earth), padding: 80px clamp(24px,6vw,96px)
+// Split: left content, right decorative image
+
+// Left (60% on desktop, full on mobile):
+// Small label: Plus Jakarta 400, 11px, letter-spacing 0.18em, uppercase, color: #b5694a, margin-bottom 20px
+// &quot;COMMISSIONS &amp; BESPOKE WORK&quot;
+// Headline: Cormorant Garamond 700 italic, clamp(28px,4.5vw,64px), #faf7f0, line-height 1.15
+// &quot;Have something specific in mind?&quot;
+// Body: Cormorant Garamond 300 italic, 17px, #c0a890, margin-top 20px, line-height 1.8
+// &quot;I take commissions year-round for tableware sets, bespoke gifts, and sculptural works. Each commission starts with a conversation — to understand the use, the recipient, and what you&#39;re hoping to hold.&quot;
+// Second para: &quot;Typical turnaround is 6-8 weeks from sign-off. Prices from £150 for single pieces, from £350 for tableware sets.&quot;
+// Button: bg: #b5694a, color: #faf7f0, Plus Jakarta 400, 14px, px-7 py-3.5, border-radius: 0, margin-top 32px
+// &quot;Enquire About a Commission&quot;
+// Hover: bg: #9a5038, 0.2s
+
+// Right (40%): Decorative stack of finished ceramic pieces image:
+{/* Image: Stack of hand-thrown ceramic bowls in earthy matte glazes — stacked off-centre, warm earthy brown, sage green, and cream glazes visible, dark minimal background, product photography, studio lighting showing glaze texture and form */}
+&lt;img src=&quot;&quot; alt=&quot;Stacked handmade ceramic bowls in earthen glazes&quot; style={{ width: &#39;100%&#39;, aspectRatio: &#39;4/5&#39;, objectFit: &#39;cover&#39;, objectPosition: &#39;center&#39;, opacity: 0.9 }} /&gt;
+```
+
+### 8. Testimonial
+```tsx
+// Section bg: #faf7f0, padding: 64px clamp(24px,6vw,96px), text-align center
+// Cormorant Garamond 700 italic, clamp(24px,3.5vw,48px), #221408, max-width 640px, margin auto
+// &quot;My Christmas present to myself. The Wheel Throwing workshop was two of the best hours I&#39;ve spent.&quot;
+// Plus Jakarta 300, 15px, #b5694a, margin-top 20px: &quot;— Emma W. · Workshop participant&quot;
+```
+
+### 9. Footer
+```tsx
+// bg: #221408, border-top: 1px solid rgba(181,105,74,0.2), padding: 48px clamp(24px,6vw,96px) 32px
+// 3 columns: Brand / Navigate / Studio
+// &quot;Clay &amp; Form&quot; Cormorant 400 italic, 18px, #faf7f0 + Cormorant 300 italic 14px #9a8a7a &quot;Handmade ceramics · Margate&quot;
+// Navigate: Plus Jakarta 300, 14px, #9a8a7a — Shop / Workshops / About / Commission / Gift Vouchers
+// Studio: Plus Jakarta 300, 14px, #9a8a7a — &quot;Margate Old Town&quot; / &quot;By appointment&quot; / &quot;hello@clayandform.co.uk&quot;
+// Copyright: &quot;© 2025 Clay &amp; Form. Charlotte Reid.&quot; Plus Jakarta 300, 12px, #5a4030
+```
+
+## Animations
+
+| Element | Animation | Duration | Delay | Easing |
+|---|---|---|---|---|
+| Navbar | y: -64→0, opacity 0→1 | 0.5s | 0s | ease-out |
+| Hero headline | opacity 0→1, x -30→0 | 0.7s | 0.1s | ease-out |
+| Hero sub | opacity 0→1, y 20→0 | 0.6s | 0.3s | ease-out |
+| Hero CTAs | opacity 0→1, y 20→0 | 0.6s | 0.5s | ease-out |
+| Workshop cards | whileInView scale 0.95→1, opacity 0→1, stagger 0.12s | 0.6s | scroll | [0.25,0.46,0.45,0.94] |
+| Workshop card hover | y: -4px, box-shadow | 0.25s | 0s | ease-out |
+| Collection rows | whileHover y:-3px, clay border+glow | 0.2s | 0s | ease-out |
+| Commission section | whileInView opacity 0→1, y 24→0 | 0.6s | scroll | ease-out |
+| CTA button | whileHover bg darken | 0.2s | 0s | ease-out |
+
+## Responsive
+
+- **Mobile (&lt;768px)**: Hero stacks (photo above, content below), workshop cards 1-col, collection rows simplify, artist split stacks, schedule simplifies to key columns, commission section single column
+- **Tablet**: Workshop cards 2+1, artist split keeps ratio
+- **Desktop**: Full split hero (45/55), all sections full-width as described
+
+## Full Copy
+
+**Brand**: Clay &amp; Form
+
+**Navbar**: Clay &amp; Form / Shop / Workshops / About / Commission
+
+**Hero**:
+- Kicker: &quot;Handmade Ceramics &amp; Pottery Workshops · Margate&quot;
+- Headline: &quot;Every Piece Begins as Possibility.&quot;
+- Sub: &quot;Handmade ceramics and pottery workshops in Margate. Every piece thrown, hand-built, and glazed in the studio.&quot;
+- CTA 1: &quot;Browse the Shop&quot;
+- CTA 2: &quot;Book a Workshop&quot;
+- Note: &quot;Charlotte Reid · Studio open by appointment · Margate Old Town&quot;
+
+**Workshops**:
+- Wheel Throwing: £75/person / 2hrs / Up to 6 people / &quot;The most popular workshop. Learn to centre clay, open, and throw your first pot on the wheel. You&#39;ll make 2-3 pieces to take home after firing.&quot;
+- Hand Building: £65/person / 2hrs / Up to 8 people / &quot;No wheel required. Pinch pots, coil building, and slab construction. Perfect for those who prefer a more meditative, tactile process.&quot;
+- Glazing &amp; Firing: £45/person / 1hr / Existing pieces / &quot;Bring existing unfired work, or use studio bisqueware. Experiment with our glaze palette and leave the rest to us.&quot;
+
+**Collections**:
+- Tableware: &quot;Bowls, mugs, plates, and platters. Made to be used daily. Dishwasher safe.&quot; — from £28
+- Decorative Vessels: &quot;Vases, jugs, and storage jars. Each one unique from throwing.&quot; — from £45
+- Sculptural Works: &quot;Wall pieces, sculptural forms, and one-off works.&quot; — from £120
+
+**Artist statement**:
+- Pull quote: &quot;I make work that holds things — water, light, memory.&quot;
+- Name: &quot;CHARLOTTE REID — POTTER &amp; FOUNDER&quot;
+- Bio 1: &quot;Every piece is made in my Margate studio. Thrown, trimmed, dried, bisque fired, glazed by hand, and kiln fired. No shortcuts. Just clay, time, and hands.&quot;
+- Bio 2: &quot;I&#39;m Charlotte Reid. I&#39;ve been making in Margate since 2018. Before ceramics, I worked in graphic design. I left that world to make things with my hands, and I haven&#39;t looked back.&quot;
+- Location: &quot;Studio visits by appointment · Margate Old Town · Margate, Kent&quot;
+
+**Schedule** (8 workshops in Jan/Feb — see section 6 above)
+
+**Commission**: &quot;Have something specific in mind?&quot; / &quot;I take commissions year-round for tableware sets, bespoke gifts, and sculptural works. Each commission starts with a conversation — to understand the use, the recipient, and what you&#39;re hoping to hold.&quot; / &quot;Typical turnaround is 6-8 weeks from sign-off. Prices from £150 for single pieces, from £350 for tableware sets.&quot; / &quot;Enquire About a Commission&quot;
+
+**Testimonial**: &quot;My Christmas present to myself. The Wheel Throwing workshop was two of the best hours I&#39;ve spent.&quot; — Emma W. · Workshop participant
+
+**Contact**: Margate Old Town / By appointment / hello@clayandform.co.uk
+
+## Key Dependencies
+```json
+{
+  &quot;dependencies&quot;: {
+    &quot;react&quot;: &quot;^18&quot;,
+    &quot;framer-motion&quot;: &quot;^11&quot;,
+    &quot;lucide-react&quot;: &quot;latest&quot;,
+    &quot;@shadcn/ui&quot;: &quot;latest&quot;,
+    &quot;tailwindcss&quot;: &quot;^3&quot;
+  }
+}
+```
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

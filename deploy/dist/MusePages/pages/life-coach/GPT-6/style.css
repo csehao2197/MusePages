@@ -1,0 +1,439 @@
+:root
+{
+    --paper: #faf8f4; --ink: #292331; --plum: #5a3480; --gold: #9c6a22; --muted: #716779; --line: #d9d1c6; --linen: #eee9e1;
+    color: var(--ink); background: var(--paper); font-family: Arial, Helvetica, sans-serif;
+}
+*
+{
+    box-sizing: border-box;
+}
+body
+{
+    margin: 0;
+}
+html
+{
+    scroll-behavior: smooth; scroll-padding-top: 95px;
+}
+a
+{
+    color: inherit; text-decoration: none;
+}
+button, input, select, textarea
+{
+    font: inherit;
+}
+button
+{
+    cursor: pointer;
+}
+:focus-visible
+{
+    outline: 2px solid #b58235; outline-offset: 5px;
+}
+header
+{
+    display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 21px 5%; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: #faf8f4f5; z-index: 20;
+}
+.brand
+{
+    font: italic 37px Georgia, serif; color: var(--plum);
+}
+.brand span
+{
+    display: block; font: 6px Arial, sans-serif; letter-spacing: 1.8px; margin-top: 5px;
+}
+nav
+{
+    display: flex; gap: 30px; font-size: 11px;
+}
+.button
+{
+    display: inline-flex; align-items: center; justify-content: center; padding: 17px 22px; background: var(--plum); color: white; border: 0; font-size: 12px; gap: 20px;
+}
+.mini
+{
+    padding: 13px 18px; font-size: 10px;
+}
+#menu
+{
+    display: none;
+}
+.wrap
+{
+    width: min(1080px, calc(100% - 60px)); margin: auto;
+}
+.hero
+{
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 70px; padding: 70px 0 90px; align-items: center;
+}
+.eyebrow
+{
+    color: var(--plum); font-size: 9px; font-weight: 700; letter-spacing: 1.8px; line-height: 1.9;
+}
+h1, h2, h3
+{
+    font-family: Georgia, serif; font-weight: 400;
+}
+h1
+{
+    font-size: clamp(47px, 5.7vw, 75px); line-height: 1.08; letter-spacing: -2.7px; margin: 25px 0;
+}
+em
+{
+    color: var(--gold); font-weight: 400;
+}
+h2
+{
+    font-size: clamp(36px, 4vw, 52px); line-height: 1.2; margin: 20px 0 30px; letter-spacing: -1.5px;
+}
+h3
+{
+    font-size: 27px; line-height: 1.3;
+}
+p
+{
+    line-height: 1.85; font-size: 14px;
+}
+.intro
+{
+    font: 21px/1.6 Georgia, serif;
+}
+.muted, .fine
+{
+    color: var(--muted);
+}
+.fine
+{
+    font-size: 10px;
+}
+.actions
+{
+    display: flex; align-items: center; gap: 24px; flex-wrap: wrap; margin: 28px 0;
+}
+.text-link
+{
+    font-size: 11px; color: var(--plum); background: none; border: 0; border-bottom: 1px solid #9a7cae; padding: 10px 0; text-align: left;
+}
+.art
+{
+    position: relative; padding-bottom: 40px;
+}
+.portrait
+{
+    position: relative; height: 525px; background: #d7cebe; overflow: hidden;
+}
+.sun
+{
+    position: absolute; width: 340px; height: 420px; border-radius: 50% 50% 0 0; background: #ede7d7; left: 20%; top: -50px; border: 20px solid #c1b59e; box-shadow: -45px 20px 0 #e4dccb;
+}
+.head
+{
+    position: absolute; width: 125px; height: 170px; background: #d9b89d; border-radius: 55% 45% 45% 40%; top: 110px; left: 38%; border-top: 22px solid #6c5241; border-left: 20px solid #6c5241; transform: rotate(7deg);
+}
+.body
+{
+    position: absolute; width: 76%; height: 300px; background: #74695b; border-radius: 48% 48% 0 0; top: 270px; left: 21%; transform: rotate(-8deg);
+}
+.plant
+{
+    position: absolute; width: 120px; height: 190px; background: #687953; clip-path: polygon(48% 100%, 42% 60%, 0 25%, 45% 39%, 39% 0, 62% 35%, 95% 15%, 66% 63%, 56% 100%); bottom: 0; left: 0;
+}
+.portrait > span
+{
+    position: absolute; left: 23px; bottom: 40px; font: 10px/1.6 Arial, sans-serif; color: white; letter-spacing: 3px;
+}
+.portrait > span em
+{
+    font: italic 62px Georgia, serif; color: white; letter-spacing: -2px;
+}
+.quote-note
+{
+    background: var(--plum); color: white; font: 23px/1.5 Georgia, serif; padding: 22px 30px; position: absolute; right: -20px; bottom: 0; transform: rotate(-4deg); box-shadow: 0 7px 15px #3c254522;
+}
+.quote-note em
+{
+    color: #efcf97;
+}
+.quote-note small
+{
+    display: block; font: 7px/2 Arial, sans-serif; letter-spacing: 1.4px; margin-top: 12px;
+}
+.art-label
+{
+    position: absolute; top: 15px; left: 15px; font-size: 6px; letter-spacing: 1px;
+}
+.transformation
+{
+    background: var(--linen); border-top: 1px solid #bc9553; padding: 30px 0;
+}
+.transformation .wrap
+{
+    display: flex; justify-content: space-between; gap: 30px; font-size: 11px;
+}
+.transformation em
+{
+    font: italic 28px Georgia, serif; margin-right: 10px;
+}
+.section
+{
+    padding-top: 80px; padding-bottom: 80px;
+}
+.heading-row
+{
+    display: flex; justify-content: space-between; gap: 40px; align-items: center;
+}
+.programmes
+{
+    margin: 25px 0;
+}
+.programmes button
+{
+    display: grid; grid-template-columns: 35px 1.3fr 1fr 30px; gap: 20px; align-items: center; width: 100%; padding: 25px 15px; border: 0; border-bottom: 1px solid var(--line); background: transparent; text-align: left; color: var(--ink);
+}
+.programmes button[aria-pressed="true"], .programmes button:hover
+{
+    background: var(--linen);
+}
+.programmes h3
+{
+    margin: 10px 0;
+}
+.programmes span, .programmes b
+{
+    color: var(--gold); font-size: 12px;
+}
+.programmes p
+{
+    color: var(--muted); font-size: 12px;
+}
+.programme-detail
+{
+    font-size: 13px; line-height: 1.8; max-width: 760px; color: var(--muted);
+}
+.stories
+{
+    background: var(--linen);
+}
+.story-grid
+{
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 35px; margin-top: 40px;
+}
+.story-grid article
+{
+    border-top: 1px solid #b6a393; padding: 25px 0;
+}
+.story-grid span, .story-grid small
+{
+    font-size: 8px; letter-spacing: 1px; color: var(--plum);
+}
+.story-grid h3
+{
+    color: var(--plum);
+}
+.story-grid p
+{
+    color: var(--muted); font-size: 12px;
+}
+.about, .podcast-grid, .reflection
+{
+    display: grid; grid-template-columns: 1fr 1fr; gap: 85px; align-items: center;
+}
+.about-art
+{
+    background: #e7ddd0; min-height: 470px; padding: 40px; position: relative; overflow: hidden;
+}
+.about-art > span
+{
+    font-size: 12px; letter-spacing: 2px; position: relative; z-index: 2;
+}
+.about-art em
+{
+    display: block; font: italic 64px Georgia, serif; color: var(--plum); letter-spacing: -3px;
+}
+.about-art i
+{
+    position: absolute; width: 250px; height: 290px; border: 1px solid #99754f; border-radius: 50% 50% 0 0; bottom: 0; left: 28%; box-shadow: -35px 0 0 #d9c9b3, 35px 0 0 #c6b09b;
+}
+.about-art small
+{
+    position: absolute; bottom: 25px; left: 30px; font-size: 8px; letter-spacing: 2px; z-index: 3;
+}
+.podcast
+{
+    background: #e9e2ed;
+}
+.episodes
+{
+    margin-top: 30px;
+}
+.episodes button
+{
+    width: 100%; background: transparent; color: var(--plum); border: 0; border-top: 1px solid #b7a3c4; padding: 20px 0; font: italic 17px/1.5 Georgia, serif; text-align: left;
+}
+.episodes button[aria-pressed="true"]
+{
+    font-weight: bold;
+}
+.episode-panel
+{
+    min-height: 420px; background: var(--plum); padding: 35px; color: white;
+}
+.episode-panel .eyebrow
+{
+    color: #e5c998;
+}
+.episode-panel p
+{
+    font-size: 13px;
+}
+.episode-panel > span
+{
+    display: block; border-top: 1px solid #a48ab4; margin-top: 35px; padding-top: 30px; font-size: 12px; letter-spacing: 2px;
+}
+.episode-panel em
+{
+    display: block; color: #e5c998; font: italic 29px/1.7 Georgia, serif; letter-spacing: 0;
+}
+form
+{
+    border: 1px solid var(--line); padding: 30px;
+}
+label
+{
+    display: block; font-size: 11px; line-height: 1.8; margin-bottom: 20px;
+}
+input:not([type="checkbox"]), select, textarea
+{
+    width: 100%; padding: 13px; background: var(--paper); color: var(--ink); border: 1px solid #b8acbb; margin-top: 8px; min-width: 0;
+}
+.checkbox
+{
+    display: flex; align-items: center; gap: 10px;
+}
+output
+{
+    display: block; font-size: 12px; line-height: 1.8; margin: 20px 0; overflow-wrap: anywhere;
+}
+.call
+{
+    background: var(--plum); color: white; padding: 70px 0; text-align: center;
+}
+.call .eyebrow, .call em
+{
+    color: #ecd3a7;
+}
+.call form
+{
+    max-width: 580px; margin: 35px auto 0; text-align: left; border-color: #9f80b2;
+}
+.light
+{
+    background: var(--paper); color: var(--plum); width: 100%;
+}
+footer
+{
+    padding: 45px 0; background: #25202c; color: #d3cbd9;
+}
+footer .brand
+{
+    color: #e9d8bd;
+}
+footer p
+{
+    font-size: 10px;
+}
+@media (max-width: 767px)
+{
+    header
+    {
+        padding: 15px 20px; flex-wrap: wrap; gap: 10px;
+    }
+    .brand
+    {
+        font-size: 31px;
+    }
+    .brand span
+    {
+        font-size: 5px;
+    }
+    #menu
+    {
+        display: block; margin-left: auto; border: 0; background: none; color: var(--plum);
+    }
+    .mini
+    {
+        font-size: 8px; padding: 12px;
+    }
+    nav
+    {
+        display: none; width: 100%; order: 4; justify-content: space-between; gap: 10px; padding: 12px 0;
+    }
+    nav.open
+    {
+        display: flex;
+    }
+    .wrap
+    {
+        width: calc(100% - 40px);
+    }
+    .hero, .about, .podcast-grid, .reflection, .story-grid
+    {
+        grid-template-columns: 1fr; gap: 35px;
+    }
+    .hero
+    {
+        padding: 35px 0 60px;
+    }
+    h1
+    {
+        font-size: 52px; letter-spacing: -2px;
+    }
+    .portrait
+    {
+        height: 430px;
+    }
+    .quote-note
+    {
+        right: 0; padding: 20px; font-size: 20px;
+    }
+    .transformation .wrap
+    {
+        flex-direction: column; gap: 20px;
+    }
+    .section
+    {
+        padding-top: 50px; padding-bottom: 50px;
+    }
+    .heading-row
+    {
+        display: block;
+    }
+    .programmes button
+    {
+        grid-template-columns: 25px 1fr 20px; gap: 10px; padding: 20px 10px;
+    }
+    .programmes p
+    {
+        grid-column: 2; grid-row: 2; margin: 0;
+    }
+    .programmes h3
+    {
+        font-size: 24px;
+    }
+    .about-art
+    {
+        min-height: 380px;
+    }
+    form, .episode-panel
+    {
+        padding: 23px;
+    }
+}
+@media (prefers-reduced-motion: reduce)
+{
+    html
+    {
+        scroll-behavior: auto;
+    }
+}

@@ -1,0 +1,510 @@
+:root
+{
+    --sand: #f2e8d5; --ink: #25291f; --green: #2a5c45; --terra: #a45433; --line: #c9c0aa; --muted: #656c5c; --light: #faf5e9;
+}
+*
+{
+    box-sizing: border-box;
+}
+html
+{
+    scroll-behavior: smooth;
+}
+body
+{
+    margin: 0; background: var(--sand); color: var(--ink); font: 15px/1.8 "Segoe UI", Arial, sans-serif;
+}
+a
+{
+    color: inherit; text-decoration: none;
+}
+button, input, select, textarea
+{
+    font: inherit;
+}
+button, summary
+{
+    cursor: pointer;
+}
+:focus-visible
+{
+    outline: 3px solid #b66b3c; outline-offset: 4px;
+}
+.wrap
+{
+    width: min(1080px, calc(100% - 96px)); margin-inline: auto;
+}
+header
+{
+    position: sticky; top: 0; z-index: 20; background: #f2e8d5f5; border-bottom: 1px solid var(--line); backdrop-filter: blur(7px);
+}
+nav
+{
+    min-height: 85px; display: flex; justify-content: space-between; align-items: center; gap: 20px;
+}
+.brand
+{
+    font: italic 19px/1.05 Georgia, serif; color: var(--green); display: inline-flex; gap: 10px; align-items: center;
+}
+.brand b
+{
+    font-weight: 400;
+}
+#nav
+{
+    display: flex; gap: 30px; color: #59604f; font-size: 12px;
+}
+#menu
+{
+    display: none;
+}
+.button, .ghost
+{
+    display: inline-flex; justify-content: center; align-items: center; background: var(--green); color: #fcf8ed; border: 1px solid transparent; padding: 14px 23px; border-radius: 30px; font-size: 12px; font-weight: 600;
+}
+.ghost
+{
+    background: transparent; color: var(--green); border-color: #70816a;
+}
+section
+{
+    padding-block: 85px; scroll-margin-top: 85px;
+}
+.hero
+{
+    display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; padding-block: 65px;
+}
+.eyebrow
+{
+    color: var(--terra); font-size: 9px; font-weight: 650; letter-spacing: .18em; margin: 0 0 25px;
+}
+h1, h2, h3
+{
+    font-family: Georgia, "Times New Roman", serif; font-style: italic; font-weight: 400; letter-spacing: -.045em; line-height: 1.1;
+}
+h1
+{
+    font-size: clamp(46px, 5.6vw, 70px); margin: 0 0 25px;
+}
+em
+{
+    color: var(--green);
+}
+.hero p:not(.eyebrow)
+{
+    font-size: 14px; color: var(--muted);
+}
+.actions
+{
+    display: flex; gap: 12px; margin-block: 30px;
+}
+.chips
+{
+    display: flex; flex-wrap: wrap; gap: 8px;
+}
+.chips span
+{
+    font-size: 9px; background: #e5ddc8; border: 1px solid #cec7af; border-radius: 20px; padding: 5px 12px; color: #5b654d;
+}
+figure
+{
+    position: relative; margin: 0;
+}
+figure img
+{
+    width: 100%; aspect-ratio: .88; object-fit: cover; display: block; border-radius: 150px 150px 20px 20px;
+}
+figcaption
+{
+    font-size: 7px; color: #69715c; margin-top: 12px; letter-spacing: .08em;
+}
+.field-note
+{
+    position: absolute; bottom: 60px; right: -15px; background: #f6f0dc; padding: 17px 25px; transform: rotate(5deg); font: italic 25px/1.1 Georgia, serif; box-shadow: 0 4px 12px #474b2912;
+}
+h2
+{
+    font-size: clamp(34px, 4.1vw, 50px); margin: 0 0 28px;
+}
+.section-head
+{
+    display: flex; justify-content: space-between; align-items: end; gap: 35px;
+}
+.section-head p
+{
+    font-size: 13px; color: var(--muted);
+}
+.light
+{
+    background: var(--light);
+}
+.programs
+{
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 35px;
+}
+.program
+{
+    background: #eee5d1; border: 1px solid #d5cfba; border-radius: 24px; padding: 30px; display: flex; flex-direction: column; min-width: 0;
+}
+.program .symbol
+{
+    font: italic 36px/1.1 Georgia, serif; color: #84936a; height: 95px; display: flex; align-items: center; border-bottom: 1px solid #c9c3aa; margin-bottom: 22px; overflow-wrap: anywhere;
+}
+.program > span
+{
+    font-size: 10px; color: var(--green);
+}
+.program h3
+{
+    font-size: 29px; margin: 15px 0;
+}
+.program p, .program li
+{
+    font-size: 12px; color: #5d6753;
+}
+.program p
+{
+    flex-grow: 1;
+}
+.program ul
+{
+    padding-left: 17px; margin-block: 15px 25px;
+}
+.program button
+{
+    border: 1px solid #658063; background: none; color: var(--green); padding: 11px; border-radius: 25px; font-size: 11px;
+}
+.finder
+{
+    background: #dce1cb;
+}
+.finder-grid
+{
+    display: grid; grid-template-columns: 1fr 1fr; gap: 90px; align-items: center;
+}
+.finder p:not(.eyebrow)
+{
+    font-size: 13px; color: #52624b;
+}
+.text-link
+{
+    color: var(--green); text-decoration: underline; font-size: 12px;
+}
+.method, .trainer
+{
+    display: grid; grid-template-columns: 1fr 1fr; gap: 90px; align-items: center;
+}
+.method p:not(.eyebrow), .trainer p:not(.eyebrow)
+{
+    font-size: 14px; color: var(--muted);
+}
+.method-art
+{
+    background: #c9d1b3; padding: 45px; border-radius: 20px;
+}
+.method-art > span
+{
+    display: block; font-size: 54px; letter-spacing: -.055em; font-weight: 700; line-height: 1.02; color: #36573b;
+}
+.method-art svg
+{
+    width: 100%; margin-top: 30px;
+}
+.method-art > p
+{
+    font-size: 8px !important; color: #40573b !important; letter-spacing: .12em;
+}
+.trainer
+{
+    grid-template-columns: .8fr 1.2fr;
+}
+.trainer-monogram
+{
+    border: 1px solid #9cad8c; width: 300px; height: 300px; border-radius: 50%; display: flex; justify-content: center; align-items: center; flex-direction: column; font: italic 100px/1 Georgia, serif; color: var(--green); background: #e7e7d2;
+}
+.trainer-monogram span
+{
+    display: block; font: 7px/2 "Segoe UI", sans-serif; letter-spacing: .06em; margin-top: 25px;
+}
+blockquote
+{
+    margin: 25px 0; border-left: 2px solid var(--green); padding-left: 20px; font: italic 25px/1.4 Georgia, serif;
+}
+.fine
+{
+    font-size: 10px !important; color: var(--muted);
+}
+.center
+{
+    text-align: center;
+}
+.journey-track
+{
+    position: relative; margin-top: 65px;
+}
+.dotted
+{
+    position: absolute; top: 25px; left: 30px; right: 30px; border-top: 2px dashed #b5b79e;
+}
+#journey-dog
+{
+    position: absolute; top: -12px; left: 0; color: #bc704c; z-index: 3; transition: transform .3s ease-out;
+}
+.stages
+{
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; position: relative;
+}
+.stages button
+{
+    padding: 0 10px; border: 0; background: none; color: var(--ink); text-align: center;
+}
+.stages b
+{
+    display: grid; place-items: center; width: 50px; height: 50px; border-radius: 100%; background: var(--light); border: 1px solid #9aa98e; margin: 0 auto; color: #5d7455; font-size: 12px; font-weight: 400;
+}
+.stages [aria-pressed="true"] b
+{
+    background: var(--green); color: white; border-color: var(--green);
+}
+.stages h3
+{
+    font-size: 24px; margin-bottom: 15px;
+}
+.stages span
+{
+    display: block; font-size: 12px; color: #69715d;
+}
+.stage-copy
+{
+    background: #e6e5d1; padding: 18px; border-radius: 12px; margin-top: 35px; text-align: center; font-size: 12px; color: #4a6047;
+}
+.pricing
+{
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 40px;
+}
+.pricing article
+{
+    border-top: 1px solid #aeb99b; padding-top: 20px;
+}
+.pricing h3
+{
+    font-size: 26px;
+}
+.pricing strong
+{
+    font-size: 30px; color: var(--green); font-weight: 500;
+}
+.pricing small
+{
+    font-size: 11px; color: #6a735f;
+}
+.pricing p
+{
+    font-size: 12px; color: var(--muted);
+}
+.faq
+{
+    background: #e3dcc7;
+}
+.narrow
+{
+    max-width: 760px;
+}
+details
+{
+    background: #f7f1e2; padding: 18px 23px; border: 1px solid #ccc9b2; border-radius: 15px; margin-top: 12px;
+}
+summary
+{
+    font-size: 14px; font-weight: 500;
+}
+details p
+{
+    font-size: 13px; color: var(--muted);
+}
+.booking
+{
+    display: grid; grid-template-columns: 1fr 1fr; gap: 95px;
+}
+.booking > div > p
+{
+    font-size: 13px; color: #636f58;
+}
+.estimate
+{
+    background: #e3e3cc; padding: 25px; border-radius: 15px; margin-top: 35px;
+}
+.estimate span, .estimate small
+{
+    display: block; font-size: 9px; color: #5d6b51;
+}
+.estimate strong
+{
+    display: block; font: italic 27px/1.2 Georgia, serif; color: var(--green); margin-block: 15px;
+}
+form
+{
+    display: grid; gap: 17px;
+}
+.two
+{
+    display: grid; grid-template-columns: 1fr 1fr; gap: 15px;
+}
+label
+{
+    font-size: 11px; color: #506044;
+}
+input, select, textarea
+{
+    width: 100%; min-width: 0; padding: 12px; background: #faf7ed; color: var(--ink); border: 1px solid #b7c0a3; border-radius: 8px; margin-top: 6px;
+}
+textarea
+{
+    resize: vertical;
+}
+#status, #finder-status
+{
+    font-size: 12px; color: var(--green); margin: 0;
+}
+footer
+{
+    background: #21281f; padding-block: 50px; color: #e2e8d6;
+}
+footer .brand
+{
+    color: #e9eddc; font-size: 27px;
+}
+footer p
+{
+    color: #b7c1aa; font-size: 12px;
+}
+footer > div > div
+{
+    display: flex; gap: 30px; font-size: 11px; margin-block: 25px;
+}
+footer small
+{
+    font-size: 9px; color: #9faa91;
+}
+@media (max-width: 760px)
+{
+    .wrap
+    {
+        width: calc(100% - 40px);
+    }
+    nav
+    {
+        min-height: 75px; gap: 10px;
+    }
+    .brand
+    {
+        font-size: 16px; gap: 5px;
+    }
+    .brand svg
+    {
+        width: 25px;
+    }
+    nav .button
+    {
+        padding: 10px 12px; font-size: 9px;
+    }
+    #menu
+    {
+        display: block; margin-left: auto; border: 0; background: none; color: var(--green); font-size: 10px;
+    }
+    #nav
+    {
+        display: none; position: absolute; inset: 75px 0 auto; flex-direction: column; padding: 25px; background: #e9e3ce;
+    }
+    #nav.open
+    {
+        display: flex;
+    }
+    section
+    {
+        padding-block: 60px;
+    }
+    .hero, .programs, .finder-grid, .method, .trainer, .pricing, .booking
+    {
+        grid-template-columns: 1fr; gap: 30px;
+    }
+    .hero
+    {
+        padding-block: 50px;
+    }
+    h1
+    {
+        font-size: 53px;
+    }
+    .hero p br
+    {
+        display: none;
+    }
+    .hero .eyebrow
+    {
+        font-size: 8px;
+    }
+    .actions
+    {
+        flex-wrap: wrap;
+    }
+    .actions .button, .actions .ghost
+    {
+        padding: 12px 17px; font-size: 10px;
+    }
+    figure img
+    {
+        aspect-ratio: 1.1; border-radius: 110px 110px 15px 15px;
+    }
+    .field-note
+    {
+        right: 10px; bottom: 40px; font-size: 21px;
+    }
+    .section-head
+    {
+        display: block;
+    }
+    .program .symbol
+    {
+        height: 75px;
+    }
+    .trainer-monogram
+    {
+        width: 250px; height: 250px; margin-inline: auto; font-size: 85px;
+    }
+    .stages
+    {
+        grid-template-columns: 1fr; gap: 25px; padding-left: 25px; border-left: 2px dashed #b5b79e;
+    }
+    .stages button
+    {
+        text-align: left; position: relative; padding: 0 0 15px;
+    }
+    .stages b
+    {
+        margin: 0; height: 35px; width: 35px; font-size: 10px;
+    }
+    .stages h3
+    {
+        margin-top: 15px;
+    }
+    .dotted, #journey-dog
+    {
+        display: none;
+    }
+    .two
+    {
+        grid-template-columns: 1fr;
+    }
+}
+@media (prefers-reduced-motion: reduce)
+{
+    html
+    {
+        scroll-behavior: auto;
+    }
+    *
+    {
+        transition: none !important;
+    }
+}

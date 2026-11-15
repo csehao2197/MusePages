@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Build your connected workspace with TaskFlow's curated integration marketplace.">
+    <title>TaskFlow Connect — Integrations</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="app.js"></script>
+</head>
+<body>
+    <header><a class="brand" href="index.html"><span>↗</span> TaskFlow <small>CONNECT</small></a><nav aria-label="Main"><a href="#marketplace">Explore apps</a><button id="request">Request an integration ↗</button></nav><span class="workspace-name"><i></i> Studio North</span></header>
+    <main>
+        <section class="hero"><div><div class="eyebrow">YOUR TOOLS. BETTER TOGETHER.</div><h1>Integrations<span>Less switching.<br>More <em>connecting.</em></span></h1><p>Connect TaskFlow with your favorite tools.<br>Make your workflow work for you.</p><label class="search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input id="search" type="search" placeholder="Find your next connection..." aria-label="Search integrations"><kbd>⌕</kbd></label><small>Explore 16 curated app previews. No account authorization required.</small></div><div class="network-art" aria-hidden="true"><div class="ring r1"></div><div class="ring r2"></div><b class="core">↗</b><span class="node n1">#</span><span class="node n2">GH</span><span class="node n3">G</span><span class="node n4">F</span><span class="node n5">N</span></div></section>
+        <section class="featured"><div class="section-top"><div><div class="eyebrow">A FEW CROWD FAVORITES</div><h2>Small connections. Big possibilities.</h2></div><span>CURATED BY TASKFLOW</span></div><div id="featured-list"></div></section>
+        <section class="marketplace" id="marketplace"><aside><div class="eyebrow">EXPLORE THE ECOSYSTEM</div><div id="categories"></div><div class="filter-group"><h3>Availability</h3><label><input type="checkbox" id="free"> Free</label><label><input type="checkbox" id="premium"> Premium</label></div><div class="filter-group"><h3>Built by</h3><label><input type="checkbox" id="official"> Official</label><label><input type="checkbox" id="community"> Community</label></div><button id="reset">Reset filters</button><div class="developer-note"><b>Build something<br>that connects.</b><p>Meet the TaskFlow API.</p><button id="api">Developer quickstart ↗</button></div></aside><div class="catalog"><div class="catalog-heading"><h2 id="catalog-title">All integrations <small id="count"></small></h2><label>Sort by <select id="sort"><option value="popular">Most popular</option><option value="newest">Newest</option></select></label></div><p class="catalog-note">Your next great workflow is one connection away.</p><div id="apps"></div><div id="empty" hidden><h3>No connections found.</h3><p>Try a different search or reset your filters.</p><button id="empty-reset">Show all integrations</button></div><p class="catalog-foot" role="status" id="catalog-status"></p></div></section>
+        <section class="bottom"><div><div class="eyebrow">SOMETHING MISSING?</div><h2>Your stack is unique.<br>We get that.</h2><p>Tell us what you’d love to connect next.</p></div><button class="primary" id="request-bottom">Request an integration ↗</button></section>
+    </main>
+    <footer><a class="brand" href="index.html">↗ TaskFlow</a><span>Better work, connected.</span><small>© 2026 TaskFlow · Local marketplace demo</small></footer>
+    <dialog id="detail"><form method="dialog"><button class="close" aria-label="Close integration">×</button></form><div id="detail-content"></div></dialog>
+    <dialog id="request-dialog"><form method="dialog"><button class="close" aria-label="Close request">×</button></form><div class="eyebrow">MAKE A CONNECTION</div><h2>What’s on your wish list?</h2><p>Help shape the ecosystem. This demo keeps your request in this browser only.</p><form id="request-form"><label>App name<input id="app-name" required maxlength="60" placeholder="The tool you love"></label><label>Work email<input type="email" required placeholder="you@studio.com"></label><label>What would you like to do?<textarea required></textarea></label><button class="primary">Prepare request ↗</button></form><p id="request-status" role="status"></p></dialog>
+</body>
+</html>

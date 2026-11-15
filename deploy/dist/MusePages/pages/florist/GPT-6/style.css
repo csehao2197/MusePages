@@ -1,0 +1,661 @@
+:root
+{
+    --forest: #19271f;
+    --surface: #223229;
+    --ivory: #f0ece3;
+    --rose: #c4917a;
+    --muted: #bebcaf;
+    --line: #ffffff24;
+}
+*
+{
+    box-sizing: border-box;
+}
+html
+{
+    scroll-behavior: smooth;
+    scroll-padding-top: 85px;
+}
+body
+{
+    background: var(--forest);
+    color: var(--ivory);
+    margin: 0;
+    font: 15px/1.8 "Segoe UI", Arial, sans-serif;
+}
+button, input, textarea
+{
+    font: inherit;
+}
+a
+{
+    color: inherit;
+    text-decoration: none;
+}
+a, button
+{
+    cursor: pointer;
+}
+:focus-visible
+{
+    outline: 2px solid currentColor;
+    outline-offset: 5px;
+}
+header
+{
+    background: var(--forest);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 21px 5%;
+    border-bottom: 1px solid var(--line);
+}
+.brand
+{
+    font: italic 31px Georgia, serif;
+    color: var(--rose);
+    white-space: nowrap;
+    letter-spacing: -1px;
+}
+nav, .actions, .chips
+{
+    display: flex;
+    gap: 28px;
+    align-items: center;
+}
+nav a
+{
+    font-size: 12px;
+}
+nav a:hover
+{
+    color: var(--rose);
+}
+.button, .outline
+{
+    display: inline-block;
+    border: 1px solid var(--rose);
+    padding: 14px 22px;
+    background: var(--rose);
+    color: var(--forest);
+    font-size: 12px;
+}
+.button:hover
+{
+    background: #d7ad98;
+}
+.outline
+{
+    color: var(--rose);
+    background: transparent;
+}
+#bag-count
+{
+    padding-left: 8px;
+}
+section
+{
+    padding: 95px max(5%, calc((100% - 1120px) / 2));
+}
+.hero
+{
+    padding: 0;
+    display: grid;
+    grid-template-columns: 48% 52%;
+    min-height: 730px;
+}
+.hero-copy
+{
+    padding: 80px 8% 50px 10%;
+    align-self: center;
+}
+.eyebrow
+{
+    color: var(--rose);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2px;
+}
+h1, h2, h3, blockquote
+{
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 400;
+}
+h1
+{
+    font-size: clamp(59px, 7.3vw, 104px);
+    font-style: italic;
+    letter-spacing: -4px;
+    line-height: .96;
+    margin: 30px 0;
+}
+em
+{
+    color: var(--rose);
+}
+p
+{
+    color: var(--muted);
+}
+.hero-copy > p
+{
+    max-width: 370px;
+}
+.actions
+{
+    gap: 22px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+.text-link
+{
+    color: var(--rose);
+    border: 0;
+    border-bottom: 1px solid #c4917a66;
+    background: transparent;
+    font-size: 12px;
+    padding: 0 0 5px;
+}
+.hero-foot
+{
+    display: block;
+    color: var(--muted);
+    font-size: 9px;
+    letter-spacing: 2px;
+    margin-top: 45px;
+}
+figure
+{
+    margin: 0;
+    background: #101a14;
+    position: relative;
+    overflow: hidden;
+}
+figure img
+{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+figcaption
+{
+    position: absolute;
+    bottom: 25px;
+    left: 25px;
+    color: #b7ad9a;
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+h2
+{
+    font-size: clamp(38px, 4.7vw, 65px);
+    font-style: italic;
+    line-height: 1.1;
+    letter-spacing: -2px;
+    margin: 18px 0 35px;
+}
+h3
+{
+    font-size: 28px;
+    font-style: italic;
+    margin: 15px 0;
+    line-height: 1.2;
+}
+.work-row
+{
+    display: grid;
+    grid-template-columns: 1.2fr 1.2fr .55fr;
+    gap: 30px;
+    width: 100%;
+    text-align: left;
+    align-items: center;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    background: transparent;
+    color: var(--ivory);
+    padding: 26px 0;
+    transition: background .2s, color .2s;
+}
+.work-row h3
+{
+    font-size: 32px;
+}
+.work-row p
+{
+    font-size: 13px;
+}
+.work-row > span
+{
+    color: var(--rose);
+    text-align: right;
+    font-size: 13px;
+}
+.work-row:hover
+{
+    background: var(--surface);
+    color: var(--rose);
+}
+.section-top
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 30px;
+}
+.section-top > p
+{
+    font-size: 13px;
+    margin-bottom: 40px;
+}
+.collection
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 45px 25px;
+}
+.floral-art
+{
+    height: 460px;
+    background: #0e1a12;
+    overflow: hidden;
+}
+.floral-art img
+{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .6s;
+}
+.product:hover img
+{
+    transform: scale(1.03);
+}
+.product.pale img
+{
+    filter: saturate(.35) brightness(1.6);
+}
+.product.amber img
+{
+    filter: sepia(.7) saturate(.8);
+}
+.product > div:nth-child(2)
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.product > div > span
+{
+    font-size: 14px;
+    color: var(--rose);
+}
+.product p
+{
+    margin-top: 0;
+    font-size: 13px;
+}
+.amber .floral-art
+{
+    height: 320px;
+}
+.wedding-tile
+{
+    background: #2c382d;
+    padding: 45px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+.wedding-tile h3
+{
+    font-size: 53px;
+    letter-spacing: -2px;
+}
+.wedding-tile p
+{
+    font-size: 14px;
+}
+.process, #weddings
+{
+    background: var(--surface);
+}
+.three
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-top: 45px;
+}
+.three article
+{
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+}
+.three article > span
+{
+    font: italic 40px Georgia, serif;
+    color: #718071;
+}
+.three p
+{
+    font-size: 14px;
+}
+#about, #care, #order
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+}
+blockquote
+{
+    font-size: 45px;
+    font-style: italic;
+    line-height: 1.2;
+    margin: 25px 0;
+    letter-spacing: -1px;
+}
+.chips
+{
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+.chips span
+{
+    border: 1px solid #c4917a77;
+    padding: 6px 10px;
+    color: var(--rose);
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+#weddings
+{
+    text-align: center;
+}
+#weddings > p
+{
+    max-width: 640px;
+    margin: auto;
+}
+.wedding-notes
+{
+    display: flex;
+    gap: 20px;
+    margin: 40px 0;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.wedding-notes span
+{
+    padding: 25px;
+    border: 1px solid var(--line);
+    font: italic 17px Georgia, serif;
+}
+details
+{
+    border-bottom: 1px solid var(--line);
+}
+summary
+{
+    padding: 22px 0;
+    font-size: 15px;
+    cursor: pointer;
+}
+details p
+{
+    font-size: 13px;
+}
+#order
+{
+    border-top: 1px solid var(--line);
+    align-items: start;
+}
+.basket
+{
+    padding: 30px;
+    background: var(--surface);
+}
+.total-row
+{
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+    gap: 20px;
+    font-size: 14px;
+}
+.total-row strong
+{
+    font: 28px Georgia, serif;
+    color: var(--rose);
+}
+.cart-row
+{
+    padding: 15px 0;
+    border-bottom: 1px solid var(--line);
+}
+.cart-row > div
+{
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin: 10px 0;
+}
+.cart-row button
+{
+    background: transparent;
+    color: var(--rose);
+    border: 1px solid #c4917a77;
+    min-width: 32px;
+    height: 32px;
+}
+.cart-row strong
+{
+    font: italic 23px Georgia, serif;
+}
+#cart-status, #delivery-result
+{
+    font-size: 12px;
+}
+label
+{
+    display: block;
+    font-size: 12px;
+    margin-bottom: 18px;
+}
+input, textarea
+{
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background: #ffffff08;
+    color: var(--ivory);
+    border: 1px solid #c4917a66;
+    border-radius: 0;
+    margin-top: 7px;
+    color-scheme: dark;
+}
+.small
+{
+    font-size: 12px;
+}
+.delivery-banner
+{
+    background: var(--rose);
+    color: var(--forest);
+    text-align: center;
+}
+.delivery-banner em, .delivery-banner p, .delivery-banner .eyebrow
+{
+    color: var(--forest);
+}
+.delivery-banner .button
+{
+    color: var(--ivory);
+    background: var(--forest);
+    margin: 15px 0;
+}
+footer
+{
+    padding: 50px 5% 25px;
+}
+footer > div
+{
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    margin: 30px 0;
+    font-size: 13px;
+}
+footer > p
+{
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+    font-size: 11px;
+}
+dialog
+{
+    width: min(94%, 520px);
+    max-height: 90vh;
+    border: 1px solid var(--rose);
+    padding: 40px;
+    color: var(--ivory);
+    background: var(--forest);
+}
+dialog::backdrop
+{
+    background: #000a;
+}
+dialog h2
+{
+    font-size: 39px;
+}
+.close
+{
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    border: 0;
+    background: transparent;
+    color: var(--rose);
+    font-size: 28px;
+}
+#enquiry-result
+{
+    font-size: 13px;
+}
+[hidden]
+{
+    display: none !important;
+}
+@media (max-width: 767px)
+{
+    header
+    {
+        padding: 17px 6%;
+    }
+    .brand
+    {
+        font-size: 25px;
+    }
+    nav
+    {
+        display: none;
+    }
+    header .outline
+    {
+        padding: 9px 12px;
+        font-size: 11px;
+    }
+    .hero
+    {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+    figure
+    {
+        height: 370px;
+    }
+    figure img
+    {
+        object-position: center 42%;
+    }
+    .hero-copy
+    {
+        padding: 45px 6%;
+    }
+    h1
+    {
+        font-size: clamp(52px, 16vw, 66px);
+        letter-spacing: -3px;
+    }
+    section
+    {
+        padding: 60px 6%;
+    }
+    .work-row
+    {
+        display: block;
+        padding: 22px 0;
+    }
+    .work-row h3
+    {
+        font-size: 30px;
+    }
+    .work-row p
+    {
+        margin: 12px 0;
+    }
+    .section-top
+    {
+        display: block;
+    }
+    .collection, .three, #about, #care, #order
+    {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    .floral-art
+    {
+        height: 390px;
+    }
+    .wedding-tile
+    {
+        padding: 30px;
+        min-height: 360px;
+    }
+    blockquote
+    {
+        font-size: 37px;
+    }
+    .wedding-notes
+    {
+        flex-direction: column;
+    }
+    .basket
+    {
+        padding: 25px;
+    }
+    dialog
+    {
+        padding: 35px 25px;
+    }
+}
+@media (prefers-reduced-motion: reduce)
+{
+    html
+    {
+        scroll-behavior: auto;
+    }
+    *
+    {
+        transition: none !important;
+    }
+}

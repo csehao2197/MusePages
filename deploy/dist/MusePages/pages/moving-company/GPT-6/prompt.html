@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shift Movers | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Shift Movers</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Moving Company Website Prompt
+# websiteprompts.ai
+
+Build a bold, confident moving and removals company website called &quot;Shift Movers&quot; using React + Vite + TypeScript + Tailwind CSS + Framer Motion (motion/react) + shadcn/ui + lucide-react.
+
+## Design System
+
+### Colors
+```css
+:root {
+  --background: 0 0% 6%;              /* near-black #0f0f0f */
+  --foreground: 0 0% 96%;             /* white */
+  --primary: 0 0% 96%;
+  --primary-foreground: 0 0% 6%;
+  --accent: 48 92% 55%;               /* signal yellow #f0c52a */
+  --surface: 0 0% 10%;
+  --surface-raised: 0 0% 14%;
+  --muted-foreground: 0 0% 52%;
+  --border: 0 0% 18%;
+}
+```
+
+### Typography
+- Import: `https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Inter:wght@300;400;500;600&amp;display=swap`
+- Headlines: Bebas Neue — condensed, bold, no-nonsense
+- Body: Inter 300–500
+- Labels: Inter 600 uppercase 10px letter-spacing 0.14em
+
+## Sections
+
+### 1. Navbar
+- Sticky near-black, `backdrop-filter: blur(12px)`
+- Left: Bebas Neue &quot;SHIFT&quot; + lucide PackageOpen icon in yellow
+- Right: Services · Coverage · About · Quote + &quot;Get a quote →&quot; yellow button (dark text)
+
+### 2. Hero
+- Full-viewport height, near-black background
+- Full-bleed photography `position: absolute inset-0 w-full h-full object-cover object-center`
+- Composition-independent overlay: `linear-gradient(to right, rgba(15,15,15,0.97) 0%, rgba(15,15,15,0.72) 50%, rgba(15,15,15,0.2) 100%)`
+- Content `z-index: 10`, left-aligned `padding-left: 7vw`, centered vertically:
+  - Inter 600 uppercase 10px yellow label: &quot;Removals &amp; Storage · London &amp; Nationwide&quot;
+  - Bebas Neue `clamp(72px, 11vw, 160px)` white, line-height 0.85: &quot;YOUR MOVE.\nHANDLED.&quot;
+  - Yellow accent on &quot;HANDLED.&quot;
+  - Inter 300 muted white sub: &quot;House moves, office relocations, and secure storage — fully insured, on time, no damage, no excuses&quot;
+  - CTAs: &quot;Get a free quote →&quot; (yellow filled, dark text) + &quot;See our services&quot; (ghost white)
+  - Floating trust chips: &quot;Fully Insured · Same-Day Quote · Nationwide Coverage&quot;
+
+{/* Image brief: professional removal team carrying boxes, modern urban building entrance, clean branded uniform, bright daylight, confident commercial photography */}
+
+- Stagger fade-up on mount: label (0s), headline (0.1s), sub (0.26s), CTAs (0.4s)
+
+### 3. Services
+- &quot;What We Move&quot; — Bebas Neue `clamp(52px, 7vw, 85px)` white
+- 6-service 3×2 grid, dark surface cards:
+  - House Moves (local and long distance, full-service packing available)
+  - Office Relocations (business moves, IT equipment, minimal downtime)
+  - Man &amp; Van (smaller moves, student moves, single items)
+  - Piano &amp; Antiques (specialist moves for high-value items)
+  - Packing Service (full packing and unpacking, materials provided)
+  - Storage (secure climate-controlled storage — short and long term)
+- Each card: yellow lucide icon, Bebas Neue 22px service name, Inter 300 muted description
+- Hover: yellow border + `box-shadow: 0 0 18px hsl(48 92% 55% / 0.12)`
+
+### 4. Stats Strip
+- Full-width yellow `#f0c52a`, 80px height
+- 4 dark Bebas Neue stats: &quot;8,000+ Moves&quot; · &quot;100% Insured&quot; · &quot;4.9★ Google&quot; · &quot;Same-Day Quote&quot;
+- Dark dividers, count-up on scroll
+
+### 5. How It Works
+- &quot;The Shift Process&quot; — Bebas Neue large white
+- 4 steps: Get a Quote → Book Your Date → We Pack &amp; Load → Delivered On Time
+- Large faded yellow number (opacity 0.07) behind each step
+- Inter 300 muted description, stagger fade-up on scroll
+
+### 6. Why Shift
+- Split: left text, right image
+- Bebas Neue large white: &quot;NO DAMAGE.\nNO DRAMA.\nNO DELAYS.&quot;
+- Inter 300 muted: 2 paragraphs — every move is handled by trained staff, not casual labour. All vehicles GPS tracked. Full contents insurance on every job.
+- 4 yellow checkpoints: &quot;Fully insured team · GPS-tracked fleet · 0% damage claim rate · No hidden charges&quot;
+
+{/* Image brief: removal van being loaded, professional team in action, clean van branded, daytime urban setting */}
+
+### 7. Coverage
+- &quot;We Cover All of the UK&quot; — Bebas Neue large
+- Centered section, Inter 300 muted &quot;London, Manchester, Birmingham, Leeds, Edinburgh — and everywhere in between&quot;
+- 2 CTAs: &quot;Get a quote for your area →&quot; yellow + &quot;Talk to the team&quot; ghost
+
+### 8. Testimonials
+- Surface-raised section
+- 3 cards: 5-star yellow row, Inter 300 italic white quote, name + move type Inter 10px muted
+- Stagger fade-up on scroll
+
+### 9. Quote CTA
+- Full-width yellow `#f0c52a` background
+- Bebas Neue `clamp(52px, 7vw, 90px)` dark: &quot;GET YOUR FREE QUOTE IN 60 SECONDS&quot;
+- Inter 300 dark: &quot;Tell us your move date, locations, and size — we&#39;ll come back with a fixed price, no surprises&quot;
+- &quot;Get a free quote →&quot; dark near-black button
+- &quot;No obligation · Fixed pricing · Available 7 days&quot; Inter 10px dark 70%
+
+### 10. Footer
+- Near-black, Bebas Neue &quot;SHIFT&quot; in yellow + lucide PackageOpen
+- Google · Facebook · TrustPilot link
+- &quot;© 2026 Shift Movers · Removals &amp; Storage · London &amp; Nationwide · Fully Insured · 0800 123 4567&quot;
+
+## Animations
+- Hero: stagger fade-up on mount
+- Stats strip: count-up on scroll
+- Service grid: stagger fade-up
+- All hover: 0.15s ease
+
+## Responsive
+- Mobile: stacked hero, single-column services, hamburger nav
+
+## Full Copy
+- Wordmark: &quot;SHIFT&quot;
+- Hero: &quot;YOUR MOVE. HANDLED.&quot; / &quot;House moves, office relocations, and secure storage — fully insured, on time&quot;
+- Services: House Moves · Office Relocations · Man &amp; Van · Piano &amp; Antiques · Packing · Storage
+- Stats: 8,000+ Moves · 100% Insured · 4.9★ Google · Same-Day Quote
+- Process: Quote → Book → Pack &amp; Load → Delivered On Time
+- Testimonial: &quot;Shift moved our 4-bedroom house in one day. Not a single scratch on anything. The crew were professional and fast — would use again without question.&quot; — Mark H., London
+- CTA: &quot;GET YOUR FREE QUOTE IN 60 SECONDS&quot; / &quot;Fixed price, no surprises&quot;
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

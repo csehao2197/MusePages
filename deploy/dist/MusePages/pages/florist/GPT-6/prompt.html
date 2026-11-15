@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bloom Studio | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Bloom Studio</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Florist Website Prompt
+# websiteprompts.ai
+
+Build a dark, editorial luxury florist and flower studio website called &quot;Bloom Studio&quot; using React + Vite + TypeScript + Tailwind CSS + Framer Motion (motion/react) + shadcn/ui + lucide-react.
+
+## Design System
+
+### Colors
+```css
+:root {
+  --background: 145 12% 11%;          /* deep forest #1a2e1e */
+  --foreground: 38 22% 93%;           /* warm ivory */
+  --primary: 145 14% 30%;             /* muted forest */
+  --primary-foreground: 38 22% 93%;
+  --accent: 15 38% 62%;               /* dusty rose #c4917a */
+  --surface: 145 10% 15%;
+  --surface-raised: 145 8% 19%;
+  --muted-foreground: 38 10% 60%;
+  --border: 145 8% 22%;
+}
+```
+
+### Typography
+- Import: `https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;family=DM+Sans:wght@300;400;500&amp;display=swap`
+- Headlines: Cormorant Garamond 700 italic — monumental scale
+- Body: DM Sans 300–400
+- Labels: DM Sans 500 uppercase 10px letter-spacing 0.14em
+
+## Sections
+
+### 1. Navbar
+- Sticky, `background: hsl(var(--background))`, `backdrop-filter: blur(12px)`
+- Left: Cormorant italic wordmark &quot;Bloom Studio&quot; in dusty rose
+- Right: Arrangements · Weddings · About · Care + &quot;Order flowers →&quot; dusty rose outlined button
+
+### 2. Hero
+- Full-viewport height, deep forest background
+- Split layout: left 45% editorial panel, right 55% full-bleed photography (no border-radius, flush with viewport right edge)
+- Left panel deep forest background, `padding: 0 4rem`:
+  - DM Sans 500 uppercase 10px rose label: &quot;London Florist · Bespoke Arrangements&quot;
+  - Cormorant Garamond 700 italic `clamp(62px, 8vw, 115px)` ivory, line-height 0.92: &quot;Flowers\nThat Say\nEverything.&quot;
+  - Dusty rose accent on &quot;Everything.&quot;
+  - DM Sans 300 muted sub: &quot;Hand-tied arrangements, seasonal wedding flowers, and same-day London delivery — made by hand, never from a catalogue&quot;
+  - CTAs: &quot;Browse arrangements →&quot; (rose filled) + &quot;Wedding flowers&quot; (ghost)
+  - Floating detail image: `position: absolute`, 180px square crop of single stem, right edge of panel overlapping photo boundary, `z-index: 10`, no border-radius, Framer Motion scale from 0.85 on mount (0.6s delay)
+- Right photography: `object-fit: cover; object-position: center`, full-height, no overlay
+
+{/* Image brief: close-up of dark luxuriant bouquet — deep burgundy roses, black dahlias, eucalyptus, moody dark studio lighting, editorial, Vogue floral photography style */}
+
+- Hero stagger fade-up on mount: label (0s), heading (0.15s), sub (0.3s), CTAs (0.45s)
+
+### 3. Arrangement Types
+- &quot;Our Work&quot; — Cormorant 700 italic ivory with rose underline rule (scaleX 0→1)
+- 3 full-width hover-raise rows:
+  - Bespoke Arrangements (hand-tied, seasonal stems, from £45)
+  - Event Florals (corporate events, intimate dinners, installations — from £180)
+  - Wedding Flowers (full styling from bridal party to reception — from £800)
+- Each: Cormorant 600 italic large name left + DM Sans 300 muted description right + rose &quot;→&quot; + price right-aligned
+- `border-bottom: 1px solid hsl(var(--border))`
+- Hover: `background: hsl(var(--surface-raised))`, name turns rose
+
+### 4. Signature Collection
+- &quot;This Season&quot; — Cormorant 700 italic ivory
+- 4-image editorial grid: 2 tall (3/4 ratio) + 2 wide (4/3 ratio), no border-radius, 2px gap
+- Hover: ivory overlay `opacity 0→0.12` + Cormorant italic arrangement name in center
+- Stagger fade-in on scroll
+
+{/* Image brief: hand-tied arrangement of pampas grass, dried flowers, warm amber tones, moody studio background */}
+{/* Image brief: tall vase arrangement, tropical leaves and white anthuriums, dark editorial photography */}
+{/* Image brief: wedding arch of white florals and greenery, sun-drenched outdoor venue */}
+{/* Image brief: single flower close-up — black dahlia, water droplets, near-macro editorial */}
+
+### 5. Process
+- &quot;How It Works&quot; — Cormorant 700 italic
+- 3 horizontal steps: Choose Your Stems → We Build It By Hand → Same-Day Delivery
+- Large faded ivory Cormorant number (opacity 0.05) behind each step
+- DM Sans 300 muted description, stagger fade-up on scroll
+
+### 6. About
+- &quot;The Studio&quot; — Cormorant 700 italic
+- Split: right image, left text
+- Cormorant 300 italic pull quote: &quot;Every arrangement is made the day you order it. No warehouse. No batch production. Just flowers, cut fresh.&quot;
+- DM Sans 300 muted 2-paragraph bio
+- Rose chips: &quot;London · Est. 2018 · Sustainable Sourcing&quot;
+
+{/* Image brief: florist at work, hands arranging stems on worn timber table, warm light from window, editorial lifestyle photography */}
+
+### 7. Weddings
+- &quot;Wedding Florals&quot; — Cormorant 700 italic
+- Full-width dark surface section
+- Cormorant 300 italic: &quot;From bouquets to full venue styling — we work with you from the first consultation to the last petal.&quot;
+- 3 floating image chips in a row (ceremony / reception / bridal party)
+- &quot;Start your wedding enquiry →&quot; rose button
+
+### 8. Testimonials
+- 3 cards: Cormorant italic ivory quote, client name + occasion in DM Sans 10px muted, 5-star row in rose
+- Stagger fade-up on scroll
+
+### 9. Delivery CTA
+- Full-width dusty rose `#c4917a` background
+- Cormorant 700 italic dark forest: &quot;Same-Day London Delivery&quot;
+- DM Sans 300 dark: &quot;Order before 11am for same-day delivery across Central and Greater London — or choose your date at checkout&quot;
+- &quot;Order now →&quot; forest button
+- &quot;Free delivery over £80 · Recyclable packaging · Sustainably sourced&quot; DM Sans 10px dark 70%
+
+### 10. Footer
+- Deep forest background, Cormorant italic wordmark in rose
+- Instagram · Pinterest · Google
+- &quot;© 2026 Bloom Studio · Floral Design · London EC1 · Same-Day Delivery Available&quot;
+
+## Animations
+- Hero: stagger fade-up on mount, floating detail image scale 0.85→1 at 0.6s
+- Arrangement rows: hover raise + rose transition 0.2s
+- Grid: stagger fade-in on scroll
+- Rose rules: scaleX 0→1, 0.5s
+
+## Responsive
+- Mobile: stacked hero (photo top, text below), single-column grid, hamburger nav
+
+## Full Copy
+- Wordmark: &quot;Bloom Studio&quot;
+- Hero: &quot;Flowers That Say Everything.&quot; / &quot;Hand-tied arrangements, seasonal wedding flowers, and same-day London delivery&quot;
+- Types: Bespoke from £45 · Event from £180 · Wedding from £800
+- Process: Choose → Build by Hand → Same-Day Delivery
+- Testimonial: &quot;I ordered a bouquet at 9am and it arrived by 2pm. The arrangement was nothing like anything you&#39;d find in a supermarket — genuinely beautiful.&quot; — Alice K., Islington
+- CTA: &quot;Same-Day London Delivery&quot; / &quot;Order before 11am&quot;
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

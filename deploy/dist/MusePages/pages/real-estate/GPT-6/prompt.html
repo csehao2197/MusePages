@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>James Harlow Properties | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>James Harlow Properties</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Real Estate Agent Website Prompt
+# websiteprompts.ai
+
+Build a premium real estate agent personal website called &quot;James Harlow Properties&quot; using React + Vite + TypeScript + Tailwind CSS + Framer Motion (motion/react) + shadcn/ui + lucide-react.
+
+## Design System
+
+### Colors
+```css
+:root {
+  --background: 0 0% 100%;
+  --foreground: 224 20% 12%;        /* deep charcoal #1a1c2e */
+  --primary: 38 50% 56%;            /* warm gold #c9a060 */
+  --primary-foreground: 0 0% 100%;
+  --surface: 220 14% 96%;
+  --surface-dark: 224 20% 12%;      /* charcoal for dark sections */
+  --muted-foreground: 224 10% 52%;
+  --border: 220 14% 88%;
+}
+```
+
+### Typography
+- Import: `https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,400&amp;family=Inter:wght@300;400;500;600&amp;display=swap`
+- Headlines: Cormorant Garamond 600–700
+- Body/UI: Inter 300–600
+- Property data/prices: Inter 600, gold for prices
+
+## Sections
+
+### 1. Navbar
+- Sticky white bg with subtle shadow on scroll
+- Left: Cormorant wordmark &quot;James Harlow&quot; + &quot;Properties&quot; in Inter 300 muted
+- Right: Listings · About · Process · Contact + &quot;Get a free valuation →&quot; gold button
+
+### 2. Hero
+- Split layout: left content (55%), right large property image with rounded-2xl (45%)
+- Left content:
+  - Inter 500 uppercase 10px muted label: &quot;Prime London Property Specialist&quot;
+  - Cormorant 700 `clamp(48px, 6vw, 88px)`: &quot;Finding Your\nPerfect\nHome&quot;
+  - Gold italic accent on &quot;Perfect&quot;
+  - Inter 300 sub: &quot;Specialist in prime London residential property — Mayfair, Kensington, Chelsea&quot;
+  - Two CTAs: &quot;Browse listings →&quot; (gold filled) + &quot;Free valuation&quot; (ghost gold)
+  - Three trust chips: &quot;£200M+ sold · 15 yrs experience · 4.9★ Google&quot;
+
+{/* Image brief: luxury London townhouse exterior, white stucco facade, black iron railings, bright day, premium residential street */}
+
+### 3. Stats Strip
+- Full-width charcoal `#1a1c2e` background, 90px tall
+- 4 white stats in Cormorant italic: &quot;£200M+ Sold&quot; · &quot;320+ Homes&quot; · &quot;15 Years&quot; · &quot;4.9★ Avg Rating&quot;
+- Gold dividers between stats
+- Framer Motion useSpring count-up on scroll (numbers only)
+
+### 4. Featured Listings
+- &quot;Featured Properties&quot; in Cormorant 700 with gold underline rule (scaleX 0→1)
+- 3 property cards in a row:
+  - Each: full-width image (aspect-ratio 4/3), property name + area chip (Inter 500), beds/baths/sqft row with lucide icons, gold price tag (Inter 600)
+  - Hover: gold border + card lifts `translateY(-4px)`, `box-shadow: 0 8px 32px rgba(0,0,0,0.12)`
+  - &quot;View details →&quot; gold link at bottom
+- &quot;See all listings →&quot; outlined gold button below
+
+{/* Image brief: luxury London apartment interior, large windows, elegant minimal decor, natural light */}
+{/* Image brief: Georgian townhouse living room, high ceilings, period features, warm lighting */}
+{/* Image brief: modern penthouse with city skyline view, open plan, premium finishes */}
+
+### 5. About
+- Split: right portrait image, left text
+- Inter 500 uppercase 10px gold label: &quot;About James&quot;
+- Cormorant 700: &quot;15 Years of Placing People in Exceptional Homes&quot;
+- Inter 300 bio: 2 paragraphs — personal approach, deep market knowledge, trusted by families and investors alike
+- Four gold chips: &quot;Mayfair · Kensington · Chelsea · Notting Hill&quot;
+- &quot;Book a discovery call →&quot; gold link
+
+{/* Image brief: professional male real estate agent portrait, suit, confident warm smile, bright office background */}
+
+### 6. Process Steps
+- &quot;How It Works&quot; in Cormorant 700
+- 4-step horizontal row: Discovery Call → Market Appraisal → Curated Shortlist → Keys in Hand
+- Large faded gold Cormorant number (opacity 0.10) behind each step title
+- Inter 300 description per step
+
+### 7. Testimonials
+- White surface section
+- 3 cards: 5-star gold row, Cormorant italic quote, client name + property area in Inter 10px muted
+- Stagger fade-up on scroll
+
+### 8. Valuation CTA
+- Full-width charcoal `#1a1c2e` background
+- Cormorant 700 italic white: &quot;What Is Your Property Worth?&quot;
+- Inter 300 white sub: &quot;Get a free, no-obligation market appraisal from James&quot;
+- Large gold &quot;Book a free valuation →&quot; button
+- Inter 10px muted white: &quot;No obligation · Honest market insight · Usually within 48 hours&quot;
+
+### 9. Footer
+- Charcoal background, 3 columns: Brand + tagline · Links · Contact (phone, email, address)
+- Inter 10px muted: &quot;James Harlow is a member of the Property Ombudsman. Registered in England &amp; Wales.&quot;
+- &quot;© 2026 James Harlow Properties&quot;
+
+## Animations
+- Hero image: subtle float `y: 0→-5→0`, 7s loop
+- Stats: useSpring count-up on scroll
+- Listing cards: stagger fade-up on scroll
+- Gold rules: scaleX 0→1, 0.5s
+- All hover: 0.2s ease
+
+## Responsive
+- Mobile: stacked hero, single-column listings, hamburger nav
+
+## Full Copy
+- Wordmark: &quot;James Harlow Properties&quot;
+- Tagline: &quot;Prime London Residential Property Specialist&quot;
+- Hero: &quot;Finding Your Perfect Home&quot; / &quot;Specialist in prime London residential property — Mayfair, Kensington, Chelsea&quot;
+- Stats: £200M+ Sold · 320+ Homes · 15 Years · 4.9★ Rating
+- Listings: The Kensington Residence · 4 bed · £3,200,000 | Chelsea Mews House · 3 bed · £2,850,000 | Mayfair Penthouse · 2 bed · £4,500,000
+- Process: Discovery Call → Market Appraisal → Curated Shortlist → Keys in Hand
+- Testimonial: &quot;James didn&#39;t just find us a house — he found us a home. His knowledge of Kensington is unmatched.&quot; — The Harrison Family, 2025
+- CTA: &quot;What Is Your Property Worth?&quot; / &quot;Free, no-obligation market appraisal&quot;
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

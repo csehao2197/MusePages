@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>APEX Gym | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>APEX Gym</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Gym &amp; Fitness Studio Website Prompt
+# websiteprompts.ai
+
+Build a bold, high-energy gym and fitness studio website called &quot;APEX Gym&quot; using React + Vite + TypeScript + Tailwind CSS + Framer Motion (motion/react) + shadcn/ui + lucide-react.
+
+## Design System
+
+### Colors
+```css
+:root {
+  --background: 0 0% 5%;            /* near-black #0d0d0d */
+  --foreground: 0 0% 96%;           /* white */
+  --primary: 76 85% 50%;            /* electric lime #8fe619 */
+  --primary-foreground: 0 0% 5%;
+  --surface: 0 0% 9%;
+  --surface-raised: 0 0% 13%;
+  --muted-foreground: 0 0% 55%;
+  --border: 0 0% 16%;
+}
+```
+
+### Typography
+- Import: `https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap`
+- Headlines: Space Grotesk 700 — maximum scale, no apologies
+- Body: Inter 300–500
+- Stats/numbers: Space Grotesk 700, lime green
+
+## Sections
+
+### 1. Navbar
+- Sticky near-black background, `backdrop-filter: blur(12px)`
+- Left: &quot;APEX&quot; Space Grotesk 700 uppercase letter-spacing 0.2em + small lucide Dumbbell icon in lime
+- Right: Classes · Membership · About · Timetable + &quot;Start free trial →&quot; lime button
+
+### 2. Hero
+- Full-viewport height, near-black background
+- Full-bleed gym image with composition-independent overlay:
+  `linear-gradient(to right, rgba(13,13,13,0.95) 0%, rgba(13,13,13,0.65) 55%, rgba(13,13,13,0.3) 100%)`
+- Content z-10 left-aligned:
+  - Inter 600 uppercase 10px lime label: &quot;Gym &amp; Group Fitness — Shoreditch, London&quot;
+  - Space Grotesk 700 `clamp(58px, 9vw, 130px)` white: &quot;Train Hard.\nRecover Smart.\nRepeat.&quot;
+  - Lime accent on &quot;Recover Smart.&quot;
+  - Inter 300 white: &quot;State-of-the-art equipment, 40+ classes a week, and a community that shows up every day&quot;
+  - CTAs: &quot;Start free trial →&quot; (lime filled, dark text) + &quot;View classes&quot; (ghost lime)
+  - 3 white stat chips: &quot;40+ classes/week · 2,500+ members · Open 6am–10pm&quot;
+
+{/* Image brief: modern gym floor, rows of equipment, dramatic overhead lighting, members training, dark moody commercial photography */}
+
+### 3. Stats Strip
+- Full-width lime `#8fe619` background, 80px
+- 4 dark Space Grotesk 700 stats: &quot;2,500+ Members&quot; · &quot;40+ Classes/Week&quot; · &quot;3 Floors&quot; · &quot;Open 6am–10pm&quot;
+- Framer Motion useSpring count-up on scroll, dark dividers
+
+### 4. Classes
+- &quot;Train Every Way&quot; — Space Grotesk 700 white
+- 6-class 3×2 grid:
+  - HIIT · Strength &amp; Conditioning · Spin · Boxing · Yoga · Mobility
+- Each card: dark surface background, Space Grotesk 700 class name, Inter 300 muted description, lime lucide icon, &quot;View timetable →&quot; lime link
+- Hover: lime border + `box-shadow: 0 0 20px hsl(76 85% 50% / 0.15)`
+- Stagger fade-up on scroll
+
+### 5. The Floor
+- &quot;The Facility&quot; — Space Grotesk 700 white
+- 3 full-width hover-raise rows:
+  - Strength Floor (free weights, power racks, deadlift platforms — 12,000 sq ft)
+  - Cardio Deck (100+ machines, live performance tracking, skylight-lit)
+  - Studios (3 dedicated spaces for group classes, sprung floors, full AV)
+- Each: Space Grotesk 700 large name left + Inter 300 muted description right + lime &quot;→&quot;
+- `border-bottom: 1px solid hsl(var(--border))`
+- Hover: background raises to surface-raised, lime text
+
+### 6. Membership
+- &quot;Choose Your Plan&quot; — Space Grotesk 700 white
+- 3 membership cards:
+  - Flex (off-peak access, £35/mo)
+  - Full Access (unlimited gym + 10 classes/mo, £55/mo — featured middle, lime border + &quot;Best value&quot; badge)
+  - All In (unlimited gym + unlimited classes + 1 PT session/mo, £89/mo)
+- Each card: Space Grotesk 700 name, Inter 300 feature list with lucide Check in lime
+- Hover: lime border + glow
+
+### 7. Trainers
+- &quot;Our Coaches&quot; — Space Grotesk 700 white
+- 3 trainer cards: portrait (square, no border-radius), Space Grotesk 700 white name, lime specialty chip, Inter 300 muted bio
+- Hover: lime border + glow
+
+{/* Image brief: athletic personal trainer in gym, black athletic wear, professional confident pose, dark dramatic lighting */}
+{/* Image brief: female fitness coach, gym background, strong athletic build, motivating expression */}
+{/* Image brief: male strength coach, weights rack behind, dark gym, editorial commercial photography */}
+
+### 8. Testimonials
+- Surface-raised section
+- 3 cards: 5-star row in lime, Inter 300 italic white quote, member name + membership type in Inter 10px muted
+
+### 9. Free Trial CTA
+- Full-width, surface raised, lime top border 3px
+- Space Grotesk 700 white `clamp(40px, 5vw, 72px)`: &quot;Your First Week Is on Us&quot;
+- Inter 300 muted: &quot;No credit card · No commitment · No excuses&quot;
+- &quot;Start your free trial →&quot; lime button (dark text)
+- &quot;Join online in 2 minutes · Cancel anytime&quot; Inter 10px muted below
+
+### 10. Footer
+- Near-black, &quot;APEX&quot; lime wordmark
+- Instagram · TikTok · YouTube icons
+- &quot;© 2026 APEX Gym · 88 Curtain Road, Shoreditch, London EC2A · Open 6am–10pm Daily&quot;
+
+## Animations
+- Hero text: aggressive stagger fade-up on mount (y: 40→0, 0.6s, 0.08s delay)
+- Stats strip: count-up on scroll
+- Classes grid: stagger fade-up on scroll
+- All hover: 0.15s ease
+
+## Responsive
+- Mobile: stacked hero, single-column classes, hamburger nav
+
+## Full Copy
+- Wordmark: &quot;APEX&quot;
+- Hero: &quot;Train Hard. Recover Smart. Repeat.&quot; / &quot;State-of-the-art equipment, 40+ classes a week, and a community that shows up every day&quot;
+- Classes: HIIT · Strength &amp; Conditioning · Spin · Boxing · Yoga · Mobility
+- Memberships: Flex £35/mo · Full Access £55/mo · All In £89/mo
+- Stats: 2,500+ Members · 40+ Classes/Week · 3 Floors · Open 6am–10pm
+- Testimonial: &quot;I&#39;ve been a member for 2 years. The equipment is always available, the coaches are excellent, and the classes are genuinely challenging.&quot; — Marcus T., Full Access member
+- CTA: &quot;Your First Week Is on Us&quot; / &quot;No credit card · No commitment · No excuses&quot;
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

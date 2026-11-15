@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Aldwick — Boutique Hotel | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>The Aldwick — Boutique Hotel</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Boutique Hotel Website Prompt
+# websiteprompts.ai
+
+Build a dark, editorial boutique hotel and luxury B&amp;B website called &quot;The Aldwick&quot; using React + Vite + TypeScript + Tailwind CSS + Framer Motion (motion/react) + shadcn/ui + lucide-react.
+
+## Design System
+
+### Colors
+```css
+:root {
+  --background: 215 16% 9%;           /* deep slate #13181f */
+  --foreground: 38 20% 88%;           /* warm pearl */
+  --primary: 38 20% 88%;
+  --primary-foreground: 215 16% 9%;
+  --accent: 38 46% 56%;               /* warm gold #c9a55a */
+  --surface: 215 14% 13%;
+  --surface-raised: 215 12% 17%;
+  --muted-foreground: 38 8% 56%;
+  --border: 215 10% 22%;
+}
+```
+
+### Typography
+- Import: `https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;family=Inter:wght@300;400;500&amp;display=swap`
+- Headlines: Cormorant Garamond 700 italic — editorial luxury
+- Body: Inter 300–400
+- Labels: Inter 500 uppercase 10px letter-spacing 0.14em
+
+## Sections
+
+### 1. Navbar
+- Sticky deep slate, `backdrop-filter: blur(14px)`
+- Left: Cormorant italic &quot;The Aldwick&quot; in warm gold
+- Right: Rooms · Dining · Experiences · Location + &quot;Book a stay →&quot; gold outlined button
+
+### 2. Hero
+- Full-viewport height
+- Full-bleed hotel photography `position: absolute inset-0 w-full h-full object-cover object-center`
+- Cinematic dual gradient: `linear-gradient(to bottom, rgba(19,24,31,0.7) 0%, rgba(19,24,31,0.1) 35%, rgba(19,24,31,0.1) 60%, rgba(19,24,31,0.92) 100%)`
+- Content `z-index: 10`, centered at bottom: `display: flex; flex-direction: column; align-items: center; padding-bottom: 8vh`
+  - Inter 500 uppercase 10px gold label centered: &quot;Boutique Hotel · Cotswolds&quot;
+  - Cormorant Garamond 700 italic `clamp(62px, 9vw, 135px)` pearl centered, line-height 0.88: &quot;A Place\nUnlike Any Other.&quot;
+  - Gold accent on &quot;Unlike Any Other.&quot;
+  - Inter 300 muted pearl centered `max-width: 520px`: &quot;12 individually designed rooms, a restaurant serving seasonal Cotswolds produce, and grounds that change with every season&quot;
+  - CTAs centered: &quot;Book a stay →&quot; (gold filled, dark text) + &quot;See the rooms&quot; (ghost pearl)
+- Below hero CTA strip (within hero, bottom `z-index: 10`, centered horizontal row):
+  - 5 small gold chips: &quot;12 Rooms · Dog Friendly · Restaurant · Free Parking · Cotswolds&quot;
+  - Slide-in from left, stagger 0.08s on mount
+
+{/* Image brief: boutique hotel exterior at dusk, warm windows glowing, stone building, manicured garden, atmospheric twilight, luxury countryside hotel photography */}
+
+- Stagger fade-up on mount: label (0s), headline (0.15s), sub (0.3s), CTAs (0.45s), chips (0.6s)
+
+### 3. The Rooms
+- &quot;The Rooms&quot; — Cormorant 700 italic pearl with gold underline rule
+- 3 full-width hover-raise rows:
+  - Classic Rooms (6 rooms, original features, garden view, from £180/night)
+  - Deluxe Rooms (4 rooms, freestanding bath, countryside view, from £240/night)
+  - The Suite (master suite, private terrace, from £380/night)
+- Each: Cormorant 600 italic large room type left + Inter 300 description right + gold &quot;→&quot; + price
+- `border-bottom: 1px solid hsl(var(--border))`
+- Hover: surface-raised, text turns gold
+
+### 4. Gallery
+- &quot;The Aldwick in Detail&quot; — Cormorant 700 italic
+- 2-column masonry grid, 6 images, alternating 3/4 and 4/3, no border-radius, 3px gap
+- Hover: dark overlay `0→0.7` + Cormorant italic room/space label
+
+{/* Image brief: boutique hotel bedroom, four-poster bed, stone walls, warm lamp light, luxurious linens */}
+{/* Image brief: hotel bathroom with roll-top bath, window overlooking countryside, golden light */}
+{/* Image brief: hotel restaurant, candles, intimate dinner table, stone fireplace glowing */}
+{/* Image brief: hotel lounge, deep armchairs, bookshelves, warm firelight */}
+{/* Image brief: hotel grounds at sunrise, mist, rolling fields, stone walls */}
+{/* Image brief: hotel terrace, morning coffee, countryside view, peaceful */}
+
+### 5. Dining
+- &quot;The Restaurant&quot; — Cormorant 700 italic
+- Split: left text, right image
+- Cormorant 300 italic pull quote: &quot;Everything on the menu was either grown here, reared locally, or foraged from the surrounding countryside.&quot;
+- Inter 300 muted: 2 paragraphs — Head Chef James Cole. Seasonal tasting menu changes weekly. Breakfast available to all guests. Restaurant open to non-residents Thursday–Sunday.
+- Gold chips: &quot;Seasonal Menu · Locally Sourced · Open to Non-Residents Thu–Sun&quot;
+
+{/* Image brief: hotel restaurant plated dish, beautifully presented seasonal food, candlelit table, warm editorial food photography */}
+
+### 6. Experiences
+- &quot;What to Do&quot; — Cormorant 700 italic
+- 3 horizontal chips: Walking &amp; Cycling (we provide maps and bikes) · Private Dining (exclusive hire available) · Spa Treatments (in-room therapist bookings)
+
+### 7. Testimonials
+- 3 cards: Cormorant italic pearl quote, guest name + room type in Inter 10px muted, 5-star gold row
+- Stagger fade-up on scroll
+
+### 8. Location
+- &quot;Getting Here&quot; — Cormorant 700 italic
+- Inter 300 muted: &quot;Two hours from London, five minutes from Bourton-on-the-Water — the heart of the Cotswolds, without the tourist crowds&quot;
+- Two columns: by car / by train, Inter 300 muted directions
+
+### 9. Book CTA
+- Full-width warm gold `#c9a55a` background
+- Cormorant 700 italic dark slate: &quot;Is Your Date Available?&quot;
+- Inter 300 dark: &quot;We take a limited number of bookings each month — check availability and reserve your room directly for our best rate&quot;
+- &quot;Check availability →&quot; dark slate button
+- &quot;Best rate direct · Dog friendly · Free parking&quot; Inter 10px dark 70%
+
+### 10. Footer
+- Deep slate, Cormorant italic &quot;The Aldwick&quot; in gold
+- Instagram · Pinterest · TripAdvisor
+- &quot;© 2026 The Aldwick · Boutique Hotel &amp; Restaurant · Bourton-on-the-Water, Cotswolds GL54 · +44 1451 123 456&quot;
+
+## Animations
+- Hero: stagger fade-up on mount (bottom-positioned), chips slide-in from left
+- Room rows: hover raise + gold transition 0.2s
+- Gallery: stagger fade-in on scroll
+- Gold rules: scaleX 0→1, 0.5s
+
+## Responsive
+- Mobile: hero full-width, single-column gallery, hamburger nav
+
+## Full Copy
+- Wordmark: &quot;The Aldwick&quot;
+- Hero: &quot;A Place Unlike Any Other.&quot; / &quot;12 individually designed rooms, a restaurant serving seasonal Cotswolds produce&quot;
+- Rooms: Classic from £180 · Deluxe from £240 · Suite from £380
+- Dining: Seasonal tasting menu, locally sourced, open Thu–Sun
+- Testimonial: &quot;We stayed for three nights and genuinely didn&#39;t want to leave. The food was exceptional and every room detail had been thought about.&quot; — Charlotte &amp; Ben W.
+- CTA: &quot;Is Your Date Available?&quot; / &quot;Reserve directly for our best rate&quot;
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

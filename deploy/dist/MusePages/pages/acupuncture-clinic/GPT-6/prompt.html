@@ -1,0 +1,1002 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zen Point — Space to find your balance | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Zen Point — Space to find your balance</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># ZEN POINT — Acupuncture Clinic Website Prompt
+## For Bolt, v0, Lovable, Claude — React + Vite + TypeScript + Tailwind CSS + Framer Motion + shadcn/ui + lucide-react
+
+---
+
+Build a complete, production-ready acupuncture and Traditional Chinese Medicine clinic website for **ZEN POINT** — a contemporary London clinic that bridges ancient TCM practice with modern clinical sensitivity. The aesthetic is calm, earthy, and quietly authoritative: forest green and warm gold, with clean white space. All copy is fully written, all animations are fully implemented.
+
+---
+
+## DESIGN SYSTEM
+
+### Colors — HSL custom properties in :root
+
+```css
+@import url(&#39;https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&amp;family=DM+Sans:wght@300;400&amp;display=swap&#39;);
+
+:root {
+  --background: 40 30% 97%;
+  --foreground: 155 27% 18%;
+  --primary: 155 27% 18%;
+  --primary-foreground: 40 30% 97%;
+  --accent: 42 41% 59%;
+  --muted: 40 20% 93%;
+  --card: 0 0% 100%;
+  --border: 40 15% 86%;
+  --muted-foreground: 155 10% 45%;
+}
+```
+
+### Typography
+- **Headings**: Noto Serif — weights 400 and 700. Grounded, timeless, universally trusted. Evokes traditional knowledge without being ornate.
+- **Body**: DM Sans — weights 300 (light, flowing body copy) and 400 (regular, for UI elements and labels).
+
+### Signature Animation 1: Breathing Pulse Circle
+
+The hero section features a large animated circle that pulses like a breath — expanding on the inhale, contracting on the exhale. This creates a calming, meditative first impression. Implemented with Framer Motion.
+
+```tsx
+import { motion } from &#39;motion/react&#39;
+
+// Behind the hero text, centered absolutely:
+&lt;motion.div
+  className=&quot;absolute rounded-full pointer-events-none&quot;
+  style={{
+    width: &#39;350px&#39;,
+    height: &#39;350px&#39;,
+    left: &#39;50%&#39;,
+    top: &#39;50%&#39;,
+    transform: &#39;translate(-50%, -50%)&#39;,
+    background: &#39;radial-gradient(circle, hsl(155 27% 18% / 0.12) 0%, transparent 70%)&#39;,
+  }}
+  animate={{
+    scale: [1, 1.12, 1],
+    opacity: [0.6, 0.9, 0.6],
+  }}
+  transition={{
+    duration: 6,
+    repeat: Infinity,
+    ease: &#39;easeInOut&#39;,
+    times: [0, 0.5, 1],
+  }}
+/&gt;
+
+// Caption below the circle:
+// &lt;p className=&quot;font-[DM_Sans] font-light text-[10px] tracking-[0.3em] uppercase
+//               text-[hsl(var(--muted-foreground))] mt-3&quot;&gt;
+//   breathe in · breathe out
+// &lt;/p&gt;
+```
+
+### Signature Animation 2: Interactive Meridian Points SVG
+
+Section 5 features a simplified body silhouette SVG with 6 glowing acupuncture point markers. Hovering over each point reveals a tooltip with the point name and its traditional therapeutic use.
+
+```tsx
+// SVG meridian points — each as a positioned circle within an SVG
+
+const meridianPoints = [
+  {
+    id: &#39;PC-6&#39;,
+    cx: 148,  // x position on 300px-wide SVG
+    cy: 210,  // y position on 500px-tall SVG
+    name: &#39;PC-6 · Pericardium 6&#39;,
+    chinese: &#39;Nei Guan&#39;,
+    use: &#39;Nausea, anxiety, heart palpitations, travel sickness. One of the most frequently used points in TCM.&#39;,
+  },
+  {
+    id: &#39;LI-4&#39;,
+    cx: 130,
+    cy: 185,
+    name: &#39;LI-4 · Large Intestine 4&#39;,
+    chinese: &#39;He Gu&#39;,
+    use: &#39;Pain relief, immune support, headaches, and facial conditions. Often described as the &quot;aspirin point&quot; of acupuncture.&#39;,
+  },
+  {
+    id: &#39;ST-36&#39;,
+    cx: 168,
+    cy: 340,
+    name: &#39;ST-36 · Stomach 36&#39;,
+    chinese: &#39;Zu San Li&#39;,
+    use: &#39;Digestive health, energy and vitality, immune function. One of the most important tonification points in the entire system.&#39;,
+  },
+  {
+    id: &#39;SP-6&#39;,
+    cx: 152,
+    cy: 390,
+    name: &#39;SP-6 · Spleen 6&#39;,
+    chinese: &#39;San Yin Jiao&#39;,
+    use: &#39;Hormonal balance, sleep quality, stress, menstrual regulation. The meeting point of three yin meridians.&#39;,
+  },
+  {
+    id: &#39;GV-20&#39;,
+    cx: 150,
+    cy: 38,
+    name: &#39;GV-20 · Governing Vessel 20&#39;,
+    chinese: &#39;Bai Hui&#39;,
+    use: &#39;Mental clarity, headaches, dizziness, calming anxiety, and lifting the spirits. The &quot;crown&quot; point.&#39;,
+  },
+  {
+    id: &#39;LV-3&#39;,
+    cx: 160,
+    cy: 420,
+    name: &#39;LV-3 · Liver 3&#39;,
+    chinese: &#39;Tai Chong&#39;,
+    use: &#39;Stress and anger, liver health, headaches, menstrual pain, eye conditions. Paired with LI-4 as the &quot;Four Gates&quot;.&#39;,
+  },
+]
+
+// Each point rendered as:
+// &lt;motion.g key={point.id}&gt;
+//   {/* Outer pulse ring */}
+//   &lt;motion.circle
+//     cx={point.cx}
+//     cy={point.cy}
+//     r=&quot;12&quot;
+//     fill=&quot;none&quot;
+//     stroke=&quot;hsl(42 41% 59% / 0.3)&quot;
+//     strokeWidth=&quot;1&quot;
+//     animate={{ r: [12, 18, 12], opacity: [0.3, 0, 0.3] }}
+//     transition={{ duration: 3, repeat: Infinity, ease: &#39;easeInOut&#39;, delay: index * 0.5 }}
+//   /&gt;
+//   {/* Main dot */}
+//   &lt;motion.circle
+//     cx={point.cx}
+//     cy={point.cy}
+//     r=&quot;6&quot;
+//     fill=&quot;hsl(42 41% 59%)&quot;
+//     whileHover={{ r: 8, fill: &#39;hsl(155 27% 18%)&#39; }}
+//     className=&quot;cursor-pointer&quot;
+//   /&gt;
+//   {/* Tooltip on hover — use Framer Motion AnimatePresence */}
+// &lt;/motion.g&gt;
+```
+
+---
+
+## SECTION 1: NAVBAR
+
+```tsx
+// Sticky, lightly frosted background
+
+// &lt;nav className=&quot;fixed top-0 left-0 right-0 z-50
+//                 bg-[hsl(var(--background)/0.97)] border-b border-[hsl(var(--border))]
+//                 backdrop-blur-sm&quot;&gt;
+// &lt;div className=&quot;max-w-7xl mx-auto px-6 h-[72px] flex items-center justify-between&quot;&gt;
+
+// LOGO (left) — lotus SVG + wordmark:
+// Simple 6-petal lotus outline SVG (inline, approx 28×28px):
+// &lt;a href=&quot;/&quot; className=&quot;flex items-center gap-2.5&quot;&gt;
+//   &lt;svg width=&quot;28&quot; height=&quot;28&quot; viewBox=&quot;0 0 28 28&quot; fill=&quot;none&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;
+//        aria-hidden=&quot;true&quot;&gt;
+//     {/* Simple lotus: circle centre + 6 petal outlines */}
+//     &lt;circle cx=&quot;14&quot; cy=&quot;14&quot; r=&quot;3&quot; fill=&quot;hsl(42 41% 59%)&quot; /&gt;
+//     &lt;ellipse cx=&quot;14&quot; cy=&quot;6&quot; rx=&quot;2.5&quot; ry=&quot;5&quot; fill=&quot;none&quot; stroke=&quot;hsl(42 41% 59%)&quot; strokeWidth=&quot;1.2&quot; /&gt;
+//     &lt;ellipse cx=&quot;14&quot; cy=&quot;22&quot; rx=&quot;2.5&quot; ry=&quot;5&quot; fill=&quot;none&quot; stroke=&quot;hsl(42 41% 59%)&quot; strokeWidth=&quot;1.2&quot; /&gt;
+//     &lt;ellipse cx=&quot;6&quot; cy=&quot;14&quot; rx=&quot;5&quot; ry=&quot;2.5&quot; fill=&quot;none&quot; stroke=&quot;hsl(42 41% 59%)&quot; strokeWidth=&quot;1.2&quot; /&gt;
+//     &lt;ellipse cx=&quot;22&quot; cy=&quot;14&quot; rx=&quot;5&quot; ry=&quot;2.5&quot; fill=&quot;none&quot; stroke=&quot;hsl(42 41% 59%)&quot; strokeWidth=&quot;1.2&quot; /&gt;
+//     &lt;ellipse cx=&quot;8.5&quot; cy=&quot;8.5&quot; rx=&quot;3.5&quot; ry=&quot;2&quot; transform=&quot;rotate(-45 8.5 8.5)&quot;
+//              fill=&quot;none&quot; stroke=&quot;hsl(42 41% 59%)&quot; strokeWidth=&quot;1.2&quot; /&gt;
+//     &lt;ellipse cx=&quot;19.5&quot; cy=&quot;19.5&quot; rx=&quot;3.5&quot; ry=&quot;2&quot; transform=&quot;rotate(-45 19.5 19.5)&quot;
+//              fill=&quot;none&quot; stroke=&quot;hsl(42 41% 59%)&quot; strokeWidth=&quot;1.2&quot; /&gt;
+//   &lt;/svg&gt;
+//   &lt;span className=&quot;font-[Noto_Serif] font-bold text-[20px] text-[hsl(var(--foreground))] tracking-wide&quot;&gt;
+//     ZEN POINT
+//   &lt;/span&gt;
+// &lt;/a&gt;
+
+// NAV LINKS:
+// {[&#39;Treatments&#39;, &#39;Conditions&#39;, &#39;About&#39;, &#39;FAQ&#39;, &#39;Book&#39;].map(item =&gt; (
+//   &lt;a key={item} href={`#${item.toLowerCase()}`}
+//      className=&quot;font-[DM_Sans] font-normal text-sm text-[hsl(var(--muted-foreground))]
+//                 hover:text-[hsl(var(--foreground))] transition-colors&quot;&gt;
+//     {item}
+//   &lt;/a&gt;
+// ))}
+
+// CTA:
+// &lt;button className=&quot;bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))]
+//                    font-[DM_Sans] font-normal text-sm px-5 py-2.5 rounded-full
+//                    hover:opacity-90 transition-opacity&quot;&gt;
+//   Book Appointment
+// &lt;/button&gt;
+```
+
+---
+
+## SECTION 2: HERO
+
+```tsx
+// &lt;section className=&quot;min-h-screen bg-[hsl(var(--background))] flex flex-col items-center
+//                      justify-center text-center relative overflow-hidden px-6&quot;&gt;
+
+// Breathing pulse circle (see SIGNATURE ANIMATION 1 above):
+// Absolutely centred, z-0, behind all content
+
+// Optional very subtle bamboo/botanical SVG decorative elements at edges (z-0):
+// Simple organic line art, very low opacity (0.06), positioned bottom-right and top-left
+
+// CONTENT z-10:
+// &lt;div className=&quot;relative z-10 flex flex-col items-center&quot;&gt;
+
+//   Decorative horizontal line:
+//   &lt;div className=&quot;w-16 h-px bg-[hsl(var(--accent)/0.4)] mx-auto mb-6&quot; /&gt;
+
+//   Pre-heading:
+//   &lt;p className=&quot;font-[DM_Sans] font-light text-[10px] tracking-[0.35em] uppercase
+//                  text-[hsl(var(--muted-foreground))] mb-6&quot;&gt;
+//     TRADITIONAL CHINESE MEDICINE · LONDON
+//   &lt;/p&gt;
+
+//   Headline:
+//   &lt;motion.h1
+//     initial={{ opacity: 0, y: 30 }}
+//     animate={{ opacity: 1, y: 0 }}
+//     transition={{ duration: 1.2, ease: &#39;easeOut&#39; }}
+//     className=&quot;font-[Noto_Serif] font-bold text-[64px] max-lg:text-[48px] max-sm:text-[36px]
+//                text-[hsl(var(--foreground))] leading-[1.15] max-w-xl&quot;
+//   &gt;
+//     Restore your body&#39;s natural balance.
+//   &lt;/motion.h1&gt;
+
+//   Subtext:
+//   &lt;motion.p
+//     initial={{ opacity: 0 }}
+//     animate={{ opacity: 1 }}
+//     transition={{ duration: 0.9, delay: 0.6 }}
+//     className=&quot;font-[DM_Sans] font-light text-lg text-[hsl(var(--muted-foreground))]
+//                leading-relaxed max-w-lg mt-5&quot;
+//   &gt;
+//     Zen Point is a contemporary acupuncture and Traditional Chinese Medicine clinic
+//     in London. We treat pain, stress, hormonal imbalance, sleep disorders, and more —
+//     with methods refined over 2,000 years of clinical practice.
+//   &lt;/motion.p&gt;
+
+//   Breathing caption (see animation notes above):
+//   &lt;motion.p
+//     initial={{ opacity: 0 }}
+//     animate={{ opacity: 1 }}
+//     transition={{ delay: 1 }}
+//     className=&quot;font-[DM_Sans] font-light text-[10px] tracking-[0.3em] uppercase
+//                text-[hsl(var(--muted-foreground))] mt-3&quot;
+//   &gt;
+//     breathe in · breathe out
+//   &lt;/motion.p&gt;
+
+//   CTAs:
+//   &lt;motion.div
+//     initial={{ opacity: 0, y: 10 }}
+//     animate={{ opacity: 1, y: 0 }}
+//     transition={{ delay: 0.9, duration: 0.6 }}
+//     className=&quot;flex flex-wrap gap-4 justify-center mt-8&quot;
+//   &gt;
+//     &lt;button className=&quot;bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))]
+//                        font-[DM_Sans] font-normal px-7 py-3.5 rounded-full text-base
+//                        hover:opacity-90 transition-opacity&quot;&gt;
+//       Book Your First Session
+//     &lt;/button&gt;
+//     &lt;button className=&quot;font-[DM_Sans] font-normal text-base text-[hsl(var(--accent))]
+//                        hover:underline px-2&quot;&gt;
+//       What We Treat →
+//     &lt;/button&gt;
+//   &lt;/motion.div&gt;
+
+//   Credential pills:
+//   &lt;motion.div
+//     initial={{ opacity: 0 }}
+//     animate={{ opacity: 1 }}
+//     transition={{ delay: 1.2 }}
+//     className=&quot;flex flex-wrap gap-3 justify-center mt-10&quot;
+//   &gt;
+//     {[&#39;BACS Registered&#39;, &#39;Fully Insured&#39;, &#39;1,800+ treatments delivered&#39;].map(pill =&gt; (
+//       &lt;span key={pill}
+//             className=&quot;bg-white border border-[hsl(var(--border))] font-[DM_Sans] font-light
+//                        text-xs text-[hsl(var(--muted-foreground))] px-4 py-1.5 rounded-full&quot;&gt;
+//         {pill}
+//       &lt;/span&gt;
+//     ))}
+//   &lt;/motion.div&gt;
+
+// &lt;/div&gt;
+```
+
+---
+
+## SECTION 3: TREATMENTS
+
+```tsx
+// &lt;section id=&quot;treatments&quot; className=&quot;py-24 bg-white&quot;&gt;
+// &lt;div className=&quot;max-w-7xl mx-auto px-6&quot;&gt;
+
+// Heading:
+// &lt;h2 className=&quot;font-[Noto_Serif] font-bold text-[52px] max-md:text-[38px]
+//                text-[hsl(var(--foreground))] leading-tight mb-14&quot;&gt;
+//   Our treatments.
+// &lt;/h2&gt;
+
+const treatments = [
+  {
+    name: &#39;Acupuncture&#39;,
+    icon: &#39;Syringe&#39;, // lucide-react
+    price: &#39;From £65 / session&#39;,
+    duration: &#39;60 minutes&#39;,
+    description: &#39;The insertion of ultra-fine single-use sterile needles at specific meridian points to restore the flow of qi (vital energy) and support the body\&#39;s natural healing processes. Used to treat a broad range of conditions including pain, fatigue, anxiety, insomnia, digestive issues, and reproductive health.&#39;,
+    note: &#39;Initial session includes consultation. Follow-up sessions 45 minutes.&#39;,
+  },
+  {
+    name: &#39;Cupping Therapy&#39;,
+    icon: &#39;Wind&#39;,
+    price: &#39;From £55 / session&#39;,
+    duration: &#39;45 minutes&#39;,
+    description: &#39;Glass or medical-grade silicone cups are applied to the skin and used to create gentle suction, lifting the fascia, increasing local blood circulation, and releasing deep layers of muscle tension. Particularly effective for chronic pain, sports recovery, respiratory conditions, and stress-related muscle holding.&#39;,
+    note: &#39;Temporary circular marks are common and typically fade within 3–7 days.&#39;,
+  },
+  {
+    name: &#39;Chinese Herbal Medicine&#39;,
+    icon: &#39;Leaf&#39;,
+    price: &#39;From £45 / consultation&#39;,
+    duration: &#39;60 minutes + herbs&#39;,
+    description: &#39;Bespoke herbal formulas prescribed following a comprehensive TCM consultation. Herbs are combined in precise ratios to address your unique pattern of disbalance — available as traditional teas, convenient granule powders, or capsules. Particularly effective for hormonal, digestive, immune, and skin conditions.&#39;,
+    note: &#39;Cost of herbs in addition to consultation fee. Typical ongoing cost: £30–£55 per month.&#39;,
+  },
+  {
+    name: &#39;Moxibustion&#39;,
+    icon: &#39;Flame&#39;,
+    price: &#39;Included in select plans&#39;,
+    duration: &#39;Add-on to acupuncture&#39;,
+    description: &#39;The careful burning of dried mugwort (moxa) near specific acupuncture points to generate warmth, stimulate the meridians, and tonify yang energy. Particularly effective for conditions characterised by cold or deficiency: low energy and immunity, menstrual pain, certain digestive conditions, and breech presentation in pregnancy.&#39;,
+    note: &#39;Always performed by Dr. Zhang as an integrated part of a treatment plan, never in isolation.&#39;,
+  },
+  {
+    name: &#39;Facial Acupuncture&#39;,
+    icon: &#39;Sparkles&#39;,
+    price: &#39;From £85 / session&#39;,
+    duration: &#39;75 minutes&#39;,
+    description: &#39;Constitutional facial renewal using extremely fine needles to improve microcirculation, stimulate collagen and elastin production, and release accumulated facial tension. Unlike Botox, results build subtly over a course of treatments — improving tone, radiance, and reducing the appearance of fine lines whilst also supporting overall systemic health.&#39;,
+    note: &#39;Recommended course: 10 sessions weekly, then monthly maintenance. Not suitable during pregnancy.&#39;,
+  },
+  {
+    name: &#39;TCM Health Consultation&#39;,
+    icon: &#39;ClipboardList&#39;,
+    price: &#39;£95&#39;,
+    duration: &#39;75 minutes&#39;,
+    description: &#39;A comprehensive initial consultation covering your complete health history, current symptoms, lifestyle, diet, sleep, emotional state, and goals. Dr. Zhang uses TCM diagnostic methods including tongue and pulse observation to identify your unique pattern of disbalance and formulate a personalised treatment plan.&#39;,
+    note: &#39;The £95 consultation fee is deducted from the cost of your first treatment course.&#39;,
+  },
+]
+
+// Grid: 3×2 desktop, 2-col tablet, 1-col mobile
+// &lt;div className=&quot;grid grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1 gap-5&quot;&gt;
+// {treatments.map((t, i) =&gt; (
+//   &lt;motion.div
+//     key={t.name}
+//     initial={{ opacity: 0, y: 20 }}
+//     whileInView={{ opacity: 1, y: 0 }}
+//     viewport={{ once: true }}
+//     transition={{ delay: i * 0.1 }}
+//     className=&quot;bg-[hsl(var(--muted))] rounded-2xl p-8 border border-[hsl(var(--border))]
+//                hover:border-[hsl(var(--accent))] transition-colors duration-300&quot;
+//   &gt;
+//     &lt;div className=&quot;mb-5&quot;&gt;
+//       &lt;Icon className=&quot;w-6 h-6 text-[hsl(var(--accent))]&quot; /&gt; {/* lucide icon */}
+//     &lt;/div&gt;
+//     &lt;h3 className=&quot;font-[Noto_Serif] font-bold text-xl text-[hsl(var(--foreground))] mb-1&quot;&gt;
+//       {t.name}
+//     &lt;/h3&gt;
+//     &lt;p className=&quot;font-[DM_Sans] font-light text-xs text-[hsl(var(--accent))] mb-4&quot;&gt;
+//       {t.price} · {t.duration}
+//     &lt;/p&gt;
+//     &lt;p className=&quot;font-[DM_Sans] font-light text-sm text-[hsl(var(--muted-foreground))] leading-relaxed mb-4&quot;&gt;
+//       {t.description}
+//     &lt;/p&gt;
+//     &lt;p className=&quot;font-[DM_Sans] font-light text-[11px] text-[hsl(var(--muted-foreground))] italic border-t
+//                   border-[hsl(var(--border))] pt-4&quot;&gt;
+//       {t.note}
+//     &lt;/p&gt;
+//   &lt;/motion.div&gt;
+// ))}
+```
+
+---
+
+## SECTION 4: CONDITIONS WE TREAT
+
+```tsx
+// &lt;section id=&quot;conditions&quot; className=&quot;py-24 bg-[hsl(var(--muted))]&quot;&gt;
+// &lt;div className=&quot;max-w-7xl mx-auto px-6&quot;&gt;
+
+// Heading:
+// &lt;h2 className=&quot;font-[Noto_Serif] font-bold text-[48px] max-md:text-[36px]
+//                text-[hsl(var(--foreground))] leading-tight mb-4&quot;&gt;
+//   What we can help with.
+// &lt;/h2&gt;
+// &lt;p className=&quot;font-[DM_Sans] font-light text-base text-[hsl(var(--muted-foreground))] mb-12 max-w-xl&quot;&gt;
+//   This list represents our most frequently treated conditions. Acupuncture and TCM have a
+//   much broader clinical scope — if your condition isn&#39;t listed, please get in touch.
+// &lt;/p&gt;
+
+const conditions = [
+  &#39;Chronic Back Pain&#39;, &#39;Neck &amp; Shoulder Pain&#39;, &#39;Migraines &amp; Headaches&#39;,
+  &#39;Anxiety &amp; Stress&#39;, &#39;Insomnia &amp; Sleep Issues&#39;, &#39;Fertility Support&#39;,
+  &#39;Menstrual Irregularities&#39;, &#39;Menopause Symptoms&#39;, &#39;IBS &amp; Digestive Issues&#39;,
+  &#39;Fatigue &amp; Low Energy&#39;, &#39;Sports Injuries&#39;, &#39;Sciatica&#39;,
+  &#39;Fibromyalgia&#39;, &#39;Hay Fever &amp; Allergies&#39;, &#39;Skin Conditions (Eczema, Acne)&#39;,
+  &#39;High Blood Pressure&#39;, &#39;Immune Support&#39;, &#39;Post-COVID Recovery&#39;,
+  &#39;Pregnancy Support&#39;, &#39;Carpal Tunnel Syndrome&#39;, &#39;Tennis Elbow&#39;,
+  &#39;Frozen Shoulder&#39;, &#39;Low Mood &amp; Depression&#39;, &#39;Irritable Bowel Syndrome&#39;,
+]
+
+// Interactive tags — hover changes to primary colour:
+// &lt;div className=&quot;flex flex-wrap gap-3&quot;&gt;
+// {conditions.map(condition =&gt; (
+//   &lt;motion.button
+//     key={condition}
+//     whileHover={{ scale: 1.03 }}
+//     className=&quot;bg-white border border-[hsl(var(--border))] rounded-full px-4 py-2
+//                font-[DM_Sans] font-normal text-sm text-[hsl(var(--foreground))]
+//                hover:bg-[hsl(var(--primary))] hover:text-[hsl(var(--primary-foreground))]
+//                hover:border-transparent transition-all duration-200&quot;
+//   &gt;
+//     {condition}
+//   &lt;/motion.button&gt;
+// ))}
+// &lt;/div&gt;
+
+// Note:
+// &lt;p className=&quot;font-[DM_Sans] font-light text-sm text-[hsl(var(--muted-foreground))] mt-10
+//               italic&quot;&gt;
+//   Not sure whether acupuncture can help with your condition?
+//   &lt;a href=&quot;#&quot; className=&quot;text-[hsl(var(--accent))] hover:underline ml-1&quot;&gt;
+//     Book a free 15-minute discovery call →
+//   &lt;/a&gt;
+// &lt;/p&gt;
+```
+
+---
+
+## SECTION 5: THE MERIDIAN POINTS
+
+```tsx
+// &lt;section className=&quot;py-24 bg-white&quot;&gt;
+// &lt;div className=&quot;max-w-7xl mx-auto px-6&quot;&gt;
+
+// Heading:
+// &lt;h2 className=&quot;font-[Noto_Serif] font-bold text-[48px] max-md:text-[36px]
+//                text-[hsl(var(--foreground))] leading-tight mb-4 text-center&quot;&gt;
+//   The science of acupuncture.
+// &lt;/h2&gt;
+// &lt;p className=&quot;font-[DM_Sans] font-light text-base text-[hsl(var(--muted-foreground))]
+//               text-center mb-16 max-w-2xl mx-auto&quot;&gt;
+//   TCM views the body as a network of energy pathways — meridians — through which qi (vital
+//   energy) flows. Hover over the points below to explore the meridian system.
+// &lt;/p&gt;
+
+// 2-column layout: SVG left, text right
+// &lt;div className=&quot;grid grid-cols-2 max-lg:grid-cols-1 gap-16 items-start&quot;&gt;
+
+//   LEFT — SVG body silhouette with interactive points
+//   &lt;div className=&quot;relative flex justify-center&quot;&gt;
+//     &lt;svg
+//       width=&quot;300&quot;
+//       height=&quot;500&quot;
+//       viewBox=&quot;0 0 300 500&quot;
+//       className=&quot;max-w-[300px] mx-auto&quot;
+//     &gt;
+//       {/* Simple clean body silhouette — front view, minimal line art */}
+//       {/* Head */}
+//       &lt;ellipse cx=&quot;150&quot; cy=&quot;45&quot; rx=&quot;32&quot; ry=&quot;40&quot; fill=&quot;none&quot; stroke=&quot;hsl(155 27% 18% / 0.15)&quot; strokeWidth=&quot;1.5&quot; /&gt;
+//       {/* Neck */}
+//       &lt;path d=&quot;M 134 84 L 134 100 L 166 100 L 166 84&quot; fill=&quot;none&quot; stroke=&quot;hsl(155 27% 18% / 0.15)&quot; strokeWidth=&quot;1.5&quot; /&gt;
+//       {/* Shoulders + torso */}
+//       &lt;path d=&quot;M 100 110 Q 80 115 78 150 L 82 280 Q 82 290 90 290 L 210 290 Q 218 290 218 280 L 222 150 Q 220 115 200 110 L 166 100 L 134 100 Z&quot;
+//             fill=&quot;none&quot; stroke=&quot;hsl(155 27% 18% / 0.15)&quot; strokeWidth=&quot;1.5&quot; /&gt;
+//       {/* Left arm */}
+//       &lt;path d=&quot;M 100 110 L 65 220 Q 62 235 70 240 L 78 240&quot;
+//             fill=&quot;none&quot; stroke=&quot;hsl(155 27% 18% / 0.15)&quot; strokeWidth=&quot;1.5&quot; /&gt;
+//       {/* Right arm */}
+//       &lt;path d=&quot;M 200 110 L 235 220 Q 238 235 230 240 L 222 240&quot;
+//             fill=&quot;none&quot; stroke=&quot;hsl(155 27% 18% / 0.15)&quot; strokeWidth=&quot;1.5&quot; /&gt;
+//       {/* Hips + legs */}
+//       &lt;path d=&quot;M 90 290 L 82 380 L 80 430 L 95 430 L 105 380 L 150 370 L 195 380 L 205 430 L 220 430 L 218 380 L 210 290&quot;
+//             fill=&quot;none&quot; stroke=&quot;hsl(155 27% 18% / 0.15)&quot; strokeWidth=&quot;1.5&quot; /&gt;
+
+//       {/* Meridian points — see SIGNATURE ANIMATION 2 data above */}
+//       {/* Render each point as a pulsing circle with hover tooltip */}
+//       {meridianPoints.map((point, index) =&gt; (
+//         &lt;AnimatePresence key={point.id}&gt;
+//           &lt;motion.g&gt;
+//             {/* Pulse ring */}
+//             &lt;motion.circle
+//               cx={point.cx} cy={point.cy} r=&quot;12&quot;
+//               fill=&quot;none&quot; stroke=&quot;hsl(42 41% 59% / 0.4)&quot; strokeWidth=&quot;1&quot;
+//               animate={{ r: [12, 20, 12], opacity: [0.4, 0, 0.4] }}
+//               transition={{ duration: 3, repeat: Infinity, ease: &#39;easeInOut&#39;, delay: index * 0.4 }}
+//             /&gt;
+//             {/* Main dot */}
+//             &lt;motion.circle
+//               cx={point.cx} cy={point.cy} r=&quot;6&quot;
+//               fill=&quot;hsl(42 41% 59%)&quot;
+//               whileHover={{ r: 9 }}
+//               className=&quot;cursor-pointer&quot;
+//               onHoverStart={() =&gt; setHoveredPoint(point.id)}
+//               onHoverEnd={() =&gt; setHoveredPoint(null)}
+//             /&gt;
+//             {/* Point label */}
+//             &lt;text x={point.cx + 12} y={point.cy + 4}
+//                   fill=&quot;hsl(155 27% 18%)&quot; fontSize=&quot;9&quot; fontFamily=&quot;DM Sans&quot;&gt;
+//               {point.id}
+//             &lt;/text&gt;
+//           &lt;/motion.g&gt;
+//         &lt;/AnimatePresence&gt;
+//       ))}
+//     &lt;/svg&gt;
+
+//     {/* Tooltip — shows below SVG or as absolute overlay */}
+//     {hoveredPoint &amp;&amp; (() =&gt; {
+//       const point = meridianPoints.find(p =&gt; p.id === hoveredPoint)
+//       return point ? (
+//         &lt;motion.div
+//           initial={{ opacity: 0, y: 5 }}
+//           animate={{ opacity: 1, y: 0 }}
+//           exit={{ opacity: 0 }}
+//           className=&quot;absolute bottom-0 left-1/2 -translate-x-1/2 bg-white border
+//                      border-[hsl(var(--border))] rounded-xl shadow-lg p-4 w-72 z-20&quot;
+//         &gt;
+//           &lt;p className=&quot;font-[Noto_Serif] font-bold text-sm text-[hsl(var(--foreground))] mb-0.5&quot;&gt;
+//             {point.name}
+//           &lt;/p&gt;
+//           &lt;p className=&quot;font-[DM_Sans] font-light text-xs text-[hsl(var(--accent))] mb-2&quot;&gt;
+//             {point.chinese}
+//           &lt;/p&gt;
+//           &lt;p className=&quot;font-[DM_Sans] font-light text-xs text-[hsl(var(--muted-foreground))] leading-relaxed&quot;&gt;
+//             {point.use}
+//           &lt;/p&gt;
+//         &lt;/motion.div&gt;
+//       ) : null
+//     })()}
+//   &lt;/div&gt;
+
+//   RIGHT — Explanatory text
+//   &lt;div&gt;
+//     &lt;h3 className=&quot;font-[Noto_Serif] font-bold text-2xl text-[hsl(var(--foreground))] mb-5&quot;&gt;
+//       How acupuncture works.
+//     &lt;/h3&gt;
+//     &lt;div className=&quot;space-y-5&quot;&gt;
+//       &lt;p className=&quot;font-[DM_Sans] font-light text-sm text-[hsl(var(--muted-foreground))] leading-relaxed&quot;&gt;
+//         Traditional Chinese Medicine views the body as a dynamic system of interconnected pathways —
+//         meridians — through which qi (vital energy) flows. When this flow is disrupted by stress,
+//         injury, illness, dietary factors, or emotional patterns, symptoms arise. Acupuncture restores
+//         balance by stimulating specific points along these meridians, prompting the body&#39;s own
+//         healing response.
+//       &lt;/p&gt;
+//       &lt;p className=&quot;font-[DM_Sans] font-light text-sm text-[hsl(var(--muted-foreground))] leading-relaxed&quot;&gt;
+//         Modern research increasingly supports what Chinese physicians have observed for millennia.
+//         Studies have demonstrated that acupuncture stimulates the release of endogenous opioids
+//         (the body&#39;s natural painkillers), modulates the autonomic nervous system, reduces systemic
+//         inflammation, and influences gene expression in ways that promote tissue healing.
+//       &lt;/p&gt;
+//       &lt;p className=&quot;font-[DM_Sans] font-light text-sm text-[hsl(var(--muted-foreground))] leading-relaxed&quot;&gt;
+//         The six points illustrated opposite represent a small fraction of the 361 recognised
+//         acupuncture points distributed across 14 primary meridians. A TCM practitioner selects
+//         which points to use based on your specific pattern — no two treatment plans are identical.
+//       &lt;/p&gt;
+//     &lt;/div&gt;
+//   &lt;/div&gt;
+
+// &lt;/div&gt;
+```
+
+---
+
+## SECTION 6: ABOUT THE PRACTITIONER
+
+```tsx
+// &lt;section id=&quot;about&quot; className=&quot;py-24 bg-[hsl(var(--muted))]&quot;&gt;
+// &lt;div className=&quot;max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-start&quot;&gt;
+
+// LEFT — Portrait image
+// {/* Image: Dr. Mei Lin Zhang — a female acupuncturist in her early forties, calm and professional expression that conveys warmth and clinical authority, photographed in a clean contemporary TCM treatment room with subtle traditional elements, soft natural light from one side, half-length portrait photography for a medical clinic website */}
+// &lt;motion.div
+//   initial={{ opacity: 0, x: -20 }}
+//   whileInView={{ opacity: 1, x: 0 }}
+//   viewport={{ once: true }}
+//   className=&quot;rounded-3xl overflow-hidden aspect-[4/5]&quot;
+// &gt;
+//   &lt;img src=&quot;&quot; alt=&quot;Dr. Mei Lin Zhang, Zen Point acupuncturist&quot;
+//        className=&quot;w-full h-full object-cover&quot; /&gt;
+// &lt;/motion.div&gt;
+
+// RIGHT — Bio
+// &lt;motion.div
+//   initial={{ opacity: 0, x: 20 }}
+//   whileInView={{ opacity: 1, x: 0 }}
+//   viewport={{ once: true }}
+//   className=&quot;py-8 lg:py-12&quot;
+// &gt;
+//   &lt;p className=&quot;font-[DM_Sans] font-light text-[10px] tracking-[0.3em] uppercase
+//                  text-[hsl(var(--muted-foreground))] mb-4&quot;&gt;
+//     LEAD PRACTITIONER
+//   &lt;/p&gt;
+//   &lt;h2 className=&quot;font-[Noto_Serif] font-bold text-[40px] max-md:text-[32px]
+//                  text-[hsl(var(--foreground))] leading-tight mb-1&quot;&gt;
+//     Dr. Mei Lin Zhang
+//   &lt;/h2&gt;
+//   &lt;p className=&quot;font-[DM_Sans] font-light text-sm text-[hsl(var(--muted-foreground))] mb-8&quot;&gt;
+//     MBBAcC · BSc (Hons) Acupuncture · TCM Herbalist · 14 Years Clinical Experience
+//   &lt;/p&gt;
+
+//   &lt;div className=&quot;space-y-5&quot;&gt;
+//     &lt;p className=&quot;font-[DM_Sans] font-light text-base text-[hsl(var(--muted-foreground))] leading-relaxed&quot;&gt;
+//       I trained at the University of Westminster in Traditional Chinese Medicine — one of the
+//       most rigorous TCM training programmes in the UK — and have been in clinical practice in
+//       London for fourteen years. My approach integrates classical TCM diagnostics with an
+//       understanding of modern biomedicine and lifestyle medicine.
+//     &lt;/p&gt;
+//     &lt;p className=&quot;font-[DM_Sans] font-light text-base text-[hsl(var(--muted-foreground))] leading-relaxed&quot;&gt;
+//       The tongue and pulse tell me things that a blood test cannot. The blood test tells me
+//       things that pulse diagnosis cannot. I use both, and I believe that lasting health outcomes
+//       come from treating the root cause of a condition — not suppressing the symptom.
+//     &lt;/p&gt;
+//     &lt;p className=&quot;font-[DM_Sans] font-light text-base text-[hsl(var(--muted-foreground))] leading-relaxed&quot;&gt;
+//       I work collaboratively with my patients&#39; GPs and specialists where appropriate, and I
+//       always keep clear clinical notes. Zen Point is registered with BACS (the British
+//       Acupuncture Council) and all treatments are performed using single-use sterile needles
+//       under full clinical protocols.
+//     &lt;/p&gt;
+//   &lt;/div&gt;
+
+//   {/* Stats row */}
+//   &lt;div className=&quot;grid grid-cols-4 gap-4 mt-10 border-t border-[hsl(var(--border))] pt-8&quot;&gt;
+//     {[
+//       { number: &#39;14&#39;, label: &#39;Years practice&#39; },
+//       { number: &#39;1,800+&#39;, label: &#39;Patients&#39; },
+//       { number: &#39;MBBAcC&#39;, label: &#39;Registered&#39; },
+//       { number: &#39;5★&#39;, label: &#39;Rating&#39; },
+//     ].map(stat =&gt; (
+//       &lt;div key={stat.label} className=&quot;text-center&quot;&gt;
+//         &lt;p className=&quot;font-[Noto_Serif] font-bold text-xl text-[hsl(var(--primary))] leading-none&quot;&gt;
+//           {stat.number}
+//         &lt;/p&gt;
+//         &lt;p className=&quot;font-[DM_Sans] font-light text-xs text-[hsl(var(--muted-foreground))] mt-1&quot;&gt;
+//           {stat.label}
+//         &lt;/p&gt;
+//       &lt;/div&gt;
+//     ))}
+//   &lt;/div&gt;
+
+// &lt;/motion.div&gt;
+```
+
+---
+
+## SECTION 7: WHAT TO EXPECT
+
+```tsx
+// &lt;section className=&quot;py-24 bg-white&quot;&gt;
+// &lt;div className=&quot;max-w-5xl mx-auto px-6&quot;&gt;
+
+// Heading:
+// &lt;h2 className=&quot;font-[Noto_Serif] font-bold text-[48px] max-md:text-[36px]
+//                text-[hsl(var(--foreground))] leading-tight mb-16&quot;&gt;
+//   Your first visit.
+// &lt;/h2&gt;
+
+const visitSteps = [
+  {
+    number: &#39;1&#39;,
+    title: &#39;The Consultation&#39;,
+    timing: &#39;30 minutes&#39;,
+    description: &quot;We begin with a detailed health history — current symptoms, your sleep, digestion, emotional state, energy levels, menstrual cycle if relevant, and medical history. Dr. Zhang will then use TCM diagnostic methods: tongue observation (the tongue maps directly to the organ systems) and pulse reading at three positions on each wrist, each corresponding to different internal organs and functions.&quot;,
+  },
+  {
+    number: &#39;2&#39;,
+    title: &#39;Your Treatment Plan&#39;,
+    timing: &#39;10 minutes&#39;,
+    description: &quot;Based on the assessment, Dr. Zhang will explain your TCM diagnosis in plain language — what pattern she&#39;s identified, what&#39;s driving it, and what a realistic treatment course looks like. She&#39;ll recommend a number of sessions and a frequency, and explain why. You&#39;re never pressured to commit to more than you&#39;re comfortable with.&quot;,
+  },
+  {
+    number: &#39;3&#39;,
+    title: &#39;The Treatment&#39;,
+    timing: &#39;45–60 minutes&#39;,
+    description: &quot;You&#39;ll rest comfortably on a heated treatment couch. Ultra-fine single-use needles are inserted gently — most people feel little or nothing on insertion, and many describe a dull ache or warmth at the needle site, which is the qi arriving. Once the needles are placed, you&#39;ll rest for 20–30 minutes. The majority of patients fall asleep.&quot;,
+  },
+  {
+    number: &#39;4&#39;,
+    title: &#39;Ongoing Support&#39;,
+    timing: &#39;Between sessions&#39;,
+    description: &quot;After each session, Dr. Zhang will advise on dietary adjustments, lifestyle factors, exercises, or breathing practices that support your treatment. Every 4 sessions, she&#39;ll conduct a formal progress review and adjust the treatment plan accordingly. You&#39;ll always know where you are and what&#39;s coming next.&quot;,
+  },
+]
+
+// Vertical numbered steps
+// &lt;div className=&quot;space-y-0 divide-y divide-[hsl(var(--border))]&quot;&gt;
+// {visitSteps.map((step, i) =&gt; (
+//   &lt;motion.div
+//     key={step.number}
+//     initial={{ opacity: 0, x: -20 }}
+//     whileInView={{ opacity: 1, x: 0 }}
+//     viewport={{ once: true }}
+//     transition={{ delay: i * 0.1 }}
+//     className=&quot;py-10 grid grid-cols-[64px_1fr] gap-8 items-start&quot;
+//   &gt;
+//     &lt;span className=&quot;font-[Noto_Serif] font-bold text-[56px] leading-none
+//                      text-[hsl(var(--accent)/0.35)]&quot;&gt;
+//       {step.number}
+//     &lt;/span&gt;
+//     &lt;div&gt;
+//       &lt;div className=&quot;flex items-center gap-4 mb-3&quot;&gt;
+//         &lt;h3 className=&quot;font-[Noto_Serif] font-bold text-xl text-[hsl(var(--foreground))]&quot;&gt;
+//           {step.title}
+//         &lt;/h3&gt;
+//         &lt;span className=&quot;font-[DM_Sans] font-light text-xs text-[hsl(var(--accent))] uppercase tracking-wider&quot;&gt;
+//           {step.timing}
+//         &lt;/span&gt;
+//       &lt;/div&gt;
+//       &lt;p className=&quot;font-[DM_Sans] font-light text-sm text-[hsl(var(--muted-foreground))] leading-relaxed&quot;&gt;
+//         {step.description}
+//       &lt;/p&gt;
+//     &lt;/div&gt;
+//   &lt;/motion.div&gt;
+// ))}
+```
+
+---
+
+## SECTION 8: TESTIMONIALS
+
+```tsx
+// &lt;section className=&quot;py-24 bg-[hsl(var(--muted))]&quot;&gt;
+// &lt;div className=&quot;max-w-7xl mx-auto px-6&quot;&gt;
+
+// Heading:
+// &lt;h2 className=&quot;font-[Noto_Serif] font-bold text-[48px] max-md:text-[36px]
+//                text-[hsl(var(--foreground))] leading-tight mb-14 text-center&quot;&gt;
+//   Patient experiences.
+// &lt;/h2&gt;
+
+const testimonials = [
+  {
+    quote: &quot;I came to Zen Point for chronic lower back pain after two years of physiotherapy that hadn&#39;t resolved it. Six sessions with Dr. Zhang later and I&#39;m pain-free for the first time in years. I don&#39;t fully understand the mechanism, but I&#39;ve stopped needing to. It works.&quot;,
+    name: &quot;Michael O.&quot;,
+    condition: &quot;Chronic lower back pain&quot;,
+    sessions: &quot;6 sessions · ongoing&quot;,
+  },
+  {
+    quote: &quot;I&#39;d been struggling with insomnia and anxiety for 18 months. I&#39;d tried CBT, sleep hygiene protocols, and medication — nothing lasted. Acupuncture was genuinely my last resort. I&#39;m now sleeping 7–8 hours and my anxiety is completely manageable for the first time in a long time. I wish I hadn&#39;t waited so long.&quot;,
+    name: &quot;Laura S.&quot;,
+    condition: &quot;Insomnia &amp; anxiety&quot;,
+    sessions: &quot;8 sessions to date&quot;,
+  },
+  {
+    quote: &quot;I came for fertility support alongside a private IVF cycle. Dr. Zhang was extraordinarily knowledgeable about the IVF process, worked sensitively alongside my clinic, and never made claims she couldn&#39;t support. I&#39;m now 24 weeks pregnant. I can&#39;t prove causation, but I feel strongly that the treatment supported my body through the process.&quot;,
+    name: &quot;Hannah T.&quot;,
+    condition: &quot;Fertility support&quot;,
+    sessions: &quot;12 sessions across IVF cycle&quot;,
+  },
+]
+
+// 3-col desktop, 1-col mobile
+// {testimonials.map((t, i) =&gt; (
+//   &lt;motion.div
+//     key={t.name}
+//     initial={{ opacity: 0, y: 20 }}
+//     whileInView={{ opacity: 1, y: 0 }}
+//     viewport={{ once: true }}
+//     transition={{ delay: i * 0.12 }}
+//     className=&quot;bg-white rounded-2xl p-8 border border-[hsl(var(--border))] flex flex-col&quot;
+//   &gt;
+//     {/* Gold accent line */}
+//     &lt;div className=&quot;w-8 h-0.5 bg-[hsl(var(--accent))] mb-6&quot; /&gt;
+//     &lt;p className=&quot;font-[Noto_Serif] font-normal italic text-base text-[hsl(var(--foreground))]
+//                   leading-relaxed flex-1 mb-6&quot;&gt;
+//       &quot;{t.quote}&quot;
+//     &lt;/p&gt;
+//     &lt;div className=&quot;border-t border-[hsl(var(--border))] pt-5&quot;&gt;
+//       &lt;p className=&quot;font-[DM_Sans] font-normal text-sm text-[hsl(var(--foreground))]&quot;&gt;{t.name}&lt;/p&gt;
+//       &lt;p className=&quot;font-[DM_Sans] font-light text-xs text-[hsl(var(--accent))] mt-0.5&quot;&gt;{t.condition}&lt;/p&gt;
+//       &lt;p className=&quot;font-[DM_Sans] font-light text-[10px] text-[hsl(var(--muted-foreground))] mt-0.5&quot;&gt;{t.sessions}&lt;/p&gt;
+//     &lt;/div&gt;
+//   &lt;/motion.div&gt;
+// ))}
+```
+
+---
+
+## SECTION 9: PRICING
+
+```tsx
+// &lt;section className=&quot;py-24 bg-white&quot;&gt;
+// &lt;div className=&quot;max-w-3xl mx-auto px-6&quot;&gt;
+
+// Heading:
+// &lt;h2 className=&quot;font-[Noto_Serif] font-bold text-[48px] max-md:text-[36px]
+//                text-[hsl(var(--foreground))] leading-tight mb-4&quot;&gt;
+//   Pricing.
+// &lt;/h2&gt;
+
+const priceList = [
+  { service: &#39;Initial TCM Consultation&#39;, detail: &#39;75 minutes · redeemable against first treatment course&#39;, price: &#39;£95&#39; },
+  { service: &#39;Follow-up Acupuncture&#39;, detail: &#39;60 minutes&#39;, price: &#39;£75&#39; },
+  { service: &#39;Facial Acupuncture&#39;, detail: &#39;75 minutes&#39;, price: &#39;£85&#39; },
+  { service: &#39;Cupping Therapy&#39;, detail: &#39;45 minutes&#39;, price: &#39;£55&#39; },
+  { service: &#39;Chinese Herbal Consultation&#39;, detail: &#39;60 minutes · herbs charged separately (approx. £30–55 / month)&#39;, price: &#39;£45&#39; },
+  { service: &#39;Course of 6 Acupuncture Sessions&#39;, detail: &#39;Paid in advance — save 10% vs individual session pricing&#39;, price: &#39;£405&#39; },
+  { service: &#39;Course of 10 Acupuncture Sessions&#39;, detail: &#39;Paid in advance — save 12% vs individual session pricing&#39;, price: &#39;£660&#39; },
+]
+
+// Clean table with border-b rows:
+// &lt;div className=&quot;border border-[hsl(var(--border))] rounded-2xl overflow-hidden mb-8&quot;&gt;
+//   {priceList.map((row, i) =&gt; (
+//     &lt;div key={row.service}
+//          className=&quot;flex justify-between items-start gap-6 px-8 py-5
+//                     border-b border-[hsl(var(--border))] last:border-b-0&quot;&gt;
+//       &lt;div&gt;
+//         &lt;p className=&quot;font-[Noto_Serif] font-bold text-base text-[hsl(var(--foreground))]&quot;&gt;
+//           {row.service}
+//         &lt;/p&gt;
+//         &lt;p className=&quot;font-[DM_Sans] font-light text-xs text-[hsl(var(--muted-foreground))] mt-0.5&quot;&gt;
+//           {row.detail}
+//         &lt;/p&gt;
+//       &lt;/div&gt;
+//       &lt;p className=&quot;font-[Noto_Serif] font-bold text-xl text-[hsl(var(--primary))] shrink-0&quot;&gt;
+//         {row.price}
+//       &lt;/p&gt;
+//     &lt;/div&gt;
+//   ))}
+// &lt;/div&gt;
+
+// Notes:
+// &lt;p className=&quot;font-[DM_Sans] font-light text-sm text-[hsl(var(--muted-foreground))] leading-relaxed&quot;&gt;
+//   HSA/FSA eligible. Detailed receipts for private health insurance claims are provided as
+//   standard. BACS registered practitioner number available on request. Cancellation policy:
+//   24 hours&#39; notice required. Late cancellations charged at 50%.
+// &lt;/p&gt;
+```
+
+---
+
+## SECTION 10: FAQ + FOOTER
+
+```tsx
+// FAQ
+// &lt;section id=&quot;faq&quot; className=&quot;py-24 bg-[hsl(var(--muted))]&quot;&gt;
+// &lt;div className=&quot;max-w-3xl mx-auto px-6&quot;&gt;
+
+// Heading:
+// &lt;h2 className=&quot;font-[Noto_Serif] font-bold text-[40px] max-md:text-[30px]
+//                text-[hsl(var(--foreground))] leading-tight mb-12&quot;&gt;
+//   Frequently asked questions.
+// &lt;/h2&gt;
+
+const faqs = [
+  {
+    q: &quot;Does acupuncture hurt?&quot;,
+    a: &quot;Acupuncture needles are extraordinarily fine — considerably thinner than a hypodermic needle and nothing like an injection. On insertion, most people feel little or nothing. At the needle site, you may experience a dull ache, warmth, tingling, or heaviness — sensations that indicate qi arriving at the point and are considered therapeutically positive. Most patients relax deeply during treatment, and a significant number fall asleep.&quot;,
+  },
+  {
+    q: &quot;How many sessions will I need?&quot;,
+    a: &quot;This varies considerably by condition. Acute conditions (a recent sports injury, a cold, tension headache) may resolve meaningfully in 2–3 sessions. Chronic or complex conditions — long-standing pain, hormonal imbalance, anxiety — typically require a course of 6–10 sessions to produce lasting change. Dr. Zhang will give you an honest, realistic expectation at your initial consultation and revise it at your 4-session review.&quot;,
+  },
+  {
+    q: &quot;Is acupuncture safe?&quot;,
+    a: &quot;When practised by a qualified and registered practitioner using single-use sterile needles, acupuncture has an excellent safety record. Dr. Zhang is a Member of the British Acupuncture Council (MBBAcC), holds full professional indemnity insurance, and works strictly within the BAcC&#39;s Code of Safe Practice. Serious adverse events from acupuncture are extremely rare.&quot;,
+  },
+  {
+    q: &quot;Can acupuncture be combined with conventional medical treatment?&quot;,
+    a: &quot;Yes, and it often works best this way. Many of Zen Point&#39;s patients receive acupuncture alongside conventional medical care — for example, supporting IVF cycles, managing side effects of cancer treatment, or complementing physiotherapy for musculoskeletal conditions. Dr. Zhang always reviews your current medications and medical situation at consultation.&quot;,
+  },
+  {
+    q: &quot;Do you offer acupuncture during pregnancy?&quot;,
+    a: &quot;Yes — pregnancy acupuncture is one of Dr. Zhang&#39;s specialist areas. Certain acupuncture points are avoided during pregnancy, and the treatment approach adapts to each trimester. Acupuncture during pregnancy is used to address morning sickness, pelvic girdle pain, back pain, anxiety, sleep problems, and to prepare for birth. Please mention your pregnancy when booking.&quot;,
+  },
+]
+
+// &lt;Accordion type=&quot;single&quot; collapsible className=&quot;space-y-3&quot;&gt;
+//   {faqs.map((faq, i) =&gt; (
+//     &lt;AccordionItem key={i} value={`item-${i}`}
+//                   className=&quot;bg-white rounded-xl border border-[hsl(var(--border))] px-6&quot;&gt;
+//       &lt;AccordionTrigger className=&quot;font-[Noto_Serif] font-bold text-base
+//                                    text-[hsl(var(--foreground))] hover:no-underline py-5 text-left&quot;&gt;
+//         {faq.q}
+//       &lt;/AccordionTrigger&gt;
+//       &lt;AccordionContent className=&quot;font-[DM_Sans] font-light text-sm
+//                                     text-[hsl(var(--muted-foreground))] leading-relaxed pb-5&quot;&gt;
+//         {faq.a}
+//       &lt;/AccordionContent&gt;
+//     &lt;/AccordionItem&gt;
+//   ))}
+// &lt;/Accordion&gt;
+
+// FOOTER
+// &lt;footer className=&quot;bg-[hsl(var(--foreground))] text-[hsl(var(--primary-foreground))] py-16&quot;&gt;
+// &lt;div className=&quot;max-w-7xl mx-auto px-6&quot;&gt;
+
+//   Top row:
+//   &lt;div className=&quot;flex flex-col lg:flex-row justify-between gap-12 pb-12 border-b border-white/10&quot;&gt;
+//     &lt;div&gt;
+//       &lt;div className=&quot;flex items-center gap-2.5 mb-3&quot;&gt;
+//         {/* Lotus SVG in white */}
+//         &lt;span className=&quot;font-[Noto_Serif] font-bold text-2xl text-white&quot;&gt;ZEN POINT&lt;/span&gt;
+//       &lt;/div&gt;
+//       &lt;p className=&quot;font-[DM_Sans] font-light text-sm text-white/40 max-w-xs leading-relaxed&quot;&gt;
+//         Contemporary acupuncture and Traditional Chinese Medicine. Harley Street area, London.
+//       &lt;/p&gt;
+//     &lt;/div&gt;
+//     &lt;nav className=&quot;flex flex-wrap gap-x-10 gap-y-3&quot;&gt;
+//       {[&#39;Treatments&#39;, &#39;Conditions&#39;, &#39;About&#39;, &#39;What to Expect&#39;, &#39;Pricing&#39;, &#39;FAQ&#39;, &#39;Book&#39;].map(link =&gt; (
+//         &lt;a key={link} href=&quot;#&quot;
+//            className=&quot;font-[DM_Sans] font-light text-sm text-white/50 hover:text-white transition-colors&quot;&gt;
+//           {link}
+//         &lt;/a&gt;
+//       ))}
+//     &lt;/nav&gt;
+//   &lt;/div&gt;
+
+//   Bottom row:
+//   &lt;div className=&quot;flex flex-col md:flex-row justify-between items-center gap-4 pt-8&quot;&gt;
+//     &lt;p className=&quot;font-[DM_Sans] font-light text-xs text-white/30&quot;&gt;
+//       📍 Harley Street area, London W1 &amp;nbsp;|&amp;nbsp; ☎ 020 7946 0001
+//     &lt;/p&gt;
+//     &lt;p className=&quot;font-[DM_Sans] font-light text-xs text-white/30&quot;&gt;
+//       © 2025 Zen Point Acupuncture Clinic. Dr. Mei Lin Zhang MBBAcC.
+//     &lt;/p&gt;
+//   &lt;/div&gt;
+
+// &lt;/div&gt;
+```
+
+---
+
+## DEPENDENCIES &amp; IMPLEMENTATION NOTES
+
+```bash
+npm install framer-motion lucide-react
+npx shadcn-ui@latest init
+npx shadcn-ui@latest add accordion button card
+```
+
+### Key state variables:
+```tsx
+const [hoveredPoint, setHoveredPoint] = useState&lt;string | null&gt;(null)
+const [scrolled, setScrolled] = useState(false)
+```
+
+### Global CSS:
+```css
+* { font-family: &#39;DM Sans&#39;, sans-serif; }
+h1, h2, h3 { font-family: &#39;Noto Serif&#39;, serif; }
+html { scroll-behavior: smooth; }
+```
+
+### SVG body silhouette note:
+The body outline SVG provided is a simplified schematic. For production, consider using a professional anatomical illustration SVG (available royalty-free from medical illustration libraries) with the acupuncture point circles overlaid via SVG `&lt;g&gt;` groups positioned to match actual anatomical point locations.
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

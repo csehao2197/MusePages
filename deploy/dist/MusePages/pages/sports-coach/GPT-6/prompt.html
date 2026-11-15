@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Perform | Endurance, with intent | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Perform | Endurance, with intent</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Sports Coach Website Prompt
+# websiteprompts.ai
+
+Build a sports coach and personal trainer website for **Jake Perform** — an elite cycling and endurance sports coach. Full-bleed dark action photo hero, dark surface, bold white type, fresh green accent. High-energy but precise — this is serious performance, not a gym bro brand.
+
+## Tech Stack
+React + Vite + TypeScript + Tailwind CSS + Framer Motion (motion/react) + shadcn/ui + lucide-react
+
+## Design System
+```css
+:root {
+  --background: 220 18% 8%;         /* #0f1118 near-black blue-grey */
+  --surface: 220 14% 11%;           /* #161b24 surface */
+  --surface-raised: 220 12% 14%;    /* #1e2530 raised */
+  --border: 220 10% 20%;            /* #2a3040 border */
+  --foreground: 210 20% 95%;        /* #f0f3f8 off-white */
+  --muted: 220 10% 50%;             /* #707a90 muted blue-grey */
+  --primary: 142 68% 48%;           /* #20c758 performance green */
+  --primary-dark: 142 72% 36%;      /* #189840 hover */
+  --primary-glow: 142 68% 48% / 0.15;
+  --mono: &#39;JetBrains Mono&#39;, monospace;
+}
+```
+
+## Typography
+Import: `https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&amp;family=JetBrains+Mono:wght@400&amp;display=swap`
+- Display / H1–H2: Sora 700–800, letter-spacing -0.03em
+- Body / UI: Sora 300–500
+- Stats / Labels / Data: JetBrains Mono 400
+
+## Visual Effects
+
+**Full-bleed hero photo** — composition-independent with gradient:
+```
+{/* Image: elite cyclist in full racing kit riding at speed on an empty road, motion blur background, dramatic low angle, overcast moody sky, high intensity athletic action */}
+```
+Gradient overlay (independent of subject position):
+```css
+background: linear-gradient(
+  to bottom,
+  rgba(15,17,24,0.3) 0%,
+  rgba(15,17,24,0.5) 40%,
+  rgba(15,17,24,0.92) 80%,
+  rgba(15,17,24,1) 100%
+);
+```
+
+**Green glow stat** — performance stat numbers with green text-shadow:
+```css
+.stat-num { color: hsl(var(--primary)); text-shadow: 0 0 30px hsl(142 68% 48% / 0.4); }
+```
+
+**Count-up stats** — useSpring + useInView, triggered on scroll.
+
+**Stagger fade-up** — 0.5s per-section, IntersectionObserver.
+
+## Sections
+
+**1. Navbar** — fixed, `background: hsl(var(--background)/0.94)`, blur 12px, border-bottom. Left: &quot;Perform&quot; Sora 800 18px white + JetBrains Mono 10px green tag &quot;Sports Coach&quot;. Center: Training · Results · About · Contact. Right: &quot;Get started&quot; — green filled, border-radius 6px. Visible star row &quot;★★★★★&quot; in JetBrains Mono 10px + &quot;350+ athletes coached&quot; next to CTA.
+
+**2. Hero** — full viewport, position relative, overflow hidden. Background: full-bleed action photo + gradient overlay (Visual Effects). Content z-10, positioned bottom of viewport, padding 0 64px 80px: JetBrains Mono 10px green uppercase &quot;ELITE PERFORMANCE COACHING&quot;. H1 Sora 800, clamp(56px, 8vw, 100px), line-height 0.92, white:
+```
+Level Up Your
+Performance.
+```
+&quot;Performance.&quot; in green. Sub Sora 300 15px muted, max-width 420px: &quot;Structured training programmes for cyclists, runners, and endurance athletes. Data-driven. Results-proven.&quot; Two CTAs: &quot;Start training →&quot; (green filled) + &quot;See results&quot; (ghost white). Below CTAs: client proof row — 5 avatar image placeholders + &quot;Joined by 350+ athletes&quot; JetBrains Mono 11px muted.
+
+**3. Stats strip** — full-width surface, border-top + bottom, padding 24px 64px. 4 stats with count-up: 350+ athletes coached · 12 yrs coaching · 4.9★ avg rating · 87% hit PB in 12 weeks. Each: JetBrains Mono number green glow + Sora 12px muted label. Dividers between items.
+
+**4. Training Programmes** — padding 96px 64px. H2 &quot;Choose your programme.&quot; 3-column card grid. Each card surface bg, border, border-radius 10px, padding 32px. JetBrains Mono 10px green tag + Sora 700 20px name + description 2 lines muted + included features list (3 items, lucide `Check` green icons) + price JetBrains Mono 14px green + &quot;Enquire →&quot; green link. Middle card: featured, green border, &quot;Most popular&quot; badge. Programmes: Foundations 8-week · Performance 16-week · Elite 6-month.
+
+**5. Results** — surface bg, padding 96px 64px. H2 &quot;Real results.&quot; 3-column grid. Each card: athlete photo (square, rounded-lg) + name Sora 700 + sport JetBrains Mono 10px muted + key result in green + short quote italic Sora 300 14px. Results examples: &quot;Finished first Ironman&quot; · &quot;-8 min marathon PB&quot; · &quot;Qualified for nationals&quot;.
+```
+{/* Athlete photo: athlete portrait outdoors, post-race or training environment, determined expression, sports kit */}
+```
+
+**6. About** — two-column, padding 96px 64px. Left: H2 &quot;The coach behind the plan.&quot; Sora 800. 3 paragraphs: background, coaching philosophy, certifications. Credential chips JetBrains Mono 10px: UCI Level 3 · British Cycling · 12 yrs experience · Data-driven approach. Right: coach portrait photo:
+```
+{/* Image: athletic male sports coach outdoors, professional confident pose, cycling or running context, natural light, high contrast */}
+```
+
+**7. How It Works** — centered, padding 96px 64px. H2 &quot;From day one to new PB.&quot; 4 horizontal steps: 01 Free strategy call → 02 Custom training plan → 03 Weekly coaching check-ins → 04 Hit your goal. Each: JetBrains Mono large faded number (opacity 0.1 green) + step name Sora 700 + 1-line description.
+
+**8. CTA Banner** — green bg `hsl(var(--primary))`, padding 72px 64px, centered. Dark diagonal texture overlay (black 5% opacity). H2 Sora 800 dark: &quot;Ready to train smarter?&quot; Sub dark 70%. CTAs: &quot;Book a free call&quot; (black bg, white text) + &quot;See all programmes&quot; (ghost dark border). JetBrains Mono 11px dark 50%: &quot;Free 30-min strategy call · No commitment.&quot;
+
+**9. Footer** — `hsl(220 18% 5%)`, padding 48px 64px 28px. 3-column: Brand (logo + tagline + socials) / Programmes links / Company links. Bottom: copyright + &quot;Certified sports coach · Regulated by British Cycling&quot; JetBrains Mono 10px muted.
+
+## Responsive
+Mobile: nav hamburger · hero H1 clamp(44px, 12vw, 72px) · stats strip 2×2 · programmes stack single column · results 2-column · about single column · steps 2×2.
+
+## Animations Summary
+| Element | Animation | Trigger |
+|---|---|---|
+| Hero content | Stagger fade-up | On mount |
+| Stats | Count-up useSpring | Scroll |
+| Programme cards | Stagger fade-up | Scroll |
+| Results cards | Stagger fade-up | Scroll |
+| Steps | Stagger fade-up | Scroll |
+| CTA | Fade-up | Scroll |
+
+## Key Dependencies
+```json
+{ &quot;motion&quot;: &quot;^12.x&quot;, &quot;lucide-react&quot;: &quot;^0.400.x&quot; }
+```
+
+&gt; **Quick notes:** &quot;Jake Perform&quot; brand name is a placeholder — swap throughout. Hero photo must be high-quality action photography for full effect. Certification mentions should reflect real credentials. Pricing is indicative only.
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

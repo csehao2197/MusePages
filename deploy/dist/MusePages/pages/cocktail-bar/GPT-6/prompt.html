@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dusk — Cocktail Bar | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Dusk — Cocktail Bar</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Cocktail Bar Website Prompt
+# websiteprompts.ai
+
+Build a cinematic, dark cocktail bar and craft spirits website called &quot;Dusk Bar&quot; using React + Vite + TypeScript + Tailwind CSS + Framer Motion (motion/react) + shadcn/ui + lucide-react.
+
+## Design System
+
+### Colors
+```css
+:root {
+  --background: 0 0% 2%;              /* pure near-black #050505 */
+  --foreground: 38 16% 88%;           /* warm cream */
+  --primary: 38 16% 88%;
+  --primary-foreground: 0 0% 2%;
+  --accent: 28 55% 50%;               /* deep amber #c97a2a */
+  --surface: 0 0% 6%;
+  --surface-raised: 0 0% 10%;
+  --muted-foreground: 38 8% 52%;
+  --border: 0 0% 16%;
+}
+```
+
+### Typography
+- Import: `https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Cormorant+Garamond:ital,wght@1,400;1,600&amp;family=Inter:wght@300;400;500&amp;display=swap`
+- Display: Bebas Neue — cinematic, maximum scale
+- Accent: Cormorant Garamond italic — used for sub-labels and pull quotes
+- Body: Inter 300–400
+- Labels: Inter 500 uppercase 10px letter-spacing 0.16em
+
+## Sections
+
+### 1. Navbar
+- Sticky pure black, `backdrop-filter: blur(14px)`
+- Left: Bebas Neue letter-spacing 0.15em &quot;DUSK&quot; in warm cream
+- Right: Menu · Reservations · Events · About + &quot;Reserve a table →&quot; amber outlined button
+
+### 2. Hero
+- Full-viewport height, black background
+- Full-bleed cinematic cocktail photography `position: absolute inset-0 w-full h-full object-cover object-center`
+- Minimal overlay — just enough for text: `background: linear-gradient(to right, rgba(5,5,5,0.88) 0%, rgba(5,5,5,0.45) 55%, rgba(5,5,5,0.15) 100%)`
+- Large background display text: &quot;DUSK&quot; in Bebas Neue `font-size: clamp(300px, 42vw, 600px)` at `opacity: 0.025`, `position: absolute; right: -3%; top: 50%; transform: translateY(-50%); z-index: 1; letter-spacing: -0.02em`
+- Content `z-index: 10`, left-aligned `padding-left: 7vw`, centered vertically:
+  - Inter 500 uppercase 10px amber label: &quot;Craft Cocktail Bar · Soho, London&quot;
+  - Bebas Neue `clamp(78px, 11vw, 165px)` warm cream, line-height 0.84:
+    &quot;CRAFTED\nBY HAND.\nSERVED WITH\nINTENT.&quot;
+  - Amber accent on &quot;INTENT.&quot;
+  - Inter 300 muted cream sub: &quot;A rotating menu of 24 craft cocktails, an obsessive spirits selection, and a room designed to make you stay later than you planned&quot;
+  - CTAs: &quot;Reserve a table →&quot; (amber filled, dark text) + &quot;See the menu&quot; (ghost cream)
+  - 3 floating chips: &quot;24 Cocktails · 200+ Spirits · Tues–Sun from 5pm&quot;
+
+{/* Image brief: cinematic close-up of craft cocktail being poured — dark amber liquid, dramatic back-lighting, smoke or ice vapour, black background, film-still quality photography */}
+
+- Stagger fade-up on mount: label (0s), headline (0.1s), sub (0.28s), CTAs (0.44s), chips (0.6s)
+
+### 3. The Menu
+- &quot;What We Make&quot; — Bebas Neue `clamp(52px, 7vw, 90px)` warm cream
+- 4 cocktail category rows, hover-raise:
+  - Signature Cocktails (our rotating originals, each named for a time of night — from £14)
+  - Classics Reworked (the canon, our way — from £12)
+  - Low ABV &amp; Zero (the same obsession, less spirit — from £10)
+  - Spirits &amp; Highballs (rare pour-overs, seasonal highballs — ask your bartender)
+- Each: Bebas Neue 32px category name left + Inter 300 muted description right + amber &quot;→&quot;
+- `border-bottom: 1px solid hsl(var(--border))`
+- Hover: surface-raised, name turns amber
+
+### 4. Signature Drinks
+- &quot;Current Signatures&quot; — Bebas Neue large
+- 3 cocktail cards, dark surface, no border-radius:
+  - The Last Light (mezcal, aperol, blood orange, activated charcoal — £15)
+  - Midnight Sour (bourbon, black sesame, lemon, honey — £14)
+  - Fog of Dusk (gin, elderflower, cucumber, dry ice serve — £14)
+- Each: large 4/3 cocktail image, Bebas Neue cocktail name, Cormorant italic description, amber price tag
+- Hover: amber border, image scale 1.02
+
+{/* Image brief: dark moody cocktail — mezcal sour with smoked rim, black background, theatrical presentation, cinematic photography */}
+{/* Image brief: bourbon cocktail, amber liquid, single large ice sphere, dark bar background, editorial */}
+{/* Image brief: gin drink with dry ice smoke effect, dramatic, dark surface, artistic serve */}
+
+### 5. The Bar
+- &quot;The Room&quot; — Bebas Neue large
+- Split: left text, right image
+- Cormorant Garamond italic pull quote: &quot;We built Dusk for people who think a good drink deserves a good hour.&quot;
+- Inter 300 muted: 2 paragraphs — no TVs, no DJ after 10pm, no rush. 40 covers. Reservations recommended. Walk-ins always welcome if there&#39;s space.
+- Amber chips: &quot;40 Covers · No TVs · Walk-ins Welcome · Soho&quot;
+
+{/* Image brief: intimate cocktail bar interior, dark wood and brass, warm backlit spirits shelves, moody candles, cinematic atmosphere */}
+
+### 6. Events
+- &quot;Private Hire &amp; Events&quot; — Bebas Neue large
+- Centered dark surface section
+- Inter 300 muted: &quot;Full bar buyout available Sunday–Monday. Cocktail masterclasses for groups of 8–20. Seasonal supper club nights announced monthly.&quot;
+- &quot;Enquire about events →&quot; amber button + &quot;Join the mailing list&quot; ghost
+
+### 7. Testimonials
+- 3 cards: Bebas Neue 18px amber cocktail name as header, Inter 300 italic cream quote, guest name in Inter 10px muted
+- Stagger fade-up on scroll
+
+### 8. Reservation CTA
+- Full-width deep amber `#c97a2a` background
+- Bebas Neue `clamp(52px, 7vw, 90px)` dark: &quot;YOUR TABLE IS WAITING&quot;
+- Inter 300 dark: &quot;Reserve online or walk in — we&#39;ll always try to find you a seat&quot;
+- &quot;Reserve a table →&quot; dark near-black button
+- &quot;Tues–Sun from 5pm · Last seating 10:30pm · Soho, London&quot; Inter 10px dark 70%
+
+### 9. Footer
+- Pure black, Bebas Neue &quot;DUSK&quot; in warm cream
+- Instagram · Google Maps
+- &quot;© 2026 Dusk Bar · 12 Beak Street, Soho, London W1F · Tues–Sun 5pm–1am&quot;
+
+## Animations
+- Hero: aggressive stagger fade-up on mount, &quot;DUSK&quot; bg text fade in 1.2s delay
+- Menu rows: hover raise + amber transition 0.15s
+- Cocktail cards: stagger fade-up + scale 0.96→1 on scroll
+- All hover: 0.15s ease
+
+## Responsive
+- Mobile: stacked hero, single-column cocktail cards, hamburger nav
+
+## Full Copy
+- Wordmark: &quot;DUSK&quot;
+- Hero: &quot;CRAFTED BY HAND. SERVED WITH INTENT.&quot; / &quot;A rotating menu of 24 craft cocktails, an obsessive spirits selection&quot;
+- Menu: Signatures from £14 · Classics from £12 · Low ABV from £10 · Spirits ask bartender
+- Cocktails: The Last Light £15 · Midnight Sour £14 · Fog of Dusk £14
+- Hours: Tues–Sun from 5pm, last seating 10:30pm
+- Testimonial: &quot;Every cocktail at Dusk is genuinely considered. They&#39;ve taken a mezcal sour and made it the best drink I&#39;ve had this year.&quot; — Marcus T., Soho
+- CTA: &quot;YOUR TABLE IS WAITING&quot; / &quot;Reserve online or walk in&quot;
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A fresh take on Asian comfort food. Explore the Umami House digital menu and build your table's order.">
+    <title>Umami House — The Menu</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="app.js"></script>
+</head>
+<body>
+    <header><a class="brand" href="#top"><span class="seal">U</span>umami house<span class="brand-note">ASIAN FUSION KITCHEN</span></a><div class="header-right"><span id="hours"><i></i> OPEN NOW</span><time id="clock"></time><button id="language" aria-pressed="false">EN / Romanized</button><button id="basket-button">Your order <span id="basket-count">0</span></button></div></header>
+    <main id="top">
+        <section class="intro"><div><p class="eyebrow">GOOD FOOD. GOOD COMPANY.</p><h1>A little adventure.<br><em>In every bite.</em></h1><p>Rooted in tradition. Made for right now.<br>Find your new favorite at our table.</p><div class="intro-meta"><span>FRESHLY MADE TO ORDER</span><span>LOCALLY SOURCED</span><span>BIG UMAMI ENERGY</span></div></div><div class="hero-photo"><img src="sushi.jpg" alt="Freshly prepared sushi rolls with vibrant garnishes"><span class="photo-stamp">MADE WITH<br><b>good taste.</b><br>SHARED WITH LOVE</span></div></section>
+        <aside class="special"><span class="special-label">FROM THE CHEF</span><p><strong>A little seasonal magic.</strong> Miso butter mushroom bao, back for a limited time.</p><button id="special-button">Try the special <span>↗</span></button></aside>
+        <section class="menu-area" id="menu"><div class="menu-heading"><div><p class="eyebrow">SOMETHING FOR EVERY CRAVING</p><h2>The menu.</h2></div><p>Small plates, big feelings.<br>Order a few. Share a lot.</p></div><nav class="categories" aria-label="Menu categories"><button class="active" data-category="All" aria-pressed="true">All dishes</button><button data-category="Appetizers">Appetizers</button><button data-category="Sushi & Sashimi">Sushi & sashimi</button><button data-category="Noodles & Rice">Noodles & rice</button><button data-category="Main Courses">Main courses</button><button data-category="Vegetarian">Vegetarian</button><button data-category="Desserts">Desserts</button><button data-category="Beverages">Beverages</button></nav><div class="diet-bar"><span>MAKE IT YOURS</span><button data-diet="Vegetarian" aria-pressed="false">Vegetarian</button><button data-diet="Vegan" aria-pressed="false">Vegan</button><button data-diet="Gluten-Free" aria-pressed="false">GF Gluten-free</button><button data-diet="Spicy" aria-pressed="false">Spicy</button><button data-diet="Chef's Picks" aria-pressed="false">Chef's picks</button><button id="clear">Clear all</button></div><div class="result-line"><h3 id="category-heading">A taste of everything</h3><span id="count" role="status"></span></div><div id="dishes" class="dish-grid"></div><p class="allergen-note">Your wellbeing comes first. Let us know about allergies before ordering. Our kitchen handles sesame, soy, shellfish, gluten, dairy and nuts; cross-contact is possible.</p></section>
+    </main>
+    <footer><div><a class="brand" href="#top">umami house</a><p>Come hungry. Leave happy.<br>28 Orchard Street · San Francisco<br>Daily, 11:30 am–10 pm Pacific</p></div><div><h3>A menu worth sharing.</h3><button id="download">Print / save PDF menu ↗</button><button id="share">Copy menu link ↗</button><p id="share-status" role="status"></p><small>Menu updated November 14, 2026 · Prices in USD<br>Digital ordering demonstration. Payment at the restaurant.</small></div><img class="qr" src="menu-qr.png" alt="QR code for the public Umami House collection page"></footer>
+    <dialog id="dish-dialog"><button class="close" aria-label="Close dish details">×</button><div id="dish-detail"></div></dialog>
+    <dialog id="order-dialog"><button class="close" aria-label="Close order">×</button><p class="eyebrow">FOR THE TABLE</p><h2>Your order.</h2><div id="order-items"></div><p id="order-total"></p><p class="muted">A local order preview. Nothing is sent to the kitchen and no payment is taken.</p><button class="primary" id="clear-order">Clear order</button></dialog>
+</body>
+</html>

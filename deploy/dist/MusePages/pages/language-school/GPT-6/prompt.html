@@ -1,0 +1,1067 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LINGUA Language School | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>LINGUA Language School</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># LINGUA — Language School Website Prompt
+## For Bolt, v0, Lovable, Claude — React + Vite + TypeScript + Tailwind CSS + Framer Motion + shadcn/ui + lucide-react
+
+---
+
+Build a complete, production-ready language school website for **LINGUA** — a modern online language school aimed at professional adults who want structured, effective language learning without the gimmicks. The brand is confident, intelligent, and approachable — navy with warm yellow accents. Every section contains fully written copy and all animations are fully implemented.
+
+---
+
+## DESIGN SYSTEM
+
+### Colors — HSL custom properties in :root
+
+```css
+@import url(&#39;https://fonts.googleapis.com/css2?family=Sora:wght@700;800&amp;family=Plus+Jakarta+Sans:wght@400;500&amp;display=swap&#39;);
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 228 52% 22%;
+  --primary: 228 52% 22%;
+  --primary-foreground: 0 0% 100%;
+  --accent: 45 92% 61%;
+  --muted: 220 30% 96%;
+  --card: 0 0% 100%;
+  --border: 220 15% 88%;
+  --muted-foreground: 228 20% 50%;
+}
+```
+
+### Typography
+- **Headings**: Sora — weights 700 and 800. Modern, geometric, friendly but purposeful. Used for all H1/H2/H3.
+- **Body**: Plus Jakarta Sans — weights 400 and 500. Clear, readable, professional.
+
+### Signature Animation: Language Ticker Marquee
+
+The hero section features a horizontal scrolling language ticker — a full-width animated strip that scrolls languages infinitely from right to left. Implementation:
+
+```css
+/* Add to global CSS */
+@keyframes ticker-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: ticker-scroll 25s linear infinite;
+}
+
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+```
+
+```tsx
+// Ticker JSX:
+const TICKER_TEXT = &quot;Hello · Hola · Bonjour · Ciao · Olá · こんにちは · Merhaba · مرحبا · Привет · Namaste · &quot;
+
+&lt;div className=&quot;w-full overflow-hidden bg-[hsl(var(--accent))] py-3&quot;&gt;
+  &lt;div className=&quot;ticker-track&quot;&gt;
+    {/* Render the string TWICE side-by-side so the loop is seamless */}
+    &lt;span className=&quot;font-[Sora] font-bold text-lg text-[hsl(var(--foreground))] pr-8 whitespace-nowrap&quot;&gt;
+      {TICKER_TEXT.repeat(4)}
+    &lt;/span&gt;
+    &lt;span className=&quot;font-[Sora] font-bold text-lg text-[hsl(var(--foreground))] pr-8 whitespace-nowrap&quot;&gt;
+      {TICKER_TEXT.repeat(4)}
+    &lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+```
+
+---
+
+## SECTION 1: NAVBAR
+
+```tsx
+// Sticky navbar with scroll shadow
+
+// State: const [scrolled, setScrolled] = useState(false)
+// useEffect: window.addEventListener(&#39;scroll&#39;, () =&gt; setScrolled(window.scrollY &gt; 40))
+
+// &lt;nav className={`fixed top-0 left-0 right-0 z-50 bg-white transition-shadow duration-300
+//                  border-b border-[hsl(var(--border))]
+//                  ${scrolled ? &#39;shadow-sm&#39; : &#39;shadow-none&#39;}`}&gt;
+// &lt;div className=&quot;max-w-7xl mx-auto px-6 h-18 flex items-center justify-between h-[72px]&quot;&gt;
+
+// LOGO (left):
+// &lt;a href=&quot;/&quot; className=&quot;flex items-center gap-2.5&quot;&gt;
+//   &lt;GraduationCap className=&quot;w-6 h-6 text-[hsl(var(--accent))]&quot; /&gt;
+//   &lt;span className=&quot;font-[Sora] font-bold text-[22px] text-[hsl(var(--foreground))] tracking-tight&quot;&gt;
+//     LINGUA
+//   &lt;/span&gt;
+// &lt;/a&gt;
+
+// NAV LINKS (center, hidden md:down):
+// &lt;nav className=&quot;hidden md:flex items-center gap-8&quot;&gt;
+//   {[&#39;Languages&#39;, &#39;Courses&#39;, &#39;Teachers&#39;, &#39;Business&#39;, &#39;Pricing&#39;].map(item =&gt; (
+//     &lt;a key={item} href={`#${item.toLowerCase()}`}
+//        className=&quot;font-[Plus_Jakarta_Sans] font-normal text-sm text-[hsl(var(--muted-foreground))]
+//                   hover:text-[hsl(var(--foreground))] transition-colors&quot;&gt;
+//       {item}
+//     &lt;/a&gt;
+//   ))}
+// &lt;/nav&gt;
+
+// CTA (right):
+// &lt;button className=&quot;bg-[hsl(var(--primary))] text-white font-[Plus_Jakarta_Sans] font-medium
+//                    text-sm px-5 py-2.5 rounded-full hover:opacity-90 transition-opacity&quot;&gt;
+//   Start Learning
+// &lt;/button&gt;
+```
+
+---
+
+## SECTION 2: HERO
+
+```tsx
+// &lt;section className=&quot;min-h-[90dvh] bg-white flex flex-col items-center justify-center
+//                      text-center px-6 relative overflow-hidden&quot;&gt;
+
+// BACKGROUND DECORATIVE ELEMENTS (absolutely positioned, z-0):
+// Large faint language names scattered in corners:
+// &lt;span className=&quot;absolute top-8 left-4 font-[Sora] font-extrabold text-[120px]
+//                  text-[hsl(var(--foreground)/0.04)] select-none pointer-events-none leading-none
+//                  max-lg:hidden&quot;&gt;
+//   ESPAÑOL
+// &lt;/span&gt;
+// &lt;span className=&quot;absolute bottom-8 right-4 font-[Sora] font-extrabold text-[100px]
+//                  text-[hsl(var(--foreground)/0.04)] select-none pointer-events-none leading-none
+//                  max-lg:hidden&quot;&gt;
+//   FRANÇAIS
+// &lt;/span&gt;
+// &lt;span className=&quot;absolute top-1/2 right-8 -translate-y-1/2 font-[Sora] font-extrabold text-[80px]
+//                  text-[hsl(var(--foreground)/0.03)] select-none pointer-events-none leading-none
+//                  max-lg:hidden&quot;&gt;
+//   ITALIANO
+// &lt;/span&gt;
+
+// Subtle radial gradient background:
+// &lt;div className=&quot;absolute inset-0 bg-radial-gradient from-[hsl(var(--primary)/0.04)]
+//                  to-transparent pointer-events-none&quot; /&gt;
+//  → Use inline style: background: &#39;radial-gradient(ellipse 80% 60% at 50% 40%, hsl(228 52% 22% / 0.04), transparent)&#39;
+
+// CONTENT z-10:
+// &lt;div className=&quot;relative z-10 w-full flex flex-col items-center&quot;&gt;
+
+//   --- TICKER (full width, appears just above the headline) ---
+//   (Render the ticker marquee strip here — full width, yellow background strip with scrolling text)
+//   (See ticker implementation above)
+
+//   Pre-heading:
+//   &lt;p className=&quot;font-[Plus_Jakarta_Sans] font-normal text-xs tracking-[0.35em] uppercase
+//                  text-[hsl(var(--muted-foreground))] mt-10 mb-5&quot;&gt;
+//     ONLINE LANGUAGE SCHOOL
+//   &lt;/p&gt;
+
+//   Headline:
+//   &lt;motion.h1
+//     initial={{ opacity: 0, y: 30 }}
+//     animate={{ opacity: 1, y: 0 }}
+//     transition={{ duration: 0.9, ease: &#39;easeOut&#39; }}
+//     className=&quot;font-[Sora] font-extrabold text-[72px] max-lg:text-[52px] max-sm:text-[38px]
+//                text-[hsl(var(--foreground))] leading-[1.1] max-w-3xl&quot;
+//   &gt;
+//     Speak a new language with confidence.
+//   &lt;/motion.h1&gt;
+
+//   Subtext:
+//   &lt;motion.p
+//     initial={{ opacity: 0 }}
+//     animate={{ opacity: 1 }}
+//     transition={{ duration: 0.8, delay: 0.4 }}
+//     className=&quot;font-[Plus_Jakarta_Sans] font-normal text-lg text-[hsl(var(--muted-foreground))]
+//                leading-relaxed max-w-xl mt-5&quot;
+//   &gt;
+//     Expert tutors, structured courses, and flexible scheduling — for absolute beginners and
+//     conversational speakers wanting to go further. 7 languages. 1 platform.
+//   &lt;/motion.p&gt;
+
+//   CTAs:
+//   &lt;motion.div
+//     initial={{ opacity: 0, y: 10 }}
+//     animate={{ opacity: 1, y: 0 }}
+//     transition={{ duration: 0.6, delay: 0.7 }}
+//     className=&quot;flex flex-wrap gap-4 justify-center mt-8&quot;
+//   &gt;
+//     &lt;button className=&quot;bg-[hsl(var(--primary))] text-white font-[Plus_Jakarta_Sans] font-medium
+//                        text-base px-7 py-3.5 rounded-full hover:opacity-90 transition-opacity&quot;&gt;
+//       Book a Free Trial Class
+//     &lt;/button&gt;
+//     &lt;button className=&quot;text-[hsl(var(--primary))] font-[Plus_Jakarta_Sans] font-medium
+//                        text-base px-7 py-3.5 hover:underline&quot;&gt;
+//       Explore Languages →
+//     &lt;/button&gt;
+//   &lt;/motion.div&gt;
+
+//   Social proof strip:
+//   &lt;motion.div
+//     initial={{ opacity: 0 }}
+//     animate={{ opacity: 1 }}
+//     transition={{ duration: 0.6, delay: 1 }}
+//     className=&quot;mt-10 border-t border-[hsl(var(--border))] pt-6&quot;
+//   &gt;
+//     &lt;p className=&quot;font-[Plus_Jakarta_Sans] font-normal text-sm text-[hsl(var(--muted-foreground))]&quot;&gt;
+//       Trusted by 4,200+ learners across 38 countries &amp;nbsp;·&amp;nbsp; 4.9★ Trustpilot &amp;nbsp;·&amp;nbsp; Google-certified teachers
+//     &lt;/p&gt;
+//   &lt;/motion.div&gt;
+
+// &lt;/div&gt;
+```
+
+---
+
+## SECTION 3: LANGUAGES
+
+```tsx
+// &lt;section id=&quot;languages&quot; className=&quot;py-24 bg-[hsl(var(--muted))]&quot;&gt;
+// &lt;div className=&quot;max-w-7xl mx-auto px-6&quot;&gt;
+
+// Heading:
+// &lt;motion.h2
+//   initial={{ opacity: 0, y: 20 }}
+//   whileInView={{ opacity: 1, y: 0 }}
+//   viewport={{ once: true }}
+//   className=&quot;font-[Sora] font-bold text-[52px] max-md:text-[38px]
+//              text-[hsl(var(--foreground))] leading-tight mb-4&quot;
+// &gt;
+//   7 languages. Expert teachers. One platform.
+// &lt;/motion.h2&gt;
+// &lt;p className=&quot;font-[Plus_Jakarta_Sans] font-normal text-base text-[hsl(var(--muted-foreground))]
+//               mb-14 max-w-xl&quot;&gt;
+//   All our teachers are native or near-native speakers with recognised teaching qualifications
+//   and a minimum of two years&#39; experience.
+// &lt;/p&gt;
+
+const languages = [
+  {
+    flag: &#39;🇪🇸&#39;,
+    name: &#39;Spanish&#39;,
+    teachers: 10,
+    levels: &#39;A1 – C2&#39;,
+    popular: true,
+    description: &#39;The world\&#39;s second most spoken language, and our most popular. Whether you\&#39;re headed to Spain or Latin America, this is where most students start.&#39;,
+  },
+  {
+    flag: &#39;🇫🇷&#39;,
+    name: &#39;French&#39;,
+    teachers: 8,
+    levels: &#39;A1 – C2&#39;,
+    popular: true,
+    description: &#39;Official language in 29 countries. Our French teachers cover European, Canadian, and African French varieties depending on your goals.&#39;,
+  },
+  {
+    flag: &#39;🇩🇪&#39;,
+    name: &#39;German&#39;,
+    teachers: 6,
+    levels: &#39;A1 – C1&#39;,
+    popular: false,
+    description: &#39;The most spoken language in the EU. Highly valued in engineering, finance, and academia — and more learnable than its reputation suggests.&#39;,
+  },
+  {
+    flag: &#39;🇮🇹&#39;,
+    name: &#39;Italian&#39;,
+    teachers: 5,
+    levels: &#39;A1 – B2&#39;,
+    popular: true,
+    description: &#39;The language of opera, art, food, and fashion. Students consistently describe Italian lessons as the most enjoyable on the platform.&#39;,
+  },
+  {
+    flag: &#39;🇵🇹&#39;,
+    name: &#39;Portuguese&#39;,
+    teachers: 4,
+    levels: &#39;A1 – B2&#39;,
+    popular: false,
+    description: &#39;Available in both European (Portugal) and Brazilian varieties. Growing rapidly in business importance, particularly in tech and finance.&#39;,
+  },
+  {
+    flag: &#39;🇯🇵&#39;,
+    name: &#39;Japanese&#39;,
+    teachers: 4,
+    levels: &#39;Beginner – Intermediate&#39;,
+    popular: false,
+    description: &#39;Three writing systems, a unique grammatical structure, and an incredibly rich cultural context. Our teachers make it structured and achievable.&#39;,
+  },
+  {
+    flag: &#39;🇦🇪&#39;,
+    name: &#39;Arabic&#39;,
+    teachers: 3,
+    levels: &#39;A1 – A2&#39;,
+    popular: false,
+    description: &#39;We offer Modern Standard Arabic, suitable for formal communication, reading, and as a foundation for regional dialects. Expanding programme.&#39;,
+  },
+]
+
+// Grid: grid grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1 gap-4
+// Each card:
+// &lt;motion.div
+//   key={lang.name}
+//   whileInView={{ opacity: 1, y: 0 }}
+//   initial={{ opacity: 0, y: 20 }}
+//   viewport={{ once: true }}
+//   transition={{ delay: index * 0.08 }}
+//   className=&quot;bg-white rounded-2xl p-6 border border-[hsl(var(--border))]
+//              hover:border-[hsl(var(--accent))] hover:shadow-md transition-all duration-300
+//              relative overflow-hidden&quot;
+// &gt;
+//   {lang.popular &amp;&amp; (
+//     &lt;span className=&quot;absolute top-3 right-3 bg-[hsl(var(--accent))] text-[hsl(var(--foreground))]
+//                       font-[Plus_Jakarta_Sans] font-medium text-[10px] tracking-wider uppercase
+//                       px-2.5 py-1 rounded-full&quot;&gt;
+//       Most Popular
+//     &lt;/span&gt;
+//   )}
+//   &lt;div className=&quot;text-[40px] mb-3 leading-none&quot;&gt;{lang.flag}&lt;/div&gt;
+//   &lt;h3 className=&quot;font-[Sora] font-bold text-[22px] text-[hsl(var(--foreground))] mb-1&quot;&gt;
+//     {lang.name}
+//   &lt;/h3&gt;
+//   &lt;p className=&quot;font-[Plus_Jakarta_Sans] font-normal text-xs text-[hsl(var(--muted-foreground))] mb-3&quot;&gt;
+//     {lang.levels} · {lang.teachers} teachers available
+//   &lt;/p&gt;
+//   &lt;p className=&quot;font-[Plus_Jakarta_Sans] font-normal text-sm text-[hsl(var(--muted-foreground))] leading-relaxed&quot;&gt;
+//     {lang.description}
+//   &lt;/p&gt;
+//   &lt;button className=&quot;mt-5 font-[Plus_Jakarta_Sans] font-medium text-sm
+//                      text-[hsl(var(--primary))] hover:underline&quot;&gt;
+//     View {lang.name} teachers →
+//   &lt;/button&gt;
+// &lt;/motion.div&gt;
+```
+
+---
+
+## SECTION 4: HOW IT WORKS
+
+```tsx
+// &lt;section id=&quot;courses&quot; className=&quot;py-24 bg-white&quot;&gt;
+// &lt;div className=&quot;max-w-7xl mx-auto px-6 text-center&quot;&gt;
+
+// Heading:
+// &lt;h2 className=&quot;font-[Sora] font-bold text-[52px] max-md:text-[36px]
+//                text-[hsl(var(--foreground))] leading-tight mb-4 text-center&quot;&gt;
+//   Learning that fits your life.
+// &lt;/h2&gt;
+// &lt;p className=&quot;font-[Plus_Jakarta_Sans] font-normal text-base text-[hsl(var(--muted-foreground))]
+//               mb-16 max-w-lg mx-auto text-center&quot;&gt;
+//   No commuting to a classroom, no fixed timetable you can&#39;t keep. Just structured, effective
+//   language learning built around your schedule.
+// &lt;/p&gt;
+
+const steps = [
+  {
+    number: &#39;01&#39;,
+    icon: &#39;📝&#39;,
+    title: &#39;Take a free placement test&#39;,
+    description: &#39;A 15-minute online assessment tells us exactly where you are and what you need. No guesswork, no wasted early lessons, no frustration. We\&#39;ll know your level before your first session.&#39;,
+    time: &#39;15 minutes&#39;,
+  },
+  {
+    number: &#39;02&#39;,
+    icon: &#39;👩‍🏫&#39;,
+    title: &#39;Get matched with a teacher&#39;,
+    description: &#39;Based on your level, your goals, your learning style, and your schedule, we match you with the right teacher. You can preview their profile and short-form intro video before confirming.&#39;,
+    time: &#39;Within 48 hours&#39;,
+  },
+  {
+    number: &#39;03&#39;,
+    icon: &#39;📅&#39;,
+    title: &#39;Book flexible lessons&#39;,
+    description: &#39;1-on-1 sessions, small group classes (max. 6), or a mix of both. Book week-by-week for flexibility or subscribe for better value and priority scheduling. Sessions from 30 to 90 minutes.&#39;,
+    time: &#39;Your schedule&#39;,
+  },
+  {
+    number: &#39;04&#39;,
+    icon: &#39;🎯&#39;,
+    title: &#39;Track your progress&#39;,
+    description: &#39;After every month you\&#39;ll receive a written progress report from your teacher. After every completed CEFR level, a full language assessment. You\&#39;ll always know exactly where you stand and what\&#39;s next.&#39;,
+    time: &#39;Monthly reports&#39;,
+  },
+]
+
+// Desktop: horizontal 4-col grid. Mobile: vertical stack.
+// &lt;div className=&quot;grid grid-cols-4 max-lg:grid-cols-2 max-sm:grid-cols-1 gap-8 text-left&quot;&gt;
+// {steps.map((step, i) =&gt; (
+//   &lt;motion.div
+//     key={step.number}
+//     initial={{ opacity: 0, y: 20 }}
+//     whileInView={{ opacity: 1, y: 0 }}
+//     viewport={{ once: true }}
+//     transition={{ delay: i * 0.1 }}
+//     className=&quot;relative&quot;
+//   &gt;
+//     &lt;div className=&quot;font-[Sora] font-extrabold text-[60px] leading-none
+//                     text-[hsl(var(--accent)/0.4)] mb-4&quot;&gt;
+//       {step.number}
+//     &lt;/div&gt;
+//     &lt;div className=&quot;text-3xl mb-3&quot;&gt;{step.icon}&lt;/div&gt;
+//     &lt;h3 className=&quot;font-[Sora] font-bold text-lg text-[hsl(var(--foreground))] mb-3&quot;&gt;
+//       {step.title}
+//     &lt;/h3&gt;
+//     &lt;p className=&quot;font-[Plus_Jakarta_Sans] font-normal text-sm text-[hsl(var(--muted-foreground))]
+//                   leading-relaxed&quot;&gt;
+//       {step.description}
+//     &lt;/p&gt;
+//     &lt;p className=&quot;font-[Plus_Jakarta_Sans] font-medium text-xs text-[hsl(var(--accent))]
+//                   mt-4 uppercase tracking-wider&quot;&gt;
+//       {step.time}
+//     &lt;/p&gt;
+//   &lt;/motion.div&gt;
+// ))}
+```
+
+---
+
+## SECTION 5: MEET THE TEACHERS
+
+```tsx
+// &lt;section id=&quot;teachers&quot; className=&quot;py-24 bg-[hsl(var(--muted))]&quot;&gt;
+// &lt;div className=&quot;max-w-7xl mx-auto px-6&quot;&gt;
+
+// Heading:
+// &lt;h2 className=&quot;font-[Sora] font-bold text-[48px] max-md:text-[36px]
+//                text-[hsl(var(--foreground))] leading-tight mb-14&quot;&gt;
+//   Meet some of our teachers.
+// &lt;/h2&gt;
+
+const teachers = [
+  {
+    imageComment: &#39;/* Image: friendly female Spanish language teacher, warm genuine smile, professional yet approachable expression, light neutral background, softbox lighting, educational or home office setting, portrait photography for a tutoring website */&#39;,
+    altText: &#39;Elena Martínez, Spanish teacher at Lingua&#39;,
+    name: &#39;Elena Martínez&#39;,
+    languages: &#39;Spanish (Native) · English (C2)&#39;,
+    credentials: &#39;DELE Examiner · MA Hispanic Studies · 9 years teaching&#39;,
+    reviews: 97,
+    reviewCount: 248,
+    quote: &quot;I&#39;m passionate about helping students use Spanish in real conversations from day one — not just conjugating verbs on paper. My lessons are fast-paced, practical, and always grounded in how people actually speak.&quot;,
+    specialisms: [&#39;Conversational Spanish&#39;, &#39;Business Spanish&#39;, &#39;DELE Exam prep&#39;],
+  },
+  {
+    imageComment: &#39;/* Image: male French and Italian language teacher, intellectual and friendly expression, slight smile, professional casual attire, light academic or neutral background, warm natural lighting, tutoring website portrait */&#39;,
+    altText: &#39;Julien Fontaine, French and Italian teacher at Lingua&#39;,
+    name: &#39;Julien Fontaine&#39;,
+    languages: &#39;French (Native) · Italian (B2) · English (C1)&#39;,
+    credentials: &#39;MA Linguistics (Paris III) · DALF examiner · 11 years teaching&#39;,
+    reviews: 94,
+    reviewCount: 189,
+    quote: &quot;My approach: the fastest path to speaking a language is enormous amounts of comprehensible input and gentle, consistent correction. I don&#39;t waste lesson time on abstract grammar — we speak, and the grammar follows.&quot;,
+    specialisms: [&#39;DALF/DELF Exam prep&#39;, &#39;Academic French&#39;, &#39;Beginners Italian&#39;],
+  },
+  {
+    imageComment: &#39;/* Image: friendly female Japanese language teacher, warm professional portrait, natural and approachable expression, minimal clean background, soft natural lighting from the side, educational portrait style */&#39;,
+    altText: &#39;Yuki Tanaka, Japanese teacher at Lingua&#39;,
+    name: &#39;Yuki Tanaka&#39;,
+    languages: &#39;Japanese (Native) · English (C1)&#39;,
+    credentials: &#39;JLPT Certification Specialist · BA Japanese Education · 8 years teaching&#39;,
+    reviews: 98,
+    reviewCount: 143,
+    quote: &quot;Japanese has a reputation for being impossibly difficult. It isn&#39;t — it just needs a proper system, introduced in the right order. I&#39;ve helped complete beginners pass JLPT N3 in 18 months. It&#39;s entirely achievable.&quot;,
+    specialisms: [&#39;JLPT N5–N2 prep&#39;, &#39;Reading &amp; Writing systems&#39;, &#39;Business Japanese&#39;],
+  },
+]
+
+// 3-column grid desktop, 1-col mobile
+// &lt;div className=&quot;grid grid-cols-3 max-lg:grid-cols-1 gap-6&quot;&gt;
+// {teachers.map((teacher, i) =&gt; (
+//   &lt;motion.div
+//     key={teacher.name}
+//     initial={{ opacity: 0, y: 20 }}
+//     whileInView={{ opacity: 1, y: 0 }}
+//     viewport={{ once: true }}
+//     transition={{ delay: i * 0.1 }}
+//     className=&quot;bg-white rounded-2xl p-6 border border-[hsl(var(--border))] flex flex-col&quot;
+//   &gt;
+//     {/* Teacher portrait */}
+//     {teacher.imageComment}
+//     &lt;div className=&quot;w-20 h-20 rounded-full overflow-hidden mb-4 border-2 border-[hsl(var(--accent)/0.4)]&quot;&gt;
+//       &lt;img src=&quot;&quot; alt={teacher.altText} className=&quot;w-full h-full object-cover&quot; /&gt;
+//     &lt;/div&gt;
+
+//     {/* Name &amp; meta */}
+//     &lt;h3 className=&quot;font-[Sora] font-bold text-xl text-[hsl(var(--foreground))] mb-0.5&quot;&gt;
+//       {teacher.name}
+//     &lt;/h3&gt;
+//     &lt;p className=&quot;font-[Plus_Jakarta_Sans] font-normal text-xs text-[hsl(var(--muted-foreground))] mb-2&quot;&gt;
+//       {teacher.languages}
+//     &lt;/p&gt;
+//     &lt;p className=&quot;font-[Plus_Jakarta_Sans] font-normal text-xs text-[hsl(var(--muted-foreground))] mb-4&quot;&gt;
+//       {teacher.credentials}
+//     &lt;/p&gt;
+
+//     {/* Reviews */}
+//     &lt;div className=&quot;flex items-center gap-2 mb-5&quot;&gt;
+//       &lt;div className=&quot;flex&quot;&gt;
+//         {[...Array(5)].map((_, s) =&gt; (
+//           &lt;Star key={s} className=&quot;w-3.5 h-3.5 fill-[hsl(var(--accent))] text-[hsl(var(--accent))]&quot; /&gt;
+//         ))}
+//       &lt;/div&gt;
+//       &lt;span className=&quot;font-[Plus_Jakarta_Sans] font-medium text-xs text-[hsl(var(--foreground))]&quot;&gt;
+//         {teacher.reviews}% positive
+//       &lt;/span&gt;
+//       &lt;span className=&quot;font-[Plus_Jakarta_Sans] font-normal text-xs text-[hsl(var(--muted-foreground))]&quot;&gt;
+//         ({teacher.reviewCount} reviews)
+//       &lt;/span&gt;
+//     &lt;/div&gt;
+
+//     {/* Quote */}
+//     &lt;p className=&quot;font-[Plus_Jakarta_Sans] font-normal text-sm text-[hsl(var(--muted-foreground))]
+//                   leading-relaxed italic flex-1 mb-5&quot;&gt;
+//       &quot;{teacher.quote}&quot;
+//     &lt;/p&gt;
+
+//     {/* Specialisms */}
+//     &lt;div className=&quot;flex flex-wrap gap-2 mt-auto&quot;&gt;
+//       {teacher.specialisms.map(s =&gt; (
+//         &lt;span key={s} className=&quot;bg-[hsl(var(--muted))] font-[Plus_Jakarta_Sans] font-normal
+//                                  text-[10px] text-[hsl(var(--foreground))] px-2.5 py-1 rounded-full&quot;&gt;
+//           {s}
+//         &lt;/span&gt;
+//       ))}
+//     &lt;/div&gt;
+
+//     &lt;button className=&quot;mt-5 w-full border border-[hsl(var(--primary))] text-[hsl(var(--primary))]
+//                        font-[Plus_Jakarta_Sans] font-medium text-sm py-2.5 rounded-full
+//                        hover:bg-[hsl(var(--primary))] hover:text-white transition-colors&quot;&gt;
+//       View profile &amp; book
+//     &lt;/button&gt;
+//   &lt;/motion.div&gt;
+// ))}
+
+// &quot;Meet all 38 teachers&quot; link:
+// &lt;p className=&quot;text-center mt-10&quot;&gt;
+//   &lt;a href=&quot;#&quot; className=&quot;font-[Plus_Jakarta_Sans] font-medium text-base
+//                          text-[hsl(var(--primary))] hover:underline&quot;&gt;
+//     Meet all 38 teachers →
+//   &lt;/a&gt;
+// &lt;/p&gt;
+```
+
+---
+
+## SECTION 6: COURSES
+
+```tsx
+// &lt;section id=&quot;courses&quot; className=&quot;py-24 bg-white&quot;&gt;
+// &lt;div className=&quot;max-w-5xl mx-auto px-6&quot;&gt;
+
+// Heading:
+// &lt;h2 className=&quot;font-[Sora] font-bold text-[48px] max-md:text-[36px]
+//                text-[hsl(var(--foreground))] leading-tight mb-14&quot;&gt;
+//   Structured courses, clear outcomes.
+// &lt;/h2&gt;
+
+const courses = [
+  {
+    name: &#39;Individual 1-on-1 Tuition&#39;,
+    tag: &#39;Most popular&#39;,
+    description: &#39;Completely personalised — your pace, your goals, your schedule, your teacher. Our most popular format for adults who want measurable results and don\&#39;t want to waste a single lesson hour. Every session is tailored to you: what you did last time, what you struggled with, what you need to nail before your next trip or meeting.&#39;,
+    price: &#39;From £35 / hour&#39;,
+    note: &#39;Book weekly or subscribe for best value&#39;,
+    languages: &#39;All 7 languages available&#39;,
+    format: &#39;Online · 1-on-1&#39;,
+  },
+  {
+    name: &#39;Small Group Classes (max. 6)&#39;,
+    tag: &#39;Great value&#39;,
+    description: &#39;Learn with peers at exactly the same level. Build fluency through real conversation with other learners guided by a teacher — correcting in real-time, creating realistic dialogue, building confidence through repetition. The small group format is available for Spanish, French, and Italian at levels A1 through B2.&#39;,
+    price: &#39;From £15 / lesson&#39;,
+    note: &#39;Fixed timetable — book a term at a time&#39;,
+    languages: &#39;Spanish · French · Italian&#39;,
+    format: &#39;Online · up to 6 students&#39;,
+  },
+  {
+    name: &#39;Business Language Programme&#39;,
+    tag: &#39;Teams welcome&#39;,
+    description: &#39;Corporate language training for individuals and teams. The curriculum is built around your industry, your specific communication scenarios, your stakeholders, and your goals. Invoice-based billing, a dedicated account manager, and a full progress report for each learner at the end of every 8-week module. Certificates of completion provided.&#39;,
+    price: &#39;From £55 / hour&#39;,
+    note: &#39;Team discounts available · Invoice billing&#39;,
+    languages: &#39;All 7 languages available&#39;,
+    format: &#39;Online · 1-on-1 or team sessions&#39;,
+  },
+]
+
+// Each course: a horizontal row with border-b, py-10
+// &lt;div className=&quot;divide-y divide-[hsl(var(--border))]&quot;&gt;
+// {courses.map((course, i) =&gt; (
+//   &lt;motion.div
+//     key={course.name}
+//     initial={{ opacity: 0, x: -20 }}
+//     whileInView={{ opacity: 1, x: 0 }}
+//     viewport={{ once: true }}
+//     transition={{ delay: i * 0.1 }}
+//     className=&quot;py-10 flex flex-col lg:flex-row lg:items-start gap-6 justify-between&quot;
+//   &gt;
+//     &lt;div className=&quot;flex-1 max-w-2xl&quot;&gt;
+//       &lt;div className=&quot;flex items-center gap-3 mb-2&quot;&gt;
+//         &lt;h3 className=&quot;font-[Sora] font-bold text-2xl text-[hsl(var(--foreground))]&quot;&gt;
+//           {course.name}
+//         &lt;/h3&gt;
+//         &lt;span className=&quot;bg-[hsl(var(--accent)/0.3)] font-[Plus_Jakarta_Sans] font-medium
+//                          text-[10px] text-[hsl(var(--foreground))] px-2.5 py-1 rounded-full uppercase tracking-wide&quot;&gt;
+//           {course.tag}
+//         &lt;/span&gt;
+//       &lt;/div&gt;
+//       &lt;p className=&quot;font-[Plus_Jakarta_Sans] font-normal text-sm text-[hsl(var(--muted-foreground))]
+//                     leading-relaxed mb-4&quot;&gt;
+//         {course.description}
+//       &lt;/p&gt;
+//       &lt;p className=&quot;font-[Plus_Jakarta_Sans] font-normal text-xs text-[hsl(var(--muted-foreground))]&quot;&gt;
+//         {course.languages} · {course.format}
+//       &lt;/p&gt;
+//     &lt;/div&gt;
+//     &lt;div className=&quot;flex flex-col items-start lg:items-end gap-3 shrink-0&quot;&gt;
+//       &lt;p className=&quot;font-[Sora] font-bold text-2xl text-[hsl(var(--primary))]&quot;&gt;
+//         {course.price}
+//       &lt;/p&gt;
+//       &lt;p className=&quot;font-[Plus_Jakarta_Sans] font-normal text-xs text-[hsl(var(--muted-foreground))]&quot;&gt;
+//         {course.note}
+//       &lt;/p&gt;
+//       &lt;button className=&quot;bg-[hsl(var(--primary))] text-white font-[Plus_Jakarta_Sans] font-medium
+//                          text-sm px-6 py-2.5 rounded-full hover:opacity-90 transition-opacity&quot;&gt;
+//         Learn more
+//       &lt;/button&gt;
+//     &lt;/div&gt;
+//   &lt;/motion.div&gt;
+// ))}
+```
+
+---
+
+## SECTION 7: PRICING
+
+```tsx
+// &lt;section id=&quot;pricing&quot; className=&quot;py-24 bg-[hsl(var(--muted))]&quot;&gt;
+// &lt;div className=&quot;max-w-6xl mx-auto px-6 text-center&quot;&gt;
+
+// Heading:
+// &lt;h2 className=&quot;font-[Sora] font-bold text-[48px] max-md:text-[36px]
+//                text-[hsl(var(--foreground))] leading-tight mb-4&quot;&gt;
+//   Simple pricing.
+// &lt;/h2&gt;
+// &lt;p className=&quot;font-[Plus_Jakarta_Sans] font-normal text-base text-[hsl(var(--muted-foreground))]
+//               mb-16 max-w-sm mx-auto&quot;&gt;
+//   No hidden fees. No contracts unless you want one. No pressure.
+// &lt;/p&gt;
+
+const plans = [
+  {
+    name: &#39;Pay As You Go&#39;,
+    tag: null,
+    price: &#39;From £35&#39;,
+    period: &#39;/ lesson&#39;,
+    description: &#39;Maximum flexibility. Book a lesson when you want one and cancel anytime.&#39;,
+    features: [
+      &#39;1-on-1 lessons from £35 / hour&#39;,
+      &#39;Group classes from £15 / lesson&#39;,
+      &#39;Book anytime — no advance commitment&#39;,
+      &#39;Access to all 7 languages&#39;,
+      &#39;Cancel with 24 hours notice&#39;,
+      &#39;Session recording available&#39;,
+    ],
+    cta: &#39;Get started&#39;,
+    highlight: false,
+  },
+  {
+    name: &#39;Monthly Subscriber&#39;,
+    tag: &#39;BEST VALUE&#39;,
+    price: &#39;£99&#39;,
+    period: &#39;/ month&#39;,
+    description: &#39;Consistent weekly lessons with priority teacher matching and monthly progress reports.&#39;,
+    features: [
+      &#39;4 × 1hr 1-on-1 sessions per month&#39;,
+      &#39;Unlimited group class access&#39;,
+      &#39;Priority teacher matching&#39;,
+      &#39;Written progress report monthly&#39;,
+      &#39;WhatsApp teacher check-in&#39;,
+      &#39;Save 15% vs Pay As You Go&#39;,
+      &#39;Roll over unused sessions (1 per month)&#39;,
+    ],
+    cta: &#39;Start subscription&#39;,
+    highlight: true,
+  },
+  {
+    name: &#39;Business&#39;,
+    tag: &#39;For teams&#39;,
+    price: &#39;Custom&#39;,
+    period: &#39;pricing&#39;,
+    description: &#39;For organisations that need structured language training with accountability and reporting.&#39;,
+    features: [
+      &#39;Individual and group sessions&#39;,
+      &#39;Invoice billing available&#39;,
+      &#39;Dedicated account manager&#39;,
+      &#39;Team progress dashboard&#39;,
+      &#39;Custom curriculum per learner&#39;,
+      &#39;Certificate of completion&#39;,
+      &#39;Discounts from 3+ learners&#39;,
+    ],
+    cta: &#39;Contact us →&#39;,
+    highlight: false,
+  },
+]
+
+// 3-column grid
+// &lt;div className=&quot;grid grid-cols-3 max-lg:grid-cols-1 gap-6 text-left&quot;&gt;
+// {plans.map(plan =&gt; (
+//   &lt;div key={plan.name}
+//        className={`rounded-2xl p-8 border flex flex-col ${
+//          plan.highlight
+//            ? &#39;bg-[hsl(var(--primary))] border-[hsl(var(--primary))] text-white&#39;
+//            : &#39;bg-white border-[hsl(var(--border))]&#39;
+//        }`}
+//   &gt;
+//     {plan.tag &amp;&amp; (
+//       &lt;span className={`inline-block self-start font-[Plus_Jakarta_Sans] font-medium text-[10px]
+//                         tracking-widest uppercase px-3 py-1 rounded-full mb-4 ${
+//         plan.highlight
+//           ? &#39;bg-[hsl(var(--accent))] text-[hsl(var(--foreground))]&#39;
+//           : &#39;bg-[hsl(var(--accent)/0.3)] text-[hsl(var(--foreground))]&#39;
+//       }`}&gt;
+//         {plan.tag}
+//       &lt;/span&gt;
+//     )}
+//     &lt;h3 className={`font-[Sora] font-bold text-2xl mb-1 ${plan.highlight ? &#39;text-white&#39; : &#39;text-[hsl(var(--foreground))]&#39;}`}&gt;
+//       {plan.name}
+//     &lt;/h3&gt;
+//     &lt;div className=&quot;flex items-baseline gap-1 my-4&quot;&gt;
+//       &lt;span className={`font-[Sora] font-extrabold text-5xl ${plan.highlight ? &#39;text-white&#39; : &#39;text-[hsl(var(--primary))]&#39;}`}&gt;
+//         {plan.price}
+//       &lt;/span&gt;
+//       &lt;span className={`font-[Plus_Jakarta_Sans] font-normal text-sm ${plan.highlight ? &#39;text-white/70&#39; : &#39;text-[hsl(var(--muted-foreground))]&#39;}`}&gt;
+//         {plan.period}
+//       &lt;/span&gt;
+//     &lt;/div&gt;
+//     &lt;p className={`font-[Plus_Jakarta_Sans] font-normal text-sm leading-relaxed mb-6 ${plan.highlight ? &#39;text-white/80&#39; : &#39;text-[hsl(var(--muted-foreground))]&#39;}`}&gt;
+//       {plan.description}
+//     &lt;/p&gt;
+//     &lt;ul className=&quot;space-y-2.5 flex-1 mb-8&quot;&gt;
+//       {plan.features.map(f =&gt; (
+//         &lt;li key={f} className=&quot;flex items-start gap-2.5&quot;&gt;
+//           &lt;Check className={`w-4 h-4 mt-0.5 shrink-0 ${plan.highlight ? &#39;text-[hsl(var(--accent))]&#39; : &#39;text-[hsl(var(--primary))]&#39;}`} /&gt;
+//           &lt;span className={`font-[Plus_Jakarta_Sans] font-normal text-sm ${plan.highlight ? &#39;text-white/80&#39; : &#39;text-[hsl(var(--muted-foreground))]&#39;}`}&gt;
+//             {f}
+//           &lt;/span&gt;
+//         &lt;/li&gt;
+//       ))}
+//     &lt;/ul&gt;
+//     &lt;button className={`w-full py-3 rounded-full font-[Plus_Jakarta_Sans] font-medium text-sm transition-opacity hover:opacity-90 ${
+//       plan.highlight
+//         ? &#39;bg-white text-[hsl(var(--primary))]&#39;
+//         : &#39;bg-[hsl(var(--primary))] text-white&#39;
+//     }`}&gt;
+//       {plan.cta}
+//     &lt;/button&gt;
+//   &lt;/div&gt;
+// ))}
+```
+
+---
+
+## SECTION 8: STUDENT REVIEWS
+
+```tsx
+// &lt;section className=&quot;py-24 bg-white&quot;&gt;
+// &lt;div className=&quot;max-w-7xl mx-auto px-6&quot;&gt;
+
+// Heading with star rating:
+// &lt;div className=&quot;text-center mb-14&quot;&gt;
+//   &lt;div className=&quot;flex justify-center gap-1 mb-3&quot;&gt;
+//     {[...Array(5)].map((_, i) =&gt; (
+//       &lt;Star key={i} className=&quot;w-6 h-6 fill-[hsl(var(--accent))] text-[hsl(var(--accent))]&quot; /&gt;
+//     ))}
+//   &lt;/div&gt;
+//   &lt;h2 className=&quot;font-[Sora] font-bold text-[48px] max-md:text-[36px]
+//                  text-[hsl(var(--foreground))] leading-tight&quot;&gt;
+//     4.9★ on Trustpilot.
+//   &lt;/h2&gt;
+//   &lt;p className=&quot;font-[Plus_Jakarta_Sans] font-normal text-sm text-[hsl(var(--muted-foreground))] mt-2&quot;&gt;
+//     Based on 1,240 verified reviews
+//   &lt;/p&gt;
+// &lt;/div&gt;
+
+const reviews = [
+  {
+    text: &quot;I&#39;ve tried Duolingo, apps, evening classes, online courses — none of them stuck. Lingua&#39;s 1-on-1 lessons were completely different. Having a real person who adapts to me, who explains why something works, who remembers what I struggled with last week — it made everything click. I had my first proper conversation in French after three months of weekly sessions.&quot;,
+    name: &quot;Marcus D.&quot;,
+    detail: &quot;French learner · started at A1&quot;,
+    stars: 5,
+  },
+  {
+    text: &quot;Elena is an incredible Spanish teacher. Patient, structured, always comes to sessions with interesting materials that are actually relevant to my life and goals. My A2 exam is next month and I feel genuinely ready in a way I&#39;ve never felt before an exam. I&#39;m already looking forward to starting B1.&quot;,
+    name: &quot;Priya S.&quot;,
+    detail: &quot;Spanish learner · currently A2&quot;,
+    stars: 5,
+  },
+  {
+    text: &quot;We subscribed our entire sales team — 14 people — to Italian lessons before we expanded into the Italian market. The business programme was flexible, the teachers understood our industry without needing extensive briefing, and we had measurable real-world improvement in communication confidence within eight weeks. Excellent programme.&quot;,
+    name: &quot;Tom B.&quot;,
+    detail: &quot;Operations Director · team of 14&quot;,
+    stars: 5,
+  },
+  {
+    text: &quot;I&#39;ve been doing weekly Japanese lessons with Yuki for six months and I&#39;ve gone from complete zero knowledge to passing JLPT N4 level — which I genuinely did not think was possible in that timeframe. The structured approach she uses makes Japanese feel achievable for the first time. Exceptional teacher.&quot;,
+    name: &quot;Claire F.&quot;,
+    detail: &quot;Japanese learner · JLPT N4 passed&quot;,
+    stars: 5,
+  },
+]
+
+// 2×2 grid desktop, 1-col mobile
+// &lt;div className=&quot;grid grid-cols-2 max-md:grid-cols-1 gap-6&quot;&gt;
+// {reviews.map((review, i) =&gt; (
+//   &lt;motion.div
+//     key={review.name}
+//     initial={{ opacity: 0, y: 20 }}
+//     whileInView={{ opacity: 1, y: 0 }}
+//     viewport={{ once: true }}
+//     transition={{ delay: i * 0.1 }}
+//     className=&quot;bg-[hsl(var(--muted))] rounded-2xl p-8 border border-[hsl(var(--border))]&quot;
+//   &gt;
+//     &lt;div className=&quot;flex gap-1 mb-4&quot;&gt;
+//       {[...Array(review.stars)].map((_, s) =&gt; (
+//         &lt;Star key={s} className=&quot;w-4 h-4 fill-[hsl(var(--accent))] text-[hsl(var(--accent))]&quot; /&gt;
+//       ))}
+//     &lt;/div&gt;
+//     &lt;p className=&quot;font-[Plus_Jakarta_Sans] font-normal text-sm text-[hsl(var(--foreground))]
+//                   leading-relaxed mb-5&quot;&gt;
+//       &quot;{review.text}&quot;
+//     &lt;/p&gt;
+//     &lt;div className=&quot;border-t border-[hsl(var(--border))] pt-4&quot;&gt;
+//       &lt;p className=&quot;font-[Plus_Jakarta_Sans] font-medium text-sm text-[hsl(var(--foreground))]&quot;&gt;
+//         {review.name}
+//       &lt;/p&gt;
+//       &lt;p className=&quot;font-[Plus_Jakarta_Sans] font-normal text-xs text-[hsl(var(--muted-foreground))] mt-0.5&quot;&gt;
+//         {review.detail}
+//       &lt;/p&gt;
+//     &lt;/div&gt;
+//   &lt;/motion.div&gt;
+// ))}
+```
+
+---
+
+## SECTION 9: FAQ
+
+```tsx
+// &lt;section className=&quot;py-24 bg-[hsl(var(--muted))]&quot;&gt;
+// &lt;div className=&quot;max-w-3xl mx-auto px-6&quot;&gt;
+
+// Heading:
+// &lt;h2 className=&quot;font-[Sora] font-bold text-[48px] max-md:text-[36px]
+//                text-[hsl(var(--foreground))] leading-tight mb-12&quot;&gt;
+//   Questions we get asked a lot.
+// &lt;/h2&gt;
+
+// Use shadcn/ui Accordion component:
+// import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from &quot;@/components/ui/accordion&quot;
+
+const faqs = [
+  {
+    q: &quot;What level do I need to be?&quot;,
+    a: &quot;All levels are welcome — from absolute beginner (no prior exposure to the language at all) to near-native speakers who want to refine accent, register, or professional vocabulary. We take a free 15-minute placement test before we match you with a teacher, so we start at exactly the right point.&quot;,
+  },
+  {
+    q: &quot;How are lessons delivered?&quot;,
+    a: &quot;All lessons are online via our integrated video platform — accessible from any laptop, tablet, or desktop with a webcam. Sessions can be recorded with teacher consent, so you can revisit what was covered. Our platform also includes a shared notes space and a vocabulary bank that builds over time.&quot;,
+  },
+  {
+    q: &quot;Can I switch teachers?&quot;,
+    a: &quot;Yes, always and without any awkwardness. If the initial match isn&#39;t quite right — a different teaching style preference, a scheduling conflict, or simply a personality fit that isn&#39;t working — just let us know via the app or by email and we&#39;ll rematch you, typically within 48 hours.&quot;,
+  },
+  {
+    q: &quot;Are your teachers qualified?&quot;,
+    a: &quot;Every teacher on the Lingua platform holds at least a recognised language teaching qualification — CELTA, DELTA, TEFL equivalent, or the national teaching licence for their language (such as DELE examinership for Spanish teachers). Minimum two years of classroom or online teaching experience is required before acceptance.&quot;,
+  },
+  {
+    q: &quot;Do you offer trial lessons?&quot;,
+    a: &quot;Yes — your first lesson is available at a reduced rate of £15 (standard 1-on-1, 45 minutes) so you can experience the platform and meet a teacher before committing. Group trial classes are free for your first session.&quot;,
+  },
+  {
+    q: &quot;What if I need to cancel a lesson?&quot;,
+    a: &quot;Cancel up to 24 hours before your session for a full credit back to your account. Cancellations within 24 hours are charged at 50%. Missed sessions with no notice are charged in full. We understand life happens — we&#39;re flexible, just ask.&quot;,
+  },
+]
+
+// &lt;Accordion type=&quot;single&quot; collapsible className=&quot;space-y-3&quot;&gt;
+//   {faqs.map((faq, i) =&gt; (
+//     &lt;AccordionItem key={i} value={`item-${i}`}
+//                   className=&quot;bg-white rounded-xl border border-[hsl(var(--border))] px-6&quot;&gt;
+//       &lt;AccordionTrigger className=&quot;font-[Sora] font-bold text-base text-[hsl(var(--foreground))]
+//                                    hover:no-underline py-5&quot;&gt;
+//         {faq.q}
+//       &lt;/AccordionTrigger&gt;
+//       &lt;AccordionContent className=&quot;font-[Plus_Jakarta_Sans] font-normal text-sm
+//                                     text-[hsl(var(--muted-foreground))] leading-relaxed pb-5&quot;&gt;
+//         {faq.a}
+//       &lt;/AccordionContent&gt;
+//     &lt;/AccordionItem&gt;
+//   ))}
+// &lt;/Accordion&gt;
+```
+
+---
+
+## SECTION 10: FOOTER
+
+```tsx
+// &lt;footer className=&quot;bg-[hsl(var(--foreground))] text-white py-16&quot;&gt;
+// &lt;div className=&quot;max-w-7xl mx-auto px-6&quot;&gt;
+
+//   Main row:
+//   &lt;div className=&quot;grid grid-cols-4 max-lg:grid-cols-2 max-sm:grid-cols-1 gap-12 pb-12
+//                   border-b border-white/10&quot;&gt;
+
+//     {/* Brand column */}
+//     &lt;div&gt;
+//       &lt;div className=&quot;flex items-center gap-2.5 mb-4&quot;&gt;
+//         &lt;GraduationCap className=&quot;w-6 h-6 text-[hsl(var(--accent))]&quot; /&gt;
+//         &lt;span className=&quot;font-[Sora] font-bold text-2xl text-white&quot;&gt;LINGUA&lt;/span&gt;
+//       &lt;/div&gt;
+//       &lt;p className=&quot;font-[Plus_Jakarta_Sans] font-normal text-sm text-white/50 leading-relaxed&quot;&gt;
+//         Speak with confidence. Learn with the best.
+//       &lt;/p&gt;
+//       &lt;div className=&quot;flex gap-4 mt-6&quot;&gt;
+//         {/* Trustpilot badge placeholder */}
+//         &lt;div className=&quot;bg-white/10 rounded-lg px-3 py-2&quot;&gt;
+//           &lt;p className=&quot;font-[Plus_Jakarta_Sans] font-medium text-xs text-white&quot;&gt;
+//             ★ 4.9 Trustpilot
+//           &lt;/p&gt;
+//         &lt;/div&gt;
+//       &lt;/div&gt;
+//     &lt;/div&gt;
+
+//     {/* Languages column */}
+//     &lt;div&gt;
+//       &lt;p className=&quot;font-[Sora] font-bold text-sm text-white mb-4 tracking-wide uppercase&quot;&gt;
+//         Languages
+//       &lt;/p&gt;
+//       &lt;ul className=&quot;space-y-2.5&quot;&gt;
+//         {[&#39;Spanish&#39;, &#39;French&#39;, &#39;German&#39;, &#39;Italian&#39;, &#39;Portuguese&#39;, &#39;Japanese&#39;, &#39;Arabic&#39;].map(lang =&gt; (
+//           &lt;li key={lang}&gt;
+//             &lt;a href=&quot;#&quot; className=&quot;font-[Plus_Jakarta_Sans] font-normal text-sm text-white/60
+//                                   hover:text-white transition-colors&quot;&gt;
+//               {lang}
+//             &lt;/a&gt;
+//           &lt;/li&gt;
+//         ))}
+//       &lt;/ul&gt;
+//     &lt;/div&gt;
+
+//     {/* Learn column */}
+//     &lt;div&gt;
+//       &lt;p className=&quot;font-[Sora] font-bold text-sm text-white mb-4 tracking-wide uppercase&quot;&gt;
+//         Learn
+//       &lt;/p&gt;
+//       &lt;ul className=&quot;space-y-2.5&quot;&gt;
+//         {[&#39;Courses&#39;, &#39;Teachers&#39;, &#39;Group Classes&#39;, &#39;Business Training&#39;, &#39;Pricing&#39;, &#39;Blog&#39;].map(link =&gt; (
+//           &lt;li key={link}&gt;
+//             &lt;a href=&quot;#&quot; className=&quot;font-[Plus_Jakarta_Sans] font-normal text-sm text-white/60
+//                                   hover:text-white transition-colors&quot;&gt;
+//               {link}
+//             &lt;/a&gt;
+//           &lt;/li&gt;
+//         ))}
+//       &lt;/ul&gt;
+//     &lt;/div&gt;
+
+//     {/* Contact column */}
+//     &lt;div&gt;
+//       &lt;p className=&quot;font-[Sora] font-bold text-sm text-white mb-4 tracking-wide uppercase&quot;&gt;
+//         Get in touch
+//       &lt;/p&gt;
+//       &lt;ul className=&quot;space-y-2.5&quot;&gt;
+//         &lt;li className=&quot;font-[Plus_Jakarta_Sans] font-normal text-sm text-white/60&quot;&gt;
+//           📧 hello@lingua.school
+//         &lt;/li&gt;
+//         &lt;li className=&quot;font-[Plus_Jakarta_Sans] font-normal text-sm text-white/60&quot;&gt;
+//           📞 +44 20 7946 0000
+//         &lt;/li&gt;
+//         &lt;li className=&quot;font-[Plus_Jakarta_Sans] font-normal text-sm text-white/60&quot;&gt;
+//           Mon–Fri, 9am–6pm GMT
+//         &lt;/li&gt;
+//       &lt;/ul&gt;
+//     &lt;/div&gt;
+
+//   &lt;/div&gt;
+
+//   Bottom row:
+//   &lt;div className=&quot;flex flex-col md:flex-row justify-between items-center gap-4 pt-8&quot;&gt;
+//     &lt;p className=&quot;font-[Plus_Jakarta_Sans] font-normal text-xs text-white/30&quot;&gt;
+//       © 2025 Lingua Language School Ltd. Registered in England &amp; Wales.
+//     &lt;/p&gt;
+//     &lt;p className=&quot;font-[Plus_Jakarta_Sans] font-normal text-xs text-white/30&quot;&gt;
+//       Privacy Policy · Terms &amp; Conditions · Cookie Policy
+//     &lt;/p&gt;
+//   &lt;/div&gt;
+
+// &lt;/div&gt;
+```
+
+---
+
+## DEPENDENCIES &amp; IMPLEMENTATION NOTES
+
+```bash
+npm install framer-motion lucide-react
+npx shadcn-ui@latest init
+npx shadcn-ui@latest add accordion button card
+```
+
+### Key state:
+```tsx
+const [scrolled, setScrolled] = useState(false)
+const [mobileNavOpen, setMobileNavOpen] = useState(false)
+```
+
+### Global CSS:
+```css
+* { font-family: &#39;Plus Jakarta Sans&#39;, sans-serif; }
+h1, h2, h3 { font-family: &#39;Sora&#39;, sans-serif; }
+html { scroll-behavior: smooth; }
+
+@keyframes ticker-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: ticker-scroll 25s linear infinite;
+}
+```
+
+### Accessibility notes:
+- Language ticker includes `aria-hidden=&quot;true&quot;` since it&#39;s decorative
+- All interactive elements have focus states
+- Teacher portraits have descriptive alt text
+- FAQ accordion uses semantic HTML with aria attributes (built into shadcn Accordion)
+- Colour contrast passes WCAG AA on all text combinations
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

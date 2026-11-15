@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clarity Coaching | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Clarity Coaching</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Life Coach Website Prompt
+# websiteprompts.ai
+
+Build a warm, aspirational life and business coach website called &quot;Clarity Coaching&quot; using React + Vite + TypeScript + Tailwind CSS + Framer Motion (motion/react) + shadcn/ui + lucide-react.
+
+## Design System
+
+### Colors
+```css
+:root {
+  --background: 38 20% 97%;         /* warm off-white #faf8f4 */
+  --foreground: 270 18% 14%;        /* deep warm near-black */
+  --primary: 265 45% 42%;           /* deep plum #5a3480 */
+  --primary-foreground: 0 0% 100%;
+  --accent: 38 65% 60%;             /* warm gold #c9913a */
+  --surface: 38 15% 91%;            /* warm linen */
+  --muted-foreground: 270 8% 52%;
+  --border: 38 12% 82%;
+}
+```
+
+### Typography
+- Import: `https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&amp;family=Inter:wght@300;400;500&amp;display=swap`
+- Headlines: Playfair Display 600–700 — italic gold accents
+- Body: Inter 300–400
+- Labels: Inter 500 uppercase 10px letter-spacing 0.12em
+
+## Sections
+
+### 1. Navbar
+- Sticky warm off-white background, `backdrop-filter: blur(10px)`
+- Left: Playfair italic wordmark &quot;Clarity&quot; in deep plum
+- Right: Coaching · Results · About · Podcast + &quot;Book a call →&quot; plum button
+
+### 2. Hero
+- Full-viewport, warm off-white background
+- Split layout: left content (52%), right large portrait image (aspect-ratio 3/4, no border-radius)
+- Left:
+  - Inter 500 uppercase 10px plum label: &quot;Life &amp; Business Coach · ICF Certified&quot;
+  - Playfair Display 700 `clamp(44px, 6vw, 88px)`: &quot;The Life You\nWant Is One\nDecision Away.&quot;
+  - Italic gold accent on &quot;One Decision&quot;
+  - Inter 300 sub: &quot;1-to-1 coaching for ambitious professionals who are done settling — for the career, the balance, and the life they actually want&quot;
+  - CTAs: &quot;Book a discovery call →&quot; (plum filled) + &quot;See the results&quot; (ghost plum)
+  - Trust chips: &quot;ICF Certified · 200+ Clients Coached · Forbes Featured&quot;
+- Hero portrait: no animation, static presence
+
+{/* Image brief: female life coach in bright airy home office, warm tones, confident but approachable expression, natural light, aspirational but real */}
+
+### 3. Transformation Strip
+- Full-width warm surface strip with gold top border
+- 4 transformation chips with Playfair italic gold stat + Inter 300 muted description:
+  - &quot;200+ Clients&quot; (from 22 countries, across 6 industries)
+  - &quot;87% Report Major Life Change&quot; (within 90 days of coaching)
+  - &quot;Forbes Contributor&quot; (writing on mindset and leadership)
+  - &quot;ICF Certified&quot; (International Coaching Federation, PCC Level)
+- Slide-in from left on scroll, stagger 0.1s
+
+### 4. Coaching Programmes
+- &quot;How We Work Together&quot; — Playfair 700 with plum underline rule (scaleX 0→1)
+- 3 full-width hover-raise rows:
+  - Clarity Intensive (90-day 1-to-1 programme, weekly sessions, unlimited voice note support)
+  - Career Pivot Coaching (6-week focused programme for professional transition)
+  - Business Founder Programme (for entrepreneurs — strategy, mindset, accountability)
+- Each: Playfair 600 large name left + Inter 300 muted description right + gold &quot;→&quot;
+- `border-bottom: 1px solid hsl(var(--border))`
+- Hover: background raises to surface raised color, gold text
+
+### 5. Client Results
+- &quot;What Clients Say Changed&quot; — Playfair 700
+- 3 result cards, warm surface background
+- Each: Playfair Display 700 plum result headline (e.g., &quot;Left a 15-year career. Zero regrets.&quot;), Inter 300 muted 2-sentence client story, programme chip in plum, client name + industry
+- Large faded plum Playfair number (opacity 0.06) behind each card
+- Stagger fade-up on scroll
+
+### 6. About
+- Split: right portrait, left text
+- Inter 500 uppercase 10px plum: &quot;Your Coach&quot;
+- Playfair 700: &quot;I Walked Away from a Six-Figure Job. Best Thing I Ever Did.&quot;
+- Inter 300 bio: 2 paragraphs — Sarah Brennan, former investment banker turned ICF-certified coach. Worked with clients from FTSE 100 executives to first-time founders. Forbes contributor. Based in London, coaching globally.
+- Plum chips: &quot;ICF Certified · Forbes Contributor · Ex-Finance&quot;
+- &quot;Download my free guide →&quot; plum link
+
+{/* Image brief: confident professional woman in bright modern home, warm styling, bookshelf visible, aspirational and real, natural window light */}
+
+### 7. Podcast / Content
+- &quot;The Clarity Sessions Podcast&quot; — Playfair 700
+- Warm surface section, split: left text, right podcast artwork
+- Inter 300 muted: &quot;200+ episodes on career transitions, mindset, business growth, and living with intention — available wherever you listen&quot;
+- 3 horizontal episode chips (recent episode titles in Playfair italic)
+- &quot;Listen on Spotify →&quot; plum button + Apple Podcasts link
+
+### 8. Testimonials
+- 3 cards: Playfair italic quote, client name + background in Inter 10px muted, 5-star row in gold
+- Stagger fade-up on scroll
+
+### 9. Discovery Call CTA
+- Full-width deep plum `#5a3480` background
+- Playfair 700 italic ivory: &quot;Let&#39;s Find Your Clarity&quot;
+- Inter 300 ivory: &quot;A free 30-minute discovery call — no sales pitch, just a genuine conversation about where you are and where you want to be&quot;
+- &quot;Book your free call →&quot; ivory button
+- &quot;No commitment · 100% confidential · Available internationally&quot; Inter 10px ivory 70%
+
+### 10. Footer
+- Near-black background, Playfair italic wordmark &quot;Clarity&quot; in plum
+- Instagram · LinkedIn · Spotify icons
+- &quot;© 2026 Clarity Coaching · Sarah Brennan · London, UK · Global Online Coaching&quot;
+
+## Animations
+- Hero: stagger fade-up on mount (y: 30→0, 0.7s)
+- Transformation strip: slide-in from left, stagger on scroll
+- Programme rows: hover raise
+- Plum rules: scaleX 0→1, 0.5s
+- All hover: 0.2s ease
+
+## Responsive
+- Mobile: stacked hero, single-column cards, hamburger nav
+
+## Full Copy
+- Wordmark: &quot;Clarity&quot;
+- Hero: &quot;The Life You Want Is One Decision Away.&quot; / &quot;1-to-1 coaching for ambitious professionals who are done settling&quot;
+- Programmes: Clarity Intensive · Career Pivot · Business Founder
+- Stats: 200+ Clients · 87% Report Major Life Change · ICF Certified · Forbes Contributor
+- Results: &quot;Left a 15-year career. Zero regrets.&quot; · &quot;Doubled my income in 8 months.&quot; · &quot;Finally started the business I&#39;d been putting off for 6 years.&quot;
+- Testimonial: &quot;Sarah helped me see that I wasn&#39;t stuck — I was just scared. 90 days later I handed in my notice and started my business. I&#39;ve never looked back.&quot; — Claire M., former HR Director
+- CTA: &quot;Let&#39;s Find Your Clarity&quot; / &quot;A free 30-minute discovery call — no sales pitch&quot;
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

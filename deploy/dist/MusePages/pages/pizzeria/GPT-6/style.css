@@ -1,0 +1,511 @@
+:root
+{
+    --cream: #f4efe6;
+    --red: #bd3026;
+    --char: #2f251f;
+}
+*
+{
+    box-sizing: border-box;
+}
+body
+{
+    margin: 0;
+    background: var(--cream);
+    color: var(--char);
+    font: 15px/1.7 Arial, sans-serif;
+}
+a, button
+{
+    color: inherit;
+}
+header
+{
+    padding: 20px 4%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.brand
+{
+    font: 28px/.95 Impact, "Arial Narrow", sans-serif;
+    color: var(--red);
+    text-decoration: none;
+}
+.brand span
+{
+    display: block;
+    font: 8px/2 Arial, sans-serif;
+    letter-spacing: 2px;
+}
+nav
+{
+    display: flex;
+    gap: 25px;
+}
+nav a
+{
+    font-size: 12px;
+    text-decoration: none;
+}
+.button, .outline
+{
+    display: inline-block;
+    background: var(--red);
+    color: var(--cream);
+    border: 0;
+    padding: 13px 22px;
+    text-decoration: none;
+    font: bold 12px/1.5 Arial, sans-serif;
+}
+.outline
+{
+    border: 1px solid #fff9;
+    background: transparent;
+    margin-left: 15px;
+}
+section
+{
+    padding: 85px max(5%, calc((100% - 1120px) / 2));
+}
+.hero
+{
+    position: relative;
+    min-height: 710px;
+    color: var(--cream);
+    overflow: hidden;
+}
+.hero > img
+{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.hero > div
+{
+    position: relative;
+    max-width: 700px;
+}
+.label
+{
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--red);
+}
+.hero .label
+{
+    color: #eac6a0;
+}
+h1, h2, .flour, footer strong
+{
+    font-family: Impact, "Arial Narrow", sans-serif;
+    font-weight: 900;
+    line-height: .96;
+}
+h1
+{
+    font-size: clamp(52px, 7.5vw, 100px);
+    letter-spacing: -1px;
+    margin: 25px 0;
+}
+.hero p:not(.label)
+{
+    max-width: 440px;
+    margin-bottom: 30px;
+    background: #2117108a;
+}
+.today
+{
+    background: var(--char);
+    color: var(--cream);
+    padding: 20px 5%;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    font-size: 11px;
+}
+h2
+{
+    font-size: clamp(36px, 4.7vw, 59px);
+    margin: 20px 0 35px;
+}
+.menu-head
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.menu-head > p
+{
+    color: var(--red);
+    font: italic 24px Georgia, serif;
+}
+button, input, select
+{
+    font: inherit;
+}
+button
+{
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    padding: 8px 0;
+}
+.filters
+{
+    display: flex;
+    gap: 12px;
+    overflow: auto;
+    padding-block: 10px;
+}
+.filters button
+{
+    white-space: nowrap;
+    border: 1px solid #cdbeb0;
+    padding: 9px 18px;
+    border-radius: 30px;
+    font-size: 12px;
+}
+.filters [aria-pressed=true]
+{
+    background: var(--red);
+    color: white;
+    border-color: var(--red);
+}
+.allergen, #menu-status, .fine
+{
+    font-size: 11px;
+    color: #6a594c;
+}
+.allergen
+{
+    max-width: 740px;
+}
+#pizza-menu
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 65px;
+}
+.pizza
+{
+    border-top: 1px solid #d5c9b9;
+    padding: 20px 0;
+}
+.pizza-head
+{
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    align-items: baseline;
+}
+.pizza h4
+{
+    font-size: 17px;
+    margin: 0;
+}
+.pizza p
+{
+    font-size: 12px;
+    color: #746355;
+    margin: 10px 0;
+}
+.pizza button
+{
+    color: var(--red);
+    font-size: 11px;
+    text-decoration: underline;
+}
+.pizza small
+{
+    color: #4a6535;
+    font-size: 10px;
+}
+.extras, .dough, .book, .find
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 70px;
+}
+.extras
+{
+    margin-top: 35px;
+}
+.extras p b
+{
+    float: right;
+}
+.extras h3
+{
+    color: var(--red);
+}
+.dough
+{
+    background: #e8dfd0;
+    align-items: center;
+}
+.dough-art
+{
+    height: 420px;
+    background: #b6a48b;
+    position: relative;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+}
+.dough-art span
+{
+    width: 280px;
+    height: 270px;
+    background: #e9d8b5;
+    border-radius: 49%;
+    border: 16px solid #cfb890;
+    transform: rotate(20deg);
+}
+.dough-art b
+{
+    position: absolute;
+    font: 80px/.8 Impact, sans-serif;
+    text-align: center;
+    color: var(--red);
+}
+.dough-art small
+{
+    font: 14px Arial, sans-serif;
+    letter-spacing: 4px;
+}
+.gallery
+{
+    display: flex;
+    padding: 15px;
+    gap: 15px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+}
+.gallery > *
+{
+    width: 30%;
+    min-width: 240px;
+    height: 270px;
+    object-fit: cover;
+    scroll-snap-align: start;
+}
+.flour
+{
+    background: var(--red);
+    color: var(--cream);
+    padding: 35px;
+    font-size: 60px;
+}
+form
+{
+    border-top: 3px solid var(--red);
+    padding-top: 25px;
+}
+label
+{
+    display: block;
+    font-size: 12px;
+    margin-bottom: 18px;
+}
+input, select
+{
+    width: 100%;
+    display: block;
+    margin-top: 5px;
+    padding: 12px;
+    border: 1px solid #baaa99;
+    background: transparent;
+    color: inherit;
+}
+.two
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.collection
+{
+    background: var(--red);
+    color: var(--cream);
+}
+.collection .label, .collection .fine
+{
+    color: #f4d5c2;
+}
+.thirds
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+}
+.thirds h3
+{
+    font-size: 20px;
+}
+.thirds p
+{
+    font-size: 13px;
+}
+.basket
+{
+    border-top: 1px solid #f4d5c288;
+    margin-top: 40px;
+    padding-top: 25px;
+}
+.basket button
+{
+    border-bottom: 1px solid;
+}
+blockquote
+{
+    font: italic 23px/1.5 Georgia, serif;
+    margin: 0;
+}
+cite
+{
+    display: block;
+    font: 10px Arial, sans-serif;
+    letter-spacing: 2px;
+    margin-top: 25px;
+}
+.reviews > p
+{
+    margin-bottom: 40px;
+}
+.find
+{
+    background: #e8dfd0;
+}
+.map
+{
+    min-height: 350px;
+    border: 25px solid #cec2ac;
+    background: #e8dfcf;
+    display: grid;
+    place-content: center;
+    text-align: center;
+    gap: 25px;
+    position: relative;
+}
+.map b
+{
+    color: var(--red);
+    font: 35px/.95 Impact, sans-serif;
+}
+.map span, .map small
+{
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+footer
+{
+    background: #251e19;
+    color: var(--cream);
+    padding: 60px 5%;
+}
+footer strong
+{
+    font-size: 10vw;
+}
+footer small
+{
+    display: block;
+    margin-top: 25px;
+}
+.mobile-bar
+{
+    display: none;
+}
+:focus-visible
+{
+    outline: 3px solid #66834a;
+    outline-offset: 4px;
+}
+@media (max-width: 767px)
+{
+    header
+    {
+        padding: 18px 22px;
+    }
+    .brand
+    {
+        font-size: 23px;
+    }
+    nav
+    {
+        display: none;
+    }
+    header .button
+    {
+        padding: 10px;
+        font-size: 10px;
+    }
+    section
+    {
+        padding: 60px 24px;
+    }
+    .hero
+    {
+        min-height: 700px;
+    }
+    .hero > img
+    {
+        object-position: 55%;
+        filter: brightness(.7);
+    }
+    h1
+    {
+        font-size: 58px;
+    }
+    .hero .button, .outline
+    {
+        padding: 12px 15px;
+    }
+    .today, .menu-head
+    {
+        display: block;
+    }
+    .today span, .today a
+    {
+        display: block;
+        margin: 8px 0;
+    }
+    #pizza-menu, .dough, .book, .find, .thirds
+    {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    #pizza-menu
+    {
+        gap: 0;
+    }
+    .extras
+    {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    .dough-art
+    {
+        height: 340px;
+    }
+    .gallery
+    {
+        padding: 12px;
+    }
+    .mobile-bar
+    {
+        position: sticky;
+        bottom: 0;
+        display: flex;
+        justify-content: space-around;
+        background: var(--red);
+        color: white;
+        padding: 15px;
+        font-size: 12px;
+        z-index: 4;
+    }
+}

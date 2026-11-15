@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Apex Talent | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Apex Talent</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Recruitment Agency Website Prompt
+# websiteprompts.ai
+
+Build a dark, bold recruitment and talent agency website called &quot;Apex Talent&quot; using React + Vite + TypeScript + Tailwind CSS + Framer Motion (motion/react) + shadcn/ui + lucide-react.
+
+## Design System
+
+### Colors
+```css
+:root {
+  --background: 0 0% 7%;              /* near-black #111111 */
+  --foreground: 0 0% 95%;             /* white */
+  --primary: 0 0% 95%;
+  --primary-foreground: 0 0% 7%;
+  --accent: 20 82% 50%;               /* electric orange #e85c1a */
+  --surface: 0 0% 10%;
+  --surface-raised: 0 0% 14%;
+  --muted-foreground: 0 0% 55%;
+  --border: 0 0% 18%;
+}
+```
+
+### Typography
+- Import: `https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;family=Inter:wght@300;400;500&amp;display=swap`
+- Headlines: Space Grotesk 700 — sharp, confident
+- Body: Inter 300–400
+- Labels: Inter 500 uppercase 10px letter-spacing 0.14em
+
+## Sections
+
+### 1. Navbar
+- Sticky near-black, `backdrop-filter: blur(12px)`
+- Left: Space Grotesk 700 &quot;APEX&quot; uppercase in orange
+- Right: For Companies · For Candidates · Sectors · About + &quot;Hire talent →&quot; orange button
+
+### 2. Hero
+- Full-viewport height, near-black background
+- Full-bleed photography `position: absolute inset-0 w-full h-full object-cover object-center`
+- Composition-independent overlay: `linear-gradient(to right, rgba(17,17,17,0.97) 0%, rgba(17,17,17,0.78) 52%, rgba(17,17,17,0.30) 100%)`
+- Large background text: &quot;TALENT&quot; in Space Grotesk 700 `font-size: clamp(200px, 28vw, 420px)` at `opacity: 0.04`, `position: absolute; left: -1%; top: 50%; transform: translateY(-50%); z-index: 1`
+- Content `z-index: 10`, left-aligned `padding-left: 7vw`, centered vertically:
+  - Inter 500 uppercase 10px orange label: &quot;Executive Recruitment · London &amp; Remote&quot;
+  - Space Grotesk 700 `clamp(48px, 7vw, 105px)` white, line-height 0.88: &quot;WE FIND THE\nPEOPLE WHO\nCHANGE COMPANIES.&quot;
+  - Orange accent on &quot;CHANGE COMPANIES.&quot;
+  - Inter 300 muted sub: &quot;Executive search and mid-level recruitment across technology, finance, and creative industries — hired in 21 days or we work for free&quot;
+  - CTAs: &quot;Hire talent →&quot; (orange filled, dark text) + &quot;Find a role&quot; (ghost white)
+  - Floating stat chips: &quot;21-Day Hire Guarantee · 400+ Placements · 94% Retention Rate&quot;
+
+{/* Image brief: professional office environment, confident executive in modern glass building, dramatic overhead lighting, commercial photography, editorial corporate style */}
+
+- Stagger fade-up on mount: label (0s), headline (0.1s), sub (0.25s), CTAs (0.4s), chips (0.55s)
+
+### 3. What We Do
+- &quot;Who We Place&quot; — Space Grotesk 700 white
+- 3 hover-raise rows:
+  - Technology &amp; Product (engineers, product managers, CTOs — startups to enterprise)
+  - Finance &amp; Operations (CFOs, FDs, analysts — Series A to FTSE 100)
+  - Creative &amp; Marketing (CMOs, creative directors, brand teams)
+- Each: Space Grotesk 700 large sector left + Inter 300 muted description right + orange &quot;→&quot;
+- `border-bottom: 1px solid hsl(var(--border))`
+- Hover: surface-raised, name turns orange
+
+### 4. Stats Strip
+- Full-width orange `#e85c1a`, 80px
+- 4 dark Space Grotesk 700 stats: &quot;400+ Placements&quot; · &quot;21-Day Guarantee&quot; · &quot;94% Retention&quot; · &quot;12 Years&quot;
+- Framer Motion count-up on scroll, dark dividers
+
+### 5. Process — For Companies
+- &quot;How We Hire For You&quot; — Space Grotesk 700 white
+- 4 steps: Brief &amp; Search → Screened Shortlist → Interviews → Offer &amp; Onboard
+- Large faded orange number (opacity 0.06) behind each step
+- Inter 300 muted description, stagger fade-up on scroll
+
+### 6. Why Apex
+- Split: left text, right image
+- Space Grotesk 700 white: &quot;We&#39;re Not a CV Forwarding Service&quot;
+- Inter 300 muted: 2 paragraphs — every candidate is spoken to by a senior consultant, not a junior researcher. We present 4 candidates, not 40. Quality, not volume.
+- 4 orange checkpoints: &quot;21-day hire guarantee · Senior consultants only · 4 candidates, not 40 · Post-placement check-ins&quot;
+
+{/* Image brief: recruitment consultant and client in meeting, professional conference room, collaborative, city view */}
+
+### 7. For Candidates
+- &quot;Looking for Your Next Role?&quot; — Space Grotesk 700
+- Centered surface-raised section
+- Inter 300 muted: &quot;Register with Apex and get access to exclusive roles — many never advertised publicly&quot;
+- &quot;Register as a candidate →&quot; orange button + &quot;Browse open roles&quot; ghost
+
+### 8. Testimonials
+- Surface-raised section
+- 3 cards: 5-star orange row, Inter 300 italic white quote, company name + role placed in Inter 10px muted
+
+### 9. CTA
+- Full-width near-black, orange top border 3px
+- Space Grotesk 700 white `clamp(42px, 5vw, 72px)`: &quot;YOUR NEXT HIRE STARTS TODAY&quot;
+- Inter 300 muted: &quot;21-day hire guarantee, or we work for free on the next search — no risk, no obligation&quot;
+- &quot;Start a search →&quot; orange button
+- &quot;Executive Search · Technology · Finance · Creative · London &amp; Remote&quot; Inter 10px muted
+
+### 10. Footer
+- Near-black, Space Grotesk 700 &quot;APEX&quot; in orange
+- LinkedIn · Twitter/X · Email
+- &quot;© 2026 Apex Talent · Executive Recruitment · London · EST. 2012&quot;
+
+## Animations
+- Hero: stagger fade-up, &quot;TALENT&quot; bg text fade in 1s delay
+- Stats strip: count-up on scroll
+- Process steps: stagger fade-up
+- All hover: 0.15s ease
+
+## Responsive
+- Mobile: stacked hero, single-column sectors, hamburger nav
+
+## Full Copy
+- Wordmark: &quot;APEX&quot;
+- Hero: &quot;WE FIND THE PEOPLE WHO CHANGE COMPANIES.&quot; / &quot;Executive search and mid-level recruitment — hired in 21 days or we work for free&quot;
+- Sectors: Technology &amp; Product · Finance &amp; Operations · Creative &amp; Marketing
+- Stats: 400+ Placements · 21-Day Guarantee · 94% Retention · 12 Years
+- Guarantee: 21-day hire guarantee or we work for free on the next search
+- Testimonial: &quot;Apex placed our Head of Product in 14 days. Every candidate they presented was genuinely hireable — which has never happened with any other agency.&quot; — Sarah T., CTO, London
+- CTA: &quot;YOUR NEXT HIRE STARTS TODAY&quot;
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

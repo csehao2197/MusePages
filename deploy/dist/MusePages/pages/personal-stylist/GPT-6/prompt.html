@@ -1,0 +1,923 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EDIT Studio — Personal Styling | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>EDIT Studio — Personal Styling</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># EDIT STUDIO — Personal Stylist Website Prompt
+## For Bolt, v0, Lovable, Claude — React + Vite + TypeScript + Tailwind CSS + Framer Motion + shadcn/ui + lucide-react
+
+---
+
+Build a complete, production-ready personal styling and wardrobe consultancy website for **EDIT STUDIO** — a London-based personal styling practice run by Sophie Laurent. The brand is refined, editorial, and intimate: warm ivory tones, champagne accents, and quiet confidence. Every section has fully written copy. All animations are fully implemented.
+
+---
+
+## DESIGN SYSTEM
+
+### Colors — HSL custom properties in :root
+
+```css
+@import url(&#39;https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@1,400;1,700&amp;family=Jost:wght@300;400&amp;display=swap&#39;);
+
+:root {
+  --background: 38 36% 97%;
+  --foreground: 24 8% 13%;
+  --primary: 35 43% 64%;
+  --primary-foreground: 24 8% 13%;
+  --secondary: 340 20% 82%;
+  --muted: 38 25% 93%;
+  --card: 0 0% 100%;
+  --border: 38 18% 86%;
+  --muted-foreground: 24 6% 45%;
+}
+```
+
+### Typography
+- **Headings**: Libre Baskerville italic — weights 400 italic and 700 italic. Refined, editorial, timeless. All headings use the italic variant exclusively.
+- **Body**: Jost — weights 300 (body text, flowing copy) and 400 (labels, buttons, UI elements).
+
+### Signature Animation 1: Before/After Wardrobe Reveal Slider
+
+The hero section&#39;s right panel features an interactive comparison slider showing a &quot;before&quot; (cluttered wardrobe) and &quot;after&quot; (curated capsule wardrobe). The user drags a vertical divider to reveal the transformation.
+
+```tsx
+// Implementation:
+
+const [sliderPosition, setSliderPosition] = useState(50) // percentage, 0–100
+const isDragging = useRef(false)
+const containerRef = useRef&lt;HTMLDivElement&gt;(null)
+
+const handleMouseMove = (e: MouseEvent) =&gt; {
+  if (!isDragging.current || !containerRef.current) return
+  const rect = containerRef.current.getBoundingClientRect()
+  const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width))
+  setSliderPosition((x / rect.width) * 100)
+}
+
+const handleTouchMove = (e: TouchEvent) =&gt; {
+  if (!containerRef.current) return
+  const rect = containerRef.current.getBoundingClientRect()
+  const x = Math.max(0, Math.min(e.touches[0].clientX - rect.left, rect.width))
+  setSliderPosition((x / rect.width) * 100)
+}
+
+// Container:
+// &lt;div
+//   ref={containerRef}
+//   className=&quot;relative aspect-[4/5] rounded-3xl overflow-hidden cursor-ew-resize select-none&quot;
+//   onMouseDown={() =&gt; { isDragging.current = true }}
+//   onMouseUp={() =&gt; { isDragging.current = false }}
+//   onMouseLeave={() =&gt; { isDragging.current = false }}
+//   onMouseMove={handleMouseMove}
+//   onTouchMove={handleTouchMove}
+// &gt;
+
+// Before image (full size, sits behind):
+// {/* Image: disorganised and overstuffed wardrobe with clothes spilling out, visible chaos — mismatched hangers, items on the floor, rails overloaded and buckling, the relatable reality of a morning wardrobe crisis, authentic documentary photography style */}
+// &lt;img src=&quot;&quot; alt=&quot;Disorganised wardrobe before styling edit&quot;
+//      className=&quot;absolute inset-0 w-full h-full object-cover&quot; /&gt;
+
+// After image (clipped by slider position):
+// {/* Image: beautifully curated capsule wardrobe — neatly spaced hangers in a calm neutral palette, organised by colour and category, visible through a clean white wardrobe interior, aspirational lifestyle wardrobe photography */}
+// &lt;img src=&quot;&quot; alt=&quot;Curated capsule wardrobe after Edit Studio styling&quot;
+//      className=&quot;absolute inset-0 w-full h-full object-cover&quot;
+//      style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }} /&gt;
+
+// Divider line:
+// &lt;div className=&quot;absolute top-0 bottom-0 w-0.5 bg-white shadow-lg z-10&quot;
+//      style={{ left: `${sliderPosition}%` }}&gt;
+//   {/* Handle circle */}
+//   &lt;div className=&quot;absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+//                   w-9 h-9 rounded-full bg-white shadow-xl flex items-center justify-center&quot;&gt;
+//     &lt;ChevronLeft className=&quot;w-3 h-3 text-[hsl(var(--foreground))]&quot; /&gt;
+//     &lt;ChevronRight className=&quot;w-3 h-3 text-[hsl(var(--foreground))]&quot; /&gt;
+//   &lt;/div&gt;
+// &lt;/div&gt;
+
+// Labels:
+// &lt;span className=&quot;absolute top-4 left-4 bg-black/40 text-white font-[Jost] font-light
+//                  text-[10px] uppercase tracking-wider px-2 py-1 rounded-sm z-10&quot;&gt;
+//   BEFORE
+// &lt;/span&gt;
+// &lt;span className=&quot;absolute top-4 right-4 bg-[hsl(var(--primary))] text-white font-[Jost] font-light
+//                  text-[10px] uppercase tracking-wider px-2 py-1 rounded-sm z-10&quot;
+//       style={{ right: `${100 - sliderPosition + 1}%` }}&gt;
+//   AFTER
+// &lt;/span&gt;
+```
+
+### Signature Animation 2: Polaroid Moodboard
+
+Section 6 features 5 image cards arranged like Polaroids pinned to a mood board — each slightly rotated, overlapping naturally. On hover, the card straightens and lifts.
+
+```tsx
+// Polaroid card component:
+// &lt;motion.div
+//   className=&quot;absolute bg-white p-3 pb-8 shadow-lg cursor-pointer&quot;
+//   style={{ rotate: card.rotate, top: card.top, left: card.left, width: card.width }}
+//   whileHover={{ rotate: 0, scale: 1.05, zIndex: 20 }}
+//   transition={{ type: &#39;spring&#39;, stiffness: 300, damping: 20 }}
+// &gt;
+//   &lt;div className=&quot;overflow-hidden aspect-[4/5] bg-[hsl(var(--muted))]&quot;&gt;
+//     {/* Image comment */}
+//     &lt;img src=&quot;&quot; alt=&quot;...&quot; className=&quot;w-full h-full object-cover&quot; /&gt;
+//   &lt;/div&gt;
+// &lt;/motion.div&gt;
+```
+
+---
+
+## SECTION 1: NAVBAR
+
+```tsx
+// Sticky navbar, ivory background, clean minimal
+
+// &lt;nav className=&quot;fixed top-0 left-0 right-0 z-50
+//                 bg-[hsl(var(--background)/0.97)] border-b border-[hsl(var(--border))]
+//                 backdrop-blur-sm&quot;&gt;
+// &lt;div className=&quot;max-w-7xl mx-auto px-8 h-[72px] flex items-center justify-between&quot;&gt;
+
+// LOGO (left) — two-line stacked inline-block:
+// &lt;a href=&quot;/&quot; className=&quot;flex flex-col leading-none&quot;&gt;
+//   &lt;span className=&quot;font-[Libre_Baskerville] italic font-bold text-2xl text-[hsl(var(--foreground))]&quot;&gt;
+//     EDIT
+//   &lt;/span&gt;
+//   &lt;span className=&quot;font-[Jost] font-light text-[10px] tracking-[0.35em] text-[hsl(var(--muted-foreground))] uppercase&quot;&gt;
+//     STUDIO
+//   &lt;/span&gt;
+// &lt;/a&gt;
+
+// NAV LINKS (center, hidden below lg):
+// &lt;nav className=&quot;hidden lg:flex items-center gap-10&quot;&gt;
+//   {[&#39;Services&#39;, &#39;About&#39;, &#39;The Process&#39;, &#39;Moodboard&#39;, &#39;Book&#39;].map(item =&gt; (
+//     &lt;a key={item} href={`#${item.toLowerCase().replace(&#39; &#39;, &#39;-&#39;)}`}
+//        className=&quot;font-[Jost] font-light text-sm text-[hsl(var(--muted-foreground))]
+//                   hover:text-[hsl(var(--foreground))] transition-colors tracking-wide&quot;&gt;
+//       {item}
+//     &lt;/a&gt;
+//   ))}
+// &lt;/nav&gt;
+
+// CTA (right) — square (no border-radius):
+// &lt;button className=&quot;bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))]
+//                    font-[Jost] font-normal text-sm px-6 py-2.5 rounded-none
+//                    hover:bg-[hsl(var(--foreground))] hover:text-white transition-colors&quot;&gt;
+//   Book a Consultation
+// &lt;/button&gt;
+```
+
+---
+
+## SECTION 2: HERO
+
+```tsx
+// &lt;section className=&quot;min-h-screen bg-[hsl(var(--background))] grid lg:grid-cols-2 items-center&quot;&gt;
+
+// LEFT COLUMN — Text
+// &lt;div className=&quot;px-8 lg:px-16 py-20 lg:py-0&quot;&gt;
+
+//   Label:
+//   &lt;p className=&quot;font-[Jost] font-light text-[10px] tracking-[0.3em] uppercase
+//                  text-[hsl(var(--muted-foreground))] mb-6&quot;&gt;
+//     LONDON-BASED PERSONAL STYLIST
+//   &lt;/p&gt;
+
+//   Headline:
+//   &lt;motion.h1
+//     initial={{ opacity: 0, y: 30 }}
+//     animate={{ opacity: 1, y: 0 }}
+//     transition={{ duration: 1, ease: &#39;easeOut&#39; }}
+//     className=&quot;font-[Libre_Baskerville] italic font-bold
+//                text-[72px] max-lg:text-[52px] max-sm:text-[40px]
+//                text-[hsl(var(--foreground))] leading-[1.1] mb-5&quot;
+//   &gt;
+//     Dress like you mean it.
+//   &lt;/motion.h1&gt;
+
+//   Subtext:
+//   &lt;motion.p
+//     initial={{ opacity: 0 }}
+//     animate={{ opacity: 1 }}
+//     transition={{ duration: 0.8, delay: 0.5 }}
+//     className=&quot;font-[Jost] font-light text-lg text-[hsl(var(--muted-foreground))]
+//                leading-relaxed mb-8 max-w-md&quot;
+//   &gt;
+//     EDIT Studio helps individuals and executives build wardrobes that work —
+//     effortlessly, intentionally, and completely true to who they are.
+//     No more standing in front of a full wardrobe with nothing to wear.
+//   &lt;/motion.p&gt;
+
+//   CTAs:
+//   &lt;motion.div
+//     initial={{ opacity: 0 }}
+//     animate={{ opacity: 1 }}
+//     transition={{ duration: 0.6, delay: 0.8 }}
+//     className=&quot;flex flex-wrap gap-4 mb-8&quot;
+//   &gt;
+//     &lt;button className=&quot;bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))]
+//                        font-[Jost] font-normal text-sm px-7 py-3 rounded-none
+//                        hover:bg-[hsl(var(--foreground))] hover:text-white transition-colors&quot;&gt;
+//       Book a Discovery Call
+//     &lt;/button&gt;
+//     &lt;button className=&quot;font-[Jost] font-normal text-sm text-[hsl(var(--primary))] hover:underline px-2&quot;&gt;
+//       See Services →
+//     &lt;/button&gt;
+//   &lt;/motion.div&gt;
+
+//   Pull quote:
+//   &lt;motion.blockquote
+//     initial={{ opacity: 0 }}
+//     animate={{ opacity: 1 }}
+//     transition={{ duration: 0.6, delay: 1.1 }}
+//     className=&quot;border-l-2 border-[hsl(var(--primary))] pl-4
+//                font-[Libre_Baskerville] italic text-sm text-[hsl(var(--muted-foreground))]
+//                leading-relaxed max-w-sm&quot;
+//   &gt;
+//     &quot;The right wardrobe doesn&#39;t take more time. It saves it.&quot;
+//   &lt;/motion.blockquote&gt;
+
+// &lt;/div&gt;
+
+// RIGHT COLUMN — Before/After Slider
+// &lt;div className=&quot;px-8 lg:pr-16 py-16 lg:py-20&quot;&gt;
+//   {/* Before/After slider implementation — see SIGNATURE ANIMATION 1 above */}
+//   {/* Wrap in a motion.div for entrance animation: */}
+//   &lt;motion.div
+//     initial={{ opacity: 0, x: 30 }}
+//     animate={{ opacity: 1, x: 0 }}
+//     transition={{ duration: 1, delay: 0.3 }}
+//   &gt;
+//     {/* [Insert Before/After Slider component here] */}
+//   &lt;/motion.div&gt;
+// &lt;/div&gt;
+```
+
+---
+
+## SECTION 3: SERVICES
+
+```tsx
+// &lt;section id=&quot;services&quot; className=&quot;py-24 bg-white&quot;&gt;
+// &lt;div className=&quot;max-w-7xl mx-auto px-8&quot;&gt;
+
+// Heading:
+// &lt;motion.h2
+//   initial={{ opacity: 0, y: 20 }}
+//   whileInView={{ opacity: 1, y: 0 }}
+//   viewport={{ once: true }}
+//   className=&quot;font-[Libre_Baskerville] italic font-bold text-[48px] max-md:text-[36px]
+//              text-[hsl(var(--foreground))] leading-tight mb-3&quot;
+// &gt;
+//   How I can help you.
+// &lt;/motion.h2&gt;
+// &lt;p className=&quot;font-[Jost] font-light text-base text-[hsl(var(--muted-foreground))] mb-14 max-w-lg&quot;&gt;
+//   Every service starts with a conversation. No hard sells, no packages you don&#39;t need.
+//   Just an honest assessment of what will make the biggest difference.
+// &lt;/p&gt;
+
+const services = [
+  {
+    name: &#39;Wardrobe Edit&#39;,
+    price: &#39;£250&#39;,
+    duration: &#39;3 hours · in your home&#39;,
+    description: &#39;The most transformative place to start. We go through everything you own — pulling out what works, identifying gaps, and letting go of what no longer serves you. You leave with a clear, functional wardrobe and a targeted shopping list. Most clients are amazed by what they already have.&#39;,
+    includes: [
+      &#39;Comprehensive closet audit&#39;,
+      &#39;Colour analysis and seasonal palette&#39;,
+      &#39;Occasion mapping (work, social, travel)&#39;,
+      &#39;Shopping list PDF — gaps identified, budget-matched&#39;,
+    ],
+    note: &#39;London only. Zone 1–3 included. Zone 4–6: £20 supplement.&#39;,
+  },
+  {
+    name: &#39;Capsule Build&#39;,
+    price: &#39;£450&#39;,
+    duration: &#39;Full-day personal shopping&#39;,
+    description: &#39;A full-day personal shopping experience in London. We visit the stores that are actually right for you — not just the obvious high-street names. Budget-agnostic: I work to your numbers and find the best possible options within them. Everything we buy works with everything else.&#39;,
+    includes: [
+      &#39;Pre-shopping consultation call (45 min)&#39;,
+      &#39;Personal shopping day (up to 6 hours)&#39;,
+      &#39;Alteration and tailoring referrals&#39;,
+      &#39;Illustrated outfit guide document post-session&#39;,
+    ],
+    note: &#39;Transport between stores not included. Minimum budget recommendation: £400.&#39;,
+  },
+  {
+    name: &#39;Executive Styling&#39;,
+    price: &#39;£180&#39;,
+    duration: &#39;/ month · retainer service&#39;,
+    description: &#39;For professionals who need to look consistently excellent without spending mental energy on it. A monthly wardrobe check-in, travel packing curation, event dressing advice, and on-call styling support via WhatsApp. This is what makes the difference when your role demands it.&#39;,
+    includes: [
+      &#39;Monthly 2-hour in-home session&#39;,
+      &#39;Event and occasion dressing advice&#39;,
+      &#39;WhatsApp on-call styling support&#39;,
+      &#39;Seasonal shopping shortlists&#39;,
+    ],
+    note: &#39;3-month minimum. 4–6 week current wait time for new Executive clients.&#39;,
+  },
+  {
+    name: &#39;Online Styling&#39;,
+    price: &#39;£95&#39;,
+    duration: &#39;90-minute video consultation&#39;,
+    description: &quot;If you&#39;re not in London. Send photos of your current wardrobe, complete a detailed style questionnaire, and we&#39;ll spend 90 minutes on Zoom building your direction, identifying the gaps, and creating a clear action plan with specific shopping recommendations at your price point.&quot;,
+    includes: [
+      &#39;Detailed style questionnaire sent in advance&#39;,
+      &#39;90-minute Zoom session&#39;,
+      &#39;Post-session written summary with recommendations&#39;,
+      &#39;Shopping list with links at your budget&#39;,
+    ],
+    note: &#39;Available worldwide. Sessions recorded with consent for future reference.&#39;,
+  },
+]
+
+// 2×2 grid desktop, 1-col mobile
+// &lt;div className=&quot;grid grid-cols-2 max-md:grid-cols-1 gap-6&quot;&gt;
+// {services.map((service, i) =&gt; (
+//   &lt;motion.div
+//     key={service.name}
+//     initial={{ opacity: 0, y: 20 }}
+//     whileInView={{ opacity: 1, y: 0 }}
+//     viewport={{ once: true }}
+//     transition={{ delay: i * 0.1 }}
+//     className=&quot;border border-[hsl(var(--border))] rounded-none p-8
+//                hover:border-[hsl(var(--primary))] transition-colors duration-300
+//                bg-white group&quot;
+//   &gt;
+//     &lt;div className=&quot;flex items-start justify-between mb-5&quot;&gt;
+//       &lt;div&gt;
+//         &lt;h3 className=&quot;font-[Libre_Baskerville] italic font-bold text-2xl text-[hsl(var(--foreground))] mb-1&quot;&gt;
+//           {service.name}
+//         &lt;/h3&gt;
+//         &lt;p className=&quot;font-[Jost] font-light text-xs text-[hsl(var(--muted-foreground))] uppercase tracking-wider&quot;&gt;
+//           {service.duration}
+//         &lt;/p&gt;
+//       &lt;/div&gt;
+//       &lt;span className=&quot;font-[Libre_Baskerville] italic text-2xl text-[hsl(var(--primary))] shrink-0&quot;&gt;
+//         {service.price}
+//       &lt;/span&gt;
+//     &lt;/div&gt;
+//     &lt;p className=&quot;font-[Jost] font-light text-sm text-[hsl(var(--muted-foreground))] leading-relaxed mb-6&quot;&gt;
+//       {service.description}
+//     &lt;/p&gt;
+//     &lt;div className=&quot;border-t border-[hsl(var(--border))] pt-5 mb-4&quot;&gt;
+//       &lt;p className=&quot;font-[Jost] font-normal text-[10px] tracking-[0.2em] uppercase
+//                     text-[hsl(var(--muted-foreground))] mb-3&quot;&gt;
+//         Includes
+//       &lt;/p&gt;
+//       &lt;ul className=&quot;space-y-2&quot;&gt;
+//         {service.includes.map(item =&gt; (
+//           &lt;li key={item} className=&quot;flex items-start gap-2&quot;&gt;
+//             &lt;span className=&quot;text-[hsl(var(--primary))] mt-0.5 text-xs&quot;&gt;—&lt;/span&gt;
+//             &lt;span className=&quot;font-[Jost] font-light text-xs text-[hsl(var(--foreground))] leading-relaxed&quot;&gt;
+//               {item}
+//             &lt;/span&gt;
+//           &lt;/li&gt;
+//         ))}
+//       &lt;/ul&gt;
+//     &lt;/div&gt;
+//     &lt;p className=&quot;font-[Jost] font-light text-[10px] text-[hsl(var(--muted-foreground))] italic&quot;&gt;
+//       {service.note}
+//     &lt;/p&gt;
+//   &lt;/motion.div&gt;
+// ))}
+```
+
+---
+
+## SECTION 4: ABOUT
+
+```tsx
+// &lt;section id=&quot;about&quot; className=&quot;py-24 bg-[hsl(var(--muted))]&quot;&gt;
+// &lt;div className=&quot;max-w-7xl mx-auto px-8 grid lg:grid-cols-2 gap-16 items-start&quot;&gt;
+
+// LEFT — Image
+// {/* Image: Sophie Laurent, personal stylist — a woman in her late thirties, elegant and approachable, standing in a beautifully organised dressing room with a curated rail of neutral clothing behind her, warm natural window light, confident and warm expression, editorial portrait photography for a personal styling website */}
+// &lt;motion.div
+//   initial={{ opacity: 0, x: -20 }}
+//   whileInView={{ opacity: 1, x: 0 }}
+//   viewport={{ once: true }}
+//   className=&quot;rounded-3xl overflow-hidden aspect-[3/4]&quot;
+// &gt;
+//   &lt;img src=&quot;&quot; alt=&quot;Sophie Laurent, Edit Studio personal stylist&quot;
+//        className=&quot;w-full h-full object-cover&quot; /&gt;
+// &lt;/motion.div&gt;
+
+// RIGHT — Bio text
+// &lt;motion.div
+//   initial={{ opacity: 0, x: 20 }}
+//   whileInView={{ opacity: 1, x: 0 }}
+//   viewport={{ once: true }}
+//   className=&quot;py-8 lg:py-12&quot;
+// &gt;
+//   &lt;p className=&quot;font-[Jost] font-light text-[10px] tracking-[0.3em] uppercase
+//                  text-[hsl(var(--muted-foreground))] mb-5&quot;&gt;
+//     ABOUT
+//   &lt;/p&gt;
+//   &lt;h2 className=&quot;font-[Libre_Baskerville] italic font-bold text-[40px] max-md:text-[32px]
+//                  text-[hsl(var(--foreground))] leading-tight mb-1&quot;&gt;
+//     Sophie Laurent
+//   &lt;/h2&gt;
+//   &lt;p className=&quot;font-[Jost] font-light text-sm text-[hsl(var(--muted-foreground))] mb-8&quot;&gt;
+//     Personal Stylist · Fashion Consultant
+//   &lt;/p&gt;
+
+//   &lt;div className=&quot;space-y-5&quot;&gt;
+//     &lt;p className=&quot;font-[Jost] font-light text-base text-[hsl(var(--muted-foreground))] leading-relaxed&quot;&gt;
+//       I spent twelve years working in fashion PR and buying before I realised that what I
+//       loved most wasn&#39;t fashion for fashion&#39;s sake — it was helping the real people around
+//       me understand and use it. EDIT Studio was founded on the belief that personal style
+//       isn&#39;t a luxury or an indulgence. It&#39;s a practical skill, and like all skills, it
+//       can be learned.
+//     &lt;/p&gt;
+//     &lt;p className=&quot;font-[Jost] font-light text-base text-[hsl(var(--muted-foreground))] leading-relaxed&quot;&gt;
+//       I work primarily with professional women who are excellent at their jobs but feel
+//       as if their wardrobe hasn&#39;t kept up with who they&#39;ve become. We fix that —
+//       thoughtfully, efficiently, without spending a fortune, and always with the goal of
+//       making getting dressed feel easier rather than more complicated.
+//     &lt;/p&gt;
+//   &lt;/div&gt;
+
+//   {/* Credentials */}
+//   &lt;div className=&quot;grid grid-cols-2 gap-4 mt-10 border-t border-[hsl(var(--border))] pt-8&quot;&gt;
+//     {[
+//       &#39;Former Fashion Director&#39;,
+//       &#39;LCF Trained Stylist&#39;,
+//       &#39;Regular contributor, The Guardian Style&#39;,
+//       &#39;200+ clients styled&#39;,
+//     ].map(cred =&gt; (
+//       &lt;div key={cred} className=&quot;flex items-start gap-2&quot;&gt;
+//         &lt;span className=&quot;text-[hsl(var(--primary))] text-xs mt-0.5&quot;&gt;✦&lt;/span&gt;
+//         &lt;span className=&quot;font-[Jost] font-light text-sm text-[hsl(var(--foreground))] leading-tight&quot;&gt;
+//           {cred}
+//         &lt;/span&gt;
+//       &lt;/div&gt;
+//     ))}
+//   &lt;/div&gt;
+
+// &lt;/motion.div&gt;
+```
+
+---
+
+## SECTION 5: THE PROCESS
+
+```tsx
+// &lt;section id=&quot;the-process&quot; className=&quot;py-24 bg-white&quot;&gt;
+// &lt;div className=&quot;max-w-5xl mx-auto px-8&quot;&gt;
+
+// Heading:
+// &lt;h2 className=&quot;font-[Libre_Baskerville] italic font-bold text-[44px] max-md:text-[32px]
+//                text-[hsl(var(--foreground))] leading-tight mb-16&quot;&gt;
+//   The Edit process.
+// &lt;/h2&gt;
+
+const processSteps = [
+  {
+    number: &#39;1&#39;,
+    title: &#39;Discovery Call (free, 20 minutes)&#39;,
+    description: &quot;We talk about where you are, where you want to be, and which service is the right fit. I&#39;ll ask about your lifestyle, your wardrobe frustrations, your budget, and your goals. No pressure, no obligation — just an honest conversation to see if we&#39;re the right fit for each other.&quot;,
+  },
+  {
+    number: &#39;2&#39;,
+    title: &#39;Style Questionnaire&#39;,
+    description: &#39;Before any session, you complete a detailed questionnaire covering your lifestyle occasions (work, evenings, weekends, travel), your inspirations and frustrations, your colour instincts, your budget, and what success looks like for you. It means we hit the ground running rather than spending the session establishing basics.&#39;,
+  },
+  {
+    number: &#39;3&#39;,
+    title: &#39;The Session&#39;,
+    description: &quot;In person at your home (London, Zone 1–3) or online via Zoom. This is where the real work happens. Honest, structured, collaborative, and often surprising — most clients discover they own far more than they realise, and that the problem isn&#39;t quantity but curation.&quot;,
+  },
+  {
+    number: &#39;4&#39;,
+    title: &#39;The Edit Document&#39;,
+    description: &quot;After every session, you receive a detailed written guide: your colour palette, your capsule building blocks, outfit combination photographs (where relevant), and a curated shopping list with specific recommendations at your price point. This is yours to keep and refer back to.&quot;,
+  },
+]
+
+// &lt;div className=&quot;space-y-0 divide-y divide-[hsl(var(--border))]&quot;&gt;
+// {processSteps.map((step, i) =&gt; (
+//   &lt;motion.div
+//     key={step.number}
+//     initial={{ opacity: 0, y: 20 }}
+//     whileInView={{ opacity: 1, y: 0 }}
+//     viewport={{ once: true }}
+//     transition={{ delay: i * 0.1 }}
+//     className=&quot;py-10 grid grid-cols-[auto_1fr] gap-8 items-start&quot;
+//   &gt;
+//     &lt;span className=&quot;font-[Libre_Baskerville] italic font-bold text-[64px] leading-none
+//                      text-[hsl(var(--primary)/0.3)] w-14 shrink-0&quot;&gt;
+//       {step.number}
+//     &lt;/span&gt;
+//     &lt;div&gt;
+//       &lt;h3 className=&quot;font-[Libre_Baskerville] italic font-bold text-xl
+//                      text-[hsl(var(--foreground))] mb-3 leading-snug&quot;&gt;
+//         {step.title}
+//       &lt;/h3&gt;
+//       &lt;p className=&quot;font-[Jost] font-light text-sm text-[hsl(var(--muted-foreground))] leading-relaxed&quot;&gt;
+//         {step.description}
+//       &lt;/p&gt;
+//     &lt;/div&gt;
+//   &lt;/motion.div&gt;
+// ))}
+```
+
+---
+
+## SECTION 6: MOODBOARD (POLAROID LAYOUT)
+
+```tsx
+// &lt;section id=&quot;moodboard&quot; className=&quot;py-24 bg-[hsl(var(--muted))]&quot;&gt;
+// &lt;div className=&quot;max-w-7xl mx-auto px-8 text-center&quot;&gt;
+
+// Heading:
+// &lt;h2 className=&quot;font-[Libre_Baskerville] italic font-bold text-[44px] max-md:text-[32px]
+//                text-[hsl(var(--foreground))] leading-tight mb-4&quot;&gt;
+//   The aesthetic.
+// &lt;/h2&gt;
+// &lt;p className=&quot;font-[Jost] font-light text-base text-[hsl(var(--muted-foreground))] mb-16 max-w-lg mx-auto&quot;&gt;
+//   Every client&#39;s Edit is unique. Here&#39;s a glimpse of the direction we build toward —
+//   elevated, effortless, and entirely your own.
+// &lt;/p&gt;
+
+// Polaroid container — relative, fixed height on desktop, flex-wrap on mobile:
+// &lt;div className=&quot;relative h-[600px] max-md:hidden max-w-3xl mx-auto&quot;&gt;
+
+const polaroids = [
+  {
+    rotate: 3,
+    top: &#39;48px&#39;,
+    left: &#39;32px&#39;,
+    width: &#39;208px&#39;,
+    imageComment: &#39;/* Image: neutral toned capsule wardrobe flat lay — camel blazer, ivory silk blouse, navy tailored trousers, white tee, all laid out artistically on a white background, professional editorial styling photography */&#39;,
+    alt: &#39;Neutral capsule wardrobe flat lay&#39;,
+  },
+  {
+    rotate: -2,
+    top: &#39;16px&#39;,
+    left: &#39;38%&#39;,
+    width: &#39;192px&#39;,
+    imageComment: &#39;/* Image: elegant woman in a tailored camel coat and wide-leg cream trousers, walking through a European city street, editorial fashion photography, refined and confident style */&#39;,
+    alt: &#39;Styled outfit editorial&#39;,
+  },
+  {
+    rotate: 6,
+    top: &#39;80px&#39;,
+    right: &#39;32px&#39;,
+    left: &#39;auto&#39;,
+    width: &#39;176px&#39;,
+    imageComment: &#39;/* Image: perfectly organised clothing rail in a home wardrobe room, neatly spaced hangers in a calm neutral palette — cream, sand, white, charcoal — bathed in morning sunlight, aspirational wardrobe lifestyle photography */&#39;,
+    alt: &#39;Organised capsule wardrobe rail&#39;,
+  },
+  {
+    rotate: -4,
+    bottom: &#39;48px&#39;,
+    top: &#39;auto&#39;,
+    left: &#39;64px&#39;,
+    width: &#39;224px&#39;,
+    imageComment: &#39;/* Image: luxury accessories flat lay — tan leather belt, structured handbag, pointed-toe heels, all in complementary warm neutrals against a white marble surface, high-end fashion product photography */&#39;,
+    alt: &#39;Luxury accessories flat lay&#39;,
+  },
+  {
+    rotate: 2,
+    bottom: &#39;32px&#39;,
+    top: &#39;auto&#39;,
+    right: &#39;48px&#39;,
+    left: &#39;auto&#39;,
+    width: &#39;208px&#39;,
+    imageComment: &#39;/* Image: professional woman in polished workwear — tailored navy blazer, white shirt, sharply pressed trousers — standing confidently in a modern office, modern fashion editorial for a styling portfolio */&#39;,
+    alt: &#39;Professional workwear styling&#39;,
+  },
+]
+
+// Desktop Polaroid grid:
+// {polaroids.map((card, i) =&gt; (
+//   &lt;motion.div
+//     key={i}
+//     initial={{ opacity: 0, scale: 0.9 }}
+//     whileInView={{ opacity: 1, scale: 1 }}
+//     viewport={{ once: true }}
+//     transition={{ delay: i * 0.15, duration: 0.5 }}
+//     whileHover={{ rotate: 0, scale: 1.05, zIndex: 20 }}
+//     className=&quot;absolute bg-white p-3 pb-8 shadow-lg&quot;
+//     style={{
+//       rotate: `${card.rotate}deg`,
+//       top: card.top,
+//       left: card.left,
+//       right: card.right,
+//       bottom: card.bottom,
+//       width: card.width,
+//       zIndex: 10 - i,
+//     }}
+//   &gt;
+//     {card.imageComment}
+//     &lt;div className=&quot;overflow-hidden aspect-[4/5] bg-[hsl(var(--muted))]&quot;&gt;
+//       &lt;img src=&quot;&quot; alt={card.alt} className=&quot;w-full h-full object-cover&quot; /&gt;
+//     &lt;/div&gt;
+//   &lt;/motion.div&gt;
+// ))}
+
+// Mobile fallback — regular grid:
+// &lt;div className=&quot;md:hidden grid grid-cols-2 gap-4&quot;&gt;
+// {polaroids.map((card, i) =&gt; (
+//   &lt;div key={i} className=&quot;bg-white p-2 pb-6 shadow-md&quot;&gt;
+//     {card.imageComment}
+//     &lt;div className=&quot;aspect-[4/5] overflow-hidden&quot;&gt;
+//       &lt;img src=&quot;&quot; alt={card.alt} className=&quot;w-full h-full object-cover&quot; /&gt;
+//     &lt;/div&gt;
+//   &lt;/div&gt;
+// ))}
+```
+
+---
+
+## SECTION 7: TESTIMONIALS
+
+```tsx
+// &lt;section className=&quot;py-24 bg-white&quot;&gt;
+// &lt;div className=&quot;max-w-7xl mx-auto px-8&quot;&gt;
+
+// Heading:
+// &lt;h2 className=&quot;font-[Libre_Baskerville] italic font-bold text-[44px] max-md:text-[34px]
+//                text-[hsl(var(--foreground))] leading-tight mb-14 text-center&quot;&gt;
+//   In their own words.
+// &lt;/h2&gt;
+
+const testimonials = [
+  {
+    quote: &quot;Sophie transformed the way I think about getting dressed. I had a wardrobe full of things I never wore and a persistent sense that nothing suited me. Three hours with her and I now have half the clothes and look better — and feel better — than I ever have. The ROI is genuinely extraordinary. I tell everyone.&quot;,
+    name: &quot;Rebecca T.&quot;,
+    role: &quot;Marketing Director&quot;,
+    service: &quot;Wardrobe Edit&quot;,
+  },
+  {
+    quote: &quot;I&#39;d been promoted to partner and felt as if my wardrobe hadn&#39;t caught up with who I&#39;d become professionally. Sophie understood that in about five minutes without me needing to articulate it in any depth. The Executive Styling package has been, without question, the best professional investment I&#39;ve made this year. I look the part. More importantly, I feel it.&quot;,
+    name: &quot;Ananya M.&quot;,
+    role: &quot;Partner at a law firm&quot;,
+    service: &quot;Executive Styling&quot;,
+  },
+  {
+    quote: &quot;I work remotely and live in Edinburgh, so I did the online consultation sceptically — could a Zoom session really change anything? It completely did. Sophie&#39;s questionnaire is so thorough that by the time we spoke she already had a clear picture of my wardrobe, my frustrations, and my goals. The shopping list she sent afterwards was specific, realistic, and entirely right.&quot;,
+    name: &quot;Niamh F.&quot;,
+    role: &quot;Remote software engineer&quot;,
+    service: &quot;Online Styling&quot;,
+  },
+]
+
+// 3-col desktop, 1-col mobile
+// &lt;div className=&quot;grid grid-cols-3 max-lg:grid-cols-1 gap-6&quot;&gt;
+// {testimonials.map((t, i) =&gt; (
+//   &lt;motion.div
+//     key={t.name}
+//     initial={{ opacity: 0, y: 20 }}
+//     whileInView={{ opacity: 1, y: 0 }}
+//     viewport={{ once: true }}
+//     transition={{ delay: i * 0.1 }}
+//     className=&quot;bg-[hsl(var(--muted))] p-8 flex flex-col border border-[hsl(var(--border))]&quot;
+//   &gt;
+//     &lt;p className=&quot;font-[Libre_Baskerville] italic text-base text-[hsl(var(--foreground))]
+//                   leading-relaxed mb-6 flex-1&quot;&gt;
+//       &quot;{t.quote}&quot;
+//     &lt;/p&gt;
+//     &lt;div className=&quot;border-t border-[hsl(var(--border))] pt-5&quot;&gt;
+//       &lt;p className=&quot;font-[Jost] font-normal text-sm text-[hsl(var(--foreground))]&quot;&gt;{t.name}&lt;/p&gt;
+//       &lt;p className=&quot;font-[Jost] font-light text-xs text-[hsl(var(--muted-foreground))] mt-0.5&quot;&gt;{t.role}&lt;/p&gt;
+//       &lt;p className=&quot;font-[Jost] font-light text-[10px] text-[hsl(var(--primary))] mt-1 uppercase tracking-wider&quot;&gt;
+//         {t.service}
+//       &lt;/p&gt;
+//     &lt;/div&gt;
+//   &lt;/motion.div&gt;
+// ))}
+```
+
+---
+
+## SECTION 8: PRICING
+
+```tsx
+// &lt;section className=&quot;py-24 bg-[hsl(var(--muted))]&quot;&gt;
+// &lt;div className=&quot;max-w-3xl mx-auto px-8&quot;&gt;
+
+// Heading:
+// &lt;h2 className=&quot;font-[Libre_Baskerville] italic font-bold text-[44px] max-md:text-[32px]
+//                text-[hsl(var(--foreground))] leading-tight mb-4&quot;&gt;
+//   Transparent pricing.
+// &lt;/h2&gt;
+// &lt;p className=&quot;font-[Jost] font-light text-base text-[hsl(var(--muted-foreground))] mb-14 leading-relaxed&quot;&gt;
+//   No confusing packages, no hidden supplements. Here&#39;s exactly what each service costs
+//   and what it includes.
+// &lt;/p&gt;
+
+const priceRows = [
+  { service: &#39;Wardrobe Edit&#39;, detail: &#39;3 hours · in your home (London, Zone 1–3)&#39;, price: &#39;£250&#39; },
+  { service: &#39;Capsule Build&#39;, detail: &#39;Personal shopping day · London stores (transport not included)&#39;, price: &#39;£450&#39; },
+  { service: &#39;Executive Styling&#39;, detail: &#39;Monthly retainer · 3-month minimum commitment&#39;, price: &#39;£180 / month&#39; },
+  { service: &#39;Online Styling&#39;, detail: &#39;90-minute Zoom consultation&#39;, price: &#39;£95&#39; },
+  { service: &#39;Gift Vouchers&#39;, detail: &#39;Any value from £50, redeemable against any service&#39;, price: &#39;From £50&#39; },
+]
+
+// &lt;div className=&quot;bg-white border border-[hsl(var(--border))]&quot;&gt;
+//   {priceRows.map((row, i) =&gt; (
+//     &lt;div key={row.service}
+//          className=&quot;flex justify-between items-start gap-6 px-8 py-6
+//                     border-b border-[hsl(var(--border))] last:border-b-0&quot;&gt;
+//       &lt;div&gt;
+//         &lt;p className=&quot;font-[Libre_Baskerville] italic font-bold text-lg text-[hsl(var(--foreground))]&quot;&gt;
+//           {row.service}
+//         &lt;/p&gt;
+//         &lt;p className=&quot;font-[Jost] font-light text-xs text-[hsl(var(--muted-foreground))] mt-0.5&quot;&gt;
+//           {row.detail}
+//         &lt;/p&gt;
+//       &lt;/div&gt;
+//       &lt;p className=&quot;font-[Libre_Baskerville] italic text-2xl text-[hsl(var(--primary))] shrink-0&quot;&gt;
+//         {row.price}
+//       &lt;/p&gt;
+//     &lt;/div&gt;
+//   ))}
+// &lt;/div&gt;
+
+// Note:
+// &lt;p className=&quot;font-[Jost] font-light text-sm text-[hsl(var(--muted-foreground))] mt-6 leading-relaxed&quot;&gt;
+//   All prices include VAT. Travel to your home within Zone 3 is included in the above.
+//   Zones 4–6: £20 travel supplement applies. Travel outside London available on request.
+// &lt;/p&gt;
+```
+
+---
+
+## SECTION 9: FAQ
+
+```tsx
+// &lt;section className=&quot;py-24 bg-white&quot;&gt;
+// &lt;div className=&quot;max-w-2xl mx-auto px-8&quot;&gt;
+
+// Heading:
+// &lt;h2 className=&quot;font-[Libre_Baskerville] italic font-bold text-[40px] max-md:text-[30px]
+//                text-[hsl(var(--foreground))] leading-tight mb-12&quot;&gt;
+//   Questions &amp; answers.
+// &lt;/h2&gt;
+
+const faqs = [
+  {
+    q: &quot;I&#39;m not interested in trends — will that be a problem?&quot;,
+    a: &quot;Not at all — in fact, that&#39;s usually where we start. My approach is explicitly anti-trend: we build a wardrobe based on who you actually are, what occasions you need to dress for, and what flatters your specific colouring and shape. Trends are discussed only when they happen to be relevant to your goals. Otherwise, we ignore them entirely.&quot;,
+  },
+  {
+    q: &quot;My budget is quite limited. Is it still worth it?&quot;,
+    a: &quot;Yes. The first thing we do in any session is maximise what you already own — most clients discover they already have the basis of a really good wardrobe and just need help seeing it clearly. When we do shop, the recommendations I provide are always specific to your price points. I work with clients at every budget.&quot;,
+  },
+  {
+    q: &quot;Do you work with men?&quot;,
+    a: &quot;At the moment, my client base is primarily professional women. For male clients seeking personal styling, I&#39;m very happy to make a referral to a colleague who specialises in menswear — just get in touch and I&#39;ll point you in the right direction.&quot;,
+  },
+  {
+    q: &quot;How far in advance should I book?&quot;,
+    a: &quot;For the Wardrobe Edit and Capsule Build, currently 2–3 weeks. The Executive Styling Retainer has a waiting list of 4–6 weeks for new clients. Online consultations are available within 1 week. If you need something sooner, please still get in touch — cancellations do occur.&quot;,
+  },
+  {
+    q: &quot;What should I do before my wardrobe session?&quot;,
+    a: &quot;Nothing! Please resist the urge to tidy up or edit anything before I arrive. The more authentic the current state of your wardrobe, the better picture I get of what&#39;s actually happening. A neatly sorted wardrobe hides the exact information I need to do my best work.&quot;,
+  },
+]
+
+// &lt;Accordion type=&quot;single&quot; collapsible className=&quot;space-y-0 divide-y divide-[hsl(var(--border))]&quot;&gt;
+//   {faqs.map((faq, i) =&gt; (
+//     &lt;AccordionItem key={i} value={`item-${i}`} className=&quot;border-none&quot;&gt;
+//       &lt;AccordionTrigger className=&quot;font-[Jost] font-normal text-base text-[hsl(var(--foreground))]
+//                                    hover:no-underline py-6 text-left&quot;&gt;
+//         {faq.q}
+//       &lt;/AccordionTrigger&gt;
+//       &lt;AccordionContent className=&quot;font-[Jost] font-light text-sm text-[hsl(var(--muted-foreground))]
+//                                     leading-relaxed pb-6&quot;&gt;
+//         {faq.a}
+//       &lt;/AccordionContent&gt;
+//     &lt;/AccordionItem&gt;
+//   ))}
+// &lt;/Accordion&gt;
+```
+
+---
+
+## SECTION 10: FOOTER
+
+```tsx
+// &lt;footer className=&quot;bg-[hsl(var(--foreground))] text-[hsl(var(--muted))] py-16&quot;&gt;
+// &lt;div className=&quot;max-w-7xl mx-auto px-8&quot;&gt;
+
+//   Top row:
+//   &lt;div className=&quot;flex flex-col lg:flex-row justify-between gap-12 pb-12 border-b border-white/10&quot;&gt;
+
+//     {/* Brand */}
+//     &lt;div className=&quot;max-w-sm&quot;&gt;
+//       &lt;div className=&quot;mb-3&quot;&gt;
+//         &lt;p className=&quot;font-[Libre_Baskerville] italic font-bold text-3xl text-white&quot;&gt;EDIT&lt;/p&gt;
+//         &lt;p className=&quot;font-[Jost] font-light text-[10px] tracking-[0.4em] text-white/40 uppercase&quot;&gt;STUDIO&lt;/p&gt;
+//       &lt;/div&gt;
+//       &lt;p className=&quot;font-[Jost] font-light text-sm text-white/40 leading-relaxed mt-4&quot;&gt;
+//         London-based personal styling. Wardrobes that work. Style that lasts.
+//       &lt;/p&gt;
+//     &lt;/div&gt;
+
+//     {/* Nav */}
+//     &lt;nav className=&quot;flex flex-wrap gap-x-10 gap-y-3&quot;&gt;
+//       {[&#39;Services&#39;, &#39;About&#39;, &#39;The Process&#39;, &#39;Moodboard&#39;, &#39;Testimonials&#39;, &#39;Book&#39;].map(link =&gt; (
+//         &lt;a key={link} href=&quot;#&quot;
+//            className=&quot;font-[Jost] font-light text-sm text-white/50 hover:text-white transition-colors&quot;&gt;
+//           {link}
+//         &lt;/a&gt;
+//       ))}
+//     &lt;/nav&gt;
+
+//   &lt;/div&gt;
+
+//   Bottom row:
+//   &lt;div className=&quot;flex flex-col md:flex-row justify-between items-center gap-4 pt-8&quot;&gt;
+//     &lt;p className=&quot;font-[Jost] font-light text-xs text-white/30&quot;&gt;
+//       📍 London (in-home services, Zone 1–3 included)
+//     &lt;/p&gt;
+//     &lt;div className=&quot;flex items-center gap-5&quot;&gt;
+//       &lt;a href=&quot;mailto:hello@editstudio.co.uk&quot;
+//          className=&quot;font-[Jost] font-light text-xs text-white/40 hover:text-white transition-colors&quot;&gt;
+//         hello@editstudio.co.uk
+//       &lt;/a&gt;
+//       &lt;a href=&quot;#&quot; aria-label=&quot;Instagram&quot;
+//          className=&quot;text-white/40 hover:text-white transition-colors&quot;&gt;
+//         &lt;Instagram className=&quot;w-4 h-4&quot; /&gt;
+//       &lt;/a&gt;
+//       &lt;a href=&quot;#&quot; aria-label=&quot;Pinterest&quot;
+//          className=&quot;text-white/40 hover:text-white transition-colors&quot;&gt;
+//         &lt;PinIcon className=&quot;w-4 h-4&quot; /&gt;
+//       &lt;/a&gt;
+//     &lt;/div&gt;
+//     &lt;p className=&quot;font-[Jost] font-light text-xs text-white/30&quot;&gt;
+//       © 2025 Edit Studio. Sophie Laurent Styling Ltd.
+//     &lt;/p&gt;
+//   &lt;/div&gt;
+
+// &lt;/div&gt;
+```
+
+---
+
+## DEPENDENCIES &amp; IMPLEMENTATION NOTES
+
+```bash
+npm install framer-motion lucide-react
+npx shadcn-ui@latest init
+npx shadcn-ui@latest add accordion button
+```
+
+### Key React state variables:
+```tsx
+const [sliderPosition, setSliderPosition] = useState(50)    // Before/after slider (0–100%)
+const isDragging = useRef(false)
+const containerRef = useRef&lt;HTMLDivElement&gt;(null)
+const [scrolled, setScrolled] = useState(false)
+const [mobileNavOpen, setMobileNavOpen] = useState(false)
+```
+
+### Global CSS:
+```css
+* { font-family: &#39;Jost&#39;, sans-serif; }
+h1, h2, h3, blockquote { font-family: &#39;Libre Baskerville&#39;, serif; font-style: italic; }
+html { scroll-behavior: smooth; }
+```
+
+### Before/After slider event binding:
+```tsx
+// Attach to window to avoid mouseup being missed if cursor leaves container:
+useEffect(() =&gt; {
+  const handleMouseMove = (e: MouseEvent) =&gt; { /* ... */ }
+  const handleMouseUp = () =&gt; { isDragging.current = false }
+  window.addEventListener(&#39;mousemove&#39;, handleMouseMove)
+  window.addEventListener(&#39;mouseup&#39;, handleMouseUp)
+  return () =&gt; {
+    window.removeEventListener(&#39;mousemove&#39;, handleMouseMove)
+    window.removeEventListener(&#39;mouseup&#39;, handleMouseUp)
+  }
+}, [])
+```
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

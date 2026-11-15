@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alex Chen — Developer Portfolio | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Alex Chen — Developer Portfolio</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Developer Portfolio Website Prompt
+# websiteprompts.ai
+
+Build a personal portfolio website for **Alex Chen** — a full-stack developer building fast, modern web applications. Near-black foundation, code green accent, strong JetBrains Mono presence. Dark, technical, precise — similar mood to designer portfolio but with a codebase aesthetic: terminal energy, monospaced labels, syntax-highlight moments.
+
+## Tech Stack
+React + Vite + TypeScript + Tailwind CSS + Framer Motion (motion/react) + shadcn/ui + lucide-react
+
+## Design System
+```css
+:root {
+  --background: 0 0% 4%;            /* #0a0a0a near-black */
+  --surface: 0 0% 7%;               /* #121212 surface */
+  --surface-raised: 0 0% 10%;       /* #1a1a1a raised */
+  --border: 0 0% 13%;               /* #212121 border */
+  --foreground: 0 0% 95%;           /* #f2f2f2 off-white */
+  --muted: 0 0% 42%;                /* #6b6b6b muted */
+  --primary: 142 72% 50%;           /* #22d472 code green */
+  --primary-dark: 142 76% 38%;      /* #18a355 hover */
+  --primary-glow: 142 72% 50% / 0.12;
+  --mono: &#39;JetBrains Mono&#39;, monospace;
+}
+```
+
+## Typography
+Import: `https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap`
+- Display / H1–H2: Sora 700–800, letter-spacing -0.04em
+- Body / UI: Sora 300–500
+- Code / Labels / Everything technical: JetBrains Mono 400–500
+
+## Visual Effects
+
+**Terminal code block hero accent** — floating dark card behind/beside H1, styled as a code snippet:
+```
+background: hsl(var(--surface)); border: 1px solid hsl(var(--border));
+border-radius: 8px; padding: 20px 24px; font-family: var(--mono); font-size: 13px;
+```
+Content (syntax-highlighted with spans):
+```jsx
+&lt;span style={{color:&#39;#6b6b6b&#39;}}&gt;// building the future&lt;/span&gt;
+&lt;br/&gt;&lt;span style={{color:&#39;#22d472&#39;}}&gt;const&lt;/span&gt; &lt;span style={{color:&#39;#f2f2f2&#39;}}&gt;alex&lt;/span&gt; = {&#39;{&#39;}
+&lt;br/&gt;  role: &lt;span style={{color:&#39;#22d472&#39;}}&gt;&quot;Full-Stack Dev&quot;&lt;/span&gt;,
+&lt;br/&gt;  stack: [&lt;span style={{color:&#39;#22d472&#39;}}&gt;&quot;React&quot;&lt;/span&gt;, &lt;span style={{color:&#39;#22d472&#39;}}&gt;&quot;Node&quot;&lt;/span&gt;, &lt;span style={{color:&#39;#22d472&#39;}}&gt;&quot;TS&quot;&lt;/span&gt;],
+&lt;br/&gt;  open: &lt;span style={{color:&#39;#22d472&#39;}}&gt;true&lt;/span&gt;
+&lt;br/&gt;{&#39;}&#39;}
+```
+Animate: float `y: [0, -8, 0]`, duration 4s, infinite ease-in-out.
+
+**Glow card hover** — all cards: `transition: border-color 0.18s, box-shadow 0.18s`. Hover: `border-color: hsl(var(--primary))`, `box-shadow: 0 0 32px hsl(142 72% 50% / 0.12)`.
+
+**Typing cursor** — after hero H1, a blinking green cursor: `&lt;span&gt;|&lt;/span&gt;` with CSS `animation: blink 1s step-end infinite; @keyframes blink { 50% { opacity: 0; } }`.
+
+**Stagger fade-up** — `initial={{ opacity: 0, y: 20 }}` → `animate={{ opacity: 1, y: 0 }}`, 0.5s, IntersectionObserver per section.
+
+## Sections
+
+**1. Navbar** — fixed, `background: hsl(var(--background) / 0.92)`, blur 12px, border-bottom. Left: &quot;Alex Chen&quot; Sora 700 16px white + JetBrains Mono 10px green tag &quot;Full-Stack Dev&quot;. Center: Projects · Stack · About · Contact. Right: &quot;Hire me →&quot; green filled button, border-radius 6px, Sora 600 12px.
+
+**2. Hero** — full viewport, two-column, `align-items: center`, padding 100px 64px. Left: JetBrains Mono 11px green badge &quot;AVAILABLE FOR HIRE · 2026&quot; with blinking cursor. H1 Sora 800, clamp(52px, 6.5vw, 88px), line-height 0.92, white:
+```
+Building apps
+people actually use.
+```
+Sub: Sora 300 16px muted, max-width 400px: &quot;Full-stack developer specialising in React, Node.js, and TypeScript. Fast, accessible, and built to scale.&quot;
+CTAs: &quot;View projects →&quot; (green filled) + &quot;Download CV&quot; (ghost border). Below CTAs: tech tag pills in JetBrains Mono 10px — React · Node.js · TypeScript · PostgreSQL · AWS — dark surface bg, green text.
+Right: floating terminal code block (Visual Effects above) with subtle green glow `filter: drop-shadow(0 0 40px hsl(142 72% 50% / 0.15))`.
+
+**3. Featured Projects** — padding 100px 64px. H2 Sora 800: &quot;Projects.&quot; 3 large project cards stacked (full-width each). Each card `background: hsl(var(--surface))`, border, border-radius 12px, padding 32px, flex row (info left + mockup/screenshot right). Left: JetBrains Mono 10px green tag (e.g. &quot;REACT · NODE · POSTGRES&quot;) + Sora 700 22px project name + 2-line description + tech chip row + &quot;View project →&quot; green link. Right: project screenshot:
+```
+{/* Image: clean web app UI on dark background, modern dashboard design, green accent colors, minimal and precise */}
+```
+Glow on hover. 3 projects: SaaS analytics dashboard · E-commerce platform · Real-time collaboration tool.
+
+**4. Tech Stack** — surface bg, padding 96px 64px. H2 &quot;The stack.&quot; JetBrains Mono 10px green labels for each category. Two rows: Frontend (React · Next.js · TypeScript · Tailwind · Framer Motion) / Backend (Node.js · PostgreSQL · Redis · Prisma · AWS). Each tech item: small surface card with icon placeholder + name in JetBrains Mono 11px. Glow hover. Category headers in JetBrains Mono 9px muted uppercase.
+
+**5. About** — two-column, padding 96px 64px. Left: H2 &quot;About me.&quot; 3 paragraphs (background, approach, what I build). Stat chips: 5 yrs exp · 30+ projects · Open source contributor · Remote-friendly.
+Right: portrait photo:
+```
+{/* Image: young male developer at dark minimal desk setup, terminal on screen, green code on monitor, focused professional portrait, ambient dark lighting */}
+```
+
+**6. Open Source / GitHub** — centered strip, padding 60px 64px, surface bg. H2 &quot;Open source.&quot; GitHub stats row (3 surface cards): Stars earned · Repos public · Contributions this year — numbers in Sora 800 green, labels in JetBrains Mono 10px muted. Below: 3 repo cards with name, language dot, star count, short description.
+
+**7. Testimonials** — padding 96px 64px. H2 &quot;From clients &amp; teams.&quot; 3 cards. Each: green top border 2px + quote Sora 300 14px italic + name Sora 600 + role JetBrains Mono 10px muted. Stagger entrance.
+
+**8. Contact CTA** — dark bg, padding 80px 64px, centered. Radial green glow behind text (opacity 0.06). H2 Sora 900 white: &quot;Let&#39;s build something.&quot; JetBrains Mono 11px green: &quot;Currently available · 2–3 project slots open.&quot; Two CTAs: &quot;Start a conversation →&quot; (green filled) + &quot;Or email me&quot; (text link). Response time note muted.
+
+**9. Footer** — `hsl(0 0% 3%)`, padding 40px 64px 24px. Left: &quot;Alex Chen&quot; + role JetBrains Mono 10px muted. Right: GitHub · LinkedIn · Twitter — icon links muted → green hover. Bottom: copyright JetBrains Mono 10px muted.
+
+## Responsive
+Mobile: nav hamburger overlay · hero single column, code block below at 85% width · projects stack fully · stack grid 3-column · about single column.
+
+## Animations Summary
+| Element | Animation | Trigger |
+|---|---|---|
+| Hero H1 | Fade-up | On mount |
+| Typing cursor | Blink loop | Always |
+| Code block | Float y 0→-8→0, 4s | Always |
+| Project cards | Stagger fade-up | Scroll |
+| Stack items | Stagger fade-in | Scroll |
+| CTA | Fade-up + glow | Scroll |
+
+## Key Dependencies
+```json
+{ &quot;motion&quot;: &quot;^12.x&quot;, &quot;lucide-react&quot;: &quot;^0.400.x&quot; }
+```
+
+&gt; **Quick notes:** Green accent swaps via `--primary`. GitHub stats section is static UI — wire to GitHub API post-generation. &quot;Alex Chen&quot; and all project names are placeholders. Tech stack section should reflect real skills.
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

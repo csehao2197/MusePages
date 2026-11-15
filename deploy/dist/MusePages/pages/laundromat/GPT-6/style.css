@@ -1,0 +1,755 @@
+:root
+{
+    --paper: #f4f8fa;
+    --ink: #1c283a;
+    --blue: #087bee;
+    --line: #d7e1e8;
+    --muted: #536474;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+}
+*
+{
+    box-sizing: border-box;
+}
+html
+{
+    scroll-behavior: smooth;
+    scroll-padding-top: 95px;
+}
+body
+{
+    margin: 0;
+}
+a
+{
+    color: inherit;
+    text-decoration: none;
+}
+button, input, select, textarea
+{
+    font: inherit;
+}
+button, a, summary
+{
+    -webkit-tap-highlight-color: transparent;
+}
+button, summary
+{
+    cursor: pointer;
+}
+:focus-visible
+{
+    outline: 3px solid #e6a413;
+    outline-offset: 4px;
+}
+header
+{
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 18px max(24px, calc((100% - 1120px) / 2));
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+}
+.brand
+{
+    display: block;
+    font-size: 23px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    white-space: nowrap;
+}
+.logo
+{
+    color: var(--blue);
+}
+.brand-small
+{
+    display: block;
+    font-size: 9px;
+    letter-spacing: 2px;
+    margin-top: 3px;
+}
+nav
+{
+    display: flex;
+    gap: 25px;
+    font-size: 12px;
+    font-weight: 700;
+}
+.live-pill, .button
+{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: var(--blue);
+    color: white;
+    border: 0;
+    border-radius: 6px;
+    padding: 17px 22px;
+    font-weight: 700;
+}
+.live-pill
+{
+    padding: 12px 15px;
+    border-radius: 40px;
+    font-size: 12px;
+    gap: 6px;
+}
+.live-pill small
+{
+    font-size: 8px;
+    opacity: .85;
+}
+.dot
+{
+    background: #b4ffd5;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+#menu
+{
+    display: none;
+}
+.wrap
+{
+    width: min(1120px, calc(100% - 48px));
+    margin: auto;
+}
+.hero
+{
+    padding-top: 65px;
+    padding-bottom: 65px;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 32px;
+    align-items: center;
+}
+.eyebrow
+{
+    font-size: 10px;
+    line-height: 1.7;
+    letter-spacing: 1.6px;
+    font-weight: 800;
+    color: var(--blue);
+}
+h1, h2, h3
+{
+    line-height: 1.04;
+    letter-spacing: -1.5px;
+    margin: 20px 0;
+}
+h1
+{
+    font-size: clamp(38px, 4.7vw, 61px);
+    font-weight: 900;
+    letter-spacing: -2.7px;
+}
+h1 span
+{
+    color: var(--blue);
+}
+h2
+{
+    font-size: clamp(29px, 3.4vw, 42px);
+    font-weight: 900;
+}
+h3
+{
+    font-size: 17px;
+    letter-spacing: -.3px;
+}
+p
+{
+    line-height: 1.75;
+}
+.intro
+{
+    max-width: 470px;
+    color: var(--muted);
+    font-size: 16px;
+}
+.actions
+{
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin: 26px 0;
+}
+.text-link
+{
+    font-size: 12px;
+    font-weight: 700;
+    border-bottom: 1px solid;
+    padding-bottom: 5px;
+}
+.practical
+{
+    font-size: 10px;
+    font-weight: 700;
+}
+.practical span
+{
+    color: var(--blue);
+    padding: 0 7px;
+}
+.laundry-art
+{
+    position: relative;
+    height: 430px;
+    overflow: hidden;
+    border-radius: 120px 8px 8px 8px;
+    background-color: #e4eff0;
+    background-image: linear-gradient(#bdcfd055 1px, transparent 1px), linear-gradient(90deg, #bdcfd055 1px, transparent 1px);
+    background-size: 42px 42px;
+    border-bottom: 45px solid #b5c9ca;
+}
+.window
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 45%;
+    height: 55%;
+    background: #c1e6fb;
+    border: 12px solid white;
+    transform: skewY(-5deg);
+    box-shadow: 30px 45px 0 #ffffff66;
+}
+.window i
+{
+    display: block;
+    height: 33%;
+    border-bottom: 5px solid white;
+}
+.wall-label
+{
+    position: absolute;
+    right: 24px;
+    top: 34px;
+    font-size: 27px;
+    font-weight: 900;
+    color: var(--blue);
+    transform: rotate(4deg);
+    line-height: .9;
+}
+.wall-label b
+{
+    font-size: 63px;
+}
+.washer-row
+{
+    display: flex;
+    position: absolute;
+    left: -10px;
+    right: -15px;
+    bottom: 36px;
+    transform: perspective(900px) rotateY(-12deg);
+    gap: 5px;
+}
+.washer
+{
+    width: 33.333%;
+    background: #edf4f6;
+    border: 3px solid #aebfc8;
+    border-top: 10px solid white;
+    height: 184px;
+    box-shadow: 6px 12px 12px #264c6d22;
+    padding: 9px;
+}
+.controls
+{
+    font-size: 12px;
+    color: #0679dc;
+}
+.controls span
+{
+    float: right;
+    background: #253e50;
+    color: #94f4d0;
+    font-size: 7px;
+    padding: 4px;
+}
+.drum
+{
+    width: 90%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #153852;
+    border: 11px solid #087bee;
+    margin: 10px auto 4px;
+    box-shadow: 0 0 0 3px #8fbbd1, inset 5px 5px 12px #001c32;
+    position: relative;
+    overflow: hidden;
+}
+.drum i
+{
+    position: absolute;
+    width: 90%;
+    height: 45%;
+    border-radius: 50%;
+    background: #9dc8df;
+    bottom: 5%;
+    left: 10%;
+    transform: rotate(-25deg);
+    box-shadow: 0 -12px 0 #e7f2ef;
+}
+.washer > b
+{
+    font-size: 9px;
+}
+.basket
+{
+    width: 90px;
+    height: 55px;
+    position: absolute;
+    bottom: 4px;
+    right: 32px;
+    background: repeating-linear-gradient(90deg, #ffd360 0 6px, #d29d26 6px 10px);
+    transform: skewX(-5deg);
+    border-top: 6px solid #ffd360;
+}
+.art-caption
+{
+    position: absolute;
+    bottom: 15px;
+    left: 20px;
+    font-size: 9px;
+    letter-spacing: 1px;
+    font-weight: 900;
+}
+.art-note
+{
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    font-size: 6px;
+    color: #436477;
+}
+.blue-strip
+{
+    display: flex;
+    justify-content: space-around;
+    background: var(--blue);
+    color: white;
+    padding: 20px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+.board-section, .prices > .wrap, .how
+{
+    padding-top: 70px;
+    padding-bottom: 70px;
+}
+.section-top
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+}
+.board-summary
+{
+    text-align: right;
+    font-size: 14px;
+}
+.board-summary small
+{
+    display: block;
+    font-size: 10px;
+    margin-top: 9px;
+    color: var(--muted);
+}
+.drum-marker
+{
+    color: var(--blue);
+    font-size: 32px;
+}
+.board-tools
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 22px 0;
+    gap: 12px;
+}
+.tabs
+{
+    display: flex;
+    gap: 5px;
+}
+.tabs button
+{
+    border: 1px solid var(--line);
+    background: transparent;
+    padding: 11px 16px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+.tabs button[aria-pressed="true"]
+{
+    background: var(--ink);
+    color: white;
+}
+.check
+{
+    font-size: 12px;
+    white-space: nowrap;
+}
+.board
+{
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 9px;
+}
+.machine
+{
+    background: #e2a025;
+    color: #24313a;
+    min-height: 87px;
+    border-radius: 8px;
+    padding: 11px;
+}
+.machine.free
+{
+    background: #21865e;
+    color: white;
+}
+.machine.broken
+{
+    background: #dce3e9;
+}
+.machine small, .machine strong
+{
+    display: block;
+}
+.machine small
+{
+    font-size: 10px;
+    margin-bottom: 10px;
+}
+.machine strong
+{
+    font-size: 21px;
+}
+.note
+{
+    color: var(--muted);
+    font-size: 12px;
+}
+.prices
+{
+    background: #e5eef4;
+}
+.price-columns
+{
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 90px;
+    margin-top: 40px;
+}
+dl
+{
+    margin: 0;
+}
+dl > div
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 0;
+    border-bottom: 1px solid #c1d0dc;
+}
+dt
+{
+    font-weight: 700;
+}
+dt small
+{
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--muted);
+    margin-top: 5px;
+}
+dd
+{
+    font-size: 33px;
+    font-weight: 900;
+}
+.big-price
+{
+    font-size: 64px;
+    font-weight: 900;
+    margin: 10px 0;
+    line-height: 1;
+}
+.big-price small
+{
+    font-size: 18px;
+}
+.service
+{
+    padding-top: 80px;
+    padding-bottom: 80px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 85px;
+}
+form
+{
+    padding: 30px;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+}
+form label
+{
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    margin: 20px 0 8px;
+}
+input:not([type="checkbox"]), select, textarea
+{
+    width: 100%;
+    padding: 13px;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid #aebdc8;
+    border-radius: 3px;
+}
+form .button
+{
+    width: 100%;
+    margin-top: 24px;
+    font-size: 13px;
+}
+output
+{
+    display: block;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-top: 18px;
+}
+.how
+{
+    border-top: 1px solid var(--line);
+}
+.steps
+{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 35px;
+    margin-top: 40px;
+}
+.steps article > b
+{
+    font-size: 35px;
+    color: var(--blue);
+}
+.steps p
+{
+    font-size: 13px;
+    color: var(--muted);
+}
+.visit
+{
+    background: #e1ece8;
+    padding: 65px 0;
+}
+.visit-grid
+{
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 70px;
+}
+.visit p
+{
+    font-size: 13px;
+}
+details
+{
+    border-top: 1px solid #acbeb7;
+    padding: 18px 0;
+}
+footer
+{
+    background: var(--ink);
+    color: white;
+    padding: 45px 0;
+}
+footer p
+{
+    font-size: 12px;
+}
+@media (max-width: 767px)
+{
+    header
+    {
+        padding: 15px 18px;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+    .brand
+    {
+        font-size: 20px;
+    }
+    .brand-small
+    {
+        font-size: 7px;
+    }
+    #menu
+    {
+        display: block;
+        background: none;
+        border: 0;
+        margin-left: auto;
+        padding: 8px;
+        color: var(--ink);
+    }
+    nav
+    {
+        display: none;
+        order: 4;
+        width: 100%;
+        padding: 15px 0;
+        justify-content: space-between;
+        gap: 10px;
+    }
+    nav.open
+    {
+        display: flex;
+    }
+    .live-pill
+    {
+        padding: 10px;
+        font-size: 10px;
+    }
+    .wrap
+    {
+        width: calc(100% - 36px);
+    }
+    .hero
+    {
+        grid-template-columns: 1fr;
+        padding: 25px 0 40px;
+    }
+    .laundry-art
+    {
+        order: -1;
+        height: 290px;
+        border-radius: 70px 6px 6px 6px;
+    }
+    .washer-row
+    {
+        bottom: 10px;
+    }
+    .washer
+    {
+        height: 150px;
+    }
+    .wall-label
+    {
+        font-size: 20px;
+        top: 29px;
+    }
+    .wall-label b
+    {
+        font-size: 42px;
+    }
+    .art-caption, .basket
+    {
+        display: none;
+    }
+    h1
+    {
+        font-size: 40px;
+        letter-spacing: -1.8px;
+    }
+    .actions
+    {
+        gap: 16px;
+    }
+    .button
+    {
+        padding: 16px;
+        font-size: 13px;
+    }
+    .blue-strip
+    {
+        gap: 20px;
+        font-size: 8px;
+        line-height: 1.6;
+    }
+    .blue-strip span:last-child
+    {
+        display: none;
+    }
+    .section-top
+    {
+        display: block;
+    }
+    .board-summary
+    {
+        text-align: left;
+    }
+    .board
+    {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+    }
+    .machine
+    {
+        padding: 10px;
+        min-height: 78px;
+    }
+    .machine strong
+    {
+        font-size: 16px;
+    }
+    .tabs button
+    {
+        padding: 10px 8px;
+        font-size: 10px;
+    }
+    .check
+    {
+        font-size: 10px;
+    }
+    .price-columns, .service, .visit-grid
+    {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    .steps
+    {
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+    }
+    .board-section, .prices > .wrap, .how, .service
+    {
+        padding-top: 45px;
+        padding-bottom: 45px;
+    }
+    form
+    {
+        padding: 22px;
+    }
+}
+@media (prefers-reduced-motion: reduce)
+{
+    html
+    {
+        scroll-behavior: auto;
+    }
+}

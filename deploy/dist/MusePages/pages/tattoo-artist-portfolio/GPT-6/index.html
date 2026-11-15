@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Thorn & Thread: a sample tattoo artist portfolio featuring original botanical and ornamental design studies and a transparent booking enquiry demo.">
+    <meta property="og:title" content="Thorn & Thread — Tattoo design studies">
+    <meta property="og:description" content="Original illustrative flash, a thoughtful process and a browser-only booking guide.">
+    <title>Thorn &amp; Thread — Tattoo design studies</title>
+    <link rel="icon" href="data:,">
+    <style>
+        :root { --paper:#e9e3d6; --ink:#21231f; --red:#b84531; --muted:#a9aa9f; }
+        * { box-sizing:border-box; }
+        html { scroll-behavior:smooth; }
+        body { margin:0; background:var(--ink); color:var(--paper); font:15px/1.65 system-ui,sans-serif; }
+        a { color:inherit; text-underline-offset:5px; }
+        button,input,select,textarea { font:inherit; }
+        button { cursor:pointer; }
+        :focus-visible { outline:3px solid #e6a079; outline-offset:5px; }
+        .wrap { max-width:1100px; margin:auto; padding:0 40px; }
+        header { padding:24px 0; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #4b4d43; }
+        .brand { text-decoration:none; font:22px Georgia,serif; }
+        nav { display:flex; gap:30px; align-items:center; font-size:12px; text-transform:uppercase; letter-spacing:1px; }
+        nav a { text-decoration:none; }
+        .eyebrow { text-transform:uppercase; font:11px/1.5 ui-monospace,monospace; letter-spacing:2px; color:var(--muted); }
+        .hero { display:grid; grid-template-columns:1fr 1fr; min-height:520px; align-items:center; gap:60px; padding:44px 0; }
+        h1 { font:normal clamp(56px,6.8vw,82px)/.98 Georgia,serif; letter-spacing:-3px; margin:22px 0; }
+        h1 em { color:#dc8065; font-weight:normal; }
+        .hero p { max-width:340px; color:#bdbfb2; }
+        .button { display:inline-block; padding:13px 22px; border:1px solid #b5b6a9; background:transparent; color:var(--paper); text-decoration:none; margin-top:15px; }
+        .button.red { background:var(--red); border-color:var(--red); }
+        .plate { background:var(--paper); color:var(--ink); position:relative; padding:20px; border-radius:180px 180px 0 0; height:445px; text-align:center; }
+        .plate svg { height:350px; width:100%; }
+        .plate small { font:10px ui-monospace,monospace; letter-spacing:2px; }
+        .bar { padding:20px 0; display:flex; justify-content:space-between; gap:15px; border-top:1px solid #4b4d43; border-bottom:1px solid #4b4d43; text-transform:uppercase; letter-spacing:2px; font-size:10px; }
+        section { scroll-margin-top:20px; }
+        .head { display:flex; justify-content:space-between; gap:20px; align-items:end; margin:50px 0 22px; }
+        h2 { font:normal 40px/1.1 Georgia,serif; margin:12px 0; }
+        .filters { display:flex; gap:7px; flex-wrap:wrap; }
+        .filters button { background:none; border:1px solid #686a5f; color:var(--paper); padding:7px 12px; font-size:12px; }
+        .filters button[aria-pressed=true] { background:var(--paper); color:var(--ink); }
+        .gallery { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+        .study { background:#d8d1c2; color:var(--ink); height:275px; display:flex; align-items:center; justify-content:center; width:100%; border:0; }
+        .study svg { width:80%; height:245px; }
+        .study:hover { background:#e9e3d6; }
+        article h3 { font:24px Georgia,serif; margin:14px 0 6px; }
+        article p { color:var(--muted); margin:0 0 10px; font-size:13px; }
+        article[hidden] { display:none; }
+        .empty { border:1px solid #686a5f; padding:35px; grid-column:1/-1; }
+        .info { display:grid; grid-template-columns:1fr 1fr; gap:55px; border-top:1px solid #4b4d43; margin-top:50px; padding:40px 0; }
+        .info p { color:#bdbfb2; }
+        details { border-bottom:1px solid #57594d; padding:15px 0; }
+        summary { cursor:pointer; }
+        .booking { background:var(--paper); color:var(--ink); padding:40px; margin:30px 0 45px; }
+        .booking .eyebrow { color:#68675e; }
+        form { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+        label { display:grid; gap:5px; font-size:12px; }
+        input,select,textarea { min-width:0; width:100%; padding:11px; color:var(--ink); border:1px solid #a9a495; background:#f6f2e8; }
+        .wide { grid-column:1/-1; }
+        form .button { color:var(--paper); justify-self:start; margin:0; }
+        footer { display:flex; justify-content:space-between; padding:20px 0 35px; color:var(--muted); font-size:11px; gap:20px; }
+        dialog { max-width:550px; width:calc(100% - 32px); padding:32px; border:0; background:var(--paper); color:var(--ink); }
+        dialog::backdrop { background:#000b; }
+        dialog button { padding:9px 16px; background:var(--ink); color:var(--paper); border:0; }
+        [data-menu] { display:none; }
+        @media(max-width:650px)
+        {
+            .wrap { padding:0 22px; }
+            header { flex-wrap:wrap; }
+            [data-menu] { display:block; background:none; color:var(--paper); border:1px solid #686a5f; padding:7px 10px; }
+            nav { display:none; width:100%; padding-top:20px; gap:20px; }
+            nav.open { display:flex; }
+            .hero { grid-template-columns:1fr; gap:30px; padding:40px 0; }
+            h1 { font-size:64px; }
+            .plate { height:390px; }
+            .plate svg { height:310px; }
+            .bar { flex-direction:column; gap:8px; }
+            .head { align-items:start; flex-direction:column; }
+            .gallery,.info,form { grid-template-columns:1fr; }
+            .info { gap:15px; }
+            .booking { padding:23px; }
+            footer { flex-direction:column; }
+        }
+        @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+    </style>
+</head>
+<body>
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><g id="botanical" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M150 345C130 260 186 194 147 67M147 145C78 151 73 91 89 73C132 83 145 108 147 145ZM157 201C211 190 230 145 212 125C177 141 157 166 157 201ZM145 255C85 256 69 210 83 190C119 204 143 226 145 255ZM141 303C192 296 208 262 197 243C161 254 143 277 141 303Z"/><path d="M147 90C110 66 127 36 146 42C165 17 194 49 169 68C184 94 158 109 147 90ZM145 145L94 86M159 198L207 140M143 252L88 205M144 301L192 257"/><circle cx="153" cy="65" r="8"/><path d="M93 321L96 310M90 315H100M208 95V80M201 88H215M65 159V150M60 155H70"/></g><g id="ornament" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M150 28L185 87L166 147L208 202L150 327L92 202L134 147L115 87Z"/><path d="M150 28V327M115 87L150 103L185 87M134 147L150 164L166 147M92 202L150 224L208 202M150 164L121 203L150 277L179 203Z"/><circle cx="150" cy="65" r="8"/><path d="M93 112Q45 173 86 236M207 112Q255 173 214 236M79 146L57 135M221 146L243 135M73 174L49 174M227 174L251 174M75 204L52 215M225 204L248 215"/></g></defs></svg>
+    <div class="wrap">
+        <header><a class="brand" href="#">Thorn &amp; Thread</a><button data-menu aria-controls="nav" aria-expanded="false">Menu</button><nav id="nav"><a href="#work">Selected work</a><a href="#about">The artist</a><a href="#booking">Enquire ↗</a></nav></header>
+        <main>
+            <section class="hero"><div><span class="eyebrow">Botanical &amp; ornamental / Sample studio</span><h1>Rooted in<br>nature.<br><em>Drawn for you.</em></h1><p>Delicate lines. Organic forms. An exploration of meaningful marks, made with a considered eye.</p><a class="button red" href="#work">Explore the design studies ↗</a></div><div class="plate"><svg viewBox="0 0 300 360" role="img" aria-label="Original fine-line botanical rose drawing; concept artwork, not a tattoo photograph"><use href="#botanical"/></svg><small>BOTANICAL STUDY / ORIGINAL ARTWORK</small></div></section>
+            <div class="bar"><span>Fine line / Botanical / Ornamental</span><span>Illustrative portfolio · booking demo</span></div>
+            <section id="work"><div class="head"><div><span class="eyebrow">The sketchbook</span><h2>Marks with meaning.</h2></div><div class="filters"><button data-filter="all" aria-pressed="true">All studies</button><button data-filter="botanical" aria-pressed="false">Botanical</button><button data-filter="healed" aria-pressed="false">Healed work</button></div></div><p class="eyebrow">Concept drawings · no client images or healed results supplied</p><div class="gallery">
+                <article data-kind="botanical"><button class="study" data-case="rose" aria-label="View Wild rose study"><svg viewBox="0 0 300 360" aria-hidden="true"><use href="#botanical"/></svg></button><h3>Wild rose</h3><p>Botanical / Original illustrative flash</p></article>
+                <article data-kind="ornamental"><button class="study" data-case="ornament" aria-label="View Quiet symmetry study"><svg viewBox="0 0 300 360" aria-hidden="true"><use href="#ornament"/></svg></button><h3>Quiet symmetry</h3><p>Ornamental / Original illustrative flash</p></article>
+                <p class="empty" id="empty" hidden>Healed gallery awaiting consented photographs and studio-supplied dates. These drawings are concepts, not evidence of healed tattoos.</p>
+            </div></section>
+            <section class="info" id="about"><div><span class="eyebrow">An intentional approach</span><h2>A conversation<br>before a line.</h2><p>Thorn &amp; Thread is a sample identity for this portfolio. The direction pairs botanical linework with restrained ornamental geometry. Artist biography and professional credentials await supplied facts.</p></div><div><details><summary>Studio &amp; accessibility</summary><p>Studio address, step-free access, facilities and accommodations are awaiting studio confirmation. Include access needs in the demo brief; it will remain in your browser.</p></details><details><summary>Age requirements &amp; aftercare</summary><p>Age policy and studio-approved aftercare link have not been supplied. Confirm both directly with the artist before booking. This page provides no medical aftercare guidance.</p></details><details><summary>Preparing an enquiry</summary><p>Describe the idea, placement and approximate size. Add references you have permission to share, your location and any access needs. The actual studio response window is awaiting confirmation.</p></details></div></section>
+            <section class="booking" id="booking"><span class="eyebrow">Your idea, in your words</span><h2>Let's start with a sketch.</h2><p>Demo enquiry only. Nothing is sent, uploaded or saved. Real booking availability and response times are not configured.</p><form><label>Email<input type="email" name="email" required></label><label>Placement<input name="placement" placeholder="e.g. upper arm" required></label><label>Approximate size<input name="size" placeholder="e.g. 8 cm" required></label><label>Your location<input name="location" required></label><label class="wide">Your idea &amp; access needs<textarea name="idea" rows="3" required></textarea></label><label class="wide">Optional reference images · stay on this device<input type="file" id="reference" accept="image/*" multiple><span id="files" role="status"></span></label><button class="button red" type="submit">Review demo enquiry ↗</button><p class="wide" role="status" id="result"></p></form></section>
+        </main>
+        <footer><span>Thorn &amp; Thread / Illustrative artist portfolio</span><span>Original drawings · GPT-6</span></footer>
+    </div>
+    <dialog aria-labelledby="case-title"><h2 id="case-title"></h2><p id="case-text"></p><button id="close">Close study</button></dialog>
+    <script>
+        const menu = document.querySelector("[data-menu]");
+        menu.addEventListener("click", () =>
+        {
+            const open = menu.getAttribute("aria-expanded") !== "true";
+            menu.setAttribute("aria-expanded", String(open));
+            document.querySelector("nav").classList.toggle("open", open);
+        });
+        document.querySelectorAll("[data-filter]").forEach(button => button.addEventListener("click", () =>
+        {
+            document.querySelectorAll("[data-filter]").forEach(item => item.setAttribute("aria-pressed", String(item === button)));
+            document.querySelectorAll("[data-kind]").forEach(item => item.hidden = button.dataset.filter !== "all" && item.dataset.kind !== button.dataset.filter);
+            document.querySelector("#empty").hidden = button.dataset.filter !== "healed";
+        }));
+        const dialog = document.querySelector("dialog");
+        document.querySelectorAll("[data-case]").forEach(button => button.addEventListener("click", () =>
+        {
+            document.querySelector("#case-title").textContent = button.dataset.case === "rose" ? "Wild rose — botanical study" : "Quiet symmetry — ornamental study";
+            document.querySelector("#case-text").textContent = "Personal concept / original SVG line drawing. Role: composition and linework exploration. Outcome: a visual design study only, not a completed tattoo. Placement, dimensions and technical suitability would need discussion with the real artist. No session or healed date is claimed.";
+            dialog.showModal();
+        }));
+        document.querySelector("#close").addEventListener("click", () => dialog.close());
+        document.querySelector("#reference").addEventListener("change", event => document.querySelector("#files").textContent = `${event.target.files.length} reference file(s) selected locally. Nothing uploaded.`);
+        document.querySelector("form").addEventListener("submit", event =>
+        {
+            event.preventDefault();
+            document.querySelector("#result").textContent = "Demo brief checked — no booking made and nothing sent. Contact details and studio policies are required before real enquiries.";
+        });
+    </script>
+</body>
+</html>

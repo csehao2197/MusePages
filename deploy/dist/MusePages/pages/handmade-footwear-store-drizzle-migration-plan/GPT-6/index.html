@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solecraft — Schema studio</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <aside class="rail"><a class="brand" href="#overview">s<span>c</span></a><span class="rail-label">SOLECRAFT / ENGINEERING</span><span class="rail-bottom">SCHEMA STUDIO</span></aside>
+    <main id="overview">
+        <header><span class="eyebrow">WORKSPACE / DATA OPERATIONS</span><span class="badge">Local simulation</span></header>
+        <section class="intro"><div><p class="eyebrow">HANDMADE. CAREFULLY EVOLVED.</p><h1>A better foundation.<br><em>Not a fresh start.</em></h1><p class="lede">Move the craft forward, keep every customer story.<br>A guided, no-data-loss baseline for the Solecraft store.</p></div><div class="seal"><svg viewBox="0 0 100 100" aria-hidden="true"><ellipse cx="50" cy="27" rx="32" ry="12"/><path d="M18 27v45c0 17 64 17 64 0V27M18 49c0 17 64 17 64 0"/></svg><strong>Data stays.<br>Schema evolves.</strong></div></section>
+        <div class="summary"><span><i></i> SAMPLE DATABASE</span><strong>Production baseline</strong><span>PostgreSQL → Drizzle</span><span>0 records modified</span></div>
+        <section class="workspace">
+            <div class="panel"><div class="section-head"><span class="eyebrow">01 / PRE-FLIGHT</span><span id="progress">0 of 3 ready</span></div><h2>Care before change.</h2><p>Confirm the safety steps in this demonstration.</p><label><input id="backup" type="checkbox"><span><b>Backup secured</b><small>RDS snapshot or pg_dump completed</small></span></label><label><input id="parity" type="checkbox"><span><b>Schema parity confirmed</b><small>lib/db/schema.ts matches existing tables</small></span></label><label><input id="check" type="checkbox"><span><b>Migration checks reviewed</b><small>Introspection and configuration verified</small></span></label><button class="text-button" id="inspect">Inspect sample schema ↗</button><div id="schema" hidden><code>customers · products · orders</code><p>Sample comparison: 3 tables match. No connection is made.</p></div></div>
+            <div class="panel plan"><div class="section-head"><span class="eyebrow">02 / BASELINE STRATEGY</span><span class="dot">●</span></div><div class="tabs" role="group" aria-label="Database state"><button class="active" data-mode="existing" aria-pressed="true">Existing database</button><button data-mode="fresh" aria-pressed="false">Fresh database</button></div><h2 id="strategy">Keep what you’ve built.</h2><p id="description">Mark a one-time baseline as applied. Existing tables and records stay untouched.</p><pre id="commands">baseline: mark as applied
+ preserve all existing tables
+ future migrations enabled</pre><div class="notice" id="notice">Existing production: baseline first, migrate later.</div><button class="primary" id="simulate" disabled>Simulate baseline <span>→</span></button><p class="result" id="result" role="status">Complete the three safety checks to continue.</p></div>
+        </section>
+        <footer><span>GOOD SYSTEMS LEAVE NOTHING BEHIND.</span><span>Demo only · No database credentials or live operations</span></footer>
+    </main>
+</body>
+</html>

@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Forma Design Playground | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Forma Design Playground</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Phase 6: Advanced Canvas Features - Implementation Plan
+
+&gt; **Strategic Addition**: 5 high-value, low-risk features to boost rubric score by +9 points
+
+---
+
+## 📊 Scoring Impact
+
+| Feature | Tier | Time | Points | Cumulative | Risk |
+|---------|------|------|--------|------------|------|
+| Arrow Keys | 1 | 15m | 2 | 2 | 🟢 Zero |
+| Duplicate | 1 | 20m | 2 | 4 | 🟢 Zero |
+| Copy/Paste | 1 | 25m | 2 | 6 | 🟢 Zero |
+| Color Picker | 1 | 45m | 0* | 6 | 🟢 Zero |
+| Alignment Tools | 2 | 60m | 3 | **9** | 🟢 Zero |
+
+**Total: +9 points in ~2.5 hours**
+
+*Color picker is 4th Tier 1 feature (max 3 count), but still good for UX
+
+---
+
+## 🎯 Implementation Order
+
+### PR #24: Arrow Keys (15 minutes)
+**Location:** `frontend/components/Canvas.tsx` in `handleKeyDown`
+
+```typescript
+// Add to existing handleKeyDown function
+if (!isTyping &amp;&amp; selectedIds.length &gt; 0) {
+  const moveAmount = e.shiftKey ? 10 : 1;
+  
+  if (e.key === &#39;ArrowUp&#39;) {
+    e.preventDefault();
+    selectedIds.forEach(id =&gt; {
+      const shape = shapes.get(id);
+      if (shape) updateShape(id, { y: shape.y - moveAmount });
+    });
+  }
+  if (e.key === &#39;ArrowDown&#39;) {
+    e.preventDefault();
+    selectedIds.forEach(id =&gt; {
+      const shape = shapes.get(id);
+      if (shape) updateShape(id, { y: shape.y + moveAmount });
+    });
+  }
+  if (e.key === &#39;ArrowLeft&#39;) {
+    e.preventDefault();
+    selectedIds.forEach(id =&gt; {
+      const shape = shapes.get(id);
+      if (shape) updateShape(id, { x: shape.x - moveAmount });
+    });
+  }
+  if (e.key === &#39;ArrowRight&#39;) {
+    e.preventDefault();
+    selectedIds.forEach(id =&gt; {
+      const shape = shapes.get(id);
+      if (shape) updateShape(id, { x: shape.x + moveAmount });
+    });
+  }
+}
+```
+
+---
+
+### PR #25: Duplicate (20 minutes)
+**Location:** `frontend/components/Canvas.tsx` in `handleKeyDown`
+
+```typescript
+// Add Cmd+D / Ctrl+D handler
+if ((e.metaKey || e.ctrlKey) &amp;&amp; e.key === &#39;d&#39; &amp;&amp; !isTyping) {
+  e.preventDefault();
+  
+  const newIds: string[] = [];
+  selectedIds.forEach(id =&gt; {
+    const shape = shapes.get(id);
+    if (shape) {
+      const duplicate = {
+        ...shape,
+        id: generateId(),
+        x: shape.x + 20,
+        y: shape.y + 20,
+      };
+      addShape(duplicate);
+      newIds.push(duplicate.id);
+    }
+  });
+  
+  // Select the duplicated shapes
+  selectMultiple(newIds);
+}
+```
+
+---
+
+### PR #26: Copy/Paste (25 minutes)
+**Location:** `frontend/components/Canvas.tsx`
+
+```typescript
+// Add to Canvas component (top level)
+const clipboardRef = useRef&lt;Shape[]&gt;([]);
+
+// In handleKeyDown, add:
+
+// Copy (Cmd+C)
+if ((e.metaKey || e.ctrlKey) &amp;&amp; e.key === &#39;c&#39; &amp;&amp; !isTyping &amp;&amp; selectedIds.length &gt; 0) {
+  e.preventDefault();
+  clipboardRef.current = selectedIds
+    .map(id =&gt; shapes.get(id))
+    .filter(Boolean) as Shape[];
+  console.log(`Copied ${clipboardRef.current.length} shape(s)`);
+}
+
+// Paste (Cmd+V)
+if ((e.metaKey || e.ctrlKey) &amp;&amp; e.key === &#39;v&#39; &amp;&amp; !isTyping &amp;&amp; clipboardRef.current.length &gt; 0) {
+  e.preventDefault();
+  
+  const newIds: string[] = [];
+  clipboardRef.current.forEach(shape =&gt; {
+    const pasted = {
+      ...shape,
+      id: generateId(),
+      x: shape.x + 30,
+      y: shape.y + 30,
+    };
+    addShape(pasted);
+    newIds.push(pasted.id);
+  });
+  
+  // Select the pasted shapes
+  selectMultiple(newIds);
+}
+```
+
+---
+
+### PR #27: Color Picker (45 minutes)
+**New File:** `frontend/components/PropertiesPanel.tsx`
+
+```typescript
+&#39;use client&#39;
+
+import { useCanvasStore } from &#39;@/lib/canvasStore&#39;
+
+export default function PropertiesPanel() {
+  const { shapes, selectedIds, updateShape } = useCanvasStore();
+  
+  if (selectedIds.length === 0) return null;
+  
+  const selectedShape = shapes.get(selectedIds[0]);
+  if (!selectedShape) return null;
+  
+  // Only show color picker for shapes that have color
+  const hasColor = &#39;color&#39; in selectedShape;
+  if (!hasColor) return null;
+  
+  return (
+    &lt;div className=&quot;absolute top-20 right-4 bg-white p-4 rounded-lg shadow-lg border border-gray-200&quot;&gt;
+      &lt;h3 className=&quot;text-sm font-semibold mb-2 text-gray-700&quot;&gt;Properties&lt;/h3&gt;
+      
+      &lt;div className=&quot;space-y-3&quot;&gt;
+        &lt;div&gt;
+          &lt;label className=&quot;block text-xs text-gray-600 mb-1&quot;&gt;
+            Color {selectedIds.length &gt; 1 &amp;&amp; `(${selectedIds.length} selected)`}
+          &lt;/label&gt;
+          &lt;input
+            type=&quot;color&quot;
+            value={selectedShape.color}
+            onChange={(e) =&gt; {
+              // Update all selected shapes
+              selectedIds.forEach(id =&gt; {
+                const shape = shapes.get(id);
+                if (shape &amp;&amp; &#39;color&#39; in shape) {
+                  updateShape(id, { color: e.target.value });
+                }
+              });
+            }}
+            className=&quot;w-full h-10 rounded cursor-pointer&quot;
+          /&gt;
+        &lt;/div&gt;
+        
+        {/* Can add more properties here later */}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}
+```
+
+**Add to Canvas.tsx:**
+```typescript
+import PropertiesPanel from &#39;./PropertiesPanel&#39;
+
+// In return statement, add before closing &lt;/div&gt;:
+&lt;PropertiesPanel /&gt;
+```
+
+---
+
+### PR #28: Alignment Tools (60 minutes)
+
+**Step 1:** Add functions to `frontend/lib/canvasStore.ts`:
+
+```typescript
+// Add to CanvasStore interface:
+alignShapesLeft: () =&gt; void
+alignShapesRight: () =&gt; void
+alignShapesTop: () =&gt; void
+alignShapesBottom: () =&gt; void
+alignShapesCenterHorizontal: () =&gt; void
+alignShapesCenterVertical: () =&gt; void
+distributeHorizontally: () =&gt; void
+distributeVertically: () =&gt; void
+
+// Add implementations to store:
+alignShapesLeft: () =&gt; {
+  set((state) =&gt; {
+    if (state.selectedIds.length &lt; 2) return state;
+    
+    const selectedShapes = state.selectedIds
+      .map(id =&gt; state.shapes.get(id))
+      .filter(Boolean) as Shape[];
+    
+    const minX = Math.min(...selectedShapes.map(s =&gt; s.x));
+    
+    const newShapes = new Map(state.shapes);
+    state.selectedIds.forEach(id =&gt; {
+      const shape = state.shapes.get(id);
+      if (shape) {
+        newShapes.set(id, { ...shape, x: minX });
+      }
+    });
+    
+    return { shapes: newShapes };
+  });
+},
+
+alignShapesRight: () =&gt; {
+  set((state) =&gt; {
+    if (state.selectedIds.length &lt; 2) return state;
+    
+    const selectedShapes = state.selectedIds
+      .map(id =&gt; state.shapes.get(id))
+      .filter(Boolean) as Shape[];
+    
+    // Calculate rightmost x based on shape type
+    const maxRightX = Math.max(...selectedShapes.map(s =&gt; {
+      if (s.type === &#39;rect&#39;) return s.x + s.width;
+      if (s.type === &#39;circle&#39;) return s.x + s.radius;
+      if (s.type === &#39;text&#39;) return s.x + s.width;
+      return s.x;
+    }));
+    
+    const newShapes = new Map(state.shapes);
+    state.selectedIds.forEach(id =&gt; {
+      const shape = state.shapes.get(id);
+      if (shape) {
+        let newX = maxRightX;
+        if (shape.type === &#39;rect&#39;) newX = maxRightX - shape.width;
+        else if (shape.type === &#39;circle&#39;) newX = maxRightX - shape.radius;
+        else if (shape.type === &#39;text&#39;) newX = maxRightX - shape.width;
+        
+        newShapes.set(id, { ...shape, x: newX });
+      }
+    });
+    
+    return { shapes: newShapes };
+  });
+},
+
+alignShapesTop: () =&gt; {
+  set((state) =&gt; {
+    if (state.selectedIds.length &lt; 2) return state;
+    
+    const selectedShapes = state.selectedIds
+      .map(id =&gt; state.shapes.get(id))
+      .filter(Boolean) as Shape[];
+    
+    const minY = Math.min(...selectedShapes.map(s =&gt; s.y));
+    
+    const newShapes = new Map(state.shapes);
+    state.selectedIds.forEach(id =&gt; {
+      const shape = state.shapes.get(id);
+      if (shape) {
+        newShapes.set(id, { ...shape, y: minY });
+      }
+    });
+    
+    return { shapes: newShapes };
+  });
+},
+
+alignShapesBottom: () =&gt; {
+  set((state) =&gt; {
+    if (state.selectedIds.length &lt; 2) return state;
+    
+    const selectedShapes = state.selectedIds
+      .map(id =&gt; state.shapes.get(id))
+      .filter(Boolean) as Shape[];
+    
+    const maxBottomY = Math.max(...selectedShapes.map(s =&gt; {
+      if (s.type === &#39;rect&#39;) return s.y + s.height;
+      if (s.type === &#39;circle&#39;) return s.y + s.radius;
+      if (s.type === &#39;text&#39;) return s.y + s.height;
+      return s.y;
+    }));
+    
+    const newShapes = new Map(state.shapes);
+    state.selectedIds.forEach(id =&gt; {
+      const shape = state.shapes.get(id);
+      if (shape) {
+        let newY = maxBottomY;
+        if (shape.type === &#39;rect&#39;) newY = maxBottomY - shape.height;
+        else if (shape.type === &#39;circle&#39;) newY = maxBottomY - shape.radius;
+        else if (shape.type === &#39;text&#39;) newY = maxBottomY - shape.height;
+        
+        newShapes.set(id, { ...shape, y: newY });
+      }
+    });
+    
+    return { shapes: newShapes };
+  });
+},
+
+alignShapesCenterHorizontal: () =&gt; {
+  set((state) =&gt; {
+    if (state.selectedIds.length &lt; 2) return state;
+    
+    const selectedShapes = state.selectedIds
+      .map(id =&gt; state.shapes.get(id))
+      .filter(Boolean) as Shape[];
+    
+    // Find center x of all shapes
+    const centers = selectedShapes.map(s =&gt; {
+      if (s.type === &#39;rect&#39;) return s.x + s.width / 2;
+      if (s.type === &#39;circle&#39;) return s.x;
+      if (s.type === &#39;text&#39;) return s.x + s.width / 2;
+      return s.x;
+    });
+    const avgCenterX = centers.reduce((a, b) =&gt; a + b, 0) / centers.length;
+    
+    const newShapes = new Map(state.shapes);
+    state.selectedIds.forEach(id =&gt; {
+      const shape = state.shapes.get(id);
+      if (shape) {
+        let newX = avgCenterX;
+        if (shape.type === &#39;rect&#39;) newX = avgCenterX - shape.width / 2;
+        else if (shape.type === &#39;text&#39;) newX = avgCenterX - shape.width / 2;
+        // Circle x is already center
+        
+        newShapes.set(id, { ...shape, x: newX });
+      }
+    });
+    
+    return { shapes: newShapes };
+  });
+},
+
+// Similar for alignShapesCenterVertical, distributeHorizontally, distributeVertically
+```
+
+**Step 2:** Create `frontend/components/AlignmentToolbar.tsx`:
+
+```typescript
+&#39;use client&#39;
+
+import { useCanvasStore } from &#39;@/lib/canvasStore&#39;
+
+export default function AlignmentToolbar() {
+  const { selectedIds, alignShapesLeft, alignShapesRight, alignShapesTop, alignShapesBottom } = useCanvasStore();
+  
+  // Only show if 2+ shapes selected
+  if (selectedIds.length &lt; 2) return null;
+  
+  return (
+    &lt;div className=&quot;absolute top-20 left-1/2 transform -translate-x-1/2 bg-white shadow-lg rounded-lg p-2 flex gap-1&quot;&gt;
+      &lt;button
+        onClick={alignShapesLeft}
+        className=&quot;p-2 hover:bg-gray-100 rounded&quot;
+        title=&quot;Align Left&quot;
+      &gt;
+        ⬅️
+      &lt;/button&gt;
+      &lt;button
+        onClick={alignShapesRight}
+        className=&quot;p-2 hover:bg-gray-100 rounded&quot;
+        title=&quot;Align Right&quot;
+      &gt;
+        ➡️
+      &lt;/button&gt;
+      &lt;button
+        onClick={alignShapesTop}
+        className=&quot;p-2 hover:bg-gray-100 rounded&quot;
+        title=&quot;Align Top&quot;
+      &gt;
+        ⬆️
+      &lt;/button&gt;
+      &lt;button
+        onClick={alignShapesBottom}
+        className=&quot;p-2 hover:bg-gray-100 rounded&quot;
+        title=&quot;Align Bottom&quot;
+      &gt;
+        ⬇️
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+```
+
+---
+
+## ✅ Why This Order?
+
+1. **Arrow Keys** → Proves keyboard handling works, easiest win
+2. **Duplicate** → Builds pattern for cloning shapes
+3. **Copy/Paste** → Extends duplicate, uses clipboard ref
+4. **Color Picker** → Independent UI, doesn&#39;t affect other features
+5. **Alignment** → Most complex, requires store changes, do last
+
+## 🚀 Next Steps
+
+After completing Phase 6, you&#39;ll have:
+- **+9 points** added to your score (~55 → ~64)
+- Better UX for shape manipulation
+- Foundation for more advanced features
+- No regression risk to existing functionality
+
+Then proceed to **Phase 7: AI Integration** for the big +25 point boost!
+
+---
+
+**Updated:** October 15, 2025  
+**Status:** Planned (PRs #24-28)  
+**Priority:** HIGH - Do before AI Agent
+
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

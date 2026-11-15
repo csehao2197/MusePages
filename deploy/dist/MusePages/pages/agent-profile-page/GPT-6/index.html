@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sarah Mitchell's illustrative real estate agent profile: neighborhood guides, sample listings and a transparent local contact demo.">
+    <title>Sarah Mitchell — A more personal way home</title>
+    <link rel="icon" href="data:,">
+    <style>
+        :root { --ink:#233746; --blue:#2563eb; --paper:#f8f7f3; --muted:#66727a; --line:#dce1df; }
+        * { box-sizing:border-box; }
+        body { margin:0; color:var(--ink); background:var(--paper); font:14px/1.65 system-ui,sans-serif; }
+        a { color:inherit; text-underline-offset:5px; }
+        button,input,select,textarea { font:inherit; }
+        button { cursor:pointer; }
+        :focus-visible { outline:3px solid var(--blue); outline-offset:4px; }
+        .wrap { max-width:1100px; margin:auto; padding:0 40px; }
+        header { padding:24px 0; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); }
+        .brand { text-decoration:none; font:22px Georgia,serif; }
+        nav { display:flex; gap:25px; align-items:center; font-size:12px; }
+        nav a { text-decoration:none; }
+        .btn { display:inline-block; padding:12px 21px; background:var(--blue); color:white; border:1px solid var(--blue); border-radius:4px; text-decoration:none; }
+        .btn.light { background:none; color:var(--ink); border-color:#aab8c0; }
+        .eyebrow { text-transform:uppercase; font:10px/1.5 system-ui,sans-serif; letter-spacing:2px; color:#5f7482; }
+        .hero { display:grid; grid-template-columns:1.2fr 1fr; gap:65px; padding:50px 0 40px; align-items:center; }
+        h1 { font:normal clamp(40px,5vw,62px)/1.1 Georgia,serif; letter-spacing:-2px; margin:18px 0; }
+        h1 em { color:#466a7c; }
+        .hero h2 { font-size:23px; margin:25px 0 5px; }
+        .hero p { color:var(--muted); max-width:420px; }
+        .contact-actions { display:flex; gap:10px; margin-top:23px; flex-wrap:wrap; }
+        .portrait { position:relative; }
+        .portrait img { display:block; width:100%; height:380px; object-fit:cover; object-position:50% 30%; border-radius:100px 3px 3px 3px; }
+        .portrait .badge { position:absolute; left:-25px; bottom:20px; background:white; border:1px solid var(--line); padding:14px 22px; box-shadow:0 7px 20px #2337460a; }
+        .badge strong { display:block; font-size:15px; }
+        .badge small { font-size:10px; color:var(--muted); }
+        .notice { font-size:11px; color:var(--muted); }
+        .stats { display:grid; grid-template-columns:repeat(4,1fr); padding:24px 0; border-block:1px solid var(--line); text-align:center; }
+        .stats strong { display:block; font:30px Georgia,serif; }
+        .stats span { color:var(--muted); font-size:11px; }
+        .head { display:flex; justify-content:space-between; gap:20px; align-items:center; margin:40px 0 22px; }
+        h2 { font:normal 33px/1.2 Georgia,serif; letter-spacing:-.7px; margin:10px 0; }
+        .tabs { display:flex; gap:7px; flex-wrap:wrap; }
+        .tabs button { background:none; border:1px solid var(--line); color:var(--muted); border-radius:4px; padding:7px 15px; font-size:12px; }
+        .tabs button[aria-pressed=true] { color:white; background:var(--ink); }
+        .listings { display:grid; grid-template-columns:repeat(2,1fr); gap:22px; }
+        .listing { background:white; border:1px solid var(--line); padding-bottom:18px; text-align:left; color:var(--ink); }
+        .listing img { width:100%; height:200px; object-fit:cover; display:block; }
+        .listing:nth-child(even) img { filter:sepia(.25); }
+        .listing h3,.listing p { margin:8px 18px; }
+        .listing h3 { font-size:22px; font-weight:550; }
+        .listing p { font-size:12px; color:var(--muted); }
+        .listing .tag { margin:13px 18px 0; display:inline-block; background:#edf2f8; padding:4px 8px; font-size:10px; }
+        .about { display:grid; grid-template-columns:1fr 1.2fr; gap:50px; border-top:1px solid var(--line); margin-top:45px; padding:35px 0; }
+        .about p { color:var(--muted); }
+        .specialties { display:flex; flex-wrap:wrap; gap:9px; margin:15px 0; }
+        .specialties span { border:1px solid var(--line); padding:7px 12px; font-size:12px; border-radius:4px; }
+        .coverage { display:grid; grid-template-columns:1.3fr 1fr; gap:35px; background:#e9efeb; padding:30px; }
+        .map { min-height:270px; position:relative; background:#d8e4d5; overflow:hidden; }
+        .map svg { width:100%; height:100%; position:absolute; inset:0; }
+        .map button { position:absolute; border:2px solid white; border-radius:50%; width:36px; height:36px; background:#2563eb; color:white; }
+        .map button[aria-pressed=true] { background:#173346; box-shadow:0 0 0 7px #2563eb30; }
+        .sold { display:flex; align-items:center; gap:25px; padding:23px; border:1px solid var(--line); background:white; }
+        .sold img { width:170px; height:115px; object-fit:cover; }
+        .sold button { margin-left:auto; }
+        .reviews { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+        .review { border-top:2px solid #aebfcb; padding:18px 0; }
+        .review blockquote { margin:12px 0; font:19px/1.5 Georgia,serif; }
+        .review p { color:var(--muted); font-size:12px; }
+        #extra-reviews[hidden] { display:none; }
+        details { padding:14px 0; border-bottom:1px solid var(--line); }
+        summary { cursor:pointer; font-weight:600; }
+        .contact { background:#e9edf0; padding:32px; margin:35px 0; }
+        form { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+        label { display:grid; gap:5px; font-size:11px; }
+        input,select,textarea { border:1px solid #b5c3cc; width:100%; min-width:0; padding:11px; background:white; color:var(--ink); border-radius:4px; }
+        .wide { grid-column:1/-1; }
+        form button { justify-self:start; }
+        footer { display:flex; justify-content:space-between; gap:20px; padding:25px 0; color:var(--muted); font-size:11px; }
+        dialog { max-width:550px; width:calc(100% - 28px); padding:30px; border:0; color:var(--ink); }
+        dialog::backdrop { background:#173346b0; }
+        [data-menu] { display:none; }
+        @media(max-width:650px)
+        {
+            .wrap { padding:0 22px; }
+            header { flex-wrap:wrap; }
+            [data-menu] { display:block; border:1px solid var(--line); background:none; padding:7px 10px; }
+            nav { display:none; width:100%; padding-top:20px; gap:20px; flex-wrap:wrap; }
+            nav.open { display:flex; }
+            .hero,.about,.coverage,form,.reviews,.listings { grid-template-columns:1fr; }
+            .hero { gap:25px; padding:35px 0; }
+            .portrait .badge { left:12px; }
+            .stats { grid-template-columns:1fr 1fr; gap:22px; }
+            .head { align-items:start; flex-direction:column; }
+            .about { gap:15px; }
+            .coverage,.contact { padding:22px; }
+            .sold { flex-wrap:wrap; gap:14px; }
+            .sold img { width:100%; height:170px; }
+            footer { flex-direction:column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <header><a class="brand" href="#">Haven &amp; Home<span style="color:#2563eb">.</span></a><button data-menu aria-controls="nav" aria-expanded="false">Menu</button><nav id="nav"><a href="#about">Meet Sarah</a><a href="#listings">Properties</a><a href="#areas">Neighborhoods</a><a class="btn" href="#contact">Let's connect ↗</a></nav></header>
+        <main>
+            <section class="hero"><div><span class="eyebrow">Good guidance. A great next chapter.</span><h1>A more personal<br>way <em>home.</em></h1><h2>Sarah Mitchell</h2><p>Senior Real Estate Agent / Haven &amp; Home<br>Illustrative brokerage · license awaiting verified details</p><p>Thoughtful guidance for life's biggest moves. Start with your story, explore the possibilities, and find a place that feels like you.</p><div class="contact-actions"><button class="btn" data-contact="Call">Call Sarah</button><button class="btn light" data-contact="Email">Email</button><button class="btn light" data-contact="Text">Text</button></div><p class="notice">Demo profile. Credentials, statistics and listings are illustrative.</p></div><div class="portrait"><img src="portrait.svg" width="600" height="700" alt="Original stylized portrait illustration; not a photograph of Sarah Mitchell"><div class="badge"><strong>Your next chapter starts here.</strong><small>APPROACHABLE. CONSIDERED. PERSONAL.</small></div></div></section>
+            <div class="stats" aria-label="Prompt-supplied illustrative figures"><div><strong>15+</strong><span>Years of experience · demo</span></div><div><strong>200+</strong><span>Homes sold · demo</span></div><div><strong>$150M+</strong><span>Sales volume · demo</span></div><div><strong>4.9/5</strong><span>120+ reviews · demo</span></div></div>
+            <section id="listings"><div class="head"><div><span class="eyebrow">Find your place</span><h2>Sarah's featured properties</h2></div><div class="tabs" aria-label="Property status"><button data-status="Active" aria-pressed="true">Active</button><button data-status="Pending" aria-pressed="false">Pending</button><button data-status="Sold" aria-pressed="false">Sold</button></div></div><p class="notice">Sample addresses, prices and original architectural illustrations · not live MLS data</p><div class="listings" id="listings-grid"></div><p><button class="btn light" id="all-listings">View all my sample listings</button></p></section>
+            <section class="about" id="about"><div><span class="eyebrow">Meet your guide</span><h2>It's not just property.<br>It's personal.</h2><p>Sarah Mitchell is the supplied persona for this demonstration. Her real biography, background, personal interests and professional history have not been provided.</p></div><div><p>This sample practice puts listening first: understand the move, clarify the choices and make space for informed decisions.</p><p>A proposed approach combines neighborhood discovery, clear property comparisons and a practical plan for each stage of the journey.</p><p>Owner-approved biography, a second professional photo and verified transaction history can replace these transparent placeholders.</p><div class="specialties"><span>Luxury homes</span><span>First-time buyers</span><span>Investment properties</span><span>Relocation</span><span>Waterfront</span></div><p class="notice">Specialty categories illustrate the brief, not verified qualifications.</p></div></section>
+            <section id="areas" class="coverage"><div class="map" aria-label="Illustrative service-area map"><svg viewBox="0 0 480 300" aria-hidden="true"><path d="M0 0H480V300H0Z" fill="#d8e4d5"/><path d="M330 0C250 80 400 170 310 300" stroke="#a9c8d4" stroke-width="75" fill="none"/><path d="M0 80L480 240M80 0L260 300M0 230L480 90M200 0L70 300" stroke="#f8f7ee" stroke-width="12" fill="none"/></svg><button data-area="Maplewood" aria-pressed="true" style="left:25%;top:35%" aria-label="Explore Maplewood">M</button><button data-area="Riverside" aria-pressed="false" style="left:65%;top:58%" aria-label="Explore Riverside">R</button><button data-area="Oak Park" aria-pressed="false" style="left:45%;top:15%" aria-label="Explore Oak Park">O</button></div><div><span class="eyebrow">Local knowledge, thoughtfully shared</span><h2 id="area-title">Maplewood</h2><p id="area-guide">A fictional leafy neighborhood for exploring the coverage map. Ask about walkability, transport and the kind of everyday routine you want.</p><p class="notice">Illustrative geography only. Coverage and area facts await verification.</p><a href="#contact">Ask about this neighborhood ↗</a></div></section>
+            <section><div class="head"><h2>Recently sold / sample record</h2><span class="notice">Not evidence of actual transactions</span></div><div class="sold"><img src="home.svg" width="800" height="500" loading="lazy" alt="Original sample home illustration"><div id="sold-text"><b>18 Willow Lane · $895,000</b><br><span class="notice">Sample sale / October 2026</span></div><button class="btn light" id="next-sold">Next sale →</button></div></section>
+            <section><div class="head"><h2>Kind words, close to home.</h2><span class="notice">All reviews are illustrative</span></div><div class="reviews" id="reviews"></div><div class="reviews" id="extra-reviews" hidden></div><button class="btn light" id="more-reviews" aria-expanded="false">Read more reviews</button></section>
+            <section><h2>Credentials &amp; office</h2><details><summary>Awards, certifications &amp; memberships</summary><p>Top Producer awards, CRS, ABR, SRS and association memberships await verified details. No badges or year-over-year achievements are claimed.</p></details><details><summary>Office, availability &amp; directions</summary><p>Real office address, phone, opening hours and directions await the brokerage. The coverage map is illustrative, not an office locator.</p></details><details><summary>Professional profiles</summary><p>LinkedIn, Instagram and Facebook links await verified owner profiles. No third-party affiliation is implied.</p></details></section>
+            <section class="contact" id="contact"><span class="eyebrow">Every move begins with a conversation</span><h2>Let's connect.</h2><p>Demo form · no message sent or saved. Real response times and contact details are not configured.</p><form><label>Your name<input name="name" required></label><label>Email<input name="email" type="email" required></label><label>Phone<input name="phone" type="tel"></label><label>Interested in<select name="interest"><option>Buying</option><option>Selling</option><option>Both</option></select></label><label>Preferred contact<select name="method"><option>Email</option><option>Call</option><option>Text</option></select></label><label>Timeline<select name="timeline"><option>Just exploring</option><option>Within 3 months</option><option>3–6 months</option><option>6+ months</option></select></label><label class="wide">Your message<textarea name="message" rows="3" required></textarea></label><button class="btn">Send demo message ↗</button><p class="wide" role="status" id="result"></p></form></section>
+        </main>
+        <footer><span>Haven &amp; Home / Illustrative brokerage</span><span>Equal housing opportunity · Sample profile · GPT-6</span></footer>
+    </div>
+    <dialog aria-labelledby="dialog-title"><h2 id="dialog-title"></h2><p id="dialog-text"></p><button class="btn" id="close">Close details</button></dialog>
+    <script>
+        const properties = [
+            ["Active","$925,000","24 Cedar Grove","4 beds · 3 baths · 2,450 sq ft"],
+            ["Active","$1,240,000","8 Riverstone Way","5 beds · 4 baths · 3,100 sq ft"],
+            ["Active","$685,000","61 Maple Avenue","3 beds · 2 baths · 1,840 sq ft"],
+            ["Active","$795,000","12 Oak Terrace","4 beds · 2 baths · 2,050 sq ft"],
+            ["Pending","$875,000","9 Meadow Close","3 beds · 3 baths · 2,180 sq ft"],
+            ["Sold","$895,000","18 Willow Lane","4 beds · 3 baths · Sample sale"]
+        ];
+        const dialog = document.querySelector("dialog");
+        function show(title,text)
+        {
+            document.querySelector("#dialog-title").textContent = title;
+            document.querySelector("#dialog-text").textContent = text;
+            dialog.showModal();
+        }
+        function render(status)
+        {
+            document.querySelectorAll("[data-status]").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.status === status)));
+            const grid = document.querySelector("#listings-grid");
+            grid.replaceChildren();
+            properties.filter(row => status === "All" || row[0] === status).forEach(row =>
+            {
+                const button = document.createElement("button");
+                button.className = "listing";
+                button.innerHTML = `<img src="home.svg" width="800" height="500" loading="lazy" alt="Original illustration of a sample home"><span class="tag">${row[0]} / Sample</span><h3>${row[1]}</h3><p>${row[2]}</p><p>${row[3]}</p>`;
+                button.addEventListener("click", () => show(row[2], `${row[1]} · ${row[3]}. This is an illustrative property, not a live listing. Actual availability, disclosures, MLS information and viewings await brokerage confirmation.`));
+                grid.append(button);
+            });
+        }
+        document.querySelectorAll("[data-status]").forEach(button => button.addEventListener("click", () => render(button.dataset.status)));
+        document.querySelector("#all-listings").addEventListener("click", () => render("All"));
+        render("Active");
+        document.querySelectorAll("[data-area]").forEach(button => button.addEventListener("click", () =>
+        {
+            document.querySelectorAll("[data-area]").forEach(item => item.setAttribute("aria-pressed", String(item === button)));
+            document.querySelector("#area-title").textContent = button.dataset.area;
+            document.querySelector("#area-guide").textContent = `${button.dataset.area} is a fictional sample service area. Discuss preferred home style, travel needs and budget; actual local information needs verification.`;
+        }));
+        let soldIndex = 0;
+        const sales = ["18 Willow Lane · $895,000 / Sample sale: October 2026","42 Birch Row · $730,000 / Sample sale: September 2026","7 Lake Court · $1,120,000 / Sample sale: August 2026"];
+        document.querySelector("#next-sold").addEventListener("click", () => document.querySelector("#sold-text").textContent = sales[++soldIndex % sales.length]);
+        const reviews = [["Jamie & Alex","First home","A clear next step at every turn. We felt listened to throughout the process."],["Morgan T.","Condo sale","Patient conversations helped us understand the choices in front of us."],["Riley P.","Relocation","The proposed neighborhood tour made an unfamiliar place feel more approachable."],["Casey W.","Family home","Careful attention to our priorities made the search feel manageable."],["Taylor S.","Investment","The comparison process helped us ask better questions about each option."],["Avery L.","Waterfront home","Clear communication mattered as much as the properties themselves."]];
+        reviews.forEach((review,index) =>
+        {
+            const article = document.createElement("article");
+            article.className = "review";
+            article.innerHTML = `<span aria-label="5 stars, illustrative rating">★★★★★</span><blockquote>“${review[2]}”</blockquote><p><b>${review[0]}</b><br>${review[1]} · Sample transaction: 2026<br>Illustrative quote / not verified</p>`;
+            document.querySelector(index < 3 ? "#reviews" : "#extra-reviews").append(article);
+        });
+        document.querySelector("#more-reviews").addEventListener("click", event =>
+        {
+            const extra = document.querySelector("#extra-reviews");
+            extra.hidden = !extra.hidden;
+            event.target.setAttribute("aria-expanded", String(!extra.hidden));
+            event.target.textContent = extra.hidden ? "Read more reviews" : "Show fewer reviews";
+        });
+        document.querySelectorAll("[data-contact]").forEach(button => button.addEventListener("click", () => show(`${button.dataset.contact} Sarah`, "Demo contact action. Verified phone and email have not been supplied; no call, text or email has been initiated. Use the local form to explore the enquiry flow.")));
+        document.querySelector("#close").addEventListener("click", () => dialog.close());
+        document.querySelector("form").addEventListener("submit", event =>
+        {
+            event.preventDefault();
+            document.querySelector("#result").textContent = "Demo message checked locally. Nothing sent or stored; Sarah has not been contacted.";
+        });
+        const menu = document.querySelector("[data-menu]");
+        menu.addEventListener("click", () =>
+        {
+            const open = menu.getAttribute("aria-expanded") !== "true";
+            menu.setAttribute("aria-expanded", String(open));
+            document.querySelector("nav").classList.toggle("open", open);
+        });
+    </script>
+</body>
+</html>

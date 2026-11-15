@@ -1,0 +1,541 @@
+:root
+{
+    --paper: hsl(38 50% 96%);
+    --ink: hsl(20 18% 18%);
+    --amber: hsl(24 42% 42%);
+    --sage: hsl(130 14% 38%);
+    --line: hsl(38 20% 82%);
+    --muted: hsl(38 30% 92%);
+}
+*
+{
+    box-sizing: border-box;
+}
+html
+{
+    scroll-behavior: smooth;
+    scroll-padding-top: 105px;
+}
+body
+{
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 15px/1.7 "Segoe UI", sans-serif;
+}
+a
+{
+    color: inherit;
+    text-decoration: none;
+}
+button, input, select, textarea
+{
+    font: inherit;
+}
+button, a, summary
+{
+    -webkit-tap-highlight-color: transparent;
+}
+button, summary
+{
+    cursor: pointer;
+}
+:focus-visible
+{
+    outline: 3px solid var(--sage);
+    outline-offset: 4px;
+}
+header
+{
+    min-height: 100px;
+    padding: 18px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    background: hsl(38 50% 96% / .96);
+    z-index: 20;
+}
+.wordmark
+{
+    font: italic 34px Georgia, serif;
+    letter-spacing: 3px;
+}
+.wordmark span
+{
+    display: block;
+    font: 8px/2.5 "Segoe UI", sans-serif;
+    letter-spacing: 2px;
+}
+nav, .actions
+{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+nav
+{
+    font-size: 13px;
+}
+#menu
+{
+    display: none;
+}
+.button
+{
+    background: var(--amber);
+    color: var(--paper);
+    padding: 15px 26px;
+    border: 0;
+    border-radius: 3px;
+    display: inline-block;
+    font-size: 13px;
+}
+.small
+{
+    padding: 11px 20px;
+}
+.hero
+{
+    min-height: 755px;
+    position: relative;
+    overflow: hidden;
+    padding: 85px 20px 125px;
+    text-align: center;
+}
+.hero > :not(.still-life, .steam)
+{
+    position: relative;
+    z-index: 2;
+}
+.eyebrow
+{
+    color: var(--sage);
+    letter-spacing: 2.5px;
+    font-size: 10px;
+    font-weight: 600;
+}
+h1, h2, h3
+{
+    font-family: Georgia, serif;
+    font-weight: 400;
+}
+h1
+{
+    font-size: clamp(52px, 7vw, 88px);
+    line-height: 1.07;
+    margin: 28px 0;
+    letter-spacing: -3px;
+}
+h1 em, h2 em
+{
+    color: var(--amber);
+}
+.intro
+{
+    color: hsl(20 8% 38%);
+    margin-bottom: 30px;
+}
+.hero .actions
+{
+    justify-content: center;
+}
+.text-link
+{
+    border: 0;
+    border-bottom: 1px solid var(--amber);
+    background: transparent;
+    padding: 6px 0;
+    font-size: 13px;
+    color: var(--ink);
+}
+.hero-note
+{
+    font-size: 11px;
+    margin: 36px auto 0;
+}
+.hero-note span
+{
+    margin: 0 10px;
+}
+.still-life
+{
+    position: absolute;
+    right: -25px;
+    bottom: -30px;
+    width: 360px;
+    opacity: .8;
+}
+.vertical
+{
+    position: absolute !important;
+    left: 3%;
+    top: 39%;
+    writing-mode: vertical-rl;
+    letter-spacing: 3px;
+    font-size: 8px;
+}
+.demo
+{
+    position: absolute !important;
+    bottom: 20px;
+    left: 5%;
+    font-size: 10px;
+    color: var(--sage);
+}
+.steam
+{
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+.steam i
+{
+    width: 4px;
+    height: 4px;
+    background: hsl(24 52% 61% / .35);
+    position: absolute;
+    bottom: 30%;
+    border-radius: 50%;
+    animation: drift 7s infinite;
+}
+@keyframes drift
+{
+    from { transform: translateY(0); opacity: 0; }
+    50% { opacity: .7; }
+    to { transform: translateY(-180px); opacity: 0; }
+}
+.section
+{
+    padding: 90px max(6%, calc((100% - 1060px) / 2));
+}
+h2
+{
+    font-size: clamp(35px, 4vw, 52px);
+    line-height: 1.15;
+    margin: 20px 0 28px;
+    letter-spacing: -1.5px;
+}
+h3
+{
+    font-size: 28px;
+    line-height: 1.25;
+}
+.section-top, .about, .pricing, .booking
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 70px;
+}
+.section-top
+{
+    align-items: end;
+}
+.section-top > p
+{
+    text-align: right;
+    padding-bottom: 20px;
+}
+.treatments, .pricing, .booking
+{
+    background: var(--muted);
+}
+.treatment-grid
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 30px;
+}
+.treatment-grid article
+{
+    padding: 34px;
+    border-top: 1px solid var(--amber);
+    background: var(--paper);
+}
+.number
+{
+    color: var(--sage);
+    letter-spacing: 2px;
+    font-size: 9px;
+}
+.treatment-grid button
+{
+    background: transparent;
+    border: 0;
+    color: var(--amber);
+    border-bottom: 1px solid var(--line);
+    margin-right: 20px;
+    padding: 8px 0;
+}
+.about
+{
+    align-items: center;
+}
+.about-art
+{
+    background: hsl(33 27% 85%);
+    border-radius: 200px 200px 0 0;
+    padding: 40px 10px;
+    text-align: center;
+}
+.about-art img
+{
+    width: 100%;
+}
+.about-art span
+{
+    font-size: 9px;
+    letter-spacing: 3px;
+}
+table
+{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-top: 30px;
+}
+caption
+{
+    text-align: left;
+    color: var(--sage);
+    margin-bottom: 15px;
+}
+th, td
+{
+    text-align: left;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    font-weight: 400;
+}
+td
+{
+    text-align: right;
+    white-space: nowrap;
+}
+aside
+{
+    background: hsl(24 30% 38%);
+    color: var(--paper);
+    padding: 42px;
+}
+aside .eyebrow
+{
+    color: hsl(38 30% 85%);
+}
+.price
+{
+    font: 70px/1 Georgia, serif;
+    margin: 25px 0;
+}
+.light
+{
+    background: var(--paper);
+    color: var(--ink);
+}
+.booking
+{
+    background: hsl(130 14% 89%);
+}
+form
+{
+    background: hsl(38 50% 96% / .75);
+    padding: 30px;
+    border-radius: 12px;
+    min-width: 0;
+}
+label
+{
+    display: block;
+    font-size: 11px;
+    margin-bottom: 16px;
+}
+input, select, textarea
+{
+    display: block;
+    width: 100%;
+    min-width: 0;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 12px;
+    background: var(--paper);
+    color: var(--ink);
+    margin-top: 6px;
+    font-size: 13px;
+}
+.fields, .principles
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.checkbox
+{
+    display: flex;
+    align-items: start;
+    gap: 10px;
+}
+.checkbox input
+{
+    width: auto;
+    margin: 4px 0;
+}
+.notice, .fine
+{
+    font-size: 12px;
+}
+#result
+{
+    font-size: 13px;
+    color: var(--sage);
+}
+.journal
+{
+    text-align: center;
+}
+.journal > p
+{
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.principles
+{
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 40px;
+}
+.faq
+{
+    padding-top: 0;
+    max-width: 940px;
+    margin: auto;
+}
+details
+{
+    border-bottom: 1px solid var(--line);
+    padding: 20px 0;
+}
+summary
+{
+    font-size: 15px;
+}
+details p
+{
+    font-size: 13px;
+}
+footer
+{
+    padding: 55px 6%;
+    background: var(--ink);
+    color: var(--paper);
+}
+footer div
+{
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    margin: 30px 0;
+    font-size: 13px;
+}
+@media (max-width: 700px)
+{
+    header
+    {
+        min-height: 80px;
+        padding: 15px 6%;
+    }
+    .wordmark
+    {
+        font-size: 28px;
+    }
+    #menu
+    {
+        display: block;
+        background: transparent;
+        border: 1px solid var(--line);
+        padding: 7px 12px;
+        color: var(--ink);
+    }
+    nav
+    {
+        display: none;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        right: 0;
+        background: var(--paper);
+        padding: 25px;
+    }
+    nav.open
+    {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 18px;
+    }
+    .hero
+    {
+        min-height: 730px;
+        padding-top: 65px;
+    }
+    h1
+    {
+        font-size: 56px;
+        letter-spacing: -2px;
+    }
+    .hero .actions
+    {
+        gap: 18px;
+    }
+    .hero-note
+    {
+        max-width: 250px;
+    }
+    .still-life
+    {
+        width: 235px;
+        opacity: .55;
+    }
+    .vertical, .desktop
+    {
+        display: none;
+    }
+    .section
+    {
+        padding: 60px 6%;
+    }
+    .section-top, .about, .pricing, .booking, .treatment-grid, .fields, .principles
+    {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    .section-top > p
+    {
+        text-align: left;
+    }
+    .treatment-grid article, aside, form
+    {
+        padding: 25px;
+    }
+    .about-art
+    {
+        max-height: 370px;
+        overflow: hidden;
+    }
+    .about-art img
+    {
+        max-height: 280px;
+    }
+    .faq
+    {
+        padding-top: 10px;
+    }
+}
+@media (prefers-reduced-motion: reduce)
+{
+    html { scroll-behavior: auto; }
+    .steam i { animation: none; }
+}

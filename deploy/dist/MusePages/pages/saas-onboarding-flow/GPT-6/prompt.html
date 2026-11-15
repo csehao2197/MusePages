@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TaskFlow — A thoughtful start | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>TaskFlow — A thoughtful start</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code>Create a SaaS onboarding flow prompt for Next.js:
+
+1. LAYOUT
+- Clean, centered card layout
+- Progress indicator showing current step (1/4, 2/4, etc.)
+- Step title and description
+- Back and Continue buttons
+- &quot;Skip for now&quot; link where appropriate
+- Next.js app router structure with reusable StepShell, ProgressIndicator, FormField, and CTA components
+- Server-safe defaults with client components only where form state needs interactivity
+
+2. STEP 1: SIGNUP AND WORKSPACE
+- &quot;Welcome to TaskFlow!&quot;
+- &quot;Let&#39;s set up your workspace in 2 minutes&quot;
+- Input: Workspace name
+- Input: Your role (dropdown: Founder, Manager, Developer, Designer, Other)
+- Optional: Upload workspace logo
+- Account fields for name, email, password, and terms acceptance if the user has not signed up yet
+
+3. STEP 2: ACTIVATION CHECKLIST
+- Show a short checklist that explains what the user must complete before reaching the dashboard
+- Include workspace setup, first project, first teammate, notification preferences, and billing status
+- Mark completed items visually and show a persistent &quot;Finish setup&quot; CTA
+
+4. STEP 3: PRODUCT TOUR
+- Add a lightweight product tour with cards for dashboard, projects, tasks, integrations, reports, and settings
+- Include &quot;Next&quot;, &quot;Back&quot;, &quot;Skip tour&quot;, and &quot;Restart tour&quot; states
+- Add empty-state copy for accounts with no data yet
+
+5. STEP 4: INVITE TEAM
+- &quot;Invite your team members&quot;
+- Email input field with &quot;Add another&quot; button
+- Bulk invite option (paste multiple emails)
+- Role selector for each invite (Admin, Member, Viewer)
+- &quot;I&#39;ll do this later&quot; skip option
+
+6. STEP 5: CREATE FIRST PROJECT
+- &quot;Create your first project&quot;
+- Project name input
+- Project template selector (cards):
+  - Blank Project
+  - Marketing Campaign
+  - Product Launch
+  - Software Development
+  - Client Project
+- Each template shows preview of included tasks
+- Empty-state guidance if the user skips project creation
+
+7. STEP 6: PERSONALIZE
+- &quot;Customize your experience&quot;
+- Notification preferences (checkboxes)
+- Theme preference (Light/Dark/System)
+- Keyboard shortcuts toggle
+- &quot;Get tips via email&quot; opt-in
+- Lifecycle email capture with choices for product tips, onboarding nudges, billing reminders, and release notes
+
+8. BILLING HANDOFF
+- Add a billing handoff screen for free trial, team plan, or usage-based plans
+- Show plan summary, seats, next billing date, payment CTA, and &quot;continue on free plan&quot; option
+- Include reassurance copy about changing plans later
+
+9. COMPLETION SCREEN
+- Celebration animation/confetti
+- &quot;You&#39;re all set!&quot;
+- Summary of what was created
+- &quot;Go to Dashboard&quot; primary button
+- &quot;Watch getting started video&quot; secondary link
+
+10. NEXT.JS IMPLEMENTATION NOTES
+- Use accessible form labels, validation copy, and keyboard-friendly step navigation.
+- Store step state in a single onboarding object that can be saved to an API route later.
+- Include loading, error, skipped, and completed states for every step.
+- Make the flow responsive, with a compact progress indicator on mobile and a side checklist on desktop.
+
+Design: Minimal, focused design. One action per screen. Use illustrations or icons to make it friendly.
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

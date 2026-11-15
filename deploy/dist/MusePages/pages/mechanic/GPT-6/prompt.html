@@ -1,0 +1,1088 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Axle &amp; Co Auto Repair | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Axle &amp; Co Auto Repair</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Axle &amp; Co Auto Repair — Full Website Prompt
+# websiteprompts.ai
+
+---
+
+## 1. GOAL STATEMENT
+
+Build a complete, production-ready website for **Axle &amp; Co Auto Repair** — an independent mechanic and MOT testing garage — that communicates industrial expertise, honest pricing, and trustworthy service through a dark charcoal, signal orange, and light grey design system with Space Grotesk display type and full Framer Motion animation.
+
+---
+
+## 2. TECH STACK
+
+- **Framework:** React 18 + Vite + TypeScript
+- **Styling:** Tailwind CSS v3 (with custom CSS variables)
+- **Animation:** Framer Motion (`motion/react`) — import exclusively from `motion/react`, never from `framer-motion`
+- **UI Components:** shadcn/ui
+- **Icons:** lucide-react
+- **Fonts:** Google Fonts (Space Grotesk + Plus Jakarta Sans via `&lt;link&gt;` in index.html)
+
+---
+
+## 3. DESIGN SYSTEM
+
+Place these CSS custom properties in `src/index.css` inside `:root {}`:
+
+```css
+:root {
+  /* Core Palette */
+  --color-bg:           hsl(216, 14%, 10%);     /* #111418 — deep charcoal */
+  --color-surface:      hsl(216, 12%, 14%);     /* #1c2028 — card background */
+  --color-surface-mid:  hsl(216, 10%, 18%);     /* #272d35 — elevated surface */
+  --color-border:       hsl(216, 10%, 22%);     /* #313840 — subtle border */
+  --color-orange:       hsl(22, 97%, 47%);      /* #e85d04 — signal orange */
+  --color-orange-hover: hsl(22, 97%, 42%);      /* #d15203 — orange hover */
+  --color-orange-glow:  hsla(22, 97%, 47%, 0.18); /* orange ambient glow */
+  --color-grey-light:   hsl(0, 0%, 91%);        /* #e8e8e8 — light grey */
+  --color-grey-mid:     hsl(0, 0%, 62%);        /* #9e9e9e — mid grey */
+  --color-grey-dark:    hsl(0, 0%, 38%);        /* #616161 — dark grey */
+  --color-white:        hsl(0, 0%, 100%);
+
+  /* Typography Scale */
+  --text-hero:    clamp(50px, 7.5vw, 130px);
+  --text-h2:      clamp(32px, 4vw, 60px);
+  --text-h3:      clamp(20px, 2.2vw, 28px);
+  --text-body:    16px;
+  --text-small:   14px;
+  --text-label:   12px;
+
+  /* Spacing */
+  --section-px:   clamp(24px, 5vw, 96px);
+  --section-py:   clamp(64px, 8vw, 120px);
+
+  /* Radius */
+  --radius-sm:    6px;
+  --radius-md:    12px;
+  --radius-lg:    20px;
+
+  /* Transitions */
+  --ease-out:     cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out:  cubic-bezier(0.65, 0, 0.35, 1);
+}
+```
+
+Set `body { background-color: var(--color-bg); color: var(--color-grey-light); }` globally.
+
+---
+
+## 4. TYPOGRAPHY
+
+Add to `index.html` `&lt;head&gt;`:
+```html
+&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot; /&gt;
+&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin /&gt;
+&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap&quot; rel=&quot;stylesheet&quot; /&gt;
+```
+
+**Usage rules:**
+- `font-family: &#39;Space Grotesk&#39;, sans-serif; font-weight: 800;` — ALL display headlines (hero, section heads, emergency CTA, marquee)
+- `font-family: &#39;Space Grotesk&#39;, sans-serif; font-weight: 700;` — Navbar logo, pricing table headers, trust marquee text
+- `font-family: &#39;Plus Jakarta Sans&#39;, sans-serif; font-weight: 400;` — Body copy, card descriptions, footer content
+- `font-family: &#39;Plus Jakarta Sans&#39;, sans-serif; font-weight: 600;` — Service card names, nav links, price chips, CTA labels
+- `font-family: &#39;Plus Jakarta Sans&#39;, sans-serif; font-weight: 300;` — Subheadlines, captions, supporting text under emergency section
+- Letter spacing: headlines use `letter-spacing: -0.02em`; labels use `letter-spacing: 0.08em; text-transform: uppercase`
+
+---
+
+## 5. VISUAL EFFECTS
+
+### Effect 1 — Hero Horizontal Gradient
+```css
+background: linear-gradient(
+  to right,
+  rgba(17, 20, 24, 0.96) 0%,
+  rgba(17, 20, 24, 0.80) 40%,
+  rgba(17, 20, 24, 0.40) 65%,
+  rgba(17, 20, 24, 0.00) 100%
+);
+```
+Applied as `absolute inset-0 z-10` over the hero image. Ensures text is readable across all photo compositions without relying on image placement.
+
+### Effect 2 — Background Watermark &quot;AXLE&quot;
+```jsx
+&lt;span
+  className=&quot;absolute select-none pointer-events-none&quot;
+  style={{
+    fontFamily: &quot;&#39;Space Grotesk&#39;, sans-serif&quot;,
+    fontWeight: 800,
+    fontSize: &quot;clamp(240px, 34vw, 520px)&quot;,
+    color: &quot;rgba(232, 232, 232, 0.03)&quot;,
+    right: &quot;-2%&quot;,
+    top: &quot;50%&quot;,
+    transform: &quot;translateY(-50%)&quot;,
+    lineHeight: 1,
+    letterSpacing: &quot;-0.04em&quot;,
+    zIndex: 5,
+    userSelect: &quot;none&quot;,
+  }}
+&gt;
+  AXLE
+&lt;/span&gt;
+```
+Sits between the photo layer and the gradient overlay (z-5). Creates brand identity without distracting from content.
+
+### Effect 3 — Orange Glow on Cards (hover state)
+```css
+box-shadow: 0 0 0 0 transparent;
+transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+```
+On hover: `box-shadow: 0 8px 32px var(--color-orange-glow), 0 2px 8px rgba(0,0,0,0.4);` — creates a subtle orange ambient halo around hovered cards.
+
+### Effect 4 — Infinite Scrolling Marquee
+```css
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 35s linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+```
+Duplicate the trust text content once so the animation loops seamlessly.
+
+### Effect 5 — Fixed Orange CTA Bar (hero-only)
+A `position: fixed; bottom: 0; left: 0; right: 0; z-index: 100` bar that renders only when the user is within the hero viewport. Controlled via a `useEffect` + `IntersectionObserver` on a hero sentinel `&lt;div&gt;`. Fades out (`opacity: 0; pointer-events: none`) when hero exits view.
+
+---
+
+## 6. COMPONENT BREAKDOWN
+
+---
+
+### SECTION 1 — NAVBAR
+
+**Layout:** `position: sticky; top: 0; z-index: 90`
+- Background: `var(--color-bg)` with `border-bottom: 1px solid var(--color-border)`
+- Padding: `16px var(--section-px)`
+- Flex: `justify-between; align-items: center`
+
+**Left — Logo:**
+```jsx
+&lt;div style={{ fontFamily: &quot;&#39;Space Grotesk&#39;, sans-serif&quot;, fontWeight: 800, fontSize: &quot;22px&quot;, color: &quot;var(--color-white)&quot;, letterSpacing: &quot;-0.02em&quot; }}&gt;
+  AXLE &lt;span style={{ color: &quot;var(--color-orange)&quot; }}&gt;&amp;&lt;/span&gt; CO
+&lt;/div&gt;
+```
+
+**Center — Nav Links (desktop only, hidden on mobile):**
+`Services · About · Pricing · Reviews` — rendered as `&lt;nav&gt;` with `&lt;a&gt;` tags, `color: var(--color-grey-mid)`, `font-family: Plus Jakarta Sans 600`, `font-size: 15px`, `letter-spacing: 0.01em`. On hover: `color: var(--color-grey-light)`, transition `0.15s ease`.
+
+**Right — CTA:**
+```jsx
+&lt;a href=&quot;#booking&quot;
+  style={{
+    backgroundColor: &quot;var(--color-orange)&quot;,
+    color: &quot;var(--color-white)&quot;,
+    fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;,
+    fontWeight: 600,
+    fontSize: &quot;15px&quot;,
+    padding: &quot;10px 20px&quot;,
+    borderRadius: &quot;var(--radius-sm)&quot;,
+    textDecoration: &quot;none&quot;,
+    transition: &quot;background-color 0.15s ease&quot;,
+  }}
+  onMouseEnter={e =&gt; e.currentTarget.style.backgroundColor = &quot;var(--color-orange-hover)&quot;}
+  onMouseLeave={e =&gt; e.currentTarget.style.backgroundColor = &quot;var(--color-orange)&quot;}
+&gt;
+  Book Online
+&lt;/a&gt;
+```
+
+**Mobile:** Hamburger icon (Menu from lucide-react), slides down a full-width drawer with links stacked vertically, same dark background.
+
+---
+
+### SECTION 2 — HERO
+
+**Container:** `position: relative; height: 100vh; min-height: 640px; overflow: hidden`
+
+**Layer 1 — Photo:**
+```jsx
+{/* Image: Professional mechanic in a clean navy uniform lying beneath a lifted car on a hydraulic ramp, dramatic underlighting from LED inspection lights casting warm orange/white on engine components. Background shows a tidy garage with tools organized on an orange pegboard. Cinematic wide-angle composition, slight grain, warm industrial atmosphere. */}
+&lt;img
+  src=&quot;&quot;
+  alt=&quot;Mechanic working beneath a lifted car at Axle &amp; Co garage&quot;
+  className=&quot;absolute inset-0 w-full h-full object-cover object-center&quot;
+  style={{ zIndex: 1 }}
+/&gt;
+```
+
+**Layer 2 — Watermark &quot;AXLE&quot;** (z-index: 5, see Effect 2 above)
+
+**Layer 3 — Horizontal Gradient Overlay** (z-index: 10, see Effect 1 above)
+
+**Layer 4 — Content (z-index: 20):**
+```jsx
+&lt;div
+  className=&quot;absolute inset-0 flex flex-col justify-center&quot;
+  style={{
+    zIndex: 20,
+    paddingLeft: &quot;var(--section-px)&quot;,
+    paddingRight: &quot;var(--section-px)&quot;,
+    maxWidth: &quot;820px&quot;,
+  }}
+&gt;
+  {/* Eyebrow label */}
+  &lt;motion.p
+    initial={{ opacity: 0, y: 16 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+    style={{
+      fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;,
+      fontWeight: 600,
+      fontSize: &quot;13px&quot;,
+      letterSpacing: &quot;0.14em&quot;,
+      textTransform: &quot;uppercase&quot;,
+      color: &quot;var(--color-orange)&quot;,
+      marginBottom: &quot;20px&quot;,
+    }}
+  &gt;
+    Trusted Independent Garage · Est. 2008
+  &lt;/motion.p&gt;
+
+  {/* Main Headline */}
+  &lt;motion.h1
+    initial={{ opacity: 0, y: 24 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+    style={{
+      fontFamily: &quot;&#39;Space Grotesk&#39;, sans-serif&quot;,
+      fontWeight: 800,
+      fontSize: &quot;var(--text-hero)&quot;,
+      color: &quot;var(--color-white)&quot;,
+      lineHeight: 0.92,
+      letterSpacing: &quot;-0.03em&quot;,
+      marginBottom: &quot;28px&quot;,
+    }}
+  &gt;
+    WE FIX WHAT&lt;br /&gt;
+    &lt;span style={{ color: &quot;var(--color-orange)&quot; }}&gt;OTHERS&lt;/span&gt; MISS.
+  &lt;/motion.h1&gt;
+
+  {/* Subheadline */}
+  &lt;motion.p
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+    style={{
+      fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;,
+      fontWeight: 300,
+      fontSize: &quot;clamp(16px, 1.8vw, 22px)&quot;,
+      color: &quot;var(--color-grey-light)&quot;,
+      maxWidth: &quot;480px&quot;,
+      lineHeight: 1.6,
+      marginBottom: &quot;40px&quot;,
+    }}
+  &gt;
+    Honest diagnostics. Fair pricing. Guaranteed work.
+  &lt;/motion.p&gt;
+
+  {/* CTA Buttons */}
+  &lt;motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
+    style={{ display: &quot;flex&quot;, gap: &quot;16px&quot;, flexWrap: &quot;wrap&quot; }}
+  &gt;
+    &lt;a href=&quot;#booking&quot; style={{
+      backgroundColor: &quot;var(--color-orange)&quot;,
+      color: &quot;var(--color-white)&quot;,
+      fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;,
+      fontWeight: 600,
+      fontSize: &quot;16px&quot;,
+      padding: &quot;14px 28px&quot;,
+      borderRadius: &quot;var(--radius-sm)&quot;,
+      textDecoration: &quot;none&quot;,
+      display: &quot;inline-flex&quot;,
+      alignItems: &quot;center&quot;,
+      gap: &quot;8px&quot;,
+    }}&gt;
+      Book a Service
+    &lt;/a&gt;
+    &lt;a href=&quot;tel:02079460823&quot; style={{
+      border: &quot;1px solid var(--color-border)&quot;,
+      color: &quot;var(--color-grey-light)&quot;,
+      fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;,
+      fontWeight: 600,
+      fontSize: &quot;16px&quot;,
+      padding: &quot;14px 28px&quot;,
+      borderRadius: &quot;var(--radius-sm)&quot;,
+      textDecoration: &quot;none&quot;,
+      display: &quot;inline-flex&quot;,
+      alignItems: &quot;center&quot;,
+      gap: &quot;8px&quot;,
+      backgroundColor: &quot;rgba(255,255,255,0.04)&quot;,
+    }}&gt;
+      020 7946 0823
+    &lt;/a&gt;
+  &lt;/motion.div&gt;
+&lt;/div&gt;
+```
+
+**Layer 5 — Scroll indicator (bottom center, z-20):**
+```jsx
+&lt;motion.div
+  animate={{ y: [0, 8, 0] }}
+  transition={{ duration: 2, repeat: Infinity, ease: &quot;easeInOut&quot; }}
+  style={{ position: &quot;absolute&quot;, bottom: &quot;80px&quot;, left: &quot;50%&quot;, transform: &quot;translateX(-50%)&quot;, zIndex: 20 }}
+&gt;
+  &lt;ChevronDown size={28} color=&quot;rgba(232,232,232,0.4)&quot; /&gt;
+&lt;/motion.div&gt;
+```
+
+**Fixed Call Bar (Layer 6 — separate DOM node at root level):**
+```jsx
+&lt;motion.div
+  initial={{ y: 80, opacity: 0 }}
+  animate={heroVisible ? { y: 0, opacity: 1 } : { y: 80, opacity: 0 }}
+  transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+  style={{
+    position: &quot;fixed&quot;,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    zIndex: 100,
+    backgroundColor: &quot;var(--color-orange)&quot;,
+    padding: &quot;14px var(--section-px)&quot;,
+    display: &quot;flex&quot;,
+    alignItems: &quot;center&quot;,
+    justifyContent: &quot;center&quot;,
+    gap: &quot;14px&quot;,
+    pointerEvents: heroVisible ? &quot;auto&quot; : &quot;none&quot;,
+  }}
+&gt;
+  &lt;PhoneCall size={22} color=&quot;white&quot; /&gt;
+  &lt;span style={{
+    fontFamily: &quot;&#39;Space Grotesk&#39;, sans-serif&quot;,
+    fontWeight: 800,
+    fontSize: &quot;clamp(18px, 2.2vw, 28px)&quot;,
+    color: &quot;var(--color-white)&quot;,
+    letterSpacing: &quot;-0.01em&quot;,
+  }}&gt;
+    CALL NOW: 020 7946 0823
+  &lt;/span&gt;
+  &lt;span style={{
+    fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;,
+    fontWeight: 400,
+    fontSize: &quot;14px&quot;,
+    color: &quot;rgba(255,255,255,0.75)&quot;,
+    marginLeft: &quot;8px&quot;,
+  }}&gt;
+    Mon–Sat 8am–6pm · Emergency callout available
+  &lt;/span&gt;
+&lt;/motion.div&gt;
+```
+
+Use `useEffect` + `IntersectionObserver` on a `ref` at the bottom of the hero section. Set state `heroVisible: boolean`. When hero exits viewport, bar slides down and becomes non-interactive.
+
+---
+
+### SECTION 3 — SERVICES GRID
+
+**Container:** `padding: var(--section-py) var(--section-px); background: var(--color-bg)`
+
+**Section heading:**
+```jsx
+&lt;div style={{ marginBottom: &quot;56px&quot; }}&gt;
+  &lt;p style={{ /* orange eyebrow */ fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;, fontWeight: 600, fontSize: &quot;13px&quot;, letterSpacing: &quot;0.14em&quot;, textTransform: &quot;uppercase&quot;, color: &quot;var(--color-orange)&quot;, marginBottom: &quot;12px&quot; }}&gt;
+    What We Do
+  &lt;/p&gt;
+  &lt;h2 style={{ fontFamily: &quot;&#39;Space Grotesk&#39;, sans-serif&quot;, fontWeight: 800, fontSize: &quot;var(--text-h2)&quot;, color: &quot;var(--color-white)&quot;, letterSpacing: &quot;-0.02em&quot;, lineHeight: 1.05 }}&gt;
+    Full-Spectrum&lt;br /&gt;
+    &lt;span style={{ color: &quot;var(--color-grey-mid)&quot; }}&gt;Auto Services&lt;/span&gt;
+  &lt;/h2&gt;
+&lt;/div&gt;
+```
+
+**Grid:** `display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;` on desktop. Each card shares a continuous surface — the `2px` gap creates thin dark dividers. On mobile: `repeat(1, 1fr)`, stacked.
+
+**6 Service Cards — identical structure, staggered reveal (delay: index × 0.08s):**
+
+Each card:
+```jsx
+&lt;motion.div
+  initial={{ opacity: 0, y: 32 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true, margin: &quot;-60px&quot; }}
+  transition={{ duration: 0.55, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+  whileHover={{ y: -3 }}
+  style={{
+    backgroundColor: &quot;var(--color-surface)&quot;,
+    padding: &quot;36px 32px&quot;,
+    borderLeft: &quot;3px solid transparent&quot;,
+    transition: &quot;border-color 0.2s ease, box-shadow 0.2s ease&quot;,
+    cursor: &quot;default&quot;,
+  }}
+  onHoverStart={e =&gt; {
+    e.currentTarget.style.borderLeftColor = &quot;var(--color-orange)&quot;;
+    e.currentTarget.style.boxShadow = &quot;0 8px 32px var(--color-orange-glow)&quot;;
+  }}
+  onHoverEnd={e =&gt; {
+    e.currentTarget.style.borderLeftColor = &quot;transparent&quot;;
+    e.currentTarget.style.boxShadow = &quot;none&quot;;
+  }}
+&gt;
+  {/* Icon */}
+  &lt;div style={{ marginBottom: &quot;20px&quot; }}&gt;
+    &lt;Icon size={32} color=&quot;var(--color-orange)&quot; strokeWidth={1.5} /&gt;
+  &lt;/div&gt;
+  {/* Service name */}
+  &lt;h3 style={{ fontFamily: &quot;&#39;Space Grotesk&#39;, sans-serif&quot;, fontWeight: 700, fontSize: &quot;var(--text-h3)&quot;, color: &quot;var(--color-white)&quot;, marginBottom: &quot;10px&quot;, letterSpacing: &quot;-0.01em&quot; }}&gt;
+    {service.name}
+  &lt;/h3&gt;
+  {/* Description */}
+  &lt;p style={{ fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;, fontWeight: 400, fontSize: &quot;15px&quot;, color: &quot;var(--color-grey-mid)&quot;, lineHeight: 1.65, marginBottom: &quot;24px&quot; }}&gt;
+    {service.description}
+  &lt;/p&gt;
+  {/* Price chip */}
+  &lt;span style={{
+    display: &quot;inline-block&quot;,
+    backgroundColor: &quot;rgba(232, 93, 4, 0.12)&quot;,
+    color: &quot;var(--color-orange)&quot;,
+    fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;,
+    fontWeight: 600,
+    fontSize: &quot;13px&quot;,
+    letterSpacing: &quot;0.04em&quot;,
+    padding: &quot;6px 14px&quot;,
+    borderRadius: &quot;100px&quot;,
+    border: &quot;1px solid rgba(232, 93, 4, 0.25)&quot;,
+  }}&gt;
+    {service.price}
+  &lt;/span&gt;
+&lt;/motion.div&gt;
+```
+
+**6 Services Data:**
+```ts
+const services = [
+  {
+    name: &quot;MOT Testing&quot;,
+    icon: ClipboardCheck,  // lucide-react
+    description: &quot;Class 4 and Class 7 MOT tests on-site. Fast turnaround, same-day results, retest included free within 10 working days.&quot;,
+    price: &quot;From £29.99&quot;,
+  },
+  {
+    name: &quot;Engine Repair&quot;,
+    icon: Gauge,
+    description: &quot;Full engine diagnostics and repair. From sensor faults to full rebuilds — we get to the root cause, not just the symptom.&quot;,
+    price: &quot;From £95&quot;,
+  },
+  {
+    name: &quot;Brake Service&quot;,
+    icon: CircleDot,
+    description: &quot;Pad and disc replacement, brake fluid flush, handbrake adjustment. All brake work comes with a 12-month parts guarantee.&quot;,
+    price: &quot;From £79 per axle&quot;,
+  },
+  {
+    name: &quot;Tyres&quot;,
+    icon: Circle,
+    description: &quot;Supply and fit for all tyre sizes. Budget, mid-range, and premium brands. Free wheel balancing included with every tyre fit.&quot;,
+    price: &quot;From £49 fitted&quot;,
+  },
+  {
+    name: &quot;Air Con Regas&quot;,
+    icon: Wind,
+    description: &quot;Full air conditioning recharge using R134a or R1234yf refrigerant. Includes system leak check and performance test.&quot;,
+    price: &quot;From £49&quot;,
+  },
+  {
+    name: &quot;Diagnostics&quot;,
+    icon: ScanLine,
+    description: &quot;OBD2 full-system scan covering engine, ABS, airbag, gearbox, and emissions. We read the codes and explain what they actually mean.&quot;,
+    price: &quot;From £35&quot;,
+  },
+];
+```
+
+---
+
+### SECTION 4 — WHY CHOOSE US
+
+**Container:** `padding: var(--section-py) var(--section-px); background: var(--color-surface)`
+
+**Layout:** Single row on desktop (`display: flex; gap: 40px; flex-wrap: wrap`), stacked on mobile.
+
+**Section heading (left-aligned, full width above the row):**
+```
+Why Axle &amp; Co?
+```
+Space Grotesk 800, `var(--text-h2)`, white, `-0.02em` letter-spacing, `margin-bottom: 48px`.
+
+**4 Trust Points — each:**
+```jsx
+&lt;motion.div
+  initial={{ opacity: 0, x: -20 }}
+  whileInView={{ opacity: 1, x: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.5, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+  style={{ flex: &quot;1 1 220px&quot;, display: &quot;flex&quot;, alignItems: &quot;flex-start&quot;, gap: &quot;16px&quot; }}
+&gt;
+  {/* Orange circle checkmark */}
+  &lt;div style={{
+    width: &quot;40px&quot;,
+    height: &quot;40px&quot;,
+    borderRadius: &quot;50%&quot;,
+    backgroundColor: &quot;var(--color-orange)&quot;,
+    display: &quot;flex&quot;,
+    alignItems: &quot;center&quot;,
+    justifyContent: &quot;center&quot;,
+    flexShrink: 0,
+    marginTop: &quot;2px&quot;,
+  }}&gt;
+    &lt;Check size={20} color=&quot;white&quot; strokeWidth={2.5} /&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;p style={{ fontFamily: &quot;&#39;Space Grotesk&#39;, sans-serif&quot;, fontWeight: 700, fontSize: &quot;18px&quot;, color: &quot;var(--color-white)&quot;, marginBottom: &quot;6px&quot; }}&gt;
+      {point.title}
+    &lt;/p&gt;
+    &lt;p style={{ fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;, fontWeight: 400, fontSize: &quot;15px&quot;, color: &quot;var(--color-grey-mid)&quot;, lineHeight: 1.6 }}&gt;
+      {point.detail}
+    &lt;/p&gt;
+  &lt;/div&gt;
+&lt;/motion.div&gt;
+```
+
+**4 Trust Points Data:**
+```ts
+const trustPoints = [
+  {
+    title: &quot;No Hidden Charges&quot;,
+    detail: &quot;We quote before we touch. If we discover additional work needed, we call you first. Always.&quot;,
+  },
+  {
+    title: &quot;12-Month Parts Guarantee&quot;,
+    detail: &quot;Every part we fit is guaranteed for 12 months or 12,000 miles — whichever comes first.&quot;,
+  },
+  {
+    title: &quot;Same-Day Service Available&quot;,
+    detail: &quot;Most repairs completed while you wait. Drop off in the morning, collect by afternoon.&quot;,
+  },
+  {
+    title: &quot;Free Collection &amp; Delivery&quot;,
+    detail: &quot;Can&#39;t get to us? We&#39;ll collect your vehicle and return it to your door. Free within 5 miles.&quot;,
+  },
+];
+```
+
+---
+
+### SECTION 5 — THE TEAM
+
+**Container:** `padding: var(--section-py) var(--section-px); background: var(--color-bg)`
+
+**Section heading:**
+```
+Meet the Mechanics
+```
+Space Grotesk 800, white, `var(--text-h2)`, `margin-bottom: 56px`.
+
+**Grid:** `display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px` on desktop. `repeat(1, 1fr)` on mobile.
+
+**3 Team Cards:**
+```jsx
+&lt;motion.div
+  initial={{ opacity: 0, y: 24 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true, margin: &quot;-40px&quot; }}
+  transition={{ duration: 0.55, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+  style={{
+    backgroundColor: &quot;var(--color-surface)&quot;,
+    borderRadius: &quot;var(--radius-md)&quot;,
+    overflow: &quot;hidden&quot;,
+    borderTop: &quot;4px solid transparent&quot;,
+    transition: &quot;border-color 0.15s ease&quot;,
+  }}
+  onHoverStart={e =&gt; e.currentTarget.style.borderTopColor = &quot;var(--color-orange)&quot;}
+  onHoverEnd={e =&gt; e.currentTarget.style.borderTopColor = &quot;transparent&quot;}
+&gt;
+  {/* Photo — 4:3 ratio */}
+  &lt;div style={{ aspectRatio: &quot;4/3&quot;, overflow: &quot;hidden&quot;, position: &quot;relative&quot; }}&gt;
+    {/* Image: [mechanic portrait — see copy below] */}
+    &lt;img src=&quot;&quot; alt=&quot;{member.name} — mechanic at Axle &amp; Co&quot; className=&quot;w-full h-full object-cover object-center&quot; /&gt;
+  &lt;/div&gt;
+
+  &lt;div style={{ padding: &quot;24px 28px 28px&quot; }}&gt;
+    &lt;h3 style={{ fontFamily: &quot;&#39;Space Grotesk&#39;, sans-serif&quot;, fontWeight: 700, fontSize: &quot;22px&quot;, color: &quot;var(--color-white)&quot;, marginBottom: &quot;4px&quot; }}&gt;
+      {member.name}
+    &lt;/h3&gt;
+    &lt;p style={{ fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;, fontWeight: 400, fontSize: &quot;14px&quot;, color: &quot;var(--color-grey-mid)&quot;, marginBottom: &quot;16px&quot; }}&gt;
+      {member.experience} years experience
+    &lt;/p&gt;
+    {/* Speciality chip */}
+    &lt;span style={{
+      display: &quot;inline-block&quot;,
+      backgroundColor: &quot;var(--color-orange)&quot;,
+      color: &quot;white&quot;,
+      fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;,
+      fontWeight: 600,
+      fontSize: &quot;12px&quot;,
+      letterSpacing: &quot;0.06em&quot;,
+      textTransform: &quot;uppercase&quot;,
+      padding: &quot;5px 12px&quot;,
+      borderRadius: &quot;4px&quot;,
+    }}&gt;
+      {member.speciality}
+    &lt;/span&gt;
+  &lt;/div&gt;
+&lt;/motion.div&gt;
+```
+
+**3 Team Members Data:**
+```ts
+const team = [
+  {
+    name: &quot;Danny Rowe&quot;,
+    experience: 18,
+    speciality: &quot;Engine &amp; Transmission&quot;,
+    imageDesc: &quot;Mid-30s male mechanic in clean navy uniform, confident expression, arms crossed, workshop background with orange-lit pegboard tools, portrait orientation, warm professional lighting&quot;,
+  },
+  {
+    name: &quot;Priya Mehta&quot;,
+    experience: 11,
+    speciality: &quot;Diagnostics &amp; Electronics&quot;,
+    imageDesc: &quot;Early 30s female mechanic holding a diagnostic tablet, professional navy uniform, slight smile, clean workshop background, warm studio lighting, portrait orientation&quot;,
+  },
+  {
+    name: &quot;Carl Hutchins&quot;,
+    experience: 24,
+    speciality: &quot;Brakes &amp; Suspension&quot;,
+    imageDesc: &quot;Late 40s male senior mechanic, weathered hands, confident expression, navy uniform with Axle &amp; Co logo, garage background with lifted vehicle partially visible, portrait orientation, cinematic lighting&quot;,
+  },
+];
+```
+
+---
+
+### SECTION 6 — TRUST MARQUEE
+
+**Container:**
+```jsx
+&lt;div style={{
+  backgroundColor: &quot;var(--color-surface)&quot;,
+  borderTop: &quot;1px solid var(--color-border)&quot;,
+  borderBottom: &quot;1px solid var(--color-border)&quot;,
+  padding: &quot;20px 0&quot;,
+  overflow: &quot;hidden&quot;,
+}}&gt;
+  &lt;div className=&quot;marquee-track&quot; style={{ display: &quot;flex&quot;, alignItems: &quot;center&quot;, gap: &quot;0&quot; }}&gt;
+    {/* Render items twice for seamless loop */}
+    {[...items, ...items].map((item, i) =&gt; (
+      &lt;React.Fragment key={i}&gt;
+        &lt;span style={{
+          fontFamily: &quot;&#39;Space Grotesk&#39;, sans-serif&quot;,
+          fontWeight: 700,
+          fontSize: &quot;clamp(14px, 1.4vw, 17px)&quot;,
+          color: &quot;var(--color-grey-light)&quot;,
+          letterSpacing: &quot;0.02em&quot;,
+          whiteSpace: &quot;nowrap&quot;,
+          padding: &quot;0 40px&quot;,
+        }}&gt;
+          {item}
+        &lt;/span&gt;
+        &lt;span style={{ color: &quot;var(--color-orange)&quot;, fontSize: &quot;22px&quot;, lineHeight: 1, flexShrink: 0 }}&gt;·&lt;/span&gt;
+      &lt;/React.Fragment&gt;
+    ))}
+  &lt;/div&gt;
+&lt;/div&gt;
+```
+
+**Marquee Items:**
+```ts
+const items = [
+  &quot;AA Approved Garage&quot;,
+  &quot;ASE Certified Technicians&quot;,
+  &quot;500+ Five-Star Reviews&quot;,
+  &quot;Est. 2008&quot;,
+  &quot;IMI Registered&quot;,
+  &quot;RAC Approved Garage&quot;,
+  &quot;Free MOT Retest&quot;,
+  &quot;12-Month Parts Guarantee&quot;,
+];
+```
+
+Animation: `35s linear infinite`, pauses on hover. CSS defined in `index.css` as shown in Effect 4.
+
+---
+
+### SECTION 7 — TRANSPARENT PRICING
+
+**Container:** `padding: var(--section-py) var(--section-px); background: var(--color-bg)`
+
+**Section heading:**
+```
+No Surprises. Just Prices.
+```
+Space Grotesk 800, white, `var(--text-h2)`, `margin-bottom: 12px`.
+
+**Subhead:** &quot;Every price shown is the starting rate — we&#39;ll always confirm your exact quote before starting work.&quot; — Plus Jakarta Sans 300, `var(--color-grey-mid)`, 17px, `margin-bottom: 48px`.
+
+**Table:**
+```jsx
+&lt;div style={{
+  borderRadius: &quot;var(--radius-md)&quot;,
+  overflow: &quot;hidden&quot;,
+  border: &quot;1px solid var(--color-border)&quot;,
+}}&gt;
+  {/* Header row */}
+  &lt;div style={{
+    display: &quot;grid&quot;,
+    gridTemplateColumns: &quot;1fr 160px 140px&quot;,
+    backgroundColor: &quot;var(--color-orange)&quot;,
+    padding: &quot;16px 28px&quot;,
+  }}&gt;
+    &lt;span style={{ fontFamily: &quot;&#39;Space Grotesk&#39;, sans-serif&quot;, fontWeight: 700, fontSize: &quot;14px&quot;, color: &quot;white&quot;, letterSpacing: &quot;0.08em&quot;, textTransform: &quot;uppercase&quot; }}&gt;Service&lt;/span&gt;
+    &lt;span style={{ fontFamily: &quot;&#39;Space Grotesk&#39;, sans-serif&quot;, fontWeight: 700, fontSize: &quot;14px&quot;, color: &quot;white&quot;, letterSpacing: &quot;0.08em&quot;, textTransform: &quot;uppercase&quot; }}&gt;From Price&lt;/span&gt;
+    &lt;span style={{ fontFamily: &quot;&#39;Space Grotesk&#39;, sans-serif&quot;, fontWeight: 700, fontSize: &quot;14px&quot;, color: &quot;white&quot;, letterSpacing: &quot;0.08em&quot;, textTransform: &quot;uppercase&quot; }}&gt;Avg. Time&lt;/span&gt;
+  &lt;/div&gt;
+
+  {/* Data rows — alternate between --color-surface and --color-surface-mid */}
+  {pricingRows.map((row, i) =&gt; (
+    &lt;div key={i} style={{
+      display: &quot;grid&quot;,
+      gridTemplateColumns: &quot;1fr 160px 140px&quot;,
+      padding: &quot;18px 28px&quot;,
+      backgroundColor: i % 2 === 0 ? &quot;var(--color-surface)&quot; : &quot;var(--color-surface-mid)&quot;,
+      borderBottom: &quot;1px solid var(--color-border)&quot;,
+    }}&gt;
+      &lt;span style={{ fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;, fontWeight: 500, fontSize: &quot;16px&quot;, color: &quot;var(--color-grey-light)&quot; }}&gt;{row.service}&lt;/span&gt;
+      &lt;span style={{ fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;, fontWeight: 600, fontSize: &quot;16px&quot;, color: &quot;var(--color-orange)&quot; }}&gt;{row.price}&lt;/span&gt;
+      &lt;span style={{ fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;, fontWeight: 400, fontSize: &quot;15px&quot;, color: &quot;var(--color-grey-mid)&quot; }}&gt;{row.time}&lt;/span&gt;
+    &lt;/div&gt;
+  ))}
+&lt;/div&gt;
+```
+
+**8 Pricing Rows:**
+```ts
+const pricingRows = [
+  { service: &quot;MOT Test (Class 4)&quot;,        price: &quot;From £29.99&quot;,      time: &quot;45–60 min&quot; },
+  { service: &quot;Full Service&quot;,               price: &quot;From £149&quot;,        time: &quot;2–3 hrs&quot; },
+  { service: &quot;Interim Service&quot;,            price: &quot;From £89&quot;,         time: &quot;1–2 hrs&quot; },
+  { service: &quot;Brake Pads (per axle)&quot;,      price: &quot;From £79&quot;,         time: &quot;1 hr&quot; },
+  { service: &quot;Brake Discs + Pads&quot;,         price: &quot;From £149 axle&quot;,   time: &quot;1.5 hrs&quot; },
+  { service: &quot;Air Con Regas&quot;,              price: &quot;From £49&quot;,         time: &quot;30–45 min&quot; },
+  { service: &quot;Diagnostic Scan&quot;,            price: &quot;From £35&quot;,         time: &quot;30 min&quot; },
+  { service: &quot;Tyre Supply &amp; Fit (each)&quot;,   price: &quot;From £49 fitted&quot;,  time: &quot;20 min each&quot; },
+];
+```
+
+**Note below table:** &quot;All prices exclude VAT. Prices are indicative starting rates and may vary by vehicle. We confirm all costs before work begins.&quot; — Plus Jakarta Sans 300, 13px, `var(--color-grey-dark)`, `margin-top: 16px`.
+
+---
+
+### SECTION 8 — EMERGENCY SECTION
+
+**Container:**
+```jsx
+&lt;section style={{
+  backgroundColor: &quot;var(--color-orange)&quot;,
+  padding: &quot;var(--section-py) var(--section-px)&quot;,
+  textAlign: &quot;center&quot;,
+  position: &quot;relative&quot;,
+  overflow: &quot;hidden&quot;,
+}}&gt;
+  {/* Background watermark &quot;24/7&quot; for depth */}
+  &lt;span style={{
+    position: &quot;absolute&quot;,
+    fontFamily: &quot;&#39;Space Grotesk&#39;, sans-serif&quot;,
+    fontWeight: 800,
+    fontSize: &quot;clamp(180px, 28vw, 400px)&quot;,
+    color: &quot;rgba(0,0,0,0.06)&quot;,
+    left: &quot;50%&quot;,
+    top: &quot;50%&quot;,
+    transform: &quot;translate(-50%, -50%)&quot;,
+    pointerEvents: &quot;none&quot;,
+    userSelect: &quot;none&quot;,
+    whiteSpace: &quot;nowrap&quot;,
+  }}&gt;
+    24/7
+  &lt;/span&gt;
+
+  &lt;div style={{ position: &quot;relative&quot;, zIndex: 1 }}&gt;
+    &lt;motion.h2
+      initial={{ opacity: 0, y: 32 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+      style={{
+        fontFamily: &quot;&#39;Space Grotesk&#39;, sans-serif&quot;,
+        fontWeight: 800,
+        fontSize: &quot;clamp(36px, 5vw, 80px)&quot;,
+        color: &quot;white&quot;,
+        letterSpacing: &quot;-0.03em&quot;,
+        lineHeight: 0.95,
+        marginBottom: &quot;28px&quot;,
+      }}
+    &gt;
+      BROKEN DOWN?&lt;br /&gt;
+      WE COME TO YOU.
+    &lt;/motion.h2&gt;
+
+    &lt;motion.a
+      href=&quot;tel:02079460823&quot;
+      initial={{ opacity: 0, scale: 0.95 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+      style={{
+        display: &quot;block&quot;,
+        fontFamily: &quot;&#39;Space Grotesk&#39;, sans-serif&quot;,
+        fontWeight: 800,
+        fontSize: &quot;clamp(44px, 6vw, 90px)&quot;,
+        color: &quot;white&quot;,
+        letterSpacing: &quot;-0.03em&quot;,
+        lineHeight: 1,
+        textDecoration: &quot;none&quot;,
+        marginBottom: &quot;20px&quot;,
+      }}
+    &gt;
+      020 7946 0823
+    &lt;/motion.a&gt;
+
+    &lt;p style={{
+      fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;,
+      fontWeight: 300,
+      fontSize: &quot;clamp(15px, 1.6vw, 19px)&quot;,
+      color: &quot;rgba(255,255,255,0.82)&quot;,
+      letterSpacing: &quot;0.02em&quot;,
+    }}&gt;
+      Available 7 days · Usually within 2 hours · No call-out charge within 10 miles
+    &lt;/p&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+```
+
+---
+
+### SECTION 9 — FOOTER
+
+**Container:** `background: var(--color-surface); border-top: 1px solid var(--color-border); padding: 64px var(--section-px) 32px`
+
+**3-Column Grid (`display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 48px`):**
+
+**Column 1 — Brand:**
+```
+AXLE &amp; CO
+Est. 2008 — trusted independent garage serving South London and the surrounding area. MOT, servicing, repairs, and tyres.
+
+Unit 4, Grange Road Industrial Estate
+London, SE1 3BT
+
+Open Mon–Fri: 8:00am – 6:00pm
+Saturday: 8:00am – 4:00pm
+Sunday: Emergency callout only
+```
+Logo in Space Grotesk 800, white. Address and hours in Plus Jakarta Sans 400, `var(--color-grey-mid)`, 14px. Map link: &quot;Get Directions →&quot; in orange, 14px.
+
+**Column 2 — Opening Hours Table:**
+```
+Monday      8:00am – 6:00pm
+Tuesday     8:00am – 6:00pm
+Wednesday   8:00am – 6:00pm
+Thursday    8:00am – 6:00pm
+Friday      8:00am – 6:00pm
+Saturday    8:00am – 4:00pm
+Sunday      Emergency only
+```
+Rendered as a `&lt;table&gt;` with `border-collapse: collapse`. Each `&lt;tr&gt;` has `padding: 6px 0`. Day names in Plus Jakarta Sans 600, white; times in Plus Jakarta Sans 400, `var(--color-grey-mid)`.
+
+**Column 3 — Certifications &amp; Links:**
+```
+Certifications
+AA Approved Garage
+RAC Approved Garage
+IMI Registered (No. 123456)
+ASE Certified Technicians
+
+Quick Links
+Book Online
+View Pricing
+Get a Quote
+Contact Us
+```
+Certifications with small ShieldCheck icon (lucide, 14px, orange) beside each. Links in Plus Jakarta Sans 400, `var(--color-grey-mid)`, hover orange.
+
+**Bottom bar (border-top: 1px solid var(--color-border); padding-top: 24px; margin-top: 40px):**
+```
+© 2024 Axle &amp; Co Auto Repair Ltd. All rights reserved. · Privacy Policy · Terms of Service
+```
+Center-aligned, Plus Jakarta Sans 400, 13px, `var(--color-grey-dark)`.
+
+---
+
+## 7. ANIMATIONS
+
+| Element | Type | Duration | Delay | Easing |
+|---|---|---|---|---|
+| Navbar (on load) | Fade in from y:-8 | 0.4s | 0s | ease-out |
+| Hero eyebrow | Fade in from y:16 | 0.5s | 0.1s | [0.22,1,0.36,1] |
+| Hero headline | Fade in from y:24 | 0.7s | 0.2s | [0.22,1,0.36,1] |
+| Hero subhead | Fade in from y:20 | 0.6s | 0.4s | [0.22,1,0.36,1] |
+| Hero CTAs | Fade in from y:20 | 0.6s | 0.55s | [0.22,1,0.36,1] |
+| Scroll chevron | Float y:0→8→0 | 2s | — | ease-in-out, repeat:Infinity |
+| Fixed call bar | Slide from y:80 | 0.35s | — | [0.22,1,0.36,1] |
+| Service cards | Fade from y:32, stagger | 0.55s | index×0.08s | [0.22,1,0.36,1] |
+| Service card (hover) | y:-3 | 0.2s | — | ease |
+| Trust points | Fade from x:-20, stagger | 0.5s | index×0.1s | [0.22,1,0.36,1] |
+| Team cards | Fade from y:24, stagger | 0.55s | index×0.1s | [0.22,1,0.36,1] |
+| Trust marquee | Continuous scroll | 35s | — | linear, infinite |
+| Pricing table rows | Fade from x:-16, stagger | 0.4s | index×0.06s | [0.22,1,0.36,1] |
+| Emergency section h2 | Fade from y:32 | 0.65s | 0s | [0.22,1,0.36,1] |
+| Emergency phone number | Fade + scale from 0.95 | 0.5s | 0.2s | [0.22,1,0.36,1] |
+
+All `whileInView` animations use `viewport={{ once: true }}` so they fire once on scroll.
+
+---
+
+## 8. RESPONSIVE SPECIFICATIONS
+
+### Desktop (≥1024px)
+- Services grid: `grid-template-columns: repeat(3, 1fr)` — 2 rows of 3 cards
+- Trust points: single horizontal row, `flex-wrap: wrap`
+- Team cards: `repeat(3, 1fr)`
+- Pricing table: 3 columns visible
+- Footer: 3-column grid
+- Marquee text: 17px
+- Hero text: full `clamp()` scale
+
+### Tablet (640px–1023px)
+- Services grid: `repeat(2, 1fr)` — 3 rows of 2 cards
+- Team cards: `repeat(2, 1fr)`
+- Footer: `repeat(2, 1fr)`, third column wraps to full width
+- Navbar: hide center nav links, show hamburger
+- Fixed call bar: reduce font size to 18px, hide supporting text
+
+### Mobile (&lt;640px)
+- Services grid: `repeat(1, 1fr)` — stacked
+- Team cards: `repeat(1, 1fr)` — stacked
+- Footer: single column, stacked
+- Hero: `min-height: 100svh`, headline at `clamp(44px, 12vw, 70px)`
+- Pricing table: hide &quot;Avg. Time&quot; column, show &quot;Service&quot; + &quot;From Price&quot; only
+- Fixed call bar: full width, `font-size: 18px`, just phone number + icon
+- Trust points: stacked vertically with `gap: 24px`
+
+---
+
+## 9. FULL COPY
+
+### Navbar
+- Logo: `AXLE &amp; CO`
+- Nav: `Services` · `About` · `Pricing` · `Reviews`
+- CTA: `Book Online`
+
+### Hero
+- Eyebrow: `Trusted Independent Garage · Est. 2008`
+- Headline line 1: `WE FIX WHAT`
+- Headline line 2: `OTHERS MISS.`
+- Subhead: `Honest diagnostics. Fair pricing. Guaranteed work.`
+- CTA 1: `Book a Service`
+- CTA 2: `020 7946 0823`
+- Fixed bar: `CALL NOW: 020 7946 0823` + `Mon–Sat 8am–6pm · Emergency callout available`
+
+### Services Section
+- Eyebrow: `What We Do`
+- Headline: `Full-Spectrum Auto Services`
+- Services: (see services data above)
+
+### Why Choose Us
+- Headline: `Why Axle &amp; Co?`
+- Points: (see trust points data above)
+
+### Team Section
+- Headline: `Meet the Mechanics`
+- Members: Danny Rowe / Priya Mehta / Carl Hutchins (see data above)
+
+### Pricing Section
+- Headline: `No Surprises. Just Prices.`
+- Subhead: `Every price shown is the starting rate — we&#39;ll always confirm your exact quote before starting work.`
+- Footnote: `All prices exclude VAT. Prices are indicative starting rates and may vary by vehicle. We confirm all costs before work begins.`
+
+### Emergency Section
+- Headline line 1: `BROKEN DOWN?`
+- Headline line 2: `WE COME TO YOU.`
+- Phone: `020 7946 0823`
+- Subtext: `Available 7 days · Usually within 2 hours · No call-out charge within 10 miles`
+
+### Footer
+- Tagline: `Est. 2008 — trusted independent garage serving South London and the surrounding area. MOT, servicing, repairs, and tyres.`
+- Address: `Unit 4, Grange Road Industrial Estate, London, SE1 3BT`
+- Map link: `Get Directions →`
+- Hours (see column 2 above)
+- Copyright: `© 2024 Axle &amp; Co Auto Repair Ltd. All rights reserved. · Privacy Policy · Terms of Service`
+
+---
+
+## 10. KEY DEPENDENCIES
+
+```json
+{
+  &quot;dependencies&quot;: {
+    &quot;react&quot;: &quot;^18.3.1&quot;,
+    &quot;react-dom&quot;: &quot;^18.3.1&quot;,
+    &quot;motion&quot;: &quot;^11.11.0&quot;,
+    &quot;lucide-react&quot;: &quot;^0.441.0&quot;,
+    &quot;tailwindcss&quot;: &quot;^3.4.13&quot;,
+    &quot;@shadcn/ui&quot;: &quot;latest&quot;
+  },
+  &quot;devDependencies&quot;: {
+    &quot;typescript&quot;: &quot;^5.5.3&quot;,
+    &quot;vite&quot;: &quot;^5.4.8&quot;,
+    &quot;@vitejs/plugin-react&quot;: &quot;^4.3.2&quot;
+  }
+}
+```
+
+**lucide-react icons used:**
+- `PhoneCall` — fixed call bar + emergency
+- `ClipboardCheck` — MOT card
+- `Gauge` — Engine card
+- `CircleDot` — Brakes card
+- `Circle` — Tyres card
+- `Wind` — Air Con card
+- `ScanLine` — Diagnostics card
+- `Check` — trust points
+- `ChevronDown` — hero scroll indicator
+- `ShieldCheck` — footer certifications
+- `Menu`, `X` — mobile nav
+
+**Important implementation notes:**
+1. Import all Framer Motion components from `motion/react`, not `framer-motion`
+2. All `whileHover` inside `whileInView` elements require the parent `motion.div` — do not split into separate divs
+3. The `IntersectionObserver` for the fixed call bar should observe a `ref` div placed at the bottom edge of the hero `&lt;section&gt;`, triggering when it exits the top of the viewport (threshold: 0)
+4. The marquee CSS animation must be defined in `index.css`, not inline styles, for browser compatibility
+5. Pricing table on mobile: wrap in a horizontally scrollable div with `-webkit-overflow-scrolling: touch`
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

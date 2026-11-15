@@ -1,0 +1,1137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ashford Manor — Where Your Story Begins | Prompt | MusePages</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f6f2;--ink:#203d37;--muted:#69756f;--line:#dce1d8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,sans-serif}
+    main{max-width:1000px;margin:auto;padding:32px 24px}a{color:inherit;text-underline-offset:4px}a:focus-visible,pre:focus-visible{outline:3px solid #ae592d;outline-offset:4px}
+    h1{font:normal clamp(28px,5vw,44px)/1.2 Georgia,serif;overflow-wrap:anywhere;margin:32px 0 16px}.intro{color:var(--muted)}
+    .codebox{min-width:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin-top:24px}
+    .codebox h2{margin:0;padding:12px 20px;background:#edf2eb;font:600 13px/1.5 system-ui,sans-serif;border-bottom:1px solid var(--line)}
+    pre{margin:0;padding:20px;max-height:70vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+    code{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+    @media(max-width:650px){main{padding:24px 16px}pre{padding:16px}code{font-size:13px}}
+  </style>
+</head>
+<body>
+  <main>
+    <a href="../../../index.html">Back to MusePages</a>
+    <h1>Ashford Manor — Where Your Story Begins</h1>
+    <p class="intro">The original prompt, shown as plain text. Select the text to copy it.</p>
+    <section class="codebox" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">Prompt</h2>
+      <pre tabindex="0" role="region" aria-label="Prompt text"><code># Ashford Manor Wedding Venue — Full Website Prompt
+# websiteprompts.ai
+
+---
+
+## 1. GOAL STATEMENT
+
+Build a complete, production-ready website for **Ashford Manor** — an exclusive country estate wedding venue — that communicates timeless romance, natural luxury, and exclusivity through a warm ivory, sage green, and aged gold design system with Cormorant Garamond display type and refined Framer Motion animation.
+
+---
+
+## 2. TECH STACK
+
+- **Framework:** React 18 + Vite + TypeScript
+- **Styling:** Tailwind CSS v3 (with custom CSS variables)
+- **Animation:** Framer Motion (`motion/react`) — import exclusively from `motion/react`, never from `framer-motion`
+- **UI Components:** shadcn/ui
+- **Icons:** lucide-react
+- **Fonts:** Google Fonts (Cormorant Garamond + Plus Jakarta Sans via `&lt;link&gt;` in index.html)
+
+---
+
+## 3. DESIGN SYSTEM
+
+Place these CSS custom properties in `src/index.css` inside `:root {}`:
+
+```css
+:root {
+  /* Core Palette */
+  --color-bg:           hsl(40, 33%, 97%);      /* #faf7f2 — warm ivory */
+  --color-bg-warm:      hsl(38, 28%, 94%);      /* #f3efe8 — slightly deeper ivory */
+  --color-surface:      hsl(0, 0%, 100%);       /* pure white for cards */
+  --color-border:       hsl(40, 20%, 88%);      /* #e4ddd2 — warm border */
+  --color-border-gold:  hsl(40, 52%, 56%);      /* #c4a35a — aged gold border */
+  --color-sage:         hsl(104, 14%, 38%);     /* #5a7052 — sage green */
+  --color-sage-light:   hsl(104, 14%, 94%);     /* #edf2ec — sage tint */
+  --color-sage-mid:     hsl(104, 14%, 55%);     /* #7d9875 — medium sage */
+  --color-gold:         hsl(40, 52%, 56%);      /* #c4a35a — aged gold */
+  --color-gold-light:   hsl(40, 52%, 92%);      /* #f5edd9 — gold tint */
+  --color-charcoal:     hsl(210, 10%, 20%);     /* #2d3238 — deep charcoal text */
+  --color-text-mid:     hsl(210, 8%, 42%);      /* #636b74 — mid text */
+  --color-text-light:   hsl(40, 12%, 60%);      /* #a09880 — light warm text */
+  --color-white:        hsl(0, 0%, 100%);
+
+  /* Typography Scale */
+  --text-hero:    clamp(52px, 8vw, 140px);
+  --text-h2:      clamp(34px, 4.5vw, 72px);
+  --text-h3:      clamp(22px, 2.4vw, 32px);
+  --text-body:    16px;
+  --text-small:   14px;
+  --text-label:   12px;
+
+  /* Spacing */
+  --section-px:   clamp(24px, 5vw, 96px);
+  --section-py:   clamp(72px, 9vw, 140px);
+
+  /* Radius */
+  --radius-sm:    4px;
+  --radius-md:    8px;
+  --radius-lg:    16px;
+
+  /* Transitions */
+  --ease-out:     cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-gentle:  cubic-bezier(0.4, 0, 0.2, 1);
+}
+```
+
+Set `body { background-color: var(--color-bg); color: var(--color-charcoal); }` globally.
+
+---
+
+## 4. TYPOGRAPHY
+
+Add to `index.html` `&lt;head&gt;`:
+```html
+&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot; /&gt;
+&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin /&gt;
+&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600&amp;display=swap&quot; rel=&quot;stylesheet&quot; /&gt;
+```
+
+**Usage rules:**
+- `font-family: &#39;Cormorant Garamond&#39;, serif; font-weight: 600; font-style: italic;` — ALL display headlines (hero, section heads, venue names, couple names in testimonials)
+- `font-family: &#39;Cormorant Garamond&#39;, serif; font-weight: 400; font-style: italic;` — Pull quotes, decorative subtext
+- `font-family: &#39;Plus Jakarta Sans&#39;, sans-serif; font-weight: 300;` — Body copy, card descriptions, supporting text
+- `font-family: &#39;Plus Jakarta Sans&#39;, sans-serif; font-weight: 400;` — Form inputs, nav links, general body
+- `font-family: &#39;Plus Jakarta Sans&#39;, sans-serif; font-weight: 500;` — Labels, metadata, date chips
+- `font-family: &#39;Plus Jakarta Sans&#39;, sans-serif; font-weight: 600;` — CTA buttons, nav CTAs, form submit
+- Letter spacing: display headlines use `letter-spacing: -0.02em`; all-caps labels use `letter-spacing: 0.12em; text-transform: uppercase`
+- Line height: display text `1.0`; body text `1.75`
+
+---
+
+## 5. VISUAL EFFECTS
+
+### Effect 1 — Hero Radial + Linear Vignette
+```css
+background:
+  radial-gradient(ellipse at center, rgba(0,0,0,0) 30%, rgba(0,0,0,0.55) 100%),
+  linear-gradient(to bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,0.50) 100%);
+```
+Applied as `absolute inset-0 z-10` over the hero image. Creates a natural cinematic vignette that darkens edges and bottom, ensuring text legibility regardless of photo composition.
+
+### Effect 2 — Animated Gold Underline
+```tsx
+{/* Decorative gold line, placed immediately beneath the hero headline */}
+&lt;motion.div
+  initial={{ scaleX: 0 }}
+  animate={{ scaleX: 1 }}
+  transition={{ duration: 1.2, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
+  style={{
+    height: &quot;2px&quot;,
+    width: &quot;160px&quot;,
+    backgroundColor: &quot;var(--color-gold)&quot;,
+    transformOrigin: &quot;left center&quot;,
+    margin: &quot;28px auto 32px&quot;,
+  }}
+/&gt;
+```
+Grows from left to right after the headline fades in, animating `scaleX: 0 to 1` over `1.2s` with `delay: 0.8s`. The `transformOrigin: &quot;left center&quot;` makes it draw left-to-right. Purely decorative.
+
+### Effect 3 — Background Watermark &quot;MANOR&quot;
+```jsx
+&lt;span
+  className=&quot;absolute select-none pointer-events-none&quot;
+  style={{
+    fontFamily: &quot;&#39;Cormorant Garamond&#39;, serif&quot;,
+    fontWeight: 600,
+    fontStyle: &quot;italic&quot;,
+    fontSize: &quot;clamp(200px, 30vw, 460px)&quot;,
+    color: &quot;rgba(90, 112, 82, 0.025)&quot;,
+    right: &quot;-1%&quot;,
+    top: &quot;50%&quot;,
+    transform: &quot;translateY(-50%)&quot;,
+    lineHeight: 1,
+    letterSpacing: &quot;-0.03em&quot;,
+    zIndex: 5,
+    userSelect: &quot;none&quot;,
+  }}
+&gt;
+  MANOR
+&lt;/span&gt;
+```
+Sits between the photo layer (z-1) and the gradient overlay (z-10). Renders in sage at 2.5% opacity — subliminally reinforces the brand name without competing with the photography.
+
+### Effect 4 — Venue Card Parallax Scale on Hover
+Outer card container is a `motion.div` with `whileHover={{ scale: 1.02 }}` and `transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}`. Inside it, a nested `motion.div` wrapping only the `&lt;img&gt;` has `whileHover={{ scale: 1.06 }}` with the same transition. The two different scale values create a zoom-within-zoom parallax effect that feels natural and cinematic. The outer card must have `overflow: hidden` and `border-radius` set to contain the inner scale.
+
+### Effect 5 — Gold Separator Lines
+Between the Hero and Venue Spaces sections, and between the Testimonials and Availability CTA sections:
+```jsx
+&lt;div style={{
+  display: &quot;flex&quot;,
+  alignItems: &quot;center&quot;,
+  gap: &quot;16px&quot;,
+  padding: &quot;0 var(--section-px)&quot;,
+}}&gt;
+  &lt;div style={{ flex: 1, height: &quot;1px&quot;, backgroundColor: &quot;var(--color-border)&quot; }} /&gt;
+  &lt;span style={{ color: &quot;var(--color-gold)&quot;, fontSize: &quot;20px&quot; }}&gt;✦&lt;/span&gt;
+  &lt;div style={{ flex: 1, height: &quot;1px&quot;, backgroundColor: &quot;var(--color-border)&quot; }} /&gt;
+&lt;/div&gt;
+```
+
+### Effect 6 — Form Input Focus Ring
+In `index.css`:
+```css
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 0 3px rgba(196, 163, 90, 0.30);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+```
+Gold glow ring on the sage-background enquiry form inputs.
+
+---
+
+## 6. COMPONENT BREAKDOWN
+
+---
+
+### SECTION 1 — NAVBAR
+
+**Layout:** `position: sticky; top: 0; z-index: 90`
+- Background: `rgba(250, 247, 242, 0.92)` + `backdrop-filter: blur(12px) saturate(1.5)`
+- Border bottom: `1px solid var(--color-border)`
+- Padding: `18px var(--section-px)`
+- Structure: 3-part flex row — `[left nav] [center logo] [right CTA]`
+
+**Left nav links (desktop only, hidden `&lt;768px`):** `Services · Gallery · Packages · Testimonials · Blog`
+Plus Jakarta Sans 400, `14px`, `letter-spacing: 0.02em`, `color: var(--color-text-mid)`. On hover: `color: var(--color-sage)`, transition `0.15s ease`.
+
+**Center logo:**
+```jsx
+&lt;div style={{ textAlign: &quot;center&quot;, flexShrink: 0 }}&gt;
+  &lt;div style={{
+    fontFamily: &quot;&#39;Cormorant Garamond&#39;, serif&quot;,
+    fontWeight: 600,
+    fontStyle: &quot;italic&quot;,
+    fontSize: &quot;clamp(18px, 2vw, 24px)&quot;,
+    color: &quot;var(--color-charcoal)&quot;,
+    letterSpacing: &quot;0.04em&quot;,
+    lineHeight: 1.1,
+  }}&gt;
+    Ashford Manor
+  &lt;/div&gt;
+  &lt;div style={{
+    width: &quot;32px&quot;,
+    height: &quot;1px&quot;,
+    backgroundColor: &quot;var(--color-gold)&quot;,
+    margin: &quot;5px auto 0&quot;,
+  }} /&gt;
+&lt;/div&gt;
+```
+
+**Right:** `Contact` plain link + `Enquire` filled sage button.
+```jsx
+&lt;a href=&quot;#enquire&quot; style={{
+  backgroundColor: &quot;var(--color-sage)&quot;,
+  color: &quot;white&quot;,
+  fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;,
+  fontWeight: 600,
+  fontSize: &quot;14px&quot;,
+  padding: &quot;9px 20px&quot;,
+  borderRadius: &quot;var(--radius-sm)&quot;,
+  textDecoration: &quot;none&quot;,
+  letterSpacing: &quot;0.02em&quot;,
+  transition: &quot;background-color 0.15s ease&quot;,
+}}&gt;
+  Enquire
+&lt;/a&gt;
+```
+
+**Mobile (&lt;768px):** Centered logo only + `Menu` icon (lucide) right-aligned. Tap opens a full-screen ivory overlay with all links stacked vertically (Plus Jakarta Sans 400, 22px, `var(--color-charcoal)`).
+
+---
+
+### SECTION 2 — HERO
+
+**Container:** `position: relative; height: 100vh; min-height: 680px; overflow: hidden`
+
+**Layer 1 — Photo (z-index: 1):**
+```jsx
+{/* Image: Outdoor wedding ceremony setup at a grand English country estate on a summer afternoon. White wooden chairs arranged in symmetrical rows facing a floral arch covered in white roses, peonies, and trailing eucalyptus. Golden hour sunlight filters through the canopy of mature oak trees at the frame&#39;s edges, casting long warm rays across a lush manicured lawn. A stone manor house is softly visible out of focus in the background. Warm, romantic, aspirational. Shot on 85mm, shallow depth of field, wide crop. */}
+&lt;img
+  src=&quot;&quot;
+  alt=&quot;Outdoor wedding ceremony on the lawns of Ashford Manor&quot;
+  className=&quot;absolute inset-0 w-full h-full object-cover object-center&quot;
+  style={{ zIndex: 1 }}
+/&gt;
+```
+
+**Layer 2 — Watermark &quot;MANOR&quot; (z-index: 5):** See Effect 3 above.
+
+**Layer 3 — Vignette overlay (z-index: 10):** See Effect 1 above.
+
+**Layer 4 — Centered Content (z-index: 20):**
+```jsx
+&lt;div style={{
+  position: &quot;absolute&quot;,
+  inset: 0,
+  zIndex: 20,
+  display: &quot;flex&quot;,
+  flexDirection: &quot;column&quot;,
+  alignItems: &quot;center&quot;,
+  justifyContent: &quot;center&quot;,
+  textAlign: &quot;center&quot;,
+  padding: &quot;0 var(--section-px)&quot;,
+}}&gt;
+  {/* Eyebrow */}
+  &lt;motion.p
+    initial={{ opacity: 0, y: 12 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+    style={{
+      fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;,
+      fontWeight: 500,
+      fontSize: &quot;12px&quot;,
+      letterSpacing: &quot;0.18em&quot;,
+      textTransform: &quot;uppercase&quot;,
+      color: &quot;var(--color-gold)&quot;,
+      marginBottom: &quot;20px&quot;,
+    }}
+  &gt;
+    Ashford, Hertfordshire · Est. 1847
+  &lt;/motion.p&gt;
+
+  {/* Main Headline */}
+  &lt;motion.h1
+    initial={{ opacity: 0, y: 28 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.9, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+    style={{
+      fontFamily: &quot;&#39;Cormorant Garamond&#39;, serif&quot;,
+      fontWeight: 600,
+      fontStyle: &quot;italic&quot;,
+      fontSize: &quot;var(--text-hero)&quot;,
+      color: &quot;white&quot;,
+      lineHeight: 1.0,
+      letterSpacing: &quot;-0.02em&quot;,
+      maxWidth: &quot;960px&quot;,
+      marginBottom: 0,
+    }}
+  &gt;
+    Where Your Story Begins.
+  &lt;/motion.h1&gt;
+
+  {/* Animated Gold Underline */}
+  &lt;motion.div
+    initial={{ scaleX: 0 }}
+    animate={{ scaleX: 1 }}
+    transition={{ duration: 1.2, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
+    style={{
+      height: &quot;2px&quot;,
+      width: &quot;160px&quot;,
+      backgroundColor: &quot;var(--color-gold)&quot;,
+      transformOrigin: &quot;left center&quot;,
+      margin: &quot;28px auto 32px&quot;,
+    }}
+  /&gt;
+
+  {/* Subline */}
+  &lt;motion.p
+    initial={{ opacity: 0, y: 16 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.7, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+    style={{
+      fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;,
+      fontWeight: 300,
+      fontSize: &quot;clamp(15px, 1.6vw, 20px)&quot;,
+      color: &quot;rgba(255,255,255,0.85)&quot;,
+      maxWidth: &quot;600px&quot;,
+      lineHeight: 1.7,
+      marginBottom: &quot;12px&quot;,
+    }}
+  &gt;
+    An exclusive country manor for intimate weddings and grand celebrations alike.
+  &lt;/motion.p&gt;
+
+  {/* Capacity note */}
+  &lt;motion.p
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 0.6, delay: 0.65, ease: &quot;easeOut&quot; }}
+    style={{
+      fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;,
+      fontWeight: 300,
+      fontSize: &quot;15px&quot;,
+      color: &quot;rgba(255,255,255,0.60)&quot;,
+      letterSpacing: &quot;0.04em&quot;,
+      marginBottom: &quot;44px&quot;,
+    }}
+  &gt;
+    Capacity 20–180 guests · Licensed for civil ceremonies
+  &lt;/motion.p&gt;
+
+  {/* CTA Pair */}
+  &lt;motion.div
+    initial={{ opacity: 0, y: 16 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6, delay: 0.75, ease: [0.22, 1, 0.36, 1] }}
+    style={{ display: &quot;flex&quot;, gap: &quot;16px&quot;, flexWrap: &quot;wrap&quot;, justifyContent: &quot;center&quot; }}
+  &gt;
+    &lt;a href=&quot;#enquire&quot; style={{
+      backgroundColor: &quot;var(--color-sage)&quot;,
+      color: &quot;white&quot;,
+      fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;,
+      fontWeight: 600,
+      fontSize: &quot;15px&quot;,
+      padding: &quot;14px 32px&quot;,
+      borderRadius: &quot;var(--radius-sm)&quot;,
+      textDecoration: &quot;none&quot;,
+      letterSpacing: &quot;0.02em&quot;,
+    }}&gt;
+      Check Availability
+    &lt;/a&gt;
+    &lt;a href=&quot;#gallery&quot; style={{
+      border: &quot;1px solid rgba(255,255,255,0.55)&quot;,
+      color: &quot;white&quot;,
+      fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;,
+      fontWeight: 400,
+      fontSize: &quot;15px&quot;,
+      padding: &quot;14px 32px&quot;,
+      borderRadius: &quot;var(--radius-sm)&quot;,
+      textDecoration: &quot;none&quot;,
+      letterSpacing: &quot;0.02em&quot;,
+      backgroundColor: &quot;rgba(255,255,255,0.08)&quot;,
+    }}&gt;
+      View Our Gallery
+    &lt;/a&gt;
+  &lt;/motion.div&gt;
+&lt;/div&gt;
+```
+
+**Scroll indicator (z-20, bottom center):**
+```jsx
+&lt;motion.div
+  animate={{ y: [0, 10, 0] }}
+  transition={{ duration: 2.5, repeat: Infinity, ease: &quot;easeInOut&quot; }}
+  style={{ position: &quot;absolute&quot;, bottom: &quot;40px&quot;, left: &quot;50%&quot;, transform: &quot;translateX(-50%)&quot;, zIndex: 20 }}
+&gt;
+  &lt;ChevronDown size={24} color=&quot;rgba(255,255,255,0.45)&quot; /&gt;
+&lt;/motion.div&gt;
+```
+
+---
+
+### SECTION 3 — VENUE SPACES
+
+**Container:** `padding: var(--section-py) var(--section-px); background: var(--color-bg)`
+
+**Section heading (centered):**
+```jsx
+&lt;div style={{ textAlign: &quot;center&quot;, marginBottom: &quot;60px&quot; }}&gt;
+  &lt;p style={{ fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;, fontWeight: 500, fontSize: &quot;12px&quot;, letterSpacing: &quot;0.18em&quot;, textTransform: &quot;uppercase&quot;, color: &quot;var(--color-gold)&quot;, marginBottom: &quot;14px&quot; }}&gt;
+    Our Spaces
+  &lt;/p&gt;
+  &lt;h2 style={{ fontFamily: &quot;&#39;Cormorant Garamond&#39;, serif&quot;, fontWeight: 600, fontStyle: &quot;italic&quot;, fontSize: &quot;var(--text-h2)&quot;, color: &quot;var(--color-charcoal)&quot;, letterSpacing: &quot;-0.02em&quot;, lineHeight: 1.05 }}&gt;
+    Three Breathtaking Settings
+  &lt;/h2&gt;
+&lt;/div&gt;
+```
+
+**Grid:** `display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px` on desktop.
+
+**3 Venue Space Cards — each full-bleed 16:9 aspect ratio:**
+```jsx
+&lt;motion.div
+  key={space.name}
+  initial={{ opacity: 0, y: 32 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true, margin: &quot;-60px&quot; }}
+  transition={{ duration: 0.7, delay: index * 0.12, ease: [0.22, 1, 0.36, 1] }}
+  style={{
+    borderRadius: &quot;var(--radius-md)&quot;,
+    overflow: &quot;hidden&quot;,
+    position: &quot;relative&quot;,
+    aspectRatio: &quot;16/9&quot;,
+    cursor: &quot;pointer&quot;,
+  }}
+&gt;
+  {/* Parallax image — nested motion.div for independent scale */}
+  &lt;motion.div
+    style={{ position: &quot;absolute&quot;, inset: 0 }}
+    whileHover={{ scale: 1.06 }}
+    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+  &gt;
+    {/* Image: [see venue space image descriptions in data block below] */}
+    &lt;img src=&quot;&quot; alt={space.name + &quot; at Ashford Manor&quot;} className=&quot;w-full h-full object-cover object-center&quot; /&gt;
+  &lt;/motion.div&gt;
+
+  {/* Gradient overlay — darkens slightly more on hover via CSS transition */}
+  &lt;div style={{
+    position: &quot;absolute&quot;,
+    inset: 0,
+    background: &quot;linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.20) 50%, rgba(0,0,0,0) 100%)&quot;,
+    zIndex: 2,
+    transition: &quot;background 0.4s ease&quot;,
+  }} /&gt;
+
+  {/* Text overlay — bottom */}
+  &lt;div style={{ position: &quot;absolute&quot;, bottom: 0, left: 0, right: 0, padding: &quot;28px&quot;, zIndex: 3 }}&gt;
+    &lt;span style={{
+      display: &quot;block&quot;,
+      width: &quot;fit-content&quot;,
+      backgroundColor: &quot;rgba(196, 163, 90, 0.25)&quot;,
+      border: &quot;1px solid rgba(196, 163, 90, 0.5)&quot;,
+      color: &quot;var(--color-gold)&quot;,
+      fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;,
+      fontWeight: 500,
+      fontSize: &quot;12px&quot;,
+      letterSpacing: &quot;0.08em&quot;,
+      textTransform: &quot;uppercase&quot;,
+      padding: &quot;4px 12px&quot;,
+      borderRadius: &quot;2px&quot;,
+      marginBottom: &quot;10px&quot;,
+    }}&gt;
+      Up to {space.capacity} guests
+    &lt;/span&gt;
+    &lt;h3 style={{
+      fontFamily: &quot;&#39;Cormorant Garamond&#39;, serif&quot;,
+      fontWeight: 600,
+      fontStyle: &quot;italic&quot;,
+      fontSize: &quot;clamp(22px, 2.4vw, 32px)&quot;,
+      color: &quot;white&quot;,
+      letterSpacing: &quot;-0.01em&quot;,
+      lineHeight: 1.1,
+      marginBottom: &quot;6px&quot;,
+    }}&gt;
+      {space.name}
+    &lt;/h3&gt;
+    &lt;p style={{
+      fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;,
+      fontWeight: 300,
+      fontSize: &quot;14px&quot;,
+      color: &quot;rgba(255,255,255,0.72)&quot;,
+      lineHeight: 1.5,
+    }}&gt;
+      {space.tagline}
+    &lt;/p&gt;
+  &lt;/div&gt;
+&lt;/motion.div&gt;
+```
+
+**Venue Spaces Data:**
+```ts
+const venueSpaces = [
+  {
+    name: &quot;The Grand Hall&quot;,
+    capacity: 200,
+    tagline: &quot;Vaulted stone ceilings, crystal chandeliers, and original oak floors.&quot;,
+    imageDesc: &quot;Elegant wedding banquet in a grand stone hall with high vaulted ceilings, multiple crystal chandeliers casting warm candlelight, white floral centrepieces on round tables with ivory linens, 200 guests seated, wide-angle cinematic shot&quot;,
+  },
+  {
+    name: &quot;The Orangery&quot;,
+    capacity: 80,
+    tagline: &quot;Floor-to-ceiling glass, tropical botanicals, and dappled garden light.&quot;,
+    imageDesc: &quot;Intimate wedding reception inside a Victorian orangery with floor-to-ceiling arched glass windows, lush tropical hanging ferns and potted plants, white dining tables, warm golden afternoon light streaming through glass, wide shot&quot;,
+  },
+  {
+    name: &quot;The Garden Terrace&quot;,
+    capacity: 60,
+    tagline: &quot;Open-air celebrations beneath a canopy of fairy lights and stars.&quot;,
+    imageDesc: &quot;Outdoor evening wedding reception on a manicured stone terrace, thousands of warm fairy lights strung between mature trees, white-draped round tables, stone balustrade, rose bushes in bloom, warm dusk light, romantic and magical&quot;,
+  },
+];
+```
+
+---
+
+### SECTION 4 — WHAT&#39;S INCLUDED
+
+**Container:** `padding: var(--section-py) var(--section-px); background: var(--color-bg-warm)`
+
+**Layout:** `display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: center`
+
+**Left column — heading + prose:**
+```jsx
+&lt;div&gt;
+  &lt;p style={{ fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;, fontWeight: 500, fontSize: &quot;12px&quot;, letterSpacing: &quot;0.18em&quot;, textTransform: &quot;uppercase&quot;, color: &quot;var(--color-gold)&quot;, marginBottom: &quot;14px&quot; }}&gt;
+    Every Package Includes
+  &lt;/p&gt;
+  &lt;h2 style={{ fontFamily: &quot;&#39;Cormorant Garamond&#39;, serif&quot;, fontWeight: 600, fontStyle: &quot;italic&quot;, fontSize: &quot;var(--text-h2)&quot;, color: &quot;var(--color-charcoal)&quot;, letterSpacing: &quot;-0.02em&quot;, lineHeight: 1.05, marginBottom: &quot;28px&quot; }}&gt;
+    What&#39;s Included
+  &lt;/h2&gt;
+  &lt;p style={{ fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;, fontWeight: 300, fontSize: &quot;17px&quot;, color: &quot;var(--color-text-mid)&quot;, lineHeight: 1.75 }}&gt;
+    Every Ashford Manor wedding package includes exclusive use of the estate and all its facilities. We believe your wedding day should feel entirely yours — no shared spaces, no conflicting events, no compromises.
+  &lt;/p&gt;
+&lt;/div&gt;
+```
+
+**Right column — 14-item checklist in 2-col sub-grid:**
+```jsx
+&lt;ul style={{ display: &quot;grid&quot;, gridTemplateColumns: &quot;repeat(2, 1fr)&quot;, gap: &quot;14px 32px&quot;, listStyle: &quot;none&quot;, padding: 0, margin: 0 }}&gt;
+  {inclusions.map((item, i) =&gt; (
+    &lt;motion.li
+      key={i}
+      initial={{ opacity: 0, x: 12 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.4, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
+      style={{ display: &quot;flex&quot;, alignItems: &quot;flex-start&quot;, gap: &quot;10px&quot; }}
+    &gt;
+      &lt;Check size={16} color=&quot;var(--color-sage)&quot; strokeWidth={2.5} style={{ marginTop: &quot;3px&quot;, flexShrink: 0 }} /&gt;
+      &lt;span style={{ fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;, fontWeight: 400, fontSize: &quot;15px&quot;, color: &quot;var(--color-charcoal)&quot;, lineHeight: 1.5 }}&gt;
+        {item}
+      &lt;/span&gt;
+    &lt;/motion.li&gt;
+  ))}
+&lt;/ul&gt;
+```
+
+**14 Inclusions:**
+```ts
+const inclusions = [
+  &quot;Exclusive use of the entire estate&quot;,
+  &quot;Bridal suite for getting-ready prep&quot;,
+  &quot;5 acres of private landscaped gardens&quot;,
+  &quot;250-space private car park&quot;,
+  &quot;Licensed for civil ceremonies&quot;,
+  &quot;Dedicated wedding coordinator&quot;,
+  &quot;Ceremony and reception chairs&quot;,
+  &quot;Tables, linens, and crockery&quot;,
+  &quot;In-house catering available&quot;,
+  &quot;Bar facilities and full licence&quot;,
+  &quot;Accommodation for up to 22 guests&quot;,
+  &quot;Grand piano in The Grand Hall&quot;,
+  &quot;Award-winning floral designer referrals&quot;,
+  &quot;Complimentary menu tasting for two&quot;,
+];
+```
+
+---
+
+### SECTION 5 — WEDDING GALLERY
+
+**Container:** `padding: var(--section-py) var(--section-px); background: var(--color-bg)`
+
+**Section heading (centered, `margin-bottom: 56px`):**
+```
+A Glimpse of Your Day
+```
+Cormorant Garamond 600 italic, `var(--text-h2)`, `var(--color-charcoal)`, letter-spacing -0.02em.
+
+**Asymmetric 5-image grid using a 12-column CSS grid:**
+```jsx
+&lt;div style={{
+  display: &quot;grid&quot;,
+  gap: &quot;16px&quot;,
+  gridTemplateColumns: &quot;repeat(12, 1fr)&quot;,
+  gridTemplateRows: &quot;auto auto&quot;,
+}}&gt;
+  {/* Image 1 — Large landscape, columns 1-7, row 1 */}
+  &lt;div style={{ gridColumn: &quot;1 / 8&quot;, gridRow: &quot;1&quot;, aspectRatio: &quot;4/3&quot;, borderRadius: &quot;var(--radius-md)&quot;, overflow: &quot;hidden&quot; }}&gt;
+    {/* Image: Bride and groom exchanging vows under a floral arch on a sunlit lawn, golden hour warm light, candid emotional moment, soft focus background, romantic wide shot */}
+    &lt;img src=&quot;&quot; alt=&quot;Wedding ceremony vows under the floral arch at Ashford Manor&quot; className=&quot;w-full h-full object-cover object-center&quot; /&gt;
+  &lt;/div&gt;
+
+  {/* Image 2 — Portrait, columns 8-12, row 1 */}
+  &lt;div style={{ gridColumn: &quot;8 / 13&quot;, gridRow: &quot;1&quot;, aspectRatio: &quot;3/4&quot;, borderRadius: &quot;var(--radius-md)&quot;, overflow: &quot;hidden&quot; }}&gt;
+    {/* Image: Bridal bouquet close-up, white roses and peonies with trailing eucalyptus greenery, held in both hands with lace wedding dress visible, warm natural daylight, soft macro detail */}
+    &lt;img src=&quot;&quot; alt=&quot;Bridal bouquet detail — white roses and peonies&quot; className=&quot;w-full h-full object-cover object-center&quot; /&gt;
+  &lt;/div&gt;
+
+  {/* Image 3 — Portrait, columns 1-4, row 2 */}
+  &lt;div style={{ gridColumn: &quot;1 / 5&quot;, gridRow: &quot;2&quot;, aspectRatio: &quot;3/4&quot;, borderRadius: &quot;var(--radius-md)&quot;, overflow: &quot;hidden&quot; }}&gt;
+    {/* Image: Couple&#39;s first dance in The Grand Hall, crystal chandeliers above, dress hem in motion blur, close romantic crop, warm candlelight tones */}
+    &lt;img src=&quot;&quot; alt=&quot;First dance in The Grand Hall at Ashford Manor&quot; className=&quot;w-full h-full object-cover object-center&quot; /&gt;
+  &lt;/div&gt;
+
+  {/* Image 4 — Portrait, columns 5-8, row 2 */}
+  &lt;div style={{ gridColumn: &quot;5 / 9&quot;, gridRow: &quot;2&quot;, aspectRatio: &quot;3/4&quot;, borderRadius: &quot;var(--radius-md)&quot;, overflow: &quot;hidden&quot; }}&gt;
+    {/* Image: Elegant wedding table setting — ivory linen, gold cutlery, crystal glasses, white floral centrepiece with candles, detail shot, warm shallow depth of field */}
+    &lt;img src=&quot;&quot; alt=&quot;Elegant reception table setting at Ashford Manor&quot; className=&quot;w-full h-full object-cover object-center&quot; /&gt;
+  &lt;/div&gt;
+
+  {/* Image 5 — Square, columns 9-12, row 2 */}
+  &lt;div style={{ gridColumn: &quot;9 / 13&quot;, gridRow: &quot;2&quot;, aspectRatio: &quot;1/1&quot;, borderRadius: &quot;var(--radius-md)&quot;, overflow: &quot;hidden&quot; }}&gt;
+    {/* Image: The Orangery interior during an evening wedding reception, warm fairy lights through glass walls, tropical plants, guests in formal attire mingling, candid atmosphere */}
+    &lt;img src=&quot;&quot; alt=&quot;Evening reception in The Orangery at Ashford Manor&quot; className=&quot;w-full h-full object-cover object-center&quot; /&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+```
+
+**Below grid — centered link:**
+```jsx
+&lt;div style={{ textAlign: &quot;center&quot;, marginTop: &quot;40px&quot; }}&gt;
+  &lt;a href=&quot;#gallery&quot; style={{
+    fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;,
+    fontWeight: 500,
+    fontSize: &quot;15px&quot;,
+    color: &quot;var(--color-sage)&quot;,
+    textDecoration: &quot;none&quot;,
+    letterSpacing: &quot;0.04em&quot;,
+    borderBottom: &quot;1px solid var(--color-sage)&quot;,
+    paddingBottom: &quot;2px&quot;,
+    display: &quot;inline-flex&quot;,
+    alignItems: &quot;center&quot;,
+    gap: &quot;8px&quot;,
+  }}&gt;
+    View Full Gallery &lt;ArrowRight size={16} /&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+```
+
+---
+
+### SECTION 6 — TESTIMONIALS
+
+**Container:** `padding: var(--section-py) var(--section-px); background: var(--color-bg-warm)`
+
+**Section heading (centered, `margin-bottom: 56px`):**
+```
+Words From Our Couples
+```
+Cormorant Garamond 600 italic, `var(--text-h2)`, `var(--color-charcoal)`.
+
+**Grid:** `display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px`
+
+**3 Testimonial Cards:**
+```jsx
+&lt;motion.div
+  initial={{ opacity: 0, y: 28 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true, margin: &quot;-40px&quot; }}
+  transition={{ duration: 0.65, delay: index * 0.12, ease: [0.22, 1, 0.36, 1] }}
+  style={{
+    backgroundColor: &quot;var(--color-surface)&quot;,
+    borderRadius: &quot;var(--radius-md)&quot;,
+    borderLeft: &quot;3px solid var(--color-gold)&quot;,
+    padding: &quot;36px 32px&quot;,
+    boxShadow: &quot;0 2px 20px rgba(0,0,0,0.04)&quot;,
+  }}
+&gt;
+  {/* 5 stars */}
+  &lt;div style={{ display: &quot;flex&quot;, gap: &quot;4px&quot;, marginBottom: &quot;20px&quot; }}&gt;
+    {[...Array(5)].map((_, s) =&gt; (
+      &lt;Star key={s} size={16} fill=&quot;var(--color-gold)&quot; color=&quot;var(--color-gold)&quot; /&gt;
+    ))}
+  &lt;/div&gt;
+
+  {/* Quote */}
+  &lt;p style={{
+    fontFamily: &quot;&#39;Cormorant Garamond&#39;, serif&quot;,
+    fontWeight: 400,
+    fontStyle: &quot;italic&quot;,
+    fontSize: &quot;clamp(18px, 1.8vw, 22px)&quot;,
+    color: &quot;var(--color-charcoal)&quot;,
+    lineHeight: 1.65,
+    marginBottom: &quot;28px&quot;,
+  }}&gt;
+    &quot;{testimonial.quote}&quot;
+  &lt;/p&gt;
+
+  {/* Couple name + date chip */}
+  &lt;div style={{ display: &quot;flex&quot;, alignItems: &quot;center&quot;, justifyContent: &quot;space-between&quot;, flexWrap: &quot;wrap&quot;, gap: &quot;12px&quot; }}&gt;
+    &lt;div&gt;
+      &lt;p style={{ fontFamily: &quot;&#39;Cormorant Garamond&#39;, serif&quot;, fontWeight: 600, fontStyle: &quot;italic&quot;, fontSize: &quot;20px&quot;, color: &quot;var(--color-charcoal)&quot;, marginBottom: &quot;2px&quot; }}&gt;
+        {testimonial.couple}
+      &lt;/p&gt;
+      &lt;p style={{ fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;, fontWeight: 400, fontSize: &quot;13px&quot;, color: &quot;var(--color-text-light)&quot; }}&gt;
+        {testimonial.venue}
+      &lt;/p&gt;
+    &lt;/div&gt;
+    &lt;span style={{
+      backgroundColor: &quot;var(--color-sage-light)&quot;,
+      color: &quot;var(--color-sage)&quot;,
+      fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;,
+      fontWeight: 500,
+      fontSize: &quot;12px&quot;,
+      letterSpacing: &quot;0.06em&quot;,
+      textTransform: &quot;uppercase&quot;,
+      padding: &quot;5px 12px&quot;,
+      borderRadius: &quot;2px&quot;,
+    }}&gt;
+      {testimonial.date}
+    &lt;/span&gt;
+  &lt;/div&gt;
+&lt;/motion.div&gt;
+```
+
+**3 Testimonials Data:**
+```ts
+const testimonials = [
+  {
+    quote: &quot;Ashford Manor exceeded every expectation. From the first enquiry call to the final dance, every detail was handled with such grace and care. Our guests still talk about it.&quot;,
+    couple: &quot;Charlotte &amp; James Whitmore&quot;,
+    venue: &quot;The Grand Hall · 180 guests&quot;,
+    date: &quot;June 2024&quot;,
+  },
+  {
+    quote: &quot;We had always dreamed of an outdoor ceremony, and The Garden Terrace was exactly what we&#39;d imagined — but more beautiful. The fairy lights at dusk were simply magical.&quot;,
+    couple: &quot;Amara &amp; Daniel Okafor&quot;,
+    venue: &quot;The Garden Terrace · 55 guests&quot;,
+    date: &quot;September 2024&quot;,
+  },
+  {
+    quote: &quot;The Orangery was the perfect intimate setting for our small, meaningful wedding. The botanical atmosphere, the light, the staff — everything was flawless. Truly perfect.&quot;,
+    couple: &quot;Sophie &amp; Miriam Leclair&quot;,
+    venue: &quot;The Orangery · 42 guests&quot;,
+    date: &quot;April 2024&quot;,
+  },
+];
+```
+
+---
+
+### SECTION 7 — AVAILABILITY CTA
+
+**Container:**
+```jsx
+&lt;section id=&quot;enquire&quot; style={{
+  backgroundColor: &quot;var(--color-sage)&quot;,
+  padding: &quot;var(--section-py) var(--section-px)&quot;,
+  position: &quot;relative&quot;,
+  overflow: &quot;hidden&quot;,
+}}&gt;
+  {/* Decorative watermark &quot;2025&quot; */}
+  &lt;span style={{
+    position: &quot;absolute&quot;,
+    fontFamily: &quot;&#39;Cormorant Garamond&#39;, serif&quot;,
+    fontWeight: 600,
+    fontStyle: &quot;italic&quot;,
+    fontSize: &quot;clamp(200px, 30vw, 500px)&quot;,
+    color: &quot;rgba(255,255,255,0.04)&quot;,
+    right: &quot;-5%&quot;,
+    bottom: &quot;-10%&quot;,
+    pointerEvents: &quot;none&quot;,
+    userSelect: &quot;none&quot;,
+    lineHeight: 1,
+  }}&gt;
+    2025
+  &lt;/span&gt;
+
+  &lt;div style={{ position: &quot;relative&quot;, zIndex: 1, maxWidth: &quot;720px&quot;, margin: &quot;0 auto&quot;, textAlign: &quot;center&quot; }}&gt;
+    &lt;p style={{ fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;, fontWeight: 500, fontSize: &quot;12px&quot;, letterSpacing: &quot;0.18em&quot;, textTransform: &quot;uppercase&quot;, color: &quot;rgba(255,255,255,0.6)&quot;, marginBottom: &quot;16px&quot; }}&gt;
+      Limited Dates Remaining
+    &lt;/p&gt;
+
+    &lt;motion.h2
+      initial={{ opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+      style={{
+        fontFamily: &quot;&#39;Cormorant Garamond&#39;, serif&quot;,
+        fontWeight: 600,
+        fontStyle: &quot;italic&quot;,
+        fontSize: &quot;clamp(40px, 6vw, 100px)&quot;,
+        color: &quot;white&quot;,
+        letterSpacing: &quot;-0.02em&quot;,
+        lineHeight: 1.0,
+        marginBottom: &quot;20px&quot;,
+      }}
+    &gt;
+      Your Perfect Day Awaits.
+    &lt;/motion.h2&gt;
+
+    &lt;p style={{ fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;, fontWeight: 300, fontSize: &quot;clamp(15px, 1.5vw, 18px)&quot;, color: &quot;rgba(255,255,255,0.78)&quot;, lineHeight: 1.7, marginBottom: &quot;48px&quot; }}&gt;
+      We have limited availability for 2025 and 2026. Fill in your details and our wedding coordinator will be in touch within 24 hours.
+    &lt;/p&gt;
+
+    {/* Enquiry Form — 2-column grid */}
+    &lt;form style={{ display: &quot;grid&quot;, gridTemplateColumns: &quot;repeat(2, 1fr)&quot;, gap: &quot;16px&quot;, textAlign: &quot;left&quot; }}&gt;
+
+      {/* Field: Your Name */}
+      &lt;div&gt;
+        &lt;label style={{ display: &quot;block&quot;, fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;, fontWeight: 500, fontSize: &quot;12px&quot;, letterSpacing: &quot;0.08em&quot;, textTransform: &quot;uppercase&quot;, color: &quot;rgba(255,255,255,0.7)&quot;, marginBottom: &quot;8px&quot; }}&gt;
+          Your Name
+        &lt;/label&gt;
+        &lt;input type=&quot;text&quot; placeholder=&quot;Charlotte &amp; James&quot; style={{ width: &quot;100%&quot;, backgroundColor: &quot;rgba(255,255,255,0.12)&quot;, border: &quot;1px solid rgba(255,255,255,0.25)&quot;, borderRadius: &quot;var(--radius-sm)&quot;, padding: &quot;13px 16px&quot;, fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;, fontWeight: 400, fontSize: &quot;15px&quot;, color: &quot;white&quot;, outline: &quot;none&quot;, boxSizing: &quot;border-box&quot; }} /&gt;
+      &lt;/div&gt;
+
+      {/* Field: Email Address */}
+      &lt;div&gt;
+        &lt;label style={{ display: &quot;block&quot;, fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;, fontWeight: 500, fontSize: &quot;12px&quot;, letterSpacing: &quot;0.08em&quot;, textTransform: &quot;uppercase&quot;, color: &quot;rgba(255,255,255,0.7)&quot;, marginBottom: &quot;8px&quot; }}&gt;
+          Email Address
+        &lt;/label&gt;
+        &lt;input type=&quot;email&quot; placeholder=&quot;hello@example.com&quot; style={{ width: &quot;100%&quot;, backgroundColor: &quot;rgba(255,255,255,0.12)&quot;, border: &quot;1px solid rgba(255,255,255,0.25)&quot;, borderRadius: &quot;var(--radius-sm)&quot;, padding: &quot;13px 16px&quot;, fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;, fontWeight: 400, fontSize: &quot;15px&quot;, color: &quot;white&quot;, outline: &quot;none&quot;, boxSizing: &quot;border-box&quot; }} /&gt;
+      &lt;/div&gt;
+
+      {/* Field: Preferred Date */}
+      &lt;div&gt;
+        &lt;label style={{ display: &quot;block&quot;, fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;, fontWeight: 500, fontSize: &quot;12px&quot;, letterSpacing: &quot;0.08em&quot;, textTransform: &quot;uppercase&quot;, color: &quot;rgba(255,255,255,0.7)&quot;, marginBottom: &quot;8px&quot; }}&gt;
+          Preferred Date
+        &lt;/label&gt;
+        &lt;input type=&quot;date&quot; style={{ width: &quot;100%&quot;, backgroundColor: &quot;rgba(255,255,255,0.12)&quot;, border: &quot;1px solid rgba(255,255,255,0.25)&quot;, borderRadius: &quot;var(--radius-sm)&quot;, padding: &quot;13px 16px&quot;, fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;, fontWeight: 400, fontSize: &quot;15px&quot;, color: &quot;rgba(255,255,255,0.7)&quot;, outline: &quot;none&quot;, boxSizing: &quot;border-box&quot; }} /&gt;
+      &lt;/div&gt;
+
+      {/* Field: Estimated Guests */}
+      &lt;div&gt;
+        &lt;label style={{ display: &quot;block&quot;, fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;, fontWeight: 500, fontSize: &quot;12px&quot;, letterSpacing: &quot;0.08em&quot;, textTransform: &quot;uppercase&quot;, color: &quot;rgba(255,255,255,0.7)&quot;, marginBottom: &quot;8px&quot; }}&gt;
+          Estimated Guests
+        &lt;/label&gt;
+        &lt;select style={{ width: &quot;100%&quot;, backgroundColor: &quot;rgba(255,255,255,0.12)&quot;, border: &quot;1px solid rgba(255,255,255,0.25)&quot;, borderRadius: &quot;var(--radius-sm)&quot;, padding: &quot;13px 16px&quot;, fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;, fontWeight: 400, fontSize: &quot;15px&quot;, color: &quot;rgba(255,255,255,0.85)&quot;, outline: &quot;none&quot;, boxSizing: &quot;border-box&quot;, appearance: &quot;none&quot; }}&gt;
+          &lt;option value=&quot;&quot; style={{ color: &quot;var(--color-charcoal)&quot; }}&gt;Select a range&lt;/option&gt;
+          &lt;option value=&quot;20-40&quot; style={{ color: &quot;var(--color-charcoal)&quot; }}&gt;20–40 guests&lt;/option&gt;
+          &lt;option value=&quot;40-80&quot; style={{ color: &quot;var(--color-charcoal)&quot; }}&gt;40–80 guests&lt;/option&gt;
+          &lt;option value=&quot;80-120&quot; style={{ color: &quot;var(--color-charcoal)&quot; }}&gt;80–120 guests&lt;/option&gt;
+          &lt;option value=&quot;120-180&quot; style={{ color: &quot;var(--color-charcoal)&quot; }}&gt;120–180 guests&lt;/option&gt;
+        &lt;/select&gt;
+      &lt;/div&gt;
+
+      {/* Submit — full width */}
+      &lt;div style={{ gridColumn: &quot;1 / -1&quot; }}&gt;
+        &lt;button type=&quot;submit&quot; style={{
+          width: &quot;100%&quot;,
+          backgroundColor: &quot;white&quot;,
+          color: &quot;var(--color-sage)&quot;,
+          fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;,
+          fontWeight: 600,
+          fontSize: &quot;16px&quot;,
+          padding: &quot;16px&quot;,
+          borderRadius: &quot;var(--radius-sm)&quot;,
+          border: &quot;none&quot;,
+          cursor: &quot;pointer&quot;,
+          letterSpacing: &quot;0.02em&quot;,
+          transition: &quot;background-color 0.2s ease, color 0.2s ease&quot;,
+        }}&gt;
+          Check My Date →
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/form&gt;
+
+    &lt;p style={{ fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;, fontWeight: 300, fontSize: &quot;13px&quot;, color: &quot;rgba(255,255,255,0.5)&quot;, marginTop: &quot;16px&quot; }}&gt;
+      No commitment required. We&#39;ll reply within one business day.
+    &lt;/p&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+```
+
+On submit, toggle a React `useState` that replaces the form with:
+```jsx
+&lt;div style={{ textAlign: &quot;center&quot;, padding: &quot;48px 0&quot; }}&gt;
+  &lt;p style={{ fontFamily: &quot;&#39;Cormorant Garamond&#39;, serif&quot;, fontWeight: 600, fontStyle: &quot;italic&quot;, fontSize: &quot;clamp(28px, 3.5vw, 48px)&quot;, color: &quot;white&quot;, marginBottom: &quot;16px&quot; }}&gt;
+    Thank you — we&#39;ll be in touch shortly.
+  &lt;/p&gt;
+  &lt;p style={{ fontFamily: &quot;&#39;Plus Jakarta Sans&#39;, sans-serif&quot;, fontWeight: 300, fontSize: &quot;16px&quot;, color: &quot;rgba(255,255,255,0.75)&quot; }}&gt;
+    Our wedding coordinator will reply to you within one business day.
+  &lt;/p&gt;
+&lt;/div&gt;
+```
+
+---
+
+### SECTION 8 — FOOTER
+
+**Container:** `background: var(--color-bg); border-top: 1px solid var(--color-border); padding: 72px var(--section-px) 32px`
+
+**3-Column Grid:** `display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 60px`
+
+**Column 1 — Brand + Address:**
+- Logo: Cormorant Garamond 600 italic, 28px, `var(--color-charcoal)`
+- Gold line: 40px wide, 1px tall, `var(--color-gold)`, `margin: 16px 0 20px`
+- Tagline: Plus Jakarta Sans 300, 15px, `var(--color-text-mid)`, `margin-bottom: 28px`
+- Address, email, phone: Plus Jakarta Sans 400, 14px, `var(--color-text-mid)`, line-height 2.0
+- Map link: Plus Jakarta Sans 500, 14px, `var(--color-sage)`, hover underline
+
+Text:
+```
+Ashford Manor
+
+A 19th-century country estate offering exclusive wedding packages for 20–180 guests in the heart of Hertfordshire. Licensed for civil ceremonies, civil partnerships, and blessing ceremonies.
+
+Ashford Manor Estate
+Church Lane, Ashford
+Hertfordshire, AL5 2PQ
+
+enquiries@ashfordmanor.co.uk
+01234 567 890
+
+Get Directions →
+```
+
+**Column 2 — Social Links + Awards:**
+```
+Follow Our Journey
+
+Instagram · @ashfordmanorweddings
+Pinterest · @ashfordmanor
+Facebook · Ashford Manor Estate
+
+Awards &amp; Memberships
+
+★ Hitched Top Venue 2024
+★ Guides for Brides Recommended
+★ UKAWP Member
+★ WeddingPlanner.co.uk — Gold Badge
+★ Hitched Couples&#39; Choice Award
+```
+Section label: Plus Jakarta Sans 600, 12px, uppercase, 0.1em letter-spacing, `var(--color-charcoal)`, `margin-bottom: 16px`. Social links: Plus Jakarta Sans 400, 14px, `var(--color-text-mid)`, hover `var(--color-sage)`. Awards: same style with `Star` icon (lucide, 14px, `var(--color-gold)`) preceding each item.
+
+**Column 3 — Quick Links:**
+```
+Explore
+Our Venue · Wedding Packages · Gallery · Testimonials · Blog · FAQs
+
+Contact
+Enquiry Form · Call: 01234 567 890 · Email: enquiries@ashfordmanor.co.uk
+```
+Same section label style. Links: Plus Jakarta Sans 400, 15px, `var(--color-text-mid)`, hover `var(--color-sage)`, displayed as a stacked list, `line-height: 2.2`.
+
+**Bottom bar:** `border-top: 1px solid var(--color-border); padding-top: 28px; margin-top: 48px`
+```
+© 2024 Ashford Manor Estate Ltd. All rights reserved. · Privacy Policy · Terms &amp; Conditions · Accessibility
+```
+Center-aligned, Plus Jakarta Sans 300, 13px, `var(--color-text-light)`.
+
+---
+
+## 7. ANIMATIONS
+
+| Element | Type | Duration | Delay | Easing |
+|---|---|---|---|---|
+| Navbar (load) | Fade from y:-8 | 0.5s | 0s | ease-out |
+| Hero eyebrow | Fade from y:12 | 0.6s | 0.1s | [0.22,1,0.36,1] |
+| Hero headline | Fade from y:28 | 0.9s | 0.25s | [0.22,1,0.36,1] |
+| Gold underline | scaleX 0→1 | 1.2s | 0.8s | [0.22,1,0.36,1] |
+| Hero subline | Fade from y:16 | 0.7s | 0.5s | [0.22,1,0.36,1] |
+| Capacity note | Fade in | 0.6s | 0.65s | ease-out |
+| Hero CTAs | Fade from y:16 | 0.6s | 0.75s | [0.22,1,0.36,1] |
+| Scroll chevron | Float y:0→10→0 | 2.5s | — | ease-in-out, Infinity |
+| Venue space cards | Fade from y:32, stagger | 0.7s | index×0.12s | [0.22,1,0.36,1] |
+| Venue card outer (hover) | scale 1.02 | 0.4s | — | [0.22,1,0.36,1] |
+| Venue card inner img (hover) | scale 1.06 | 0.4s | — | [0.22,1,0.36,1] |
+| Inclusion list items | Fade from x:12, stagger | 0.4s | index×0.05s | [0.22,1,0.36,1] |
+| Gallery section heading | Fade from y:24 | 0.65s | 0s | [0.22,1,0.36,1] |
+| Testimonial cards | Fade from y:28, stagger | 0.65s | index×0.12s | [0.22,1,0.36,1] |
+| Availability headline | Fade from y:28 | 0.75s | 0s | [0.22,1,0.36,1] |
+| Footer | Fade from y:16 | 0.6s | 0s | [0.22,1,0.36,1] |
+
+All `whileInView` use `viewport={{ once: true, margin: &quot;-60px&quot; }}`.
+
+---
+
+## 8. RESPONSIVE SPECIFICATIONS
+
+### Desktop (≥1024px)
+- Navbar: 3-part layout `[left nav | center logo | right CTA]`
+- Venue spaces: `repeat(3, 1fr)` grid
+- What&#39;s Included: 2-column layout (`1fr 1.2fr`)
+- Inclusions checklist: 2-column sub-grid inside right column
+- Gallery: full 12-column asymmetric grid as specified
+- Testimonials: `repeat(3, 1fr)`
+- Enquiry form: 2-column grid
+- Footer: 3-column grid
+
+### Tablet (640px–1023px)
+- Navbar: centered logo + hamburger
+- Venue spaces: `repeat(2, 1fr)` — 2 cards row 1, 1 card full width row 2
+- What&#39;s Included: single column, checklist below heading in `repeat(2, 1fr)`
+- Gallery: `repeat(2, 1fr)` simple grid, images `aspect-ratio: 4/3`
+- Testimonials: `repeat(2, 1fr)` — third card full width below
+- Enquiry form: 2-column maintained
+- Footer: `repeat(2, 1fr)` — column 3 wraps to full width
+
+### Mobile (&lt;640px)
+- Hero headline at `clamp(44px, 11vw, 72px)`, gold line width `120px`, CTAs stack vertically (`flex-direction: column`, each full width)
+- Venue spaces: `repeat(1, 1fr)`, `aspect-ratio: 16/9`
+- What&#39;s Included: single column heading + single column checklist
+- Gallery: `repeat(1, 1fr)`, all images `aspect-ratio: 4/3`
+- Testimonials: single column stacked
+- Enquiry form: single column (all fields full width)
+- Footer: single column stacked, `gap: 40px`
+
+---
+
+## 9. FULL COPY
+
+### Navbar
+`Services · Gallery · Packages · Testimonials · Blog` | `Ashford Manor` | `Contact · Enquire`
+
+### Hero
+- Eyebrow: `Ashford, Hertfordshire · Est. 1847`
+- Headline: `Where Your Story Begins.`
+- Subline: `An exclusive country manor for intimate weddings and grand celebrations alike.`
+- Capacity: `Capacity 20–180 guests · Licensed for civil ceremonies`
+- CTA 1: `Check Availability`
+- CTA 2: `View Our Gallery`
+
+### Venue Spaces
+- Eyebrow: `Our Spaces` | Headline: `Three Breathtaking Settings`
+- Cards: The Grand Hall (200 guests) / The Orangery (80 guests) / The Garden Terrace (60 guests)
+
+### What&#39;s Included
+- Eyebrow: `Every Package Includes` | Headline: `What&#39;s Included`
+- Prose: `Every Ashford Manor wedding package includes exclusive use of the estate and all its facilities. We believe your wedding day should feel entirely yours — no shared spaces, no conflicting events, no compromises.`
+
+### Gallery
+- Headline: `A Glimpse of Your Day` | Link: `View Full Gallery →`
+
+### Testimonials
+- Headline: `Words From Our Couples`
+- Couple 1: Charlotte &amp; James Whitmore / June 2024
+- Couple 2: Amara &amp; Daniel Okafor / September 2024
+- Couple 3: Sophie &amp; Miriam Leclair / April 2024
+
+### Availability CTA
+- Eyebrow: `Limited Dates Remaining`
+- Headline: `Your Perfect Day Awaits.`
+- Body: `We have limited availability for 2025 and 2026. Fill in your details and our wedding coordinator will be in touch within 24 hours.`
+- Submit: `Check My Date →`
+- Footnote: `No commitment required. We&#39;ll reply within one business day.`
+
+### Footer
+- Address: `Ashford Manor Estate, Church Lane, Ashford, Hertfordshire, AL5 2PQ`
+- Email: `enquiries@ashfordmanor.co.uk` | Phone: `01234 567 890`
+- Copyright: `© 2024 Ashford Manor Estate Ltd. All rights reserved. · Privacy Policy · Terms &amp; Conditions · Accessibility`
+
+---
+
+## 10. KEY DEPENDENCIES
+
+```json
+{
+  &quot;dependencies&quot;: {
+    &quot;react&quot;: &quot;^18.3.1&quot;,
+    &quot;react-dom&quot;: &quot;^18.3.1&quot;,
+    &quot;motion&quot;: &quot;^11.11.0&quot;,
+    &quot;lucide-react&quot;: &quot;^0.441.0&quot;,
+    &quot;tailwindcss&quot;: &quot;^3.4.13&quot;,
+    &quot;@shadcn/ui&quot;: &quot;latest&quot;
+  },
+  &quot;devDependencies&quot;: {
+    &quot;typescript&quot;: &quot;^5.5.3&quot;,
+    &quot;vite&quot;: &quot;^5.4.8&quot;,
+    &quot;@vitejs/plugin-react&quot;: &quot;^4.3.2&quot;
+  }
+}
+```
+
+**lucide-react icons used:**
+- `ChevronDown` — hero scroll indicator
+- `Check` — inclusions checklist
+- `Star` — testimonial stars, footer awards
+- `ArrowRight` — gallery link
+- `Menu`, `X` — mobile nav
+- `MapPin` — footer address
+- `Phone` — footer phone
+- `Mail` — footer email
+
+**Key implementation notes:**
+1. Import all Framer Motion from `motion/react`, never `framer-motion`
+2. The gold underline `scaleX: 0 → 1` uses `animate` (not `whileInView`) so it fires as part of the hero load sequence, with `transformOrigin: &quot;left center&quot;` for left-to-right draw
+3. Venue card hover: outer `motion.div` (scale 1.02) wraps an inner `motion.div` (scale 1.06) that contains the `&lt;img&gt;` — both must have `transition={{ duration: 0.4 }}`; outer div has `overflow: hidden` and `border-radius`
+4. The gold separator lines (Effect 5) appear between Hero → Venue Spaces and between Testimonials → Availability CTA
+5. The enquiry form uses a React `useState` boolean to toggle between the form and the thank-you confirmation state on submit
+6. Gallery grid: on screens below 640px, collapse to a simple `repeat(1, 1fr)` grid — the custom `gridColumn` and `gridRow` values should be overridden with `gridColumn: &quot;1 / -1&quot;` and `gridRow: &quot;auto&quot;` at mobile via a CSS media query in `index.css`
+</code></pre>
+    </section>
+  </main>
+</body>
+</html>

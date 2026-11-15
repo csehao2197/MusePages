@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="An illustrative luxury property at 123 Oak Avenue. Explore original architectural artwork, room details, mortgage estimates and a local tour enquiry.">
+    <title>123 Oak Avenue — Oak &amp; Acre</title>
+    <link rel="icon" href="data:,">
+    <style>
+        :root { --ink:#0f172a; --muted:#75808c; --line:#dfe4e7; --paper:#fbfbf8; --green:#49705c; }
+        * { box-sizing:border-box; }
+        [hidden] { display:none !important; }
+        body { margin:0; color:var(--ink); background:var(--paper); font:14px/1.65 system-ui,sans-serif; }
+        a { color:inherit; text-underline-offset:5px; }
+        button,input,select,textarea { font:inherit; }
+        button { cursor:pointer; }
+        :focus-visible { outline:3px solid #b98b42; outline-offset:4px; }
+        .wrap { max-width:1100px; margin:auto; padding:0 40px; }
+        header { padding:23px 0; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); }
+        .brand { font:25px Georgia,serif; text-decoration:none; letter-spacing:-.7px; }
+        nav { display:flex; gap:27px; align-items:center; font-size:11px; }
+        nav a { text-decoration:none; }
+        .btn { display:inline-block; padding:11px 20px; border:1px solid var(--ink); border-radius:3px; background:var(--ink); color:white; text-decoration:none; }
+        .btn.light { background:white; color:var(--ink); border-color:#c8d0d5; }
+        .trail { display:flex; align-items:center; justify-content:space-between; gap:20px; padding:18px 0; font-size:11px; color:var(--muted); }
+        .actions { display:flex; gap:9px; flex-wrap:wrap; }
+        .actions button { padding:7px 12px; font-size:11px; background:white; color:var(--ink); border:1px solid var(--line); border-radius:3px; }
+        .gallery { display:grid; grid-template-columns:1.75fr 1fr; gap:10px; height:385px; }
+        .gallery button { border:0; background:#e4e6df; padding:0; min-height:0; overflow:hidden; }
+        .gallery img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .3s; }
+        .gallery button:hover img { transform:scale(1.025); }
+        .hero-photo { grid-row:1/3; }
+        .gallery-tools { display:flex; align-items:center; justify-content:space-between; gap:10px; margin:12px 0; }
+        .thumbs { display:flex; gap:7px; }
+        .thumbs button { padding:0; border:1px solid var(--line); background:none; }
+        .thumbs img { width:53px; height:34px; display:block; object-fit:cover; }
+        .gallery-tools .btn { font-size:10px; padding:8px 12px; }
+        .notice { color:var(--muted); font-size:10px; }
+        .property-header { display:flex; justify-content:space-between; gap:25px; padding:25px 0; border-bottom:1px solid var(--line); }
+        .status { background:#e8efe7; color:#4b6d50; font-size:9px; padding:4px 8px; letter-spacing:1px; }
+        h1 { font:normal 37px/1.2 Georgia,serif; letter-spacing:-1px; margin:13px 0 8px; }
+        .property-header p { color:var(--muted); margin:0; font-size:12px; }
+        .price { font-size:29px; letter-spacing:-1px; }
+        .specs { display:flex; gap:25px; margin-top:15px; }
+        .specs strong { font-size:18px; font-weight:550; }
+        .specs small { display:block; font-size:10px; color:var(--muted); }
+        .sticky { display:flex; justify-content:space-between; gap:15px; padding:13px 0; border-bottom:1px solid var(--line); position:sticky; top:0; z-index:5; background:var(--paper); align-items:center; }
+        .sticky-links { display:flex; gap:22px; font-size:11px; }
+        .sticky a { text-decoration:none; }
+        .content { display:grid; grid-template-columns:1.55fr 1fr; gap:45px; padding-top:30px; }
+        .content > div { min-width:0; }
+        section { scroll-margin-top:85px; }
+        h2 { font:normal 27px/1.25 Georgia,serif; letter-spacing:-.6px; margin:15px 0; }
+        .copy { color:#6b7580; font-size:13px; }
+        .highlights { display:flex; gap:8px; flex-wrap:wrap; }
+        .highlights span { padding:6px 10px; background:#eef1eb; font-size:10px; }
+        details { padding:15px 0; border-bottom:1px solid var(--line); }
+        summary { cursor:pointer; font-weight:550; font-size:13px; }
+        details p,details li { font-size:12px; color:#697680; }
+        .feature-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; padding:12px 0 25px; border-bottom:1px solid var(--line); }
+        .feature-grid small { display:block; font-size:9px; color:var(--muted); }
+        .feature-grid strong { font-size:12px; font-weight:550; }
+        .table-wrap { overflow:auto; }
+        table { width:100%; min-width:410px; border-collapse:collapse; font-size:11px; }
+        th,td { text-align:left; padding:10px; border-bottom:1px solid var(--line); }
+        th { background:#edf0eb; font-weight:550; }
+        .agent { background:white; border:1px solid var(--line); padding:25px; position:sticky; top:90px; }
+        .agent-head { display:flex; align-items:center; gap:13px; margin-bottom:18px; }
+        .avatar { width:48px; height:48px; background:#dce4dc; color:#4c6654; border-radius:50%; display:grid; place-items:center; font:20px Georgia,serif; }
+        .agent h3 { margin:0; font-size:14px; }
+        .agent p { color:var(--muted); font-size:10px; }
+        label { display:grid; gap:5px; font-size:10px; margin-bottom:12px; }
+        input,select,textarea { min-width:0; width:100%; padding:10px; background:white; color:var(--ink); border:1px solid #c4cfd2; border-radius:3px; }
+        .agent .btn { width:100%; }
+        .agent .contact-choices { display:flex; gap:7px; margin-top:15px; }
+        .contact-choices button { width:100%; padding:7px 5px; font-size:10px; }
+        .map { height:235px; background:#dfe7d8; position:relative; margin:15px 0; overflow:hidden; }
+        .map svg { position:absolute; width:100%; height:100%; }
+        .map .pin { position:absolute; left:45%; top:40%; width:35px; height:35px; background:var(--ink); color:white; display:grid; place-items:center; border-radius:50%; border:3px solid white; }
+        .places { display:flex; gap:6px; flex-wrap:wrap; }
+        .places button { border:1px solid var(--line); background:white; color:#51616d; padding:6px 9px; font-size:10px; }
+        .places button[aria-pressed=true] { background:var(--ink); color:white; }
+        .commute { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:18px; }
+        .commute button { grid-column:1/-1; justify-self:start; }
+        .commute p { grid-column:1/-1; margin:0; }
+        .financial { background:#f0f3ed; padding:23px; margin:25px 0; }
+        .financial input[type=range] { accent-color:var(--green); padding:0; }
+        .financial strong { font-size:26px; font-weight:550; }
+        .similar { margin:30px 0; border-top:1px solid var(--line); padding-top:20px; }
+        .similar-head { display:flex; justify-content:space-between; align-items:center; gap:20px; }
+        .similar-head button { font-size:11px; }
+        .similar-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+        .similar-card { text-align:left; padding:0; color:var(--ink); border:1px solid var(--line); background:white; }
+        .similar-card img { width:100%; height:160px; object-fit:cover; display:block; }
+        .similar-card p { margin:12px 15px; font-size:12px; }
+        .legal { border-top:1px solid var(--line); padding:25px 0; color:var(--muted); font-size:10px; }
+        footer { display:flex; justify-content:space-between; gap:20px; padding:22px 0; font-size:10px; color:var(--muted); }
+        dialog { max-width:1000px; width:calc(100% - 24px); max-height:94vh; overflow:auto; border:0; padding:22px; color:var(--ink); background:var(--paper); }
+        dialog::backdrop { background:#0f172ae6; }
+        .modal-head { display:flex; align-items:center; justify-content:space-between; gap:20px; }
+        dialog img,dialog video { width:100%; max-height:65vh; object-fit:contain; background:#e8e9df; }
+        .gallery-controls { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:12px; }
+        .gallery-controls button { font-size:11px; }
+        [data-menu] { display:none; }
+        @media(max-width:700px)
+        {
+            .wrap { padding:0 20px; }
+            header { flex-wrap:wrap; }
+            [data-menu] { display:block; border:1px solid var(--line); padding:7px 10px; background:none; }
+            nav { display:none; width:100%; padding-top:20px; gap:19px; flex-wrap:wrap; }
+            nav.open { display:flex; }
+            .trail { flex-wrap:wrap; }
+            .gallery { height:320px; grid-template-columns:1fr 1fr; grid-template-rows:220px 90px; }
+            .hero-photo { grid-column:1/-1; grid-row:1; }
+            .gallery-tools { align-items:start; flex-direction:column; }
+            .property-header { flex-direction:column; gap:15px; }
+            h1 { font-size:33px; }
+            .sticky-links { display:none; }
+            .sticky { justify-content:center; }
+            .sticky .btn { padding:9px 16px; font-size:12px; }
+            .content { grid-template-columns:1fr; gap:25px; }
+            .agent { position:static; }
+            .similar-grid { grid-template-columns:1fr; }
+            footer { flex-direction:column; }
+        }
+        @media(prefers-reduced-motion:reduce) { .gallery img { transition:none; } }
+        @media print
+        {
+            header,.sticky,.agent,.actions,.gallery-tools,.similar,dialog { display:none; }
+            .wrap { max-width:none; padding:0; }
+            .content { display:block; }
+            .gallery { height:280px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <header><a class="brand" href="#">oak &amp; acre<span style="color:#6e876d">.</span></a><button data-menu aria-controls="nav" aria-expanded="false">Menu</button><nav id="nav"><a href="#overview">The property</a><a href="#location">Neighborhood</a><a href="#financial">Payment estimate</a><a href="#agent">Get in touch ↗</a></nav></header>
+        <div class="trail"><span>Properties / Oak Avenue / Illustrative listing</span><div class="actions"><button id="save" aria-pressed="false">♡ Save</button><button id="share">Share ↗</button><button id="print">Print listing</button></div></div>
+        <main>
+            <section aria-label="Property illustration gallery"><div class="gallery"><button class="hero-photo" data-photo="0" aria-label="Open exterior illustration"><img src="exterior.svg" width="1400" height="850" alt="Original architectural illustration of a modern luxury home with pool and mature trees"></button><button data-photo="1" aria-label="Open living room illustration"><img src="living.svg" width="1200" height="800" alt="Original illustration of a light-filled living room with expansive glazing"></button><button data-photo="2" aria-label="Open garden illustration"><img src="garden.svg" width="1200" height="800" alt="Original illustration of a private pool garden and shaded terrace"></button></div><div class="gallery-tools"><div class="thumbs"><button data-photo="0" aria-label="Exterior thumbnail"><img src="exterior.svg" width="53" height="34" alt=""></button><button data-photo="1" aria-label="Living room thumbnail"><img src="living.svg" width="53" height="34" alt=""></button><button data-photo="2" aria-label="Garden thumbnail"><img src="garden.svg" width="53" height="34" alt=""></button></div><div class="actions"><button class="btn light" data-photo="0">View all 3 illustrations</button><button class="btn light" id="tour">Illustrated virtual tour</button><button class="btn light" id="video">Video concept ▷</button></div></div><p class="notice">Original architectural artwork, not photographs. Sample listing only; not live MLS data.</p></section>
+            <section class="property-header"><div><span class="status">ACTIVE / DEMO</span><h1>123 Oak Avenue</h1><p>City, State ZIP · Location awaiting verified details</p><div class="specs"><div><strong>4</strong><small>BEDS</small></div><div><strong>3.5</strong><small>BATHS</small></div><div><strong>3,200</strong><small>SQ FT</small></div><div><strong>0.5</strong><small>ACRES</small></div></div></div><div><div class="price">$1,250,000</div><p>Single Family Home</p><p>12 days on market · sample</p><p>MLS #12345678 · demonstration ID</p></div></section>
+            <div class="sticky"><div class="sticky-links"><a href="#overview">Overview</a><a href="#features">Features</a><a href="#location">Location</a><a href="#financial">Payment</a></div><div class="actions"><a class="btn light" id="request-info" href="#agent">Request info</a><a class="btn" id="schedule-tour" href="#agent">Schedule a tour ↗</a></div></div>
+            <div class="content"><div>
+                <section id="overview"><span class="eyebrow notice">A little more space to live well</span><h2>Modern lines. A natural rhythm.</h2><p class="copy">An illustrative retreat where generous living spaces open to a quiet garden. Warm materials, expansive glazing and a sheltered terrace imagine a home shaped around everyday connection.</p><div class="highlights"><span>Open-plan living</span><span>Private pool</span><span>Garden terrace</span></div><details><summary>Read more about the property</summary><p>The sample plan pairs a light-filled main floor with a private upper-level primary suite. A finished lower level creates room for a home office or quiet retreat. Recent updates, actual condition, school information and neighborhood amenities require verified listing data; none are represented as inspected facts.</p></details></section>
+                <section id="features"><h2>Considered, inside and out.</h2><div class="feature-grid"><div><small>YEAR BUILT</small><strong>2018</strong></div><div><small>GARAGE</small><strong>2 cars</strong></div><div><small>HEATING</small><strong>Central</strong></div><div><small>COOLING</small><strong>Central A/C</strong></div><div><small>BASEMENT</small><strong>Finished</strong></div><div><small>POOL / FIREPLACE</small><strong>Yes / Gas</strong></div></div><p class="notice">Brief-supplied sample features; verify all details independently.</p><details><summary>Room dimensions &amp; finishes</summary><div class="table-wrap" tabindex="0" role="region" aria-label="Room details, horizontally scrollable"><table><thead><tr><th>Room</th><th>Dimensions</th><th>Level</th><th>Flooring</th></tr></thead><tbody><tr><td>Living room</td><td>20 × 18 ft</td><td>Main</td><td>Hardwood</td></tr><tr><td>Primary bedroom</td><td>18 × 16 ft</td><td>Upper</td><td>Carpet</td></tr><tr><td>Kitchen</td><td>15 × 12 ft</td><td>Main</td><td>Tile</td></tr></tbody></table></div></details><details><summary>Interior features</summary><p>Illustrative specification: kitchen with granite counters and stainless appliances; tiled bathrooms; mixed hardwood, carpet and tile; expansive glazed windows. Appliance inventory and fixture inclusions require confirmation.</p></details><details><summary>Exterior &amp; lot</summary><p>Half-acre sample lot with conceptual landscaping, pool, shaded patio and private planting. Lot boundaries, fencing, outdoor installations and permits are unverified.</p></details></section>
+                <section id="location"><h2>Get to know the surroundings.</h2><div class="map" aria-label="Illustrative map, not a real address"><svg viewBox="0 0 600 260" aria-hidden="true"><path d="M0 50L600 210M0 180L600 70M100 0L280 260M440 0L270 260" stroke="#fffdf3" stroke-width="15" fill="none"/><path d="M560 0Q370 70 495 260" stroke="#abcbd0" stroke-width="65" fill="none"/></svg><button class="pin" id="map-pin" aria-label="View sample property location">⌂</button></div><div class="places"><button data-place="Schools" aria-pressed="true">Schools</button><button data-place="Shopping" aria-pressed="false">Shopping</button><button data-place="Dining" aria-pressed="false">Dining</button><button data-place="Parks" aria-pressed="false">Parks</button><button data-place="Transit" aria-pressed="false">Transit</button></div><p class="copy" id="place-result">School names, ratings, attendance zones and distances await verified location data. No school quality claims are made.</p><p class="notice">Walk / Bike / Transit scores: unavailable. Street view requires a verified address.</p><div class="commute"><label>Trip distance (miles)<input id="distance" type="number" value="10" min="0" max="1000"></label><label>Average speed (mph)<input id="speed" type="number" value="30" min="1" max="100"></label><button class="btn light" id="commute">Estimate travel time</button><p class="copy" id="commute-result" role="status"></p></div></section>
+                <section><h2>Price history / illustrative</h2><details open><summary>Current sample asking price: $1,250,000</summary><p>November 2026: $1,250,000. October 2026: original sample list price $1,295,000. Illustrative reduction: $45,000. These are demonstration entries, not a verified sale or listing history.</p></details></section>
+                <section class="financial" id="financial"><h2>Make room in your plans.</h2><label for="down">Down payment <span id="down-value">20%</span><input id="down" type="range" min="0" max="100" value="20"></label><label>Fixed annual interest rate (%)<input id="rate" type="number" min="0" max="25" step=".125" value="6.5"></label><strong id="monthly"></strong><span class="notice"> / month, estimate</span><p class="copy" id="payment-detail"></p><p class="notice">30-year fixed. Illustrative taxes $15,000/year, insurance $2,400/year, HOA $0. PMI estimated at 0.5% of original loan/year below 20% down. Excludes closing costs; not advice or a lender quote.</p></section>
+            </div><aside><section class="agent" id="agent"><div class="agent-head"><div class="avatar" aria-label="Agent monogram, no approved photo supplied">SM</div><div><h3>Sarah Mitchell</h3><span class="notice">Sample listing representative</span></div></div><h2 style="font-size:23px">See the possibilities.</h2><p>Demo enquiry. No real showing availability or agent contact is configured.</p><form><label>Your name<input name="name" required autocomplete="name"></label><label>Email<input name="email" type="email" required autocomplete="email"></label><label>Preferred date<input name="date" type="date" required></label><label>Preferred time<select name="time"><option>Morning</option><option>Afternoon</option><option>Evening</option></select></label><label>Message<textarea rows="3" name="message">I'd like to learn more about 123 Oak Avenue.</textarea></label><button class="btn">Request demo showing ↗</button><p role="status" id="form-result"></p></form><div class="contact-choices"><button class="btn light" data-contact="Call">Call</button><button class="btn light" data-contact="Email">Email</button><button class="btn light" data-contact="Text">Text</button></div><p id="contact-result" role="status"></p></section></aside></div>
+            <section class="similar"><div class="similar-head"><h2>A few more possibilities.</h2><button class="btn light" id="next-similar">More like this →</button></div><p class="notice">Four illustrative comparable homes, not actual market comparables.</p><div class="similar-grid" id="similar-grid"></div></section>
+            <section class="legal">Demonstration only. MLS #12345678 is prompt-supplied sample data, not a live feed. All property details, prices, history, dimensions and representations require independent verification. Original illustrations are not property photography. Equal housing opportunity: housing choices are offered without discrimination; this demo does not perform eligibility screening.</section>
+        </main>
+        <footer><span>oak &amp; acre / Considered places. Meaningful moves.</span><span>Illustrative property experience · GPT-6</span></footer>
+    </div>
+    <dialog aria-labelledby="modal-title"><div class="modal-head"><h2 id="modal-title"></h2><button class="btn light" id="close">Close</button></div><img id="modal-image" src="exterior.svg" width="1400" height="850" alt="Original exterior illustration"><video id="walkthrough" src="walkthrough.webm" poster="exterior.svg" controls playsinline preload="none" hidden></video><p class="notice" id="modal-note"></p><div class="gallery-controls" id="gallery-controls"><button class="btn light" id="previous">← Previous</button><span id="photo-count"></span><button class="btn light" id="next">Next →</button></div><div id="share-controls" hidden><label>Listing link<input id="share-link" readonly></label><button class="btn" id="copy">Copy link</button> <a id="email-link" class="btn light">Email link</a><p role="status" id="copy-result"></p></div></dialog>
+    <script src="app.js"></script>
+</body>
+</html>

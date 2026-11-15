@@ -1,0 +1,613 @@
+*
+{
+    box-sizing: border-box;
+}
+html
+{
+    scroll-behavior: smooth;
+    scroll-padding-top: 85px;
+}
+body
+{
+    margin: 0;
+    background: #000;
+    color: #fff;
+    font: 14px/1.8 Arial, sans-serif;
+}
+a
+{
+    color: inherit;
+    text-decoration: none;
+}
+button, select, input
+{
+    font: inherit;
+}
+button
+{
+    cursor: pointer;
+}
+button:focus-visible, a:focus-visible, select:focus-visible, input:focus-visible
+{
+    outline: 2px solid white;
+    outline-offset: 5px;
+}
+header
+{
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    border-bottom: 1px solid #222;
+    background: black;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+}
+.brand
+{
+    font: 24px Impact, "Arial Narrow", sans-serif;
+    letter-spacing: 3px;
+}
+nav
+{
+    display: flex;
+    gap: 30px;
+}
+nav, .ticket-link
+{
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+#menu
+{
+    display: none;
+}
+section
+{
+    padding: 85px 5%;
+    border-bottom: 1px solid #222;
+}
+.hero
+{
+    padding-top: 45px;
+    min-height: calc(100vh - 75px);
+}
+.label
+{
+    font-size: 10px;
+    color: #999;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+h1, h2, h3
+{
+    font-family: Impact, "Arial Narrow", sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    line-height: .9;
+}
+h1
+{
+    font-size: clamp(110px, 18vw, 240px);
+    margin: 35px 0 45px;
+    line-height: .82;
+}
+h1 span
+{
+    display: block;
+}
+h2
+{
+    font-size: clamp(46px, 6vw, 75px);
+    margin: 20px 0 30px;
+}
+h3
+{
+    font-size: 29px;
+}
+.hero-bottom
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #333;
+    padding-top: 20px;
+    gap: 40px;
+}
+.hero-bottom p
+{
+    max-width: 370px;
+    color: #a0a0a0;
+}
+.actions
+{
+    display: flex;
+    gap: 15px;
+}
+.solid, .outline
+{
+    display: inline-block;
+    padding: 13px 25px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1px solid white;
+    background: white;
+    color: black;
+    text-align: center;
+}
+.outline
+{
+    color: white;
+    border-color: #555;
+    background: black;
+}
+.solid:hover
+{
+    color: white;
+    background: black;
+}
+.hero-foot
+{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: #888;
+}
+.heading
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+.heading h2
+{
+    margin-bottom: 0;
+}
+.text
+{
+    padding: 0;
+    background: none;
+    border: 0;
+    border-bottom: 1px solid #666;
+    color: white;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+.note
+{
+    color: #999;
+    font-size: 12px;
+}
+.show
+{
+    display: grid;
+    grid-template-columns: 130px 1fr 170px 100px;
+    gap: 25px;
+    align-items: center;
+    padding: 25px 0;
+    border-top: 1px solid #292929;
+}
+.show:hover
+{
+    background: #0c0c0c;
+}
+.show strong
+{
+    font: 28px Impact, sans-serif;
+}
+.show small, .show .time
+{
+    display: block;
+    color: #999;
+    font-size: 11px;
+}
+.show button
+{
+    padding-inline: 8px;
+    font-size: 10px;
+}
+.show button:disabled
+{
+    color: #888;
+    border-color: #444;
+    cursor: not-allowed;
+}
+.music, .about
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7%;
+}
+.album
+{
+    aspect-ratio: 1;
+    background: #0b0b0b;
+}
+.album svg
+{
+    width: 100%;
+    height: 100%;
+}
+.listen
+{
+    color: #999;
+    font-size: 11px;
+    margin-top: 22px;
+}
+.listen a
+{
+    color: white;
+    border-bottom: 1px solid #555;
+}
+.music h2
+{
+    font-size: 52px;
+    margin: 18px 0 10px;
+}
+.track
+{
+    display: grid;
+    grid-template-columns: 25px 1fr auto;
+    gap: 15px;
+    width: 100%;
+    text-align: left;
+    background: black;
+    color: white;
+    border: 0;
+    border-top: 1px solid #292929;
+    padding: 17px 0;
+    font-size: 13px;
+}
+.track:hover
+{
+    background: #111;
+}
+.track span:first-child, .track span:last-child
+{
+    color: #999;
+    font-size: 11px;
+}
+.about > div > p:not(.label)
+{
+    color: #aaa;
+    line-height: 1.9;
+    max-width: 510px;
+}
+.members
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 40px;
+    font-size: 12px;
+}
+.members span
+{
+    display: block;
+    font-size: 11px;
+    color: #999;
+}
+.band-art svg
+{
+    width: 100%;
+}
+.merch-grid
+{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+}
+.product
+{
+    color: white;
+    background: none;
+    border: 0;
+    padding: 0;
+    text-align: left;
+}
+.product svg
+{
+    width: 100%;
+    display: block;
+}
+.product strong, .product span
+{
+    display: block;
+    font-weight: 400;
+    font-size: 12px;
+    margin-top: 13px;
+}
+.product span
+{
+    margin-top: 4px;
+    color: #aaa;
+}
+.product:hover strong
+{
+    text-decoration: underline;
+}
+.quotes
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 30px;
+}
+blockquote
+{
+    border-top: 1px solid #333;
+    margin: 0;
+    padding: 30px;
+    color: #bbb;
+    font-style: italic;
+}
+blockquote + blockquote
+{
+    border-left: 1px solid #333;
+}
+cite
+{
+    display: block;
+    font: 11px Arial, sans-serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: white;
+    margin-top: 25px;
+}
+.newsletter
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8%;
+    align-items: center;
+}
+.newsletter h2
+{
+    font-size: clamp(65px, 8vw, 100px);
+}
+label
+{
+    color: #aaa;
+    font-size: 12px;
+}
+#newsletter > div
+{
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+input
+{
+    min-width: 0;
+    flex: 1;
+    background: black;
+    color: white;
+    border: 0;
+    border-bottom: 1px solid #777;
+    padding: 12px 0;
+    border-radius: 0;
+}
+#status
+{
+    font-size: 11px;
+    color: #aaa;
+}
+footer
+{
+    padding: 45px 5%;
+}
+footer > div
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    font-size: 11px;
+}
+footer .brand
+{
+    font-size: 20px;
+}
+.fine
+{
+    color: #888;
+    border-top: 1px solid #222;
+    margin-top: 35px;
+    padding-top: 25px;
+    font-size: 10px;
+}
+dialog
+{
+    background: black;
+    color: white;
+    border: 1px solid #777;
+    padding: 30px;
+    width: min(660px, calc(100% - 35px));
+    max-height: 88vh;
+    overflow: auto;
+}
+dialog::backdrop
+{
+    background: #000d;
+}
+#close
+{
+    display: block;
+    margin-left: auto;
+}
+dialog h2
+{
+    font-size: 40px;
+}
+dialog label
+{
+    display: block;
+    margin-top: 22px;
+}
+select
+{
+    display: block;
+    padding: 12px;
+    background: black;
+    color: white;
+    width: 100%;
+    margin: 8px 0 25px;
+    border: 1px solid #777;
+}
+.platforms
+{
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+.bag-row
+{
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #444;
+    padding: 20px 0;
+    gap: 15px;
+    font-size: 12px;
+}
+@media (max-width: 767px)
+{
+    header
+    {
+        padding: 0 22px;
+    }
+    .ticket-link
+    {
+        display: none;
+    }
+    #menu
+    {
+        display: block;
+        background: black;
+        color: white;
+        border: 0;
+        font-size: 11px;
+        letter-spacing: 2px;
+    }
+    #nav
+    {
+        display: none;
+    }
+    #nav.open
+    {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        inset: 75px 0 auto;
+        background: black;
+        padding: 40px 25px;
+        border-bottom: 1px solid #666;
+    }
+    section
+    {
+        padding: 60px 22px;
+    }
+    .hero
+    {
+        min-height: 740px;
+        padding-top: 40px;
+    }
+    h1
+    {
+        font-size: 28vw;
+        letter-spacing: -2px;
+        margin: 45px 0;
+    }
+    .hero-bottom
+    {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
+    }
+    .actions
+    {
+        flex-direction: column;
+    }
+    .hero-foot
+    {
+        font-size: 8px;
+        letter-spacing: 1px;
+    }
+    .heading
+    {
+        flex-direction: column;
+        align-items: start;
+    }
+    .show
+    {
+        grid-template-columns: 65px 1fr 75px;
+        gap: 12px;
+    }
+    .show strong
+    {
+        font-size: 20px;
+    }
+    .show .time
+    {
+        display: none;
+    }
+    .show > div:nth-child(2)
+    {
+        font-size: 12px;
+    }
+    .music, .about, .quotes, .newsletter
+    {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+    .band-art
+    {
+        order: -1;
+    }
+    .band-art svg
+    {
+        max-height: 330px;
+    }
+    .merch-grid
+    {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px 16px;
+    }
+    blockquote
+    {
+        padding: 28px 0;
+    }
+    blockquote + blockquote
+    {
+        border-left: 0;
+    }
+    #newsletter > div
+    {
+        flex-direction: column;
+    }
+    footer > div
+    {
+        flex-direction: column;
+        text-align: center;
+    }
+    footer nav
+    {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+}
+@media (prefers-reduced-motion: reduce)
+{
+    html
+    {
+        scroll-behavior: auto;
+    }
+}

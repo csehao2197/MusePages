@@ -1,0 +1,437 @@
+:root
+{
+    --bg: #0a0c0f; --surface: #0d1016; --yellow: #f5c518; --muted: #a7abb2; --line: #292b2e;
+}
+*
+{
+    box-sizing: border-box;
+}
+html
+{
+    scroll-behavior: smooth; scroll-padding-top: 30px;
+}
+body
+{
+    margin: 0; background-color: var(--bg); background-image: linear-gradient(#f5c51808 1px, transparent 1px), linear-gradient(90deg, #f5c51808 1px, transparent 1px); background-size: 64px 64px; color: white; font: 16px/1.8 "Segoe UI", Arial, sans-serif;
+}
+a
+{
+    color: inherit;
+}
+.inner
+{
+    width: 100%; max-width: 1200px; margin: auto; padding-left: 64px; padding-right: 64px;
+}
+header
+{
+    height: 85px; display: flex; justify-content: space-between; align-items: center; gap: 20px;
+}
+.brand
+{
+    display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 850; font-size: 23px; letter-spacing: -.04em;
+}
+.brand svg
+{
+    width: 34px; height: 34px; background: var(--yellow); fill: var(--bg); padding: 5px; border-radius: 6px;
+}
+nav
+{
+    display: flex; gap: 30px; font-size: 10px; letter-spacing: .1em; color: #b0b4ba;
+}
+nav a
+{
+    text-decoration: none;
+}
+.button, button
+{
+    background: var(--yellow); color: var(--bg); border: 1px solid var(--yellow); border-radius: 7px; padding: 15px 25px; font: 700 13px "Segoe UI", sans-serif; text-decoration: none; cursor: pointer; display: inline-block;
+}
+.button:hover, button:hover
+{
+    background: #ffe365;
+}
+.ghost
+{
+    background: #ffffff06; border-color: #42444a; color: white;
+}
+.ghost:hover
+{
+    background: #282a2d;
+}
+#menu
+{
+    display: none;
+}
+.hero
+{
+    min-height: 740px; display: grid; grid-template-columns: 1fr 1fr; gap: 55px; align-items: center; padding-top: 50px; padding-bottom: 65px;
+}
+.badge
+{
+    display: inline-flex; gap: 10px; align-items: center; border: 1px solid #6c5a19; padding: 7px 12px; color: var(--yellow); font-size: 8px; letter-spacing: .12em; border-radius: 5px;
+}
+.badge span
+{
+    width: 5px; height: 5px; background: var(--yellow); border-radius: 50%;
+}
+h1, h2, h3
+{
+    font-weight: 850; letter-spacing: -.055em; line-height: 1.02; margin: 20px 0 27px;
+}
+h1
+{
+    font-size: clamp(56px, 6.7vw, 86px);
+}
+h1 em
+{
+    color: var(--yellow); font-style: normal;
+}
+h2
+{
+    font-size: clamp(34px, 4vw, 49px);
+}
+h3
+{
+    font-size: 22px;
+}
+p
+{
+    margin: 0 0 25px;
+}
+.lead
+{
+    max-width: 380px; color: var(--muted);
+}
+.actions
+{
+    display: flex; gap: 10px; flex-wrap: wrap;
+}
+.hero-stats
+{
+    display: flex; gap: 25px; margin: 40px 0 20px;
+}
+.hero-stats div
+{
+    border-right: 1px solid var(--line); padding-right: 25px;
+}
+.hero-stats b
+{
+    font-size: 30px; letter-spacing: -.04em;
+}
+.hero-stats small
+{
+    display: block; font-size: 8px; letter-spacing: .1em; color: var(--muted);
+}
+.hero-stats div:last-child b
+{
+    color: var(--yellow);
+}
+.fine
+{
+    font-size: 11px; color: var(--muted); line-height: 1.7; margin-top: 20px;
+}
+.panel-art
+{
+    position: relative; border: 1px solid #7d6820; border-radius: 8px; background: #151817; padding: 15px;
+}
+.panel-art img
+{
+    display: block; width: 100%; position: relative;
+}
+.ghost-number
+{
+    position: absolute; right: 0; top: -80px; color: #f5c5180b; font-size: 290px; font-weight: 900; line-height: 1;
+}
+.technical-note
+{
+    background: var(--bg); border: 1px solid #63521a; position: absolute; bottom: -20px; left: -20px; padding: 18px; font-size: 8px; letter-spacing: .1em; color: var(--yellow);
+}
+.technical-note b
+{
+    display: block; font-size: 14px; color: white; letter-spacing: 0; margin-top: 5px;
+}
+.panel-tab
+{
+    background: var(--yellow); color: var(--bg); position: absolute; top: 25px; right: -15px; padding: 15px; font-size: 30px; font-weight: 900; line-height: 1;
+}
+.panel-tab small
+{
+    font-size: 7px;
+}
+.emergency
+{
+    background: var(--yellow); color: var(--bg);
+}
+.strip
+{
+    padding-top: 22px; padding-bottom: 22px; display: flex; gap: 25px; justify-content: space-between; align-items: center; font-size: 12px;
+}
+.strip b
+{
+    font-size: 13px;
+}
+.dark
+{
+    background: var(--bg); color: var(--yellow); border-color: var(--bg);
+}
+.dark:hover
+{
+    background: #34352a; color: var(--yellow);
+}
+.section
+{
+    padding-top: 85px; padding-bottom: 85px;
+}
+.surface
+{
+    background: #0d1016e8;
+}
+.eyebrow
+{
+    color: var(--yellow); font-size: 9px; font-weight: 700; letter-spacing: .2em;
+}
+.services
+{
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #34362f; border: 1px solid #34362f; margin-top: 45px;
+}
+.services button
+{
+    background: var(--surface); color: white; border: 0; border-top: 2px solid transparent; border-radius: 0; padding: 32px; text-align: left; font-weight: 400;
+}
+.services button:hover
+{
+    background: #191c20; border-top-color: var(--yellow);
+}
+.services button.highlight
+{
+    background: #1d1c10;
+}
+.service-icon
+{
+    display: block; color: var(--yellow); font-size: 25px; font-weight: 800; margin-bottom: 25px;
+}
+.services small
+{
+    color: #dac773; font-size: 8px; letter-spacing: .12em;
+}
+.services h3
+{
+    font-size: 19px; margin: 15px 0;
+}
+.services p
+{
+    color: var(--muted); font-size: 13px; line-height: 1.8; margin: 0;
+}
+.about, .quote, .faq
+{
+    display: grid; grid-template-columns: 1fr 1fr; gap: 65px; align-items: center;
+}
+.about p, .faq p
+{
+    color: var(--muted);
+}
+.diagram
+{
+    background: #141711; border: 1px solid #454124; padding: 20px;
+}
+.diagram svg
+{
+    width: 100%; fill: none; stroke-width: 2;
+}
+.house
+{
+    stroke: #777b70;
+}
+.circuit, .nodes
+{
+    stroke: var(--yellow);
+}
+.nodes
+{
+    fill: #141711;
+}
+.diagram p
+{
+    font-size: 9px; text-align: center; color: var(--yellow);
+}
+ul
+{
+    list-style: none; padding: 0; font-size: 13px;
+}
+li
+{
+    padding: 8px 0;
+}
+li::before
+{
+    content: "✓ "; color: var(--yellow); margin-right: 8px;
+}
+.steps
+{
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; margin-top: 45px;
+}
+.steps b
+{
+    display: block; border-bottom: 1px solid #5b501e; padding-bottom: 18px; color: var(--yellow); font-size: 9px; letter-spacing: .1em;
+}
+.steps h3
+{
+    font-size: 20px;
+}
+.steps p
+{
+    color: var(--muted); font-size: 13px;
+}
+.proof
+{
+    display: grid; grid-template-columns: repeat(4, 1fr); padding-top: 40px; padding-bottom: 40px; gap: 20px; text-align: center;
+}
+.proof strong
+{
+    font-size: 43px; letter-spacing: -.06em; line-height: 1;
+}
+.proof span
+{
+    display: block; font-size: 8px; letter-spacing: .15em; margin-top: 10px;
+}
+.reviews
+{
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px;
+}
+blockquote
+{
+    margin: 15px 0; padding: 28px; background: #11151a; border: 1px solid var(--line); font-size: 16px; font-style: italic;
+}
+cite
+{
+    display: block; margin-top: 25px; border-top: 1px solid var(--line); padding-top: 20px; color: var(--muted); font-style: normal; font-size: 11px;
+}
+.quote
+{
+    align-items: start;
+}
+#service-detail
+{
+    color: var(--yellow); border-left: 2px solid var(--yellow); padding-left: 18px;
+}
+form
+{
+    display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
+}
+label, legend
+{
+    font-size: 12px;
+}
+input:not([type="radio"]):not([type="checkbox"]), select, textarea
+{
+    display: block; width: 100%; min-width: 0; padding: 12px; border: 1px solid #4e5154; background: #15181c; color: white; font: 15px "Segoe UI", sans-serif; border-radius: 4px; margin-top: 7px;
+}
+fieldset
+{
+    border: 1px solid #4e5154; padding: 10px; margin: 0;
+}
+fieldset label
+{
+    display: inline-block;
+}
+input[type="radio"], input[type="checkbox"]
+{
+    accent-color: var(--yellow);
+}
+.full
+{
+    grid-column: 1 / -1;
+}
+.consent
+{
+    display: flex; align-items: center; gap: 9px;
+}
+#result
+{
+    color: var(--yellow); font-size: 13px; margin: 0;
+}
+details
+{
+    border-bottom: 1px solid var(--line); padding: 20px 0; font-size: 14px;
+}
+summary
+{
+    cursor: pointer; font-weight: 600;
+}
+details p
+{
+    margin: 15px 0 0;
+}
+.faq
+{
+    align-items: start;
+}
+.final
+{
+    text-align: center; padding-top: 60px; padding-bottom: 60px;
+}
+.final .eyebrow
+{
+    color: var(--bg);
+}
+.final h2
+{
+    font-size: 58px;
+}
+footer
+{
+    display: flex; justify-content: space-between; gap: 28px; padding-top: 50px; padding-bottom: 40px; font-size: 11px; color: var(--muted);
+}
+footer .brand
+{
+    color: white; align-self: flex-start;
+}
+dialog
+{
+    width: min(600px, calc(100% - 35px)); padding: 40px; background: var(--surface); color: white; border: 1px solid var(--yellow); border-radius: 8px;
+}
+dialog::backdrop
+{
+    background: #000c;
+}
+dialog h2
+{
+    font-size: 35px;
+}
+.close
+{
+    float: right; padding: 4px 12px; font-size: 22px;
+}
+[aria-invalid="true"], :focus-visible
+{
+    outline: 2px solid var(--yellow); outline-offset: 3px;
+}
+@media (max-width: 767px)
+{
+    .inner { padding-left: 24px; padding-right: 24px; }
+    header { height: auto; padding-top: 20px; padding-bottom: 20px; flex-wrap: wrap; }
+    header > .button { display: none; }
+    #menu { display: block; padding: 10px 15px; }
+    nav { display: none; flex-direction: column; width: 100%; gap: 15px; }
+    nav.open { display: flex; }
+    .hero, .about, .quote, .faq { grid-template-columns: 1fr; gap: 40px; }
+    .hero { padding-top: 30px; }
+    h1 { font-size: 65px; }
+    .hero-stats { gap: 17px; }
+    .hero-stats div { padding-right: 17px; }
+    .panel-art { margin: 10px 10px 20px; }
+    .technical-note { left: -10px; }
+    .strip { flex-direction: column; text-align: center; gap: 12px; }
+    .section { padding-top: 55px; padding-bottom: 55px; }
+    .services, .reviews { grid-template-columns: 1fr; }
+    .steps, .proof { grid-template-columns: 1fr 1fr; }
+    .proof { row-gap: 30px; }
+    .proof strong { font-size: 37px; }
+    form { grid-template-columns: 1fr; }
+    .final h2 { font-size: 45px; }
+    footer { flex-direction: column; gap: 15px; }
+}
+@media (prefers-reduced-motion: reduce)
+{
+    html { scroll-behavior: auto; }
+}
