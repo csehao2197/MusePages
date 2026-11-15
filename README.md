@@ -367,7 +367,7 @@ prompt 目录仅容纳模型结果目录。公开标题与 slug 保存在 `deplo
 {
   "version": 2,
   "siteUrl": "https://musepages.pages.dev/",
-  "categories": ["Business", "Technology", "Commerce", "Lifestyle", "Creative", "Entertainment", "Education", "Services"],
+  "categories": ["Lifestyle", "Business", "Technology", "Commerce", "Creative", "Entertainment", "Education", "Services"],
   "pages": {
     "006-travel-agency-homepage": {
       "category": "Lifestyle",
