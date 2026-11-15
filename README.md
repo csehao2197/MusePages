@@ -298,7 +298,7 @@ node --test src\workflows\script\render-prompt-pages.test.mjs src\workflows\scri
 
 1. **输入与范围**：接收用户指定的 `<ai model>` 和本轮授权范围，读取原始 prompt 与 `src\workflows\AI Agent\DESIGN.md`，明确真实生成模型及允许写入的位置；调用 `.mjs` 生成脚本时，由该脚本发现本地服务的唯一模型。
 2. **执行依据**：沿用[页面生成脚本](#页面生成脚本)的步骤与[覆盖检查规则](#生成覆盖检查与模型匹配)，不另设判断标准。模型身份无法核实或不匹配时报告阻塞；已有有效结果跳过，需要覆盖或重试时先取得授权。
-3. **输出要求**：源码写入 `out\pages\<prompt>\<ai model>\`，静态首页及资源写入其 `out\` 子目录；每次生成必须为该模型结果生成非空 `tags` 并写入模型元数据，按[项目状态元数据](#项目状态元数据)核验并记录结果，登记默认关闭的发布选项，不把 Agent 返回成功当作生成完成。
+3. **输出要求**：源码写入 `out\pages\<prompt>\<ai model>\`，静态首页及资源写入其 `out\` 子目录；按[分类与标签设置](#分类与标签设置)填写模型元数据的 `tags`，无合适标签时保存 `[]`，按[项目状态元数据](#项目状态元数据)核验并记录结果，登记默认关闭的发布选项，不把 Agent 返回成功当作生成完成。
 4. **恢复与交付**：约定超时、有限重试和中断恢复方式，保留已有有效产物；结束时汇总生成、跳过、待确认、失败及剩余缺失项，说明原因和后续步骤，不自动部署目标网站。
 
 该 Markdown 只维护任务指引，不保存凭据、原始需求副本或执行状态；具体字段、路径和验收规则引用对应章节，避免与脚本流程形成两套不一致的约定。
@@ -318,7 +318,7 @@ prompt 目录仅容纳模型结果目录。公开标题与 slug 保存在 `deplo
 ```json
 {
   "modelId": "actual-model-id",
-  "tags": ["Travel"],
+  "tags": ["Adventure"],
   "staticDir": "out",
   "generated": false,
   "preview": false,
@@ -329,11 +329,9 @@ prompt 目录仅容纳模型结果目录。公开标题与 slug 保存在 `deplo
 
 `modelId` 记录真实生成模型，不能用目录名或 CLI 名称冒充；`tags` 描述该模型结果的风格。`staticDir` 相对于模型源码目录，新生成结果统一准备到 `out\`，历史结果迁移前以核验过的实际目录为准。
 
-每个标签优先使用 **一个准确、有意义的英文单词**；仅在表达完整主题或风格需要时使用两个单词，例如 `Real Estate`。标签与 prompt 的 `category` 保持不同。
+根据原始 prompt 与实际页面，按[分类与标签设置](#分类与标签设置)填写模型级 `metadata.json` 的 `tags`。有合适标签时使用去除首尾空白的非空字符串，准确描述页面特色；无合适标签时保存 `tags: []`。
 
-**每次生成页面必须生成 `tags`**：根据原始 prompt 与实际生成页面，为每个 prompt／模型组合填写至少一个有意义的标签，写入模型级 `metadata.json`，不能省略字段或以 `[]` 作为完成结果。标签应描述页面主题、类型或实际设计风格，例如 `["Travel", "Eco Tourism", "Nature"]`；`["Travel"]` 只是示例，不要求所有页面固定使用该值。每项必须是去除首尾空白后的非空字符串，标签不得重复，也不得包含 prompt 编号或未实现的功能。
-
-标签须在发布登记前核对，并保存在模型元数据和发布配置的模型选项中；prompt 级 `category` 保存共享分类。已有有效页面仅缺标签时，在获准修改元数据后补齐，保留已有源码；只读检查仅报告缺失。当前生成脚本仍可能初始化为 `tags: []`，执行生成任务的 Agent 须补齐并检查元数据标签。
+发布登记前核对标签，并将标签数组（含空数组）保存在模型元数据和发布配置的模型选项中；prompt 级 `category` 保存共享分类。已有有效页面按需补充标签，在获准修改元数据后更新，保留已有源码；只读检查仅报告结果。
 
 #### 元数据与状态
 
@@ -369,7 +367,7 @@ prompt 目录仅容纳模型结果目录。公开标题与 slug 保存在 `deplo
 {
   "version": 2,
   "siteUrl": "https://musepages.pages.dev/",
-  "categories": ["Business", "Technology", "Commerce", "Finance", "Lifestyle", "Fashion", "Health", "Education", "Creative", "Media", "Entertainment", "Sports", "Travel", "Food", "Property", "Community", "Industry", "Services"],
+  "categories": ["Business", "Technology", "Commerce", "Lifestyle", "Creative", "Entertainment", "Education", "Services"],
   "pages": {
     "006-travel-agency-homepage": {
       "category": "Lifestyle",
@@ -381,7 +379,7 @@ prompt 目录仅容纳模型结果目录。公开标题与 slug 保存在 `deplo
           "deployed": false,
           "slug": "travel-agency-homepage",
           "title": "旅行社首页",
-          "tags": ["Travel Agency"],
+          "tags": ["Adventure"],
           "staticDir": "out"
         },
         {
@@ -390,7 +388,7 @@ prompt 目录仅容纳模型结果目录。公开标题与 slug 保存在 `deplo
           "deployed": false,
           "slug": "travel-agency-homepage",
           "title": "旅行社首页",
-          "tags": ["Travel Agency"],
+          "tags": ["Adventure"],
           "staticDir": "."
         }
       ]
@@ -401,12 +399,23 @@ prompt 目录仅容纳模型结果目录。公开标题与 slug 保存在 `deplo
 
 每个 prompt 对应一个 key，使用原始文件名。`pages[<prompt>].pages` 中的 `model` 对应实际模型目录，prompt key 及组内模型名忽略大小写后保持唯一。`weight` 为有限数值，默认 `1`；首页面板按权重降序排列，同权重沿用配置顺序，页面数组顺序决定面板内模型的轮播顺序。prompt 对象可保留其他自定义字段。新选项默认关闭，同步保留已有开关、权重和顺序，重复登记复用原项，源码临时缺失时保留旧配置。`slug` 使用去编号的公开名称，`staticDir` 相对于模型源码目录，指向实际静态产物。
 
-`deploy\config.json` 顶层 `categories` 统一定义可选分类；每个 `pages[<prompt>].category` 从中选择最匹配的一项，同一 prompt 的所有模型共享该分类。每个模型选项的 `tags` 为数组，当前填写一个描述性标签，优先使用一个英文单词、最多两个单词，且与共享分类不同。集合发布器从同一发布配置读取分类列表，兼容缺少列表时显示全部作品，并按标题和标签推断分类；使用显式分类的渲染接入仍待实现。
-
 `deployed` 是布尔字段，旧配置缺少时补为 `false`，非布尔值会被拒绝。`deploy:sync`、`deploy:watch` 和生成登记不会将其标记成功，也不会覆盖已有状态。`npm run dist` 完成静态校验并成功替换本地网站后，将本次已纳入集合的模型选项设为 `deployed: true`，未选中并已从集合移除的项设为 `false`，再原子保存配置。发布失败保留旧状态；配置保存失败时尝试回滚网站，回滚失败则报告恢复路径。修改源码或开关不会自动改变该记录，仍须实际发布并核验版本。
 
 `npm run deploy:sync`、生成登记和 `npm run dist` 兼容 version 1 的顶层页面数组及旧 version 2 的 prompt 数组值，成功写入时统一为上述 prompt 对象结构，保留开关、顺序及已有字段。选择器兼容旧 version 2，实际保存选择时采用新结构。同步或登记仅更新配置；本地集合由 `npm run dist` 组装。
 
+#### 分类与标签设置
+
+分类与标签统一在 `deploy\config.json` 维护：
+
+| 字段 | 设置规则 |
+| --- | --- |
+| `categories` | 全站可选分类列表，名称非空、去除首尾空白且忽略大小写后唯一；顺序决定分类筛选按钮顺序 |
+| `pages[<prompt>].category` | 从列表中选择最匹配的一项，同一 prompt 的所有模型共享 |
+| `pages[<prompt>].pages[*].tags` | 每个模型页面独立保存有辨识度的标签，例如 `["Coffee"]`；无合适标签时保存 `[]` |
+
+标签优先使用 **一个准确的英文单词**，最多两个单词，如 `Coffee`、`Photography`、`Real Estate`。标签名称与分类列表中的所有名称保持区分（忽略大小写），描述页面独特的主题或风格；无有辨识度的合适标签时使用 `tags: []`。
+
+维护者或生成 Agent 核验上述分类与标签规范。发布器从该文件读取分类列表，缺少列表时保留“All websites”入口，目前仍按标题和标签推断筛选归属；显式 `category` 的渲染接入仍待实现。
 
 ### 静态产物边界
 

@@ -1255,6 +1255,14 @@ test("configured categories escape labels, support custom names and reject inval
     });
     assert.match(html, /data-filter="research%20%26%20design"[^>]*>Research &amp; Design<\/button>/);
     assert.match(html, /data-categories="research%20%26%20design"/);
+    for (const [tag, category] of [["Newsletter", "creative"], ["Medical", "lifestyle"], ["Community", "lifestyle"]])
+    {
+        const migrated = renderGallery(template, [{ ...pages[0], tags: [tag] }],
+        {
+            categories: ["Business", "Technology", "Commerce", "Lifestyle", "Creative", "Entertainment", "Education", "Services"]
+        });
+        assert.match(migrated, new RegExp(`data-categories="${category}"`));
+    }
     for (const categories of [null, "Food", [""], [" Food "], ["Food", "food"], [42], ["all"]])
     {
         assert.throws(() => renderGallery(template, pages,

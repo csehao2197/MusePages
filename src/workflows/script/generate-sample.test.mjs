@@ -524,7 +524,7 @@ test("gallery groups models into stable, accessible carousels with synchronized 
         await check(1);
         await page.getByRole("button",
         {
-            name: "Media",
+            name: "Services",
             exact: true
         }).click();
         assert.equal(await page.locator("[data-carousel]:not([hidden])").count(), 0);
