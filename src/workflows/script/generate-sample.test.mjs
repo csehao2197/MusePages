@@ -286,6 +286,8 @@ test("gallery groups models into stable, accessible carousels with synchronized 
         }
         const config = await syncDeployConfig(workspace);
         config.pages[prompt].weight = 2;
+        config.pages[prompt].category = "Lifestyle";
+        config.pages["002-single"].category = "Commerce";
         config.pages = {
             "002-single": config.pages["002-single"],
             [prompt]: config.pages[prompt]
@@ -296,9 +298,9 @@ test("gallery groups models into stable, accessible carousels with synchronized 
             option.enabled = option.model !== "disabled-model";
             option.title = option.model === "model-a" ?
                 'A much longer title with <literal markup> & "quotes" to test layout stability' :
-                `Title for ${option.model}`;
+                option.model === "only-model" ? "Storefront" : "Tokyo | Wanderly Travel";
             option.tags = [`Style for ${option.model}`,
-                option.model === "only-model" ? "Commerce" : option.model === "model-a" ? "Developer tools" : "Portfolio",
+                option.model === "only-model" ? "Commerce" : option.model === "model-a" ? "Developer tools" : "Travel",
                 "Extra category"
             ];
         }
@@ -325,8 +327,9 @@ test("gallery groups models into stable, accessible carousels with synchronized 
             const model = models[index];
             assert.equal(await active.count(), 1);
             assert.equal(await active.locator(".model").textContent(), model);
-            assert.equal(await active.locator(".tag").first().textContent(), `Style for ${model}`);
-            assert.equal(await active.locator(".tag").count(), 2);
+            assert.equal(await active.locator("[data-tag]").first().textContent(), `Style for ${model}`);
+            assert.equal(await active.locator("[data-tag]").count(), 2);
+            assert.equal(await active.locator("[data-category]").textContent(), "Lifestyle");
             assert.equal(await active.locator("h3").textContent(), config.pages[prompt].pages[index].title);
             for (const link of [".preview", "h3 a", ".prompt"])
             {
@@ -498,13 +501,20 @@ test("gallery groups models into stable, accessible carousels with synchronized 
             assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
             assert.equal(await single.locator(".slide:not([hidden]) .model").textContent(), "only-model");
         }
+        await active.getByRole("button",
+        {
+            name: "Filter category Lifestyle",
+            exact: true
+        }).click();
+        assert.equal(await page.locator("[data-carousel]:not([hidden])").count(), 1);
+        assert.equal(await page.locator('#collections [data-filter="lifestyle"]').getAttribute("aria-pressed"), "true");
         await page.getByRole("button",
         {
             name: "Creative",
             exact: true
         }).first().click();
-        assert.equal(await page.locator("[data-carousel]:not([hidden])").count(), 1);
-        assert.equal(await card.isVisible(), true);
+        assert.equal(await page.locator("[data-carousel]:not([hidden])").count(), 0);
+        assert.equal(await card.isVisible(), false);
         await page.getByRole("button",
         {
             name: "Commerce",
@@ -514,12 +524,18 @@ test("gallery groups models into stable, accessible carousels with synchronized 
         assert.equal(await card.isVisible(), false);
         await page.getByRole("button",
         {
-            name: "Technology",
+            name: "Lifestyle",
             exact: true
         }).first().click();
         assert.equal(await page.locator("[data-carousel]:not([hidden])").count(), 1);
+        await check(2);
+        await card.getByRole("button",
+        {
+            name: "Show model model-a",
+            exact: true
+        }).click();
         await check(1);
-        await active.locator(".tag").first().focus();
+        await active.locator("[data-tag]").first().focus();
         await page.keyboard.press("ArrowRight");
         await check(1);
         await page.getByRole("button",
@@ -689,9 +705,10 @@ test("gallery groups models into stable, accessible carousels with synchronized 
             name: "All models",
             exact: true
         }).click();
-        await page.locator('.filters [data-filter="technology"]').click();
-        assert.equal(await page.locator("[data-gallery-card]:visible").count(), 1);
-        assert.equal(await page.locator("[data-gallery-card]:visible .model").textContent(), "model-a");
+        await page.locator('.filters [data-filter="lifestyle"]').click();
+        assert.equal(await page.locator("[data-gallery-card]:visible").count(), 3);
+        assert.ok((await page.locator("[data-gallery-card]:visible .slide").evaluateAll((slides) =>
+            slides.map((slide) => slide.dataset.categories))).every((category) => category === "lifestyle"));
         await page.getByRole("button",
         {
             name: "All websites",

@@ -334,6 +334,11 @@
             background: #dfe9da
         }
 
+        .tag[data-category]
+        {
+            flex-shrink: 0
+        }
+
         .card-footer
         {
             display: grid;
@@ -684,6 +689,10 @@
         document.querySelectorAll("[data-tag]").forEach((button) =>
         {
             button.addEventListener("click", () => applyFilter("all", button.dataset.tag));
+        });
+        document.querySelectorAll("[data-category]").forEach((button) =>
+        {
+            button.addEventListener("click", () => applyFilter(button.dataset.category));
         });
         selectedTag.addEventListener("click", () =>
         {

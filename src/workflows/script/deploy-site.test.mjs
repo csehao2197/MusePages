@@ -1198,7 +1198,9 @@ test("configured categories control both galleries and are reloaded without chan
     await result(workspace, "001-example", "model-a");
     const config = await syncDeployConfig(workspace);
     const option = config.pages["001-example"].pages[0];
+    config.pages["001-example"].category = "Lifestyle";
     option.enabled = true;
+    option.category = "Technology";
     option.title = "Developer portfolio";
     option.tags = ["Portfolio", "Developer tools"];
     await saveConfig(workspace, config);
@@ -1215,16 +1217,18 @@ test("configured categories control both galleries and are reloaded without chan
         const labels = [...html.matchAll(/data-filter="([^"]+)"[^>]*>([^<]*)<\/button>/g)];
         assert.deepEqual(labels.map((match) => match[2]), ["All websites", ...configured]);
         assert.doesNotMatch(html, /data-filter="(?:portfolio|saas|editorial|developer)"/);
-        assert.match(html, /data-categories="technology creative"/);
+        assert.match(html, /data-categories="lifestyle"/);
+        assert.match(html, /data-category="lifestyle"[^>]*>Lifestyle<\/button>/);
     }
     const published = await configFile(workspace);
     published.categories = ["Creative", "Technology"];
+    published.pages["001-example"].category = "Creative";
     await saveConfig(workspace, published);
     assert.equal((await publishSite(workspace)).changed, true);
     const html = await readFile(path.join(target, "index.html"), "utf8");
     assert.deepEqual([...html.matchAll(/data-filter="([^"]+)"[^>]*>([^<]*)<\/button>/g)].map((match) => match[2]),
         ["All websites", "Creative", "Technology"]);
-    assert.match(html, /data-categories="creative technology"/);
+    assert.match(html, /data-categories="creative"/);
     assert.equal((await configFile(workspace)).pages["001-example"].pages[0].enabled, true);
     published.categories = [];
     await saveConfig(workspace, published);
@@ -1246,6 +1250,7 @@ test("configured categories escape labels, support custom names and reject inval
             model: "model-a",
             title: "Example",
             tags: ["Research & Design"],
+            category: "Research & Design",
             preview: false
         }
     ];
@@ -1255,13 +1260,27 @@ test("configured categories escape labels, support custom names and reject inval
     });
     assert.match(html, /data-filter="research%20%26%20design"[^>]*>Research &amp; Design<\/button>/);
     assert.match(html, /data-categories="research%20%26%20design"/);
-    for (const [tag, category] of [["Newsletter", "creative"], ["Medical", "lifestyle"], ["Community", "lifestyle"]])
+    const categoryOnly = renderGallery(template, [{ ...pages[0], tags: [] }],
     {
-        const migrated = renderGallery(template, [{ ...pages[0], tags: [tag] }],
+        categories: ["Research & Design"]
+    });
+    assert.match(categoryOnly, /data-category="research%20%26%20design"/);
+    assert.doesNotMatch(categoryOnly, /data-tag="/);
+    for (const tag of ["Newsletter", "Medical", "Community", "Technology"])
+    {
+        const classified = renderGallery(template, [{ ...pages[0], title: "Developer portfolio", category: "lifestyle", tags: [tag] }],
         {
             categories: ["Business", "Technology", "Commerce", "Lifestyle", "Creative", "Entertainment", "Education", "Services"]
         });
-        assert.match(migrated, new RegExp(`data-categories="${category}"`));
+        assert.match(classified, /data-categories="lifestyle"/);
+    }
+    for (const category of [undefined, "Unlisted"])
+    {
+        const unclassified = renderGallery(template, [{ ...pages[0], title: "Developer portfolio", category, tags: ["Creative"] }],
+        {
+            categories: ["Creative", "Technology"]
+        });
+        assert.match(unclassified, /data-categories=""/);
     }
     for (const categories of [null, "Food", [""], [" Food "], ["Food", "food"], [42], ["all"]])
     {
