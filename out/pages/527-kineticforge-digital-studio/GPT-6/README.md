@@ -1,0 +1,18 @@
+# KineticForge
+
+- Actual generator: `gpt-6.1-sol`; public model label: `GPT-6`.
+- Input: `data\prompts\527-kineticforge-digital-studio\527-kineticforge-digital-studio.md`; design guide: `src\workflows\AI Agent\DESIGN.md`.
+- Source: this directory's `index.html`, `index.css`, `app.js`. Independent static output: `out\`.
+- Two full-height sections, exact specified remotely hosted videos and font stylesheet, fixed 700 ms video crossfade at a 0.15 observer threshold, partner geometry from the prompt, Lucide Atom logo, responsive menu with scroll lock and keyboard handling.
+- Navigation opens studio information, expertise, illustrative project directions, and a browser-only project brief form. No message is sent, no backend or persistent storage is used; supplied brand/history/partner claims are design-brief content, not verified affiliations.
+- Static adaptation: vanilla HTML/CSS/browser JavaScript replaces requested React/TypeScript/Vite/Tailwind runtime to avoid unauthorized builds. The Atom SVG is rendered from installed `lucide-react` using React's static renderer, not hand approximated. No other UI library. Added accessible dialogs, pause/reduced-motion support, and an unobtrusive font attribution.
+- Required video/font URLs remain remote: online connectivity and host availability are required. Exact videos are fetched completely into ephemeral browser data URLs (about 20 MB transferred, plus base64 memory overhead), avoiding speculative streaming cancellations during crossfade; no video binaries are saved in the output. No third-party videos or font binaries are copied or relicensed; the prompt's MIT license does not confer rights to them. Check media rights independently before redistribution/commercial use.
+- Private validation: `.checks\qa.json`, `.checks\desktop.png`, `.checks\mobile.png`. Preview: `out\preview.png`. Input and preview fingerprints stay outside the public output.
+- Run from repository root: `node src\workflows\script\generate-preview.mjs out\pages\527-kineticforge-digital-studio\GPT-6\out` for an actual preview; the installed Playwright Chromium is used. The private execution helper `src\workflows\script\.ai-gpt6-527.mjs` contains the 11 scoped browser checks and serial completion gates; run it only during authorized coordinator-held operations, not as a standalone regeneration command. No build, deployment, or upload is performed.
+- Validation: source check and independent static/public-subpath check passed; 11 desktop/mobile Chromium assertions passed, including real video decoding/crossfade, navigation/details, contact validation, keyboard focus, mobile scroll lock, pause/reduced-motion, and overflow checks at 1200, 390, 320 and 1024 px. Final run has zero HTTP/resource/request/console/page errors.
+- Opened and visually reviewed fresh desktop/mobile first-screen screenshots, both second-section screenshots, and the actual 1200×900 preview. Hierarchy, spacing, alignment, typography, dark-video contrast, partner layout and narrow-screen composition passed after darkening the background overlay. Preview/static and original-input/DESIGN SHA-256 fingerprints are recorded. Registration remains disabled and undeployed.
+
+## Provenance
+
+Original prompt: frostmute/msites-prompt-collection, commit `d4974f4296e2851e05eabddb9240170cc423dd46`, `motionsites-prompts/351-product-studio/prompt.md`; MIT, Copyright (c) 2026 Nomaan Khan. Full license retained in `LICENSE` and static output.
+Lucide Atom: Lucide contributors, ISC license retained in `NOTICE`. Font stylesheet requests visible [Web Fonts](https://www.onlinewebfonts.com/fonts) credit, included in the second section.

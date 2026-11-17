@@ -1,0 +1,98 @@
+{
+  "passed": true,
+  "modelId": "gpt-6.1-sol",
+  "tests": [
+    "desktop: HTTP, fonts, visible UI, no overflow before/after and during queue editing, no autoplay, real advancing playback/pause, keyboard seek and volume, pointer-drag seek, mute, saved persistence, queue selection, next/previous, reorder, actual ended repeat and queue advance, shuffle, Space toggle, collapse, modal Escape, all four original WAV recordings decoded and non-silent",
+    "mobile: HTTP, fonts, visible UI, no overflow before/after and during queue editing, no autoplay, real advancing playback/pause, keyboard seek and volume, touch seek, mute, saved persistence, queue selection, next/previous, reorder, actual ended repeat and queue advance, shuffle, Space toggle, collapse, modal Escape, all four original WAV recordings decoded and non-silent"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "width": 1200,
+      "height": 900,
+      "deviceScaleFactor": 1,
+      "beforeAfterOverflow": false,
+      "audioEvidence": [
+        {
+          "name": "slow-afternoon",
+          "duration": 32,
+          "expected": 32,
+          "rms": 0.07847132034480744,
+          "channels": 1
+        },
+        {
+          "name": "amber-windows",
+          "duration": 36,
+          "expected": 36,
+          "rms": 0.07948928992547293,
+          "channels": 1
+        },
+        {
+          "name": "somewhere-still",
+          "duration": 40,
+          "expected": 40,
+          "rms": 0.07974036004524052,
+          "channels": 1
+        },
+        {
+          "name": "last-light",
+          "duration": 32,
+          "expected": 32,
+          "rms": 0.07851959932394129,
+          "channels": 1
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 1,
+      "beforeAfterOverflow": false,
+      "audioEvidence": [
+        {
+          "name": "slow-afternoon",
+          "duration": 32,
+          "expected": 32,
+          "rms": 0.07847132034480744,
+          "channels": 1
+        },
+        {
+          "name": "amber-windows",
+          "duration": 36,
+          "expected": 36,
+          "rms": 0.07948928992547293,
+          "channels": 1
+        },
+        {
+          "name": "somewhere-still",
+          "duration": 40,
+          "expected": 40,
+          "rms": 0.07974036004524052,
+          "channels": 1
+        },
+        {
+          "name": "last-light",
+          "duration": 32,
+          "expected": 32,
+          "rms": 0.07851959932394129,
+          "channels": 1
+        }
+      ]
+    }
+  ],
+  "visualReviewed": true,
+  "resourcesClosed": true,
+  "staticDigest": "fdbe0da085a4d6e9ee9bc9173d0c327ba287e4c6b95d819e88a7afa72b47998d",
+  "visualEvidence": {
+    "imagesOpened": [
+      ".checks\\desktop.png",
+      ".checks\\mobile.png",
+      "out\\preview.png"
+    ],
+    "review": "已实际打开两端 PNG 及 1200×900 最终预览。奶油色与森林绿分区清楚，珊瑚日落同心圆封面与 Sora 曲名形成主次，播放图标高对比并居中；桌面两侧编辑式排版留白平衡，390px 手机保留完整控件与队列前两行。其余队列通过自然纵向滚动查看，无横向溢出。",
+    "refined": [
+      "加入本地 Lucide 状态栏图标以对应原始移动屏幕结构。",
+      "修复静态主机无 Range 支持时的真实音频拖动定位。"
+    ]
+  }
+}

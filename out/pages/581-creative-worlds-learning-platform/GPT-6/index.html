@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#faf8f2">
+    <meta name="description" content="A little space for big imaginations. Build, explore, and tell stories in your own playful 3D world.">
+    <title>Little Worlds — Big ideas start here.</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="app.js"></script>
+</head>
+<body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="site-header wrap">
+        <a class="brand" href="index.html" aria-label="Little Worlds home"><span class="brand-mark"><svg><use href="icons.svg#box"></use></svg></span><span>little<span class="brand-light">worlds</span><span class="brand-dot">.</span></span></a>
+        <nav aria-label="Main navigation">
+            <a href="#sparks">Discover</a>
+            <button type="button" data-action="gallery">Your worlds</button>
+            <button type="button" data-action="grownups">For grown-ups <svg><use href="icons.svg#arrow-up-right"></use></svg></button>
+        </nav>
+        <button type="button" class="button small dark header-create" data-start="dream">Let's create <svg><use href="icons.svg#arrow-right"></use></svg></button>
+    </header>
+    <main id="main">
+        <section class="hero wrap" aria-labelledby="hero-title">
+            <div class="hero-copy">
+                <p class="eyebrow"><svg class="tiny-spark"><use href="icons.svg#sparkles"></use></svg> BIG IDEAS START HERE</p>
+                <h1 id="hero-title">A little world.<br>A whole lot of<br><em>what if.</em><svg class="title-spark"><use href="icons.svg#sparkles"></use></svg></h1>
+                <p class="hero-description">What if trees were purple? Or your house could fly?<br class="desktop-break"> Make a world only <strong>you</strong> could imagine.</p>
+                <div class="hero-actions">
+                    <button class="button orange" type="button" data-start="dream">Build your first world <svg><use href="icons.svg#arrow-right"></use></svg></button>
+                    <button class="watch-link" type="button" id="take-look"><span class="play-icon"><svg><use href="icons.svg#play"></use></svg></span>Take a little look</button>
+                </div>
+                <p class="reassurance"><svg><use href="icons.svg#check"></use></svg> No downloads. No right answers. Just you.</p>
+            </div>
+            <div class="hero-art">
+                <div class="art-corner">IMAGINATION, UNDER CONSTRUCTION</div>
+                <canvas id="hero-world" width="640" height="570" aria-label="An original 3D floating island with a mushroom house, colorful trees and a tiny explorer"></canvas>
+                <div class="floating-note note-top"><svg><use href="icons.svg#sparkles"></use></svg> It starts with a “what if…”</div>
+                <div class="floating-note note-bottom"><span class="note-avatar">M</span><span><strong>My somewhere happy</strong><small>A world by a little dreamer. You?</small></span><span class="note-heart"><svg><use href="icons.svg#heart"></use></svg></span></div>
+                <span class="orbit-doodle"></span>
+                <span class="art-caption">a small idea can become anything</span>
+            </div>
+        </section>
+        <section class="possibility-band" aria-label="Learn by creating">
+            <div class="wrap band-inner"><p>A space for little creators.<br><strong>And very big possibilities.</strong></p><span><svg><use href="icons.svg#box"></use></svg> Build your ideas</span><span><svg><use href="icons.svg#compass"></use></svg> Follow your curiosity</span><span><svg><use href="icons.svg#message-circle"></use></svg> Tell your own story</span></div>
+        </section>
+        <section class="sparks wrap" id="sparks" aria-labelledby="sparks-title">
+            <div class="section-heading"><div><p class="eyebrow">ONE LITTLE IDEA IS ALL IT TAKES</p><h2 id="sparks-title">Where will your imagination go?</h2></div><span class="hand-note">Pick a spark. Make it yours.<svg><use href="icons.svg#corner-down-left"></use></svg></span></div>
+            <div class="challenge-grid">
+                <button class="challenge-card peach" data-start="story" type="button"><div class="card-art"><canvas data-scene="story" width="380" height="225" aria-label="A cozy story village"></canvas><span class="challenge-tag">TELL A STORY</span></div><div class="card-copy"><h3>A home for someone new</h3><span class="card-arrow"><svg><use href="icons.svg#arrow-up-right"></use></svg></span><p>Who lives here? What is their secret?</p><span class="time"><svg><use href="icons.svg#clock"></use></svg> A 10-minute imagination adventure</span></div></button>
+                <button class="challenge-card mint" data-start="habitat" type="button"><div class="card-art"><canvas data-scene="habitat" width="380" height="225" aria-label="A lush green habitat"></canvas><span class="challenge-tag">CARE FOR A CREATURE</span></div><div class="card-copy"><h3>A tiny, thriving habitat</h3><span class="card-arrow"><svg><use href="icons.svg#arrow-up-right"></use></svg></span><p>What would make a little creature feel at home?</p><span class="time"><svg><use href="icons.svg#leaf"></use></svg> Grow a world full of life</span></div></button>
+                <button class="challenge-card lavender" data-start="feeling" type="button"><div class="card-art"><canvas data-scene="feeling" width="380" height="225" aria-label="A purple dream island under a moon"></canvas><span class="challenge-tag">MAKE A FEELING</span></div><div class="card-copy"><h3>Somewhere that feels like you</h3><span class="card-arrow"><svg><use href="icons.svg#arrow-up-right"></use></svg></span><p>If happiness were a place, what would it look like?</p><span class="time"><svg><use href="icons.svg#heart"></use></svg> Every feeling has a place</span></div></button>
+            </div>
+            <button class="text-link blank-link" data-start="blank" type="button">Or start with a beautifully blank world <svg><use href="icons.svg#arrow-right"></use></svg></button>
+        </section>
+        <section class="how wrap" aria-labelledby="how-title">
+            <div class="how-intro"><p class="eyebrow">LESS “HOW DO I?”<br>MORE “WHAT IF?”</p><h2 id="how-title">Little steps.<br>Limitless ideas.</h2><p>No tricky tools. No perfect way to do it.<br>Just a safe space to try something new.</p><button class="text-link" type="button" data-start="dream">Come make something <svg><use href="icons.svg#arrow-right"></use></svg></button></div>
+            <ol class="steps"><li><span>01</span><div><h3>Imagine it</h3><p>Start with a spark, a feeling, or a wonderfully silly idea.</p></div></li><li><span>02</span><div><h3>Make it your own</h3><p>Add a tree. Move a mountain. Ask, “What could happen next?”</p></div></li><li><span>03</span><div><h3>Step inside your story</h3><p>Explore, change your mind, and tell us what you discovered.</p></div></li></ol>
+        </section>
+        <section class="grownup-banner wrap"><div class="grown-icon"><svg><use href="icons.svg#sprout"></use></svg></div><div><p class="eyebrow">BIG LEARNING. LITTLE PRESSURE.</p><h2>Making worlds. Growing minds.</h2><p>Room for creative confidence, curiosity, and a child's own voice.</p></div><button class="button outline" type="button" data-action="grownups">A note for grown-ups <svg><use href="icons.svg#arrow-up-right"></use></svg></button></section>
+    </main>
+    <footer class="wrap site-footer"><a class="brand" href="index.html"><span class="brand-mark"><svg><use href="icons.svg#box"></use></svg></span><span>little<span class="brand-light">worlds</span><span class="brand-dot">.</span></span></a><p>For the worlds only you can make.</p><button type="button" data-action="privacy">A safe little space</button><span class="footer-year">© 2026 Little Worlds</span></footer>
+
+    <dialog id="builder" class="builder" aria-labelledby="builder-heading">
+        <header class="builder-header"><div><p class="eyebrow">YOUR LITTLE STUDIO</p><h2 id="builder-heading">Make room for your imagination.</h2></div><div class="builder-header-actions"><button class="button outline small" id="save-world" type="button"><svg><use href="icons.svg#save"></use></svg> Save world</button><button type="button" class="icon-button" data-close="builder" aria-label="Close studio"><svg><use href="icons.svg#x"></use></svg></button></div></header>
+        <div class="studio-layout">
+            <section class="work-area" aria-label="World builder">
+                <div class="scene-toolbar"><label class="world-name-label"><span class="sr-only">World name</span><input id="world-name" maxlength="45" value="My somewhere happy" aria-label="World name"></label><div class="history-tools"><button class="icon-button" id="undo" aria-label="Undo change" type="button"><svg><use href="icons.svg#undo-2"></use></svg></button><button class="icon-button" id="redo" aria-label="Redo change" type="button"><svg><use href="icons.svg#redo-2"></use></svg></button></div></div>
+                <div class="scene-stage"><canvas id="studio-world" tabindex="0" aria-label="Your interactive 3D world. Select an object to move it with arrow keys. Press Enter to add the chosen object at the center."></canvas><span id="mode-label" class="stage-label">BUILD MODE</span><div class="view-controls"><button class="icon-button" id="orbit-left" aria-label="Turn view left" type="button"><svg><use href="icons.svg#rotate-ccw"></use></svg></button><button class="icon-button" id="orbit-right" aria-label="Turn view right" type="button"><svg><use href="icons.svg#rotate-cw"></use></svg></button><button class="button small dark" id="play-world" type="button"><svg><use href="icons.svg#play"></use></svg> Explore</button></div></div>
+                <p id="build-hint" class="build-hint">Pick a piece, then tap the island. Drag a piece to move it.</p>
+                <div class="pieces" aria-label="Choose a piece"><button data-piece="house" type="button" aria-pressed="false"><svg><use href="icons.svg#house"></use></svg> Cozy home</button><button data-piece="tree" type="button" aria-pressed="false"><svg><use href="icons.svg#tree-pine"></use></svg> Funny tree</button><button data-piece="friend" type="button" aria-pressed="false"><svg><use href="icons.svg#smile"></use></svg> Little friend</button><button data-piece="star" type="button" aria-pressed="false"><svg><use href="icons.svg#star"></use></svg> Wishing star</button></div>
+                <div class="object-tools"><label>Choose a piece<select id="selected-object"><option value="">Nothing selected</option></select></label><div class="transform-tools"><button type="button" class="icon-button" id="move-left" aria-label="Move piece left"><svg><use href="icons.svg#arrow-left"></use></svg></button><button type="button" class="icon-button" id="move-right" aria-label="Move piece right"><svg><use href="icons.svg#arrow-right"></use></svg></button><button type="button" class="icon-button" id="rotate-piece" aria-label="Rotate piece"><svg><use href="icons.svg#rotate-cw"></use></svg></button><button type="button" class="icon-button" id="grow-piece" aria-label="Grow piece"><svg><use href="icons.svg#plus"></use></svg></button><button type="button" class="icon-button" id="shrink-piece" aria-label="Shrink piece"><svg><use href="icons.svg#minus"></use></svg></button><label class="color-label" title="Piece color"><span class="sr-only">Piece color</span><input type="color" id="piece-color" value="#eb966f" aria-label="Piece color"></label><button type="button" class="icon-button" id="delete-piece" aria-label="Remove piece"><svg><use href="icons.svg#trash-2"></use></svg></button></div></div>
+            </section>
+            <aside class="guide-panel" aria-label="Imagination guide"><div class="guide-title"><span class="guide-avatar"><svg><use href="icons.svg#sparkles"></use></svg></span><div><h3>A little nudge?</h3><small>Imagination guide · offline demo</small></div></div><p id="mission" class="mission">Build a place where something surprising could happen.</p><div class="guide-bubble"><p id="guide-question">Who lives here? What would make them feel at home?</p><button class="text-link" id="new-idea" type="button">Another what if <svg><use href="icons.svg#shuffle"></use></svg></button></div><fieldset class="weather"><legend>Change the feeling</legend><button data-theme="day" type="button" aria-pressed="true"><svg><use href="icons.svg#sun"></use></svg> Day</button><button data-theme="night" type="button" aria-pressed="false"><svg><use href="icons.svg#moon"></use></svg> Night</button><button data-theme="ocean" type="button" aria-pressed="false"><svg><use href="icons.svg#waves"></use></svg> Ocean</button></fieldset><label class="reflection-label" for="reflection">A thought to take with you</label><p class="reflection-question">What changed after your first idea?</p><textarea id="reflection" maxlength="500" placeholder="I wondered what would happen if…" rows="3"></textarea><p class="local-note"><svg><use href="icons.svg#lock-keyhole"></use></svg> Your world stays in this browser.<br>No account. No public sharing.</p></aside>
+        </div><p id="studio-status" role="status" aria-live="polite">Your ideas belong here. Try adding your first piece.</p>
+    </dialog>
+    <dialog class="info-dialog" id="info" aria-labelledby="info-title"><button class="icon-button dialog-close" data-close="info" type="button" aria-label="Close window"><svg><use href="icons.svg#x"></use></svg></button><div id="info-content"></div></dialog>
+</body>
+</html>

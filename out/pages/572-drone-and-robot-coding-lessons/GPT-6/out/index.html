@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#0b1019">
+    <meta name="description" content="Learn spatial thinking and coding through safe, browser-only drone and robot missions.">
+    <title>Orbit Academy — Your next mission starts here</title>
+    <link rel="icon" href="assets/orbit.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <a class="skip" href="#lab">Skip to simulator</a>
+    <aside class="sidebar">
+        <a class="brand" href="#top"><img src="assets/orbit.svg" width="32" height="32" alt=""><span>orbit<span class="brand-dot">.</span><small>ACADEMY</small></span></a>
+        <div class="workspace-label">YOUR WORKSPACE</div>
+        <nav aria-label="Workspace">
+            <a class="nav-item active" href="#lab"><i data-icon="layout-dashboard"></i> Mission control <span class="nav-indicator"></span></a>
+            <a class="nav-item" href="#missions"><i data-icon="map"></i> Mission library <span class="count">12</span></a>
+            <button class="nav-item guide-open"><i data-icon="book-open"></i> Field guide <i class="small-icon" data-icon="arrow-up-right"></i></button>
+        </nav>
+        <div class="sidebar-line"></div>
+        <div class="workspace-label">LEARNING PATH</div>
+        <button class="nav-item mode-link" data-mode="drone"><span class="path-dot blue"></span> Drone flight</button>
+        <button class="nav-item mode-link" data-mode="robot"><span class="path-dot green"></span> Robot programming</button>
+        <div class="sidebar-bottom">
+            <div class="mini-orbit"><i data-icon="sparkles"></i></div>
+            <strong>Built for curious minds.</strong>
+            <p>No hardware. No setup.<br>Just you and your next idea.</p>
+            <span class="sandbox-label"><span></span> BROWSER SANDBOX</span>
+            <div class="learner"><span class="avatar">EX</span><div>Explorer<small>Independent learner</small></div><i data-icon="chevrons-up-down"></i></div>
+        </div>
+    </aside>
+    <div class="shell" id="top">
+        <header class="topbar">
+            <a class="mobile-brand" href="#top"><img src="assets/orbit.svg" width="28" height="28" alt=""> orbit.</a>
+            <div class="breadcrumb">Workspace <span>/</span> <strong>Mission control</strong></div>
+            <div class="top-right"><span class="online"><span></span> Systems ready</span><button class="icon-button guide-open" aria-label="Open field guide"><i data-icon="circle-help"></i></button><span class="avatar">EX</span></div>
+        </header>
+        <main>
+            <section class="hero" aria-labelledby="headline">
+                <div class="hero-copy">
+                    <div class="eyebrow"><span class="tiny-line"></span> THE FUTURE IS YOUR PLAYGROUND</div>
+                    <h1 id="headline">Small commands.<br><span>Extraordinary missions.</span></h1>
+                    <p>Pilot a drone. Program a robot. Turn your curiosity<br class="desktop-break"> into your very first line of thinking.</p>
+                    <div class="hero-meta"><span><i data-icon="compass"></i> Beginner friendly</span><span><i data-icon="box"></i> 12 hands-on missions</span><span class="hero-last"><i data-icon="shield-check"></i> 100% virtual</span></div>
+                </div>
+                <div class="hero-art">
+                    <img src="assets/explorers.svg" alt="Original illustration of a blue-lit humanoid robot and a quadcopter drone" width="440" height="250">
+                    <span class="art-caption"><span></span> EXPLORER SERIES / 01</span>
+                </div>
+            </section>
+            <section class="lab-heading" id="lab">
+                <div class="lab-tabs" role="tablist" aria-label="Learning lab">
+                    <button id="drone-tab" role="tab" aria-selected="true" aria-controls="simulator" data-mode="drone"><i data-icon="scan"></i> Drone flight <span>01</span></button>
+                    <button id="robot-tab" role="tab" aria-selected="false" aria-controls="simulator" data-mode="robot"><i data-icon="bot"></i> Robot coding <span>02</span></button>
+                </div>
+                <div class="local-save"><i data-icon="hard-drive"></i><span id="save-label">Progress saved on this device</span></div>
+            </section>
+            <div class="learning-grid">
+                <section class="simulator panel" id="simulator" role="tabpanel" aria-labelledby="drone-tab">
+                    <div class="sim-top"><div><span class="section-kicker" id="mission-kicker">MISSION 01 / FLIGHT BASICS</span><h2 id="mission-title">A little lift-off.</h2></div><span class="difficulty"><span></span> BEGINNER</span></div>
+                    <div class="sim-toolbar"><span class="live"><span></span> LIVE SIMULATION</span><label class="craft-picker">Craft <select id="craft" aria-label="Choose craft"><option value="scout">Scout S1</option><option value="vector">Vector X2</option></select></label></div>
+                    <div class="arena-wrap">
+                        <div class="arena-decoration">N ↑<span>SECTOR A–01</span></div>
+                        <div class="arena" id="arena" tabindex="0" role="group" aria-label="Flight grid. Use arrow keys to move."></div>
+                        <div class="arena-floor"><span>X / <b id="position">01 : 05</b></span><span>VIRTUAL ENVIRONMENT</span><i data-icon="maximize"></i></div>
+                    </div>
+                    <div id="mobile-controls"></div>
+                    <div class="sim-bottom"><div><span class="metric-label">COLLECTED</span><span class="stars-metric"><i data-icon="star"></i><strong id="star-count">0 / 3</strong></span></div><div><span class="metric-label">MOVES</span><strong class="moves" id="moves">00</strong></div><button id="reset" class="reset-button"><i data-icon="rotate-ccw"></i> Reset mission</button></div>
+                    <div class="feedback" id="feedback" role="status" aria-live="polite">Ready, pilot? Collect all 3 stars, then reach the landing pad.</div>
+                </section>
+                <aside class="control-column">
+                    <section class="briefing panel">
+                        <div class="card-title"><i data-icon="flag"></i><h3>Mission briefing</h3><span id="level-number">01</span></div>
+                        <p id="brief">Every great pilot starts with a small step. Navigate the training zone and bring your drone home.</p>
+                        <ol class="objectives"><li><span class="objective-symbol star-symbol"><i data-icon="star"></i></span><span>Collect <strong id="goal-stars">3 stars</strong></span><i id="stars-done" data-icon="circle"></i></li><li><span class="objective-symbol"><i data-icon="layers"></i></span><span id="obstacle-objective">Navigate around obstacles</span><i data-icon="circle"></i></li><li><span class="objective-symbol green-symbol"><i data-icon="flag"></i></span><span>Reach the <strong>landing pad</strong></span><i id="finish-done" data-icon="circle"></i></li></ol>
+                    </section>
+                    <section class="controls panel">
+                        <div class="card-title"><i data-icon="gamepad-2"></i><h3 id="controls-title">Take the controls</h3></div>
+                        <div id="flight-controls">
+                            <div class="dpad" aria-label="Drone directional controls"><button data-move="up" aria-label="Move up"><i data-icon="arrow-up"></i></button><button data-move="left" aria-label="Move left"><i data-icon="arrow-left"></i></button><span><i data-icon="scan"></i></span><button data-move="right" aria-label="Move right"><i data-icon="arrow-right"></i></button><button data-move="down" aria-label="Move down"><i data-icon="arrow-down"></i></button></div>
+                            <p class="keyboard-hint">Use the arrow keys <kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd><br>or tap the controls above.</p>
+                        </div>
+                        <div id="robot-controls" hidden>
+                            <p class="program-help">Plan a route. Turns change facing, not position.</p>
+                            <div class="command-buttons"><button data-command="F"><i data-icon="arrow-up"></i> Forward</button><button data-command="L"><i data-icon="corner-up-left"></i> Left</button><button data-command="R"><i data-icon="corner-up-right"></i> Right</button></div>
+                            <div class="program-heading"><label for="program">YOUR PROGRAM</label><span id="command-count">0 / 24</span></div>
+                            <ol id="program" aria-label="Command queue"></ol>
+                            <div class="program-tools"><button id="undo">Undo last</button><button id="clear">Clear</button></div>
+                            <button class="primary-button" id="run"><i data-icon="play"></i> Run program</button>
+                        </div>
+                    </section>
+                    <div class="tip"><i data-icon="lightbulb"></i><p><strong>A little tip</strong><span id="tip-text">Think one move ahead. The shortest route isn't always the safest.</span></p></div>
+                </aside>
+            </div>
+            <section class="mission-library" id="missions">
+                <div class="library-heading"><div><span class="section-kicker">ONE SMALL STEP AT A TIME</span><h2>Your flight path<span id="path-heading"> / Drone</span></h2></div><span id="progress-count">0 of 6 completed</span></div>
+                <div class="mission-cards" id="mission-cards"></div>
+            </section>
+            <section class="next-step"><span class="next-icon"><i data-icon="terminal"></i></span><div><h3>From flying to thinking in code.</h3><p>Meet your robot. Give it a plan. See your logic come to life.</p></div><button id="switch-path">Explore robot coding <i data-icon="arrow-up-right"></i></button></section>
+            <footer><span>orbit. <span>Make room for discovery.</span></span><span>Browser-only simulation · No hardware connection <button class="guide-open">How it works <i data-icon="arrow-up-right"></i></button></span></footer>
+        </main>
+    </div>
+    <dialog id="guide" aria-labelledby="guide-title">
+        <button class="icon-button" id="close-guide" aria-label="Close field guide"><i data-icon="x"></i></button>
+        <span class="section-kicker">EXPLORER HANDBOOK</span><h2 id="guide-title">Your first mission.</h2>
+        <h3>01 / Pilot a drone</h3><p>Choose any mission. Tap directional controls or focus the grid and use arrow keys. Collect every gold star, avoid solid blocks, then reach the green landing pad. Bumps do not move you.</p>
+        <h3>02 / Think like a programmer</h3><p>Forward moves one square in the robot's current facing direction. Left and Right rotate 90 degrees without moving. Queue up to 24 commands, then run. Execution always starts at the mission's starting position. A collision stops the program. Edit and try again.</p>
+        <h3>03 / The supply run</h3><p>Robot mission 6 requires the cyan supply crate before reaching the landing pad. Watch the robot's direction arrow and plan the order of your route.</p>
+        <h3>A safe place to experiment</h3><p>All movement is a bounded grid simulation in this browser. Nothing executes on or connects to real drones, robots, hardware, a backend, or a code service. Completion is stored locally when browser storage is available. You can explore any mission.</p>
+        <button class="primary-button" id="start-learning">Got it. Let's explore <i data-icon="arrow-right"></i></button>
+    </dialog>
+</body>
+</html>

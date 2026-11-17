@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#16261f">
+    <meta name="description" content="Off Hours. A little room for listening, with four original instrumental studies.">
+    <title>Off Hours — Now Playing</title>
+    <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+    <script src="player.js" defer></script>
+</head>
+<body>
+    <aside class="editorial" aria-label="Off Hours listening room">
+        <a class="wordmark" href="index.html">off hours<span>/ 01</span></a>
+        <div class="editorial-title">A little<br>room for<br><em>listening.</em></div>
+        <p>Unhurried sounds.<br>Undivided attention.</p>
+        <span class="edition">THE LISTENING ROOM / VOL. 01</span>
+    </aside>
+    <main class="player" aria-label="Music player">
+        <section class="now-playing" aria-label="Now playing">
+            <div class="device-status" aria-hidden="true"><span>9:41</span><span><svg><use href="assets/icons.svg#signal"></use></svg><svg><use href="assets/icons.svg#wifi"></use></svg><svg><use href="assets/icons.svg#battery-full"></use></svg></span></div>
+            <header class="topbar">
+                <button class="icon-button" id="collapse" aria-label="Show queue" aria-expanded="true" aria-controls="listening"><svg><use href="assets/icons.svg#chevron-down"></use></svg></button>
+                <div><span class="eyebrow">PLAYING FROM</span><strong>The golden hour</strong></div>
+                <button class="icon-button" id="more" aria-label="About this listening room"><svg><use href="assets/icons.svg#ellipsis"></use></svg></button>
+            </header>
+            <div id="listening">
+                <div class="cover" role="img" aria-label="Original sunset artwork with fine concentric rings">
+                    <div class="cover-top"><span>THE QUIET HOURS</span><span>STUDY 01</span></div>
+                    <div class="sun"><i></i></div>
+                    <div class="cover-bottom"><span>slow<br>afternoon</span><small>ORIGINAL<br>RECORDINGS</small></div>
+                </div>
+                <div class="track-meta">
+                    <div><h1 id="track-title">Slow afternoon</h1><p>The Quiet Hours <span>·</span> Sunset studies</p></div>
+                    <button class="like" id="like" aria-label="Save Slow afternoon" aria-pressed="false"><svg><use href="assets/icons.svg#heart"></use></svg></button>
+                </div>
+                <div class="scrubber">
+                    <label class="sr-only" for="seek">Playback position</label>
+                    <input type="range" id="seek" min="0" max="32" value="0" step="0.1">
+                    <div class="time"><output id="elapsed">0:00</output><span id="duration">0:32</span></div>
+                </div>
+            </div>
+            <div class="transport">
+                <button class="icon-button mode" id="shuffle" aria-label="Shuffle" aria-pressed="false"><svg><use href="assets/icons.svg#shuffle"></use></svg></button>
+                <button class="icon-button skip" id="previous" aria-label="Previous track"><svg><use href="assets/icons.svg#skip-back"></use></svg></button>
+                <button class="play" id="play" aria-label="Play"><svg><use href="assets/icons.svg#play"></use></svg></button>
+                <button class="icon-button skip" id="next" aria-label="Next track"><svg><use href="assets/icons.svg#skip-forward"></use></svg></button>
+                <button class="icon-button mode" id="repeat" aria-label="Repeat track" aria-pressed="false"><svg><use href="assets/icons.svg#repeat"></use></svg></button>
+            </div>
+            <div class="volume">
+                <button class="icon-button" id="mute" aria-label="Mute" aria-pressed="false"><svg><use href="assets/icons.svg#volume-1"></use></svg></button>
+                <label class="sr-only" for="volume">Volume</label><input id="volume" type="range" min="0" max="1" step="0.01" value="0.65">
+                <svg aria-hidden="true"><use href="assets/icons.svg#volume-2"></use></svg>
+            </div>
+        </section>
+        <section class="queue" aria-labelledby="queue-title">
+            <div class="queue-heading"><div><h2 id="queue-title">Up Next<span>04</span></h2><p>A soundtrack for slowing down.</p></div><button id="queue-edit">Queue <svg><use href="assets/icons.svg#list-music"></use></svg></button></div>
+            <p class="queue-help" hidden>Move tracks with the arrows. The current track stays selected.</p>
+            <ol id="tracks"></ol>
+            <footer><span class="live-dot"></span> FOUR ORIGINAL INSTRUMENTAL STUDIES <span>02:20</span></footer>
+        </section>
+        <p class="disclosure">Fictional artist. Real, original audio. No streaming account needed.</p>
+    </main>
+    <aside class="margin-note" aria-hidden="true"><span>SELECTED WITH INTENTION</span><div class="note-line"></div><p>Press play.<br>Stay a while.</p><span>EST. FOR THE EVERYDAY</span></aside>
+    <dialog id="about">
+        <button class="icon-button" id="close-about" aria-label="Close information"><svg><use href="assets/icons.svg#x"></use></svg></button>
+        <span class="eyebrow">A NOTE ON THE MUSIC</span><h2>Small sounds.<br>Made for this room.</h2>
+        <p>The Quiet Hours is a fictional artist. These four short instrumental studies are original synthesized recordings made for this player, not commercial tracks or artist imitations.</p>
+        <p>Everything plays locally. No accounts, tracking, streaming service, or backend. Saved tracks stay in this browser.</p>
+        <p class="shortcut">Keyboard: Space to play / pause. Use Tab to reach controls and arrow keys on sliders. Escape closes this note.</p>
+        <a href="assets/NOTICE.txt">Credits &amp; licenses</a>
+    </dialog>
+    <p id="status" class="sr-only" role="status" aria-live="polite"></p>
+    <audio id="audio" preload="auto"></audio>
+</body>
+</html>

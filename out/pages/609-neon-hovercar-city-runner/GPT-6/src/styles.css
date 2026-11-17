@@ -1,0 +1,854 @@
+@font-face
+{
+    font-family: Rajdhani;
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url("../fonts/rajdhani-latin-500-normal.woff2") format("woff2");
+}
+@font-face
+{
+    font-family: Rajdhani;
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url("../fonts/rajdhani-latin-600-normal.woff2") format("woff2");
+}
+@font-face
+{
+    font-family: Rajdhani;
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("../fonts/rajdhani-latin-700-normal.woff2") format("woff2");
+}
+@font-face
+{
+    font-family: "Outfit Variable";
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url("../fonts/outfit-latin-wght-normal.woff2") format("woff2");
+}
+:root
+{
+    color-scheme: dark;
+    --ink: #e2e8ef;
+    --muted: #9daaba;
+    --cyan: #92f2db;
+    --line: #ffffff20;
+    font-family: "Outfit Variable", sans-serif;
+    font-weight: 350;
+    color: var(--ink);
+    background: #070b17;
+}
+*
+{
+    box-sizing: border-box;
+}
+body
+{
+    margin: 0;
+    width: 100%;
+    height: 100svh;
+    min-height: 600px;
+    overflow: hidden;
+}
+button, a, input
+{
+    -webkit-tap-highlight-color: transparent;
+}
+button
+{
+    font: inherit;
+    cursor: pointer;
+    color: inherit;
+}
+button:focus-visible, a:focus-visible, input:focus-visible
+{
+    outline: 2px solid var(--cyan);
+    outline-offset: 5px;
+}
+button:disabled
+{
+    opacity: 0.3;
+    cursor: default;
+}
+svg
+{
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+#world
+{
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+#app
+{
+    position: relative;
+    height: 100%;
+    background: linear-gradient(90deg, #040915a6 0%, transparent 65%), linear-gradient(0deg, #050b18ed, transparent 22%, transparent 75%, #060c19c4);
+    pointer-events: none;
+}
+a, button, input, .card
+{
+    pointer-events: auto;
+}
+a
+{
+    color: inherit;
+    text-decoration: none;
+}
+.masthead
+{
+    height: 91px;
+    margin: 0 38px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+.wordmark
+{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font: 600 26px Rajdhani, sans-serif;
+}
+.wordmark small
+{
+    display: block;
+    margin-top: 1px;
+    font: 400 8px "Outfit Variable", sans-serif;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+}
+.mark
+{
+    font: 600 28px Rajdhani, sans-serif;
+    color: var(--cyan);
+    letter-spacing: -5px;
+    padding-right: 7px;
+}
+.mark span
+{
+    color: #3a6470;
+    padding: 0 3px;
+}
+.city, .eyebrow, .label, .dispatch > span, .route-start, .route-end
+{
+    font: 600 11px Rajdhani, sans-serif;
+    letter-spacing: 1.7px;
+    color: var(--muted);
+}
+.city
+{
+    display: flex;
+    gap: 9px;
+    align-items: center;
+    font-size: 10px;
+}
+.status-dot
+{
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    background: var(--cyan);
+    box-shadow: 0 0 8px #92f2db75;
+}
+nav
+{
+    display: flex;
+    gap: 10px;
+}
+.icon-button
+{
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--line);
+    background: #111b2b70;
+    width: 35px;
+    height: 35px;
+    border-radius: 4px;
+    color: #bbcbd5;
+}
+.icon-button:hover:not(:disabled)
+{
+    border-color: var(--cyan);
+    color: var(--cyan);
+}
+main
+{
+    position: absolute;
+    inset: 91px 0 66px;
+}
+.hud
+{
+    position: absolute;
+    top: 26px;
+    left: 39px;
+    right: 39px;
+    display: flex;
+    align-items: start;
+    gap: 27px;
+}
+.frame
+{
+    width: 170px;
+}
+.label
+{
+    display: block;
+    font-size: 10px;
+    letter-spacing: 1.9px;
+}
+.frame .label, .surge .label
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+.frame strong
+{
+    color: var(--ink);
+    font-size: 21px;
+    line-height: 21px;
+    font-weight: 500;
+    letter-spacing: 0;
+}
+.frame strong span
+{
+    font-size: 12px;
+    margin-left: 3px;
+    color: var(--muted);
+}
+.meter
+{
+    background: #b6d5e51f;
+    height: 3px;
+    margin-top: 8px;
+    overflow: hidden;
+}
+.meter i
+{
+    display: block;
+    background: var(--cyan);
+    height: 100%;
+    width: 100%;
+}
+.surge
+{
+    width: 113px;
+    padding-top: 5px;
+}
+.surge .meter i
+{
+    background: #b49bdf;
+}
+.surge .label span
+{
+    letter-spacing: 0;
+    color: #c9b9e3;
+}
+.haul
+{
+    margin-left: auto;
+    padding-right: 26px;
+    border-right: 1px solid var(--line);
+}
+.haul strong, .distance strong
+{
+    font: 500 33px/34px Rajdhani, sans-serif;
+    letter-spacing: 1px;
+}
+.haul small, .distance small
+{
+    color: var(--muted);
+    font: 500 10px Rajdhani, sans-serif;
+    margin-left: 6px;
+}
+.card
+{
+    position: absolute;
+    left: 62px;
+    top: 49%;
+    transform: translateY(-45%);
+    width: 391px;
+    padding: 0;
+    text-shadow: 0 2px 20px #0006;
+}
+.eyebrow
+{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    color: var(--cyan);
+}
+h1
+{
+    font: 600 60px/0.98 Rajdhani, sans-serif;
+    letter-spacing: -2px;
+    margin: 20px 0 18px;
+}
+h1.brand-title
+{
+    font-size: 83px;
+    letter-spacing: -3.4px;
+    margin: 17px 0 12px;
+}
+.title-period
+{
+    color: var(--cyan);
+}
+h2
+{
+    font: 500 21px Rajdhani, sans-serif;
+    margin: 0 0 16px;
+    letter-spacing: 0.2px;
+}
+.card p
+{
+    max-width: 344px;
+    color: #acb7c8;
+    font-size: 12px;
+    line-height: 1.9;
+    margin: 0 0 20px;
+}
+.dispatch
+{
+    border-left: 2px solid #90f2d947;
+    padding-left: 15px;
+    margin: 25px 0 29px;
+}
+.dispatch > span
+{
+    font-size: 9px;
+    letter-spacing: 1.6px;
+}
+blockquote
+{
+    margin: 7px 0 0;
+    color: #c2ccd6;
+    font-size: 11px;
+    line-height: 1.7;
+    max-width: 270px;
+}
+.primary
+{
+    width: 100%;
+    background: var(--cyan);
+    color: #0a2427;
+    border: 0;
+    padding: 17px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 550;
+    font-size: 13px;
+    border-radius: 3px;
+    text-shadow: none;
+}
+.primary:hover
+{
+    background: #c4ffed;
+}
+.primary svg
+{
+    width: 17px;
+    height: 17px;
+}
+.card-bottom
+{
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font: 500 8px Rajdhani, sans-serif;
+    color: #9aa8b8;
+    letter-spacing: 1px;
+    margin-top: 13px;
+}
+.card-bottom b
+{
+    color: #e2e8ef;
+    font-weight: 600;
+    margin-left: 6px;
+}
+.route
+{
+    position: absolute;
+    right: 38px;
+    top: 145px;
+    width: 120px;
+    text-align: center;
+}
+.route .label
+{
+    margin-bottom: 22px;
+    font-size: 9px;
+}
+.route-end
+{
+    font-size: 9px;
+    letter-spacing: 1.1px;
+}
+.route-end b
+{
+    display: block;
+    color: var(--cyan);
+    margin-top: 9px;
+}
+#map
+{
+    display: block;
+    width: 120px;
+    height: 146px;
+}
+.route-start
+{
+    font-size: 8px;
+    letter-spacing: 1px;
+}
+.pace
+{
+    position: absolute;
+    right: 39px;
+    bottom: 30px;
+    text-align: right;
+}
+.pace strong
+{
+    font: 500 74px/80px Rajdhani, sans-serif;
+    letter-spacing: -2px;
+}
+.pace div > span
+{
+    font: 500 10px Rajdhani, sans-serif;
+    color: var(--muted);
+    margin-left: 8px;
+}
+.pace-ticks
+{
+    color: #9cd4d17a;
+    font: 600 13px Rajdhani, sans-serif;
+    letter-spacing: 3px;
+}
+.sector
+{
+    position: absolute;
+    left: 39px;
+    bottom: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+.sector strong
+{
+    font: 500 16px Rajdhani, sans-serif;
+    letter-spacing: 1px;
+}
+#run-status
+{
+    color: #94a4b8;
+    font: 500 9px Rajdhani, sans-serif;
+    letter-spacing: 1.3px;
+}
+.notification
+{
+    position: absolute;
+    bottom: 150px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    color: var(--cyan);
+    font: 600 12px Rajdhani, sans-serif;
+    letter-spacing: 2px;
+}
+footer
+{
+    position: absolute;
+    bottom: 0;
+    left: 38px;
+    right: 38px;
+    height: 66px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    font: 500 8px Rajdhani, sans-serif;
+    color: #98a7b9;
+    letter-spacing: 0.9px;
+}
+footer > span
+{
+    font-size: 8px;
+}
+footer a
+{
+    font-family: "Outfit Variable", sans-serif;
+    font-size: 9px;
+    letter-spacing: 0;
+}
+.keyboard-hints
+{
+    display: flex;
+    gap: 20px;
+}
+.keyboard-hints > span
+{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+kbd
+{
+    font: 500 9px Rajdhani, sans-serif;
+    letter-spacing: 0.1px;
+    border: 1px solid #ffffff20;
+    padding: 3px 5px;
+    color: #c8d6dc;
+    border-radius: 2px;
+}
+.touch-controls
+{
+    display: none;
+}
+.motion
+{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 24px;
+    font-size: 13px;
+}
+input
+{
+    accent-color: var(--cyan);
+}
+.result-stats
+{
+    display: flex;
+    gap: 65px;
+    margin-bottom: 28px;
+}
+.result-stats strong
+{
+    display: block;
+    font: 500 42px Rajdhani, sans-serif;
+}
+.result-stats small
+{
+    font-size: 20px;
+    color: var(--muted);
+}
+[hidden]
+{
+    display: none !important;
+}
+@media (min-width: 1500px)
+{
+    .card
+    {
+        left: 7vw;
+        width: 420px;
+    }
+}
+@media (max-width: 1000px)
+{
+    .city, footer > span
+    {
+        display: none;
+    }
+    .card
+    {
+        left: 38px;
+        width: 345px;
+    }
+    h1.brand-title
+    {
+        font-size: 74px;
+    }
+    .keyboard-hints
+    {
+        gap: 12px;
+    }
+}
+@media (max-width: 650px)
+{
+    body
+    {
+        min-height: 600px;
+    }
+    #app
+    {
+        background: linear-gradient(0deg, #060c19fa 8%, #060c19eb 32%, transparent 66%, #060c19b3);
+    }
+    .masthead
+    {
+        height: 71px;
+        margin: 0 20px;
+        gap: 10px;
+    }
+    .wordmark
+    {
+        font-size: 23px;
+        gap: 9px;
+    }
+    .wordmark small
+    {
+        font-size: 6px;
+        letter-spacing: 0.8px;
+    }
+    .mark
+    {
+        font-size: 25px;
+    }
+    nav
+    {
+        gap: 6px;
+    }
+    .icon-button
+    {
+        width: 31px;
+        height: 31px;
+    }
+    .icon-button svg
+    {
+        width: 16px;
+    }
+    main
+    {
+        top: 71px;
+        bottom: 44px;
+    }
+    .hud
+    {
+        top: 19px;
+        left: 20px;
+        right: 20px;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+    .frame
+    {
+        width: 118px;
+    }
+    .surge
+    {
+        width: 72px;
+    }
+    .haul
+    {
+        border: 0;
+        padding: 0;
+    }
+    .haul strong
+    {
+        font-size: 27px;
+        line-height: 30px;
+    }
+    .haul small
+    {
+        font-size: 8px;
+        margin-left: 3px;
+    }
+    .distance
+    {
+        position: absolute;
+        top: 67px;
+        right: 0;
+        text-align: right;
+    }
+    .distance .label
+    {
+        font-size: 8px;
+    }
+    .distance strong
+    {
+        font-size: 23px;
+        line-height: 28px;
+    }
+    .route
+    {
+        display: none;
+    }
+    .card
+    {
+        top: auto;
+        bottom: 66px;
+        transform: none;
+        left: 25px;
+        width: calc(100% - 50px);
+    }
+    .eyebrow
+    {
+        font-size: 9px;
+    }
+    h1.brand-title
+    {
+        font-size: 65px;
+        margin: 10px 0 6px;
+        letter-spacing: -2.6px;
+    }
+    h1
+    {
+        font-size: 48px;
+        margin: 13px 0;
+    }
+    h2
+    {
+        font-size: 19px;
+        margin-bottom: 12px;
+    }
+    .card p
+    {
+        font-size: 11px;
+        line-height: 1.8;
+        margin-bottom: 13px;
+    }
+    .dispatch
+    {
+        margin: 16px 0 20px;
+    }
+    blockquote
+    {
+        font-size: 10px;
+    }
+    .primary
+    {
+        padding: 16px 18px;
+    }
+    .card-bottom
+    {
+        font-size: 7px;
+        letter-spacing: 0.4px;
+        margin-top: 11px;
+    }
+    .sector
+    {
+        left: 20px;
+        bottom: 15px;
+        gap: 4px;
+    }
+    .sector .label
+    {
+        display: none;
+    }
+    .sector strong
+    {
+        font-size: 12px;
+    }
+    #run-status
+    {
+        font-size: 7px;
+        letter-spacing: 1px;
+    }
+    .pace
+    {
+        right: 20px;
+        bottom: 9px;
+    }
+    .pace .label, .pace-ticks
+    {
+        display: none;
+    }
+    .pace strong
+    {
+        font-size: 35px;
+        line-height: 44px;
+    }
+    .pace div > span
+    {
+        font-size: 8px;
+        margin-left: 5px;
+    }
+    footer
+    {
+        height: 44px;
+        left: 20px;
+        right: 20px;
+        justify-content: flex-end;
+    }
+    footer a
+    {
+        font-size: 8px;
+    }
+    .keyboard-hints
+    {
+        display: none;
+    }
+    .touch-controls
+    {
+        position: absolute;
+        bottom: 80px;
+        left: 20px;
+        right: 20px;
+        display: flex;
+        gap: 8px;
+    }
+    .touch-controls button
+    {
+        touch-action: none;
+        user-select: none;
+        border: 1px solid #8cdfdb67;
+        background: #091a2bc7;
+        min-width: 52px;
+        min-height: 52px;
+        border-radius: 4px;
+        color: #d7eee9;
+        font: 600 11px Rajdhani, sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+    }
+    .touch-controls button:nth-child(3)
+    {
+        margin-left: auto;
+        padding: 0 12px;
+    }
+    .touch-controls button:last-child
+    {
+        background: #92f2db;
+        color: #0c3034;
+        padding: 0 12px;
+    }
+    body:not([data-phase="running"]) .touch-controls
+    {
+        display: none;
+    }
+    .notification
+    {
+        bottom: 158px;
+        font-size: 10px;
+        letter-spacing: 1px;
+    }
+}
+@media (max-height: 740px) and (max-width: 650px)
+{
+    .card
+    {
+        bottom: 57px;
+    }
+    .dispatch
+    {
+        display: none;
+    }
+    h1.brand-title
+    {
+        font-size: 56px;
+    }
+}
+@media (prefers-reduced-motion: reduce)
+{
+    *
+    {
+        scroll-behavior: auto !important;
+        transition: none !important;
+    }
+}

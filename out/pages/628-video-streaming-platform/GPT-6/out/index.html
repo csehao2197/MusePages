@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#101211">
+    <meta name="description" content="FRAME — a small cinema for your curious side. Discover original animated short films.">
+    <title>FRAME — A little further from ordinary</title>
+    <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="app.js"></script>
+</head>
+<body>
+    <a class="skip" href="#discover">Skip to films</a>
+    <header class="header">
+        <a class="brand" href="index.html" aria-label="FRAME home"><span class="brand-mark"></span>FRAME<span class="brand-dot">.</span></a>
+        <nav aria-label="Main navigation">
+            <button class="nav-link active" data-view="home">Discover</button>
+            <button class="nav-link" data-view="films">Short films</button>
+            <button class="nav-link" data-view="watchlist">My list <span id="list-count">0</span></button>
+        </nav>
+        <div class="header-actions">
+            <button class="icon-button" id="search-toggle" aria-label="Search films" aria-expanded="false" data-icon="search"></button>
+            <button class="icon-button notification-button" id="notifications" aria-label="What's new" data-icon="bell"><i></i></button>
+            <button class="avatar" id="profile" aria-label="Profile and parental settings">J</button>
+        </div>
+    </header>
+    <section class="search-panel" id="search-panel" hidden>
+        <label for="search">Find your next escape</label>
+        <div class="search-input"><span data-icon="search"></span><input id="search" type="search" autocomplete="off" placeholder="Search titles, moods, or genres…"><button class="icon-button" id="search-close" aria-label="Close search" data-icon="x"></button></div>
+        <div id="suggestions" aria-label="Search suggestions"></div>
+    </section>
+    <main>
+        <section class="hero" aria-labelledby="hero-title">
+            <img class="hero-art" src="assets/quiet.svg" alt="An original illustrated alpine landscape, with a tiny traveler looking toward sunlit mountain peaks.">
+            <div class="hero-shade"></div>
+            <div class="hero-content">
+                <div class="eyebrow"><span class="mini-mark">F</span> FRAME ORIGINAL <span class="new-label">NEW RELEASE</span></div>
+                <p class="hero-kicker">A LITTLE FURTHER FROM ORDINARY</p>
+                <h1 id="hero-title">The quiet<br>between<span>.</span></h1>
+                <div class="film-meta"><span class="match">A fresh perspective</span><span>2026</span><span class="age">G</span><span>8 sec</span><span>360p</span></div>
+                <p class="hero-description">Leave the familiar behind. Find a moment of stillness<br class="desktop-break"> in a world that never stops moving.</p>
+                <div class="hero-buttons">
+                    <button class="button primary" id="hero-play"><span data-icon="play"></span>Play film</button>
+                    <button class="button secondary" id="hero-save"><span data-icon="plus"></span><span class="save-label">My list</span></button>
+                </div>
+                <p class="hero-credit">AN ORIGINAL ANIMATED MICRO-FILM <span>•</span> NATURE / EXPLORATION</p>
+            </div>
+            <div class="hero-side"><span>01</span><div></div><span>THE ORIGINALS COLLECTION</span></div>
+            <div class="hero-bottom"><span><span class="tiny-dot"></span> SMALL FILMS. BIG FEELINGS.</span><span>YOUR EVERYDAY, REFRAMED <span data-icon="arrow-down"></span></span></div>
+        </section>
+        <section class="discovery" id="discover" aria-labelledby="section-title">
+            <div class="discovery-top">
+                <div class="filters" aria-label="Filter by genre">
+                    <button class="filter active" data-genre="All" aria-pressed="true">For you</button>
+                    <button class="filter" data-genre="Nature" aria-pressed="false">Nature</button>
+                    <button class="filter" data-genre="Animation" aria-pressed="false">Animation</button>
+                    <button class="filter" data-genre="Ambient" aria-pressed="false">Ambient</button>
+                </div>
+                <span class="curated"><span data-icon="sparkles"></span> A different kind of screen time</span>
+            </div>
+            <section id="continue-section" hidden>
+                <div class="section-heading"><h2>Pick up where you left off</h2><button class="text-button" id="clear-progress">Clear history</button></div>
+                <div class="film-grid" id="continue-grid"></div>
+            </section>
+            <div class="section-heading"><div><p class="section-kicker">LESS SCROLLING. MORE DISCOVERING.</p><h2 id="section-title">Made for a little escape</h2></div><span class="collection-count" id="result-count">6 original films</span></div>
+            <div class="film-grid" id="film-grid"></div>
+            <div class="empty" id="empty" hidden><span data-icon="bookmark"></span><h3 id="empty-title">Your collection starts here</h3><p id="empty-copy">Save a film with the + button to make it yours.</p><button class="button secondary" id="reset">Explore all films</button></div>
+            <section class="editorial">
+                <div class="editorial-stamp"><span data-icon="aperture"></span><span>AN INDEPENDENT<br>POINT OF VIEW</span></div>
+                <div><p class="section-kicker">THE FRAME PHILOSOPHY</p><h2>Not more to watch.<br>More to feel.</h2></div>
+                <p>A small, thoughtfully made collection of original animated moments. No algorithms to get lost in. Just a little room to wander.</p>
+                <button class="round-button" id="about" aria-label="About this collection" data-icon="arrow-up-right"></button>
+            </section>
+        </section>
+    </main>
+    <footer><a class="brand footer-brand" href="index.html">FRAME<span class="brand-dot">.</span></a><p>Fictional catalog. Real, original micro-films. Browser-only demo.</p><button class="text-button" id="credits">Credits & limitations</button><span>© 2026 FRAME</span></footer>
+    <dialog id="player-dialog" aria-labelledby="player-title">
+        <div class="player-top"><span class="brand">FRAME<span class="brand-dot">.</span></span><button class="icon-button" id="player-close" aria-label="Close player" data-icon="x"></button></div>
+        <div class="video-wrap">
+            <video id="video" playsinline preload="auto" tabindex="0" aria-label="Original animated film"></video>
+            <button id="big-play" class="big-play" aria-label="Play or pause video" data-icon="play"></button>
+        </div>
+        <div class="player-controls">
+            <button class="icon-button" id="play-pause" aria-label="Play" data-icon="play"></button>
+            <span class="time" id="time">0:00 / 0:08</span>
+            <input id="seek" type="range" min="0" max="8" step=".05" value="0" aria-label="Seek video">
+            <select id="speed" aria-label="Playback speed"><option value="1">1×</option><option value=".5">0.5×</option><option value="1.5">1.5×</option><option value="2">2×</option></select>
+            <button class="icon-button" id="fullscreen" aria-label="Fullscreen player" data-icon="maximize"></button>
+        </div>
+        <div class="player-info"><div><p class="section-kicker">FRAME ORIGINAL · SILENT ANIMATED SHORT</p><h2 id="player-title"></h2><p id="player-description"></p></div><button class="button secondary" id="player-save"><span data-icon="plus"></span><span class="save-label">My list</span></button></div>
+        <div class="player-extras"><label>Your rating <select id="rating" aria-label="Your rating"><option value="">Not rated</option><option value="1">1 / 5</option><option value="2">2 / 5</option><option value="3">3 / 5</option><option value="4">4 / 5</option><option value="5">5 / 5</option></select></label><button class="text-button" id="next-film">Play next →</button><span>Space: play / pause · ← →: seek · Esc: close</span></div>
+        <p class="player-note">Original silent canvas animation · 640 × 360 · Local WebM · No dialogue or audio tracks. Progress and ratings stay in this browser.</p>
+    </dialog>
+    <dialog id="info-dialog" aria-labelledby="info-title"><div class="info-heading"><h2 id="info-title"></h2><button id="info-close" class="icon-button" aria-label="Close information" data-icon="x"></button></div><div id="info-body"></div></dialog>
+    <div class="toast" id="toast" role="status" hidden></div>
+</body>
+</html>

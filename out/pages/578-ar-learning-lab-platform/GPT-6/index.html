@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#153f37">
+    <meta name="description" content="A little curiosity. A whole new universe. Explore interactive science lessons and browser-based learning labs with Orbit.">
+    <meta property="og:title" content="Orbit — A world of wonder">
+    <meta property="og:description" content="Explore, experiment, and discover through playful interactive learning.">
+    <meta property="og:type" content="website">
+    <title>Orbit — A world of wonder</title>
+    <link rel="icon" href="icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Orbit","applicationCategory":"EducationalApplication","operatingSystem":"Web browser","description":"An interactive learning homepage with browser-based astronomy and physics simulations."}</script>
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <a class="skip" href="#main">Skip to learning</a>
+    <aside class="sidebar">
+        <a href="#main" class="brand" aria-label="Orbit home"><svg viewBox="0 0 42 42" aria-hidden="true"><ellipse cx="21" cy="21" rx="20" ry="9" transform="rotate(-35 21 21)"/><circle cx="21" cy="21" r="11"/><circle cx="35" cy="10" r="3" class="brand-dot"/></svg>orbit<span>®</span></a>
+        <div class="workspace-label">YOUR LEARNING SPACE</div>
+        <nav aria-label="Main navigation">
+            <a href="#main" class="active"><i data-icon="house"></i>Discover<span class="nav-dot"></span></a>
+            <a href="#library"><i data-icon="book-open"></i>Lesson library</a>
+            <a href="#labs"><i data-icon="flask-conical"></i>Virtual labs<span class="tiny">NEW</span></a>
+            <a href="#explore"><i data-icon="compass"></i>World explorer</a>
+            <a href="#quests"><i data-icon="flag"></i>My quests</a>
+        </nav>
+        <div class="sidebar-bottom">
+            <div class="curiosity"><div class="little-star">✳</div><strong>Big discoveries.<br>Small steps.</strong><p>Your next “aha!” is<br>just a lesson away.</p><a href="#library">Find your next lesson <span>↗</span></a></div>
+            <button class="parent-button" data-open="privacy"><i data-icon="shield-check"></i>Grown-up corner<i data-icon="arrow-up-right"></i></button>
+            <span class="sidebar-foot">Made for curious minds.</span>
+        </div>
+    </aside>
+    <div class="shell">
+        <header class="topbar">
+            <span class="breadcrumb">Your world of discovery <span>/</span> <b>Discover</b></span>
+            <div class="top-actions"><span class="streak"><i data-icon="flame"></i><b id="streak">0</b> day streak</span><button class="profile" data-open="privacy" aria-label="Local explorer profile">E<span></span></button></div>
+        </header>
+        <main id="main">
+            <section class="greeting" aria-labelledby="welcome">
+                <div><span class="eyebrow">KEEP YOUR CURIOSITY CLOSE</span><h1 id="welcome">Hey, explorer. <span>What if…</span></h1><p>Big questions lead to extraordinary discoveries. Let’s find yours.</p></div>
+                <button class="button scan-button" data-open="scan"><i data-icon="scan-line"></i>Scan a book <span class="demo-label">DEMO</span></button>
+            </section>
+            <section class="hero" aria-labelledby="hero-title">
+                <div class="hero-copy"><div class="pill"><span></span>THE UNIVERSE IS YOUR CLASSROOM</div><h2 id="hero-title">A little curiosity.<br>A whole new<br><em>universe.</em></h2><p>Go beyond the page. Get hands-on with<br class="desktop-break"> ideas that make your world a little bigger.</p><button class="button yellow" data-open="solar">Explore the solar system<i data-icon="arrow-up-right"></i></button><div class="hero-meta"><span><i data-icon="orbit"></i>Interactive 3D model</span><span>8 min adventure</span></div></div>
+                <div class="solar-art"><canvas id="hero-space" aria-label="A projected three-dimensional solar system illustration"></canvas><div class="space-label sun-label">THE SUN <span>Our very own star</span></div><div class="space-label earth-label"><span class="earth-dot"></span>Home, sweet home</div><div class="coordinate">SOLAR SYSTEM / 01<span>NOT TO SCALE · BROWSER SIMULATION</span></div><div class="spark spark-one">+</div><div class="spark spark-two">+</div><span class="art-corner">A DIFFERENT PERSPECTIVE CHANGES EVERYTHING.</span></div>
+            </section>
+            <section class="quick-paths" aria-label="Ways to explore">
+                <a href="#library"><span class="path-icon peach"><i data-icon="book-open"></i></span><div><strong>Open a new chapter</strong><span>Lessons for every kind of curious</span></div><i data-icon="arrow-up-right"></i></a>
+                <a href="#labs"><span class="path-icon lilac"><i data-icon="flask-conical"></i></span><div><strong>A little trial. A little wonder.</strong><span>Experiment in a virtual lab</span></div><i data-icon="arrow-up-right"></i></a>
+                <a href="#explore"><span class="path-icon mint"><i data-icon="globe"></i></span><div><strong>The world is waiting</strong><span>Take your curiosity somewhere new</span></div><i data-icon="arrow-up-right"></i></a>
+            </section>
+            <section id="library" class="section library-section" aria-labelledby="library-title">
+                <div class="section-heading"><div><span class="eyebrow">FOLLOW YOUR “WHAT IF”</span><h2 id="library-title">Small lessons. Big discoveries.</h2></div><span class="section-note"><span id="lesson-count">6</span> adventures to explore<i data-icon="sparkles"></i></span></div>
+                <div class="library-tools"><div class="filters" role="group" aria-label="Filter by subject"><button class="selected" data-subject="All" aria-pressed="true">All subjects</button><button data-subject="Science" aria-pressed="false">Science</button><button data-subject="Space" aria-pressed="false">Space</button><button data-subject="Nature" aria-pressed="false">Nature</button></div><div class="search-tools"><label class="sr-only" for="grade">Grade</label><select id="grade"><option value="All">All grades</option><option value="3–5">Grades 3–5</option><option value="6–8">Grades 6–8</option></select><label class="search"><i data-icon="search"></i><input id="search" placeholder="Find a little wonder…" aria-label="Search lessons by title"></label></div></div>
+                <div class="lesson-grid" id="lesson-grid"></div><p id="empty" hidden>No adventures found. Try another subject, grade, or title.</p>
+            </section>
+            <section id="labs" class="lab-banner section" aria-labelledby="lab-title"><div class="lab-art" aria-hidden="true"><svg viewBox="0 0 220 160"><path d="M75 26h70M110 27v25M60 52h100" fill="none" stroke="#1b5546" stroke-width="4"/><path d="M110 52l52 67" stroke="#1b5546" stroke-width="3"/><circle cx="163" cy="121" r="21" fill="#ecad59"/><path d="M62 123a64 64 0 0 0 101 0" fill="none" stroke="#7ea794" stroke-dasharray="4 5"/><path d="M31 143h158" stroke="#a9c8b4"/><text x="30" y="31" fill="#356353" font-size="12">T = 2π√(L/g)</text></svg></div><div><span class="eyebrow">THE WONDER WORKSHOP</span><h2 id="lab-title">Good questions deserve an experiment.</h2><p>Change gravity. Swing a pendulum. Discover what makes time tick.</p><span class="micro">Browser physics lab · Grades 3–8 · No materials needed</span></div><button class="button dark" data-open="pendulum">Enter the lab<i data-icon="arrow-up-right"></i></button></section>
+            <div class="bottom-grid">
+                <section id="explore" class="section explorer-section" aria-labelledby="explore-title"><span class="eyebrow">A WINDOW TO THE WORLD</span><h2 id="explore-title">Next stop: somewhere amazing.</h2><div class="destination"><div class="pyramid-art" aria-hidden="true"><svg viewBox="0 0 300 180"><circle cx="237" cy="42" r="25" fill="#f3c35d"/><path d="M0 126Q85 110 150 136t150-9v53H0" fill="#e1b486"/><path d="M45 145l85-118 91 118" fill="#bf8157"/><path d="M130 27l-5 118h96z" fill="#e7ad72"/><path d="M175 146l45-67 58 67" fill="#d79d68"/><path d="M220 79l-3 67h61" fill="#f1c48f"/></svg></div><div><span class="micro">GIZA, EGYPT · VIRTUAL FIELD TRIP</span><h3>Wonders that stand the test of time.</h3><button class="text-button" data-open="explorer">Explore the pyramids <i data-icon="arrow-up-right"></i></button></div></div></section>
+                <section id="quests" class="section quest-section" aria-labelledby="quest-title"><div class="quest-top"><span class="eyebrow">YOUR CURIOSITY ADDS UP</span><i data-icon="award"></i></div><h2 id="quest-title">One small discovery at a time.</h2><div class="xp-row"><strong id="xp">0 XP</strong><span id="level">Level 1 · Curious beginner</span></div><div class="progress-track"><div id="xp-progress"></div></div><p id="quest-status" aria-live="polite">Complete a discovery to begin your journey.</p><div class="quest-item"><span class="quest-check" id="solar-check">1</span><div><strong>Meet your cosmic neighbors</strong><span>Answer the solar system challenge</span></div><b>+40 XP</b></div><div class="quest-item"><span class="quest-check" id="lab-check">2</span><div><strong>Think like a scientist</strong><span>Compare gravity in the pendulum lab</span></div><b>+60 XP</b></div><div id="badge" class="badge" hidden><i data-icon="award"></i>Wonder seeker badge unlocked</div><span class="micro">Progress stays in this browser. No account needed.</span></section>
+            </div>
+            <footer><a class="footer-brand" href="#main">orbit</a><p>A safe space for big questions and little discoveries.</p><button class="text-button" data-open="about">About this learning demo<i data-icon="arrow-up-right"></i></button><span>Stay curious.</span></footer>
+        </main>
+    </div>
+    <dialog id="learning-dialog" aria-labelledby="dialog-title"><div class="dialog-top"><span class="eyebrow">ORBIT DISCOVERY SPACE</span><button id="close-dialog" class="icon-button" aria-label="Close discovery"><i data-icon="x"></i></button></div><div id="dialog-content"></div></dialog>
+    <div id="announcement" class="toast" role="status"></div>
+</body>
+</html>

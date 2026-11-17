@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#6551d9">
+    <meta name="description" content="A little anticipation. An equal chance. A private, browser-only classroom name picker.">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+    <title>Classroom Shuffle — Every student, a chance to shine</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <aside class="sidebar">
+        <a class="brand" href="#main" aria-label="Classroom Shuffle home"><span class="brand-mark" data-icon="shuffle"></span><span>classroom<span class="brand-sub">shuffle<span class="brand-dot">.</span></span></span></a>
+        <div class="workspace-label">YOUR TEACHING TOOLKIT</div>
+        <nav aria-label="Main navigation">
+            <a class="nav-item active" href="#main"><span data-icon="sparkles"></span>Name picker<span class="nav-dot"></span></a>
+            <button class="nav-item" data-open="roster-dialog"><span data-icon="users"></span>Class roster<span class="nav-count" id="nav-count">24</span></button>
+            <button class="nav-item" data-open="history-dialog"><span data-icon="history"></span>Draw history</button>
+        </nav>
+        <div class="sidebar-tip"><span class="tip-icon" data-icon="lightbulb"></span><strong>Make room for everyone.</strong><p>A random pick gives every voice a moment in the spotlight.</p><span class="tip-line"></span></div>
+        <div class="sidebar-bottom"><span data-icon="shield"></span><div><strong>Little tool. Big privacy.</strong><span>Names stay in this browser.</span></div></div>
+        <span class="sidebar-version">Made for your classroom</span>
+    </aside>
+    <div class="app">
+        <header class="topbar"><span class="breadcrumb">Your classroom <span>/</span> <strong>Name picker</strong></span><a class="mobile-brand" href="#main">classroom shuffle.</a><div class="top-actions"><span class="local-status"><i></i>Local mode · KV offline</span><button class="icon-button mobile-history" data-open="history-dialog" aria-label="Open draw history" title="Draw history"><span data-icon="history"></span></button><button class="icon-button" id="sound" aria-label="Enable sound" aria-pressed="false" title="Toggle sound"><span data-icon="volume-off"></span></button><button class="icon-button" id="fullscreen" aria-label="Toggle fullscreen" title="Fullscreen (F)"><span data-icon="maximize"></span></button><span class="teacher-avatar" aria-label="Teacher workspace">T</span></div></header>
+        <main id="main">
+            <section class="page-heading"><div><div class="eyebrow"><span></span>A LITTLE SUSPENSE. A LOT OF POSSIBILITY.</div><h1>Every student, a chance to shine<span>.</span></h1><p>Turn “who’s next?” into everyone’s favorite moment.</p></div><button class="secondary history-shortcut" data-open="history-dialog"><span data-icon="history"></span>Draw history</button></section>
+            <div class="workspace">
+                <section class="picker-column" aria-label="Random name picker">
+                    <div class="picker-card">
+                        <div class="picker-top"><div class="event-label"><span class="event-icon" data-icon="calendar"></span><div><span class="small-label">TODAY’S ACTIVITY</span><button id="edit-event" class="event-edit"><span id="event-title">A little classroom magic</span><span data-icon="pencil"></span></button></div></div><span class="fair-badge"><span data-icon="shield"></span>Fair & random</span></div>
+                        <div class="stage" id="stage">
+                            <span class="stage-star star-one" data-icon="sparkles"></span><span class="stage-star star-two" data-icon="star"></span><span class="stage-star star-three" data-icon="star"></span><span class="orbit orbit-one"></span><span class="orbit orbit-two"></span><span class="stage-dot dot-one"></span><span class="stage-dot dot-two"></span>
+                            <div class="stage-content"><span class="stage-pill" id="stage-pill"><i></i>THE SPOTLIGHT IS WAITING</span><div class="name-display" id="name-display" aria-live="polite">Who will it be?</div><p id="stage-description">A fresh possibility with every shuffle.</p></div>
+                            <div class="stage-bottom"><span><span data-icon="users"></span><b id="eligible-count">24</b> names in the mix</span><span><span data-icon="check-circle"></span>No repeats this round</span></div>
+                        </div>
+                        <div class="control-area">
+                            <div class="settings"><label for="draw-count">Pick at a time <select id="draw-count" aria-label="Number of students to pick"><option value="1">1 student</option><option value="2">2 students</option><option value="3">3 students</option><option value="4">4 students</option><option value="5">5 students</option><option value="6">6 students</option><option value="7">7 students</option><option value="8">8 students</option><option value="9">9 students</option><option value="10">10 students</option></select></label><div class="speed-setting"><span>Shuffle speed</span><div class="segmented" role="group" aria-label="Shuffle speed"><button data-speed="slow" aria-pressed="false">Slow</button><button class="selected" data-speed="medium" aria-pressed="true">Medium</button><button data-speed="fast" aria-pressed="false">Fast</button></div></div></div>
+                            <div class="draw-buttons"><button id="start" class="start-button"><span data-icon="shuffle"></span>Let’s shuffle<span data-icon="arrow-right"></span></button><button id="stop" class="stop-button" hidden><span data-icon="square"></span>Stop & reveal</button><button id="reset" class="reset-button"><span data-icon="rotate"></span>Reset</button></div>
+                            <div class="keyboard-hint">A little shortcut: press <kbd>Space</kbd> to start or stop <span>·</span> <kbd>F</kbd> for fullscreen</div>
+                        </div>
+                    </div>
+                    <section class="winners-section"><div class="section-title"><h2><span class="winner-symbol" data-icon="trophy"></span>In the spotlight <span id="winner-total" class="count-pill">0</span></h2><span class="round-label">THIS ROUND</span></div><div id="winner-list" class="winner-list"><div class="empty-winners"><span data-icon="star"></span><div><strong>The next bright moment starts here.</strong><p>Your picked students will appear in this space.</p></div></div></div><p class="winner-note" id="winner-note" hidden>Remove a card to hide it. That student stays out until you reset the round.</p></section>
+                </section>
+                <aside class="roster-panel" aria-label="Class roster overview"><div class="roster-header"><h2>Your classroom<span class="count-pill" id="roster-total">24</span></h2><button class="icon-button" data-open="roster-dialog" aria-label="Manage class roster"><span data-icon="sliders"></span></button></div><div class="class-title"><span class="class-icon" data-icon="graduation"></span><div><strong>Our lovely bunch</strong><span id="roster-caption">24 students · ready to shine</span></div><span class="saved-dot" title="Saved in this browser"></span></div><div class="roster-table-heading"><span>STUDENT</span><span>IN THE MIX</span></div><div id="roster-preview" class="roster-preview"></div><button class="view-roster" data-open="roster-dialog">Manage all <span id="manage-count">24</span> students<span data-icon="arrow-right"></span></button><div class="roster-footer"><span data-icon="lock"></span>Autosaved on this device</div><div class="round-stats"><div><strong id="drawn-stat">0</strong><span>Picked</span></div><span class="stats-divider"></span><div><strong id="remaining-stat">24</strong><span>Remaining</span></div><span class="stats-divider"></span><div><strong id="paused-stat">0</strong><span>Paused</span></div></div></aside>
+            </div>
+            <footer class="page-footer"><span><span data-icon="heart"></span>A fair chance. A happy classroom.</span><span>Browser-only history <span class="footer-dot">·</span> No cloud connection</span></footer>
+            <p class="sr-only" id="announcement" role="status" aria-live="polite"></p>
+        </main>
+    </div>
+    <dialog id="roster-dialog"><form method="dialog" class="dialog-heading"><div><span class="eyebrow">EVERY VOICE COUNTS</span><h2>Your class roster</h2></div><button class="icon-button" aria-label="Close roster"><span data-icon="x"></span></button></form><p class="dialog-description">Up to 500 students, stored only in this browser. Matching names are deduplicated; add an initial to distinguish students.</p><form id="add-form" class="add-form"><label class="sr-only" for="new-name">Student name</label><input id="new-name" maxlength="80" placeholder="Add a student’s name" required><button class="primary" type="submit">Add student</button></form><details class="import-section"><summary>Paste or import a list</summary><label for="paste-names">One name per line</label><textarea id="paste-names" rows="5" placeholder="Alex Morgan&#10;Jamie Taylor&#10;Sam Rivera"></textarea><div class="import-actions"><button type="button" class="secondary" id="paste-add">Add names</button><button type="button" class="secondary" id="import-button"><span data-icon="upload"></span>Import TXT</button><input id="file-import" type="file" accept=".txt,text/plain" hidden></div></details><div class="roster-tools"><span id="manage-summary"></span><button class="text-button" id="export"><span data-icon="download"></span>Export TXT</button></div><p class="helper-text">Uncheck a student to pause them. Resetting a round keeps your pauses.</p><div id="roster-list" class="full-roster"></div><p role="status" id="roster-message"></p></dialog>
+    <dialog id="history-dialog"><form method="dialog" class="dialog-heading"><div><span class="eyebrow">LITTLE MOMENTS, REMEMBERED</span><h2>Draw history</h2></div><button class="icon-button" aria-label="Close history"><span data-icon="x"></span></button></form><div class="history-notice"><span data-icon="shield"></span><p><strong>Local history, not cloud storage.</strong><br>KV is offline. Records stay in this browser; nothing is sent to a server.</p></div><label class="filter-label" for="history-filter">Filter by activity name</label><input id="history-filter" placeholder="Search activities…"><div id="history-list" class="history-list"></div><button class="secondary danger-text" id="clear-history">Clear local history</button></dialog>
+    <dialog id="event-dialog"><form id="event-form"><div class="dialog-heading"><h2>Name your activity</h2><button class="icon-button" type="button" id="cancel-event" aria-label="Cancel editing"><span data-icon="x"></span></button></div><label for="event-input">Activity name</label><input id="event-input" maxlength="80" required><p class="helper-text">This name is saved with each new draw.</p><button class="primary" type="submit">Save activity</button></form></dialog>
+    <dialog id="confirm-dialog"><h2 id="confirm-title">Start a fresh round?</h2><p id="confirm-description">Picked students become eligible again. Your roster, pauses, and history stay saved.</p><div class="confirm-actions"><button class="secondary" id="confirm-cancel">Cancel</button><button class="primary" id="confirm-accept">Reset round</button></div></dialog>
+</body>
+</html>

@@ -1,0 +1,356 @@
+{
+  "prompt": "627-interactive-personality-quiz",
+  "modelId": "gpt-6.1-sol",
+  "timestamp": "2026-11-16T18:25:40.661Z",
+  "passed": true,
+  "assertions": [
+    {
+      "name": "Deterministic scoring and complete data",
+      "passed": true,
+      "evidence": "All 16 reachable profiles; unique names/codes/object emoji; 3 paragraphs each; weighted midpoint and boundary tests; invalid inputs rejected; shuffled values preserved."
+    },
+    {
+      "name": "Complement ranking",
+      "passed": true,
+      "evidence": "Top three are distinct and never self; all 16 profiles checked."
+    },
+    {
+      "name": "Browser syntax baseline",
+      "passed": true,
+      "evidence": "No optional chaining, nullish coalescing, or await in browser scripts."
+    },
+    {
+      "name": "Independent final-subpath static validation",
+      "passed": true,
+      "evidence": "62eec6b9ddfbafc692892d8ea0d528d4f9373b555b0eb7d1279282296738f76e"
+    },
+    {
+      "name": "Preview server isolation and readiness",
+      "passed": true,
+      "evidence": "Actual export responds 200; server root and repository config respond 404."
+    },
+    {
+      "name": "No horizontal overflow: desktop home 1200",
+      "passed": true,
+      "evidence": {
+        "width": 1200,
+        "document": 1200,
+        "body": 1200
+      }
+    },
+    {
+      "name": "Visible homepage and local resources",
+      "passed": true,
+      "evidence": {
+        "textLength": 624,
+        "allResourcesLocal": true
+      }
+    },
+    {
+      "name": "Theme",
+      "passed": true,
+      "evidence": "Keyboard toggle, local preference survives reload, light restored."
+    },
+    {
+      "name": "Accessible about dialog",
+      "passed": true,
+      "evidence": "Method, references and disclaimer visible; Tab/Shift+Tab trapped; Escape closes and restores trigger focus."
+    },
+    {
+      "name": "No horizontal overflow: desktop mid-quiz",
+      "passed": true,
+      "evidence": {
+        "width": 1200,
+        "document": 1200,
+        "body": 1200
+      }
+    },
+    {
+      "name": "No horizontal overflow: desktop results",
+      "passed": true,
+      "evidence": {
+        "width": 1200,
+        "document": 1200,
+        "body": 1200
+      }
+    },
+    {
+      "name": "Desktop real quiz flow and keyboard",
+      "passed": true,
+      "evidence": "12 actual answers; Space/Enter; previous-answer edit changes outcome; visible processing >=1.45s; ASID 0%; radar, four dimensions, three interpretation paragraphs and three counterparts; forced-dark result."
+    },
+    {
+      "name": "Real clipboard and local save",
+      "passed": true,
+      "evidence": {
+        "clipboardIncludesResultAndUrl": true,
+        "file": "offscript-asid.txt",
+        "bytes": 1046
+      }
+    },
+    {
+      "name": "No horizontal overflow: desktop after restart",
+      "passed": true,
+      "evidence": {
+        "width": 1200,
+        "document": 1200,
+        "body": 1200
+      }
+    },
+    {
+      "name": "Restart isolation",
+      "passed": true,
+      "evidence": "Fresh entry restores selected light theme; new quiz has no previous selected answer."
+    },
+    {
+      "name": "No horizontal overflow: mobile home 390",
+      "passed": true,
+      "evidence": {
+        "width": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "No horizontal overflow: mobile mid-quiz",
+      "passed": true,
+      "evidence": {
+        "width": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "No horizontal overflow: mobile results",
+      "passed": true,
+      "evidence": {
+        "width": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "No horizontal overflow: mobile after restart",
+      "passed": true,
+      "evidence": {
+        "width": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "Mobile actual quiz and share fallback",
+      "passed": true,
+      "evidence": "390×844 touch context; all 12 high-pole answers yield VFTB 100%; reduced motion disables orbit; clipboard-denied fallback has correct selectable result; restart works."
+    },
+    {
+      "name": "No horizontal overflow: home width 375",
+      "passed": true,
+      "evidence": {
+        "width": 375,
+        "document": 375,
+        "body": 375
+      }
+    },
+    {
+      "name": "No horizontal overflow: quiz width 375",
+      "passed": true,
+      "evidence": {
+        "width": 375,
+        "document": 375,
+        "body": 375
+      }
+    },
+    {
+      "name": "No horizontal overflow: home width 414",
+      "passed": true,
+      "evidence": {
+        "width": 414,
+        "document": 414,
+        "body": 414
+      }
+    },
+    {
+      "name": "No horizontal overflow: quiz width 414",
+      "passed": true,
+      "evidence": {
+        "width": 414,
+        "document": 414,
+        "body": 414
+      }
+    },
+    {
+      "name": "No horizontal overflow: home width 1024",
+      "passed": true,
+      "evidence": {
+        "width": 1024,
+        "document": 1024,
+        "body": 1024
+      }
+    },
+    {
+      "name": "No horizontal overflow: quiz width 1024",
+      "passed": true,
+      "evidence": {
+        "width": 1024,
+        "document": 1024,
+        "body": 1024
+      }
+    },
+    {
+      "name": "No horizontal overflow: home width 1440",
+      "passed": true,
+      "evidence": {
+        "width": 1440,
+        "document": 1440,
+        "body": 1440
+      }
+    },
+    {
+      "name": "No horizontal overflow: quiz width 1440",
+      "passed": true,
+      "evidence": {
+        "width": 1440,
+        "document": 1440,
+        "body": 1440
+      }
+    },
+    {
+      "name": "Responsive boundaries",
+      "passed": true,
+      "evidence": "375, 390, 414, 1024, 1200 and 1440 widths; centered shell; no horizontal overflow on home, quiz, results, or restart."
+    },
+    {
+      "name": "No horizontal overflow: 375 full result",
+      "passed": true,
+      "evidence": {
+        "width": 375,
+        "document": 375,
+        "body": 375
+      }
+    },
+    {
+      "name": "375px full result accessibility",
+      "passed": true,
+      "evidence": "Entire result is scrollable; restart and disclosure visible; no clipping/overflow."
+    },
+    {
+      "name": "No horizontal overflow: WeChat UA emulation",
+      "passed": true,
+      "evidence": {
+        "width": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "Limited WeChat user-agent emulation",
+      "passed": true,
+      "evidence": "Chromium with MicroMessenger UA: home and answer transition pass. Not real WeChat-engine or hardware certification."
+    },
+    {
+      "name": "Browser error audit",
+      "passed": true,
+      "evidence": "Zero console errors, page exceptions, HTTP >=400 resources, or failed requests across all actual browser checks."
+    }
+  ],
+  "viewports": [
+    {
+      "width": 1200,
+      "height": 900,
+      "deviceScaleFactor": 1
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 1,
+      "touch": true,
+      "reducedMotion": true
+    },
+    {
+      "width": 375,
+      "height": 900,
+      "centered": true
+    },
+    {
+      "width": 414,
+      "height": 900,
+      "centered": true
+    },
+    {
+      "width": 1024,
+      "height": 900,
+      "centered": true
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "centered": true
+    }
+  ],
+  "screenshots": [
+    "C:\\Code\\MusePages\\out\\pages\\627-interactive-personality-quiz\\GPT-6\\.checks\\desktop.png",
+    "C:\\Code\\MusePages\\out\\pages\\627-interactive-personality-quiz\\GPT-6\\.checks\\desktop-result.png",
+    "C:\\Code\\MusePages\\out\\pages\\627-interactive-personality-quiz\\GPT-6\\.checks\\mobile.png",
+    "C:\\Code\\MusePages\\out\\pages\\627-interactive-personality-quiz\\GPT-6\\.checks\\mobile-result.png"
+  ],
+  "errors": [],
+  "failure": null,
+  "visualReviewed": true,
+  "visualReview": "已实际打开桌面1200×900、移动390×844的首页及结果四张PNG。单列居中、轨道插画、黑白层级、统一留白及文字对比清晰；移动端按钮和结果码完整可见。长页页脚与雷达下方内容正常滚动；无重叠或截断。零分雷达收于中心符合方向分数定义，不表示能力不足。",
+  "resourcesClosed": true,
+  "limitations": [
+    "Real WeChat engine/hardware untested; only user-agent emulation.",
+    "No throttled 3G timing assertion.",
+    "Entertainment questionnaire: no psychometric validation.",
+    "No deployment, KV, API, global statistics, or production backend."
+  ],
+  "visualReviewedAt": "2026-11-16T18:26:13.647Z",
+  "imageEvidence": [
+    {
+      "name": "desktop.png",
+      "sha256": "4a01b6fe3094ffe096f2a98e9557b89210d0ba5e90e2d70bbde330ba7836887c",
+      "width": 1200,
+      "height": 900,
+      "opened": true
+    },
+    {
+      "name": "mobile.png",
+      "sha256": "cc0b8d23ec8aa2f7083dd54797cebe707ddb638118a70423d0a8915be6319724",
+      "width": 390,
+      "height": 844,
+      "opened": true
+    },
+    {
+      "name": "desktop-result.png",
+      "sha256": "9e1cb6b1bd26ecd76cffbeeb1d2900464c8bc685be49486d34e228e025f5dd92",
+      "width": 1200,
+      "height": 900,
+      "opened": true
+    },
+    {
+      "name": "mobile-result.png",
+      "sha256": "d656d3803ccb0e36b3c84de8c94de3ac0cb892aac61361ee7b2e021a85b6cfae",
+      "width": 390,
+      "height": 844,
+      "opened": true
+    }
+  ],
+  "previewReview": {
+    "file": "C:\\Code\\MusePages\\out\\pages\\627-interactive-personality-quiz\\GPT-6\\out\\preview.png",
+    "opened": true,
+    "reviewedAt": "2026-11-16T18:27:25.148Z",
+    "width": 1200,
+    "height": 900,
+    "sha256": "d6ee10c88570f8d99f4bbec3d9a173919f7d0449f40e681bc8dccea27f144d67",
+    "staticDigest": "62eec6b9ddfbafc692892d8ea0d528d4f9373b555b0eb7d1279282296738f76e",
+    "notes": "已实际打开新生成首页预览；内容对应真实静态首页，与桌面QA画面一致，布局、层级、留白与对比通过。"
+  },
+  "inputDigest": "37652b554b3c093f8f5ce11c4fca9b6cc2a7b986f2030908f6602946a293c817",
+  "staticDigest": "62eec6b9ddfbafc692892d8ea0d528d4f9373b555b0eb7d1279282296738f76e",
+  "sourceExportEqual": true,
+  "harnessCorrections": [
+    "首次运行等待颜色过渡结束后再断言最终暗色，避免读取过渡中间色。",
+    "第二次运行按Windows系统剪贴板规则规范化CRLF/LF后比对下载内容。完整套件最终全部通过，未跳过产品断言。"
+  ]
+}

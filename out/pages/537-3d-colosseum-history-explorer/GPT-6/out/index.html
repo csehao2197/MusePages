@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f3eb">
+    <meta name="description" content="Explore a procedural 3D Colosseum, from construction to weathering. Orbit, reveal a cutaway, and discover the architecture of an amphitheater.">
+    <title>An amphitheater, unbuilt — Stonefield Atlas</title>
+    <link rel="icon" href="icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="app.js"></script>
+</head>
+<body>
+    <a class="skip-link" href="#exhibit" data-copy="skip"></a>
+    <header class="masthead">
+        <a class="brand" href="index.html"><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 26V12L16 5l12 7v14M4 18l12-7 12 7M10 26V15m12 11V15m-6 11V12" fill="none" stroke="currentColor" stroke-width="1.5"/></svg><span data-copy="brand"></span></a>
+        <span class="header-note" data-copy="headerNote"></span>
+        <a class="about-link" href="#field-notes"><span data-copy="aboutLink"></span><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a>
+    </header>
+    <main>
+        <section class="intro" aria-labelledby="title">
+            <div>
+                <p class="eyebrow"><span class="tiny-rule"></span><span data-copy="eyebrow"></span></p>
+                <h1 id="title" data-copy="edition"></h1>
+            </div>
+            <p class="intro-copy" data-copy="intro"></p>
+        </section>
+        <section class="exhibit" id="exhibit" data-label="exhibitLabel">
+            <div class="viewer-panel">
+                <div class="viewer-top"><span class="live-dot"></span><span data-copy="modelLabel"></span><span class="view-number" data-copy="viewNumber"></span></div>
+                <div class="canvas-wrap" id="canvas-wrap">
+                    <canvas id="model" tabindex="0" data-label="modelControls"></canvas>
+                    <div class="model-label"><span data-copy="location"></span><small data-copy="coordinates"></small></div>
+                    <div class="north" aria-hidden="true"><span>N</span><svg width="26" height="35" viewBox="0 0 26 35"><path d="m13 2 6 20-6-4-6 4Z" fill="none" stroke="currentColor" stroke-width="1"/></svg></div>
+                    <div class="hotspot-layer" id="hotspot-layer"></div>
+                    <p id="webgl-status" class="webgl-status" hidden></p>
+                    <div class="viewer-tools">
+                        <button id="zoom-in" class="icon-button" data-label="zoomIn"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+                        <button id="zoom-out" class="icon-button" data-label="zoomOut"><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button>
+                        <span class="tool-divider"></span>
+                        <button id="reset" class="icon-button" data-label="resetCamera"><svg viewBox="0 0 24 24"><path d="M3 10a9 9 0 1 1 2.6 8M3 4v6h6"/></svg></button>
+                    </div>
+                </div>
+                <div class="viewer-bottom">
+                    <span class="drag-hint"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 3v18M3 12h18m-6-6-3-3-3 3m6 12-3 3-3-3M6 9l-3 3 3 3m12-6 3 3-3 3" fill="none" stroke="currentColor" stroke-width="1"/></svg><span data-copy="dragHint"></span></span>
+                    <button class="cut-button" id="cutaway" aria-pressed="false"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="m8.1 8.1 12.8 12.8M14 10l7-7M8.1 15.9l3.8-3.8" fill="none"/></svg><span data-copy="cutaway"></span></button>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-heading"><span class="eyebrow" data-copy="timeLabel"></span><span class="state-name" id="state-name"></span></div>
+                    <input id="time" type="range" min="0" max="100" value="100" step="1" data-label="timelineLabel">
+                    <div class="timeline-ticks" id="timeline-ticks"></div>
+                    <div class="state-copy"><span id="state-date"></span><p id="state-description"></p></div>
+                </div>
+            </div>
+            <aside class="explore-panel">
+                <div class="explore-heading"><p class="eyebrow" data-copy="exploreLabel"></p><h2 data-copy="exploreTitle"></h2><p data-copy="exploreIntro"></p></div>
+                <div id="hotspot-list" class="hotspot-list"></div>
+                <div id="detail" class="detail" aria-live="polite"><span id="detail-kicker" class="eyebrow"></span><h3 id="detail-title"></h3><p id="detail-copy"></p><div id="detail-fact"></div></div>
+                <div class="tour-box">
+                    <span class="eyebrow" data-copy="tourLabel"></span>
+                    <p data-copy="tourIntro"></p>
+                    <button id="tour" class="tour-button"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="m8 5 11 7-11 7Z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg><span id="tour-text" data-copy="startTour"></span><span class="tour-length" data-copy="tourLength"></span></button>
+                    <p id="tour-status" class="tour-status" aria-live="polite"></p>
+                </div>
+            </aside>
+        </section>
+        <section id="field-notes" class="field-notes" aria-labelledby="notes-title">
+            <div><p class="eyebrow" data-copy="notesLabel"></p><h2 id="notes-title" data-copy="notesTitle"></h2></div>
+            <div><h3 data-copy="observationTitle"></h3><p data-copy="observation"></p></div>
+            <div><h3 data-copy="interpretationTitle"></h3><p data-copy="interpretation"></p><a id="source-link" target="_blank" rel="noreferrer" data-copy="sourceLabel"></a></div>
+        </section>
+    </main>
+    <footer><a class="footer-brand" href="index.html" data-copy="brand"></a><span data-copy="footerNote"></span><a id="credit" target="_blank" rel="noreferrer" data-copy="credit"></a></footer>
+    <noscript>This exhibit requires JavaScript and a WebGL 2 capable browser for interactive 3D exploration.</noscript>
+</body>
+</html>

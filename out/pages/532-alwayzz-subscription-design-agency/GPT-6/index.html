@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Alwayzz — a flexible creative partnership for ambitious founders, brands and agencies. Premium creative, on demand.">
+    <title>Alwayzz — Premium creative on demand</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&amp;family=Inter:wght@400;500;600;700&amp;family=Source+Serif+4:ital,wght@0,400;0,600;1,400;1,600&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="navbar">
+        <a class="logo" href="#main" aria-label="Alwayzz home">Alwayzz<sup>®</sup></a>
+        <button class="menu-button" id="menu-button" aria-haspopup="dialog" aria-expanded="false" aria-controls="menu">
+            Menu <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
+        </button>
+    </header>
+    <main id="main">
+        <section class="hero" aria-labelledby="headline">
+            <div class="line-field left-lines" aria-hidden="true"></div>
+            <div class="line-field right-lines" aria-hidden="true"></div>
+            <div class="line-field top-lines" aria-hidden="true"></div>
+            <div class="hero-content">
+                <div class="service-ticker" aria-label="Brand Identity, App Development, Visual Design, Creative Video, Iconography">
+                    <div class="ticker-track" aria-hidden="true"></div>
+                </div>
+                <h1 id="headline">Premium creative <span class="serif">alwayzz</span><sup>®</sup> on demand.</h1>
+                <p class="subtitle">A flexible design partnership for founders, brands, and agencies who want top craft delivered on their timeline.</p>
+                <div class="cta-row">
+                    <button class="primary-button" data-panel="plans">View Plans <span aria-hidden="true">↗</span></button>
+                    <button class="book-button" data-panel="contact">
+                        <img src="https://framerusercontent.com/images/hfneFL6CHBi5BnNvCeOaqU9HqE4.png" alt="" width="40" height="40">
+                        <span class="book-text"><strong>Chat for 15 minutes</strong><span class="availability"><i aria-hidden="true"></i> Pick a slot</span></span>
+                    </button>
+                </div>
+                <p class="micro-copy"><span class="status-dot" aria-hidden="true"></span> A small team. A world of possibilities.</p>
+            </div>
+            <div class="progressive-blur" aria-hidden="true"></div>
+        </section>
+        <section class="trusted" aria-label="Trusted companies">
+            <p>Partnered with top-tier<br>companies globally</p>
+            <div class="company-ticker">
+                <div class="company-track" aria-label="Airbnb, Shopify, Notion, Linear, Webflow, Figma, Slack, Stripe, Vercel, Framer"></div>
+            </div>
+        </section>
+        <footer class="page-footer"><span>Independent minds. Exceptional craft.</span><span>© 2026 Alwayzz</span></footer>
+    </main>
+    <dialog id="menu" class="menu-drawer" aria-label="Main navigation">
+        <div class="drawer-top"><span class="logo">Alwayzz<sup>®</sup></span><button class="menu-button" data-close="menu">Close <span aria-hidden="true">×</span></button></div>
+        <nav aria-label="Main">
+            <a href="#projects" data-panel="projects"><span>01</span> Projects <i>↗</i></a>
+            <a href="#plans" data-panel="plans"><span>02</span> Plans <i>↗</i></a>
+            <a href="#team" data-panel="team"><span>03</span> Team <i>↗</i></a>
+            <a href="#faqs" data-panel="faqs"><span>04</span> FAQs <i>↗</i></a>
+            <a href="#contact" data-panel="contact"><span>05</span> Get in Touch <i>↗</i></a>
+        </nav>
+        <div class="drawer-footer"><span>Good work starts with a conversation.</span><span>© 2026 Alwayzz. All rights reserved.</span></div>
+    </dialog>
+    <dialog id="detail" class="detail-dialog" aria-labelledby="detail-title">
+        <div class="detail-top"><span class="eyebrow">ALWAYZZ / ON DEMAND</span><button class="close-button" data-close="detail" aria-label="Close detail">×</button></div>
+        <div id="detail-content"></div>
+    </dialog>
+    <template id="plans-content">
+        <h2 id="detail-title">Great craft.<br><em>Your pace.</em></h2>
+        <p class="detail-intro">Choose a starting point for your design partnership.</p>
+        <div class="plan-options" role="group" aria-label="Choose a design plan">
+            <button class="plan-option" data-plan="Essentials" aria-pressed="true"><span>01 / Essentials</span><strong>One project at a time</strong><small>Brand and visual design. A focused creative rhythm.</small></button>
+            <button class="plan-option" data-plan="Studio" aria-pressed="false"><span>02 / Studio</span><strong>A broader creative team</strong><small>Design, development and motion. More room to explore.</small></button>
+        </div>
+        <p class="plan-summary" aria-live="polite">Essentials selected — let's talk about your next project.</p>
+        <button class="primary-button plan-contact">Discuss Essentials <span aria-hidden="true">↗</span></button>
+        <p class="demo-note">Illustrative plans for this homepage demo. Scope and pricing are not a commercial offer.</p>
+    </template>
+    <template id="contact-content">
+        <h2 id="detail-title">Let's make<br><em>something great.</em></h2>
+        <p class="detail-intro" id="contact-intro">A 15-minute introduction. No pitch deck required.</p>
+        <form id="booking-form">
+            <label for="booking-day">Choose a date</label>
+            <input type="date" id="booking-day" name="date" required>
+            <fieldset><legend>Pick a time · your local time</legend><div class="slots">
+                <label><input type="radio" name="time" value="10:00" required><span>10:00 AM</span></label>
+                <label><input type="radio" name="time" value="13:30"><span>1:30 PM</span></label>
+                <label><input type="radio" name="time" value="16:00"><span>4:00 PM</span></label>
+            </div></fieldset>
+            <label for="booking-name">Your name</label><input id="booking-name" name="name" autocomplete="name" placeholder="Alex Morgan" required maxlength="100">
+            <label for="booking-email">Email address</label><input id="booking-email" name="email" type="email" autocomplete="email" placeholder="alex@yourstudio.com" required>
+            <button class="primary-button" type="submit">Preview my booking <span aria-hidden="true">↗</span></button>
+        </form>
+        <p class="booking-result" role="status" hidden></p>
+        <p class="demo-note">Browser-only demo. No meeting is booked, no email is sent, and your details are not stored or transmitted.</p>
+    </template>
+    <template id="projects-content">
+        <h2 id="detail-title">Small details.<br><em>Big difference.</em></h2>
+        <p class="detail-intro">Explore the disciplines behind an on-demand creative partnership.</p>
+        <div class="project-tabs" role="group" aria-label="Creative disciplines">
+            <button data-discipline="Brand Identity" aria-pressed="true">Brand</button><button data-discipline="App Development" aria-pressed="false">Digital</button><button data-discipline="Creative Video" aria-pressed="false">Motion</button>
+        </div>
+        <div class="discipline-sample"><span class="sample-mark" aria-hidden="true">a.</span><span class="eyebrow">ILLUSTRATIVE CREATIVE DIRECTION</span><h3>Brand Identity</h3><p id="discipline-description">From first impression to lasting recognition: strategy, wordmarks and cohesive visual systems.</p></div>
+        <p class="demo-note">Original typographic concept, not a client case study. Company names on the homepage are requested illustrative text logos, not verified endorsements.</p>
+    </template>
+    <template id="team-content">
+        <h2 id="detail-title">A little team.<br><em>A lot of care.</em></h2>
+        <p class="detail-intro">An independent creative partner, built around the work.</p>
+        <div class="team-list"><p><span>01</span><strong>Creative direction</strong><small>Clarity, taste and a consistent point of view.</small></p><p><span>02</span><strong>Design & development</strong><small>Thoughtful identities and considered digital experiences.</small></p><p><span>03</span><strong>Your partnership</strong><small>A direct conversation. A flexible creative rhythm.</small></p></div>
+        <button class="primary-button" data-panel="contact">Meet through a conversation <span aria-hidden="true">↗</span></button>
+        <p class="demo-note">Illustrative studio roles; no specific staff or credentials are claimed.</p>
+    </template>
+    <template id="faqs-content">
+        <h2 id="detail-title">Good questions.<br><em>Clear answers.</em></h2>
+        <div class="faq-list">
+            <details><summary>What can we work on together?</summary><p>Brand identity, visual design, app development, creative video and iconography — shaped around the needs of your project.</p></details>
+            <details><summary>How does the partnership work?</summary><p>Start with a conversation about scope and timing, then choose a creative rhythm. The plans here illustrate possible ways to collaborate.</p></details>
+            <details><summary>Can I book a real call here?</summary><p>Not in this static demo. The booking form previews your chosen date and time locally; it does not send a request or reserve a meeting.</p></details>
+            <details><summary>Are prices and client claims verified?</summary><p>No pricing or client case studies are claimed. Company names are illustrative text logos specified by the design prompt.</p></details>
+        </div>
+    </template>
+</body>
+</html>

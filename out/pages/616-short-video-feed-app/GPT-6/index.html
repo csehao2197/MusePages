@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f6f5f0">
+    <meta name="description" content="Hearthline — a small collection of original motion stories. A slower kind of scroll.">
+    <title>Hearthline — Small moments, in motion</title>
+    <link rel="icon" href="./assets/mark.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./style.css">
+    <script type="module" src="./app.js"></script>
+</head>
+<body>
+    <a class="skip" href="#main">Skip to stories</a>
+    <aside class="sidebar">
+        <a class="brand" href="#/" aria-label="Hearthline home"><span class="brand-mark" data-icon="Flame"></span>hearthline<span class="brand-dot">.</span></a>
+        <div class="brand-description">SMALL MOMENTS, IN MOTION</div>
+        <nav class="navigation" aria-label="Main navigation">
+            <a href="#/" data-nav="home"><span data-icon="Compass"></span>For you<span class="nav-indicator"></span></a>
+            <a href="#/following" data-nav="following"><span data-icon="UsersRound"></span>Following</a>
+            <a href="#/saved" data-nav="saved"><span data-icon="Bookmark"></span>Saved stories</a>
+            <a href="#/profile" data-nav="profile"><span data-icon="CircleUserRound"></span>Your profile</a>
+        </nav>
+        <button class="create-button" id="create"><span data-icon="Plus"></span>Create a story</button>
+        <div class="sidebar-note">
+            <span class="tiny-star">✳</span>
+            <h2>Less noise.<br>More noticing.</h2>
+            <p>A little corner of the internet<br>for the things worth a pause.</p>
+        </div>
+        <footer class="sidebar-footer">
+            <div class="footer-links"><button data-info="about">About</button><button data-info="guidelines">Community</button><button data-info="privacy">Privacy</button></div>
+            <p>Made for a slower scroll.</p>
+            <a href="https://vibefather.ai/t/short-video-feed-app" target="_blank" rel="noopener noreferrer">Template by VibeFather ↗</a>
+            <button class="account" id="account"><span class="avatar account-avatar">Y</span><span>Your little corner<small>Local demo account</small></span><span data-icon="Ellipsis"></span></button>
+        </footer>
+    </aside>
+    <div class="page">
+        <header class="topbar">
+            <a class="mobile-brand" href="#/">hearthline.</a>
+            <div class="feed-tabs" aria-label="Story views"><a href="#/" data-tab="home">For you</a><a href="#/following" data-tab="following">Following</a><span class="new-dot"></span></div>
+            <label class="search"><span data-icon="Search"></span><input id="search" type="search" placeholder="Find a little inspiration" aria-label="Search stories"><kbd>/</kbd></label>
+            <button class="icon-button mobile-search" aria-label="Search stories" id="mobile-search"><span data-icon="Search"></span></button>
+        </header>
+        <main id="main" tabindex="-1">
+            <section class="feed-layout" id="feed-layout">
+                <div class="feed-column">
+                    <div class="section-eyebrow"><span class="live-dot"></span><span id="feed-label">A FEW THINGS WORTH NOTICING</span><span id="story-position">01 / 06</span></div>
+                    <div class="feed-shell">
+                        <div id="feed" class="feed" tabindex="0" aria-label="Short video stories. Use arrow keys to browse."></div>
+                        <div class="step-controls"><button id="previous" class="icon-button" aria-label="Previous story"><span data-icon="ArrowUp"></span></button><button id="next" class="icon-button" aria-label="Next story"><span data-icon="ArrowDown"></span></button></div>
+                    </div>
+                    <div class="feed-bottom"><span data-icon="Mouse"></span>Scroll to discover<span class="bottom-separator">·</span><span>↑ ↓ to wander</span><span class="original-badge">ORIGINAL MOTION</span></div>
+                </div>
+                <aside class="discovery" aria-label="Discover more">
+                    <div class="edition">THE EVERYDAY EDIT <span>VOL. 01</span></div>
+                    <h1>A slower kind<br>of <em>scroll.</em></h1>
+                    <p class="intro">Small rituals. Curious details.<br>A little wonder in the everyday.</p>
+                    <div class="editor-note"><span data-icon="Sparkles"></span><span>Stay a moment.<br><strong>Good things take noticing.</strong></span></div>
+                    <section class="creators-section"><div class="section-heading"><h2>People to pause with</h2><button id="see-creators">View all <span>↗</span></button></div><div id="creators"></div></section>
+                    <section class="topic-section"><h2>Follow your curiosity</h2><div class="topics" id="topics"></div></section>
+                    <div class="daily-note"><span>NOTE TO SELF</span><p>“You don’t have to go far<br>to find something beautiful.”</p><div class="note-line"></div><small>A collection of original animated shorts.<br>Social activity stays in your browser.</small></div>
+                    <div class="right-footer"><span class="small-orbit"></span> A quieter place to be.</div>
+                </aside>
+            </section>
+            <section id="profile-view" class="profile-view" hidden></section>
+        </main>
+    </div>
+    <nav class="mobile-nav" aria-label="Mobile navigation">
+        <a href="#/" data-nav="home" aria-label="For you"><span data-icon="Compass"></span><small>For you</small></a>
+        <a href="#/following" data-nav="following" aria-label="Following"><span data-icon="UsersRound"></span><small>Following</small></a>
+        <button id="mobile-create" aria-label="Create a story"><span data-icon="Plus"></span></button>
+        <a href="#/saved" data-nav="saved" aria-label="Saved stories"><span data-icon="Bookmark"></span><small>Saved</small></a>
+        <a href="#/profile" data-nav="profile" aria-label="Your profile"><span data-icon="CircleUserRound"></span><small>Profile</small></a>
+    </nav>
+    <dialog id="drawer" aria-labelledby="dialog-title"><div class="dialog-header"><h2 id="dialog-title">Comments</h2><button class="icon-button" id="close-dialog" aria-label="Close dialog"><span data-icon="X"></span></button></div><div id="dialog-content"></div></dialog>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <input id="upload" type="file" accept="video/mp4,video/webm" hidden>
+</body>
+</html>

@@ -1,0 +1,701 @@
+@font-face
+{
+    font-family: "Fraunces Variable";
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url("./fonts/fraunces-latin-wght-normal.woff2") format("woff2");
+}
+@font-face
+{
+    font-family: "DM Sans Variable";
+    font-style: normal;
+    font-weight: 100 1000;
+    font-display: swap;
+    src: url("./fonts/dm-sans-latin-wght-normal.woff2") format("woff2");
+}
+:root
+{
+    --sky: #ddede6;
+    --cream: #fffdf4;
+    --ink: #1f342b;
+    --moss: #526c59;
+    --sun: #f2c14e;
+    --line: #1f342b24;
+    color: var(--ink);
+    background: var(--sky);
+    font-family: "DM Sans Variable", sans-serif;
+    font-synthesis: none;
+}
+*
+{
+    box-sizing: border-box;
+}
+html, body, #app
+{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+button, input
+{
+    font: inherit;
+}
+button, a, input
+{
+    -webkit-tap-highlight-color: transparent;
+}
+button
+{
+    min-height: 44px;
+    color: var(--ink);
+    cursor: pointer;
+    border: 1px solid var(--line);
+    background: var(--cream);
+}
+button:focus-visible, a:focus-visible, input:focus-visible
+{
+    outline: 2px solid var(--sun);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 5px var(--ink);
+}
+button:hover
+{
+    background: #f4f2e7;
+}
+svg
+{
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+.stage
+{
+    position: fixed;
+    inset: 0;
+}
+.stage canvas
+{
+    display: block;
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+    outline: none;
+}
+.stage canvas:focus-visible
+{
+    outline: 3px solid var(--sun);
+    outline-offset: -6px;
+}
+.topbar
+{
+    position: relative;
+    z-index: 2;
+    height: 72px;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    pointer-events: none;
+}
+.wordmark
+{
+    font-family: "Fraunces Variable", serif;
+    font-size: 24px;
+    font-weight: 650;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: -.8px;
+}
+.brandmark
+{
+    width: 28px;
+    height: 28px;
+    color: var(--moss);
+}
+.utilities
+{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    pointer-events: auto;
+}
+.icon-button
+{
+    width: 44px;
+    padding: 0;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: #fffdf4b8;
+}
+.count
+{
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: #fffdf4b8;
+    margin-right: 8px;
+}
+.count::before
+{
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #7c9e64;
+}
+.intro
+{
+    position: absolute;
+    z-index: 1;
+    top: 105px;
+    left: 32px;
+    width: 350px;
+    pointer-events: none;
+}
+.eyebrow
+{
+    margin: 0 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    text-transform: uppercase;
+    letter-spacing: 2.4px;
+    color: var(--moss);
+    font-size: 10px;
+    font-weight: 700;
+}
+.eyebrow::before
+{
+    content: "";
+    width: 20px;
+    height: 1px;
+    background: currentColor;
+}
+h1
+{
+    font: 600 clamp(36px, 4.4vw, 62px)/.98 "Fraunces Variable", serif;
+    letter-spacing: -2px;
+    margin: 0 0 20px;
+    max-width: 340px;
+}
+.intro > p:last-child
+{
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--moss);
+    max-width: 300px;
+}
+.dock-wrap
+{
+    position: absolute;
+    z-index: 3;
+    bottom: max(24px, env(safe-area-inset-bottom));
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(880px, calc(100% - 48px));
+}
+.gesture-hints
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 18px;
+    font-size: 11px;
+    color: var(--moss);
+    pointer-events: none;
+}
+.gesture-hints span
+{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.gesture-hints svg
+{
+    width: 14px;
+    height: 14px;
+}
+.gesture-hints i
+{
+    height: 3px;
+    width: 3px;
+    background: #526c5980;
+    border-radius: 50%;
+}
+.dock
+{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px;
+    border: 1px solid #fffdf4;
+    border-radius: 18px;
+    background: var(--cream);
+    box-shadow: 0 12px 40px #1f342b12, 0 2px 6px #1f342b06;
+}
+.flowers
+{
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+}
+.flower
+{
+    position: relative;
+    height: 76px;
+    padding: 6px 8px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid var(--line);
+    transition: background 140ms, transform 140ms;
+}
+.flower > svg
+{
+    width: 30px;
+    height: 30px;
+    transition: transform 140ms;
+}
+.flower[aria-pressed="true"]
+{
+    background: var(--sun);
+    border: 2px solid var(--ink);
+    padding: 5px 7px;
+}
+.flower[aria-pressed="true"] > svg
+{
+    transform: rotate(6deg);
+}
+.flower:hover
+{
+    transform: translateY(-1px);
+}
+kbd
+{
+    position: absolute;
+    right: 6px;
+    top: 5px;
+    font: 9px "DM Sans Variable", sans-serif;
+    color: var(--moss);
+    opacity: .8;
+}
+.weather
+{
+    width: 170px;
+    flex-shrink: 0;
+    border-left: 1px solid var(--line);
+    padding-left: 16px;
+}
+.weather-head
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    white-space: nowrap;
+}
+.weather-head label
+{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    font-weight: 600;
+}
+.weather-head svg
+{
+    width: 15px;
+    height: 15px;
+}
+.weather-head output
+{
+    font-size: 10px;
+    color: var(--moss);
+    font-variant-numeric: tabular-nums;
+}
+input[type="range"]
+{
+    width: 100%;
+    height: 44px;
+    margin: 0;
+    cursor: pointer;
+    accent-color: var(--ink);
+}
+.snapshot
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--ink);
+    color: var(--cream);
+    height: 48px;
+    min-width: 122px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+}
+.snapshot:hover
+{
+    background: #345241;
+}
+.credit
+{
+    position: absolute;
+    left: 18px;
+    bottom: 8px;
+    color: var(--moss);
+    font-size: 10px;
+    text-decoration: none;
+    z-index: 2;
+}
+.credit:hover, .dialog-credit:hover
+{
+    text-decoration: underline;
+}
+.toast
+{
+    position: absolute;
+    bottom: 165px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--cream);
+    font-size: 12px;
+    padding: 12px 20px;
+    box-shadow: 0 5px 20px #1f342b18;
+    z-index: 5;
+    max-width: calc(100% - 32px);
+    text-align: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 160ms;
+}
+.toast.visible
+{
+    opacity: 1;
+}
+dialog
+{
+    width: min(460px, calc(100vw - 32px));
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 32px;
+    color: var(--ink);
+    background: var(--cream);
+    box-shadow: 0 20px 100px #1f342b30;
+    max-height: calc(100dvh - 32px);
+}
+dialog::backdrop
+{
+    background: #1f342b50;
+}
+dialog h2
+{
+    font: 600 32px/1.1 "Fraunces Variable", serif;
+    letter-spacing: -1px;
+    margin: 0 24px 24px 0;
+}
+.dialog-x
+{
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    border: 0;
+    background: transparent;
+}
+.guide-items
+{
+    list-style: none;
+    counter-reset: guide;
+    padding: 0;
+    margin: 0;
+}
+.guide-items li
+{
+    counter-increment: guide;
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--moss);
+}
+.guide-items li::before
+{
+    content: counter(guide, decimal-leading-zero);
+    color: var(--moss);
+    font-size: 11px;
+    padding-top: 3px;
+}
+.guide-items strong
+{
+    display: block;
+    color: var(--ink);
+    font-size: 14px;
+    margin-bottom: 3px;
+}
+.keyboard-help, .reset-copy
+{
+    color: var(--moss);
+    font-size: 12px;
+    line-height: 1.7;
+}
+.keyboard-help
+{
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+}
+.dialog-primary, .dialog-secondary
+{
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 13px;
+    font-weight: 600;
+}
+.dialog-primary
+{
+    color: var(--cream);
+    background: var(--ink);
+}
+.dialog-primary:hover
+{
+    background: #345241;
+}
+.dialog-actions
+{
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 24px;
+}
+.dialog-credit
+{
+    display: none;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 12px;
+    color: var(--moss);
+}
+.fallback
+{
+    padding: 32px;
+    position: absolute;
+    top: 40%;
+    left: 10%;
+    max-width: 80%;
+    background: var(--cream);
+    border-radius: 12px;
+}
+@media (min-width: 1100px)
+{
+    .credit
+    {
+        bottom: 18px;
+        width: 110px;
+        line-height: 1.5;
+        font-size: 12px;
+    }
+}
+@media (max-width: 700px)
+{
+    .topbar
+    {
+        height: 60px;
+        padding: 0 16px;
+    }
+    .wordmark
+    {
+        font-size: 22px;
+        gap: 7px;
+    }
+    .brandmark
+    {
+        width: 24px;
+        height: 24px;
+    }
+    .utilities
+    {
+        gap: 4px;
+    }
+    .utilities .icon-button
+    {
+        background: transparent;
+        border: 0;
+    }
+    .count
+    {
+        position: absolute;
+        right: 16px;
+        top: 82px;
+        margin: 0;
+        padding: 8px 11px;
+        font-size: 10px;
+    }
+    .count::before
+    {
+        width: 5px;
+        height: 5px;
+    }
+    .intro
+    {
+        top: 88px;
+        left: 16px;
+        width: min(300px, calc(100% - 32px));
+    }
+    .eyebrow
+    {
+        font-size: 8px;
+        letter-spacing: 1.5px;
+        margin-bottom: 14px;
+        gap: 6px;
+    }
+    .eyebrow::before
+    {
+        width: 12px;
+    }
+    h1
+    {
+        font-size: 36px;
+        max-width: 260px;
+        margin-bottom: 14px;
+        letter-spacing: -1.3px;
+    }
+    .intro > p:last-child
+    {
+        max-width: 268px;
+        font-size: 12px;
+        line-height: 1.65;
+    }
+    .dock-wrap
+    {
+        width: calc(100% - 24px);
+        bottom: max(12px, env(safe-area-inset-bottom));
+    }
+    .dock
+    {
+        display: grid;
+        grid-template-columns: 1fr 48px;
+        gap: 8px 16px;
+        padding: 12px;
+    }
+    .flowers
+    {
+        grid-column: 1 / -1;
+        gap: 6px;
+    }
+    .flower
+    {
+        height: 64px;
+        font-size: 11px;
+        padding: 4px;
+        gap: 2px;
+    }
+    .flower[aria-pressed="true"]
+    {
+        padding: 3px;
+    }
+    .flower > svg
+    {
+        width: 28px;
+        height: 28px;
+    }
+    kbd
+    {
+        display: none;
+    }
+    .weather
+    {
+        padding: 6px 0 0;
+        border: 0;
+        width: 100%;
+        height: 52px;
+    }
+    .weather-head
+    {
+        font-size: 12px;
+    }
+    .weather-head output
+    {
+        font-size: 10px;
+    }
+    input[type="range"]
+    {
+        position: relative;
+        top: -5px;
+    }
+    .snapshot
+    {
+        width: 48px;
+        min-width: 48px;
+    }
+    .snapshot span, .credit
+    {
+        display: none;
+    }
+    .gesture-hints
+    {
+        margin-bottom: 14px;
+        font-size: 10px;
+        gap: 14px;
+    }
+    .gesture-hints span:last-child, .gesture-hints i
+    {
+        display: none;
+    }
+    .toast
+    {
+        bottom: 205px;
+        width: max-content;
+        font-size: 11px;
+    }
+    .dialog-credit
+    {
+        display: block;
+    }
+    dialog
+    {
+        padding: 28px 24px;
+    }
+}
+@media (max-height: 620px) and (min-width: 701px)
+{
+    .intro
+    {
+        top: 85px;
+    }
+    h1
+    {
+        font-size: 36px;
+        max-width: 240px;
+    }
+}
+@media (prefers-reduced-motion: reduce)
+{
+    *, *::before, *::after
+    {
+        transition: opacity 100ms !important;
+        animation: none !important;
+    }
+}

@@ -1,0 +1,110 @@
+{
+  "prompt": "533-valley-brand-experiences-agency",
+  "status": "blocked",
+  "modelId": "gpt-6.1-sol",
+  "display_model_name": "GPT-6",
+  "tags": [],
+  "generated": null,
+  "preview": null,
+  "validated": null,
+  "config_added": null,
+  "output": "C:\\Code\\MusePages\\out\\pages\\533-valley-brand-experiences-agency\\GPT-6",
+  "metadataFile": "C:\\Code\\MusePages\\out\\pages\\533-valley-brand-experiences-agency\\GPT-6\\metadata.json",
+  "outputExists": false,
+  "provenance": {
+    "title": "Valley brand experiences agency",
+    "category": "Creative",
+    "source_url": "https://github.com/frostmute/msites-prompt-collection/blob/d4974f4296e2851e05eabddb9240170cc423dd46/motionsites-prompts/430-valley/working-prompt.md",
+    "license": "MIT",
+    "license_file": "data\\downloads\\github.com\\frostmute-msites-prompt-collection\\d4974f4296e2851e05eabddb9240170cc423dd46\\LICENSE"
+  },
+  "originalInput": "C:\\Code\\MusePages\\data\\prompts\\533-valley-brand-experiences-agency\\533-valley-brand-experiences-agency.md",
+  "inputFingerprint": "b4c586f062cbe9698272dc0c27cdd9368d5e59b3e080189883bd68d88b11cfbc",
+  "lockVerification": {
+    "prompt": "533-valley-brand-experiences-agency",
+    "pid": 40104,
+    "alive": true,
+    "matchesDurableOwnedLock": true,
+    "commandLine": "\"C:\\Program Files\\nodejs\\node.exe\" src\\workflows\\script\\ai-gpt6-all-run.mjs hold 533-valley-brand-experiences-agency",
+    "coordinatorLockUntouched": true
+  },
+  "blocker": {
+    "reason": "原始需求第 4.2、4.3 节明确指定精确滚动视频和固定背景；两项均返回 HTTP 401，Cloudinary 明确报告 cloud_name dprydfxok is disabled。不能取得真实视频帧及指定背景，无法忠实完成核心电影式体验。",
+    "assets": [
+      {
+        "url": "https://res.cloudinary.com/dprydfxok/video/upload/v1782932129/hero-video_ponm8n.mp4",
+        "requiredBy": "4.2 Cinematic Video Intro: hidden video, extracted ImageBitmap frames, scroll-scrubbed cover canvas",
+        "rangeGetStatus": 401,
+        "ordinaryCurlGetStatus": 401,
+        "ordinaryCurlErrorHeader": "cloud_name dprydfxok is disabled"
+      },
+      {
+        "url": "https://res.cloudinary.com/dprydfxok/image/upload/v1782932143/last-frame-bg-website_wiotlm.png",
+        "requiredBy": "4.3 Background Layer: exact fixed background image",
+        "rangeGetStatus": 401,
+        "ordinaryCurlGetStatus": 401,
+        "ordinaryCurlResponseBody": "cloud_name dprydfxok is disabled"
+      }
+    ],
+    "localDiscovery": "对应 prompt 目录仅含原始 Markdown；对应来源下载快照内未找到文件名含 ponm8n 或 wiotlm 的本地原件。",
+    "unblockRequirement": "提供可访问且获许可的上述精确 MP4/PNG 原件，或明确授权变更原始指定素材；无需提供或读取凭据。",
+    "noApproximation": true
+  },
+  "tests": [
+    {
+      "name": "exact prompt, durable coordinator-owned attached lock and live PID",
+      "passed": true
+    },
+    {
+      "name": "full original, DESIGN, AGENTS, README, AI guide and applicable MIT license read",
+      "passed": true
+    },
+    {
+      "name": "mandatory exact asset availability",
+      "passed": false,
+      "method": "Node ordinary HTTP range GET then independent curl ordinary GET, no authentication"
+    },
+    {
+      "name": "four specified selected-work references",
+      "passed": true,
+      "scope": "Each returned HTTP 206, Content-Type image/webp, 512 bytes for range probe; no redistribution or ownership claim."
+    }
+  ],
+  "qa": {
+    "path": "C:\\Code\\MusePages\\out\\pages\\533-valley-brand-experiences-agency\\GPT-6\\.checks\\qa.json",
+    "executed": false,
+    "passed": false,
+    "reason": "核心必需素材阻塞，未生成网页；不能伪造静态及浏览器验证。"
+  },
+  "screenshots": {
+    "desktop": null,
+    "mobile": null,
+    "preview": null
+  },
+  "visualReviewed": false,
+  "visualEvidence": "未产生截图，未进行桌面/移动浏览器 QA 或图片审阅。",
+  "staticValidation": {
+    "checkSource": "not run",
+    "validateStaticOutput": "not run",
+    "ensurePreview": "not run",
+    "staticDigest": null,
+    "previewDigest": null
+  },
+  "registration": {
+    "attempted": false,
+    "exists": false,
+    "enabled": null,
+    "deployed": null,
+    "sharedSlug": null,
+    "sharedTitle": null,
+    "configUnchanged": true
+  },
+  "limitations": [
+    "未生成源码、静态产物、标签、元数据、QA 或预览；四项元数据标志为 null（文件不存在），而非虚假成功。",
+    "需求要求 React/TypeScript/Vite/GSAP/Framer Motion/Lenis；获授权静态适配尚未执行，亦未构建或部署。",
+    "MIT 来源许可证仅据实记录，不宣称其覆盖独立第三方图片或视频的再分发权。"
+  ],
+  "resourcesClosed": true,
+  "resourceEvidence": "HTTP 探测命令均已结束；未启动自有浏览器或服务器；协调器 PID 40104 和锁保持原样。",
+  "completedAt": "2026-11-15T21:19:25.108Z"
+}

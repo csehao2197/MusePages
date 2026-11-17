@@ -1,0 +1,47 @@
+.screen
+{
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px / 18px;
+    background: var(--screen);
+    border: 3px solid var(--screen-outline);
+    box-shadow: 0 0 0 2px var(--screen-edge), inset 0 0 30px var(--black);
+    isolation: isolate;
+}
+.screen canvas
+{
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    image-rendering: pixelated;
+    touch-action: manipulation;
+}
+.crt
+{
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    border-radius: inherit;
+    background: repeating-linear-gradient(0deg, var(--scanline) 0, var(--scanline) 1px, transparent 1px, transparent 3px);
+    box-shadow: inset 0 0 38px 6px var(--vignette);
+    animation: flicker 7s infinite;
+}
+@keyframes flicker
+{
+    0%, 96%, 100%
+    {
+        opacity: .65;
+    }
+    97%, 99%
+    {
+        opacity: .8;
+    }
+}
+@media (prefers-reduced-motion: reduce)
+{
+    .crt
+    {
+        animation: none;
+    }
+}

@@ -1,0 +1,272 @@
+{
+  "runId": "ai-gpt6-all-28883b46-8438-4644-b660-725d7968c87c",
+  "prompt": "622-daily-word-puzzle-game",
+  "status": "completed",
+  "summary": "已完成Larkspur单页静态文字游戏、真实桌面/移动端核心玩法验证、三张实际PNG视觉审查、预览摘要与默认关闭登记。未构建、汇集或部署。",
+  "modelId": "gpt-6.1-sol",
+  "display_model_name": "GPT-6",
+  "tags": [
+    "Wordplay",
+    "Warm Arcade"
+  ],
+  "generated": true,
+  "preview": true,
+  "validated": true,
+  "config_added": true,
+  "metadata": {
+    "modelId": "gpt-6.1-sol",
+    "tags": [
+      "Wordplay",
+      "Warm Arcade"
+    ],
+    "staticDir": "out",
+    "generated": true,
+    "preview": true,
+    "config_added": true,
+    "validated": true
+  },
+  "input": "C:\\Code\\MusePages\\data\\prompts\\622-daily-word-puzzle-game\\622-daily-word-puzzle-game.md",
+  "provenance": {
+    "title": "Daily Word Puzzle Game",
+    "category": "Entertainment",
+    "source_url": "https://github.com/liyupi/awesome-vibe-coding-websites/blob/85431a57f231fa59269dad62c757193d6a3fd0ff/templates/daily-word-puzzle-game/prompt.md",
+    "license": "CC-BY-NC-4.0",
+    "license_file": "data\\downloads\\github.com\\liyupi-awesome-vibe-coding-websites\\85431a57f231fa59269dad62c757193d6a3fd0ff\\LICENSE"
+  },
+  "output": "C:\\Code\\MusePages\\out\\pages\\622-daily-word-puzzle-game\\GPT-6",
+  "staticDir": "C:\\Code\\MusePages\\out\\pages\\622-daily-word-puzzle-game\\GPT-6\\out",
+  "publicPath": "/pages/daily-word-puzzle-game/GPT-6/index.html",
+  "qaFile": "C:\\Code\\MusePages\\out\\pages\\622-daily-word-puzzle-game\\GPT-6\\.checks\\qa.json",
+  "screenshots": {
+    "desktop": "C:\\Code\\MusePages\\out\\pages\\622-daily-word-puzzle-game\\GPT-6\\.checks\\desktop.png",
+    "mobile": "C:\\Code\\MusePages\\out\\pages\\622-daily-word-puzzle-game\\GPT-6\\.checks\\mobile.png",
+    "preview": "C:\\Code\\MusePages\\out\\pages\\622-daily-word-puzzle-game\\GPT-6\\out\\preview.png"
+  },
+  "screenshotEvidence": {
+    "desktop": {
+      "path": "C:\\Code\\MusePages\\out\\pages\\622-daily-word-puzzle-game\\GPT-6\\.checks\\desktop.png",
+      "width": 1200,
+      "height": 900,
+      "bytes": 53785,
+      "sha256": "c95de35843d04f93fc2732cafa2f57add39c8d2ee9b1345f4d9fcaa3faa1dfa5"
+    },
+    "mobile": {
+      "path": "C:\\Code\\MusePages\\out\\pages\\622-daily-word-puzzle-game\\GPT-6\\.checks\\mobile.png",
+      "width": 390,
+      "height": 844,
+      "bytes": 41293,
+      "sha256": "615e8550f58b42dc6f0dc9501a1317df8805e8673ce866f1014832daccbb5732"
+    },
+    "preview": {
+      "path": "C:\\Code\\MusePages\\out\\pages\\622-daily-word-puzzle-game\\GPT-6\\out\\preview.png",
+      "width": 1200,
+      "height": 900,
+      "bytes": 81845,
+      "sha256": "9e830998e71d430b0f0dbf95510bbed5e23738772044538eacc8bcbae3137963"
+    }
+  },
+  "lockVerification": {
+    "verified": true,
+    "pid": 11936,
+    "ownedLockPrompt": "622-daily-word-puzzle-game",
+    "runId": "ai-gpt6-all-28883b46-8438-4644-b660-725d7968c87c",
+    "attachedCoordinator": true,
+    "coordinatorPreserved": true
+  },
+  "coreFeatures": [
+    "40个原始答案和80个独立整理的额外合法词，严格五字母验证；无效猜测不消耗次数。",
+    "两阶段重复字母评分、逐字翻转与键盘最高状态优先、输入与退格、六次胜负。",
+    "真实累计场次、胜率、当前/最佳连胜和六栏猜测分布；重载不重复计数。",
+    "localStorage保存当前轮次、未提交输入、帮助状态与最近40轮历史；损坏/禁止存储提供真实提示。",
+    "物理键盘与触屏、帮助焦点循环及Escape、重置确认、Unicode方块分享及剪贴板拒绝时可选文本。"
+  ],
+  "tests": {
+    "passed": true,
+    "count": 16,
+    "command": "node out\\pages\\622-daily-word-puzzle-game\\GPT-6\\.checks\\verify.mjs",
+    "results": [
+      {
+        "name": "Dictionary: forty original answers, eighty extras, unique five-letter words, strict validation and wrap",
+        "passed": true
+      },
+      {
+        "name": "Duplicate scoring: exact matches first, repeated letters consume only remaining occurrences",
+        "passed": true
+      },
+      {
+        "name": "Persistent store: invalid guesses, bounded typing, immutable playing-next, wins, loss, streaks and reset",
+        "passed": true
+      },
+      {
+        "name": "Malformed storage and unavailable storage remain playable; original share contains no emoji",
+        "passed": true
+      },
+      {
+        "name": "Real independent static source, byte-identical public resources and under-three-megabyte export",
+        "passed": true
+      },
+      {
+        "name": "Preview server responds at final public subpath and does not expose repository or private source",
+        "passed": true
+      },
+      {
+        "name": "Desktop first-visit help: native focus containment, blocked game input, keyboard dismissal and self-hosted fonts",
+        "passed": true
+      },
+      {
+        "name": "Stats keyboard opening, real zero baseline, reset cancellation and return to game",
+        "passed": true
+      },
+      {
+        "name": "Desktop physical input: short/unknown guesses rejected, max length, delete, real staggered flip and keyboard precedence",
+        "passed": true
+      },
+      {
+        "name": "Desktop actual win, one-time stats, history, exact clipboard text and restored completed round",
+        "passed": true
+      },
+      {
+        "name": "Clipboard denial: truthful fallback offers the actual selectable result",
+        "passed": true
+      },
+      {
+        "name": "Mobile touch and reduced motion: help, real round win, next answer, repeated-letter states, no overflow",
+        "passed": true
+      },
+      {
+        "name": "Mobile genuine six-guess loss, streak reset, history, reload idempotence and reset confirmation",
+        "passed": true
+      },
+      {
+        "name": "Responsive 1440px and 320px layouts, meaningful visible content before and after interaction",
+        "passed": true
+      },
+      {
+        "name": "Browser recovery from corrupt saved JSON and denied localStorage, with real playable fallback",
+        "passed": true
+      },
+      {
+        "name": "No HTTP, request, external-network, console or page errors across all actual browser interactions",
+        "passed": true
+      }
+    ],
+    "viewports": [
+      {
+        "name": "desktop",
+        "width": 1200,
+        "height": 900,
+        "deviceScaleFactor": 1
+      },
+      {
+        "name": "mobile",
+        "width": 390,
+        "height": 844,
+        "deviceScaleFactor": 1,
+        "reducedMotion": true
+      },
+      {
+        "name": "wide",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "name": "narrow",
+        "width": 320,
+        "height": 700
+      }
+    ],
+    "errors": [],
+    "overflowBeforeAndAfterInteractions": false,
+    "realClipboardVerified": true,
+    "reducedMotionVerified": true,
+    "sourceStaticEqualityVerified": true
+  },
+  "visualReviewed": true,
+  "visualEvidence": {
+    "desktop": {
+      "path": "C:\\Code\\MusePages\\out\\pages\\622-daily-word-puzzle-game\\GPT-6\\.checks\\desktop.png",
+      "openedWith": "view",
+      "reviewed": true,
+      "notes": "已实际打开1200×900 PNG。暖奶油底、衬线之外的特色展示字体和小标题层级清晰；342px棋盘居中，重复字母的浅黄/灰及圆点反馈清楚；键盘与页脚首屏可见。调整桌面垂直留白后重新截图并再次打开核验。"
+    },
+    "mobile": {
+      "path": "C:\\Code\\MusePages\\out\\pages\\622-daily-word-puzzle-game\\GPT-6\\.checks\\mobile.png",
+      "openedWith": "view",
+      "reviewed": true,
+      "notes": "已实际打开390×844 PNG。52px字块、44/52px键高、三行触控键盘完整可见；标题、图例和页脚无截断，重复P仅计一次、字母状态与边框点标识明确，无横向溢出。"
+    }
+  },
+  "previewVisualReview": {
+    "status": "generated",
+    "path": "C:\\Code\\MusePages\\out\\pages\\622-daily-word-puzzle-game\\GPT-6\\out\\preview.png",
+    "staticDigest": "bc4db746134985a242e93b0bd3ffbccf5ee2be52e14bb639c2d731291837511b",
+    "visualReviewed": true,
+    "visualNotes": "已通过view实际打开新生成的1200×900预览。首次访问帮助弹窗完整呈现，标题、四条规则、三个真实示例、关闭焦点与开始按钮清楚可读，背景真实棋盘与键盘保持淡化；遵循原需求自动打开帮助，不用其他页面或静态设计稿替代。",
+    "sha256": "9e830998e71d430b0f0dbf95510bbed5e23738772044538eacc8bcbae3137963"
+  },
+  "refinements": [
+    "为帮助弹窗添加明确的首尾Tab焦点循环。",
+    "键入字母后将焦点转至棋盘，使关闭帮助后可直接物理Enter提交，同时保留帮助/统计按钮的Enter可访问性。",
+    "压缩桌面垂直留白，首屏截图置于scrollY=0并断言页脚不超出900px。",
+    "Windows剪贴板CRLF只在测试比较时归一化；实际分享文本保持原生格式。"
+  ],
+  "digests": {
+    "input": "bb0a42b9307157279287839997d46c89244e0b78e4763f0923794ace91eb94e0",
+    "static": "bc4db746134985a242e93b0bd3ffbccf5ee2be52e14bb639c2d731291837511b",
+    "preview": "9e830998e71d430b0f0dbf95510bbed5e23738772044538eacc8bcbae3137963",
+    "previewRecord": "bc4db746134985a242e93b0bd3ffbccf5ee2be52e14bb639c2d731291837511b 9e830998e71d430b0f0dbf95510bbed5e23738772044538eacc8bcbae3137963"
+  },
+  "staticPublic": {
+    "bytes": 515309,
+    "under3MB": true,
+    "files": [
+      "app.mjs",
+      "content.mjs",
+      "favicon.svg",
+      "fonts\\bricolage-600.woff2",
+      "fonts\\BRICOLAGE-LICENSE.txt",
+      "fonts\\INTER-LICENSE.txt",
+      "fonts\\inter.woff2",
+      "fonts\\LUCIDE-LICENSE.txt",
+      "game.mjs",
+      "index.html",
+      "LICENSE.txt",
+      "preview.png",
+      "style.css"
+    ],
+    "privateChecksExcluded": true
+  },
+  "registration": {
+    "verified": true,
+    "added": true,
+    "uniqueMatches": 1,
+    "configFile": "C:\\Code\\MusePages\\deploy\\config.json",
+    "prompt": "622-daily-word-puzzle-game",
+    "model": "GPT-6",
+    "slug": "daily-word-puzzle-game",
+    "title": "Daily Word Puzzle Game",
+    "tags": [
+      "Wordplay",
+      "Warm Arcade"
+    ],
+    "staticDir": "out",
+    "enabled": false,
+    "deployed": false,
+    "otherConfigPreserved": true
+  },
+  "limitations": [
+    "按原始prompt明确要求使用无日期的40词样本轮换，而非真实每日限玩；当前局及历史已持久化。",
+    "获授权采用原生HTML/CSS/ES模块静态适配，不是Vite/React/TypeScript/Tailwind/Motion工程；未执行禁止的安装或生产构建。",
+    "复用本地有OFL许可的Bricolage Grotesque 600和Inter字体，非新装Fontsource-variable；Lucide内联路径保留ISC/MIT许可。",
+    "词库刻意限制为120词；答案可从客户端查看，统计只在本浏览器保存，无账号、同步、反作弊或生产后台。",
+    "首次访客帮助自动打开，因此ensurePreview的真实新访客预览显示帮助弹窗；私有桌面/手机截图展示可玩棋盘。",
+    "原需求与适配设计保留VibeFather署名和CC-BY-NC-4.0非商业条款；商业使用需另获原作者授权。"
+  ],
+  "blocker": null,
+  "buildsExecuted": false,
+  "deploymentsExecuted": false,
+  "sharedStateOrLogChanged": false,
+  "resourcesClosed": true,
+  "resourceEvidence": "QA浏览器上下文、Chromium及仅托管目标静态目录的临时服务均在finally关闭；ensurePreview自有浏览器和服务已结束，协调器持锁进程未动。",
+  "completedAt": "2026-11-16T17:24:08.948Z"
+}

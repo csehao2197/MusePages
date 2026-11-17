@@ -1,0 +1,185 @@
+{
+  "prompt": "611-open-world-city-driving-game",
+  "modelId": "gpt-6.1-sol",
+  "passed": true,
+  "visualReviewed": true,
+  "tests": [
+    {
+      "name": "Independent static output and final subpath validation",
+      "passed": true
+    },
+    {
+      "name": "Owned static-only preview server responsive",
+      "passed": true,
+      "path": "/pages/open-world-city-driving-game/GPT-6/index.html",
+      "status": 200
+    },
+    {
+      "name": "desktop initial overflow",
+      "passed": true,
+      "scroll": 1200,
+      "viewport": 1200,
+      "height": 900,
+      "body": 1200
+    },
+    {
+      "name": "desktop full world, four north-correct pool cars and eight moving neighbors",
+      "passed": true
+    },
+    {
+      "name": "desktop help freezes simulation and closes",
+      "passed": true
+    },
+    {
+      "name": "desktop keyboard moves real north-facing vehicle",
+      "passed": true,
+      "before": {
+        "x": -3,
+        "z": -88,
+        "yaw": 0,
+        "speed": 0,
+        "car": "Kiln pool car",
+        "collisions": 0,
+        "distance": 0
+      },
+      "after": {
+        "x": -3,
+        "z": -68.30216433018653,
+        "yaw": 0,
+        "speed": 18.011839999999992,
+        "car": "Kiln pool car",
+        "collisions": 0,
+        "distance": 19.697835669813546
+      }
+    },
+    {
+      "name": "desktop post-gameplay overflow",
+      "passed": true,
+      "scroll": 1200,
+      "viewport": 1200,
+      "height": 900,
+      "body": 1200
+    },
+    {
+      "name": "desktop enter/exit, pause/resume, activity selection/cancel and reset",
+      "passed": true
+    },
+    {
+      "name": "mobile initial overflow",
+      "passed": true,
+      "scroll": 390,
+      "viewport": 390,
+      "height": 844,
+      "body": 390
+    },
+    {
+      "name": "mobile full world, four north-correct pool cars and eight moving neighbors",
+      "passed": true
+    },
+    {
+      "name": "mobile help freezes simulation and closes",
+      "passed": true
+    },
+    {
+      "name": "mobile touch pedal moves real north-facing vehicle",
+      "passed": true,
+      "before": {
+        "x": -3,
+        "z": -88,
+        "yaw": 0,
+        "speed": 0,
+        "car": "Kiln pool car",
+        "collisions": 0,
+        "distance": 0
+      },
+      "after": {
+        "x": -3,
+        "z": -66.68010081946667,
+        "yaw": 0,
+        "speed": 18.17592000000002,
+        "car": "Kiln pool car",
+        "collisions": 0,
+        "distance": 21.319899180533362
+      }
+    },
+    {
+      "name": "mobile simultaneous multitouch steering/accelerator and genuine brake-to-reverse",
+      "passed": true,
+      "turned": {
+        "x": 8.861422468975828,
+        "z": -36.75712969538996,
+        "yaw": 2.2034863669238183,
+        "speed": 20.13648000000003,
+        "car": "Kiln pool car",
+        "collisions": 0,
+        "distance": 63.59740324490008
+      },
+      "reversed": {
+        "x": -3.6859240712804024,
+        "z": -27.55687663250907,
+        "yaw": 2.2034863669238183,
+        "speed": -7.159999999999997,
+        "car": "Kiln pool car",
+        "collisions": 1,
+        "distance": 81.1559895641538
+      }
+    },
+    {
+      "name": "mobile post-gameplay overflow",
+      "passed": true,
+      "scroll": 390,
+      "viewport": 390,
+      "height": 844,
+      "body": 390
+    },
+    {
+      "name": "mobile enter/exit, pause/resume, activity selection/cancel and reset",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "width": 1200,
+      "height": 900,
+      "deviceScaleFactor": 1,
+      "isMobile": false,
+      "canvasBytes": 547556
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 1,
+      "isMobile": true,
+      "canvasBytes": 115029
+    }
+  ],
+  "resourcesClosed": true,
+  "sourceType": "html",
+  "staticDigest": "e03742d3b177716a7a189d9ae3218b314f0e2035e01f5a9459757b47eec51644",
+  "visualReview": {
+    "desktop": "已打开实际 1200×900 PNG：衬线标题与松绿/暖纸/陶橙层级清晰；原创立体街区、地图、页脚各自有明确位置，未见横向溢出。",
+    "mobile": "已打开实际 390×844 PNG：上方城区与下方标题形成竖向构图；正文与开始按钮清楚，游戏视图触控踏板、转向、地图和任务面板均不遮挡主要驾驶区域。",
+    "gameplay": "已打开真实配送和圈赛完成 PNG；实际在街区内抵达目标，分数与圈速来自模拟，不是点击按钮直接完成。",
+    "preview": "已另行打开 ensurePreview 新捕获的真实首屏 PNG，尺寸与页面构图正确。",
+    "previewReviewed": true
+  },
+  "gameplay": {
+    "file": "C:\\Code\\MusePages\\out\\pages\\611-open-world-city-driving-game\\GPT-6\\.checks\\gameplay.json",
+    "passed": true,
+    "groups": 11,
+    "inputMethod": "Frame-synchronized browser keyboard events use the actual key handlers and read-only snapshots. Trusted Playwright keyboard and real CDP multitouch are tested separately in qa.mjs. No state mutation, time skipping or fake mission completion."
+  },
+  "physics": {
+    "file": "C:\\Code\\MusePages\\out\\pages\\611-open-world-city-driving-game\\GPT-6\\.checks\\physics.json",
+    "passed": true,
+    "groups": 7
+  },
+  "totalAssertionGroups": 33,
+  "refinements": [
+    "原创世界与车体网格实例化，减少绘制调用。",
+    "低帧率下用固定小步模拟，避免输入、计时及碰撞依赖渲染速度。",
+    "完整路线实测发现并修复交通并排让行死锁，增加车辆间距避免重叠。",
+    "完整路线自动控制改为逐帧事件反馈，避免外部自动化延迟导致绕圈。"
+  ]
+}

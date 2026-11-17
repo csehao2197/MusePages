@@ -1,0 +1,970 @@
+@font-face
+{
+    font-family: Fraunces;
+    src: url("./fonts/fraunces.woff2") format("woff2");
+    font-weight: 100 900;
+    font-display: swap;
+}
+@font-face
+{
+    font-family: Outfit;
+    src: url("./fonts/outfit.woff2") format("woff2");
+    font-weight: 100 900;
+    font-display: swap;
+}
+@font-face
+{
+    font-family: Plex;
+    src: url("./fonts/plex.woff2") format("woff2");
+    font-weight: 500;
+    font-display: swap;
+}
+:root
+{
+    --pine: #173c34;
+    --paper: #fcf6e8;
+    --orange: #e77843;
+    --line: rgba(26, 60, 50, .18);
+}
+*
+{
+    box-sizing: border-box;
+}
+[hidden]
+{
+    display: none !important;
+}
+html, body
+{
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    color: var(--pine);
+    font-family: Outfit, sans-serif;
+}
+button, a
+{
+    -webkit-tap-highlight-color: transparent;
+}
+button
+{
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    border: 0;
+}
+button:focus-visible, a:focus-visible
+{
+    outline: 3px solid var(--orange);
+    outline-offset: 5px;
+}
+button:hover
+{
+    filter: brightness(1.05);
+}
+button:disabled
+{
+    cursor: default;
+    opacity: .6;
+}
+button svg
+{
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+}
+#world
+{
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    touch-action: none;
+}
+.vignette
+{
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(90deg, rgba(247, 239, 218, .92), rgba(247, 239, 218, .65) 23%, transparent 52%), linear-gradient(0deg, rgba(233, 227, 202, .65), transparent 16%);
+}
+body.playing .vignette
+{
+    background: linear-gradient(0deg, rgba(18, 46, 40, .25), transparent 24%);
+}
+header
+{
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 112px;
+    padding: 32px 38px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.wordmark
+{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+.brand-mark
+{
+    border: 1.5px solid var(--pine);
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: grid;
+    place-items: center;
+    transform: rotate(-12deg);
+    background: rgba(252, 246, 232, .5);
+}
+.brand-mark svg
+{
+    width: 25px;
+}
+.brand-sub
+{
+    display: block;
+    font-family: Plex, monospace;
+    font-size: 8px;
+    margin-top: 5px;
+    letter-spacing: 1.2px;
+}
+.header-tools
+{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.evening
+{
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font: 9px Plex, monospace;
+    letter-spacing: 1px;
+    margin-right: 20px;
+    padding: 10px 12px;
+    border-radius: 20px;
+    background: rgba(252, 246, 232, .72);
+}
+.live-dot
+{
+    width: 6px;
+    height: 6px;
+    display: inline-block;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #d47e41;
+}
+.icon-button
+{
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    background: var(--paper);
+    border: 1px solid rgba(26, 60, 50, .1);
+    border-radius: 50%;
+}
+.title-card
+{
+    position: absolute;
+    left: 5%;
+    top: 23%;
+    width: 430px;
+}
+.eyebrow
+{
+    font: 10px Plex, monospace;
+    letter-spacing: 1.7px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    line-height: 1.6;
+}
+.small-line
+{
+    display: block;
+    height: 1px;
+    width: 25px;
+    background: var(--orange);
+}
+h1
+{
+    font: 600 clamp(75px, 8.5vw, 110px)/.95 Fraunces, Georgia, serif;
+    letter-spacing: -7px;
+    margin: 29px 0 23px -5px;
+}
+h1 em
+{
+    font-weight: 600;
+    color: #b75f3d;
+}
+.deck
+{
+    font-size: 20px;
+    line-height: 1.5;
+    font-weight: 400;
+    margin-bottom: 30px;
+}
+.play-button
+{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0;
+    text-align: left;
+    background: transparent;
+    font-size: 17px;
+    font-weight: 500;
+}
+.play-disc
+{
+    width: 58px;
+    height: 58px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--pine);
+    color: var(--paper);
+}
+.play-disc svg
+{
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+}
+.play-button small
+{
+    display: block;
+    font: 8px Plex, monospace;
+    letter-spacing: 1px;
+    margin-top: 7px;
+    opacity: .65;
+}
+.play-arrow
+{
+    font-size: 25px;
+    margin-left: 25px;
+    color: #b75f3d;
+}
+.title-facts
+{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 36px;
+    font-size: 10px;
+    color: #567168;
+}
+.title-facts span + span::before
+{
+    content: "·";
+    margin-right: 8px;
+}
+.place-label
+{
+    position: fixed;
+    top: 20%;
+    right: 6%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font: 500 25px Fraunces, Georgia, serif;
+    transform: rotate(-5deg);
+}
+.place-rule
+{
+    width: 35px;
+    height: 1px;
+    background: var(--pine);
+}
+.place-label small
+{
+    display: block;
+    font: 8px Plex, monospace;
+    letter-spacing: 1px;
+    margin-top: 7px;
+}
+.map-panel
+{
+    position: fixed;
+    bottom: 88px;
+    right: 38px;
+    width: 185px;
+    padding: 13px;
+    background: rgba(252, 246, 232, .94);
+    border: 1px solid var(--line);
+    box-shadow: 0 7px 30px rgba(27, 55, 45, .05);
+    transform: rotate(2deg);
+}
+.map-heading
+{
+    display: flex;
+    justify-content: space-between;
+    font: 7px Plex, monospace;
+    letter-spacing: .5px;
+}
+#minimap
+{
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 9px 0;
+}
+.map-key
+{
+    display: flex;
+    justify-content: space-between;
+    font-size: 7px;
+}
+.map-key b
+{
+    width: 4px;
+    height: 4px;
+    margin-right: 3px;
+    display: inline-block;
+    border-radius: 50%;
+}
+.key-you
+{
+    background: var(--pine);
+}
+.key-car
+{
+    background: #65b89b;
+}
+.key-target
+{
+    background: var(--orange);
+}
+footer
+{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    min-height: 56px;
+    padding: 18px 38px calc(18px + env(safe-area-inset-bottom));
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    border-top: 1px solid var(--line);
+    background: rgba(252, 246, 232, .9);
+    font: 8px Plex, monospace;
+    letter-spacing: .5px;
+}
+.footer-left
+{
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+footer a
+{
+    color: inherit;
+    white-space: nowrap;
+    font-family: Outfit, sans-serif;
+    font-size: 10px;
+    letter-spacing: 0;
+}
+.desktop-hint span
+{
+    opacity: .5;
+    font-size: 7px;
+}
+.mission-panel
+{
+    position: fixed;
+    left: 28px;
+    top: 128px;
+    width: 280px;
+    padding: 23px;
+    background: rgba(252, 246, 232, .96);
+    border-radius: 3px;
+    border-top: 3px solid var(--orange);
+}
+.mission-panel .eyebrow
+{
+    font-size: 8px;
+    letter-spacing: 1px;
+}
+h2
+{
+    font: 600 28px/1.1 Fraunces, Georgia, serif;
+    letter-spacing: -1px;
+    margin: 15px 0;
+}
+.mission-panel p
+{
+    font-size: 13px;
+    line-height: 1.5;
+    color: #536a60;
+    margin-bottom: 18px;
+}
+.activity
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 13px 0;
+    background: transparent;
+    text-align: left;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+}
+.activity > span:last-child
+{
+    margin-left: auto;
+    color: #b75f3d;
+}
+.activity small
+{
+    display: block;
+    font-size: 9px;
+    color: #536a60;
+    margin-top: 4px;
+}
+.bests
+{
+    border-top: 1px solid var(--line);
+    padding-top: 13px;
+    display: flex;
+    gap: 18px;
+    margin-top: 7px;
+    font: 7px Plex, monospace;
+}
+.bests b
+{
+    display: block;
+    font-size: 13px;
+    margin-top: 6px;
+}
+.mission-progress
+{
+    padding: 12px 0;
+    font: 10px Plex, monospace;
+}
+.mission-progress button
+{
+    display: block;
+    margin-top: 15px;
+    padding: 0;
+    background: none;
+    font: 11px Outfit, sans-serif;
+    text-decoration: underline;
+}
+.drive-hud
+{
+    position: fixed;
+    bottom: 83px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 18px 23px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    box-shadow: 0 5px 25px rgba(18, 46, 40, .1);
+}
+.speed
+{
+    display: flex;
+    align-items: baseline;
+    gap: 7px;
+}
+.speed strong
+{
+    font: 500 42px/1 Outfit, sans-serif;
+    font-variant-numeric: tabular-nums;
+    min-width: 46px;
+}
+.speed > span
+{
+    font: 7px Plex, monospace;
+}
+.drive-divider
+{
+    height: 37px;
+    width: 1px;
+    background: var(--line);
+}
+.vehicle-status
+{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 150px;
+}
+.vehicle-status span
+{
+    font: 7px Plex, monospace;
+    letter-spacing: .7px;
+}
+.vehicle-status strong
+{
+    font-size: 14px;
+    font-weight: 500;
+}
+.vehicle-status span:last-child
+{
+    color: #60766a;
+    font-size: 6px;
+}
+.action-button
+{
+    padding: 12px 14px;
+    white-space: nowrap;
+    font-size: 11px;
+    background: var(--pine);
+    color: var(--paper);
+}
+kbd
+{
+    font: 8px Plex, monospace;
+    border: 1px solid #6c8980;
+    padding: 2px 4px;
+    margin-left: 6px;
+}
+.toast
+{
+    position: fixed;
+    left: 50%;
+    bottom: 195px;
+    transform: translateX(-50%) translateY(10px);
+    background: var(--pine);
+    color: var(--paper);
+    max-width: min(90vw, 500px);
+    padding: 13px 20px;
+    text-align: center;
+    font-size: 13px;
+    opacity: 0;
+    transition: opacity .2s, transform .2s;
+    pointer-events: none;
+    z-index: 4;
+}
+.toast.visible
+{
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+dialog
+{
+    background: var(--paper);
+    color: var(--pine);
+    width: min(500px, calc(100vw - 32px));
+    max-height: calc(100dvh - 40px);
+    overflow-y: auto;
+    border: 0;
+    padding: 35px;
+    border-radius: 3px;
+}
+dialog::backdrop
+{
+    background: rgba(15, 40, 35, .55);
+    backdrop-filter: blur(6px);
+}
+dialog h2
+{
+    font-size: 38px;
+}
+dialog p
+{
+    font-size: 14px;
+    line-height: 1.65;
+}
+.close-dialog
+{
+    float: right;
+    margin: -20px -20px 10px 10px;
+}
+dl
+{
+    font-size: 12px;
+    margin: 25px 0;
+}
+dl > div
+{
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    border-bottom: 1px solid var(--line);
+    padding: 10px 0;
+}
+dt
+{
+    font-weight: 600;
+}
+dd
+{
+    margin: 0;
+}
+.fine-print
+{
+    color: #667b6e;
+    font-size: 11px;
+}
+.primary-button, .secondary-button
+{
+    width: 100%;
+    display: block;
+    margin-top: 12px;
+    padding: 14px;
+    background: var(--pine);
+    color: var(--paper);
+}
+.secondary-button
+{
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--pine);
+}
+.mobile-controls
+{
+    display: none;
+}
+body.playing header
+{
+    background: linear-gradient(rgba(252, 246, 232, .9), transparent);
+}
+@media (max-width: 760px)
+{
+    header
+    {
+        height: 80px;
+        padding: 18px;
+    }
+    .wordmark
+    {
+        font-size: 11px;
+        letter-spacing: 1px;
+        gap: 8px;
+    }
+    .brand-mark
+    {
+        width: 33px;
+        height: 33px;
+    }
+    .brand-mark svg
+    {
+        width: 20px;
+    }
+    .brand-sub
+    {
+        font-size: 5px;
+        letter-spacing: .8px;
+    }
+    .icon-button
+    {
+        width: 32px;
+        height: 32px;
+    }
+    .header-tools
+    {
+        gap: 5px;
+    }
+    .evening, .desktop-hint, .footer-left, .title-facts, .place-label
+    {
+        display: none;
+    }
+    .title-card
+    {
+        top: auto;
+        bottom: 91px;
+        left: 26px;
+        width: calc(100% - 52px);
+    }
+    .title-card .eyebrow
+    {
+        font-size: 8px;
+    }
+    h1
+    {
+        font-size: clamp(58px, 17vw, 90px);
+        letter-spacing: -4px;
+        margin: 19px 0 15px -2px;
+        line-height: .96;
+    }
+    .deck
+    {
+        font-size: 16px;
+        margin: 18px 0;
+    }
+    .play-button
+    {
+        font-size: 15px;
+        gap: 12px;
+    }
+    .play-disc
+    {
+        width: 48px;
+        height: 48px;
+    }
+    .play-arrow
+    {
+        margin-left: auto;
+    }
+    .vignette
+    {
+        background: linear-gradient(0deg, #f8efdc 3%, rgba(248, 239, 220, .96) 22%, rgba(248, 239, 220, .4) 47%, transparent 72%);
+    }
+    .map-panel
+    {
+        display: none;
+        bottom: auto;
+        top: 91px;
+        right: 16px;
+        width: 105px;
+        padding: 7px;
+        transform: none;
+    }
+    body.playing .map-panel
+    {
+        display: block;
+    }
+    .map-heading
+    {
+        font-size: 5px;
+    }
+    .map-key
+    {
+        display: none;
+    }
+    #minimap
+    {
+        margin: 5px 0 0;
+    }
+    footer
+    {
+        justify-content: center;
+        min-height: 35px;
+        padding: 10px 15px calc(10px + env(safe-area-inset-bottom));
+    }
+    footer a
+    {
+        font-size: 8px;
+    }
+    .mission-panel
+    {
+        top: 91px;
+        left: 16px;
+        padding: 12px;
+        width: calc(100% - 150px);
+        max-width: 270px;
+        max-height: 39vh;
+        overflow-y: auto;
+    }
+    .mission-panel .eyebrow
+    {
+        font-size: 6px;
+    }
+    h2
+    {
+        font-size: 21px;
+        margin: 9px 0;
+    }
+    .mission-panel p
+    {
+        font-size: 10px;
+        margin: 8px 0;
+    }
+    .activity
+    {
+        padding: 9px 0;
+        font-size: 11px;
+        gap: 8px;
+    }
+    .activity svg
+    {
+        width: 14px;
+        flex-shrink: 0;
+    }
+    .activity small
+    {
+        font-size: 7px;
+    }
+    .bests
+    {
+        font-size: 5px;
+        gap: 14px;
+        padding-top: 9px;
+    }
+    .bests b
+    {
+        font-size: 10px;
+        margin-top: 4px;
+    }
+    .drive-hud
+    {
+        bottom: 156px;
+        width: calc(100% - 32px);
+        left: 16px;
+        transform: none;
+        padding: 12px;
+        gap: 12px;
+    }
+    .speed strong
+    {
+        font-size: 30px;
+        min-width: 32px;
+    }
+    .speed
+    {
+        gap: 4px;
+    }
+    .speed > span
+    {
+        font-size: 6px;
+    }
+    .vehicle-status
+    {
+        min-width: 0;
+        flex: 1;
+    }
+    .vehicle-status strong
+    {
+        font-size: 10px;
+    }
+    .vehicle-status span
+    {
+        font-size: 6px;
+    }
+    .vehicle-status span:last-child, .drive-divider
+    {
+        display: none;
+    }
+    .action-button
+    {
+        font-size: 9px;
+        padding: 12px 9px;
+        max-width: 135px;
+        white-space: normal;
+    }
+    kbd
+    {
+        display: none;
+    }
+    .mobile-controls
+    {
+        position: fixed;
+        left: 16px;
+        right: 16px;
+        bottom: 56px;
+        display: flex;
+        justify-content: space-between;
+        pointer-events: none;
+    }
+    .steer-pad, .pedal-pad
+    {
+        display: flex;
+        gap: 8px;
+        pointer-events: auto;
+    }
+    .mobile-controls button
+    {
+        width: 58px;
+        height: 76px;
+        background: rgba(252, 246, 232, .95);
+        border: 1px solid var(--line);
+        border-bottom: 4px solid #cecab5;
+        border-radius: 7px;
+        touch-action: none;
+        user-select: none;
+        font: 11px Plex, monospace;
+    }
+    .steer-pad button
+    {
+        font-size: 25px;
+        width: 54px;
+    }
+    .pedal-pad button:last-child
+    {
+        background: var(--pine);
+        color: var(--paper);
+        border-bottom-color: #0c2c24;
+    }
+    .mobile-controls button.pressed
+    {
+        transform: translateY(3px);
+        border-bottom-width: 1px;
+        filter: brightness(.9);
+    }
+    .toast
+    {
+        bottom: 235px;
+        width: max-content;
+        max-width: calc(100% - 32px);
+        font-size: 11px;
+        padding: 12px 16px;
+    }
+    dialog
+    {
+        padding: 27px;
+    }
+    dialog h2
+    {
+        font-size: 30px;
+    }
+    dialog p
+    {
+        font-size: 12px;
+    }
+    dl > div
+    {
+        grid-template-columns: 110px 1fr;
+        font-size: 10px;
+    }
+}
+@media (max-height: 650px) and (max-width: 760px)
+{
+    .title-card
+    {
+        bottom: 60px;
+    }
+    .title-card h1
+    {
+        font-size: 52px;
+        margin: 13px 0;
+    }
+    .deck
+    {
+        font-size: 13px;
+        margin: 12px 0;
+    }
+    .mission-panel
+    {
+        max-height: 43vh;
+    }
+    .drive-hud
+    {
+        bottom: 125px;
+    }
+    .mobile-controls
+    {
+        bottom: 44px;
+    }
+    .mobile-controls button
+    {
+        height: 63px;
+    }
+}
+@media (prefers-reduced-motion: reduce)
+{
+    *
+    {
+        transition: none !important;
+    }
+}

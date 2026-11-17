@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f6f7f9">
+    <meta name="description" content="Forma is a local learning workspace demo. Explore courses, build a learning habit, and track your progress.">
+    <title>My learning — Forma</title>
+    <link rel="icon" href="icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <a class="skip" href="#main">Skip to content</a>
+    <aside class="sidebar">
+        <a class="brand" href="#learning" aria-label="Forma home"><span class="brand-mark">f</span>forma<span class="brand-period">.</span></a>
+        <div class="workspace"><span class="workspace-icon">S</span><div>Personal workspace<small>Make room to grow</small></div></div>
+        <p class="nav-label">WORKSPACE</p>
+        <nav aria-label="Main navigation">
+            <a href="#learning" data-nav="learning"><svg><use href="icons.svg#layout-dashboard"></use></svg>My learning<span class="nav-dot"></span></a>
+            <a href="#catalog" data-nav="catalog"><svg><use href="icons.svg#compass"></use></svg>Explore courses</a>
+            <a href="#calendar" data-nav="calendar"><svg><use href="icons.svg#calendar-days"></use></svg>My calendar</a>
+            <a href="#certificates" data-nav="certificates"><svg><use href="icons.svg#award"></use></svg>Certificates</a>
+        </nav>
+        <div class="sidebar-bottom">
+            <div class="habit-note"><svg><use href="icons.svg#sprout"></use></svg><strong>Small steps, real growth.</strong><p>Your next chapter starts with a little curiosity.</p><button class="text-button" id="find-course">Find your next course <span>↗</span></button></div>
+            <button class="profile-button" id="profile"><span class="avatar">JL</span><span><strong id="profile-name">Jamie Lee</strong><small>Student · Local demo</small></span><svg><use href="icons.svg#chevrons-up-down"></use></svg></button>
+        </div>
+    </aside>
+    <div class="shell">
+        <header class="topbar">
+            <span class="breadcrumb">Workspace <span>/</span> <strong id="breadcrumb">My learning</strong></span>
+            <div class="top-actions"><label class="search"><svg><use href="icons.svg#search"></use></svg><input id="search" type="search" placeholder="Search your courses" aria-label="Search courses"><kbd>/</kbd></label><button class="icon-button notification-button" id="notifications" aria-label="Notifications, 2 unread"><svg><use href="icons.svg#bell"></use></svg><i></i></button><button class="avatar top-avatar" id="top-profile" aria-label="Open demo profile">JL</button></div>
+        </header>
+        <main id="main" tabindex="-1">
+            <div class="page-heading"><div><p class="eyebrow" id="date-label">YOUR SPACE TO GROW</p><h1 id="page-title">My learning</h1><p id="page-subtitle">A little more curious. A little further along.</p></div><button class="button secondary" id="customize"><svg><use href="icons.svg#sliders-horizontal"></use></svg>Customize</button></div>
+            <section id="learning-view">
+                <section class="hero" aria-label="Welcome back">
+                    <div class="hero-copy"><span class="pill"><span></span>KEEP THE MOMENTUM</span><h2>A little progress.<br>A bigger possibility.</h2><p>Good to see you, <span id="greeting-name">Jamie</span>. Your next<br class="desktop-break"> breakthrough is just one lesson away.</p><button class="button dark" id="hero-resume">Pick up where you left off <svg><use href="icons.svg#arrow-up-right"></use></svg></button></div>
+                    <div class="hero-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orb"></div><div class="step step-one"></div><div class="step step-two"></div><div class="step step-three"></div><div class="star">✳</div><div class="art-caption">THE ONLY WAY IS FORWARD ↗</div><div class="mini-note"><svg><use href="icons.svg#trending-up"></use></svg> 1% better, every day</div></div>
+                </section>
+                <div class="stats" aria-label="Learning overview"><div><span class="stat-icon peach"><svg><use href="icons.svg#book-open"></use></svg></span><span><strong id="active-stat">3</strong><small>Courses in progress</small></span></div><div><span class="stat-icon violet"><svg><use href="icons.svg#clock-3"></use></svg></span><span><strong id="lesson-stat">4 <em>lessons</em></strong><small>Completed so far</small></span></div><div><span class="stat-icon green"><svg><use href="icons.svg#award"></use></svg></span><span><strong id="certificate-stat">0</strong><small>Certificates earned</small></span></div><div><span class="stat-icon yellow"><svg><use href="icons.svg#flame"></use></svg></span><span><strong>3 <em>days</em></strong><small>Sample learning streak</small></span></div></div>
+                <div class="dashboard-grid">
+                    <section class="courses-section"><div class="section-heading"><h2>Continue learning <span id="course-count">3</span></h2><button class="text-button" id="view-all">View all <svg><use href="icons.svg#arrow-right"></use></svg></button></div><div class="tabs" role="group" aria-label="Filter enrolled courses"><button class="selected" data-filter="progress" aria-pressed="true">In progress</button><button data-filter="completed" aria-pressed="false">Completed</button><button data-filter="all" aria-pressed="false">All courses</button></div><div class="course-grid" id="courses"></div><div class="journey-note"><span class="small-orbit"></span><p>Not a race. Your own kind of journey.</p><span>Keep going ↗</span></div></section>
+                    <aside class="right-column"><section class="weekly widget" id="weekly-widget"><div class="section-heading"><h2>Your learning rhythm</h2><svg><use href="icons.svg#chart-no-axes-column-increasing"></use></svg></div><div class="weekly-total"><strong id="weekly-total">4</strong><span>lessons completed<br><b>This week, in this demo</b></span></div><div class="bar-chart" aria-label="Sample activity: Monday 2, Tuesday 1, Wednesday 0, Thursday 1, Friday 0, Saturday 0, Sunday 0"><div><i style="--height:64%"></i><span>M</span></div><div><i style="--height:35%"></i><span>T</span></div><div><i style="--height:8%"></i><span>W</span></div><div class="today"><i style="--height:90%"></i><span>T</span></div><div><i style="--height:8%"></i><span>F</span></div><div><i style="--height:8%"></i><span>S</span></div><div><i style="--height:8%"></i><span>S</span></div></div><p class="rhythm-footer"><span class="live-dot"></span> A good habit starts with showing up.</p></section><section class="session widget"><div class="section-heading"><h2>On your calendar</h2><svg><use href="icons.svg#calendar-days"></use></svg></div><span class="session-label">UPCOMING · SAMPLE SESSION</span><h3>Designing with intention</h3><p>A guided studio with Olivia Chen</p><div class="session-time"><span class="date-tile">NOV<strong>19</strong></span><span>Thursday, November 19<small>10:00 – 11:00 AM · Local time</small></span></div><button class="button secondary full" id="session-details">View session <svg><use href="icons.svg#arrow-up-right"></use></svg></button></section></aside>
+                </div>
+            </section>
+            <section id="other-view" hidden></section>
+            <footer><span><span class="footer-dot"></span> A space for lifelong learners.</span><button class="text-button" id="demo-info">Local demo · How it works <svg><use href="icons.svg#info"></use></svg></button></footer>
+        </main>
+    </div>
+    <dialog id="dialog" aria-labelledby="dialog-title"><div class="dialog-heading"><div><p class="eyebrow" id="dialog-kicker">FORMA WORKSPACE</p><h2 id="dialog-title"></h2></div><button class="icon-button" id="close-dialog" aria-label="Close dialog"><svg><use href="icons.svg#x"></use></svg></button></div><div id="dialog-content"></div></dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

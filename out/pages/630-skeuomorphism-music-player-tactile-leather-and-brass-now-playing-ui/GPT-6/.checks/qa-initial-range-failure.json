@@ -1,0 +1,129 @@
+{
+  "status": "failed",
+  "date": "2026-11-16T18:54:13.808Z",
+  "modelId": "gpt-6.1-sol",
+  "viewports": [
+    {
+      "width": 1200,
+      "height": 900
+    },
+    {
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "results": [
+    {
+      "name": "Independent static export and final public subpath",
+      "passed": true,
+      "evidence": {
+        "digest": "9e56b3e0fa38a5e11aba4f21d6acb02813880c4508ac1f90f2fc84649191fdbc"
+      }
+    },
+    {
+      "name": "Isolated preview server is responsive at final mount",
+      "passed": true,
+      "evidence": {
+        "url": "http://127.0.0.1:56806/pages/skeuomorphism-music-player-tactile-leather-and-brass-now-playing-ui/GPT-6/index.html",
+        "status": 200
+      }
+    },
+    {
+      "name": "Preview server does not expose repository root",
+      "passed": true,
+      "evidence": {
+        "status": 404
+      }
+    },
+    {
+      "name": "Desktop: visible English player, user-initiated audio only",
+      "passed": true,
+      "evidence": {
+        "width": 1200,
+        "height": 900
+      }
+    },
+    {
+      "name": "Desktop: no horizontal overflow before interactions",
+      "passed": true,
+      "evidence": {
+        "viewport": 1200,
+        "document": 1200,
+        "body": 1200
+      }
+    },
+    {
+      "name": "Desktop: actual first-screen PNG captured",
+      "passed": true,
+      "evidence": {
+        "width": 1200,
+        "height": 900,
+        "deviceScaleFactor": 1
+      }
+    },
+    {
+      "name": "Desktop: all three real local audio files decode with non-silent unclipped signal",
+      "passed": true,
+      "evidence": [
+        {
+          "filename": "last-light.wav",
+          "duration": 36,
+          "sampleRate": 44100,
+          "rms": 0.09068814279753057,
+          "peak": 0.31277990341186523
+        },
+        {
+          "filename": "velvet-hours.wav",
+          "duration": 36,
+          "sampleRate": 44100,
+          "rms": 0.0817281806478128,
+          "peak": 0.2909192442893982
+        },
+        {
+          "filename": "quiet-return.wav",
+          "duration": 36,
+          "sampleRate": 44100,
+          "rms": 0.07585095112226573,
+          "peak": 0.28076672554016113
+        }
+      ]
+    },
+    {
+      "name": "Desktop: real audio plays and native time advances",
+      "passed": true,
+      "evidence": {
+        "paused": false,
+        "time": 0.409043
+      }
+    },
+    {
+      "name": "Desktop: pause stops actual media clock",
+      "passed": true,
+      "evidence": 0.424728
+    }
+  ],
+  "errors": [
+    {
+      "viewport": {
+        "width": 1200,
+        "height": 900
+      },
+      "type": "requestfailed",
+      "url": "http://127.0.0.1:56806/pages/skeuomorphism-music-player-tactile-leather-and-brass-now-playing-ui/GPT-6/assets/last-light.wav",
+      "message": "net::ERR_ABORTED"
+    }
+  ],
+  "failure": {
+    "message": "page.waitForFunction: Timeout 30000ms exceeded.",
+    "stack": "page.waitForFunction: Timeout 30000ms exceeded.\n    at C:\\Code\\MusePages\\out\\pages\\630-skeuomorphism-music-player-tactile-leather-and-brass-now-playing-ui\\GPT-6\\.checks\\qa.mjs:143:20"
+  },
+  "screenshots": {
+    "desktop": ".checks\\desktop.png",
+    "mobile": ".checks\\mobile.png"
+  },
+  "visualReviewed": false,
+  "resourcesClosed": {
+    "browsers": true,
+    "servers": true
+  }
+}

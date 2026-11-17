@@ -1,0 +1,196 @@
+{
+  "prompt": "620-theme-park-website",
+  "modelId": "gpt-6.1-sol",
+  "timestamp": "2026-11-16T17:00:33.765Z",
+  "passed": true,
+  "assertions": [
+    {
+      "name": "Owned helper responsive, final public subpath served, repository root inaccessible",
+      "passed": true,
+      "url": "http://127.0.0.1:61499/pages/theme-park-website/GPT-6/index.html",
+      "lockPid": 40888
+    },
+    {
+      "name": "No horizontal overflow: desktop before interactions",
+      "passed": true,
+      "viewport": 1200,
+      "document": 1200,
+      "body": 1200
+    },
+    {
+      "name": "Desktop 1200×900 DPR1 real first-screen screenshot, local fonts loaded",
+      "passed": true,
+      "fonts": [
+        {
+          "font": "500 20px Fredoka",
+          "loaded": true
+        },
+        {
+          "font": "400 15px \"DM Sans\"",
+          "loaded": true
+        }
+      ]
+    },
+    {
+      "name": "Keyboard ride popover, Escape/focus return, X and outside-click close; add is unique",
+      "passed": true
+    },
+    {
+      "name": "Shared map/list thrill and cumulative height filters, keyboard filter and zero-match case",
+      "passed": true
+    },
+    {
+      "name": "Ride/show/parade plan, correct categorized summary, keyboard reorder, completion, reload persistence, remove",
+      "passed": true
+    },
+    {
+      "name": "No horizontal overflow: desktop after filters, popovers, ticket note and itinerary",
+      "passed": true,
+      "viewport": 1200,
+      "document": 1200,
+      "body": 1200
+    },
+    {
+      "name": "All three ticket demo controls disclose no connected ticketing or charge",
+      "passed": true
+    },
+    {
+      "name": "Clear plan updates empty state and persisted ids",
+      "passed": true
+    },
+    {
+      "name": "No horizontal overflow: requested 1440x900",
+      "passed": true,
+      "viewport": 1440,
+      "document": 1440,
+      "body": 1440
+    },
+    {
+      "name": "Additional requested 1440×900 desktop viewport",
+      "passed": true
+    },
+    {
+      "name": "No horizontal overflow: mobile before interactions",
+      "passed": true,
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "name": "No horizontal overflow: mobile with ride details open",
+      "passed": true,
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "name": "No horizontal overflow: mobile after menu, map scroll, popover, tickets, filters and itinerary",
+      "passed": true,
+      "viewport": 390,
+      "document": 390,
+      "body": 390
+    },
+    {
+      "name": "Mobile 390×844: real screenshot, menu touch/keyboard/Escape, internal map scroll, keyboard ride, itinerary, tickets, shared filters and 44px controls",
+      "passed": true
+    },
+    {
+      "name": "Reduced-motion preference disables map pops and add confetti",
+      "passed": true
+    },
+    {
+      "name": "Corrupt stored plan recovers safely and remains usable",
+      "passed": true
+    },
+    {
+      "name": "Unavailable storage falls back to in-memory plan with honest warning",
+      "passed": true
+    },
+    {
+      "name": "No external runtime requests",
+      "passed": true
+    },
+    {
+      "name": "Independent static export and final model-subpath validation",
+      "passed": true,
+      "staticDigest": "f8b867172fe879157d5a4885851d25d13e70af1706b583e127b81d94fcacc70d"
+    },
+    {
+      "name": "Zero browser console, page, request and HTTP errors in all contexts",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "failure": null,
+  "screenshots": {
+    "desktop": ".checks\\desktop.png",
+    "mobile": ".checks\\mobile.png"
+  },
+  "viewports": [
+    {
+      "width": 1200,
+      "height": 900,
+      "deviceScaleFactor": 1
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 1
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 1
+    }
+  ],
+  "visualReviewed": true,
+  "resourcesClosed": true,
+  "visualReview": {
+    "reviewer": "gpt-6.1-sol",
+    "method": "通过 view 工具实际打开最终 desktop.png 与 mobile.png，并打开 rides.png、tickets.png、mobile-plan.png 检查下方内容。",
+    "desktop": "奶油底、葡萄紫圆体标题、糖果四区地图形成清晰层次；完整原创地标、入口和筛选按钮可辨识。调整首屏密度，移开柠檬区骑乘点并消除标题/塔顶重叠。",
+    "mobile": "390×844 下标题、正文、CTA 和导航无横向溢出；地图使用明确提示的内部横向滚动，右侧区域并非被丢弃。移动行程按行换行，完成框及44px排序/删除控件清晰。",
+    "sections": "九张卡片间距、区色和图标统一；票价对比及演示声明清晰；移动行程完成态与排序控件未重叠。",
+    "refinements": [
+      "修复菜单点击 SVG 后目标节点脱离导致立即关闭的问题，并加强桌面隐藏选择器。",
+      "禁止截图中途动画残影；保留实际动效并让截图捕获最终状态。",
+      "移除负间距遮挡，使地图底部入口条完整显示；移动端滑动提示前置。"
+    ],
+    "screenshots": {
+      "desktop.png": {
+        "width": 1200,
+        "height": 900,
+        "sha256": "c7e2acb786fa0b316497f02c94d08e3a270f5d97f780d7254925058f62a3e6db"
+      },
+      "mobile.png": {
+        "width": 390,
+        "height": 844,
+        "sha256": "45ace268cf9ea4ccb3b3f9d43ad294a288d0f9cac01d5ac3cc4051dd3dfff669"
+      },
+      "rides.png": {
+        "width": 1080,
+        "height": 1229,
+        "sha256": "3f05e0235a93fafc6f9748de2ec186427fea18ac013eca0f1e11511c48ec3d35"
+      },
+      "tickets.png": {
+        "width": 1080,
+        "height": 715,
+        "sha256": "df0420fd4d1f212f79c6f08b6a7058bede1ae808f296d322278f1d88f7fbc0c2"
+      },
+      "mobile-plan.png": {
+        "width": 354,
+        "height": 712,
+        "sha256": "312c48dc7b578bb64bbc683c42430e1d533c3fab9cd4e79e7e7846dfd51dac35"
+      }
+    }
+  },
+  "preview": {
+    "generated": true,
+    "viewed": true,
+    "width": 1200,
+    "height": 900,
+    "staticDigest": "f8b867172fe879157d5a4885851d25d13e70af1706b583e127b81d94fcacc70d",
+    "sha256": "9787f51448a79b93ec57bd93f2d162740c54b8c85f9a7b44a6fc1972ec450065",
+    "review": "实际打开新生成的 out\\preview.png；字体、四区地图、入口、筛选与主标题一致，没有空白或错误页面。"
+  }
+}

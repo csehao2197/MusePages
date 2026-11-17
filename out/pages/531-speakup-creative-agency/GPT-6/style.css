@@ -1,0 +1,401 @@
+:root
+{
+    --green: #0E7824;
+    --dark: #2D2D2F;
+    font-family: Inter, sans-serif;
+    color: var(--dark);
+    background: #edf0e6;
+    font-synthesis: none;
+}
+*
+{
+    box-sizing: border-box;
+}
+html, body
+{
+    margin: 0;
+    font-family: Inter, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+button, input, textarea, select
+{
+    font: inherit;
+}
+button, a
+{
+    -webkit-tap-highlight-color: transparent;
+}
+button
+{
+    cursor: pointer;
+}
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible
+{
+    outline: 3px solid var(--green);
+    outline-offset: 5px;
+}
+.hero
+{
+    position: relative;
+    height: 100vh;
+    height: 100svh;
+    min-height: 600px;
+    overflow: hidden;
+}
+.background
+{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.navbar
+{
+    position: relative;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 24px 0;
+}
+.brand
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--dark);
+    text-decoration: none;
+    font-size: 18px;
+    letter-spacing: -0.8px;
+    font-weight: 700;
+}
+.brand strong
+{
+    font-weight: 900;
+}
+.logo
+{
+    width: 32px;
+    height: 32px;
+}
+.desktop-nav, .nav-cta
+{
+    display: none;
+}
+nav button
+{
+    border: 0;
+    padding: 8px 0;
+    background: none;
+    color: var(--dark);
+    transition: color 180ms;
+}
+nav button:hover
+{
+    color: var(--green);
+}
+.pill
+{
+    border: 0;
+    border-radius: 999px;
+    background: var(--dark);
+    color: white;
+    font-weight: 500;
+    transition: background-color 180ms, color 180ms;
+    box-shadow: 0 3px 5px #00000012;
+}
+.pill:hover
+{
+    background: black;
+    color: white;
+}
+.icon-button
+{
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    background: transparent;
+    color: var(--dark);
+    transition: color 180ms;
+}
+.icon-button:hover
+{
+    color: var(--green);
+}
+.hero-content
+{
+    position: relative;
+    z-index: 10;
+    max-width: 1280px;
+    margin-top: 32px;
+    padding: 0 24px;
+}
+.font-recoleta
+{
+    font-family: "Recoleta Regular", serif;
+}
+h1
+{
+    color: var(--green);
+    font-size: 56px;
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    margin: 0;
+}
+.hero-content p
+{
+    margin: 24px 0 0;
+    max-width: 448px;
+    font-size: 16px;
+    line-height: 1.5;
+}
+.desktop-break
+{
+    display: none;
+}
+.hero-cta
+{
+    margin-top: 32px;
+    padding: 16px 40px;
+    font-size: 16px;
+    box-shadow: 0 4px 7px #00000018;
+}
+.motion-control
+{
+    position: absolute;
+    z-index: 10;
+    right: 24px;
+    bottom: 24px;
+    padding: 10px 14px;
+    border: 1px solid #2d2d2f40;
+    border-radius: 24px;
+    background: #ffffffdf;
+    color: var(--dark);
+    font-size: 11px;
+    transition: background-color 180ms;
+}
+.motion-control:hover
+{
+    background: white;
+}
+.motion-control span
+{
+    margin-left: 12px;
+}
+dialog
+{
+    color: var(--dark);
+    border: 0;
+}
+dialog::backdrop
+{
+    background: #00000038;
+}
+.mobile-menu
+{
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 80px 32px 32px;
+    background: white;
+    z-index: 50;
+}
+.close-menu
+{
+    position: absolute;
+    top: 24px;
+    right: 24px;
+}
+.mobile-menu nav
+{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+}
+.mobile-menu nav button
+{
+    font-size: 24px;
+}
+.mobile-menu nav .pill
+{
+    font-size: 14px;
+    padding: 14px 28px;
+    margin-top: 16px;
+}
+.details
+{
+    width: min(560px, calc(100% - 32px));
+    max-height: calc(100svh - 32px);
+    padding: 44px 36px 36px;
+    border-radius: 20px;
+    background: #fafbf5;
+}
+.close-details
+{
+    position: absolute;
+    right: 12px;
+    top: 12px;
+}
+.eyebrow
+{
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+}
+h2
+{
+    margin: 20px 0;
+    font-size: 32px;
+    letter-spacing: -0.04em;
+}
+.details p
+{
+    line-height: 1.6;
+}
+.details .pill
+{
+    padding: 14px 26px;
+}
+.demo-note
+{
+    color: #62625e;
+    font-size: 12px;
+}
+form
+{
+    display: grid;
+    gap: 16px;
+}
+label
+{
+    display: grid;
+    gap: 7px;
+    font-size: 13px;
+    font-weight: 500;
+}
+input, textarea, select
+{
+    width: 100%;
+    min-width: 0;
+    border: 1px solid #c7cbc1;
+    border-radius: 8px;
+    background: white;
+    color: var(--dark);
+    padding: 11px;
+}
+textarea
+{
+    min-height: 90px;
+    resize: vertical;
+}
+body:has(dialog[open])
+{
+    overflow: hidden;
+}
+@media (min-width: 640px)
+{
+    h1
+    {
+        font-size: 72px;
+    }
+    .desktop-break
+    {
+        display: block;
+    }
+}
+@media (min-width: 768px)
+{
+    .navbar
+    {
+        padding: 32px 48px 0;
+    }
+    .logo
+    {
+        width: 36px;
+        height: 36px;
+    }
+    .brand
+    {
+        font-size: 20px;
+    }
+    .hero-content
+    {
+        padding: 0 48px;
+        margin-top: 64px;
+    }
+    h1
+    {
+        font-size: 96px;
+    }
+    .hero-content p
+    {
+        margin-top: 32px;
+        font-size: 18px;
+    }
+    .hero-cta
+    {
+        margin-top: 40px;
+    }
+}
+@media (min-width: 1024px)
+{
+    .navbar
+    {
+        padding-left: 64px;
+        padding-right: 64px;
+    }
+    .desktop-nav
+    {
+        display: flex;
+        gap: 32px;
+    }
+    .desktop-nav button
+    {
+        font-size: 14px;
+        font-weight: 500;
+    }
+    .nav-cta
+    {
+        display: block;
+        padding: 14px 28px;
+        font-size: 14px;
+    }
+    .menu-toggle
+    {
+        display: none;
+    }
+    .hero-content
+    {
+        padding: 0 64px;
+        margin-top: 96px;
+    }
+    h1
+    {
+        font-size: 128px;
+    }
+}
+@media (min-width: 1280px)
+{
+    .desktop-nav
+    {
+        gap: 40px;
+    }
+}
+@media (prefers-reduced-motion: reduce)
+{
+    *, *::before, *::after
+    {
+        transition: none !important;
+    }
+}

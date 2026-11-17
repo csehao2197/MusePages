@@ -1,0 +1,481 @@
+@font-face
+{
+    font-family: Syne;
+    src: url("./fonts/syne-latin-700-normal.woff2") format("woff2");
+    font-weight: 700;
+    font-display: swap;
+}
+@font-face
+{
+    font-family: Syne;
+    src: url("./fonts/syne-latin-800-normal.woff2") format("woff2");
+    font-weight: 800;
+    font-display: swap;
+}
+@font-face
+{
+    font-family: Sora;
+    src: url("./fonts/sora-latin-400-normal.woff2") format("woff2");
+    font-weight: 400;
+    font-display: swap;
+}
+@font-face
+{
+    font-family: Sora;
+    src: url("./fonts/sora-latin-500-normal.woff2") format("woff2");
+    font-weight: 500;
+    font-display: swap;
+}
+@font-face
+{
+    font-family: Sora;
+    src: url("./fonts/sora-latin-600-normal.woff2") format("woff2");
+    font-weight: 600;
+    font-display: swap;
+}
+@font-face
+{
+    font-family: "Share Tech Mono";
+    src: url("./fonts/share-tech-mono-latin-400-normal.woff2") format("woff2");
+    font-weight: 400;
+    font-display: swap;
+}
+:root
+{
+    color-scheme: dark;
+    --ink: #07110F;
+    --court: #0C1714;
+    --grid: #24584F;
+    --teal: #1EC8B8;
+    --paper: #E7F3EE;
+    --dim: #8AA39A;
+}
+*
+{
+    box-sizing: border-box;
+}
+body
+{
+    margin: 0;
+    overflow: hidden;
+    overscroll-behavior: none;
+    background: var(--ink);
+    color: var(--paper);
+    font: 400 14px/1.65 Sora, sans-serif;
+    touch-action: none;
+}
+button, a
+{
+    -webkit-tap-highlight-color: transparent;
+}
+button
+{
+    font: 500 13px Sora, sans-serif;
+    cursor: pointer;
+    color: var(--paper);
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 12px 16px;
+    min-height: 44px;
+    background: transparent;
+}
+button:hover
+{
+    border-color: var(--grid);
+    background: #12312C;
+}
+button.primary
+{
+    background: var(--teal);
+    color: var(--ink);
+    font-weight: 600;
+}
+button.primary:hover
+{
+    background: #7DFFB2;
+}
+:focus-visible
+{
+    outline: 2px solid var(--teal);
+    outline-offset: 3px;
+}
+canvas, #ui
+{
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+#ui
+{
+    pointer-events: none;
+}
+.card
+{
+    pointer-events: auto;
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 420px;
+    padding: 28px;
+    border: 1px solid var(--grid);
+    border-radius: 12px;
+    background: var(--ink);
+    box-shadow: 4px 4px 0 var(--grid);
+    animation: appear .16s ease both;
+    max-height: calc(100dvh - 40px);
+    overflow-y: auto;
+}
+.card.start
+{
+    width: 400px;
+}
+[hidden]
+{
+    display: none !important;
+}
+.eyebrow
+{
+    margin: 0 0 24px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .16em;
+    color: var(--dim);
+}
+h1
+{
+    font: 800 48px/.98 Syne, sans-serif;
+    letter-spacing: -.055em;
+    margin: 0 0 20px;
+}
+.start h1
+{
+    font-size: 64px;
+    max-width: 290px;
+}
+.deck
+{
+    font-size: 17px;
+    line-height: 1.55;
+    margin: 0 0 24px;
+}
+.attendant
+{
+    color: var(--paper);
+    font-size: 12px;
+    margin: 0 0 12px;
+}
+.instructions
+{
+    color: var(--dim);
+    font-size: 12px;
+    line-height: 1.9;
+    margin: 0 0 24px;
+}
+.buttons
+{
+    display: flex;
+    gap: 8px;
+}
+.vertical
+{
+    flex-direction: column;
+}
+.card-footer
+{
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--grid);
+    color: var(--dim);
+    font-size: 10px;
+}
+.card-footer p
+{
+    margin: 0 0 8px;
+}
+.card-footer a
+{
+    color: var(--dim);
+    text-underline-offset: 4px;
+    font-size: 12px;
+}
+.card-footer a:hover
+{
+    color: var(--paper);
+}
+.best, .reward
+{
+    font-size: 12px;
+    color: #7DFFB2;
+}
+.best b
+{
+    margin-left: 12px;
+    font-family: "Share Tech Mono", monospace;
+    font-size: 18px;
+}
+.help
+{
+    color: var(--dim);
+    font-size: 13px;
+    margin-bottom: 24px;
+}
+.end-points
+{
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    font-family: "Share Tech Mono", monospace;
+}
+.end-points b
+{
+    font-size: 44px;
+    font-weight: 400;
+}
+#hud
+{
+    position: absolute;
+    inset: max(16px, env(safe-area-inset-top)) 16px auto;
+    display: grid;
+    grid-template-columns: minmax(140px, 1fr) 1fr 72px 80px 112px;
+    gap: 12px;
+    align-items: center;
+}
+.brand
+{
+    font-weight: 600;
+    font-size: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 28vw;
+}
+.stat
+{
+    height: 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    background: #0C1714e8;
+    padding: 4px 12px;
+}
+.stat span
+{
+    font-size: 10px;
+    color: var(--dim);
+    letter-spacing: .12em;
+}
+.stat b
+{
+    font: 400 20px "Share Tech Mono", monospace;
+}
+.stat.points
+{
+    min-width: 110px;
+    justify-self: center;
+}
+.hud-actions
+{
+    position: absolute;
+    left: -12px;
+    top: 48px;
+    display: flex;
+    pointer-events: auto;
+}
+.hud-actions button
+{
+    font-size: 11px;
+    color: var(--dim);
+}
+.round-name
+{
+    position: absolute;
+    top: 56px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    color: var(--paper);
+    white-space: nowrap;
+}
+.round-name em
+{
+    font: 400 10px "Share Tech Mono", monospace;
+    color: var(--teal);
+    margin-left: 12px;
+}
+.sparks b
+{
+    display: flex;
+    gap: 7px;
+    align-items: center;
+    height: 20px;
+}
+.pip
+{
+    width: 8px;
+    height: 8px;
+    border: 1px solid var(--grid);
+    transform: rotate(45deg);
+}
+.pip.filled
+{
+    background: var(--teal);
+    border-color: var(--teal);
+}
+#toast, #powers
+{
+    position: absolute;
+    bottom: max(52px, calc(env(safe-area-inset-bottom) + 32px));
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    max-width: 280px;
+    width: max-content;
+    font-size: 11px;
+    color: var(--paper);
+    background: var(--ink);
+    padding: 4px 12px;
+}
+#toast
+{
+    bottom: max(88px, calc(env(safe-area-inset-bottom) + 68px));
+    opacity: 0;
+}
+#powers:empty
+{
+    display: none;
+}
+#court-label
+{
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+    color: var(--dim);
+    font: 400 11px "Share Tech Mono", monospace;
+    letter-spacing: .18em;
+}
+.sr-only
+{
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+}
+@keyframes appear
+{
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@media (max-width: 799px)
+{
+    .card, .card.start
+    {
+        top: auto;
+        bottom: max(12px, env(safe-area-inset-bottom));
+        left: max(12px, env(safe-area-inset-left));
+        width: calc(100% - 24px);
+        max-height: 46dvh;
+        transform: none;
+        padding: 20px;
+        overscroll-behavior: contain;
+        touch-action: pan-y;
+    }
+    h1, .start h1
+    {
+        font-size: 40px;
+        max-width: none;
+        margin-bottom: 12px;
+    }
+    .eyebrow
+    {
+        font-size: 10px;
+        margin-bottom: 12px;
+    }
+    .deck
+    {
+        font-size: 14px;
+        margin-bottom: 12px;
+    }
+    .attendant, .instructions
+    {
+        font-size: 10px;
+        line-height: 1.7;
+        margin-bottom: 12px;
+    }
+    .card-footer
+    {
+        margin-top: 16px;
+        padding-top: 12px;
+        font-size: 9px;
+    }
+    .card-footer a
+    {
+        font-size: 10px;
+    }
+    #court-label
+    {
+        top: max(16px, env(safe-area-inset-top));
+        bottom: auto;
+        left: 16px;
+        font-size: 9px;
+    }
+    #hud
+    {
+        inset: max(12px, env(safe-area-inset-top)) 12px auto;
+        grid-template-columns: 1.1fr .8fr .9fr 1.2fr;
+        gap: 4px;
+        padding-top: 48px;
+    }
+    .brand
+    {
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: 44vw;
+        font-size: 13px;
+    }
+    .hud-actions
+    {
+        top: -4px;
+        left: -8px;
+        right: -8px;
+        justify-content: space-between;
+    }
+    .stat, .stat.points
+    {
+        width: 100%;
+        min-width: 0;
+        padding: 4px;
+    }
+    .stat b
+    {
+        font-size: 16px;
+    }
+    .stat span
+    {
+        font-size: 8px;
+    }
+    .round-name
+    {
+        top: 106px;
+        font-size: 10px;
+    }
+    #toast
+    {
+        max-width: 260px;
+    }
+}
+@media (prefers-reduced-motion: reduce)
+{
+    *, *::before, *::after
+    {
+        animation: none !important;
+        transition: none !important;
+    }
+}

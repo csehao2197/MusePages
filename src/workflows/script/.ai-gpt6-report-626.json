@@ -1,0 +1,224 @@
+{
+  "prompt": "626-breakout-legend-browser-game",
+  "runId": "ai-gpt6-all-28883b46-8438-4644-b660-725d7968c87c",
+  "modelId": "gpt-6.1-sol",
+  "display_model_name": "GPT-6",
+  "output": "C:\\Code\\MusePages\\out\\pages\\626-breakout-legend-browser-game\\GPT-6",
+  "tags": [
+    "Arcade",
+    "Breakout",
+    "Neon"
+  ],
+  "status": "completed",
+  "resourcesClosed": true,
+  "blocker": null,
+  "lock": {
+    "verified": true,
+    "pid": 19232,
+    "ownership": "协调器附属进程，与持久清单一致；未获取、释放或删除锁。"
+  },
+  "summary": "已完成唯一指定需求的英文静态可玩十关打砖块页面，真实游戏核心、桌面/移动交互、静态校验、截图目视审查、正式预览和默认关闭登记均已完成。",
+  "generated": true,
+  "preview": true,
+  "validated": true,
+  "config_added": true,
+  "flags": {
+    "generated": true,
+    "preview": true,
+    "validated": true,
+    "config_added": true
+  },
+  "input": "C:\\Code\\MusePages\\data\\prompts\\626-breakout-legend-browser-game\\626-breakout-legend-browser-game.md",
+  "provenance": {
+    "title": "Breakout Legend browser game",
+    "category": "Entertainment",
+    "source_url": "https://github.com/TencentEdgeOne/awesome-website-prompts-and-skills/blob/e3f25bd20d371d9a64613306a6a48da15671a35b/prompts/breakout-legend.md",
+    "license": "MIT",
+    "license_file": "data\\downloads\\github.com\\TencentEdgeOne-awesome-website-prompts-and-skills\\e3f25bd20d371d9a64613306a6a48da15671a35b\\LICENSE"
+  },
+  "staticOutput": "C:\\Code\\MusePages\\out\\pages\\626-breakout-legend-browser-game\\GPT-6\\out",
+  "publicPath": "/pages/breakout-legend-browser-game/GPT-6/index.html",
+  "publicFiles": [
+    "app.js",
+    "engine.js",
+    "fonts\\inter-400.ttf",
+    "fonts\\inter-600.ttf",
+    "fonts\\Inter-LICENSE.txt",
+    "fonts\\orbitron-700.ttf",
+    "fonts\\Orbitron-LICENSE.txt",
+    "index.html",
+    "leaderboard.js",
+    "levels.js",
+    "LICENSE",
+    "preview.png",
+    "renderer.js",
+    "style.css"
+  ],
+  "qa": "C:\\Code\\MusePages\\out\\pages\\626-breakout-legend-browser-game\\GPT-6\\.checks\\qa.json",
+  "screenshots": {
+    "desktop": "C:\\Code\\MusePages\\out\\pages\\626-breakout-legend-browser-game\\GPT-6\\.checks\\desktop.png",
+    "mobile": "C:\\Code\\MusePages\\out\\pages\\626-breakout-legend-browser-game\\GPT-6\\.checks\\mobile.png",
+    "preview": "C:\\Code\\MusePages\\out\\pages\\626-breakout-legend-browser-game\\GPT-6\\out\\preview.png"
+  },
+  "tests": {
+    "passed": true,
+    "groups": 17,
+    "results": [
+      {
+        "name": "All ten authored levels: exact indestructible/splitter counts, grid and speed progression",
+        "passed": true
+      },
+      {
+        "name": "Brick AABB collision resolves top, bottom, left and right faces",
+        "passed": true
+      },
+      {
+        "name": "Wall bounces, top-face paddle angles, speed conservation, downward miss and last-ball game over",
+        "passed": true
+      },
+      {
+        "name": "Normal bricks destroy once; indestructible bricks deflect without destruction; splitters spawn two up to cap eight",
+        "passed": true
+      },
+      {
+        "name": "Every level transitions by real last-brick collision; final victory; pause freezes timer; paddle clamps",
+        "passed": true
+      },
+      {
+        "name": "Local ranking validates names/times, strips HTML, persists sorted top 50, top ten and unique duplicate identity",
+        "passed": true
+      },
+      {
+        "name": "Desktop 1200×900 initial meaningful homepage, resources and overflow",
+        "passed": true
+      },
+      {
+        "name": "Desktop real keyboard movement, pause/resume/restart, natural loss/retry and no overflow after interactions",
+        "passed": true
+      },
+      {
+        "name": "Unmodified browser: natural ball flight and missed-paddle game over, menu and empty leaderboard, sound toggle",
+        "passed": true
+      },
+      {
+        "name": "Responsive 768px before interactions",
+        "passed": true
+      },
+      {
+        "name": "Responsive 768px after play and pause",
+        "passed": true
+      },
+      {
+        "name": "Responsive 1280px before interactions",
+        "passed": true
+      },
+      {
+        "name": "Responsive 1280px after play and pause",
+        "passed": true
+      },
+      {
+        "name": "Mobile 390×844 initial visible homepage and no overflow",
+        "passed": true
+      },
+      {
+        "name": "Mobile real touch drag, pause/resume, quit and leaderboard; no overflow after interactions",
+        "passed": true
+      },
+      {
+        "name": "Controlled fixture: ten collision-driven levels, victory/name submission, local persisted rank and no overflow",
+        "passed": true
+      },
+      {
+        "name": "Leaderboard corrupt-storage error is visible without crashing",
+        "passed": true
+      }
+    ],
+    "errors": [],
+    "viewports": [
+      {
+        "width": 768,
+        "height": 900
+      },
+      {
+        "width": 1280,
+        "height": 900
+      },
+      {
+        "width": 1200,
+        "height": 900,
+        "deviceScaleFactor": 1
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "touch": true,
+        "deviceScaleFactor": 1
+      }
+    ],
+    "naturalGameplay": "未修改页面真实球路、键盘移动、漏接全失球、失败重试；CDP 分段真实触摸拖动并验证画布挡板位移。",
+    "deterministicFixtures": "物理引擎单元情境验证四面碰撞、挡板偏转、不可破坏砖、多球最大8、全部十关；隔离浏览器仅暴露状态后以最后一砖真实碰撞逐关进入胜利并提交名字。不是手工完整通关。",
+    "browserOnlyLeaderboard": "名字去HTML、长度/时间校验、唯一记录、排序、前50持久化/前10展示、空状态、损坏数据错误及刷新后记录均验证。"
+  },
+  "visualReviewed": true,
+  "visualEvidence": {
+    "reviewedAt": "2026-11-16T18:17:30.899Z",
+    "openedActualImages": [
+      ".checks\\desktop.png",
+      ".checks\\mobile.png"
+    ],
+    "desktop": "已打开真实 1200×900 PNG：Orbitron 标题与紫色主操作层级明确，舞台、球及挡板完整可见；右侧规则与画面一致，留白和边框对齐。初次审查发现挡板落出首屏，已缩小内容宽度并复验。",
+    "mobile": "已打开真实 390px 宽全页 PNG：导航、标题、HUD、缩放舞台及两列目标说明无横溢；已隐藏冗余弹窗徽章，保留挡板可见区域。文字、按钮与局部装饰不重叠。",
+    "limitations": "移动端固定 800×600 逻辑画布等比缩小，技术性辅助标签较小；主要按钮和状态保持可辨识。未声称手动从第一关通关至第十关。"
+  },
+  "previewEvidence": {
+    "generatedBy": "StaticHomepage.ensurePreview",
+    "dimensions": [
+      1200,
+      900
+    ],
+    "visualReviewed": true,
+    "staticDigest": "8549e7aad99a37430977624760cbefe15acc692ab3efcb28cd7a34fdd456ffed",
+    "imageSHA256": "5b3024d70271296b72288ac8c1e84205b5c4d88f62d3ff21e252b1a844ef438c"
+  },
+  "inputSHA256": "8aa6d1306f924811b71c3f115da94a1515333fca2bae324c492dda0cb1643774",
+  "registration": {
+    "unique": true,
+    "prompt": "626-breakout-legend-browser-game",
+    "model": "GPT-6",
+    "slug": "breakout-legend-browser-game",
+    "title": "Breakout Legend",
+    "enabled": false,
+    "deployed": false,
+    "staticDir": "out",
+    "tags": [
+      "Arcade",
+      "Breakout",
+      "Neon"
+    ],
+    "unrelatedOptionsPreserved": true
+  },
+  "features": [
+    "Canvas真实物理挡板/球/墙体/砖块碰撞",
+    "10关、关卡加速与挡板缩短",
+    "标准砖/不可破坏砖/分裂球道具及8球上限",
+    "单次生命，所有球丢失则失败",
+    "生存计时、胜利、暂停/重启/菜单",
+    "鼠标/键盘/移动触摸",
+    "本机浏览器排行榜及真实存储"
+  ],
+  "limitations": [
+    "依授权使用无构建HTML/CSS/JavaScript静态适配，而非原文React18/Vite/严格TypeScript/Tailwind项目。",
+    "排行榜仅存当前浏览器localStorage；未实现或声称EdgeOne全球API/KV、CORS或云端持久化。",
+    "原文明确无积分，仅按完成十关的耗时排名；没有增加与原文不符的得分/额外生命机制。",
+    "没有部署、EdgeOne技能安装、生产构建、dist/publish或账户/后端操作。",
+    "十关进程采用可复现引擎与隔离浏览器情境验证；未声称手动从第一关通关第十关。",
+    "task\\TASK.md不存在，已读取现有progress.log且不修改任何共享状态或日志。"
+  ],
+  "licenses": [
+    "Tencent EdgeOne 原始需求 MIT LICENSE 保留于源码和静态导出。",
+    "Inter/Orbitron字体本地托管，原作者署名与完整SIL OFL1.1许可证一并保留。"
+  ],
+  "buildsRun": false,
+  "deployed": false,
+  "completedAt": "2026-11-16T18:18:41.878Z"
+}

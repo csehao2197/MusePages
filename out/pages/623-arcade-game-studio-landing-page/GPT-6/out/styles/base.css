@@ -1,0 +1,215 @@
+@font-face
+{
+    font-family: "Press Start 2P";
+    src: url("../assets/press-start-2p.woff2") format("woff2");
+    font-weight: 400;
+    font-display: swap;
+}
+@font-face
+{
+    font-family: "VT323";
+    src: url("../assets/vt323.woff2") format("woff2");
+    font-weight: 400;
+    font-display: swap;
+}
+:root
+{
+    --bg: #101119;
+    --screen: #05060f;
+    --panel: #1a1b26;
+    --edge: #343541;
+    --magenta: #ff2e88;
+    --green: #b7ee99;
+    --amber: #ffb627;
+    --ink: #f7eedc;
+    --muted: #a4a1ad;
+    --green-glow: #b7ee9940;
+    --nav-edge: #5b5140;
+    --body-copy: #b7b3bd;
+    --amber-shadow: #715324;
+    --board: #15161f;
+    --score-copy: #d7d1dc;
+    --rank: #777383;
+    --ambient: #54373550;
+    --side-copy: #777583;
+    --cabinet: #332d45;
+    --cabinet-edge: #777080;
+    --bezel: #191623;
+    --side-light: #524559;
+    --side-dark: #1d1928;
+    --shadow: #0008;
+    --marquee-edge: #100f17;
+    --marquee-ink: #2b2034;
+    --amber-glow: #ffb62718;
+    --marquee-accent: #7e2449;
+    --screw: #795123;
+    --marquee-copy: #c4b5c9;
+    --bezel-edge: #51445f;
+    --overlay: #070d18a8;
+    --title-shadow: #733349;
+    --screen-muted: #bab7c0;
+    --instruction-muted: #8d829b;
+    --instruction-copy: #e2d3e6;
+    --deck-edge: #70617b;
+    --deck-highlight: #9c8c9f;
+    --deck-shadow: #17141e;
+    --deck: #46384f;
+    --stick-base: #17151e;
+    --stick-ring: #6d5f73;
+    --stick: #c4afbc;
+    --stick-shade: #9c194f;
+    --stick-highlight: #ff78ad;
+    --deck-copy: #cbb4d3;
+    --deck-muted: #a48ba8;
+    --button-ink: #3a2431;
+    --button-edge: #17131b;
+    --amber-button-shade: #846025;
+    --amber-button-highlight: #ffe29a;
+    --pink-button-shade: #8e1d4b;
+    --pink-button-highlight: #ff84b4;
+    --cabinet-lower: #33273d;
+    --cabinet-lower-shade: #25202f;
+    --cabinet-base: #17131e;
+    --speaker: #17131f;
+    --coin-edge: #574458;
+    --coin-panel: #1a1721;
+    --coin-copy: #b6a2ba;
+    --pink-glow: #ff2e8822;
+    --seal: #88718e;
+    --feet: #08090d;
+    --feet-edge: #5d5063;
+    --ticker-ink: #263023;
+    --ticker-edge: #68865c;
+    --cartridge-edge: #3e3b46;
+    --cartridge-base: #090a10;
+    --cartridge: #24232d;
+    --cartridge-grooves: #514854;
+    --cartridge-label-edge: #111019;
+    --studio-bg: #171821;
+    --studio-frame: #252136;
+    --studio-edge: #51415d;
+    --studio-shadow: #0c0d14;
+    --studio-copy: #b4afba;
+    --field: #191a23;
+    --field-edge: #55515e;
+    --dialog-shadow: #0009;
+    --dialog-backdrop: #05060fd9;
+    --dialog-copy: #c0b9c9;
+    --screen-outline: #020307;
+    --screen-edge: #4e485b;
+    --black: #000;
+    --scanline: #0003;
+    --vignette: #000a;
+    --pixel: "Press Start 2P", monospace;
+    --terminal: "VT323", monospace;
+}
+*
+{
+    box-sizing: border-box;
+}
+html
+{
+    scroll-behavior: smooth;
+    scroll-padding-top: 24px;
+}
+body
+{
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 15px/1.7 Arial, sans-serif;
+}
+button, input
+{
+    font: inherit;
+}
+button, a
+{
+    -webkit-tap-highlight-color: transparent;
+}
+button, a, input
+{
+    outline-offset: 5px;
+}
+:focus-visible
+{
+    outline: 2px solid var(--green);
+}
+a
+{
+    color: inherit;
+    text-decoration: none;
+}
+button
+{
+    cursor: pointer;
+}
+button:disabled
+{
+    cursor: default;
+    opacity: .5;
+}
+h1, h2, h3, p
+{
+    margin-top: 0;
+}
+button, input, dialog
+{
+    color: inherit;
+}
+button
+{
+    border: 0;
+}
+.wrap
+{
+    width: min(1080px, calc(100% - 72px));
+    margin-inline: auto;
+}
+.eyebrow
+{
+    font: 9px/1.8 var(--pixel);
+    color: var(--green);
+    letter-spacing: .3px;
+}
+.status-dot
+{
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin-right: 8px;
+    background: var(--green);
+    box-shadow: 0 0 10px var(--green-glow);
+}
+.skip
+{
+    position: fixed;
+    top: -60px;
+    left: 20px;
+    padding: 12px;
+    z-index: 20;
+    color: var(--bg);
+    background: var(--amber);
+}
+.skip:focus
+{
+    top: 10px;
+}
+[hidden]
+{
+    display: none !important;
+}
+@media (max-width: 700px)
+{
+    .wrap
+    {
+        width: calc(100% - 36px);
+    }
+}
+@media (prefers-reduced-motion: reduce)
+{
+    html
+    {
+        scroll-behavior: auto;
+    }
+}

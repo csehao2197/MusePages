@@ -1,0 +1,1489 @@
+:root
+{
+    --paper: #f6f3e8;
+    --white: #fffef7;
+    --ink: #293a31;
+    --muted: #657067;
+    --yellow: #f9d754;
+    --rule: #dce5dc;
+    --green: #b7cba0;
+    --body: "Trebuchet MS", "Segoe UI", sans-serif;
+    --hand: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
+    --display: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
+    --max: 1100px;
+    --space: 24px;
+}
+*
+{
+    box-sizing: border-box;
+}
+html
+{
+    scroll-behavior: smooth;
+    scroll-padding-top: 110px;
+}
+body
+{
+    margin: 0;
+    color: var(--ink);
+    background: var(--paper);
+    font: 16px/1.65 var(--body);
+}
+a
+{
+    color: inherit;
+}
+button, a
+{
+    -webkit-tap-highlight-color: transparent;
+}
+button
+{
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+}
+a:focus-visible, button:focus-visible
+{
+    outline: 3px solid #6d7133;
+    outline-offset: 6px;
+}
+.skip
+{
+    position: fixed;
+    top: -90px;
+    left: 20px;
+    z-index: 20;
+    padding: 10px 20px;
+    background: var(--yellow);
+}
+.skip:focus
+{
+    top: 10px;
+}
+.topbar
+{
+    min-height: 92px;
+    max-width: var(--max);
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space);
+    border-bottom: 1px solid #ccd0be;
+}
+.brand
+{
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    font: bold 27px/1.3 var(--hand);
+    letter-spacing: -1.6px;
+    white-space: nowrap;
+}
+.brand-dot
+{
+    color: #788e4e;
+}
+.brand-mark
+{
+    position: relative;
+    font: italic 46px/1 Georgia, serif;
+    margin-right: 16px;
+    transform: rotate(-12deg);
+}
+.brand-mark span
+{
+    font: 22px/1 var(--body);
+    position: absolute;
+    top: -1px;
+    right: -13px;
+}
+.topbar p
+{
+    font: 16px var(--hand);
+    color: var(--muted);
+}
+.header-link, .text-link
+{
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
+}
+.header-link
+{
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 4px;
+}
+.arrow-icon
+{
+    width: 35px;
+    height: 20px;
+    flex-shrink: 0;
+}
+.intro
+{
+    max-width: var(--max);
+    margin: auto;
+    padding: 82px 0 35px;
+    min-height: 808px;
+    display: grid;
+    grid-template-columns: 1fr 1.05fr;
+    column-gap: 32px;
+    position: relative;
+}
+.eyebrow
+{
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 1.8px;
+    line-height: 1.7;
+}
+.intro .eyebrow
+{
+    display: flex;
+    align-items: center;
+    gap: 17px;
+    margin: 0 0 25px;
+}
+.eyebrow span
+{
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: normal;
+    letter-spacing: 0.1px;
+}
+h1
+{
+    font: bold 61px/1.37 var(--display);
+    letter-spacing: -3.2px;
+    margin: 0 0 24px;
+}
+.highlight
+{
+    position: relative;
+    z-index: 0;
+    white-space: nowrap;
+}
+.highlight::before
+{
+    content: "";
+    position: absolute;
+    z-index: -1;
+    background: var(--yellow);
+    left: -9px;
+    right: -14px;
+    top: 48%;
+    bottom: 1%;
+    transform: rotate(-2.2deg);
+    clip-path: polygon(1% 13%, 99% 0, 98% 90%, 0 100%);
+}
+.intro-body
+{
+    max-width: 395px;
+    color: #535e55;
+    font-size: 16px;
+    line-height: 1.85;
+    margin: 0 0 18px;
+}
+.hand
+{
+    font-family: var(--hand);
+}
+.intro-end
+{
+    font-size: 18px;
+    margin: 0 0 29px;
+    transform: rotate(-1deg);
+}
+.primary
+{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    background: var(--ink);
+    color: var(--white);
+    padding: 15px 23px;
+    border: 2px solid var(--ink);
+    border-radius: 2px 6px 3px 5px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
+    box-shadow: 3px 4px 0 #b9bca5;
+    transform: rotate(-1deg);
+    transition: transform 150ms;
+}
+.primary:hover
+{
+    transform: rotate(0) translateY(-2px);
+}
+.small-note
+{
+    margin-left: 15px;
+    font: 13px var(--hand);
+    color: var(--muted);
+}
+.hero-illustration
+{
+    position: relative;
+    min-width: 0;
+    height: 540px;
+}
+.paper
+{
+    background: repeating-linear-gradient(to bottom, var(--white) 0, var(--white) 30px, var(--rule) 31px, var(--white) 32px);
+    border: 1px solid #d5d8c9;
+    box-shadow: 4px 5px 0 #e8e5d8;
+}
+.hero-paper
+{
+    position: absolute;
+    width: 92%;
+    height: 458px;
+    top: 10px;
+    right: 0;
+    transform: rotate(3deg);
+    border-radius: 2px 5px 3px 2px;
+}
+.hero-paper::before
+{
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 36px;
+    border-left: 1px solid #e6c6b8;
+}
+.tape
+{
+    position: absolute;
+    z-index: 3;
+    width: 104px;
+    height: 30px;
+    background: #e6d9a8b8;
+    clip-path: polygon(1% 5%, 98% 0, 96% 27%, 100% 43%, 96% 70%, 99% 98%, 0 100%, 3% 77%, 0 54%, 4% 28%);
+    top: -14px;
+    left: calc(50% - 52px);
+    transform: rotate(-8deg);
+}
+.tape-left
+{
+    left: 12px;
+    transform: rotate(-29deg);
+}
+.tape-right
+{
+    left: auto;
+    right: 4px;
+    transform: rotate(29deg);
+}
+.paper-heading
+{
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-align: center;
+    margin: 27px 5px 0 25px;
+}
+.glyph
+{
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+.hero-sun
+{
+    position: absolute;
+    width: 104px;
+    height: 104px;
+    top: 62px;
+    left: 37px;
+    color: #4a5033;
+}
+.hero-sun svg
+{
+    fill: #f9d75499;
+}
+.hero-leaf
+{
+    position: absolute;
+    top: 142px;
+    left: 124px;
+    width: 224px;
+    height: 215px;
+    z-index: 1;
+    transform: rotate(-7deg);
+}
+.hero-leaf path:first-child
+{
+    fill: #b7cba080;
+}
+.hero-lines
+{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+.hero-label
+{
+    position: absolute;
+    font: 17px/1.4 var(--hand);
+}
+.sun-label
+{
+    top: 162px;
+    left: 32px;
+    transform: rotate(-8deg);
+}
+.leaf-label
+{
+    right: 29px;
+    top: 97px;
+    width: 115px;
+    transform: rotate(4deg);
+}
+.food-label
+{
+    bottom: 47px;
+    right: 31px;
+    transform: rotate(-7deg);
+    border-bottom: 5px solid var(--yellow);
+}
+.molecule
+{
+    position: absolute;
+    font: 24px var(--hand);
+    border: 1.5px solid var(--ink);
+    border-radius: 51% 47% 54% 46%;
+    padding: 2px 10px;
+}
+.m1
+{
+    top: 239px;
+    left: 45px;
+}
+.m2
+{
+    top: 168px;
+    right: 35px;
+}
+.water-drop
+{
+    position: absolute;
+    bottom: 45px;
+    left: 106px;
+    width: 23px;
+    height: 32px;
+    background: #a9cdd5;
+    border: 1.5px solid var(--ink);
+    border-radius: 70% 30% 60% 40%;
+    transform: rotate(-35deg);
+}
+.hero-pip
+{
+    position: absolute;
+    bottom: 10px;
+    left: -27px;
+    display: flex;
+    align-items: flex-start;
+    z-index: 4;
+}
+.pip
+{
+    width: 82px;
+    height: 132px;
+    flex-shrink: 0;
+}
+.bubble
+{
+    margin: 0;
+    background: var(--white);
+    border: 1.5px solid var(--ink);
+    border-radius: 48% 46% 43% 17% / 30% 26% 32% 26%;
+    font: 16px/1.7 var(--hand);
+    padding: 15px 20px;
+    position: relative;
+}
+.hero-pip .bubble
+{
+    margin-top: 1px;
+    margin-left: -5px;
+    transform: rotate(-4deg);
+}
+.hero-margin
+{
+    position: absolute;
+    right: 5px;
+    bottom: 7px;
+    font-size: 16px;
+    transform: rotate(5deg);
+}
+.hero-margin svg
+{
+    display: block;
+    width: 130px;
+    height: 12px;
+    stroke: var(--ink);
+    stroke-width: 2px;
+}
+.scroll-note
+{
+    grid-column: 1 / -1;
+    text-align: center;
+    color: var(--muted);
+    font: 13px var(--hand);
+    align-self: end;
+    padding-top: 40px;
+}
+.scroll-icon
+{
+    display: inline-block;
+    color: var(--ink);
+    margin-right: 12px;
+    font: 25px var(--hand);
+    animation: nudge 2s infinite;
+}
+.trail
+{
+    position: sticky;
+    top: 12px;
+    z-index: 10;
+    background: #f6f3e8f5;
+    border: 1px solid #d1d6c6;
+    width: max-content;
+    max-width: calc(100% - 24px);
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+    margin: 0 auto;
+    padding: 5px 10px;
+    border-radius: 30px;
+    backdrop-filter: blur(8px);
+}
+.trail a
+{
+    display: flex;
+    align-items: center;
+    position: relative;
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font: 12px var(--body);
+    min-width: 39px;
+    min-height: 36px;
+    justify-content: center;
+}
+.trail b
+{
+    display: none;
+}
+.trail a[aria-current]
+{
+    background: var(--ink);
+    color: var(--white);
+}
+.trail a[aria-current] b
+{
+    display: inline;
+    margin-left: 7px;
+    font-weight: normal;
+}
+.trail a:hover
+{
+    outline: 1px solid var(--muted);
+}
+.scene
+{
+    min-height: 900px;
+    scroll-margin-top: 0;
+    border-bottom: 1px solid #d8dbce;
+    display: flex;
+    align-items: center;
+}
+.scene-inner
+{
+    max-width: 1000px;
+    width: calc(100% - 100px);
+    margin: 100px auto;
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 80px;
+    align-items: center;
+}
+.scene-copy .eyebrow
+{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+.part
+{
+    background: var(--accent);
+    display: inline-block;
+    padding: 2px 12px;
+    font: 17px var(--hand);
+    transform: rotate(-3deg);
+}
+h2
+{
+    font: bold 40px/1.5 var(--display);
+    letter-spacing: -1.5px;
+}
+.scene h2
+{
+    margin: 16px 0 18px;
+}
+.scene-copy > p:not(.eyebrow)
+{
+    color: #535e55;
+    line-height: 1.9;
+    max-width: 360px;
+}
+.scene .text-link
+{
+    margin-top: 18px;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 5px;
+}
+.scene-paper
+{
+    position: relative;
+    min-width: 0;
+    height: 510px;
+    transform: rotate(1.7deg);
+}
+.scene:nth-of-type(odd) .scene-paper
+{
+    transform: rotate(-1.7deg);
+}
+.scene-doodle
+{
+    width: 260px;
+    height: 265px;
+    position: absolute;
+    left: calc(50% - 130px);
+    top: 75px;
+}
+.scribble
+{
+    position: absolute;
+    width: 270px;
+    height: 100px;
+    left: 0;
+    bottom: 3px;
+    z-index: -1;
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 20px;
+    opacity: 0.75;
+}
+.label
+{
+    position: absolute;
+    font: 15px/1.5 var(--hand);
+    max-width: 175px;
+}
+.label svg
+{
+    display: block;
+    width: 75px;
+    height: 40px;
+    stroke: var(--ink);
+    stroke-width: 1.5;
+}
+.label.tl
+{
+    top: 33px;
+    left: 28px;
+    transform: rotate(-6deg);
+}
+.label.br
+{
+    right: 15px;
+    top: 294px;
+    transform: rotate(4deg);
+}
+.label.br svg
+{
+    position: absolute;
+    top: -36px;
+    left: 0;
+    transform: rotate(180deg);
+}
+.page-number
+{
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    color: var(--muted);
+    font: 14px var(--hand);
+}
+.narration
+{
+    position: absolute;
+    display: flex;
+    left: 20px;
+    right: 20px;
+    bottom: -28px;
+    align-items: flex-start;
+    gap: 5px;
+}
+.narration .bubble
+{
+    margin-top: 0;
+    min-height: 90px;
+    flex: 1;
+}
+.bubble-text span
+{
+    display: inline;
+}
+.recap
+{
+    max-width: 1000px;
+    margin: auto;
+    text-align: center;
+    padding: 100px 0 80px;
+}
+.recap > .eyebrow
+{
+    margin: 0;
+}
+.recap h2
+{
+    margin: 16px 0;
+}
+.recap-note
+{
+    max-width: 600px;
+    margin: 0 auto 45px;
+    color: #535e55;
+}
+.flow
+{
+    padding: 20px 30px 25px;
+    transform: rotate(-0.5deg);
+}
+.flow-power
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    font: 18px var(--hand);
+}
+.flow-power .glyph
+{
+    width: 63px;
+    height: 63px;
+}
+.flow-power .glyph:first-child
+{
+    fill: #f9d75450;
+}
+.flow-power .glyph:last-child
+{
+    fill: #b7cba050;
+}
+.flow-line
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 20px;
+}
+.flow-group > div
+{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.flow-item
+{
+    width: 132px;
+    font: 18px var(--hand);
+}
+.flow-item .glyph
+{
+    display: block;
+    width: 110px;
+    height: 110px;
+    margin: auto;
+}
+.plus
+{
+    font: 28px var(--hand);
+}
+.flow-arrow .arrow-icon
+{
+    width: 65px;
+    height: 40px;
+}
+.formula
+{
+    font: 19px var(--hand);
+    margin: 30px 0 0;
+}
+.lab
+{
+    margin: 75px 0 45px;
+    text-align: left;
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 65px;
+}
+h3
+{
+    font: bold 27px/1.5 var(--hand);
+    letter-spacing: -0.5px;
+}
+.lab h3
+{
+    margin-top: 12px;
+}
+.lab > div > p:not(.eyebrow)
+{
+    color: #535e55;
+    font-size: 14px;
+}
+.supply-buttons
+{
+    display: flex;
+    gap: 10px;
+}
+.supply
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+    background: var(--white);
+    border: 1px solid var(--ink);
+    border-radius: 3px 5px 2px 6px;
+    padding: 10px 6px;
+    font-size: 12px;
+}
+.supply .glyph
+{
+    width: 50px;
+    height: 50px;
+}
+.supply b
+{
+    background: var(--green);
+    padding: 0 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.supply[aria-pressed="false"]
+{
+    border-style: dashed;
+    background: #e8e7dd;
+}
+.supply[aria-pressed="false"] b
+{
+    background: #d9c4b8;
+}
+.lab-result
+{
+    margin-top: 15px;
+    padding: 17px 20px;
+    border-left: 4px solid #829869;
+    background: #e6ebdb;
+    font-size: 13px;
+    min-height: 180px;
+}
+.lab-result[data-active="false"]
+{
+    border-color: #9c735f;
+    background: #eee2d6;
+}
+.lab-result h4
+{
+    margin: 0 0 7px;
+    font: bold 20px var(--hand);
+}
+.lab-result p
+{
+    margin: 0 0 10px;
+}
+.restore
+{
+    background: none;
+    border: 0;
+    margin-top: 14px;
+    padding: 5px 0;
+    text-align: left;
+}
+.cheat-sheet
+{
+    border-top: 1px solid #c5cbba;
+    border-bottom: 1px solid #c5cbba;
+    text-align: left;
+    padding: 10px 0 25px;
+}
+.cheat-sheet h3
+{
+    margin-bottom: 15px;
+}
+dl
+{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 50px;
+    margin: 0;
+}
+dt
+{
+    font-weight: bold;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+dd
+{
+    margin: 4px 0 0;
+    font-size: 14px;
+}
+.recap-actions
+{
+    margin: 50px auto 0;
+}
+.print
+{
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    background: transparent;
+    border: 1.5px solid var(--ink);
+    border-radius: 3px 6px 3px 4px;
+    padding: 11px 20px;
+    margin-left: 15px;
+    font-size: 13px;
+    font-weight: bold;
+}
+.print .glyph
+{
+    width: 30px;
+    height: 30px;
+}
+.recap-actions p
+{
+    color: var(--muted);
+    font: 13px var(--hand);
+    margin-top: 20px;
+}
+footer
+{
+    max-width: var(--max);
+    margin: auto;
+    border-top: 1px solid #c5cbba;
+    padding: 35px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+footer p
+{
+    font: 14px var(--hand);
+}
+footer > div
+{
+    display: grid;
+    font-size: 10px;
+    color: var(--muted);
+    text-align: right;
+    gap: 6px;
+}
+@media (min-width: 1500px)
+{
+    .intro
+    {
+        min-height: 850px;
+    }
+}
+@media (max-width: 1150px)
+{
+    .topbar, .intro, footer
+    {
+        margin-left: 35px;
+        margin-right: 35px;
+    }
+    .recap
+    {
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+    h1
+    {
+        font-size: 53px;
+    }
+    .scene-inner
+    {
+        gap: 45px;
+    }
+    .hero-leaf
+    {
+        left: 100px;
+    }
+    .intro .eyebrow
+    {
+        flex-wrap: wrap;
+        gap: 3px 15px;
+    }
+}
+@media (max-width: 899px)
+{
+    .topbar
+    {
+        min-height: 79px;
+    }
+    .topbar p
+    {
+        display: none;
+    }
+    .intro
+    {
+        padding-top: 50px;
+        grid-template-columns: minmax(0, 1fr);
+        min-height: auto;
+    }
+    .intro-copy
+    {
+        max-width: 500px;
+        margin: auto;
+        width: 100%;
+    }
+    .intro .eyebrow
+    {
+        margin-bottom: 20px;
+    }
+    .hero-illustration
+    {
+        width: 100%;
+        max-width: 490px;
+        margin: 45px auto 0;
+        height: 530px;
+    }
+    .hero-paper
+    {
+        width: 93%;
+        right: 5px;
+    }
+    .hero-pip
+    {
+        left: -4px;
+    }
+    .scene
+    {
+        min-height: 1120px;
+    }
+    .scene-inner
+    {
+        grid-template-columns: 1fr;
+        max-width: 530px;
+        width: calc(100% - 70px);
+        gap: 45px;
+        margin: 80px auto;
+    }
+    .scene-copy > p:not(.eyebrow)
+    {
+        max-width: none;
+    }
+    .scene h2
+    {
+        font-size: 34px;
+        line-height: 1.45;
+    }
+    .scene-copy .eyebrow
+    {
+        margin-bottom: 20px;
+    }
+    .scene-paper
+    {
+        height: 500px;
+    }
+    .recap h2
+    {
+        font-size: 33px;
+    }
+    .flow
+    {
+        padding: 15px;
+    }
+    .flow-line
+    {
+        flex-direction: column;
+    }
+    .flow-group > div
+    {
+        gap: 10px;
+    }
+    .flow-item
+    {
+        width: 120px;
+    }
+    .flow-arrow
+    {
+        transform: rotate(90deg);
+        height: 60px;
+    }
+    .lab
+    {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        margin-top: 55px;
+    }
+    .lab h3
+    {
+        margin-bottom: 14px;
+    }
+    footer
+    {
+        flex-wrap: wrap;
+    }
+}
+@media (max-width: 480px)
+{
+    .topbar, .intro, footer
+    {
+        margin-left: 23px;
+        margin-right: 23px;
+    }
+    .topbar
+    {
+        gap: 12px;
+        min-height: 75px;
+    }
+    .brand
+    {
+        font-size: 23px;
+    }
+    .brand-mark
+    {
+        font-size: 34px;
+        margin-right: 12px;
+    }
+    .brand-mark span
+    {
+        font-size: 16px;
+        right: -9px;
+    }
+    .header-link
+    {
+        font-size: 10px;
+        gap: 4px;
+    }
+    .header-link .arrow-icon
+    {
+        width: 22px;
+    }
+    .intro
+    {
+        padding-top: 37px;
+    }
+    .intro .eyebrow
+    {
+        font-size: 9px;
+        gap: 12px;
+        letter-spacing: 1px;
+    }
+    .intro .eyebrow span
+    {
+        font-size: 9px;
+    }
+    h1
+    {
+        font-size: 45px;
+        line-height: 1.5;
+        letter-spacing: -2.6px;
+        margin-bottom: 20px;
+    }
+    .intro-body
+    {
+        font-size: 14px;
+        max-width: 320px;
+        margin-bottom: 18px;
+    }
+    .intro-end
+    {
+        font-size: 15px;
+        margin-bottom: 25px;
+    }
+    .primary
+    {
+        padding: 13px 18px;
+        font-size: 12px;
+    }
+    .small-note
+    {
+        font-size: 11px;
+    }
+    .hero-illustration
+    {
+        margin-top: 28px;
+        height: 445px;
+    }
+    .hero-paper
+    {
+        width: 96%;
+        height: 355px;
+    }
+    .hero-paper::before
+    {
+        left: 23px;
+    }
+    .paper-heading
+    {
+        font-size: 7px;
+        letter-spacing: 1.4px;
+        margin-top: 22px;
+    }
+    .hero-sun
+    {
+        width: 80px;
+        height: 80px;
+        left: 22px;
+        top: 47px;
+    }
+    .hero-leaf
+    {
+        width: 175px;
+        height: 175px;
+        top: 105px;
+        left: 87px;
+    }
+    .hero-label
+    {
+        font-size: 12px;
+    }
+    .sun-label
+    {
+        top: 124px;
+        left: 18px;
+    }
+    .leaf-label
+    {
+        top: 64px;
+        right: 12px;
+        width: 85px;
+    }
+    .food-label
+    {
+        bottom: 34px;
+        right: 10px;
+    }
+    .molecule
+    {
+        font-size: 17px;
+        padding: 0 6px;
+    }
+    .m1
+    {
+        top: 184px;
+        left: 29px;
+    }
+    .m2
+    {
+        top: 130px;
+        right: 17px;
+    }
+    .water-drop
+    {
+        bottom: 40px;
+        left: 72px;
+        width: 17px;
+        height: 23px;
+    }
+    .hero-pip
+    {
+        bottom: 0;
+    }
+    .hero-pip .pip
+    {
+        width: 65px;
+        height: 109px;
+    }
+    .hero-pip .bubble
+    {
+        font-size: 12px;
+        padding: 10px 14px;
+    }
+    .hero-margin
+    {
+        font-size: 12px;
+        bottom: 6px;
+    }
+    .hero-margin svg
+    {
+        width: 92px;
+    }
+    .scroll-note
+    {
+        font-size: 11px;
+        line-height: 1.7;
+        padding-top: 10px;
+    }
+    .trail
+    {
+        gap: 0;
+        padding: 4px 5px;
+        top: 8px;
+    }
+    .trail a
+    {
+        padding: 5px 7px;
+        min-width: 35px;
+        font-size: 10px;
+    }
+    .trail a[aria-current] b
+    {
+        display: none;
+    }
+    .scene
+    {
+        min-height: 1080px;
+    }
+    .scene-inner
+    {
+        width: calc(100% - 50px);
+        margin-top: 75px;
+        margin-bottom: 90px;
+        gap: 42px;
+    }
+    .scene h2
+    {
+        font-size: 29px;
+    }
+    .scene-copy > p:not(.eyebrow)
+    {
+        font-size: 14px;
+    }
+    .scene-paper
+    {
+        height: 410px;
+    }
+    .scene-doodle
+    {
+        width: 210px;
+        height: 215px;
+        left: calc(50% - 105px);
+        top: 69px;
+    }
+    .scribble
+    {
+        width: 210px;
+        height: 75px;
+    }
+    .label
+    {
+        font-size: 12px;
+        max-width: 150px;
+    }
+    .label.tl
+    {
+        left: 15px;
+        top: 30px;
+    }
+    .label.br
+    {
+        top: 260px;
+        right: 12px;
+    }
+    .label svg
+    {
+        width: 55px;
+        height: 30px;
+    }
+    .narration
+    {
+        left: 2px;
+        right: 10px;
+        bottom: -37px;
+        gap: 0;
+    }
+    .narration .pip
+    {
+        width: 65px;
+        height: 110px;
+    }
+    .narration .bubble
+    {
+        font-size: 13px;
+        line-height: 1.7;
+        padding: 10px 13px;
+        min-height: 92px;
+    }
+    .recap
+    {
+        margin: 0 25px;
+        padding-top: 70px;
+    }
+    .recap h2
+    {
+        font-size: 29px;
+    }
+    .recap-note
+    {
+        font-size: 14px;
+    }
+    .flow-item
+    {
+        font-size: 16px;
+        width: 110px;
+    }
+    .flow-item .glyph
+    {
+        width: 95px;
+        height: 95px;
+    }
+    .flow-power
+    {
+        gap: 6px;
+        font-size: 14px;
+    }
+    .flow-power .glyph
+    {
+        width: 43px;
+        height: 43px;
+    }
+    .formula
+    {
+        font-size: 15px;
+    }
+    h3
+    {
+        font-size: 25px;
+    }
+    .supply
+    {
+        font-size: 10px;
+    }
+    dl
+    {
+        grid-template-columns: 1fr;
+    }
+    .recap-actions .primary, .print
+    {
+        display: flex;
+        margin: 16px auto;
+        width: max-content;
+    }
+    .recap-actions p
+    {
+        font-size: 11px;
+    }
+    footer
+    {
+        justify-content: center;
+        text-align: center;
+        padding: 25px 0;
+        gap: 6px;
+    }
+    footer p, footer > div
+    {
+        width: 100%;
+        text-align: center;
+    }
+}
+@media (prefers-reduced-motion: reduce)
+{
+    html
+    {
+        scroll-behavior: auto;
+    }
+    *, *::before, *::after
+    {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+@media print
+{
+    @page
+    {
+        size: A4;
+        margin: 12mm;
+    }
+    body
+    {
+        background: white;
+        color: black;
+        font-size: 10pt;
+    }
+    .topbar, .intro, .trail, .scene, .skip, footer, .lab, .recap-actions
+    {
+        display: none !important;
+    }
+    .recap
+    {
+        padding: 0;
+        margin: 0;
+        max-width: none;
+    }
+    .recap h2
+    {
+        font-size: 25pt;
+    }
+    .recap-note
+    {
+        margin-bottom: 15px;
+    }
+    .flow
+    {
+        background: white;
+        box-shadow: none;
+        transform: none;
+        break-inside: avoid;
+    }
+    .flow-line
+    {
+        flex-direction: row;
+        gap: 10px;
+    }
+    .flow-arrow
+    {
+        transform: none;
+        height: auto;
+    }
+    .flow-item
+    {
+        width: 95px;
+    }
+    .flow-item .glyph
+    {
+        width: 80px;
+        height: 80px;
+    }
+    .cheat-sheet
+    {
+        margin-top: 20px;
+        break-inside: avoid;
+    }
+    dl
+    {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@keyframes nudge
+{
+    0%, 100%
+    {
+        transform: translateY(0);
+    }
+    50%
+    {
+        transform: translateY(5px);
+    }
+}

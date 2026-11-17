@@ -1,0 +1,226 @@
+{
+  "passed": true,
+  "visualReviewed": true,
+  "tests": [
+    {
+      "name": "1200: real WebGL geometry and opening screenshot",
+      "passed": true,
+      "details": {
+        "calls": 1,
+        "triangles": 2730,
+        "width": 1200,
+        "height": 900,
+        "canvasName": "Three-dimensional breakout on a lit grid court."
+      }
+    },
+    {
+      "name": "1200: controls, held serve, arrow movement, A unbound",
+      "passed": true
+    },
+    {
+      "name": "1200: mouse aim and Space launch",
+      "passed": true
+    },
+    {
+      "name": "1200: naturally launched ball reached and destroyed a brick",
+      "passed": true,
+      "details": {
+        "state": "play",
+        "bar": 0,
+        "balls": [
+          {
+            "x": -3.9311999999999934,
+            "z": 14.839599999999999,
+            "held": false,
+            "vx": -2.0160000000000005,
+            "vz": -6.912
+          }
+        ],
+        "points": 100,
+        "sparks": 3,
+        "blocks": 35,
+        "round": 0,
+        "camera": [
+          0.03354492970968581,
+          8,
+          -11
+        ]
+      }
+    },
+    {
+      "name": "1200: pause freezes positions; help returns to pause; restart preserves points/sparks",
+      "passed": true
+    },
+    {
+      "name": "1200: injected falling pickups caught by actual collision and activate all three effects",
+      "passed": true,
+      "details": {
+        "girder": 7.966666666666667,
+        "needle": 5.983333333333333,
+        "balls": 3,
+        "points": 700
+      }
+    },
+    {
+      "name": "1200: five collision-driven accelerated rounds, clear cards, final win and Play again",
+      "passed": true,
+      "details": [
+        {
+          "state": "clear",
+          "points": 5100,
+          "sparks": 4,
+          "round": 1
+        },
+        {
+          "state": "clear",
+          "points": 9400,
+          "sparks": 5,
+          "round": 2
+        },
+        {
+          "state": "clear",
+          "points": 13800,
+          "sparks": 5,
+          "round": 3
+        },
+        {
+          "state": "clear",
+          "points": 17700,
+          "sparks": 5,
+          "round": 4
+        },
+        {
+          "state": "win",
+          "points": 23500,
+          "sparks": 5,
+          "round": 5
+        }
+      ]
+    },
+    {
+      "name": "1200: three actual out-line misses trigger failure; retry resets; best persists only allowed data",
+      "passed": true,
+      "details": {
+        "best": 23500,
+        "muted": false
+      }
+    },
+    {
+      "name": "390: real WebGL geometry and opening screenshot",
+      "passed": true,
+      "details": {
+        "calls": 52,
+        "triangles": 2730,
+        "width": 390,
+        "height": 844,
+        "canvasName": "Three-dimensional breakout on a lit grid court."
+      }
+    },
+    {
+      "name": "390: controls, held serve, arrow movement, A unbound",
+      "passed": true
+    },
+    {
+      "name": "390: actual touch drag aims without launching; tap launches",
+      "passed": true
+    },
+    {
+      "name": "390: naturally launched ball reached and destroyed a brick",
+      "passed": true,
+      "details": {
+        "state": "play",
+        "bar": 0,
+        "balls": [
+          {
+            "x": -3.8639999999999937,
+            "z": 15.069999999999999,
+            "held": false,
+            "vx": -2.0160000000000005,
+            "vz": -6.912
+          }
+        ],
+        "points": 100,
+        "sparks": 3,
+        "blocks": 35,
+        "round": 0,
+        "camera": [
+          -0.044635053229902306,
+          32,
+          -6
+        ]
+      }
+    },
+    {
+      "name": "390: pause freezes positions; help returns to pause; restart preserves points/sparks",
+      "passed": true
+    },
+    {
+      "name": "390: injected falling pickups caught by actual collision and activate all three effects",
+      "passed": true,
+      "details": {
+        "girder": 7.966666666666667,
+        "needle": 5.983333333333333,
+        "balls": 3,
+        "points": 700
+      }
+    },
+    {
+      "name": "reduced motion removes trail/shatter and preserves game setup",
+      "passed": true,
+      "details": {
+        "reduced": true,
+        "trails": false,
+        "particles": 0
+      }
+    },
+    {
+      "name": "1440x900: original target desktop framing, serve/launch/pause and no overflow or errors",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "width": 1200,
+      "height": 900,
+      "deviceScaleFactor": 1,
+      "errors": [],
+      "noHorizontalOverflowBeforeAndAfter": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 1,
+      "errors": [],
+      "noHorizontalOverflowBeforeAndAfter": true
+    }
+  ],
+  "resourcesClosed": true,
+  "url": "http://127.0.0.1:50981/pages/3d-neon-breakout-arcade/GPT-6/index.html",
+  "visualEvidence": {
+    "openedWithView": [
+      "desktop.png",
+      "mobile.png",
+      "desktop-play.png",
+      "mobile-play.png"
+    ],
+    "desktop": "已打开真实 PNG：左侧起始卡与网格球场层级清晰；球、挡板、砖块及右栏人物可见；游戏读数与场地无重叠。",
+    "mobile": "已打开真实 PNG：390×844 底部卡片限制在46vh，挡板和球位于卡片上方；两行读数清楚，触摸游戏区域完整。",
+    "refinement": "实际首次桌面图显示指定近距离相机裁掉挡板，因此调整相机距离/移动端俯角与天空渐变范围后重新执行全部浏览器检查并打开最终截图。"
+  },
+  "simulation": {
+    "passed": 8,
+    "failed": 0,
+    "command": "node --test out\\pages\\607-3d-neon-breakout-arcade\\GPT-6\\.checks\\simulation.test.mjs"
+  },
+  "previewEvidence": {
+    "path": "C:\\Code\\MusePages\\out\\pages\\607-3d-neon-breakout-arcade\\GPT-6\\out\\preview.png",
+    "size": [
+      1200,
+      900
+    ],
+    "openedWithView": true,
+    "sha256": "32861a7642304bc59b591383840edf88dc7c00c66096c72cdb4e5aae17201326",
+    "review": "已打开 ensurePreview 新生成的真实首屏图：球、挡板、砖阵、人物与左侧卡片完整可见；字体层级及对比清晰，无错误页或占位图。"
+  }
+}

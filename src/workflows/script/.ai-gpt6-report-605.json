@@ -1,0 +1,246 @@
+{
+  "prompt": "605-neon-snake-3d-game",
+  "status": "completed",
+  "summary": "已完成真实可玩的单页3D贪吃蛇，并完成静态、核心逻辑、桌面与手机玩法、实际截图视觉审查及正式预览；已默认关闭登记，未构建或部署。",
+  "runId": "ai-gpt6-all-28883b46-8438-4644-b660-725d7968c87c",
+  "modelId": "gpt-6.1-sol",
+  "display_model_name": "GPT-6",
+  "tags": [
+    "Snake",
+    "Neon",
+    "Three.js"
+  ],
+  "generated": true,
+  "preview": true,
+  "validated": true,
+  "config_added": true,
+  "flags": {
+    "generated": true,
+    "preview": true,
+    "validated": true,
+    "config_added": true
+  },
+  "output": "C:\\Code\\MusePages\\out\\pages\\605-neon-snake-3d-game\\GPT-6",
+  "staticDir": "C:\\Code\\MusePages\\out\\pages\\605-neon-snake-3d-game\\GPT-6\\out",
+  "sourceType": "HTML/CSS/原生 JavaScript 模块 + 本地 Three.js",
+  "publicPath": "/pages/neon-snake-3d-game/GPT-6/index.html",
+  "provenance": {
+    "title": "Neon Snake 3D Game",
+    "category": "Entertainment",
+    "source_url": "https://github.com/liyupi/awesome-vibe-coding-websites/blob/85431a57f231fa59269dad62c757193d6a3fd0ff/templates/neon-snake-3d-game/prompt.md",
+    "license": "CC-BY-NC-4.0",
+    "license_file": "data\\downloads\\github.com\\liyupi-awesome-vibe-coding-websites\\85431a57f231fa59269dad62c757193d6a3fd0ff\\LICENSE",
+    "originalFile": "C:\\Code\\MusePages\\data\\prompts\\605-neon-snake-3d-game\\605-neon-snake-3d-game.md",
+    "originalSha256": "7f81bbcf3a67459f556f16c70f439992aa2ca60904c12f5208b40ccf5e57f94f",
+    "designFile": "C:\\Code\\MusePages\\src\\workflows\\AI Agent\\DESIGN.md",
+    "designSha256": "00fe7d08e836e8c61a0bcfae841ad4daea001036bd29c16420a5403d24fe3137",
+    "inputFingerprint": "f2a4e195d7cb6d78b8eeda459c7ddecb2843561027eb952367f1d3d2307c1b05",
+    "licenseRetained": "C:\\Code\\MusePages\\out\\pages\\605-neon-snake-3d-game\\GPT-6\\LICENSE.txt",
+    "attribution": "C:\\Code\\MusePages\\out\\pages\\605-neon-snake-3d-game\\GPT-6\\ASSETS.md"
+  },
+  "identityAndLock": {
+    "selectedActualModel": "gpt-6.1-sol",
+    "publicLabel": "GPT-6",
+    "jobIdVerified": true,
+    "manifestRunIdVerified": true,
+    "ownedLockPromptVerified": true,
+    "attachedCoordinatorPid": 55804,
+    "pidAlive": true,
+    "coordinatorPreserved": true
+  },
+  "implementation": [
+    "真实 Three.js 透视场景、着色器地板、四节初始胶囊、铜色球与光晕、Walls 低栏。",
+    "16×16逐格逻辑、所有蛇节共享插值、随机空格食物、增长、5级速度、按吃到时速度级别计分、穿边、碰墙、自撞、填满256格结束。",
+    "单槽最新合法转向队列；拒绝当前方向的反向键且保留既有合法队列；允许正常腾空尾格；键盘/WASD、真实触摸滑动、64px四方向触控键共用队列。",
+    "暂停、恢复、主动结束、同规则重开、返回换规则、隐藏标签暂停、对话框焦点限制。",
+    "真实 Web Audio 振荡器节拍及音效；开始手势后启动；静音、最佳成绩、前三/前五缩写记录保存在浏览器；存储异常不阻止游戏。",
+    "自托管字体、仅3个 Lucide 图标节点、无外部运行资源、无后端或假玩法。"
+  ],
+  "qaFile": "C:\\Code\\MusePages\\out\\pages\\605-neon-snake-3d-game\\GPT-6\\.checks\\qa.json",
+  "screenshots": {
+    "desktop": "C:\\Code\\MusePages\\out\\pages\\605-neon-snake-3d-game\\GPT-6\\.checks\\desktop.png",
+    "gameover": "C:\\Code\\MusePages\\out\\pages\\605-neon-snake-3d-game\\GPT-6\\.checks\\desktop-gameover.png",
+    "mobile": "C:\\Code\\MusePages\\out\\pages\\605-neon-snake-3d-game\\GPT-6\\.checks\\mobile.png",
+    "mobileGameplay": "C:\\Code\\MusePages\\out\\pages\\605-neon-snake-3d-game\\GPT-6\\.checks\\mobile-gameplay.png",
+    "preview": "C:\\Code\\MusePages\\out\\pages\\605-neon-snake-3d-game\\GPT-6\\out\\preview.png"
+  },
+  "tests": {
+    "core": {
+      "passed": 9,
+      "failed": 0,
+      "runner": "node --test",
+      "file": "C:\\Code\\MusePages\\out\\pages\\605-neon-snake-3d-game\\GPT-6\\.checks\\core.test.mjs"
+    },
+    "browser": {
+      "passedGroups": 13,
+      "errors": [],
+      "viewports": [
+        {
+          "width": 1200,
+          "height": 900,
+          "deviceScaleFactor": 1
+        },
+        {
+          "width": 1440,
+          "height": 900,
+          "deviceScaleFactor": 1
+        },
+        {
+          "width": 390,
+          "height": 844,
+          "deviceScaleFactor": 1,
+          "touch": true
+        }
+      ],
+      "assertions": [
+        {
+          "name": "Desktop actual 3D first frame, local fonts, four capsules and bead clear of start card",
+          "passed": true
+        },
+        {
+          "name": "1440×900 desktop floor also fits without hiding the posed line",
+          "passed": true
+        },
+        {
+          "name": "How to steer and both rule radios work without starting; rails update immediately",
+          "passed": true
+        },
+        {
+          "name": "Real timed Walls run moves, collects the opening bead, grows, scores, and ends on the rail",
+          "passed": true
+        },
+        {
+          "name": "Game-over dialog traps focus, filters initials and saves a ranked browser-local run",
+          "passed": true
+        },
+        {
+          "name": "Restart preserves rule but resets opening cells, food and score; pause freezes offset and audio",
+          "passed": true
+        },
+        {
+          "name": "Wrap actually crosses the edge; keyboard turns produce real self-collision",
+          "passed": true
+        },
+        {
+          "name": "Mute persists across reload; hidden-tab event pauses and never auto-resumes",
+          "passed": true
+        },
+        {
+          "name": "390×844 mobile first frame shows the line and bead above the scrollable sheet",
+          "passed": true
+        },
+        {
+          "name": "Mobile 64px pad, swipe directions and pause operate the actual simulation",
+          "passed": true
+        },
+        {
+          "name": "Reduced-motion preference changes freeze bead scale, halo, title drift and grid breathe",
+          "passed": true
+        },
+        {
+          "name": "Unavailable WebGL presents the readable steering fallback without uncaught or console errors",
+          "passed": true
+        },
+        {
+          "name": "Owned page teardown disposes renderer, listeners and AudioContext",
+          "passed": true
+        }
+      ],
+      "realInteractions": true,
+      "hiddenTabMethod": "通过document.hidden与visibilitychange事件夹具验证不自动恢复。",
+      "touchMethod": "手机方向键使用真实tap，滑动通过Chromium CDP触摸序列。"
+    },
+    "static": {
+      "passed": true,
+      "digest": "3a78d154183bc6864429cc5d2dd260170ee575402de73e66aae330fe358e9255",
+      "sourceExportEqual": true,
+      "publicFiles": 25,
+      "publicBytes": 1152621,
+      "under20MB": true
+    },
+    "preview": {
+      "file": "C:\\Code\\MusePages\\out\\pages\\605-neon-snake-3d-game\\GPT-6\\out\\preview.png",
+      "width": 1200,
+      "height": 900,
+      "sha256": "93c72241a71d912e4b0eb9604c17eb541c2160649974786adf8a1d28e003fb47",
+      "staticDigest": "3a78d154183bc6864429cc5d2dd260170ee575402de73e66aae330fe358e9255",
+      "generatedBy": "StaticHomepage.ensurePreview",
+      "visualReviewed": true,
+      "review": "已使用 view 工具打开新生成的正式预览。确认来自真实3D首页、卡片层级清晰、蛇和珠完整，无失败回退画面。",
+      "fingerprintVerified": true,
+      "reuseVerified": true
+    }
+  },
+  "visualReviewed": true,
+  "visualEvidence": {
+    "reviewer": "gpt-6.1-sol",
+    "method": "已使用 view 工具打开本轮真实桌面与手机 PNG，并核对实际游戏与结束截图。",
+    "desktop": {
+      "file": "C:\\Code\\MusePages\\out\\pages\\605-neon-snake-3d-game\\GPT-6\\.checks\\desktop.png",
+      "sha256": "1311fa79e827eb510a15634e9ad34aabbe1191a8e2b172ee78a664a48c19e791",
+      "review": "1200×900：左侧磨砂卡片层级、间距与文字对比清晰；四节胶囊与铜色珠完整位于右侧，按钮、规则和记录没有裁切。"
+    },
+    "mobile": {
+      "file": "C:\\Code\\MusePages\\out\\pages\\605-neon-snake-3d-game\\GPT-6\\.checks\\mobile.png",
+      "sha256": "41f9e54905d7e3d48dd6085c11b23dd70511ca64809de8641e0f7f64e695db39",
+      "review": "390×844：四节胶囊与珠位于底部面板之上且未贴边裁切；34px 标题清晰，主按钮及规则可见，长内容在面板内部滚动；游戏截图中 64px 方向键与头部区域分离。"
+    },
+    "refinements": [
+      "修正紧凑桌面相机朝向以避免珠离开画面。",
+      "窄手机标题相机沿视线后退25%，保留真实几何与视角，确保蛇尾和珠完整。",
+      "将开始按钮的装饰箭头标为 aria-hidden，保持正确可访问名称。"
+    ]
+  },
+  "registration": {
+    "verified": true,
+    "count": 1,
+    "configFile": "C:\\Code\\MusePages\\deploy\\config.json",
+    "prompt": "605-neon-snake-3d-game",
+    "model": "GPT-6",
+    "slug": "neon-snake-3d-game",
+    "title": "Neon Snake 3D Game",
+    "tags": [
+      "Snake",
+      "Neon",
+      "Three.js"
+    ],
+    "staticDir": "out",
+    "enabled": false,
+    "deployed": false,
+    "otherConfigPreserved": true,
+    "sharedCategory": null
+  },
+  "limitations": [
+    "按照本轮授权作无构建静态适配：使用原生JavaScript而非Vite 6/TypeScript 5；输出为out而非dist；应用脚本可读未压缩，本地Three.js发行文件为已压缩版本。",
+    "为完整展示首屏几何，紧凑桌面调整标题观察目标，窄手机标题相机沿原视线后退25%；不改变网格、坐标、几何、规则或正式游戏相机。",
+    "浏览器与音频硬件差异未做实体设备测试；自动化使用已安装Chromium/SwiftShader。音效的实际音频设备听感未人工试听。",
+    "记录仅在本浏览器保存，无远程排行榜。WebGL不可用时展示可读说明与操作帮助，不能在无WebGL时进行3D游戏。",
+    "现有登记函数未为新prompt填充共享category；报告保留来源分类Entertainment，不擅自改动共享分类配置。"
+  ],
+  "blocker": null,
+  "resourcesClosed": true,
+  "ownedResources": {
+    "qaBrowsersClosed": true,
+    "qaServersClosed": true,
+    "previewBrowserAndServerClosed": true,
+    "coordinatorLockRetained": true
+  },
+  "unauthorizedOperations": {
+    "nestedAgents": false,
+    "build": false,
+    "dist": false,
+    "publish": false,
+    "upload": false,
+    "deploy": false,
+    "generationRetry": false,
+    "sharedStateOrLogEdited": false,
+    "helperEdited": false,
+    "secretsAccessed": false,
+    "otherPromptEdited": false
+  },
+  "notes": [
+    "task\\TASK.md不存在；已读取现有progress.log，仅按当前明确单项任务执行，未改目标或共享日志。",
+    "所有网站界面文字为英文；本报告为中文。",
+    "曾通过实际截图和运行检查修正相机裁切、按钮可访问名称及测试等待条件；最后完整重跑9项核心测试与13组浏览器检查全部通过。"
+  ]
+}

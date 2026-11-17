@@ -1,0 +1,697 @@
+@font-face
+{
+    font-family: Inter;
+    src: url("inter.ttf") format("truetype");
+    font-weight: 100 900;
+    font-display: swap;
+}
+@font-face
+{
+    font-family: Anton;
+    src: url("anton.ttf") format("truetype");
+    font-weight: 400;
+    font-display: swap;
+}
+:root
+{
+    --cream: #f5f3ee;
+    --ink: #080808;
+    --orange: #ef5c26;
+    --gutter: 48px;
+}
+*
+{
+    box-sizing: border-box;
+}
+body
+{
+    margin: 0;
+    color: var(--ink);
+    background: var(--cream);
+    font-family: Inter, sans-serif;
+    height: 100svh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+button, input, select
+{
+    font: inherit;
+}
+button, a
+{
+    -webkit-tap-highlight-color: transparent;
+}
+button
+{
+    cursor: pointer;
+    color: inherit;
+    border: 0;
+    background: none;
+}
+button:hover
+{
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
+{
+    outline: 3px solid var(--orange);
+    outline-offset: 4px;
+}
+svg
+{
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+.backdrop
+{
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    z-index: 0;
+}
+header
+{
+    padding: 24px var(--gutter);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 10;
+    flex-shrink: 0;
+}
+.wordmark
+{
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 30px;
+    letter-spacing: -1.5px;
+    display: flex;
+    align-items: baseline;
+    gap: 3px;
+}
+.logo-dot
+{
+    width: 7px;
+    height: 7px;
+    background: var(--orange);
+}
+nav, .account
+{
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+nav button, .account button
+{
+    font-size: 15px;
+    padding: 10px 0;
+}
+.account
+{
+    gap: 24px;
+}
+.account .login
+{
+    background: var(--ink);
+    color: white;
+    padding: 12px 24px;
+}
+.menu
+{
+    display: none;
+}
+main
+{
+    position: relative;
+    z-index: 10;
+    padding: 29px var(--gutter) 28px;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.top-row, .middle-row
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+}
+.eyebrow, .small-index, .partner-label
+{
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.4px;
+}
+.eyebrow
+{
+    margin: 0 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.eyebrow > span
+{
+    width: 6px;
+    height: 6px;
+    background: var(--ink);
+    border-radius: 50%;
+}
+h1, h2
+{
+    font-family: Anton, Impact, sans-serif;
+    font-weight: 400;
+}
+h1
+{
+    font-size: clamp(62px, 7.1vw, 100px);
+    line-height: .91;
+    letter-spacing: -1.8px;
+    margin: 0 0 22px;
+}
+.subheading
+{
+    font-size: 17px;
+    line-height: 1.55;
+    margin: 0 0 20px;
+    max-width: 420px;
+}
+.cta
+{
+    background: var(--ink);
+    color: white;
+    padding: 6px 6px 6px 27px;
+    border-radius: 40px;
+    display: inline-flex;
+    align-items: center;
+    gap: 25px;
+    font-size: 15px;
+}
+.cta > span
+{
+    background: white;
+    color: var(--ink);
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+}
+.metric
+{
+    text-align: right;
+}
+.launches
+{
+    padding-top: 7px;
+}
+.small-index
+{
+    display: block;
+    margin-bottom: 14px;
+}
+.metric h2
+{
+    font-size: 46px;
+    letter-spacing: -.6px;
+    line-height: 1.05;
+    margin: 0 0 15px;
+}
+.metric p, .bio > p:not(.eyebrow)
+{
+    font-size: 14px;
+    line-height: 1.65;
+    margin: 0;
+}
+.bio .eyebrow
+{
+    margin-bottom: 14px;
+}
+.socials
+{
+    display: flex;
+    gap: 19px;
+    align-items: center;
+    margin-top: 20px;
+}
+.socials button
+{
+    padding: 0;
+}
+.socials span
+{
+    font-size: 8px;
+    letter-spacing: 1px;
+    margin-left: 3px;
+}
+.socials button:first-child svg
+{
+    fill: currentColor;
+}
+.partner-label
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 14px;
+    font-size: 9px;
+}
+.partner-label button
+{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0;
+}
+.partner-label svg
+{
+    width: 13px;
+    height: 13px;
+}
+.brand-grid
+{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+}
+.brand-grid button
+{
+    background: rgba(255, 255, 255, .94);
+    border-radius: 8px;
+    min-height: 85px;
+    display: flex;
+    gap: 9px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: -.4px;
+    padding: 12px 6px;
+}
+.brand-arrow
+{
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    font-size: 11px;
+    opacity: .5;
+}
+.brand-symbol
+{
+    display: block;
+    width: 27px;
+    height: 27px;
+    flex-shrink: 0;
+}
+.frame
+{
+    border: 7px solid var(--ink);
+}
+.supa
+{
+    border-radius: 50%;
+    background: repeating-linear-gradient(90deg, var(--ink) 0 4px, transparent 4px 7px);
+}
+.hype
+{
+    background: var(--ink);
+    clip-path: polygon(50% 0, 100% 85%, 0 85%);
+}
+.hype-two
+{
+    background: var(--ink);
+    clip-path: polygon(35% 0, 65% 0, 65% 35%, 100% 35%, 100% 65%, 65% 65%, 65% 100%, 35% 100%, 35% 65%, 0 65%, 0 35%, 35% 35%);
+    transform: rotate(45deg);
+}
+.ultra
+{
+    border: 7px solid var(--ink);
+    border-radius: 50%;
+}
+.ship
+{
+    background: var(--ink);
+    clip-path: polygon(0 0, 100% 0, 0 100%, 0 72%, 72% 0, 43% 0, 0 43%);
+}
+dialog
+{
+    border: 0;
+    background: var(--cream);
+    color: var(--ink);
+    padding: 28px;
+    width: min(520px, calc(100% - 32px));
+    max-height: calc(100svh - 32px);
+    overflow-y: auto;
+}
+dialog::backdrop
+{
+    background: rgba(8, 8, 8, .5);
+}
+.dialog-top
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+    gap: 12px;
+}
+.dialog-top .eyebrow
+{
+    margin: 0;
+}
+.icon-button
+{
+    padding: 5px;
+}
+dialog h2
+{
+    font-size: 40px;
+    line-height: 1.08;
+    margin: 0 0 20px;
+    text-transform: uppercase;
+}
+dialog p, dialog li
+{
+    font-size: 14px;
+    line-height: 1.6;
+}
+.panel-action, .service
+{
+    padding: 12px 16px;
+    border: 1px solid var(--ink);
+    margin: 4px 4px 4px 0;
+    font-size: 14px;
+}
+.panel-action, .service[aria-pressed="true"]
+{
+    background: var(--ink);
+    color: white;
+}
+label
+{
+    display: block;
+    font-size: 13px;
+    margin: 16px 0 6px;
+}
+input, select
+{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #92908b;
+    background: white;
+    color: var(--ink);
+    border-radius: 0;
+}
+.estimate, .result
+{
+    border-left: 3px solid var(--orange);
+    padding-left: 14px;
+}
+details
+{
+    padding: 15px 0;
+    border-top: 1px solid #cfccc5;
+}
+summary
+{
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+}
+.menu-links
+{
+    display: grid;
+    gap: 8px;
+}
+.menu-links button
+{
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #cfccc5;
+}
+@media (max-width: 900px)
+{
+    :root
+    {
+        --gutter: 24px;
+    }
+    header
+    {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    nav
+    {
+        gap: 16px;
+    }
+    h1
+    {
+        font-size: 65px;
+    }
+    .metric h2
+    {
+        font-size: 36px;
+    }
+    .brand-grid button
+    {
+        gap: 6px;
+        font-size: 11px;
+    }
+    .brand-symbol
+    {
+        width: 20px;
+        height: 20px;
+    }
+}
+@media (max-width: 700px)
+{
+    .backdrop
+    {
+        object-position: 57% center;
+        opacity: .44;
+    }
+    header
+    {
+        padding: 18px var(--gutter);
+    }
+    .wordmark
+    {
+        font-size: 25px;
+    }
+    nav
+    {
+        display: none;
+    }
+    .account
+    {
+        gap: 14px;
+    }
+    .account button
+    {
+        font-size: 12px;
+    }
+    .account .login
+    {
+        padding: 9px 14px;
+    }
+    .account .menu
+    {
+        display: block;
+        padding: 3px 0;
+    }
+    main
+    {
+        padding: 15px var(--gutter) 20px;
+        gap: 18px;
+    }
+    .top-row
+    {
+        display: block;
+    }
+    .eyebrow
+    {
+        font-size: 8px;
+        letter-spacing: 1px;
+        margin-bottom: 16px;
+    }
+    h1
+    {
+        font-size: clamp(49px, 14vw, 64px);
+        line-height: .94;
+        letter-spacing: -.8px;
+        margin-bottom: 15px;
+    }
+    .subheading
+    {
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: 15px;
+        max-width: 300px;
+    }
+    .desktop-break
+    {
+        display: none;
+    }
+    .cta
+    {
+        font-size: 13px;
+        gap: 22px;
+        padding-left: 23px;
+    }
+    .cta > span
+    {
+        width: 32px;
+        height: 32px;
+    }
+    .launches
+    {
+        padding: 0;
+        margin-top: 25px;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+    }
+    .launches .small-index
+    {
+        display: none;
+    }
+    .metric h2
+    {
+        font-size: 28px;
+        margin-bottom: 0;
+        letter-spacing: -.2px;
+    }
+    .metric p
+    {
+        font-size: 10px;
+        line-height: 1.6;
+    }
+    .launches p
+    {
+        max-width: 180px;
+    }
+    .middle-row
+    {
+        grid-template-columns: 1.1fr 1fr;
+        gap: 16px;
+        align-items: end;
+    }
+    .bio .eyebrow
+    {
+        font-size: 7px;
+        letter-spacing: .6px;
+        margin-bottom: 8px;
+    }
+    .bio > p:not(.eyebrow)
+    {
+        font-size: 11px;
+        line-height: 1.55;
+    }
+    .socials
+    {
+        gap: 16px;
+        margin-top: 13px;
+    }
+    .socials svg
+    {
+        width: 17px;
+        height: 17px;
+    }
+    .socials span, .experience .small-index
+    {
+        display: none;
+    }
+    .experience h2
+    {
+        font-size: 25px;
+        margin-bottom: 8px;
+    }
+    .partner-label
+    {
+        font-size: 7px;
+        letter-spacing: .8px;
+        margin-bottom: 10px;
+    }
+    .partner-label button
+    {
+        font-size: 8px;
+    }
+    .brand-grid
+    {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 7px;
+    }
+    .brand-grid button
+    {
+        min-height: 50px;
+        font-size: 10px;
+        padding: 9px 5px;
+        gap: 6px;
+    }
+    .brand-symbol
+    {
+        width: 19px;
+        height: 19px;
+    }
+    .frame, .ultra
+    {
+        border-width: 5px;
+    }
+    dialog
+    {
+        padding: 22px;
+    }
+}
+@media (max-height: 740px) and (min-width: 701px)
+{
+    main
+    {
+        padding-top: 10px;
+    }
+    h1
+    {
+        font-size: 64px;
+    }
+    .eyebrow
+    {
+        margin-bottom: 12px;
+    }
+    .brand-grid button
+    {
+        min-height: 60px;
+    }
+}
+@media (max-height: 760px) and (max-width: 700px)
+{
+    header
+    {
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+    main
+    {
+        padding-top: 8px;
+        gap: 12px;
+        padding-bottom: 12px;
+    }
+    h1
+    {
+        font-size: 48px;
+    }
+    .launches
+    {
+        margin-top: 15px;
+    }
+}

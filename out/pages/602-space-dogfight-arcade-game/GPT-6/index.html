@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="theme-color" content="#07080c">
+    <meta name="description" content="A quiet, playable arcade patrol through a low-poly asteroid field.">
+    <title>Cinder Patrol</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <canvas id="field" aria-label="Third-person flight through a low-poly asteroid field."></canvas>
+    <div class="frame" aria-hidden="true"></div>
+    <header id="masthead"><span class="brand-mark">◇</span><span id="brand"></span><span class="edition">FLIGHT OPERATIONS / 01</span></header>
+    <main id="ui">
+        <section id="card" class="glass" aria-labelledby="heading">
+            <div class="eyebrow"><span class="signal"></span><span id="sector"></span></div>
+            <div class="card-rule"></div>
+            <p class="overline" id="overline">ARCADE PATROL</p>
+            <h1 id="heading"></h1>
+            <p class="deck" id="deck"></p>
+            <p class="audience" id="audience"></p>
+            <p class="meta" id="meta"></p>
+            <div class="controls">
+                <h2>FLIGHT MANUAL <span>01—06</span></h2>
+                <div class="desktop-legend">
+                    <p><kbd>W A S D</kbd><span>Steer · or pointer / arrows</span></p>
+                    <p><kbd>SPACE</kbd><span>Fire · or left click</span></p>
+                    <p><kbd>F</kbd><span>Hold to lock a missile</span></p>
+                    <p><kbd>SHIFT</kbd><span>Boost</span><kbd>R</kbd><span>Roll / shield</span></p>
+                </div>
+                <p class="mobile-legend">Drag the stick to steer. Hold FIRE to shoot or LOCK to send a missile. BOOST gives a short kick. ROLL shimmers the shield.</p>
+            </div>
+            <p class="note" id="note">Tones start when you launch. M to mute.</p>
+            <button id="launch" class="primary">Launch patrol <span aria-hidden="true">↗</span></button>
+            <button id="title" class="secondary hidden">Title</button>
+            <a class="credit" href="https://vibefather.ai/t/space-dogfight-arcade-game" target="_blank" rel="noopener">Template by VibeFather <span>↗</span></a>
+        </section>
+        <aside id="field-label" aria-hidden="true"><span class="small-cross">+</span><span>BOUNDED VOLUME<br><strong>148 / LOCAL UNITS</strong></span></aside>
+        <div id="craft-label" aria-hidden="true"><span id="craft-name"></span><small>LIGHT PATROL FIGHTER</small><i></i></div>
+        <div id="hud" class="hidden">
+            <div class="pilot"><strong id="callsign"></strong><small id="pilot-sector"></small></div>
+            <div class="wave"><small>WAVE</small><strong id="wave">01</strong><small id="remaining">3 LEFT</small><span id="score">SCORE 0000</span></div>
+            <button id="tones" class="glass">Tones on</button>
+            <svg id="radar" viewBox="0 0 148 148" aria-label="Radar"><circle cx="74" cy="74" r="72"/><circle cx="74" cy="74" r="36"/><path d="M74 2V146M2 74H146"/><g id="dots"></g><path class="player" d="M74 69L78 78L74 76L70 78Z"/></svg>
+            <div class="shield"><div><span>SHIELD</span><span id="shield-number">100</span></div><div class="shield-track"><i id="shield-fill"></i></div></div>
+            <div id="boost-ring"><svg viewBox="0 0 76 76"><circle cx="38" cy="38" r="26"/></svg><span id="boost-label">READY</span><small>BOOST / SHIFT</small></div>
+            <div id="reticle"><svg viewBox="0 0 72 72"><circle class="track" cx="36" cy="36" r="28"/><circle id="lock-arc" cx="36" cy="36" r="28"/><path d="M36 0V8M36 64V72M0 36H8M64 36H72"/></svg><span id="lock-word" class="hidden">LOCK</span></div>
+            <div id="message" aria-live="polite"></div>
+        </div>
+        <div id="touch" class="hidden">
+            <div id="stick" role="slider" aria-label="Steer" aria-valuemin="-100" aria-valuemax="100" aria-valuenow="0" tabindex="0"><span></span><i></i></div>
+            <div class="touch-buttons"><button id="boost" aria-label="Boost">BOOST</button><button id="roll" aria-label="Barrel roll">ROLL</button><button id="fire" aria-label="Fire">FIRE</button><button id="lock" aria-label="Lock">LOCK</button></div>
+        </div>
+    </main>
+    <footer id="footer"><span><i></i> LOCAL SIMULATION <b>·</b> NO NETWORK REQUIRED</span><span>KEYBOARD + POINTER / TOUCH</span></footer>
+    <div id="announcer" class="sr-only" aria-live="polite"></div>
+    <script type="module" src="./main.js"></script>
+</body>
+</html>

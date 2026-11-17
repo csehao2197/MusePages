@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="description" content="An illustrated exploration of twelve traditional Chinese trades. Discover the tools, sounds and everyday rituals behind the work.">
+    <title>Vanishing Trades — An Illustrated Cultural Archive</title>
+    <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <a class="skip" href="#archive">Skip to the archive</a>
+    <header class="masthead">
+        <a class="brand" href="#home" aria-label="Vanishing Trades home"><span class="brand-mark" aria-hidden="true">VT</span> VANISHING TRADES<span class="brand-sub">AN ILLUSTRATED CULTURAL ARCHIVE</span></a>
+        <nav aria-label="Main navigation">
+            <a href="#archive">The archive</a>
+            <a href="#atlas">The atlas</a>
+            <a href="#then-now">Then & now</a>
+        </nav>
+        <a class="header-cta" href="#heritage">Keep a craft alive <span aria-hidden="true">↗</span></a>
+    </header>
+    <main data-genie-key="archive-home" data-genie-title="Vanishing Trades">
+        <section class="hero" id="home" aria-labelledby="hero-title">
+            <img class="hero-art" src="images/workshop.svg" alt="Original woodcut-style illustration of a craftsperson's hands at a lamplit workbench, with a fountain pen and traditional tools.">
+            <div class="hero-shade"></div>
+            <div class="hero-inner">
+                <p class="eyebrow"><span class="small-line"></span> A STUDY OF HANDS, TOOLS & TIME</p>
+                <h1 id="hero-title">Vanishing<br><em>Trades.</em></h1>
+                <p class="hero-intro">Some things can only be made by hand.<br>Some stories can only be kept by listening.</p>
+                <a class="primary-link" href="#archive">Step into the archive <span aria-hidden="true">↗</span></a>
+            </div>
+            <div class="hero-caption"><span class="tiny-cross">+</span> PLATE 001 / THE WORKBENCH<br><span>Original illustration · not a historical photograph</span></div>
+            <div class="hero-bottom">
+                <div class="hero-numbers"><span><strong>12</strong> TRADITIONAL TRADES</span><span><strong>15</strong> ATLAS STOPS</span><span><strong>01</strong> SHARED INHERITANCE</span></div>
+                <a class="scroll-note" href="#archive">SCROLL TO DISCOVER <span aria-hidden="true">↓</span></a>
+            </div>
+        </section>
+        <section class="archive section-pad" id="archive" aria-labelledby="archive-title">
+            <div class="section-top"><p class="eyebrow">01 / THE LIVING ARCHIVE</p><p class="edition">AN OPEN NOTEBOOK, NOT A LAST WORD</p></div>
+            <div class="section-heading"><h2 id="archive-title">The work. <em>The hands.</em><br>The stories in between.</h2><p>A repaired nib. A sharpened blade. A small act of care.<br>Explore twelve trades woven into everyday life in China.</p></div>
+            <div class="archive-toolbar">
+                <div class="filters" role="group" aria-label="Filter by craft type"><button class="active" data-filter="All" aria-pressed="true">All trades <span>12</span></button><button data-filter="Repair" aria-pressed="false">Repair & restore</button><button data-filter="Making" aria-pressed="false">Make & shape</button><button data-filter="Performance" aria-pressed="false">Street & stage</button></div>
+                <label class="search"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input id="search" type="search" placeholder="Find a trade or city" aria-label="Find a trade or city"></label>
+            </div>
+            <div class="results-line"><p id="results" role="status">12 trades to discover</p><button class="sound-toggle" id="sound-toggle" aria-pressed="false">Sound off <span aria-hidden="true">♪</span></button></div>
+            <div class="trade-grid" id="trade-grid"></div>
+            <p class="empty" id="empty" hidden>No matching trades. Try a different name or clear the filters.</p>
+            <div class="archive-foot"><span>Every tool leaves a trace. Every trade holds a story.</span><span id="visits">Local visits: 1</span></div>
+        </section>
+        <section class="atlas section-pad" id="atlas" aria-labelledby="atlas-title">
+            <div class="section-top"><p class="eyebrow">02 / PLACES OF PRACTICE</p><span class="edition">FOLLOW THE THREAD</span></div>
+            <div class="atlas-layout">
+                <div class="atlas-copy"><h2 id="atlas-title">A country<br>of <em>small workshops.</em></h2><p>From a northern street corner to a southern courtyard, follow the tools across our illustrated atlas.</p><p class="muted small">City associations follow the original creative brief. Stops are exploratory, not verified artisan addresses. Diagram is schematic, not a boundary map.</p><div id="city-note" class="city-note" aria-live="polite"><span class="eyebrow">SELECT AN ATLAS STOP</span><h3>Every place has a story.</h3><p>Choose a city to discover its featured trade.</p></div><a id="city-link" href="#archive">Explore all trades <span aria-hidden="true">↗</span></a></div>
+                <div class="map-panel"><svg class="map-lines" viewBox="0 0 600 440" aria-hidden="true"><defs><pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".7" fill="#6b6560"/></pattern></defs><rect width="600" height="440" fill="url(#dots)" opacity=".4"/><path d="m45 185 50-78 93 9 30-45 74 34 47-17 42-46 51 9 33 53 73-3 15 64-47 20-31 63-40 14-18 65-48 61-57-17-47-57-68-15-31-48-65-5Z" fill="#191915" stroke="#766333" stroke-width="1"/><path d="M296 150 350 166 410 141 389 200 420 252 369 267 330 310 280 266 243 244" fill="none" stroke="#c9a84c" opacity=".3" stroke-dasharray="3 7"/></svg><div id="city-points"></div><span class="map-key"><i></i> ILLUSTRATED ARCHIVE STOP</span></div>
+            </div>
+        </section>
+        <section class="timeline section-pad" id="then-now" aria-labelledby="timeline-title">
+            <div class="section-top"><p class="eyebrow">03 / A CHANGING EVERYDAY</p><span class="edition">WHAT WE KEEP. WHAT WE REPLACE.</span></div>
+            <div class="timeline-heading"><h2 id="timeline-title">Then & <em>now.</em></h2><div class="timeline-controls"><button id="previous" aria-label="Previous trade">←</button><span id="timeline-name"></span><button id="next" aria-label="Next trade">→</button></div></div>
+            <p class="muted">An illustrated comparison of working contexts, not dated documentary evidence.</p>
+            <div class="comparison" id="comparison">
+                <div class="compare-now"><img id="now-image" src="images/xiugangbi.svg" alt=""><span>CONTEMPORARY CONTEXT</span><b>REPLACE / REDISCOVER</b></div>
+                <div class="compare-before" id="compare-before"><img id="before-image" src="images/xiugangbi.svg" alt=""><span>TRADITIONAL CONTEXT</span><b>REPAIR / REUSE</b></div>
+                <div class="compare-divider" id="compare-divider"><span aria-hidden="true">↔</span></div>
+                <input type="range" min="5" max="95" value="50" id="compare-range" aria-label="Reveal traditional versus contemporary context">
+            </div>
+            <div class="compare-notes"><div><p class="eyebrow">THE FAMILIAR RITUAL</p><p id="old-note"></p></div><div><p class="eyebrow">A DIFFERENT RHYTHM</p><p id="now-note"></p></div></div>
+        </section>
+        <section class="heritage section-pad" id="heritage" aria-labelledby="heritage-title">
+            <div class="heritage-panel"><div><p class="eyebrow">04 / CARRY IT FORWARD</p><h2 id="heritage-title">Curiosity is<br>the first <em>apprenticeship.</em></h2><p>Which craft would you like to learn?</p><p class="muted small">A local demonstration of an interest form. No details are sent, stored or shared. This is not a real apprenticeship application.</p></div><form id="heritage-form"><label>A TRADE TO EXPLORE<select name="trade" id="interest-trade" required><option value="">Choose your craft</option></select></label><div class="form-pair"><label>YOUR NAME<input name="name" autocomplete="name" required maxlength="80" placeholder="Your name"></label><label>PHONE NUMBER<input name="phone" type="tel" autocomplete="tel" required pattern="[+0-9\(\) .\-]{6,30}" placeholder="+1 555 010 0200"></label></div><button class="primary-link" type="submit">Express your interest <span aria-hidden="true">↗</span></button><p id="form-status" role="status">Demo only. Your curiosity stays with you.</p></form></div>
+        </section>
+    </main>
+    <footer class="section-pad"><p class="eyebrow">A NOTE ON PRESERVATION</p><h2>Not to hold on to the past.<br>But to give it <em>a future.</em></h2><p>This independent illustrated concept celebrates the knowledge held in ordinary work.<br>Stories are imagined vignettes, sounds are synthesized, and artwork is original.<br>These trades are not uniformly disappearing; practices and communities continue to change.</p><div id="footer-trades"></div><div class="footer-bottom"><a class="brand" href="#home">VANISHING TRADES</a><span>ILLUSTRATED WITH CARE · MADE TO BE EXPLORED</span><a href="LICENSE.txt">Source & license ↗</a></div></footer>
+    <a class="download" href="images/field-notes.svg" download="vanishing-trades-field-notes.svg" aria-label="Download original illustrated field notes">↓ <span>Field notes</span></a>
+    <dialog id="trade-dialog" aria-labelledby="detail-title">
+        <button id="close-dialog" class="close" aria-label="Close trade story">×</button>
+        <div class="detail-layout"><div class="detail-image"><img id="detail-image" src="images/xiugangbi.svg" alt=""><span id="detail-plate"></span></div><div class="detail-copy"><p class="eyebrow" id="detail-category"></p><h2 id="detail-title"></h2><p id="detail-roman" class="roman"></p><p id="detail-subtitle"></p><p class="fiction-label">AN IMAGINED WORKSHOP VIGNETTE</p><div id="detail-story"></div><div class="detail-actions"><button id="play-sound">Listen to the craft <span class="wave" aria-hidden="true"><i></i><i></i><i></i></span></button><span id="detail-city"></span></div><p class="small muted" id="sound-status" role="status">An original synthesized impression, not a field recording.</p></div></div>
+    </dialog>
+</body>
+</html>

@@ -1,0 +1,469 @@
+{
+  "prompt": "601-sci-fi-arena-wave-survival-game",
+  "modelId": "gpt-6.1-sol",
+  "startedAt": "2026-11-16T11:34:13.987Z",
+  "passed": true,
+  "sourceCheck": "html",
+  "staticDigest": "363bb143704b6686941b818d61e26d778768cef118f009a03b0f7d90902ff9d6",
+  "assertions": [
+    {
+      "name": "Desktop live WebGL title, one hovering drone, fonts and English title",
+      "passed": true,
+      "evidence": true
+    },
+    {
+      "name": "Desktop title has no horizontal overflow",
+      "passed": true,
+      "evidence": {
+        "width": 1200,
+        "document": 1200,
+        "body": 1200,
+        "height": 900
+      }
+    },
+    {
+      "name": "Sound toggle works; clicking outside title card does not start",
+      "passed": true,
+      "evidence": true
+    },
+    {
+      "name": "Rejected pointer-lock promise safely activates drag mode, hint and Fire/Reload",
+      "passed": true,
+      "evidence": true
+    },
+    {
+      "name": "Actual WASD movement and arrow-key looking",
+      "passed": true,
+      "evidence": true
+    },
+    {
+      "name": "Actual drag look changes camera without firing",
+      "passed": true,
+      "evidence": true
+    },
+    {
+      "name": "Wave 1 actually spawns three drones and drones move",
+      "passed": true,
+      "evidence": {
+        "before": {
+          "position": [
+            3.777875145109012,
+            2.1748689887164905,
+            2.2803098518622917
+          ],
+          "shield": 46
+        },
+        "after": {
+          "position": [
+            4.111578244446915,
+            2.1625333233564237,
+            2.9141830024347235
+          ],
+          "shield": 28
+        }
+      }
+    },
+    {
+      "name": "Actual enemy-fired projectiles hit and reduce shield",
+      "passed": true,
+      "evidence": {
+        "shield": 10,
+        "health": 100
+      }
+    },
+    {
+      "name": "Actual held F empties 12-round magazine; dry fire produces no tracer",
+      "passed": true,
+      "evidence": {
+        "effects": 0,
+        "cooldown": 0.18
+      }
+    },
+    {
+      "name": "Desktop pause has no horizontal overflow",
+      "passed": true,
+      "evidence": {
+        "width": 1200,
+        "document": 1200,
+        "body": 1200,
+        "height": 900
+      }
+    },
+    {
+      "name": "Esc pause freezes drone/bolt/reload/wave/cell clocks and hides HUD",
+      "passed": true,
+      "evidence": {
+        "clock": 8.04999999999998,
+        "reload": 0.4499999999999996,
+        "health": 38,
+        "bolts": [
+          [
+            0.9848951123651544,
+            1.7202952206564348,
+            5.39120981691811
+          ],
+          [
+            -6.187645975940765,
+            2.1215936710872723,
+            5.590064768193478
+          ]
+        ],
+        "cells": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "wave": 0.45
+      }
+    },
+    {
+      "name": "Esc resumes frozen round; reload completes to 12",
+      "passed": true,
+      "evidence": true
+    },
+    {
+      "name": "Controlled aim and single-frame browser F events raycast drone: 100 → 66 → 32 → destroyed, score +1",
+      "passed": true,
+      "evidence": [
+        {
+          "health": 66,
+          "dropped": 0,
+          "ammo": 11
+        },
+        {
+          "health": 32,
+          "dropped": 0,
+          "ammo": 10
+        },
+        {
+          "health": 100,
+          "dropped": 1,
+          "ammo": 9
+        }
+      ]
+    },
+    {
+      "name": "Controlled actual mechanics: shield overflow/invulnerability, perimeter/crate sliding, full/pickup/14-second respawn/clamp, reload gates, crate-occluded shot",
+      "passed": true,
+      "evidence": {
+        "overflow": [
+          0,
+          92
+        ],
+        "invulnerable": [
+          0,
+          92
+        ],
+        "perimeter": 13.5,
+        "crate": [
+          1.8,
+          1.65,
+          2.74
+        ],
+        "slide": [
+          3.4263455967290595,
+          1.65,
+          2.0894617613083764
+        ],
+        "fullCell": [
+          true,
+          0
+        ],
+        "pickup": [
+          70,
+          false,
+          14
+        ],
+        "waitingCell": false,
+        "respawn": true,
+        "clamp": 100,
+        "fullReload": 0,
+        "fireDuringReload": [
+          2,
+          2
+        ],
+        "occludedHealth": 100
+      }
+    },
+    {
+      "name": "Controlled wave 5/6: exact size, desktop live cap 8, queued spawn retained, 450ms slot delay, 4.5s breather, next wave",
+      "passed": true,
+      "evidence": {
+        "total": 11,
+        "live": 8,
+        "spawned": 8,
+        "beforeSlotDelay": 8,
+        "afterSlotDelay": 9,
+        "clear": true,
+        "allSpawned": 11,
+        "beforeBreather": 5,
+        "nextWave": 6,
+        "nextTotal": 13
+      }
+    },
+    {
+      "name": "Pause Retry resets all round state and immediately starts wave 1",
+      "passed": true,
+      "evidence": {
+        "health": 100,
+        "shield": 100,
+        "ammo": 12,
+        "reload": 0,
+        "wave": 1,
+        "dropped": 0,
+        "cells": true
+      }
+    },
+    {
+      "name": "Real moving bolt collision at 18 health causes game over; controls hide and Esc cannot resume",
+      "passed": true,
+      "evidence": true
+    },
+    {
+      "name": "Game-over simulation clock remains frozen",
+      "passed": true,
+      "evidence": true
+    },
+    {
+      "name": "Desktop after gameplay/gameover/retry has no horizontal overflow",
+      "passed": true,
+      "evidence": {
+        "width": 1200,
+        "document": 1200,
+        "body": 1200,
+        "height": 900
+      }
+    },
+    {
+      "name": "Game-over Retry actually restarts playable round",
+      "passed": true,
+      "evidence": true
+    },
+    {
+      "name": "Mobile title has no horizontal overflow",
+      "passed": true,
+      "evidence": {
+        "width": 390,
+        "document": 390,
+        "body": 390,
+        "height": 844
+      }
+    },
+    {
+      "name": "Actual Chromium simultaneous multi-touch: left movement, right aiming and held Fire",
+      "passed": true,
+      "evidence": {
+        "before": {
+          "z": 7.4,
+          "yaw": 0,
+          "ammo": 12
+        },
+        "after": {
+          "z": 4.527952309840947,
+          "yaw": -1.4723449999999982,
+          "ammo": 9
+        }
+      }
+    },
+    {
+      "name": "Mobile actual Reload/Pause/Resume; controlled wave-3 live cap 4 with queue retained",
+      "passed": true,
+      "evidence": {
+        "total": 7,
+        "live": 4,
+        "spawned": 4
+      }
+    },
+    {
+      "name": "Mobile after multi-touch/reload/pause/resume has no horizontal overflow",
+      "passed": true,
+      "evidence": {
+        "width": 390,
+        "document": 390,
+        "body": 390,
+        "height": 844
+      }
+    },
+    {
+      "name": "Reduced-motion actual rendering: no title/cell bob/spin, camera bob/roll, weapon kick or muzzle light",
+      "passed": true,
+      "evidence": {
+        "cameraY": 1.65,
+        "roll": 0,
+        "weaponZ": -0.52,
+        "muzzle": 0
+      }
+    },
+    {
+      "name": "1440px reduced-motion gameplay has no horizontal overflow",
+      "passed": true,
+      "evidence": {
+        "width": 1440,
+        "document": 1440,
+        "body": 1440,
+        "height": 900
+      }
+    },
+    {
+      "name": "Unmodified native pointer-lock start works or safely falls back in headless browser",
+      "passed": true,
+      "evidence": {
+        "mode": "lock",
+        "locked": true
+      }
+    },
+    {
+      "name": "Actual allow-scripts-only opaque sandbox plays with drag/Fire fallback; QA emulates required CORS asset-host headers",
+      "passed": true,
+      "evidence": true
+    },
+    {
+      "name": "Controlled document.hidden visibility fixture freezes simulation clocks",
+      "passed": true,
+      "evidence": {
+        "before": 1.3500000000000005,
+        "hidden": 1.4000000000000006
+      }
+    }
+  ],
+  "errors": [],
+  "consoleWarnings": [
+    {
+      "viewport": "desktop",
+      "text": "[.WebGL-0x3bc00424a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "viewport": "desktop",
+      "text": "[.WebGL-0x3bc00424a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "viewport": "desktop",
+      "text": "[.WebGL-0x3bc00424a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "viewport": "desktop",
+      "text": "[.WebGL-0x3bc00424a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+    }
+  ],
+  "viewports": [
+    {
+      "label": "desktop",
+      "viewport": {
+        "width": 1200,
+        "height": 900
+      },
+      "status": 200
+    },
+    {
+      "label": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "isMobile": true,
+      "hasTouch": true,
+      "status": 200
+    },
+    {
+      "label": "desktop-1440-reduced",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "reduce",
+      "status": 200
+    },
+    {
+      "label": "native-pointer-lock",
+      "viewport": {
+        "width": 1200,
+        "height": 900
+      },
+      "status": 200
+    },
+    {
+      "label": "sandbox-host",
+      "viewport": {
+        "width": 1200,
+        "height": 900
+      },
+      "status": 200
+    }
+  ],
+  "visualReviewed": true,
+  "resourcesClosed": true,
+  "previousExecutions": [
+    {
+      "startedAt": "2026-11-16T11:28:53.207Z",
+      "passed": false,
+      "assertionsPassed": 8,
+      "failure": "Expected values to be strictly equal:\n\n'10' !== '0'\n",
+      "note": "Retained QA execution evidence; the initial asynchronous test predicate was corrected to poll synchronously."
+    },
+    {
+      "startedAt": "2026-11-16T11:30:03.018Z",
+      "passed": false,
+      "assertionsPassed": 12,
+      "failure": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n-   0,\n-   0,\n    1,\n+   1,\n+   2\n  ]\n",
+      "note": "Retained QA execution evidence; the initial asynchronous test predicate was corrected to poll synchronously."
+    },
+    {
+      "startedAt": "2026-11-16T11:31:21.973Z",
+      "passed": true,
+      "assertionsPassed": 26,
+      "note": "Retained earlier QA execution evidence; current assertions and outcome are authoritative. Test harness polling and single-shot cadence were made deterministic."
+    }
+  ],
+  "testMethod": "Actual Chromium keyboard, mouse, touch and gameplay, plus explicitly controlled in-memory fixtures for rule/occlusion/timer edge cases. No rule constants or game code are patched.",
+  "screenshots": {
+    "desktop": "C:\\Code\\MusePages\\out\\pages\\601-sci-fi-arena-wave-survival-game\\GPT-6\\.checks\\desktop.png",
+    "desktop-gameplay": "C:\\Code\\MusePages\\out\\pages\\601-sci-fi-arena-wave-survival-game\\GPT-6\\.checks\\desktop-gameplay.png",
+    "mobile": "C:\\Code\\MusePages\\out\\pages\\601-sci-fi-arena-wave-survival-game\\GPT-6\\.checks\\mobile.png",
+    "mobile-gameplay": "C:\\Code\\MusePages\\out\\pages\\601-sci-fi-arena-wave-survival-game\\GPT-6\\.checks\\mobile-gameplay.png"
+  },
+  "url": "http://127.0.0.1:63990/pages/sci-fi-arena-wave-survival-game/GPT-6/index.html",
+  "completedAt": "2026-11-16T11:35:46.502Z",
+  "visualReview": {
+    "reviewedAt": "2026-11-16T11:37:39.709Z",
+    "method": "通过 view 工具实际打开 desktop.png、mobile.png、桌面/移动实战图和 ensurePreview 真实 preview.png。",
+    "observations": [
+      "桌面标题层级清晰，暖钠灯与纸白标题对比明确，卡片宽度与留白符合原始设计。",
+      "移动卡片、文字和按钮无裁切；触控摇杆、开火、装填与HUD分区可读，无横向溢出。",
+      "提高统一照明系数至4.8并去除地板自阴影条纹后重新截图；保留原始暗色工业箱体场地。",
+      "真实实时场景而非图片背景；静态预览与标题态一致。"
+    ],
+    "images": [
+      {
+        "file": "C:\\Code\\MusePages\\out\\pages\\601-sci-fi-arena-wave-survival-game\\GPT-6\\.checks\\desktop.png",
+        "sha256": "53ddaaa6745b95a3dc92aa27e835431c05fe8b2b702519b2799f0558dfe6b885",
+        "width": 1200,
+        "height": 900
+      },
+      {
+        "file": "C:\\Code\\MusePages\\out\\pages\\601-sci-fi-arena-wave-survival-game\\GPT-6\\.checks\\mobile.png",
+        "sha256": "707bd92d77a84009f8a185501d8270a11ae986448665f83fa90d08684ea0c85c",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "file": "C:\\Code\\MusePages\\out\\pages\\601-sci-fi-arena-wave-survival-game\\GPT-6\\.checks\\desktop-gameplay.png",
+        "sha256": "34f07bb726f1e4f89b6322c905055702873e97cfbc1c316d98f241d6f6f5ee3c",
+        "width": 1200,
+        "height": 900
+      },
+      {
+        "file": "C:\\Code\\MusePages\\out\\pages\\601-sci-fi-arena-wave-survival-game\\GPT-6\\.checks\\mobile-gameplay.png",
+        "sha256": "b1a7b95057fbb066f83ed73907bb951b20983ffc6451992c1913a4af5c3947e2",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "file": "C:\\Code\\MusePages\\out\\pages\\601-sci-fi-arena-wave-survival-game\\GPT-6\\out\\preview.png",
+        "sha256": "7268eb2b04380156eb0ccb0c48264b87737e48214864bbd342f1b697101ad539",
+        "width": 1200,
+        "height": 900
+      }
+    ]
+  }
+}

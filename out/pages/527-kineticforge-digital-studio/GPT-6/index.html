@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#090909">
+    <meta name="description" content="KineticForge — a Vancouver digital studio specializing in web products and interface design.">
+    <title>Kinetic Forge</title>
+    <link rel="stylesheet" href="https://db.onlinewebfonts.com/c/e66905e07608167a84e6ad52f638c3c6?family=Helvetica+Now+Var">
+    <link rel="stylesheet" href="./index.css">
+    <script src="./app.js" defer></script>
+</head>
+<body>
+    <a class="skip-link" href="#studio">Skip to our studio</a>
+    <div class="backgrounds" aria-hidden="true">
+        <video id="hero-video" class="background-video active" muted playsinline autoplay loop preload="auto" data-source="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260703_152235_56f10620-8704-4c63-8ddd-f146a7085404.mp4"></video>
+        <video id="studio-video" class="background-video" muted playsinline loop preload="auto" data-source="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260703_075205_41edc37d-b74b-4c8c-a1e2-2b7879cb4386.mp4"></video>
+        <div class="shade"></div>
+    </div>
+    <header class="navbar">
+        <a class="brand" href="#home" aria-label="KineticForge home">
+            <span id="atom-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-atom" aria-hidden="true"><circle cx="12" cy="12" r="1"></circle><path d="M20.2 20.2c2.04-2.03.02-7.36-4.5-11.9-4.54-4.52-9.87-6.54-11.9-4.5-2.04 2.03-.02 7.36 4.5 11.9 4.54 4.52 9.87 6.54 11.9 4.5Z"></path><path d="M15.7 15.7c4.52-4.54 6.54-9.87 4.5-11.9-2.03-2.04-7.36-.02-11.9 4.5-4.52 4.54-6.54 9.87-4.5 11.9 2.03 2.04 7.36.02 11.9-4.5Z"></path></svg></span>
+            <span>KineticForge</span>
+        </a>
+        <nav class="desktop-nav" aria-label="Main navigation">
+            <a href="#studio">our studio</a>
+            <button type="button" data-open="expertise">expertise</button>
+            <button type="button" data-open="projects">projects</button>
+            <button type="button" data-open="contact">get in touch</button>
+        </nav>
+        <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+            <span></span><span></span>
+        </button>
+    </header>
+    <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile navigation" inert>
+        <a href="#studio" style="--delay:100ms">our studio</a>
+        <button type="button" data-open="expertise" style="--delay:175ms">expertise</button>
+        <button type="button" data-open="projects" style="--delay:250ms">projects</button>
+        <button type="button" data-open="contact" style="--delay:325ms">get in touch</button>
+    </nav>
+    <main class="content">
+        <section id="home" class="hero" aria-labelledby="hero-title">
+            <h1 id="hero-title">Transforming the<br>online interaction<br>since 2001</h1>
+            <p>A Vancouver digital studio Specializing<br class="desktop-break"> in Web Products and Interface Design</p>
+            <a class="scroll-cue" href="#studio" aria-label="Explore our studio">
+                <span>SCROLL TO EXPLORE</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 4v16m-6-6 6 6 6-6"/></svg>
+            </a>
+        </section>
+        <section id="studio" class="studio" aria-labelledby="studio-title">
+            <div class="studio-copy">
+                <h2 id="studio-title">We craft award<br>winning platforms<br>and tools</h2>
+                <div class="studio-details">
+                    <p>With studios in Vancouver, Montreal and Berlin, we design and develop full-scale digital products that generate real outcomes, cut costs, boost engagement and grow revenue.</p>
+                    <p>For over 23 years, Kinetic Forge has partnered with organizations large and small with a roster that features some of the most recognized names worldwide. We're always eager to arrange a meeting to explore your next venture so don't hesitate to reach out for a free consultation or quote!</p>
+                    <button type="button" class="outline-button" data-open="about">Learn more here</button>
+                </div>
+            </div>
+            <div class="partners">
+                <p class="partners-label">Partners we're proud to work with</p>
+                <div class="client-grid" aria-label="Partner roster as supplied in the design brief">
+                    <div class="nasa">NASA</div>
+                    <div class="google">Google</div>
+                    <div>
+                        <svg viewBox="0 0 24 24" class="client-icon" fill="currentColor" aria-hidden="true"><path d="M18.6,6.62C17.16,6.62 15.8,7.18 14.83,8.15L7.8,14.39C7.16,15.03 6.31,15.38 5.4,15.38C3.53,15.38 2,13.87 2,12C2,10.13 3.53,8.62 5.4,8.62C6.31,8.62 7.16,8.97 7.84,9.65L8.97,10.65L10.5,9.31L9.22,8.2C8.2,7.18 6.84,6.62 5.4,6.62C2.42,6.62 0,9.04 0,12C0,14.96 2.42,17.38 5.4,17.38C6.84,17.38 8.2,16.82 9.17,15.85L16.2,9.61C16.84,8.97 17.69,8.62 18.6,8.62C20.47,8.62 22,10.13 22,12C22,13.87 20.47,15.38 18.6,15.38C17.69,15.38 16.84,15.03 16.16,14.35L15.03,13.34L13.5,14.68L14.78,15.8C15.8,16.82 17.16,17.38 18.6,17.38C21.58,17.38 24,14.96 24,12C24,9.04 21.58,6.62 18.6,6.62Z"/></svg>
+                        <span>Canadian<br>Digital Service</span>
+                    </div>
+                    <div>
+                        <svg class="un-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width=".8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><ellipse cx="12" cy="12" rx="4" ry="10"/><path d="M4 7h16M2 12h20M4 17h16"/></svg>
+                        <span>United Nations</span>
+                    </div>
+                    <div>
+                        <svg class="canada-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2L9.5 8.5H2L8 12.5L5.5 19L12 15L18.5 19L16 12.5L22 8.5H14.5L12 2Z"/></svg>
+                        <span class="canada-label">Canada</span>
+                    </div>
+                    <div><strong class="mn">mn</strong><span>Department of<br>Administration</span></div>
+                </div>
+                <a class="font-credit" href="https://www.onlinewebfonts.com/fonts" target="_blank" rel="noopener noreferrer">Web Fonts</a>
+            </div>
+        </section>
+    </main>
+    <button class="motion-toggle" type="button" aria-label="Pause background videos" aria-pressed="false">
+        <svg class="pause-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg>
+        <svg class="play-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m8 5 11 7-11 7Z"/></svg>
+    </button>
+    <dialog id="detail-dialog" aria-labelledby="dialog-title">
+        <button type="button" class="dialog-close" aria-label="Close details">Close <span aria-hidden="true">×</span></button>
+        <div class="dialog-content"></div>
+    </dialog>
+</body>
+</html>

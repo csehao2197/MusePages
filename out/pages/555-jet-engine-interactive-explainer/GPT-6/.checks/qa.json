@@ -1,0 +1,52 @@
+{
+  "passed": true,
+  "visualReviewed": true,
+  "viewports": [
+    {
+      "width": 1200,
+      "height": 900,
+      "deviceScaleFactor": 1,
+      "screenshot": ".checks\\desktop.png"
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 1
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 1,
+      "screenshot": ".checks\\mobile.png"
+    }
+  ],
+  "assertions": [
+    "HTTP 200 at exact final public subpath; meaningful visible page, 22 fan blades, 14 rotor rows, five chapters, 160 desktop particles.",
+    "Desktop initial: no horizontal overflow.",
+    "Keyboard Home/End/ArrowRight synchronize all three throttles and both spool readouts; real projected blades move, pause freezes geometry, zero freezes blades and particles.",
+    "Bypass/core controls independently hide path and particle groups and synchronize all scenes.",
+    "All five manual stage selections highlight relevant geometry; reset restores defaults; real scrolling selects all five cutaway states.",
+    "Wrong and correct quiz choices provide mechanical explanations; keyboard Enter selects; retry clears feedback and restores focus.",
+    "Desktop after interactions: no horizontal overflow.",
+    "Reduced motion freezes continuous rotors while keyboard readouts, scroll states, toggles and quiz remain functional.",
+    "Offscreen hero scene does not update rotor geometry.",
+    "1440×900 requested desktop layout: no horizontal overflow.",
+    "Mobile initial: no horizontal overflow.",
+    "Mobile after touch/quiz/throttle interactions: no horizontal overflow.",
+    "390×844 mobile: 80 particles; actual touch pause, flow isolation, stage selection and quiz; 73% lab throttle synchronizes hero."
+  ],
+  "errors": [],
+  "resourcesClosed": true,
+  "staticDigest": "519e928b3556d1717e55d2ddc4a43fc4aae4ede821db88865e746b541db9e1a2",
+  "visualEvidence": {
+    "opened": [
+      ".checks\\desktop.png",
+      ".checks\\mobile.png",
+      "out\\preview.png"
+    ],
+    "desktop": "已打开真实1200×900截图：暖白版面与深绿剖面形成清晰层次；标题、CTA、发动机和控件间距均衡，无裁切。",
+    "mobile": "已打开真实390×844截图：导航换行、标题、按钮和控制区完整，无页面横向溢出；缩小的示意图文字由下方可读章节补充。",
+    "preview": "已打开ensurePreview实际生成的1200×900首屏，内容与本作品一致；预览使用减少动态效果设置。"
+  },
+  "correctedIssue": "首轮发现重置后滚动事件覆盖概览选中态，已令重置返回概览位置；修复后完整浏览器检查通过。"
+}

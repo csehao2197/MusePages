@@ -1,0 +1,212 @@
+{
+  "passed": true,
+  "visualReviewed": true,
+  "modelId": "gpt-6.1-sol",
+  "results": [
+    {
+      "name": "Desktop initial render",
+      "passed": true,
+      "details": "Actual 1200×900 DPR1 WebGL meadow; 18 clumps, 108 flowers, local fonts, English UI, final public subpath."
+    },
+    {
+      "name": "Real procedural instancing",
+      "passed": true,
+      "details": {
+        "counts": [
+          30,
+          30,
+          24,
+          24
+        ],
+        "parts": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "grass": 1800,
+        "geometries": [
+          480,
+          180,
+          180,
+          48
+        ],
+        "births": true,
+        "webgl": true,
+        "drawCalls": 28
+      }
+    },
+    {
+      "name": "Four botanical choices and six-flower raycast planting",
+      "passed": true,
+      "details": "Actual clicks planted exactly six of the chosen type each; existing types preserved; occupied patch rejected; two-phase GPU growth attributes populated."
+    },
+    {
+      "name": "Keyboard and wind",
+      "passed": true,
+      "details": "Canvas 1–4 selection, arrow ring movement, Enter/Space planting; focused slider retains arrow/number behavior; Still/Light/Gusty states and GPU shared wind updated."
+    },
+    {
+      "name": "Help/reset accessible dialogs",
+      "passed": true,
+      "details": "Native modal focus trap and Escape/return focus tested; help scrim dismisses; reset scrim does not; cancel preserves plants."
+    },
+    {
+      "name": "Orbit and wheel",
+      "passed": true,
+      "details": "Actual mouse drag and wheel changed camera without planting."
+    },
+    {
+      "name": "Deterministic reset",
+      "passed": true,
+      "details": "All seeded positions/heights/rotations exactly equal original state; camera, first flower and wind restored."
+    },
+    {
+      "name": "Actual PNG download and failure handling",
+      "passed": true,
+      "details": {
+        "filename": "meadowmint-garden.png",
+        "width": 1200,
+        "height": 900,
+        "bytes": 331536,
+        "stateAndSizeRestored": true,
+        "nullBlobFailureHandled": true
+      }
+    },
+    {
+      "name": "720-bloom capacity",
+      "passed": true,
+      "details": {
+        "count": 720,
+        "rejected": true,
+        "toast": "Your meadow is full. Reset to begin again.",
+        "instances": [
+          642,
+          30,
+          24,
+          24
+        ],
+        "method": "Actual plant validation/state/pools, batched into one render to avoid software-GPU command backlog; not a hardware performance benchmark."
+      }
+    },
+    {
+      "name": "Reduced-motion live preference",
+      "passed": true,
+      "details": "Preference change freezes shader field, disables camera damping, plants immediately without growth stagger."
+    },
+    {
+      "name": "Desktop after-interaction layout",
+      "passed": true,
+      "details": "No horizontal overflow after all interactions."
+    },
+    {
+      "name": "Mobile actual touch controls",
+      "passed": true,
+      "details": "390×844: selected bluebell and tapped six blooms; one-finger orbit and two-finger pinch change camera with no accidental planting; wind, help, reset, 44px targets, no overflow."
+    },
+    {
+      "name": "Resources and errors",
+      "passed": true,
+      "details": "All homepage/resource requests successful; zero request, HTTP, console or page errors in all viewports."
+    }
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "width": 1200,
+      "height": 900,
+      "dpr": 1,
+      "http": 200,
+      "initialOverflow": false,
+      "initialBlooms": 108,
+      "completeIsland": true,
+      "framing": {
+        "minX": 351.1330955188121,
+        "maxX": 1050.780394635056,
+        "minY": 369.77309913496316,
+        "maxY": 678.6115839798883
+      }
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "dpr": 1,
+      "touch": true,
+      "http": 200,
+      "initialOverflow": false,
+      "initialBlooms": 108,
+      "completeIsland": true,
+      "framing": {
+        "minX": 20.753534876318827,
+        "maxX": 366.7136223083873,
+        "minY": 346.98641380162974,
+        "maxY": 500.8530437813762
+      }
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "dpr": 1,
+      "http": 200,
+      "initialOverflow": false,
+      "initialBlooms": 108,
+      "completeIsland": true,
+      "framing": {
+        "minX": 486.7330955188121,
+        "maxX": 1186.3803946350556,
+        "minY": 369.77309913496316,
+        "maxY": 678.6115839798883
+      }
+    }
+  ],
+  "resourcesClosed": true,
+  "visualReview": {
+    "reviewedAt": "2026-11-16T07:03:14.168Z",
+    "images": [
+      ".checks/desktop.png",
+      ".checks/mobile.png",
+      ".checks/postcard.png"
+    ],
+    "assessment": "已打开最终桌面、移动及下载明信片 PNG；核对真实 3D 花型、层级、字距、留白、对比度、双行移动工具栏和完整岛屿边缘。已修复初次截图的右侧裁切及土层缝隙；最终布局无明显缺陷。",
+    "screenshots": {
+      "desktop.png": "83ae917ce6af0d5d8f6943325aa6829baf4d87c4ecb0d3aadf8b22a3c875d922",
+      "mobile.png": "a8e87f3df9c44920fd14359d5c046701f43a68d531eb4dcbc317bcc37ab9c91f",
+      "postcard.png": "b7067d091f4a16c677ac185168c83f74f7d248ced09ea11ffb77781d3682ef14"
+    }
+  },
+  "syntaxChecks": {
+    "passed": true,
+    "files": [
+      "content.js",
+      "fonts.js",
+      "main.js",
+      "ui.js",
+      "vite.config.js",
+      "garden/Garden.js",
+      "garden/geometry.js",
+      "garden/instances.js",
+      "garden/interactions.js",
+      "garden/snapshot.js",
+      ".checks/qa.mjs"
+    ]
+  },
+  "previewReview": {
+    "viewed": true,
+    "path": "C:\\Code\\MusePages\\out\\pages\\584-3d-flower-garden-toy\\GPT-6\\out\\preview.png",
+    "width": 1200,
+    "height": 900,
+    "sha256": "b0dcfc2d51f337bbd110085ecbbca5478e185e1f9dd3ea8be1f35677b6507c29",
+    "assessment": "已通过 view 打开 ensurePreview 新生成的真实首屏；花园、文字、控件与最终桌面实现一致，非设计稿或占位图。"
+  },
+  "staticValidation": {
+    "passed": true,
+    "slug": "3d-flower-garden-toy",
+    "model": "GPT-6",
+    "digest": "06c7aa51ace592be78d536983ddffe2368e53c47e1457a66b3e488801b6b7ba7",
+    "publicFiles": 33,
+    "bytes": 1197765,
+    "sourceExportIdentical": true,
+    "inputFingerprintVerified": true,
+    "previewFingerprintVerified": true
+  }
+}

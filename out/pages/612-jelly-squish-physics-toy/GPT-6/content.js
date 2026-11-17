@@ -1,0 +1,43 @@
+export const BRAND = "Softside Studio";
+export const HEADLINE = "A little less serious.";
+export const INTRO = "Poke it. Pull it. Let the day wobble away.";
+export const ACCENT = "#a84e3d";
+export const FLAVORS =
+[
+    { name: "Peach", color: "#f08e72", note: "Peach. A soft spot for the classics." },
+    { name: "Grape", color: "#a69cda", note: "Grape. A pleasantly wobbly purple." },
+    { name: "Mint", color: "#8bbda9", note: "Mint. A fresh little wobble." }
+];
+export const CONTENT =
+{
+    brand: BRAND,
+    headline: HEADLINE,
+    intro: INTRO,
+    eyebrow: "A SMALL PLAYFUL BREAK",
+    gesture: "Grab a little. Let go.",
+    edition: "THE JELLY PLAYGROUND",
+    resting: "Resting",
+    stretching: "Stretching",
+    wobbling: "Wobbling",
+    dropping: "Dropping",
+    flavor: "Flavor",
+    controls: "Jelly controls",
+    stiffness: "Stiffness",
+    soft: "Soft",
+    firm: "Firm",
+    drop: "Drop it",
+    squish: "Squish ↘",
+    reset: "Reset",
+    hint: "Drag to stretch · Tap to poke",
+    soundOff: "Sound off",
+    soundOn: "Sound on",
+    soundUnavailable: "Sound unavailable",
+    footer: "Made for a moment of play.",
+    credit: "Template by VibeFather",
+    creditUrl: "https://vibefather.ai/t/jelly-squish-physics-toy",
+    stage: "Interactive fluted jelly on a ceramic plate. Drag to stretch or tap to poke. Use Squish and Drop it for keyboard play.",
+    dropped: "Jelly dropped onto the plate.",
+    resetDone: "Jelly reset. Ready for another wobble.",
+    squished: "Jelly squished.",
+    flavorChanged: "flavor selected."
+};

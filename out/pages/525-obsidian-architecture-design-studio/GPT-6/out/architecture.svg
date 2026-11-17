@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000">
+    <defs>
+        <linearGradient id="sky" x2=".9" y2="1">
+            <stop stop-color="#101516"/><stop offset="1" stop-color="#555650"/>
+        </linearGradient>
+        <linearGradient id="stone" x2="1" y2=".7">
+            <stop stop-color="#77776d"/><stop offset=".5" stop-color="#484b46"/><stop offset="1" stop-color="#222726"/>
+        </linearGradient>
+        <linearGradient id="side" x2="1" y2="1">
+            <stop stop-color="#171d1c"/><stop offset="1" stop-color="#424840"/>
+        </linearGradient>
+        <linearGradient id="ground" x2="0" y2="1">
+            <stop stop-color="#343c36"/><stop offset="1" stop-color="#121c1a"/>
+        </linearGradient>
+        <linearGradient id="inner" x2="1" y2="0">
+            <stop stop-color="#090f0f"/><stop offset="1" stop-color="#5c5b50"/>
+        </linearGradient>
+        <linearGradient id="light" x2="1" y2="0">
+            <stop stop-color="#d2c6a7" stop-opacity="0"/><stop offset="1" stop-color="#d2c6a7" stop-opacity=".18"/>
+        </linearGradient>
+        <filter id="grain">
+            <feTurbulence baseFrequency=".6" numOctaves="3" seed="24" stitchTiles="stitch" type="fractalNoise"/>
+            <feColorMatrix type="saturate" values="0"/>
+            <feComponentTransfer><feFuncA type="linear" slope=".13"/></feComponentTransfer>
+            <feBlend in="SourceGraphic" mode="soft-light"/>
+        </filter>
+        <filter id="blur"><feGaussianBlur stdDeviation="35"/></filter>
+        <mask id="arch-cut">
+            <rect width="1600" height="1000" fill="white"/>
+            <path d="M1030 764V405C1030 214 1340 214 1340 405V790Z" fill="black"/>
+        </mask>
+    </defs>
+    <rect width="1600" height="1000" fill="url(#sky)"/>
+    <ellipse cx="1280" cy="180" rx="340" ry="210" fill="#9b9a7e" opacity=".09" filter="url(#blur)"/>
+    <path d="M0 545 190 531 350 557 580 512 720 541 900 500 1200 535 1600 514V1000H0Z" fill="#1c2623"/>
+    <path d="M0 798 780 612 1600 754V1000H0Z" fill="url(#ground)"/>
+    <g filter="url(#grain)">
+        <path d="M520 178 1490 45 1510 807 534 770Z" fill="url(#stone)" mask="url(#arch-cut)"/>
+        <path d="M410 248 520 178 534 770 420 798Z" fill="url(#side)"/>
+        <path d="M520 178 1490 45 1390 16 410 248Z" fill="#555c51"/>
+        <path d="M1490 45 1600 103V754L1510 807Z" fill="#252d29"/>
+        <path d="M1030 764V405C1030 214 1340 214 1340 405V790L1272 730V420C1272 291 1104 291 1104 420V728Z" fill="#343a32"/>
+        <path d="M1104 728V420C1104 291 1272 291 1272 420V730Z" fill="url(#inner)"/>
+        <path d="M1104 420C1104 291 1272 291 1272 420L1229 464V477C1229 374 1150 368 1150 477V718L1104 728Z" fill="#6a6a59" opacity=".7"/>
+        <path d="M1030 764 1104 728 1272 730 1340 790Z" fill="#85806c"/>
+        <path d="M0 792 425 697 534 714 111 836Z" fill="#4b554a"/>
+        <path d="M0 792V817L111 864V836Z" fill="#18221f"/>
+        <path d="M111 836 534 714 1000 809 600 955Z" fill="#586054"/>
+        <path d="M111 836V864L600 984V955Z" fill="#252f2a"/>
+        <path d="M600 955 1000 809V837L600 984Z" fill="#1a2420"/>
+    </g>
+    <g stroke="#c0bd9d" stroke-opacity=".1" fill="none">
+        <path d="M524 360 1027 303M525 526 1028 487M528 684 1028 670M1390 235 1495 222M1390 407 1499 399M1391 582 1504 583M1392 757 1509 766"/>
+        <path d="M706 155V779M887 129V779M1400 58V791"/>
+        <path d="M184 847 601 729M350 885 774 764M511 924 935 795"/>
+    </g>
+    <path d="M1148 718 1249 725 1600 943 1480 1000 635 1000Z" fill="url(#light)"/>
+    <g fill="#121b18">
+        <path d="M252 768 255 573 263 569 269 765Z"/>
+        <path d="M224 614 261 529 289 611 307 643 206 649Z"/>
+        <path d="M191 658 260 576 328 665Z"/>
+        <path d="M153 708 258 623 360 713Z"/>
+    </g>
+    <path d="M0 1000V930C133 935 196 893 274 937S473 976 571 1000Z" fill="#101a17"/>
+    <rect width="1600" height="1000" fill="#101513" opacity=".1" filter="url(#grain)"/>
+</svg>

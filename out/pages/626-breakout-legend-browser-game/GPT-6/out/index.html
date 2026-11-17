@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#030014">
+    <meta name="description" content="Ten levels. One chance. A cinematic, keyboard and touch controlled Breakout arcade game.">
+    <title>Breakout Legend — One chance. Make it legendary.</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="./style.css">
+    <script type="module" src="./app.js"></script>
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="./index.html" aria-label="Breakout Legend home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>BREAKOUT<span class="brand-light">/ LEGEND</span></a>
+        <nav aria-label="Main navigation">
+            <a href="#field-guide">How to play <span>↗</span></a>
+            <button class="nav-button" id="leaderboard-button">Leaderboard</button>
+            <button class="icon-button" id="sound-button" aria-label="Enable sound" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M11 5 5 9H2v6h3l6 4zM16 9l6 6m0-6-6 6"/></svg></button>
+        </nav>
+    </header>
+    <main>
+        <section class="intro" aria-labelledby="page-title">
+            <div>
+                <p class="eyebrow"><span></span> THE ARCADE. REIMAGINED.</p>
+                <h1 id="page-title">Breakout <span>Legend</span><sup>®</sup></h1>
+                <p class="intro-line">One chance. Ten levels. <strong>Make it legendary.</strong></p>
+            </div>
+            <div class="session-label"><span class="status-dot"></span> ALL SYSTEMS READY <small>NO DOWNLOADS. JUST REFLEXES.</small></div>
+        </section>
+        <div class="arcade-layout">
+            <section class="machine" aria-label="Breakout game">
+                <div class="hud">
+                    <div class="hud-item"><span class="hud-label">SECTOR</span><strong><span id="level-value">01</span><small> / 10</small></strong></div>
+                    <div class="hud-item timer"><span class="hud-label">SURVIVAL TIME</span><strong id="timer-value">00:00</strong></div>
+                    <div class="hud-item balls"><span class="hud-label">BALLS IN PLAY</span><strong id="balls-value" aria-label="1 ball in play">●<small> × 1</small></strong></div>
+                    <button class="pause-button" id="pause-button" aria-label="Pause game" disabled><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M5 4h3v12H5zm7 0h3v12h-3z"/></svg><span>PAUSE</span><kbd>P</kbd></button>
+                </div>
+                <div class="playfield">
+                    <canvas id="game" width="800" height="600" tabindex="0" aria-label="Breakout playfield. Move with arrow keys, mouse, or drag. P pauses."></canvas>
+                    <div class="screen" id="screen"></div>
+                    <div class="field-corner top-left"></div><div class="field-corner bottom-right"></div>
+                    <span class="field-caption" id="field-caption">AWAITING PLAYER INPUT_</span>
+                </div>
+                <div class="machine-footer"><span><span class="status-dot"></span> <span id="machine-status">READY TO LAUNCH</span></span><span>800 × 600 <i>/</i> 60 FPS TARGET</span></div>
+                <p class="sr-only" id="announcement" role="status" aria-live="polite"></p>
+            </section>
+            <aside class="guide" id="field-guide" aria-label="Field guide">
+                <div class="guide-heading"><span class="eyebrow">YOUR FLIGHT MANUAL</span><span class="guide-number">01—10</span></div>
+                <section class="mission">
+                    <h2>Small paddle.<br>Big legend.</h2>
+                    <p>Clear every breakable brick.<br>Keep a ball alive. Go all the way.</p>
+                    <div class="rule-line"><span>10</span><p>LEVELS TO CONQUER</p><span>01</span><p>CHANCE TO DO IT</p></div>
+                </section>
+                <section class="brick-guide">
+                    <h3>KNOW YOUR TARGETS</h3>
+                    <div class="target"><span class="brick-sample normal"></span><div><strong>The standard</strong><small>One hit. One less problem.</small></div></div>
+                    <div class="target"><span class="brick-sample iron"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="4" y="8" width="10" height="7" rx="1"/><path d="M6 8V5a3 3 0 0 1 6 0v3"/></svg></span><div><strong>The unbreakable</strong><small>Deflects. Never gives in.</small></div></div>
+                    <div class="target"><span class="brick-sample splitter">⊕</span><div><strong>The game changer</strong><small>Splits into 2 extra balls. Max 8.</small></div></div>
+                </section>
+                <section class="controls">
+                    <h3>STAY IN CONTROL</h3>
+                    <div><span>Move paddle</span><span><kbd>←</kbd> <kbd>→</kbd></span></div>
+                    <div><span>Pause / resume</span><kbd>P</kbd></div>
+                    <div><span>Back to menu</span><kbd>ESC</kbd></div>
+                    <p>Or move your mouse. On mobile, drag anywhere on the playfield.</p>
+                </section>
+                <div class="tip"><span>✦</span><p>Aim with the paddle's edges.<br><strong>Every angle is an opportunity.</strong></p></div>
+            </aside>
+        </div>
+        <footer class="page-footer"><span>BUILT FOR THE <strong>ONE MORE TRY.</strong></span><span>Browser arcade <i>•</i> Local leaderboard <i>•</i> No account needed</span><a href="./LICENSE">Credits & license ↗</a></footer>
+    </main>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#080808">
+    <meta name="description" content="Obsidian — bold forms, purposeful structures, and spaces shaped with intention.">
+    <title>Obsidian — Shape your bold spaces</title>
+    <link href="https://db.onlinewebfonts.com/c/42dbf00de1681d38477679d3eadad56a?family=Lexend" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <symbol id="logo" viewBox="0 0 256 256">
+            <path d="M 156 0 C 211.228 0 256 44.772 256 100 L 256 256 L 100 256 C 44.772 256 0 211.228 0 156 L 0 0 Z M 80 80 C 80 133.019 122.981 176 176 176 C 176 122.981 133.019 80 80 80 Z" fill="currentColor"/>
+        </symbol>
+        <symbol id="grid" viewBox="0 0 24 24">
+            <rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>
+        </symbol>
+        <symbol id="menu-icon" viewBox="0 0 24 24">
+            <path d="M4 6h16M4 12h16M4 18h16"/>
+        </symbol>
+        <symbol id="close-icon" viewBox="0 0 24 24">
+            <path d="m18 6-12 12M6 6l12 12"/>
+        </symbol>
+    </svg>
+    <div class="hero">
+        <video class="film" autoplay muted loop playsinline preload="auto" poster="architecture.svg" aria-label="Original architectural film of a monumental concrete arch">
+            <source src="architecture.webm" type="video/webm">
+        </video>
+        <div class="shade" aria-hidden="true"></div>
+        <header class="navigation">
+            <div class="nav-left">
+                <a class="brand" href="index.html" aria-label="Obsidian home"><svg class="logo"><use href="#logo"/></svg></a>
+                <nav class="desktop-links" aria-label="Main navigation">
+                    <button data-panel="work" class="active">Work</button>
+                    <button data-panel="studio">Studio</button>
+                    <button data-panel="connect">Connect</button>
+                </nav>
+            </div>
+            <div class="nav-right">
+                <button class="enter" data-panel="enter">Enter <span aria-hidden="true">↗</span></button>
+                <button class="icon-button" id="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="navigation-menu">
+                    <svg class="icon"><use href="#menu-icon"/></svg>
+                </button>
+            </div>
+        </header>
+        <main>
+            <section class="intro" aria-labelledby="headline">
+                <div class="eyebrow">ARCHITECTURE &amp; DESIGN STUDIO</div>
+                <h1 id="headline">Shape your<br>bold spaces</h1>
+                <p>Designing bold forms, sculpting purposeful structures, and building a timeless legacy for all.</p>
+                <button class="projects-button" data-panel="work"><svg class="icon"><use href="#grid"/></svg>Our Projects</button>
+            </section>
+            <div class="annotation atrium"><span></span>Concrete Atrium / 282 M</div>
+            <div class="annotation arc"><span></span>Brutalist Arc / 67%</div>
+            <section class="project-cards" aria-label="Selected projects">
+                <button class="project-card craft" data-panel="craft" aria-label="Explore CRAFT — Spaces shaped with intention">
+                    <img src="craft.svg" alt="A sequence of concrete thresholds leading into a sunlit courtyard">
+                    <span class="card-content"><span class="card-label">CRAFT</span><span class="card-title">Spaces shaped<br>with intention.</span></span>
+                    <svg class="icon card-icon"><use href="#grid"/></svg>
+                </button>
+                <button class="project-card arcvault" data-panel="arcvault" aria-label="Explore ARCVAULT — Form in Stone">
+                    <img src="arcvault.svg" alt="Nested stone arches framing a quiet interior">
+                    <span class="card-content"><span class="card-label">ARCVAULT</span><span class="card-title">Form in Stone</span></span>
+                    <svg class="icon card-icon"><use href="#grid"/></svg>
+                </button>
+            </section>
+            <span class="scroll-indicator" aria-hidden="true">Scroll</span>
+            <button class="film-toggle" aria-label="Pause background film">Ⅱ <span>Pause film</span></button>
+        </main>
+    </div>
+    <dialog class="menu-overlay" id="navigation-menu" aria-label="Navigation">
+        <header class="menu-header">
+            <svg class="logo" aria-hidden="true"><use href="#logo"/></svg>
+            <button class="icon-button" data-close="menu" aria-label="Close navigation"><svg class="icon"><use href="#close-icon"/></svg></button>
+        </header>
+        <nav aria-label="Expanded navigation">
+            <button data-panel="work">Work <span>01</span></button>
+            <button data-panel="studio">Studio <span>02</span></button>
+            <button data-panel="connect">Connect <span>03</span></button>
+            <button data-panel="enter">Enter <span>04</span></button>
+        </nav>
+        <footer>Crafting bold spaces for an intentional world.</footer>
+    </dialog>
+    <dialog class="detail-panel" id="detail-panel" aria-labelledby="panel-title">
+        <header><span>OBSIDIAN / STUDIO NOTES</span><button class="icon-button" data-close="detail" aria-label="Close studio notes"><svg class="icon"><use href="#close-icon"/></svg></button></header>
+        <div id="panel-body"></div>
+    </dialog>
+</body>
+</html>

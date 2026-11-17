@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Speakup — crafting the improbable. Bring your boldest digital visions to reality.">
+        <title>Speakup</title>
+        <link href="https://db.onlinewebfonts.com/c/67415ab41a7350f81536b69763e6d031?family=Recoleta+Regular" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet">
+        <link href="./style.css" rel="stylesheet">
+        <script src="./script.js" defer></script>
+    </head>
+    <body>
+        <main>
+            <section class="hero" aria-labelledby="hero-title">
+                <video class="background" autoplay muted loop playsinline aria-hidden="true" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260508_150921_27df94bd-d1e3-4440-9f55-314c4611902b.mp4"></video>
+                <header class="navbar">
+                    <a class="brand" href="./index.html" aria-label="Speakup home">
+                        <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="#2D2D2F" aria-hidden="true">
+                            <path d="M 128.005 191.173 C 128.448 156.208 156.93 128 192 128 L 192 64 L 128 64 C 128 99.346 99.346 128 64 128 L 64 192 L 128 192 Z M 192 256 L 64 256 C 28.654 256 0 227.346 0 192 L 0 64 L 64 64 L 64 0 L 192 0 C 227.346 0 256 28.654 256 64 L 256 192 L 192 192 Z"/>
+                        </svg>
+                        <span>SPEAK<strong>UP</strong></span>
+                    </a>
+                    <nav class="desktop-nav" aria-label="Main navigation">
+                        <button data-section="Projects">Projects</button>
+                        <button data-section="The Team">The Team</button>
+                        <button data-section="Products">Products</button>
+                        <button data-section="Our Story">Our Story</button>
+                        <button data-venture>Say Hello!</button>
+                    </nav>
+                    <button class="pill nav-cta" data-venture>Begin a venture</button>
+                    <button class="icon-button menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+                    </button>
+                </header>
+                <div class="hero-content">
+                    <h1 id="hero-title" class="font-recoleta">Crafting the<br>improbable</h1>
+                    <p>We bring your boldest digital visions to reality.<br class="desktop-break"> Because it cannot be done is where we all begin now</p>
+                    <button class="pill hero-cta" data-venture>Begin a venture</button>
+                </div>
+                <button class="motion-control" aria-label="Pause background video">Pause motion <span aria-hidden="true">Ⅱ</span></button>
+            </section>
+        </main>
+        <dialog id="mobile-menu" class="mobile-menu" aria-label="Navigation">
+            <button class="icon-button close-menu" aria-label="Close menu">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m18 6-12 12M6 6l12 12"/></svg>
+            </button>
+            <nav aria-label="Mobile navigation">
+                <button data-section="Projects">Projects</button>
+                <button data-section="The Team">The Team</button>
+                <button data-section="Products">Products</button>
+                <button data-section="Our Story">Our Story</button>
+                <button data-venture>Say Hello!</button>
+                <button class="pill" data-venture>Begin a venture</button>
+            </nav>
+        </dialog>
+        <dialog id="details" class="details" aria-labelledby="detail-title">
+            <button class="icon-button close-details" aria-label="Close details">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m18 6-12 12M6 6l12 12"/></svg>
+            </button>
+            <span class="eyebrow">SPEAKUP / A NEW POSSIBILITY</span>
+            <h2 id="detail-title"></h2>
+            <div id="detail-content"></div>
+        </dialog>
+    </body>
+</html>

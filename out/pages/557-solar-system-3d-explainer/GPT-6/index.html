@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#05070d">
+    <meta name="description" content="An interactive three-dimensional Solar System. Change the scale, follow the planets, and measure the space between them.">
+    <title>A little perspective — Fernhill Almanac</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="./styles.css">
+    <script type="module" src="./main.js"></script>
+</head>
+<body>
+    <canvas id="universe" tabindex="0" aria-label="Interactive 3D Solar System. Drag or use arrow keys to orbit. Use plus and minus to zoom. Select a planet using the buttons below."></canvas>
+    <div id="fallback" hidden>WebGL 2 is unavailable. The body facts, scale calculations, tour, and street model below remain available.</div>
+    <header>
+        <a class="brand" href="./index.html" aria-label="Fernhill Almanac home"><span class="brand-mark">f.</span><span>FERNHILL<br><b>ALMANAC</b></span></a>
+        <nav aria-label="Viewing mode">
+            <button id="explore" class="mode active" aria-pressed="true">Explore</button>
+            <button id="tour" class="mode" aria-pressed="false">Take the tour <span>↗</span></button>
+        </nav>
+        <span class="edition">FIELD NOTES <i> / </i> NO. 008</span>
+    </header>
+    <main>
+        <section id="explorer" aria-label="Solar System explorer">
+            <div class="intro">
+                <p class="eyebrow"><span class="status-dot"></span> THE SOLAR SYSTEM, RECONSIDERED</p>
+                <h1>A little<br><em>perspective.</em></h1>
+                <p>Nine familiar bodies.<br>A rather unfamiliar amount of nothing.</p>
+            </div>
+            <div class="model-note"><span class="cross">+</span> HELIOCENTRIC MODEL<br><span id="scale-caption">READABLE SCALE · NOT TO SCALE</span></div>
+            <div id="labels" aria-hidden="true"></div>
+            <aside class="body-panel" aria-label="Selected body facts">
+                <p class="eyebrow" id="body-kicker"></p>
+                <div class="body-heading"><h2 id="body-name"></h2><span id="body-symbol" aria-hidden="true"></span></div>
+                <p id="body-note"></p>
+                <dl id="facts"></dl>
+                <p class="aside-note">Mean distances. Rounded figures.<br>Surface colors are illustrative.</p>
+                <button id="overview" class="text-button">↖ Reset the view</button>
+            </aside>
+            <div class="scale-instrument">
+                <p class="eyebrow">01 <span>/</span> THE POSTER IS LYING</p>
+                <h2>Space needs more space.</h2>
+                <p>We enlarged the worlds and pulled them closer.<br>Try the same ruler for everything.</p>
+                <div class="scale-switch" role="group" aria-label="Model scale">
+                    <button id="readable" aria-pressed="true">Readable</button>
+                    <button id="true-scale" aria-pressed="false">True scale <span>↗</span></button>
+                </div>
+                <p class="pixel-readout">EARTH ON YOUR SCREEN <strong id="pixel">— px</strong></p>
+            </div>
+            <div class="gesture-hint"><span>⤧</span> Drag to orbit <i>·</i> Scroll to zoom<br><small>Or focus the model and use arrow keys / + −</small></div>
+            <div class="bottom-instruments">
+                <div class="body-selector" id="body-selector" role="group" aria-label="Select a body"></div>
+                <div class="time-controls">
+                    <button id="play" aria-label="Play orbital motion" aria-pressed="false">▶</button>
+                    <span class="time-label">MODEL TIME <strong id="day-count">DAY 0000</strong></span>
+                    <input id="time" type="range" min="0" max="3650" step="1" value="0" aria-label="Elapsed model days">
+                    <select id="speed" aria-label="Simulation speed">
+                        <option value="1">1 day / sec</option>
+                        <option value="30" selected>30 days / sec</option>
+                        <option value="365">1 year / sec</option>
+                    </select>
+                    <span class="time-disclaimer">Circular orbits · not an ephemeris</span>
+                </div>
+                <div class="bottom-line"><span>A SMALL GUIDE TO OUR NEIGHBORHOOD</span><a href="#walk">Walk it yourself ↓</a></div>
+            </div>
+        </section>
+        <section id="tour-stops" aria-label="Nine-stop Solar System tour" hidden></section>
+        <section id="walk">
+            <div class="walk-heading">
+                <p class="eyebrow">FROM YOUR SCREEN TO YOUR STREET</p>
+                <h2>Bring comfortable shoes.</h2>
+                <p>Give the Sun a diameter. Use that same ruler for every world and every gap. Start measuring at the center of your Sun.</p>
+                <label class="sun-input">SUN DIAMETER <input id="sun-size" type="number" min="1" max="100" step="1" value="12"> inches</label>
+                <p id="walk-summary"></p>
+            </div>
+            <div class="table-wrap">
+                <table><caption>A true-scale walk, using mean orbital distances</caption><thead><tr><th>Body</th><th>Diameter</th><th>From the Sun</th></tr></thead><tbody id="street-table"></tbody></table>
+                <p class="table-note">Distances follow a straight line, not the planets’ present positions. 1 mile = 5,280 feet. 1 inch = 25.4 mm.</p>
+            </div>
+            <details><summary>A note on the model & the numbers</summary><p>This is a geometric teaching model, not a navigation tool. Orbits are circular and coplanar at mean distances; phases are composed, not today’s sky. Spin rates and tilts are included. True scale uses one ratio for diameters and orbital distances, without minimum visible planet sizes. The live pixel figure is a perspective projection at the current camera distance. Readable mode deliberately compresses distances and enlarges planets independently. The star field and procedural surfaces are original illustrations, not photographs. Reduced-motion mode makes camera transitions immediate.</p><p>Rounded reference figures: <a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/">NASA planetary fact sheets</a>. Values are approximate mean diameters, mean Sun distances, sidereal orbits and sidereal rotations. No live data or external requests.</p></details>
+        </section>
+    </main>
+    <footer><span>FERNHILL ALMANAC <i>© 2026</i> · An invented science publisher.</span><a href="https://vibefather.ai/t/solar-system-3d-explainer">Template by VibeFather ↗</a></footer>
+    <div id="announcement" class="sr-only" aria-live="polite"></div>
+</body>
+</html>

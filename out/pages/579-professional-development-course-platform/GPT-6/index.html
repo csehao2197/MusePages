@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#153f35">
+    <meta name="description" content="Stride is your space to build meaningful skills, make a personal growth plan, and take your next career step. Interactive local learning demo.">
+    <meta property="og:title" content="Stride — A little progress, every day">
+    <meta property="og:description" content="Explore thoughtful courses, track your goals, and find your next step.">
+    <meta property="og:type" content="website">
+    <title>My learning space · Stride</title>
+    <link rel="icon" type="image/svg+xml" href="./mark.svg">
+    <link rel="stylesheet" href="./styles.css">
+    <script type="application/ld+json">
+        {"@context":"https://schema.org","@type":"EducationalOrganization","name":"Stride","description":"An independent, browser-only professional development learning demonstration. Not an accredited institution."}
+    </script>
+    <script src="./app.js" defer></script>
+</head>
+<body>
+    <a class="skip" href="#main">Skip to content</a>
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+        <a class="brand" href="./index.html" aria-label="Stride home"><img src="./mark.svg" alt="" width="31" height="35">stride<span class="brand-dot">.</span></a>
+        <div class="workspace-label">YOUR GROWTH SPACE</div>
+        <nav>
+            <a class="nav-link active" href="#main" aria-current="page"><svg><use href="./icons.svg#LayoutDashboard"></use></svg>Overview</a>
+            <a class="nav-link" href="#courses"><svg><use href="./icons.svg#BookOpen"></use></svg>Explore courses<span class="nav-count">6</span></a>
+            <a class="nav-link" href="#my-learning"><svg><use href="./icons.svg#Play"></use></svg>My learning</a>
+            <a class="nav-link" href="#goals"><svg><use href="./icons.svg#Target"></use></svg>My goals<span class="small-dot"></span></a>
+            <a class="nav-link" href="#coaches"><svg><use href="./icons.svg#Users"></use></svg>Find a coach</a>
+            <a class="nav-link" href="#resources"><svg><use href="./icons.svg#Library"></use></svg>Resource library</a>
+            <a class="nav-link" href="#community"><svg><use href="./icons.svg#MessageCircle"></use></svg>Community</a>
+        </nav>
+        <div class="sidebar-bottom">
+            <div class="grow-note">
+                <svg><use href="./icons.svg#Sprout"></use></svg>
+                <h3>A little, every day.</h3>
+                <p>Big changes start with<br>small, intentional steps.</p>
+                <button class="text-button" data-action="onboarding">Find your next step <svg><use href="./icons.svg#ArrowUpRight"></use></svg></button>
+            </div>
+            <button class="nav-link" data-action="settings"><svg><use href="./icons.svg#Settings"></use></svg>Preferences</button>
+            <button class="profile-button" data-action="profile"><span class="avatar avatar-user">JC</span><span><strong id="sidebar-name">Jamie Chen</strong><small>Personal workspace</small></span><svg><use href="./icons.svg#ChevronRight"></use></svg></button>
+        </div>
+    </aside>
+    <div class="page">
+        <header class="topbar">
+            <button class="icon-button mobile-menu" aria-label="Open navigation" aria-expanded="false" aria-controls="sidebar" data-action="menu"><svg><use href="./icons.svg#Menu"></use></svg></button>
+            <div class="breadcrumb">My workspace <span>/</span> <strong>Overview</strong></div>
+            <div class="top-actions">
+                <button class="global-search" data-action="search" aria-label="Search courses"><svg><use href="./icons.svg#Search"></use></svg><span>Find your next thing</span><kbd>/</kbd></button>
+                <button class="icon-button notification-button" aria-label="Notifications" data-action="notifications"><svg><use href="./icons.svg#Bell"></use></svg><i></i></button>
+                <button class="avatar avatar-user top-avatar" aria-label="Edit your profile" data-action="profile">JC</button>
+            </div>
+        </header>
+        <main id="main">
+            <div class="greeting-row">
+                <div><p class="eyebrow">YOUR NEXT CHAPTER STARTS HERE</p><h1>Good to grow, <span id="greeting-name">Jamie</span><span class="leaf-dot">.</span></h1><p class="subtitle">A little curiosity today. A more confident you tomorrow.</p></div>
+                <button class="button button-outline plan-button" data-action="goal"><svg><use href="./icons.svg#Plus"></use></svg>Set a new goal</button>
+            </div>
+            <section class="feature-row" aria-label="Your growth at a glance">
+                <div class="hero">
+                    <div class="hero-copy"><span class="pill hero-pill"><span></span> INVEST IN YOURSELF</span><h2>Small steps.<br>Extraordinary<br><em>possibilities.</em></h2><p>Build the skills and mindset<br>for the life you want to lead.</p><a class="button button-dark" href="#courses">Explore your next course <svg><use href="./icons.svg#ArrowUpRight"></use></svg></a></div>
+                    <img class="hero-art" src="./growth.svg" width="360" height="390" alt="An abstract green plant rising up a staircase toward a warm orange sun">
+                    <span class="hero-footnote">GROW AT YOUR OWN PACE. GO FURTHER.</span>
+                </div>
+                <div class="weekly-card">
+                    <div class="section-top"><h2>Your weekly rhythm</h2><svg><use href="./icons.svg#TrendingUp"></use></svg></div>
+                    <p class="muted small">Estimated lesson time this week.</p>
+                    <div class="rhythm-stat"><strong id="minutes-stat">0<span> min</span></strong><span class="pill pale" id="weekly-target-label">of 60 min goal</span></div>
+                    <div class="week-days" aria-label="Weekly learning activity"><span>M<i></i></span><span>T<i></i></span><span>W<i></i></span><span>T<i></i></span><span>F<i></i></span><span class="today">S<i></i></span><span>S<i></i></span></div>
+                    <div class="weekly-divider"></div>
+                    <div class="weekly-bottom"><span class="stat-icon"><svg><use href="./icons.svg#Award"></use></svg></span><span><strong id="badge-count">Your first win is waiting</strong><small id="badge-description">Finish a lesson to earn a badge</small></span></div>
+                    <button class="text-button" data-action="progress">View my progress <svg><use href="./icons.svg#ArrowRight"></use></svg></button>
+                </div>
+            </section>
+            <section class="continue-section" id="my-learning">
+                <div class="section-heading"><div><p class="eyebrow">ONE STEP AT A TIME</p><h2>Keep your momentum</h2></div><button class="text-button" data-action="progress">My learning <svg><use href="./icons.svg#ArrowRight"></use></svg></button></div>
+                <div class="continue-card">
+                    <div class="mini-art"><svg><use href="./icons.svg#Sprout"></use></svg></div>
+                    <div class="continue-copy"><span class="small muted" id="continue-kicker">YOUR SUGGESTED STARTING POINT</span><h3 id="continue-title">The art of intentional productivity</h3><span class="small muted" id="continue-detail">A calmer approach to doing what matters · 3 short lessons</span></div>
+                    <div class="course-progress"><span id="continue-progress-label">Ready when you are</span><div class="progress-track"><div id="continue-progress"></div></div></div>
+                    <button class="button button-dark" id="continue-button" data-action="continue">Start learning <svg><use href="./icons.svg#Play"></use></svg></button>
+                </div>
+            </section>
+            <section class="catalog" id="courses">
+                <div class="section-heading"><div><p class="eyebrow">A FRESH PERSPECTIVE</p><h2>Make your next move</h2><p class="muted">Thoughtful courses for work, life, and everything in between.</p></div><button class="text-button" data-action="create-course">Coach studio <svg><use href="./icons.svg#Plus"></use></svg></button></div>
+                <div class="catalog-toolbar">
+                    <div class="topic-tabs" role="group" aria-label="Filter by topic">
+                        <button class="chip active" data-topic="All" aria-pressed="true">For you</button><button class="chip" data-topic="Productivity" aria-pressed="false">Productivity</button><button class="chip" data-topic="Mindfulness" aria-pressed="false">Mindfulness</button><button class="chip" data-topic="Leadership" aria-pressed="false">Leadership</button><button class="chip" data-topic="Emotional intelligence" aria-pressed="false">Emotional intelligence</button>
+                    </div>
+                    <button class="filter-toggle icon-button" data-action="filters" aria-expanded="false" aria-controls="filter-panel" aria-label="Search and filter courses"><svg><use href="./icons.svg#SlidersHorizontal"></use></svg></button>
+                </div>
+                <div class="filter-panel" id="filter-panel" hidden>
+                    <label class="search-field"><svg><use href="./icons.svg#Search"></use></svg><input id="course-search" type="search" placeholder="Search courses or coaches" aria-label="Search courses or coaches"></label>
+                    <label>Level<select id="level-filter"><option value="">All levels</option><option>Beginner</option><option>Intermediate</option></select></label>
+                    <label>Coach<select id="coach-filter"><option value="">All coaches</option><option>Maya Brooks</option><option>Alex Morgan</option><option>Sam Rivera</option></select></label>
+                    <button class="text-button" data-action="clear-filters">Reset filters</button>
+                </div>
+                <p class="sr-only" id="result-count" aria-live="polite"></p>
+                <div class="course-grid" id="course-grid"></div>
+                <div class="catalog-bottom"><span class="small muted">Made for real life. Learn on your terms.</span><button class="text-button" data-action="all-courses">Explore all courses <svg><use href="./icons.svg#ArrowRight"></use></svg></button></div>
+            </section>
+            <section class="lower-grid">
+                <div class="goals-panel" id="goals">
+                    <div class="section-heading compact"><div><p class="eyebrow">MAKE IT MEANINGFUL</p><h2>Your goals, in motion</h2></div><button class="icon-button" data-action="goal" aria-label="Add a goal"><svg><use href="./icons.svg#Plus"></use></svg></button></div>
+                    <p class="muted">Turn a big intention into a small next step.</p>
+                    <div id="goal-list"></div>
+                    <button class="text-button" data-action="goal">Build a personal growth plan <svg><use href="./icons.svg#ArrowUpRight"></use></svg></button>
+                </div>
+                <div class="coaches-panel" id="coaches">
+                    <div class="section-heading compact"><div><p class="eyebrow">A LITTLE GUIDANCE GOES A LONG WAY</p><h2>You don’t have to grow alone.</h2></div></div>
+                    <p class="muted">Find a fresh perspective with a supportive coach.</p>
+                    <div class="coach-row"><span class="avatar coach-maya">MB</span><span><strong>Maya Brooks</strong><small>Productivity & sustainable habits</small></span><button class="icon-button" data-coach="Maya Brooks" aria-label="View Maya Brooks"><svg><use href="./icons.svg#ArrowUpRight"></use></svg></button></div>
+                    <div class="coach-row"><span class="avatar coach-alex">AM</span><span><strong>Alex Morgan</strong><small>Leadership & career transitions</small></span><button class="icon-button" data-coach="Alex Morgan" aria-label="View Alex Morgan"><svg><use href="./icons.svg#ArrowUpRight"></use></svg></button></div>
+                    <p class="demo-note">Illustrative coach profiles · local requests only</p>
+                </div>
+            </section>
+            <section id="resources" class="resources-section">
+                <div class="section-heading"><div><p class="eyebrow">A MOMENT OF INSPIRATION</p><h2>Tools for your everyday</h2></div><span class="pill pale" id="saved-count">0 saved</span></div>
+                <div class="resource-grid">
+                    <button class="resource-card" data-resource="reflection"><span class="resource-icon"><svg><use href="./icons.svg#Pencil"></use></svg></span><span><small>WORKSHEET · 5 MIN</small><strong>Your weekly reset</strong><span>A little reflection. A clearer direction.</span></span><svg><use href="./icons.svg#ArrowUpRight"></use></svg></button>
+                    <button class="resource-card" data-resource="listening"><span class="resource-icon lilac"><svg><use href="./icons.svg#BookOpen"></use></svg></span><span><small>ARTICLE · 4 MIN</small><strong>Listen to understand</strong><span>Build trust, one conversation at a time.</span></span><svg><use href="./icons.svg#ArrowUpRight"></use></svg></button>
+                </div>
+            </section>
+            <section class="community-strip" id="community"><span class="community-icon"><svg><use href="./icons.svg#Users"></use></svg></span><div><p class="eyebrow">BETTER, TOGETHER</p><h2>Everyone starts somewhere.</h2><p>Share a small win or join our next guided reflection.</p></div><button class="button button-outline" data-action="community">Step into the community <svg><use href="./icons.svg#ArrowUpRight"></use></svg></button></section>
+            <section class="faq-section" aria-labelledby="faq-title"><h2 id="faq-title">A few things you might be wondering</h2><details><summary>How do I choose my first course?</summary><p>Start with one skill that would make this week better. Use the topic, level, and coach filters, or choose “Find your next step” to set your interests and weekly learning target.</p></details><details><summary>Are coaching sessions and certificates real?</summary><p>This is a local interactive demonstration. Profiles, coaching availability, enrollment, payments, community, and badges are illustrative. No coach receives your request, no payment is taken, and badges are not accredited credentials.</p></details><details><summary>Where is my progress stored?</summary><p>Your learning, goals, saved resources, and preferences are stored only in this browser on this device. No account is created. Clearing browser storage removes this data. Do not enter sensitive personal information.</p></details></section>
+            <footer><a class="footer-brand" href="#main">stride.</a><span>A little progress, every day.</span><button class="text-button" data-action="privacy">About this demo</button><span class="local-status"><i></i>Local learning demo</span></footer>
+        </main>
+    </div>
+    <dialog id="modal" aria-labelledby="modal-title"><div class="modal-top"><span class="eyebrow" id="modal-kicker">YOUR GROWTH SPACE</span><button class="icon-button" data-action="close" aria-label="Close dialog"><svg><use href="./icons.svg#X"></use></svg></button></div><div id="modal-body"></div></dialog>
+    <div class="toast" id="toast" role="status" hidden></div>
+</body>
+</html>

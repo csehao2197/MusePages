@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#FAF6EE">
+        <meta name="description" content="Make your first tiny 2D game, one small win at a time. A beginner-friendly, self-paced workshop with Theo Marsh.">
+        <title>Tiny Games Workshop — Learn making tiny 2D games from scratch from zero</title>
+        <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+        <link rel="stylesheet" href="./style.css">
+        <script type="module" src="./app.js"></script>
+    </head>
+    <body>
+        <header class="site-header">
+            <div class="container header-inner">
+                <a class="brand" href="#top" aria-label="Tiny Games Workshop home">
+                    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M8 2h16v6h6v16h-6v6H8v-6H2V8h6Z" fill="currentColor"/><path d="M9 11h5v5H9zm9 0h5v5h-5zm-7 10h10v3H11z" fill="#FAF6EE"/></svg>
+                    <span>TINY GAMES<span class="brand-sub">WORKSHOP</span></span>
+                </a>
+                <nav aria-label="Main navigation">
+                    <a href="#curriculum">The course</a>
+                    <a href="#results">What you'll make</a>
+                    <a href="#instructor">Meet Theo</a>
+                </nav>
+                <a class="button header-enroll" href="#pricing" data-plan-cta>Enroll — $149 <span aria-hidden="true">↗</span></a>
+            </div>
+        </header>
+        <main id="top">
+            <section class="hero container" aria-labelledby="hero-title">
+                <div class="hero-copy">
+                    <p class="eyebrow"><span class="little-star" aria-hidden="true">✳</span> SMALL GAMES. BIG “I MADE THAT” ENERGY.</p>
+                    <h1 id="hero-title">Your first game.<br>Not your next<br><em>unfinished idea.</em></h1>
+                    <p class="hero-description">Make a tiny, playable 2D game from scratch.<br class="desktop-break"> No coding experience. No epic scope.<br class="desktop-break"> Just you, a curious little character, and a finish line.</p>
+                    <div class="hero-actions">
+                        <a class="button" href="#pricing">Let's make a game <span aria-hidden="true">↗</span></a>
+                        <a class="text-link" href="#curriculum">Peek at the curriculum <span aria-hidden="true">↓</span></a>
+                    </div>
+                    <div class="hero-meta"><span><i aria-hidden="true">✓</i> Truly beginner-friendly</span><span><i aria-hidden="true">✓</i> Yours to keep</span></div>
+                    <p class="hand-note">Less “someday.” More “press play.” <span aria-hidden="true">⤴</span></p>
+                </div>
+                <div class="hero-art">
+                    <div class="scene-heading"><span><i class="status-dot"></i> YOUR NEXT LITTLE PROJECT</span><span>01 / 03</span></div>
+                    <div class="poster">
+                        <img src="./images/pocket-forest.svg" alt="An original pixel-art forest with a tiny backpack explorer, warm sun, flowers, and a path to a small cabin." width="650" height="480">
+                        <span class="scene-badge">TINY WORLD. ALL YOURS.</span>
+                        <button class="play-button" id="watch-intro" type="button" aria-label="Watch the course introduction">
+                            <svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7Z" fill="currentColor"/></svg>
+                            Meet your workshop
+                            <span class="duration">1:24 · preview</span>
+                        </button>
+                    </div>
+                    <div class="scene-caption"><span>“Pocket Forest” — an illustrative course project</span><span aria-hidden="true">✦</span></div>
+                    <div class="art-sticker"><span>MAKE SMALL.<br>FINISH HAPPY.</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg></div>
+                </div>
+            </section>
+            <section class="outcome-strip" aria-label="Course outcomes">
+                <div class="container outcome-inner">
+                    <span class="strip-lead">FROM A BLANK SCREEN TO…</span>
+                    <span><b>01</b> A character that moves</span>
+                    <span><b>02</b> A world with a little life</span>
+                    <span><b>03</b> A game you can share</span>
+                </div>
+            </section>
+            <section class="section container curriculum-section" id="curriculum" aria-labelledby="curriculum-title">
+                <div class="section-heading">
+                    <div><p class="eyebrow">THE ROADMAP</p><h2 id="curriculum-title">A small step.<br>Then another.<br><em>Then a whole game.</em></h2></div>
+                    <div class="section-intro"><p>Six focused modules. One finished, 60-second game. Every lesson gives you something you can actually try, not another tab to keep open.</p><span class="section-fact">24 lessons <i>·</i> 4 hours 20 minutes <i>·</i> At your pace</span></div>
+                </div>
+                <div class="curriculum-layout">
+                    <aside class="course-note"><span class="note-label">A NOTE ON SCOPE</span><h3>Small isn't<br>settling.</h3><p>A tiny game is a real game. A beginning, a challenge, an ending. And, crucially, an ending you’ll actually reach.</p><div class="note-pixels" aria-hidden="true"><span></span><span></span><span></span></div><p class="hand-note">Your 47 ideas can wait their turn.</p></aside>
+                    <div class="modules" id="modules"></div>
+                </div>
+            </section>
+            <section class="sample-section" aria-labelledby="sample-title">
+                <div class="container sample-layout">
+                    <div><p class="eyebrow">DON'T JUST TAKE OUR WORD FOR IT</p><h2 id="sample-title">Tiny can be<br><em>pretty delightful.</em></h2><p>This is the kind of complete little loop you’ll learn to build: move, collect, celebrate. Try our browser sample. No download, no mysterious installer.</p><p class="sample-help">Arrow keys or WASD to move. Collect all 5 stars.<br>On your phone? Use the directional buttons.</p><span class="sample-disclosure">Original illustrative sample. Not a student submission.</span></div>
+                    <div class="game-shell">
+                        <div class="game-bar"><span>STAR GATHERER</span><span id="game-score" aria-live="polite">0 / 5 stars</span></div>
+                        <canvas id="sample-game" width="560" height="280" tabindex="0" aria-label="Star Gatherer game. Use arrow keys or WASD to collect five stars. Press Start to begin."></canvas>
+                        <div class="game-controls">
+                            <button type="button" id="game-start" class="button small">Start a tiny adventure <span aria-hidden="true">→</span></button>
+                            <div class="direction-controls" aria-label="Game direction controls"><button type="button" data-move="left" aria-label="Move left">←</button><button type="button" data-move="up" aria-label="Move up">↑</button><button type="button" data-move="down" aria-label="Move down">↓</button><button type="button" data-move="right" aria-label="Move right">→</button></div>
+                        </div>
+                        <p id="game-message" class="game-message" aria-live="polite">A little adventure is waiting. Press Start.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="section container instructor-section" id="instructor" aria-labelledby="instructor-title">
+                <div class="instructor-portrait"><img src="./images/theo.svg" alt="Original illustrated portrait of the invented instructor Theo Marsh in his cozy workshop." width="440" height="450"><span class="portrait-caption">THEO MARSH <span>YOUR FRIENDLY GUIDE</span></span></div>
+                <div class="instructor-copy"><p class="eyebrow">A HUMAN ON THE OTHER SIDE</p><h2 id="instructor-title">Hi, I’m Theo.<br><em>I used to make<br>unfinished games.</em></h2><p>My folders had impressive names. “Adventure_final.” “Adventure_final_v2.” The games themselves? Not so final.</p><p>Things changed when I made something small enough to finish. A single room. A character. A reason to press play again. That’s the feeling this workshop is built around.</p><p>I’ll take you from your first line of logic to a game you can send to a friend. Slowly, clearly, with the occasional extremely reasonable duck.</p><p class="signature">See you at the workbench, <span>Theo</span></p><p class="sample-disclosure">Theo is an invented instructor. This is a non-commercial course-page demo.</p></div>
+            </section>
+            <section class="section container results-section" id="results" aria-labelledby="results-title">
+                <div class="results-heading"><div><p class="eyebrow">THE FINISH LINE LOOKS LIKE THIS</p><h2 id="results-title">Not a blockbuster.<br><em>Something better: yours.</em></h2></div><p>Three illustrative outcomes, not testimonials.<br>Small enough for a first project.<br>Personal enough to be proud of.</p></div>
+                <div class="results-grid" id="results-grid"></div>
+            </section>
+            <section class="pricing-section" id="pricing" aria-labelledby="pricing-title">
+                <div class="container pricing-layout">
+                    <div class="pricing-copy"><p class="eyebrow">ONE WORKSHOP. YOUR NEXT FIRST.</p><h2 id="pricing-title">Make room for<br><em>“I finished it.”</em></h2><p>No subscription. No countdown timer.<br>Just a clear path from curious to playable.</p><ul class="included-list" id="included-list"></ul><p class="pricing-note">A small investment in a very satisfying new hobby.<br>Your abandoned projects won’t take it personally.</p></div>
+                    <div class="pricing-card">
+                        <div class="plan-toggle" role="group" aria-label="Choose payment plan"><button type="button" data-plan="full" aria-pressed="true">Pay in full <span>Best value</span></button><button type="button" data-plan="three" aria-pressed="false">3 payments</button></div>
+                        <p class="price-label" id="price-label">ONE PAYMENT. LIFETIME ACCESS.</p>
+                        <div class="price" id="plan-price">$149 <span>USD</span></div>
+                        <p class="price-detail" id="plan-detail">One payment of $149. Nothing more.</p>
+                        <button class="button enroll-button" type="button" data-enroll data-plan-cta>Enroll — $149 <span aria-hidden="true">↗</span></button>
+                        <p class="checkout-disclosure">Demo enrollment only. No charge. No account.<br>Nothing is submitted anywhere.</p>
+                        <div class="card-guarantee"><svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m9 12 2 2 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg><span>Try it with a little peace of mind.<br><b>30-day happiness guarantee.</b></span></div>
+                    </div>
+                </div>
+            </section>
+            <section class="guarantee container" aria-labelledby="guarantee-title">
+                <div class="guarantee-seal" aria-hidden="true"><span>30</span>DAYS TO TRY</div>
+                <div><p class="eyebrow">NO LEAP OF FAITH REQUIRED</p><h2 id="guarantee-title">Try the workshop. <em>Keep the peace of mind.</em></h2><p>In a real enrollment, you’d have 30 days to try the lessons. If it wasn’t your thing, you’d ask for a full refund. No quiz, no guilt, no “have you tried believing harder?”</p><p class="sample-disclosure">Illustrative guarantee for this fictional course. This demo takes no payments and issues no refunds.</p></div>
+            </section>
+            <section class="section container faq-section" id="faq" aria-labelledby="faq-title">
+                <div><p class="eyebrow">A FEW GOOD QUESTIONS</p><h2 id="faq-title">Before you<br><em>press start.</em></h2><p>The short version: start small.<br>The slightly longer version is over here.</p></div><div id="faq-list"></div>
+            </section>
+            <section class="final-cta"><div class="container"><p class="eyebrow">YOUR IDEA DESERVES A FINISH LINE</p><h2>A tiny game.<br><em>A very real first step.</em></h2><p>Make something small. Make it yours. Then share it.</p><button type="button" class="button" data-enroll data-plan-cta>Enroll — $149 <span aria-hidden="true">↗</span></button><span class="final-meta">Beginner-friendly · Self-paced · 30-day illustrative guarantee</span></div></section>
+        </main>
+        <footer class="container footer"><div><a class="footer-brand" href="#top">Tiny Games Workshop</a><p>A little workshop by Theo Marsh.<br>A fictional, non-commercial demo. No real course is sold.</p></div><div><a href="#faq">Questions & answers</a><a href="https://vibefather.ai/t/online-course-sales-page" target="_blank" rel="noopener noreferrer">Template by VibeFather ↗</a><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener noreferrer">Prompt: CC BY-NC 4.0 ↗</a></div><span class="footer-last">MAKE SMALL.<br>FINISH HAPPY.</span></footer>
+        <dialog id="intro-modal" aria-labelledby="intro-title">
+            <button class="modal-close" type="button" data-close aria-label="Close introduction">×</button>
+            <p class="eyebrow">A NOTE FROM THEO MARSH</p><h2 id="intro-title">A little hello.<br><em>Not a pretend video.</em></h2>
+            <p>The 1:24 badge is an illustrative video-frame design. There is no recorded video in this demo, and pressing play won’t load one.</p><p>In this fictional workshop, we’d build one tiny game together: movement, a world, a challenge, a finish line. You can try the playable browser sample right here instead.</p>
+            <button type="button" class="button" id="intro-to-sample">Try the playable sample <span aria-hidden="true">→</span></button>
+        </dialog>
+        <dialog id="enroll-modal" aria-labelledby="enroll-title">
+            <button class="modal-close" type="button" data-close aria-label="Close enrollment">×</button>
+            <p class="eyebrow">YOUR WORKSHOP, AT A GLANCE</p><h2 id="enroll-title">One small<br><em>step closer.</em></h2>
+            <div class="enrollment-summary"><b>Tiny Games Workshop</b><p id="enroll-plan"></p><span>6 modules · 24 lessons · Lifetime access</span></div>
+            <p>This is a browser-only enrollment preview. No real course, payment, email collection, or account is provided.</p>
+            <label class="acknowledgement"><input id="demo-consent" type="checkbox"> I understand this is a demo, not a purchase.</label>
+            <button type="button" id="confirm-enroll" class="button" disabled>Preview my enrollment <span aria-hidden="true">→</span></button>
+            <p id="enroll-status" role="status"></p>
+        </dialog>
+    </body>
+</html>

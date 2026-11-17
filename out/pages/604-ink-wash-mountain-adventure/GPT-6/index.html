@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#e9e7dc">
+    <meta name="description" content="Rainveil. A playable ink-wash mountain adventure. Read the rain, learn three forms, and find your quiet summit.">
+    <title>Rainveil — Three guardians. One quiet summit.</title>
+    <link rel="icon" href="./mark.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./styles.css">
+    <script defer src="./vendor/lucide.min.js"></script>
+    <script type="module" src="./main.js"></script>
+</head>
+<body>
+    <main id="adventure" aria-label="Rainveil mountain adventure">
+        <canvas id="world" tabindex="0" aria-label="Playable mountain trail. Use W A S D or arrow keys to move, J to strike, Space to dodge."></canvas>
+        <div class="wash" aria-hidden="true"></div>
+        <div class="paper" aria-hidden="true"></div>
+        <div class="frame" aria-hidden="true"></div>
+        <header class="masthead">
+            <div class="eyebrow"><span class="seal">R</span> A MOUNTAIN PRACTICE</div>
+            <h1>Rainveil<span>™</span></h1>
+            <p>Three guardians. One quiet summit.</p>
+            <div class="vitals">
+                <div class="meter-label"><span>BREATH</span><span id="breath-value">100</span></div>
+                <div class="meter"><div id="breath"></div></div>
+                <div class="composure"><span id="hearts" aria-label="Composure: 3 of 3">◆ ◆ ◆</span><span>Stay soft. Stay present.</span></div>
+            </div>
+        </header>
+        <nav class="utilities" aria-label="Game settings">
+            <span class="weather"><span></span> RAIN AT THE PASS</span>
+            <button id="sound" class="icon-button" aria-label="Turn sound on" title="Turn sound on"><i data-lucide="volume-x"></i></button>
+            <button id="pause" class="icon-button" aria-label="Pause practice" title="Pause practice"><i data-lucide="pause"></i></button>
+            <button id="help" class="icon-button" aria-label="How to play" title="How to play"><i data-lucide="circle-help"></i></button>
+        </nav>
+        <aside class="journey" aria-label="Trail progress">
+            <div class="vertical-label">THE WAY UP</div>
+            <ol>
+                <li class="current"><span class="route-node">01</span><span>Reed<small>Find your rhythm</small></span></li>
+                <li><span class="route-node">02</span><span>Stone<small>Hold your ground</small></span></li>
+                <li><span class="route-node">03</span><span>Cloud<small>Move with the rain</small></span></li>
+                <li class="summit"><span class="route-node"><i data-lucide="mountain"></i></span><span>The quiet summit</span></li>
+            </ol>
+        </aside>
+        <div id="target" class="target" hidden><span class="target-type">TRAINING GUARDIAN</span><strong>Reed Sentinel</strong><div class="target-meter"><span></span></div><small id="phase">Observe its rhythm</small></div>
+        <div id="feedback" class="feedback" aria-live="polite"></div>
+        <section class="lesson" aria-label="Current objective">
+            <div class="eyebrow"><span id="lesson-index">01</span><span class="dash"></span><span id="lesson-label">THE REED LESSON</span></div>
+            <h2 id="objective">The mountain asks<br>only your attention.</h2>
+            <p id="instruction">Follow the path. Meet the Reed Sentinel.<br>There is no hurry in the Rainveil Pass.</p>
+            <button id="begin" class="primary">Enter the trail <i data-lucide="arrow-up-right"></i></button>
+            <button id="retry" class="text-button" hidden>↻ Retry this lesson</button>
+        </section>
+        <div class="controls-hint">
+            <span><kbd>W</kbd><span class="wasd"><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></span><small>Move</small></span>
+            <span class="hint-divider"></span>
+            <button id="mouse-strike" class="key-action" aria-label="Strike (J)"><kbd>J</kbd><small>Strike · 3-hit form</small></button>
+            <button id="mouse-dodge" class="key-action" aria-label="Dodge (Space)"><kbd class="wide">SPACE</kbd><small>Dodge</small></button>
+            <span class="mouse-hint"><i data-lucide="mouse-pointer-2"></i><small>Click trail to move</small></span>
+        </div>
+        <div class="touch-controls" aria-label="Touch controls">
+            <div class="dpad">
+                <button data-move="up" aria-label="Move forward"><i data-lucide="chevron-up"></i></button>
+                <button data-move="left" aria-label="Move left"><i data-lucide="chevron-left"></i></button>
+                <button data-move="down" aria-label="Move backward"><i data-lucide="chevron-down"></i></button>
+                <button data-move="right" aria-label="Move right"><i data-lucide="chevron-right"></i></button>
+            </div>
+            <div class="touch-actions"><button id="touch-dodge">Dodge<small>BREATH 24</small></button><button id="touch-strike">Strike<small>BREATH 12</small></button></div>
+        </div>
+        <footer><span class="edition">AN INK-WASH ADVENTURE <b> / </b> VOL. 01</span><a href="https://vibefather.ai/t/ink-wash-mountain-adventure" target="_blank" rel="noopener noreferrer">Template by VibeFather <span>↗</span></a><time id="clock" aria-label="Active practice time">00:00</time></footer>
+        <dialog id="help-dialog" aria-labelledby="help-title">
+            <span class="eyebrow">A MOMENT BEFORE THE CLIMB</span><h2 id="help-title">A little less force.<br>A little more timing.</h2>
+            <p>A short practice for players who enjoy timing-based action games. Walk the Rainveil Pass, calibrate three mechanical guardians, then enter the summit circle.</p>
+            <dl><div><dt>Move</dt><dd>WASD / arrows, click the trail, or the touch pad.</dd></div><div><dt>Strike</dt><dd>J, click a guardian, or Strike. Land three close-range hits within a rhythm to finish a form.</dd></div><div><dt>Dodge</dt><dd>Space or Dodge. The red ground ring warns of an incoming sweep. Dodge as it closes.</dd></div><div><dt>Breathe</dt><dd>Strikes use 12 Breath; dodges use 24. Step away to recover. Three lost composure marks restart only the current lesson.</dd></div></dl>
+            <p class="fine">Everything runs locally. Only your best active time and sound preference are saved. No account. No online records.</p><button class="primary" id="close-help">Return to the rain <i data-lucide="arrow-up-right"></i></button>
+        </dialog>
+        <dialog id="pause-dialog" aria-labelledby="pause-title"><span class="eyebrow">THE MOUNTAIN CAN WAIT</span><h2 id="pause-title">Take a breath.</h2><p>Your practice and active timer are paused.</p><button id="resume" class="primary">Continue practice <i data-lucide="play"></i></button></dialog>
+        <dialog id="result-dialog" aria-labelledby="result-title"><span class="eyebrow" id="result-kicker">A FORM LEARNED</span><h2 id="result-title">A quiet summit.<br>A clearer mind.</h2><p id="result-copy"></p><div id="result-stats"></div><button id="result-action" class="primary">Walk the trail again <i data-lucide="rotate-ccw"></i></button></dialog>
+        <noscript>This adventure needs JavaScript to render the mountain and run the local game.</noscript>
+    </main>
+</body>
+</html>

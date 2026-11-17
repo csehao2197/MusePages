@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petal Atlas — Flower Anatomy</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./styles.css">
+    <script type="module" src="./app.js"></script>
+</head>
+<body>
+    <header>
+        <a class="brand" href="./index.html"><img src="./favicon.svg" alt="" width="34" height="34">Petal Atlas</a>
+        <span class="header-note">INTERACTIVE BOTANY</span>
+        <nav aria-label="Chapters">
+            <a href="#/anatomy"><span>01</span> Anatomy</a>
+            <a href="#/pollination"><span>02</span> Pollination</a>
+            <a href="#/quiz"><span>03</span> Quiz</a>
+        </nav>
+    </header>
+    <main class="workspace">
+        <aside class="chapter">
+            <div class="eyebrow" id="chapter-number"></div>
+            <h1 id="chapter-title"></h1>
+            <p id="chapter-intro"></p>
+            <div class="chapter-links">
+                <a href="#/anatomy"><span>01</span><div>Explore the anatomy<small>Six parts. One living system.</small></div><b>↗</b></a>
+                <a href="#/pollination"><span>02</span><div>Follow the pollen<small>From anther to ovule.</small></div><b>↗</b></a>
+                <a href="#/quiz"><span>03</span><div>Test your knowledge<small>A five-question field check.</small></div><b>↗</b></a>
+            </div>
+            <div class="field-note"><i data-icon="rotate3d"></i><strong>A specimen in your hands</strong><p>Drag to rotate. Pinch or scroll to zoom. Select a label to learn.</p><small>Keyboard: arrows to turn, + / − to zoom, 0 to reset the focused model.</small></div>
+        </aside>
+        <section class="specimen-column" aria-label="Interactive flower lesson">
+            <div class="stage">
+                <div class="stage-heading"><span class="live"><b></b> LIVE SPECIMEN</span><h2>Oriental lily</h2><span class="taxonomy">Lilium · Liliaceae</span></div>
+                <div class="view-controls">
+                    <button id="labels-toggle" aria-pressed="true" title="Toggle anatomical labels"><i data-icon="eye"></i><span>Labels</span></button>
+                    <button id="reset-view" title="Reset view (0)"><i data-icon="rotate-ccw"></i><span>Reset</span></button>
+                </div>
+                <div id="model" tabindex="0" role="application" aria-label="Three-dimensional Oriental lily. Drag to rotate; arrow keys turn; plus and minus zoom; zero resets."></div>
+                <svg id="leaders" aria-hidden="true"></svg>
+                <div id="labels" aria-label="Specimen labels"></div>
+                <div class="stage-caption"><span class="orientation">Y ↑ <span> / </span> Z ↗</span><span id="gesture-hint">DRAG TO EXPLORE · SCROLL TO ZOOM</span><span class="scale">NOT TO SCALE</span></div>
+            </div>
+            <div class="toolbar" id="toolbar"></div>
+            <p class="simplification">A simplified teaching model. Geometry, structure sizes, pollen counts, and timing are illustrative.</p>
+        </section>
+        <aside class="inspector" id="inspector" aria-label="Lesson inspector"></aside>
+    </main>
+    <footer><span><b>Petal Atlas</b> · An interactive specimen study</span><span>Designed for curious beginners</span><a href="https://vibefather.ai/t/flower-anatomy-3d-explainer" target="_blank" rel="noreferrer">Template by VibeFather ↗</a></footer>
+</body>
+</html>

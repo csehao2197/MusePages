@@ -1,0 +1,344 @@
+import path from "node:path";
+import { readFile, copyFile, mkdir, readdir, rm } from "node:fs/promises";
+import { createHash } from "node:crypto";
+import { execFileSync } from "node:child_process";
+import assert from "node:assert/strict";
+import { pathToFileURL } from "node:url";
+import { WorkspaceFiles, StaticHomepage } from "./render-prompt-page.mjs";
+import { startPreviewServer } from "./generate-preview.mjs";
+import { registerGeneratedPage } from "./deploy-site.mjs";
+import { chromium } from "@playwright/test";
+
+const workspace = process.cwd();
+const job = await WorkspaceFiles.json(path.join(workspace, "src", "workflows", "script", ".ai-gpt6-current-job.json"));
+assert.equal(job.prompt, "544-university-admissions-website");
+assert.equal(job.modelId, "gpt-6.1-sol");
+const state = await WorkspaceFiles.json(job.stateFile);
+assert.equal(state.runId, job.runId);
+assert.equal(state.ownedLock.prompt, job.prompt);
+assert.equal(Number((await WorkspaceFiles.text(job.promptLock)).trim()), state.ownedLock.pid);
+process.kill(state.ownedLock.pid, 0);
+const folder = job.output;
+const exported = path.join(folder, "out");
+const checks = await WorkspaceFiles.ensureDirectory(workspace, path.relative(workspace, folder), ".checks");
+const tags = ["Admissions", "Editorial", "Riverfront"];
+const config = await WorkspaceFiles.json(path.join(workspace, "deploy", "config.json"));
+const existing = config.pages[job.prompt]?.pages ?? [];
+const shared = { slug: existing[0]?.slug ?? "university-admissions-website", title: existing[0]?.title ?? "University Admissions Website" };
+const metadataFile = path.join(folder, "metadata.json");
+const mode = process.argv[2];
+const images = ["quad-golden-hour", "library-arches", "riverwalk", "studio-lab", "lecture-hall", "lower-green"];
+const base = "https://media.vibefather.ai/assets/73548a67-9db2-4f00-b518-6ccf6caddb7e/";
+function download(url, file)
+{
+    execFileSync("curl.exe", ["--location", "--fail", "--silent", "--show-error", "--max-time", "60", url, "--output", file]);
+}
+
+if (mode === "prepare" || mode === "assets")
+{
+    if (mode === "prepare")
+    {
+        assert.equal(await WorkspaceFiles.info(metadataFile), null, "Existing metadata requires recovery, not regeneration");
+        await WorkspaceFiles.saveJson(metadataFile, { modelId: job.modelId, tags, staticDir: "out", generated: false, preview: false, config_added: false, validated: false });
+    }
+    const publicDir = await WorkspaceFiles.ensureDirectory(workspace, path.relative(workspace, folder), "public");
+    const imageDir = await WorkspaceFiles.ensureDirectory(workspace, path.relative(workspace, publicDir), "images");
+    for (const image of images)
+    {
+        download(base + image + ".webp", path.join(imageDir, image + ".webp"));
+        const data = await readFile(path.join(imageDir, image + ".webp"));
+        assert.equal(data.subarray(0, 4).toString(), "RIFF");
+        assert.equal(data.subarray(8, 12).toString(), "WEBP");
+        await WorkspaceFiles.saveText(path.join(checks, image + ".source.txt"), base + image + ".webp\n");
+    }
+    const fontDir = await WorkspaceFiles.ensureDirectory(workspace, path.relative(workspace, publicDir), "fonts");
+    const fontVersions = {};
+    for (const [name, weights] of [["fraunces", [600, 700]], ["source-sans-3", [400, 600, 700]]])
+    {
+        const packageInfo = JSON.parse(execFileSync(process.env.ComSpec, ["/c", `npm view @fontsource/${name} version dist.tarball --json`], { encoding: "utf8" }));
+        fontVersions["@fontsource/" + name] = packageInfo.version;
+        const packed = JSON.parse(execFileSync(process.env.ComSpec, ["/c", `npm pack @fontsource/${name}@${packageInfo.version} --json`], { encoding: "utf8", cwd: checks }));
+        const archive = path.join(checks, packed[0].filename);
+        const unpack = await WorkspaceFiles.ensureDirectory(workspace, path.relative(workspace, checks), name);
+        execFileSync("tar", ["-xzf", archive, "-C", unpack]);
+        for (const weight of weights)
+        {
+            const file = `${name}-latin-${weight}-normal.woff2`;
+            await copyFile(path.join(unpack, "package", "files", file), path.join(fontDir, file));
+        }
+        const pkg = await WorkspaceFiles.json(path.join(folder, "package.json"));
+        pkg.dependencies = fontVersions;
+        await WorkspaceFiles.saveJson(path.join(folder, "package.json"), pkg);
+        await copyFile(path.join(unpack, "package", "LICENSE"), path.join(publicDir, name + "-LICENSE"));
+        await rm(archive);
+        await rm(unpack, { recursive: true });
+    }
+    await copyFile(path.join(workspace, "node_modules", "lucide-react", "LICENSE"), path.join(publicDir, "icons-LICENSE"));
+    await WorkspaceFiles.saveText(path.join(folder, "ASSETS.md"), "# Asset provenance\n\n" +
+        images.map((image) => `- \`public\\images\\${image}.webp\` → \`out\\images\\${image}.webp\`; ${base}${image}.webp; Generated by VibeFather with qwen-image-3.0-pro, redistributable with this template (CC BY-NC 4.0).`).join("\n") +
+        "\n- `public\\fonts` → `out\\fonts`: Fraunces 600/700 and Source Sans 3 400/600/700 Latin WOFF2 from @fontsource/fraunces and @fontsource/source-sans-3 npm package archives, https://registry.npmjs.org/@fontsource/fraunces and https://registry.npmjs.org/@fontsource/source-sans-3. Original font authors credited in the bundled SIL OFL-1.1 licenses.\n- Bookmark, RotateCcw, ArrowRight: Lucide project SVG paths, local lucide-react package, ISC; `public\\icons-LICENSE` → `out\\icons-LICENSE`.\n- `favicon.svg`: original code-drawn navy tile and first brand letter; no third-party logo.\n- No substituted, hotlinked, or external stock photos.\n");
+    await StaticHomepage.checkSource(folder);
+    const metadata = await WorkspaceFiles.json(metadataFile);
+    metadata.generated = true;
+    await WorkspaceFiles.saveJson(metadataFile, metadata);
+    const raw = await WorkspaceFiles.text(job.file);
+    const design = await WorkspaceFiles.text(path.join(workspace, "src", "workflows", "AI Agent", "DESIGN.md"));
+    await WorkspaceFiles.saveText(path.join(folder, ".generation-input.sha256"), createHash("sha256").update(JSON.stringify([raw, design])).digest("hex") + "\n");
+    await mkdir(exported, { recursive: true });
+    for (const file of ["index.html", "styles.css", "content.js", "app.js", "favicon.svg", "LICENSE"])
+    {
+        await copyFile(path.join(folder, file), path.join(exported, file));
+    }
+    await StaticHomepage.copyHtml(publicDir, exported);
+    console.log(JSON.stringify({ source: "passed", staticDigest: await StaticHomepage.validateStaticOutput(exported, shared.slug, "GPT-6"), assets: images.length }));
+}
+
+if (mode === "sync")
+{
+    const { pageTemplate } = await import(pathToFileURL(path.join(folder, "content.js")));
+    await WorkspaceFiles.saveText(path.join(folder, "index.html"), pageTemplate);
+    for (const file of ["index.html", "styles.css", "content.js", "app.js", "favicon.svg", "LICENSE"])
+    {
+        await copyFile(path.join(folder, file), path.join(exported, file));
+    }
+    await StaticHomepage.checkSource(folder);
+    console.log(await StaticHomepage.validateStaticOutput(exported, shared.slug, "GPT-6"));
+}
+
+if (mode === "qa")
+{
+    const errors = [];
+    const results = [];
+    let browser;
+    let service;
+    let resourcesClosed = false;
+    let completed = false;
+    const screenshotPaths = { desktop: path.join(checks, "desktop.png"), mobile: path.join(checks, "mobile.png") };
+    try
+    {
+        await StaticHomepage.checkSource(folder);
+        await StaticHomepage.validateStaticOutput(exported, shared.slug, "GPT-6");
+        service = await startPreviewServer(exported, { workspace });
+        assert(service.url.includes(`/pages/${shared.slug}/GPT-6/`));
+        assert.equal((await fetch(service.url)).status, 200);
+        browser = await chromium.launch({ headless: true });
+        for (const [name, viewport] of [["desktop", { width: 1200, height: 900 }], ["mobile", { width: 390, height: 844 }], ["wide", { width: 1440, height: 900 }]])
+        {
+            const context = await browser.newContext({ viewport, deviceScaleFactor: 1, reducedMotion: "reduce" });
+            const page = await context.newPage();
+            page.on("console", (message) => { if (message.type() === "error") errors.push(name + ": " + message.text()); });
+            page.on("pageerror", (error) => errors.push(name + ": " + error.message));
+            page.on("requestfailed", (request) => errors.push(name + ": " + request.url() + " " + request.failure()?.errorText));
+            page.on("response", (response) => { if (response.status() >= 400) errors.push(name + ": HTTP " + response.status() + " " + response.url()); });
+            assert.equal((await page.goto(service.url, { waitUntil: "networkidle" })).status(), 200);
+            await page.evaluate(() => document.fonts.ready);
+            assert(await page.evaluate(() => document.fonts.check('600 24px Fraunces') && document.fonts.check('400 18px "Source Sans 3"')));
+            assert.equal(await page.locator("h1").innerText(), "Study where the\nriver bends.");
+            assert.equal(await page.locator(".program-card").count(), 11);
+            const overflow = async () => assert(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), name + " horizontal overflow");
+            await overflow();
+            await page.evaluate(async () =>
+            {
+                for (const image of document.images)
+                {
+                    image.loading = "eager";
+                    await image.decode();
+                }
+                window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+            });
+            await page.waitForTimeout(200);
+            await page.locator("header").scrollIntoViewIfNeeded();
+            await page.evaluate(() => window.scrollTo({ top: 0, left: 0, behavior: "instant" }));
+            assert.equal(await page.evaluate(() => window.scrollY), 0);
+            const heroBounds = await page.locator("h1").boundingBox();
+            assert(heroBounds && heroBounds.y >= 0 && heroBounds.y + heroBounds.height < viewport.height);
+            if (screenshotPaths[name])
+            {
+                await page.screenshot({ path: screenshotPaths[name] });
+                await page.screenshot({ path: path.join(checks, name + "-full.png"), fullPage: true });
+            }
+            await page.locator('[data-filter="Level"][data-value="Graduate"]').click();
+            assert.equal(await page.locator(".program-card").count(), 5);
+            await page.locator('[data-filter="Area"][data-value="Computing"]').click();
+            assert.equal(await page.locator(".program-card").count(), 1);
+            assert.match(await page.locator(".program-card").innerText(), /M.S. Data Engineering/);
+            await page.locator('[data-filter="Format"][data-value="On campus"]').click();
+            assert.equal(await page.locator(".program-card").count(), 0);
+            await page.locator("#empty-reset").click();
+            assert.equal(await page.locator(".program-card").count(), 11);
+            await page.locator(".bookmark").first().click();
+            assert.equal(await page.locator(".bookmark").first().getAttribute("aria-pressed"), "true");
+            await page.reload({ waitUntil: "networkidle" });
+            assert.equal(await page.locator(".bookmark").first().getAttribute("aria-pressed"), "true");
+            await page.locator("#shortlist-view").click();
+            assert.equal(await page.locator(".program-card").count(), 1);
+            await page.locator(".bookmark").click();
+            assert.equal(await page.locator(".program-card").count(), 0);
+            await page.locator("#empty-reset").click();
+            assert.equal(await page.locator(".program-card").count(), 11);
+            await page.locator("#shortlist-view").click();
+            assert.equal(await page.locator(".program-card").count(), 0);
+            await page.locator("#empty-reset").click();
+            assert.equal(await page.locator("#net-value").innerText(), "$27,300");
+            await page.locator("#contribution").focus();
+            await page.keyboard.press("ArrowRight");
+            assert.equal(await page.locator("#contribution").inputValue(), "17500");
+            assert.equal(await page.locator("#net-value").innerText(), "$28,800");
+            await page.keyboard.press("End");
+            assert.equal(await page.locator("#net-value").innerText(), "$48,300");
+            await page.keyboard.press("Home");
+            assert.equal(await page.locator("#net-value").innerText(), "$20,300");
+            await page.locator("#living").focus();
+            await page.keyboard.press("ArrowRight");
+            assert.equal(await page.locator("#net-value").innerText(), "$18,800");
+            await page.keyboard.press("End");
+            assert.equal(await page.locator("#net-value").innerText(), "$12,100");
+            assert.match(await page.locator("#living").getAttribute("aria-valuetext"), /with family/);
+            await page.locator('button[type="submit"]').click();
+            assert.equal(await page.locator("#name-error").innerText(), "Please enter your name.");
+            await page.locator("#name").fill("Alex River");
+            await page.locator("#email").fill("invalid");
+            await page.locator('button[type="submit"]').click();
+            assert.equal(await page.locator("#email-error").innerText(), "Please enter a valid email address.");
+            await page.locator("#email").fill("alex@example.test");
+            await page.locator('[data-key="day"][data-value="Wednesday"]').click();
+            await page.locator('[data-key="time"][data-value="14:00"]').click();
+            await page.locator('[data-key="type"][data-value="Aid & cost walkthrough"]').click();
+            await page.locator('button[type="submit"]').click();
+            assert.match(await page.locator("#confirmation-details").innerText(), /Wednesday at 14:00 · Aid & cost walkthrough/);
+            await page.locator("#virtual").check();
+            await page.reload({ waitUntil: "networkidle" });
+            assert(await page.locator("#virtual").isChecked());
+            assert(await page.locator("#confirmation").isVisible());
+            await page.locator("#change-request").click();
+            assert.equal(await page.locator("#name").inputValue(), "Alex River");
+            assert.equal(await page.locator('[data-key="day"][data-value="Wednesday"]').getAttribute("aria-pressed"), "true");
+            await overflow();
+            await page.evaluate((brandSlug) =>
+            {
+                localStorage.setItem(brandSlug + "-shortlist", "{broken");
+                localStorage.setItem(brandSlug + "-visit-request", JSON.stringify({ name: "<script>" }));
+            }, "stonewater-university");
+            await page.reload({ waitUntil: "networkidle" });
+            assert.equal(await page.locator("#shortlist-count").innerText(), "Shortlist (0)");
+            assert(await page.locator("#visit-form").isVisible());
+            await overflow();
+            results.push({ viewport: name, ...viewport, deviceScaleFactor: 1, assertions: ["HTTP 200 and correct public mount", "nonblank homepage and eleven programs", "no overflow before/after", "level+area+format intersection and empty reset", "shortlist save/reload/view", "keyboard sliders, default and boundary exact math", "inline name/email validation", "day/time/type save and reload", "virtual preference persistence", "change request restores fields", "malformed JSON/schema recovery", "six images decoded", "self-hosted fonts loaded"] });
+            await context.close();
+        }
+        const animatedContext = await browser.newContext({ viewport: { width: 1200, height: 900 }, deviceScaleFactor: 1, reducedMotion: "no-preference" });
+        const animated = await animatedContext.newPage();
+        animated.on("pageerror", (error) => errors.push(error.message));
+        await animated.goto(service.url, { waitUntil: "networkidle" });
+        await animated.locator("#contribution").focus();
+        await animated.keyboard.press("ArrowRight");
+        await animated.waitForTimeout(400);
+        assert.equal(await animated.locator("#net-value").innerText(), "$28,800");
+        await animatedContext.close();
+        const unavailableContext = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: "reduce" });
+        await unavailableContext.addInitScript(() =>
+        {
+            Storage.prototype.setItem = () => { throw new DOMException("Disabled", "SecurityError"); };
+        });
+        const unavailablePage = await unavailableContext.newPage();
+        await unavailablePage.goto(service.url, { waitUntil: "networkidle" });
+        await unavailablePage.locator("#name").fill("Alex River");
+        await unavailablePage.locator("#email").fill("alex@example.test");
+        await unavailablePage.locator('button[type="submit"]').click();
+        assert.equal(await unavailablePage.locator("#confirmation h3").innerText(), "Request selected.");
+        assert.match(await unavailablePage.locator("#storage-warning").innerText(), /storage is unavailable/);
+        await unavailableContext.close();
+        assert.deepEqual(errors, []);
+        completed = true;
+    }
+    finally
+    {
+        if (browser) await browser.close();
+        if (service) await service.close();
+        resourcesClosed = true;
+        await WorkspaceFiles.saveJson(path.join(checks, "qa.json"), { passed: completed, results, additionalAssertions: ["Non-reduced-motion net-price tween reaches correct final value", "Blocked local storage shows unsaved status rather than a saved claim"], errors, screenshots: screenshotPaths, fullScreenshots: { desktop: path.join(checks, "desktop-full.png"), mobile: path.join(checks, "mobile-full.png") }, visualReviewed: false, resourcesClosed, date: new Date().toISOString(), staticPath: exported });
+    }
+    console.log(JSON.stringify({ passed: true, viewports: results.length, errors, resourcesClosed }));
+}
+
+if (mode === "preview")
+{
+    const qa = await WorkspaceFiles.json(path.join(checks, "qa.json"));
+    assert.equal(qa.passed, true);
+    const metadata = await WorkspaceFiles.json(metadataFile);
+    const currentFingerprint = createHash("sha256").update(JSON.stringify([await WorkspaceFiles.text(job.file), await WorkspaceFiles.text(path.join(workspace, "src", "workflows", "AI Agent", "DESIGN.md"))])).digest("hex");
+    assert.equal((await WorkspaceFiles.text(path.join(folder, ".generation-input.sha256"))).trim(), currentFingerprint);
+    const digest = await StaticHomepage.validateStaticOutput(exported, shared.slug, "GPT-6");
+    console.log(await StaticHomepage.ensurePreview(workspace, { folder }, exported, digest, undefined, metadata.preview));
+}
+
+if (mode === "finish")
+{
+    const qa = await WorkspaceFiles.json(path.join(checks, "qa.json"));
+    assert.equal(qa.passed, true);
+    const metadata = await WorkspaceFiles.json(metadataFile);
+    const digest = await StaticHomepage.validateStaticOutput(exported, shared.slug, "GPT-6");
+    const png = await readFile(path.join(exported, "preview.png"));
+    assert.equal(png.readUInt32BE(16), 1200);
+    assert.equal(png.readUInt32BE(20), 900);
+    assert.equal((await WorkspaceFiles.text(path.join(folder, ".generation-preview.sha256"))).trim(), `${digest} ${createHash("sha256").update(png).digest("hex")}`);
+    qa.visualReviewed = true;
+    for (const name of ["desktop", "mobile"])
+    {
+        assert.equal(createHash("sha256").update(await readFile(path.join(checks, name + "-final.png"))).digest("hex"), createHash("sha256").update(await readFile(path.join(checks, name + ".png"))).digest("hex"));
+    }
+    qa.visualEvidence = "Opened actual desktop.png, mobile.png, desktop-full.png, mobile-full.png and fresh out/preview.png via view. Repeated desktop filename viewer presentation was incomplete, so identical byte-for-byte desktop-final.png and mobile-final.png were opened for final review. Reviewed serif wordmark, warm photograph and navy scrim, hierarchy, spacing, readable cards, cost disclosure, native controls, mobile 16:9 photo block, wrapping and absence of clipped content.";
+    await WorkspaceFiles.saveJson(path.join(checks, "qa.json"), qa);
+    metadata.preview = true;
+    metadata.validated = true;
+    await WorkspaceFiles.saveJson(metadataFile, metadata);
+    await registerGeneratedPage(workspace, { prompt: job.prompt, model: "GPT-6", slug: shared.slug, title: shared.title, staticDir: "out", tags });
+    const finalConfig = await WorkspaceFiles.json(path.join(workspace, "deploy", "config.json"));
+    const entries = finalConfig.pages[job.prompt].pages.filter((entry) => entry.model === "GPT-6");
+    assert.equal(entries.length, 1);
+    assert.equal(entries[0].enabled, false);
+    assert.equal(entries[0].deployed, false);
+    assert.deepEqual(entries[0].tags, tags);
+    metadata.config_added = true;
+    await WorkspaceFiles.saveJson(metadataFile, metadata);
+    await WorkspaceFiles.saveJson(job.reportFile,
+    {
+        prompt: job.prompt,
+        runId: job.runId,
+        status: "completed",
+        summary: "已完成独立英文招生首页、全部核心交互、静态与真实桌面/移动端验证、三张截图人工视觉审阅及默认关闭登记；未构建、未部署。",
+        modelId: job.modelId,
+        display_model_name: "GPT-6",
+        tags,
+        flags: { generated: metadata.generated, preview: metadata.preview, validated: metadata.validated, config_added: metadata.config_added },
+        generated: metadata.generated,
+        preview: metadata.preview,
+        validated: metadata.validated,
+        config_added: metadata.config_added,
+        output: folder,
+        staticOutput: exported,
+        publicPath: `/pages/${shared.slug}/GPT-6/index.html`,
+        qa: path.join(checks, "qa.json"),
+        screenshots: { ...qa.screenshots, preview: path.join(exported, "preview.png") },
+        reviewScreenshots: { desktop: path.join(checks, "desktop-final.png"), mobile: path.join(checks, "mobile-final.png"), full: qa.fullScreenshots },
+        tests: qa.results,
+        additionalAssertions: qa.additionalAssertions,
+        errors: qa.errors,
+        visualReviewed: qa.visualReviewed,
+        visualEvidence: qa.visualEvidence,
+        sourceType: "html-static-adaptation",
+        inputFingerprint: (await WorkspaceFiles.text(path.join(folder, ".generation-input.sha256"))).trim(),
+        staticDigest: digest,
+        previewFingerprint: (await WorkspaceFiles.text(path.join(folder, ".generation-preview.sha256"))).trim(),
+        assetEvidence: "六张原始指定生成照片均实际下载并通过 WebP 头及浏览器解码检查；五个指定字体权重来自实际 Fontsource npm 包并本地托管，许可证完整保留。",
+        resolvedDiagnostics: ["直接 Node HTTPS 请求发生 TLS 握手失败，使用 Windows curl 获取照片；公共 npm registry TLS 不可用，改用已配置的 npm registry 取得 Fontsource 包。未重生成其他 prompt，未调用外部 AI。"],
+        registration: entries[0],
+        limitations: ["按授权采用 HTML/CSS/JavaScript 静态适配，未使用 Vite/React/TypeScript/Tailwind/Motion；未执行构建", "虚构学校、专业与费用，仅本地收藏和预约，不发送邮件或进行真实预约", "仅十一项样例专业，不含完整目录与生产招生后台", "指定 studio-lab.webp 本身含近景人物；遵照精确资产要求原样保留，并未替换图片或宣称所有人物皆为远景", "许可仅非商业，商业使用须另行授权"],
+        blocker: null,
+        resourcesClosed: qa.resourcesClosed,
+        lockVerified: { prompt: state.ownedLock.prompt, pid: state.ownedLock.pid, runId: state.runId },
+        taskContext: "task\\TASK.md 不存在；已读取现有 progress.log，本轮范围以明确单任务授权为准。",
+        date: new Date().toISOString()
+    });
+    console.log(JSON.stringify({ status: "completed", flags: metadata, report: job.reportFile }));
+}

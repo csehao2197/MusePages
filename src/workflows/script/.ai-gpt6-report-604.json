@@ -1,0 +1,979 @@
+{
+  "runId": "ai-gpt6-all-28883b46-8438-4644-b660-725d7968c87c",
+  "prompt": "604-ink-wash-mountain-adventure",
+  "status": "completed",
+  "modelId": "gpt-6.1-sol",
+  "display_model_name": "GPT-6",
+  "summary": "已完成原创全英文水墨山道三维动作训练游戏；键盘真实通关三位守卫、登顶与重新开始，触屏真实完成第一守卫并验证失败后保留已学关卡。未构建或部署。",
+  "tags": [
+    "Ink Wash",
+    "Adventure",
+    "Mountains"
+  ],
+  "generated": true,
+  "preview": true,
+  "validated": true,
+  "config_added": true,
+  "metadata": {
+    "modelId": "gpt-6.1-sol",
+    "tags": [
+      "Ink Wash",
+      "Adventure",
+      "Mountains"
+    ],
+    "staticDir": "out",
+    "generated": true,
+    "preview": true,
+    "config_added": true,
+    "validated": true
+  },
+  "output": "C:\\Code\\MusePages\\out\\pages\\604-ink-wash-mountain-adventure\\GPT-6",
+  "staticOutput": "C:\\Code\\MusePages\\out\\pages\\604-ink-wash-mountain-adventure\\GPT-6\\out",
+  "publicPath": "/pages/ink-wash-mountain-adventure/GPT-6/index.html",
+  "qaFile": "C:\\Code\\MusePages\\out\\pages\\604-ink-wash-mountain-adventure\\GPT-6\\.checks\\qa.json",
+  "screenshots": {
+    "desktop": {
+      "path": "C:\\Code\\MusePages\\out\\pages\\604-ink-wash-mountain-adventure\\GPT-6\\.checks\\desktop.png",
+      "width": 1200,
+      "height": 900,
+      "sha256": "8786c5d426fffaa0fac6fda3899e8fe6f6cfb0e1eddbf11d14006f3d0ed226fc",
+      "openedWithView": true
+    },
+    "mobile": {
+      "path": "C:\\Code\\MusePages\\out\\pages\\604-ink-wash-mountain-adventure\\GPT-6\\.checks\\mobile.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "e1f7a0b469a7131e8498a00ceadf50d607e0f3bc684f094f7fee775eea5fa850",
+      "openedWithView": true
+    },
+    "preview": {
+      "path": "C:\\Code\\MusePages\\out\\pages\\604-ink-wash-mountain-adventure\\GPT-6\\out\\preview.png",
+      "width": 1200,
+      "height": 900,
+      "sha256": "885c11359b360f87ee6462fcab77b6657b9e791e4914fc8ca49afa9e3fde1839",
+      "openedWithView": true
+    },
+    "summit": {
+      "path": "C:\\Code\\MusePages\\out\\pages\\604-ink-wash-mountain-adventure\\GPT-6\\.checks\\summit.png",
+      "width": 1200,
+      "height": 900,
+      "sha256": "868bbd3bcc32b5b836f6853206d58e8520d7885033451a35129c2b897032298d",
+      "openedWithView": true
+    }
+  },
+  "input": {
+    "file": "C:\\Code\\MusePages\\data\\prompts\\604-ink-wash-mountain-adventure\\604-ink-wash-mountain-adventure.md",
+    "fullMarkdownRead": true,
+    "fullDesignRead": true,
+    "fingerprint": "ebc70dcf91b0eb236cf69212f48231a29031f5b5ee690ae0265db1415b910e1a",
+    "provenance": {
+      "title": "Ink Wash Mountain Adventure",
+      "category": "Entertainment",
+      "source_url": "https://github.com/liyupi/awesome-vibe-coding-websites/blob/85431a57f231fa59269dad62c757193d6a3fd0ff/templates/ink-wash-mountain-adventure/prompt.md",
+      "license": "CC-BY-NC-4.0",
+      "license_file": "data\\downloads\\github.com\\liyupi-awesome-vibe-coding-websites\\85431a57f231fa59269dad62c757193d6a3fd0ff\\LICENSE"
+    },
+    "licenseRead": true
+  },
+  "lock": {
+    "runId": "ai-gpt6-all-28883b46-8438-4644-b660-725d7968c87c",
+    "pid": 47144,
+    "matchedDurableOwnedLock": true,
+    "aliveAtFinalization": true,
+    "coordinatorLockPreserved": true
+  },
+  "implementation": [
+    "真实 Three.js 三维山道、第三人称角色、三个各自拥有警示/扫击/恢复时序的机械训练守卫。",
+    "固定 1/60 秒本地模拟，三段连击、攻击距离、Breath 消耗恢复、闪避无敌窗口、受击失衡、训练门与登顶圆圈判定。",
+    "重试只重置当前课，已校准守卫保留；完整重新开始重置全部进度；个人最佳主动时间与声音偏好仅存在本地。",
+    "原创程序化岩石、松树、门架、角色与着色器；纸纹、水墨分层、动态雨与可选合成雨声/远雷；静态地形实例化及渲染工作上限。",
+    "键盘、鼠标路径点击与动作按钮、触屏长按方向及动作键、帮助、暂停与结果弹窗。"
+  ],
+  "tests": {
+    "browserGroupsPassed": 14,
+    "browserGroupsFailed": 0,
+    "unitTestsPassed": 4,
+    "unitTestsFailed": 0,
+    "errors": [],
+    "assertions": [
+      {
+        "name": "Final-subpath static server isolation",
+        "passed": true,
+        "evidence": {
+          "url": "http://127.0.0.1:51219/pages/ink-wash-mountain-adventure/GPT-6/index.html",
+          "index": 200,
+          "repositoryRoot": 404,
+          "metadata": 404
+        }
+      },
+      {
+        "name": "Desktop nonblank 3D first screen and no overflow",
+        "passed": true,
+        "evidence": {
+          "canvas": {
+            "x": 0,
+            "y": 0,
+            "width": 1200,
+            "height": 900
+          },
+          "screenshotBytes": 1214383
+        }
+      },
+      {
+        "name": "Mobile nonblank 3D first screen and no overflow",
+        "passed": true,
+        "evidence": {
+          "screenshotBytes": 406589
+        }
+      },
+      {
+        "name": "Help, start, range check, and real Breath consumption",
+        "passed": true,
+        "evidence": {
+          "mode": "playing",
+          "player": {
+            "x": 0.35001218507317616,
+            "z": 2,
+            "hp": 3,
+            "breath": 90.59999999999994,
+            "combo": 0,
+            "comboWindow": 0,
+            "cooldown": 0,
+            "swing": 0,
+            "dodge": 0,
+            "invulnerable": 0,
+            "dodgeX": 0,
+            "dodgeZ": 0,
+            "facing": 3.141592653589793,
+            "walking": false
+          },
+          "guardians": [
+            {
+              "name": "Reed Sentinel",
+              "lesson": "THE REED LESSON",
+              "form": "Find your rhythm",
+              "z": -8,
+              "health": 8,
+              "windup": 1.25,
+              "rest": 2.25,
+              "maxHealth": 8,
+              "resolved": false,
+              "phase": "waiting",
+              "phaseTime": 0,
+              "hit": 0
+            },
+            {
+              "name": "Stone Sentinel",
+              "lesson": "THE STONE LESSON",
+              "form": "Hold your ground",
+              "z": -37,
+              "health": 10,
+              "windup": 1.05,
+              "rest": 1.95,
+              "maxHealth": 10,
+              "resolved": false,
+              "phase": "waiting",
+              "phaseTime": 0,
+              "hit": 0
+            },
+            {
+              "name": "Cloud Sentinel",
+              "lesson": "THE CLOUD LESSON",
+              "form": "Move with the rain",
+              "z": -66,
+              "health": 12,
+              "windup": 0.9,
+              "rest": 1.8,
+              "maxHealth": 12,
+              "resolved": false,
+              "phase": "waiting",
+              "phaseTime": 0,
+              "hit": 0
+            }
+          ],
+          "resolved": 0,
+          "elapsed": 0.6833333333333338,
+          "hits": 0,
+          "strikes": 1,
+          "dodges": 0,
+          "cleanDodges": 0,
+          "retries": 0,
+          "paused": false
+        }
+      },
+      {
+        "name": "Real keyboard calibration and dodge: Reed Sentinel",
+        "passed": true,
+        "evidence": {
+          "state": {
+            "mode": "playing",
+            "player": {
+              "x": -2.6731386745191488,
+              "z": -5.723484643622617,
+              "hp": 3,
+              "breath": 100,
+              "combo": 3,
+              "comboWindow": 0.283333333333332,
+              "cooldown": 0,
+              "swing": 0,
+              "dodge": 0,
+              "invulnerable": 0,
+              "dodgeX": 0.9544799780350297,
+              "dodgeZ": 0.2982749931359468,
+              "facing": 2.6123407720522493,
+              "walking": false
+            },
+            "guardians": [
+              {
+                "name": "Reed Sentinel",
+                "lesson": "THE REED LESSON",
+                "form": "Find your rhythm",
+                "z": -8,
+                "health": 0,
+                "windup": 1.25,
+                "rest": 2.25,
+                "maxHealth": 8,
+                "resolved": true,
+                "phase": "waiting",
+                "phaseTime": 0.9833333333333347,
+                "hit": 0
+              },
+              {
+                "name": "Stone Sentinel",
+                "lesson": "THE STONE LESSON",
+                "form": "Hold your ground",
+                "z": -37,
+                "health": 10,
+                "windup": 1.05,
+                "rest": 1.95,
+                "maxHealth": 10,
+                "resolved": false,
+                "phase": "waiting",
+                "phaseTime": 0,
+                "hit": 0
+              },
+              {
+                "name": "Cloud Sentinel",
+                "lesson": "THE CLOUD LESSON",
+                "form": "Move with the rain",
+                "z": -66,
+                "health": 12,
+                "windup": 0.9,
+                "rest": 1.8,
+                "maxHealth": 12,
+                "resolved": false,
+                "phase": "waiting",
+                "phaseTime": 0,
+                "hit": 0
+              }
+            ],
+            "resolved": 1,
+            "elapsed": 14.983333333333658,
+            "hits": 7,
+            "strikes": 8,
+            "dodges": 2,
+            "cleanDodges": 2,
+            "retries": 0,
+            "paused": false
+          }
+        }
+      },
+      {
+        "name": "Checkpoint retry retains previously learned form",
+        "passed": true,
+        "evidence": {
+          "mode": "playing",
+          "player": {
+            "x": -2.437973543650375,
+            "z": -31,
+            "hp": 3,
+            "breath": 100,
+            "combo": 0,
+            "comboWindow": 0,
+            "cooldown": 0,
+            "swing": 0,
+            "dodge": 0,
+            "invulnerable": 0,
+            "dodgeX": 0,
+            "dodgeZ": 0,
+            "facing": 3.141592653589793,
+            "walking": false
+          },
+          "guardians": [
+            {
+              "name": "Reed Sentinel",
+              "lesson": "THE REED LESSON",
+              "form": "Find your rhythm",
+              "z": -8,
+              "health": 0,
+              "windup": 1.25,
+              "rest": 2.25,
+              "maxHealth": 8,
+              "resolved": true,
+              "phase": "waiting",
+              "phaseTime": 0.9833333333333347,
+              "hit": 0
+            },
+            {
+              "name": "Stone Sentinel",
+              "lesson": "THE STONE LESSON",
+              "form": "Hold your ground",
+              "z": -37,
+              "health": 10,
+              "windup": 1.05,
+              "rest": 1.95,
+              "maxHealth": 10,
+              "resolved": false,
+              "phase": "waiting",
+              "phaseTime": 0.26666666666666666,
+              "hit": 0
+            },
+            {
+              "name": "Cloud Sentinel",
+              "lesson": "THE CLOUD LESSON",
+              "form": "Move with the rain",
+              "z": -66,
+              "health": 12,
+              "windup": 0.9,
+              "rest": 1.8,
+              "maxHealth": 12,
+              "resolved": false,
+              "phase": "waiting",
+              "phaseTime": 0,
+              "hit": 0
+            }
+          ],
+          "resolved": 1,
+          "elapsed": 16.233333333333693,
+          "hits": 7,
+          "strikes": 8,
+          "dodges": 2,
+          "cleanDodges": 2,
+          "retries": 1,
+          "paused": false
+        }
+      },
+      {
+        "name": "Real keyboard calibration and dodge: Stone Sentinel",
+        "passed": true,
+        "evidence": {
+          "state": {
+            "mode": "playing",
+            "player": {
+              "x": -2.3042776971747965,
+              "z": -36.21015131028927,
+              "hp": 3,
+              "breath": 100,
+              "combo": 1,
+              "comboWindow": 0.3666666666666653,
+              "cooldown": 0,
+              "swing": 0,
+              "dodge": 0,
+              "invulnerable": 0,
+              "dodgeX": 0.9544799780350297,
+              "dodgeZ": 0.2982749931359468,
+              "facing": 2.585867017224422,
+              "walking": false
+            },
+            "guardians": [
+              {
+                "name": "Reed Sentinel",
+                "lesson": "THE REED LESSON",
+                "form": "Find your rhythm",
+                "z": -8,
+                "health": 0,
+                "windup": 1.25,
+                "rest": 2.25,
+                "maxHealth": 8,
+                "resolved": true,
+                "phase": "waiting",
+                "phaseTime": 0.9833333333333347,
+                "hit": 0
+              },
+              {
+                "name": "Stone Sentinel",
+                "lesson": "THE STONE LESSON",
+                "form": "Hold your ground",
+                "z": -37,
+                "health": 0,
+                "windup": 1.05,
+                "rest": 1.95,
+                "maxHealth": 10,
+                "resolved": true,
+                "phase": "telegraph",
+                "phaseTime": 0.05,
+                "hit": 0
+              },
+              {
+                "name": "Cloud Sentinel",
+                "lesson": "THE CLOUD LESSON",
+                "form": "Move with the rain",
+                "z": -66,
+                "health": 12,
+                "windup": 0.9,
+                "rest": 1.8,
+                "maxHealth": 12,
+                "resolved": false,
+                "phase": "waiting",
+                "phaseTime": 0,
+                "hit": 0
+              }
+            ],
+            "resolved": 2,
+            "elapsed": 28.966666666666303,
+            "hits": 15,
+            "strikes": 16,
+            "dodges": 4,
+            "cleanDodges": 4,
+            "retries": 1,
+            "paused": false
+          }
+        }
+      },
+      {
+        "name": "Real keyboard calibration and dodge: Cloud Sentinel",
+        "passed": true,
+        "evidence": {
+          "state": {
+            "mode": "playing",
+            "player": {
+              "x": 1.6442230909487243,
+              "z": -64.56704494238923,
+              "hp": 3,
+              "breath": 100,
+              "combo": 3,
+              "comboWindow": 0.34999999999999865,
+              "cooldown": 0,
+              "swing": 0,
+              "dodge": 0,
+              "invulnerable": 0,
+              "dodgeX": 0.9544799780350297,
+              "dodgeZ": 0.2982749931359468,
+              "facing": 2.622631528911027,
+              "walking": false
+            },
+            "guardians": [
+              {
+                "name": "Reed Sentinel",
+                "lesson": "THE REED LESSON",
+                "form": "Find your rhythm",
+                "z": -8,
+                "health": 0,
+                "windup": 1.25,
+                "rest": 2.25,
+                "maxHealth": 8,
+                "resolved": true,
+                "phase": "waiting",
+                "phaseTime": 0.9833333333333347,
+                "hit": 0
+              },
+              {
+                "name": "Stone Sentinel",
+                "lesson": "THE STONE LESSON",
+                "form": "Hold your ground",
+                "z": -37,
+                "health": 0,
+                "windup": 1.05,
+                "rest": 1.95,
+                "maxHealth": 10,
+                "resolved": true,
+                "phase": "telegraph",
+                "phaseTime": 0.05,
+                "hit": 0
+              },
+              {
+                "name": "Cloud Sentinel",
+                "lesson": "THE CLOUD LESSON",
+                "form": "Move with the rain",
+                "z": -66,
+                "health": 0,
+                "windup": 0.9,
+                "rest": 1.8,
+                "maxHealth": 12,
+                "resolved": true,
+                "phase": "waiting",
+                "phaseTime": 1.2333333333333338,
+                "hit": 0
+              }
+            ],
+            "resolved": 3,
+            "elapsed": 49.43333333333181,
+            "hits": 25,
+            "strikes": 26,
+            "dodges": 7,
+            "cleanDodges": 7,
+            "retries": 1,
+            "paused": false
+          }
+        }
+      },
+      {
+        "name": "Actual summit traversal, win summary, and local personal best",
+        "passed": true,
+        "evidence": {
+          "final": {
+            "mode": "won",
+            "player": {
+              "x": 1.6442230909487243,
+              "z": -86.51037827572196,
+              "hp": 3,
+              "breath": 100,
+              "combo": 3,
+              "comboWindow": 0,
+              "cooldown": 0,
+              "swing": 0,
+              "dodge": 0,
+              "invulnerable": 0,
+              "dodgeX": 0.9544799780350297,
+              "dodgeZ": 0.2982749931359468,
+              "facing": 3.141592653589793,
+              "walking": true
+            },
+            "guardians": [
+              {
+                "name": "Reed Sentinel",
+                "lesson": "THE REED LESSON",
+                "form": "Find your rhythm",
+                "z": -8,
+                "health": 0,
+                "windup": 1.25,
+                "rest": 2.25,
+                "maxHealth": 8,
+                "resolved": true,
+                "phase": "waiting",
+                "phaseTime": 0.9833333333333347,
+                "hit": 0
+              },
+              {
+                "name": "Stone Sentinel",
+                "lesson": "THE STONE LESSON",
+                "form": "Hold your ground",
+                "z": -37,
+                "health": 0,
+                "windup": 1.05,
+                "rest": 1.95,
+                "maxHealth": 10,
+                "resolved": true,
+                "phase": "telegraph",
+                "phaseTime": 0.05,
+                "hit": 0
+              },
+              {
+                "name": "Cloud Sentinel",
+                "lesson": "THE CLOUD LESSON",
+                "form": "Move with the rain",
+                "z": -66,
+                "health": 0,
+                "windup": 0.9,
+                "rest": 1.8,
+                "maxHealth": 12,
+                "resolved": true,
+                "phase": "waiting",
+                "phaseTime": 1.2333333333333338,
+                "hit": 0
+              }
+            ],
+            "resolved": 3,
+            "elapsed": 53.383333333331585,
+            "hits": 25,
+            "strikes": 26,
+            "dodges": 7,
+            "cleanDodges": 7,
+            "retries": 1,
+            "paused": false
+          },
+          "stored": {
+            "rainveil-13w1jn3-best": "53.383333333331585"
+          }
+        }
+      },
+      {
+        "name": "Full restart, frozen pause timer, sound preference, mouse navigation",
+        "passed": true,
+        "evidence": {
+          "state": {
+            "mode": "playing",
+            "player": {
+              "x": 0.6955792207899308,
+              "z": -3.596007017055737,
+              "hp": 3,
+              "breath": 100,
+              "combo": 0,
+              "comboWindow": 0,
+              "cooldown": 0,
+              "swing": 0,
+              "dodge": 0,
+              "invulnerable": 0,
+              "dodgeX": 0,
+              "dodgeZ": 0,
+              "facing": 3.0799185385497965,
+              "walking": true
+            },
+            "guardians": [
+              {
+                "name": "Reed Sentinel",
+                "lesson": "THE REED LESSON",
+                "form": "Find your rhythm",
+                "z": -8,
+                "health": 8,
+                "windup": 1.25,
+                "rest": 2.25,
+                "maxHealth": 8,
+                "resolved": false,
+                "phase": "waiting",
+                "phaseTime": 0.5833333333333335,
+                "hit": 0
+              },
+              {
+                "name": "Stone Sentinel",
+                "lesson": "THE STONE LESSON",
+                "form": "Hold your ground",
+                "z": -37,
+                "health": 10,
+                "windup": 1.05,
+                "rest": 1.95,
+                "maxHealth": 10,
+                "resolved": false,
+                "phase": "waiting",
+                "phaseTime": 0,
+                "hit": 0
+              },
+              {
+                "name": "Cloud Sentinel",
+                "lesson": "THE CLOUD LESSON",
+                "form": "Move with the rain",
+                "z": -66,
+                "health": 12,
+                "windup": 0.9,
+                "rest": 1.8,
+                "maxHealth": 12,
+                "resolved": false,
+                "phase": "waiting",
+                "phaseTime": 0,
+                "hit": 0
+              }
+            ],
+            "resolved": 0,
+            "elapsed": 3.8833333333333244,
+            "hits": 0,
+            "strikes": 0,
+            "dodges": 0,
+            "cleanDodges": 0,
+            "retries": 0,
+            "paused": false
+          }
+        }
+      },
+      {
+        "name": "Mobile held movement, real dodge, strike, help, no post-interaction overflow",
+        "passed": true,
+        "evidence": {
+          "mode": "playing",
+          "player": {
+            "x": 3.1315571088654455,
+            "z": -3.263408988477967,
+            "hp": 3,
+            "breath": 66.8999999999999,
+            "combo": 0,
+            "comboWindow": 0,
+            "cooldown": 0.19333333333333336,
+            "swing": 0.13333333333333336,
+            "dodge": 0,
+            "invulnerable": 0,
+            "dodgeX": 0.9544799780350297,
+            "dodgeZ": 0.2982749931359468,
+            "facing": 3.141592653589793,
+            "walking": false
+          },
+          "guardians": [
+            {
+              "name": "Reed Sentinel",
+              "lesson": "THE REED LESSON",
+              "form": "Find your rhythm",
+              "z": -8,
+              "health": 8,
+              "windup": 1.25,
+              "rest": 2.25,
+              "maxHealth": 8,
+              "resolved": false,
+              "phase": "waiting",
+              "phaseTime": 1.5333333333333328,
+              "hit": 0
+            },
+            {
+              "name": "Stone Sentinel",
+              "lesson": "THE STONE LESSON",
+              "form": "Hold your ground",
+              "z": -37,
+              "health": 10,
+              "windup": 1.05,
+              "rest": 1.95,
+              "maxHealth": 10,
+              "resolved": false,
+              "phase": "waiting",
+              "phaseTime": 0,
+              "hit": 0
+            },
+            {
+              "name": "Cloud Sentinel",
+              "lesson": "THE CLOUD LESSON",
+              "form": "Move with the rain",
+              "z": -66,
+              "health": 12,
+              "windup": 0.9,
+              "rest": 1.8,
+              "maxHealth": 12,
+              "resolved": false,
+              "phase": "waiting",
+              "phaseTime": 0,
+              "hit": 0
+            }
+          ],
+          "resolved": 0,
+          "elapsed": 2.0999999999999974,
+          "hits": 0,
+          "strikes": 1,
+          "dodges": 1,
+          "cleanDodges": 0,
+          "retries": 0,
+          "paused": false
+        }
+      },
+      {
+        "name": "Actual touch-only first-guardian calibration",
+        "passed": true,
+        "evidence": {
+          "mode": "playing",
+          "player": {
+            "x": -1.6682542815360055,
+            "z": -5.813408988477976,
+            "hp": 3,
+            "breath": 100,
+            "combo": 3,
+            "comboWindow": 0.48333333333333195,
+            "cooldown": 0,
+            "swing": 0,
+            "dodge": 0,
+            "invulnerable": 0,
+            "dodgeX": 0.9544799780350297,
+            "dodgeZ": 0.2982749931359468,
+            "facing": 2.9932890123416525,
+            "walking": false
+          },
+          "guardians": [
+            {
+              "name": "Reed Sentinel",
+              "lesson": "THE REED LESSON",
+              "form": "Find your rhythm",
+              "z": -8,
+              "health": 0,
+              "windup": 1.25,
+              "rest": 2.25,
+              "maxHealth": 8,
+              "resolved": true,
+              "phase": "recovery",
+              "phaseTime": 2.0999999999999974,
+              "hit": 0
+            },
+            {
+              "name": "Stone Sentinel",
+              "lesson": "THE STONE LESSON",
+              "form": "Hold your ground",
+              "z": -37,
+              "health": 10,
+              "windup": 1.05,
+              "rest": 1.95,
+              "maxHealth": 10,
+              "resolved": false,
+              "phase": "waiting",
+              "phaseTime": 0,
+              "hit": 0
+            },
+            {
+              "name": "Cloud Sentinel",
+              "lesson": "THE CLOUD LESSON",
+              "form": "Move with the rain",
+              "z": -66,
+              "health": 12,
+              "windup": 0.9,
+              "rest": 1.8,
+              "maxHealth": 12,
+              "resolved": false,
+              "phase": "waiting",
+              "phaseTime": 0,
+              "hit": 0
+            }
+          ],
+          "resolved": 1,
+          "elapsed": 8.466666666666667,
+          "hits": 6,
+          "strikes": 7,
+          "dodges": 2,
+          "cleanDodges": 1,
+          "retries": 1,
+          "paused": false
+        }
+      },
+      {
+        "name": "Real sweep failure and mobile checkpoint recovery with first form retained",
+        "passed": true,
+        "evidence": {
+          "mode": "playing",
+          "player": {
+            "x": -2.437973543650375,
+            "z": -31,
+            "hp": 3,
+            "breath": 100,
+            "combo": 0,
+            "comboWindow": 0,
+            "cooldown": 0,
+            "swing": 0,
+            "dodge": 0,
+            "invulnerable": 0,
+            "dodgeX": 0,
+            "dodgeZ": 0,
+            "facing": 3.141592653589793,
+            "walking": false
+          },
+          "guardians": [
+            {
+              "name": "Reed Sentinel",
+              "lesson": "THE REED LESSON",
+              "form": "Find your rhythm",
+              "z": -8,
+              "health": 0,
+              "windup": 1.25,
+              "rest": 2.25,
+              "maxHealth": 8,
+              "resolved": true,
+              "phase": "recovery",
+              "phaseTime": 2.0999999999999974,
+              "hit": 0
+            },
+            {
+              "name": "Stone Sentinel",
+              "lesson": "THE STONE LESSON",
+              "form": "Hold your ground",
+              "z": -37,
+              "health": 10,
+              "windup": 1.05,
+              "rest": 1.95,
+              "maxHealth": 10,
+              "resolved": false,
+              "phase": "waiting",
+              "phaseTime": 0,
+              "hit": 0
+            },
+            {
+              "name": "Cloud Sentinel",
+              "lesson": "THE CLOUD LESSON",
+              "form": "Move with the rain",
+              "z": -66,
+              "health": 12,
+              "windup": 0.9,
+              "rest": 1.8,
+              "maxHealth": 12,
+              "resolved": false,
+              "phase": "waiting",
+              "phaseTime": 0,
+              "hit": 0
+            }
+          ],
+          "resolved": 1,
+          "elapsed": 25.916666666666476,
+          "hits": 6,
+          "strikes": 7,
+          "dodges": 2,
+          "cleanDodges": 1,
+          "retries": 2,
+          "paused": false
+        }
+      },
+      {
+        "name": "No console, page, request, or HTTP/resource errors",
+        "passed": true,
+        "evidence": {
+          "errors": []
+        }
+      }
+    ],
+    "staticValidation": "passed",
+    "sourceExportEqual": true,
+    "inputFingerprint": "ebc70dcf91b0eb236cf69212f48231a29031f5b5ee690ae0265db1415b910e1a",
+    "staticDigest": "70bbc5c8ae6ba2c1b7d046a3d52c99118834aac86f87d8b91b57910e0ac56d40",
+    "previewResult": "generated",
+    "previewDigestVerified": true
+  },
+  "visualReviewed": true,
+  "visualEvidence": {
+    "method": "实际使用 view 工具打开最终 desktop.png、mobile.png、preview.png；另已打开真实登顶结果截图 summit.png。",
+    "observations": [
+      "桌面：山道、近处玩家和第一训练守卫构成主体，衬线标题与克制 HUD 有清楚层级；暖纸底与墨绿色、朱砂角色形成区分。",
+      "手机：标题、Breath、横排进度与守卫标签互不重叠；目标位于玩家下方，方向键与动作按钮均位于视口内。",
+      "已修正早期画面过暗、文字对比不足及手机进度与目标标签重叠；最终真实截图无横向溢出和明显裁切。",
+      "标准预览为实际静态首页 1200×900 首屏，不是设计稿、游戏宣传落地页或其他模型结果。"
+    ],
+    "screenshots": {
+      "desktop": {
+        "path": "C:\\Code\\MusePages\\out\\pages\\604-ink-wash-mountain-adventure\\GPT-6\\.checks\\desktop.png",
+        "width": 1200,
+        "height": 900,
+        "sha256": "8786c5d426fffaa0fac6fda3899e8fe6f6cfb0e1eddbf11d14006f3d0ed226fc",
+        "openedWithView": true
+      },
+      "mobile": {
+        "path": "C:\\Code\\MusePages\\out\\pages\\604-ink-wash-mountain-adventure\\GPT-6\\.checks\\mobile.png",
+        "width": 390,
+        "height": 844,
+        "sha256": "e1f7a0b469a7131e8498a00ceadf50d607e0f3bc684f094f7fee775eea5fa850",
+        "openedWithView": true
+      },
+      "preview": {
+        "path": "C:\\Code\\MusePages\\out\\pages\\604-ink-wash-mountain-adventure\\GPT-6\\out\\preview.png",
+        "width": 1200,
+        "height": 900,
+        "sha256": "885c11359b360f87ee6462fcab77b6657b9e791e4914fc8ca49afa9e3fde1839",
+        "openedWithView": true
+      },
+      "summit": {
+        "path": "C:\\Code\\MusePages\\out\\pages\\604-ink-wash-mountain-adventure\\GPT-6\\.checks\\summit.png",
+        "width": 1200,
+        "height": 900,
+        "sha256": "868bbd3bcc32b5b836f6853206d58e8520d7885033451a35129c2b897032298d",
+        "openedWithView": true
+      }
+    }
+  },
+  "registration": {
+    "added": true,
+    "uniqueVerified": true,
+    "option": {
+      "model": "GPT-6",
+      "slug": "ink-wash-mountain-adventure",
+      "title": "Ink Wash Mountain Adventure",
+      "staticDir": "out",
+      "tags": [
+        "Ink Wash",
+        "Adventure",
+        "Mountains"
+      ],
+      "enabled": false,
+      "deployed": false
+    },
+    "unrelatedOptionsPreserved": true,
+    "deployed": false,
+    "enabled": false
+  },
+  "limitations": [
+    "采用获授权的 HTML/CSS/浏览器 JavaScript 静态适配，未执行原始 Vite/TypeScript 构建；模块按功能分离但文案不是单一 TypeScript 文件；Lucide 为本地 UMD 包。",
+    "原始输入仅为公开 Brief，不含付费 Pro 的精确页面、资产、坐标或时序；本实现的几何、界面和战斗参数为原创，不宣称复刻未提供的私有设计。",
+    "全部界面文字使用英文，印章也以英文 R 替代汉字书法，并在 README 记录。",
+    "实测 Chromium 桌面 1200×900 与触屏 390×844；未声称覆盖所有浏览器、GPU 或手机横屏。需要 WebGL。",
+    "保留 VibeFather 署名及 CC BY-NC 4.0 非商业限制，依赖许可随静态资源提供；未使用第三方演示图片。",
+    "没有后端、外部 API、在线纪录或交易服务，也没有假战斗 Mock；未运行生产构建、dist、publish 或上传。"
+  ],
+  "blocker": null,
+  "resourcesClosed": true,
+  "resourceClosure": "所有自有 Playwright 浏览器和仅托管目标静态目录的临时服务均已在 finally 中关闭；ensurePreview 的浏览器/服务已正常关闭；未启动常驻服务。协调器锁持有进程保持不动。",
+  "completedAt": "2026-11-16T12:31:12.165Z"
+}

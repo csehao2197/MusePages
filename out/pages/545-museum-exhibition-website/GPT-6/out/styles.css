@@ -1,0 +1,1314 @@
+@font-face
+{
+    font-family: Fraunces;
+    src: url("./fonts/fraunces-latin-300-normal.woff2") format("woff2");
+    font-weight: 300;
+    font-display: swap;
+}
+@font-face
+{
+    font-family: Fraunces;
+    src: url("./fonts/fraunces-latin-400-normal.woff2") format("woff2");
+    font-weight: 400;
+    font-display: swap;
+}
+@font-face
+{
+    font-family: Fraunces;
+    src: url("./fonts/fraunces-latin-600-normal.woff2") format("woff2");
+    font-weight: 600;
+    font-display: swap;
+}
+@font-face
+{
+    font-family: Inter;
+    src: url("./fonts/inter-latin-400-normal.woff2") format("woff2");
+    font-weight: 400;
+    font-display: swap;
+}
+@font-face
+{
+    font-family: Inter;
+    src: url("./fonts/inter-latin-500-normal.woff2") format("woff2");
+    font-weight: 500;
+    font-display: swap;
+}
+@font-face
+{
+    font-family: "IBM Plex Mono";
+    src: url("./fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2");
+    font-weight: 400;
+    font-display: swap;
+}
+@font-face
+{
+    font-family: "IBM Plex Mono";
+    src: url("./fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2");
+    font-weight: 500;
+    font-display: swap;
+}
+:root
+{
+    --gallery: #FAF8F3;
+    --ink: #17181C;
+    --museum: #2545C8;
+    --stone: #F1EEE7;
+    --line: #E4E0D6;
+    --plate: #DEDBD4;
+}
+*
+{
+    box-sizing: border-box;
+}
+html
+{
+    scroll-behavior: smooth;
+    scroll-padding-top: 95px;
+}
+body
+{
+    margin: 0;
+    background: var(--gallery);
+    color: var(--ink);
+    font-family: Inter, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+}
+button, a
+{
+    -webkit-tap-highlight-color: transparent;
+}
+button
+{
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    border-radius: 2px;
+}
+button:disabled
+{
+    cursor: not-allowed;
+}
+button:active:not(:disabled)
+{
+    transform: scale(.97);
+}
+a
+{
+    color: inherit;
+    text-decoration: none;
+}
+a:hover
+{
+    color: var(--museum);
+}
+:focus-visible
+{
+    outline: 2px solid var(--museum);
+    outline-offset: 5px;
+}
+[hidden]
+{
+    display: none !important;
+}
+svg
+{
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+p, h1, h2, h3, figure
+{
+    margin: 0;
+}
+h1, h2, h3, .wordmark, .stat strong, .price
+{
+    font-family: Fraunces, Georgia, serif;
+    font-weight: 300;
+}
+h2
+{
+    font-size: clamp(38px, 4.5vw, 56px);
+    line-height: 1.15;
+    letter-spacing: -.035em;
+}
+.container
+{
+    width: min(1200px, 100%);
+    padding: 0 40px;
+    margin: 0 auto;
+}
+.mono, .eyebrow, .section-label
+{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: .065em;
+    text-transform: uppercase;
+    line-height: 1.65;
+}
+.eyebrow, .section-label
+{
+    color: var(--museum);
+}
+.muted
+{
+    color: #62625F;
+}
+.skip
+{
+    position: fixed;
+    top: -80px;
+    left: 24px;
+    padding: 12px;
+    z-index: 100;
+    background: var(--gallery);
+}
+.skip:focus
+{
+    top: 8px;
+}
+.site-header
+{
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    height: 72px;
+    background: var(--gallery);
+    border-bottom: 1px solid transparent;
+    transition: border-color 300ms;
+}
+.site-header.scrolled
+{
+    border-color: var(--line);
+}
+.header-inner
+{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+}
+.wordmark
+{
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -.035em;
+    white-space: nowrap;
+}
+.desktop-nav
+{
+    display: flex;
+    gap: 30px;
+}
+.desktop-nav a
+{
+    font-size: 13px;
+    font-weight: 500;
+    color: #50514F;
+    position: relative;
+}
+.desktop-nav a::after
+{
+    content: "";
+    position: absolute;
+    inset: auto 0 -8px;
+    height: 2px;
+    background: var(--museum);
+    transform: scaleX(0);
+    transition: transform 200ms;
+}
+.desktop-nav a:hover::after
+{
+    transform: scaleX(1);
+}
+.ticket-link, .text-link
+{
+    display: inline-flex;
+    gap: 12px;
+    align-items: center;
+    color: var(--museum);
+    font-weight: 500;
+    font-size: 14px;
+}
+.ticket-link svg
+{
+    width: 16px;
+}
+.menu-toggle
+{
+    display: none;
+    border: 0;
+    background: transparent;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+}
+.mobile-nav
+{
+    position: absolute;
+    top: 72px;
+    left: 0;
+    right: 0;
+    padding: 20px 24px;
+    background: var(--gallery);
+    border-bottom: 1px solid var(--line);
+    animation: drawer 250ms ease-out;
+}
+.mobile-nav a
+{
+    display: block;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+}
+.hero
+{
+    padding-top: 106px;
+    padding-bottom: 64px;
+}
+.hero-grid
+{
+    display: grid;
+    grid-template-columns: 52% 48%;
+    align-items: center;
+}
+.hero-copy
+{
+    position: relative;
+    z-index: 2;
+}
+.eyebrow
+{
+    margin-bottom: 25px;
+}
+.eyebrow::before
+{
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: var(--museum);
+    margin-right: 10px;
+    vertical-align: 2px;
+}
+h1
+{
+    font-size: clamp(64px, 11vw, 148px);
+    letter-spacing: -.065em;
+    line-height: .94;
+    margin-left: -5px;
+    width: max-content;
+    max-width: 100%;
+}
+h1 span
+{
+    display: block;
+    animation: title-rise 600ms both;
+}
+h1 span:last-child
+{
+    animation-delay: 100ms;
+}
+.hero-description
+{
+    font-size: 18px;
+    line-height: 1.8;
+    max-width: 43ch;
+    color: #565754;
+    margin: 28px 48px 22px 0;
+}
+.hero-figure
+{
+    margin-left: -40px;
+    padding-top: 30px;
+}
+.hero-image
+{
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border: 1px solid var(--line);
+    animation: photo-settle 700ms both;
+}
+.hero-caption
+{
+    margin-top: 15px;
+    font-size: 11px;
+    color: #62625F;
+    letter-spacing: .04em;
+}
+.hero-caption span
+{
+    display: block;
+}
+.hero-end
+{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 64px;
+    margin-top: 8px;
+    color: #6F706B;
+    font-size: 10px;
+}
+.hero-end .mono:last-child
+{
+    color: var(--museum);
+}
+.intro
+{
+    background: var(--stone);
+    padding: 44px 0;
+}
+.intro-grid
+{
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    gap: 65px;
+    align-items: center;
+}
+.intro p
+{
+    font-size: 15px;
+    color: #555651;
+}
+.stats
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+.stat
+{
+    padding: 0 24px;
+    border-left: 1px solid #D7D3C8;
+}
+.stat:first-child
+{
+    padding-left: 0;
+    border-left: 0;
+}
+.stat strong
+{
+    display: block;
+    font-size: 38px;
+    line-height: 1.4;
+}
+.stat .mono
+{
+    font-size: 10px;
+    white-space: nowrap;
+    color: #67675F;
+}
+.section
+{
+    padding: 112px 0;
+    border-bottom: 1px solid var(--line);
+}
+.section-label
+{
+    margin-bottom: 20px;
+}
+.section-heading
+{
+    display: flex;
+    gap: 50px;
+    align-items: end;
+    justify-content: space-between;
+    margin-bottom: 64px;
+}
+.section-heading p
+{
+    max-width: 39ch;
+    color: #62625F;
+    line-height: 1.8;
+    font-size: 14px;
+}
+.object-row
+{
+    display: grid;
+    grid-template-columns: 55% 1fr;
+    gap: 64px;
+    align-items: center;
+    padding: 64px 0;
+    border-top: 1px solid var(--line);
+}
+.object-row:nth-child(even)
+{
+    grid-template-columns: 1fr 55%;
+}
+.object-row:nth-child(even) figure
+{
+    order: 2;
+}
+.object-row:first-child
+{
+    padding-top: 0;
+    border-top: 0;
+}
+.object-row:last-child
+{
+    padding-bottom: 0;
+}
+.object-frame
+{
+    position: relative;
+    border: 1px solid var(--line);
+    background: var(--plate);
+    overflow: hidden;
+    isolation: isolate;
+    touch-action: pan-y;
+}
+.object-frame img
+{
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    user-select: none;
+    transition: transform 300ms ease-out;
+}
+.object-frame.active
+{
+    border-color: var(--museum);
+    cursor: grab;
+    touch-action: none;
+}
+.object-frame.dragging
+{
+    cursor: grabbing;
+}
+.object-frame.dragging img
+{
+    transition: none;
+}
+.inspect-trigger
+{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    cursor: zoom-in;
+    border-radius: 0;
+}
+.inspect-trigger:active
+{
+    transform: none !important;
+}
+.inspect-chip
+{
+    position: absolute;
+    right: 18px;
+    top: 18px;
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    background: var(--gallery);
+    color: var(--museum);
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-size: 10px;
+}
+.inspect-chip svg
+{
+    width: 14px;
+    height: 14px;
+}
+.controls
+{
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    display: flex;
+    align-items: center;
+    gap: 1px;
+    background: var(--gallery);
+    border: 1px solid var(--line);
+}
+.controls button
+{
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 0;
+    background: var(--gallery);
+}
+.controls button:hover
+{
+    color: var(--museum);
+    background: var(--stone);
+}
+.scale-label
+{
+    padding: 0 10px;
+    color: var(--museum);
+    font-size: 10px;
+    min-width: 55px;
+    text-align: center;
+}
+.inspection-hint
+{
+    margin-top: 12px;
+    font-size: 9px;
+    color: #62625F;
+}
+.object-number
+{
+    color: #72736E;
+    margin-bottom: 26px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.object-number::after
+{
+    content: "";
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: var(--line);
+}
+.object-copy h3
+{
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 1.25;
+    margin-bottom: 16px;
+    letter-spacing: -.025em;
+}
+.material
+{
+    color: var(--museum);
+    font-size: 12px;
+    margin-bottom: 23px;
+}
+.object-note
+{
+    color: #62625F;
+    font-size: 15px;
+    max-width: 34ch;
+    margin-bottom: 28px;
+}
+.gallery-label
+{
+    color: #72736E;
+    font-size: 10px;
+}
+.visit
+{
+    background: var(--stone);
+}
+.visit-grid
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
+    margin-top: 60px;
+}
+.visit-column::before
+{
+    content: "";
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--museum);
+    margin-bottom: 20px;
+}
+.visit-column h3
+{
+    font: 12px "IBM Plex Mono", monospace;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin-bottom: 26px;
+}
+.visit-column table
+{
+    width: 100%;
+    border-collapse: collapse;
+    font: 12px "IBM Plex Mono", monospace;
+}
+.visit-column td
+{
+    padding: 8px 0;
+    border-bottom: 1px solid var(--line);
+}
+.visit-column td:last-child
+{
+    text-align: right;
+}
+.visit-column p
+{
+    color: #62625F;
+    font-size: 14px;
+    margin-top: 18px;
+}
+.visit-column .address
+{
+    color: var(--ink);
+    font-size: 17px;
+    margin-top: 0;
+}
+.tickets-grid
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-top: 45px;
+}
+.ticket-copy
+{
+    max-width: 43ch;
+    color: #62625F;
+    font-size: 15px;
+}
+.steppers
+{
+    margin-top: 32px;
+}
+.stepper
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 21px 0;
+    border-bottom: 1px solid var(--line);
+}
+.stepper-name
+{
+    display: block;
+    font-size: 14px;
+}
+.stepper-price
+{
+    color: #72736E;
+    font-size: 11px;
+}
+.step-controls
+{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.step-controls button
+{
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--line);
+    background: transparent;
+}
+.step-controls button:disabled
+{
+    opacity: .35;
+}
+.step-controls output
+{
+    font-family: "IBM Plex Mono", monospace;
+    width: 25px;
+    text-align: center;
+}
+.picker
+{
+    background: #FFFFFF;
+    border: 1px solid var(--line);
+    padding: 32px;
+}
+.picker fieldset
+{
+    border: 0;
+    padding: 0;
+    margin: 0 0 28px;
+    min-width: 0;
+}
+.picker legend
+{
+    padding: 0;
+    margin-bottom: 14px;
+    color: #62625F;
+}
+.days
+{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+.day
+{
+    border: 1px solid var(--line);
+    background: #FFFFFF;
+    min-height: 42px;
+    padding: 4px 0;
+    font-size: 10px;
+    letter-spacing: 0;
+}
+.day:disabled
+{
+    color: #AAA9A4;
+    text-decoration: line-through;
+}
+.day[aria-pressed="true"], .time[aria-pressed="true"]
+{
+    border-color: var(--museum);
+    color: var(--museum);
+    background: #F1F3FD;
+}
+.times
+{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 9px;
+}
+.time
+{
+    background: #FFFFFF;
+    border: 1px solid var(--line);
+    padding: 10px 12px;
+    min-height: 64px;
+    text-align: left;
+}
+.time .mono
+{
+    font-size: 13px;
+    text-transform: none;
+}
+.time small
+{
+    display: block;
+    font-size: 9px;
+    color: #72736E;
+}
+.time[aria-pressed="true"] small
+{
+    color: var(--museum);
+}
+.time:disabled
+{
+    color: #9A9A95;
+    background: #FAFAF8;
+}
+.time:disabled small
+{
+    color: #8B8B87;
+}
+.time:last-child
+{
+    grid-column: 1 / -1;
+}
+.total-row
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--line);
+    padding: 22px 0;
+    gap: 15px;
+}
+.total-row output
+{
+    font-size: 18px;
+    letter-spacing: 0;
+    text-transform: none;
+}
+.total-row output.donation
+{
+    font-size: 13px;
+}
+.reserve
+{
+    background: var(--museum);
+    color: #FFFFFF;
+    width: 100%;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    border: 1px solid var(--museum);
+    font-size: 14px;
+}
+.reserve:hover
+{
+    background: #1E37A4;
+}
+.saved-panel
+{
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+    animation: confirmation 350ms both;
+}
+.saved-heading
+{
+    display: flex;
+    gap: 10px;
+    color: var(--museum);
+    align-items: center;
+    font-size: 14px;
+}
+.saved-panel p
+{
+    font-size: 12px;
+    color: #62625F;
+    margin: 10px 0;
+}
+.edit-pick
+{
+    border: 0;
+    border-bottom: 1px solid var(--museum);
+    background: transparent;
+    color: var(--museum);
+    padding: 2px 0;
+    font-size: 12px;
+}
+.ticket-status
+{
+    font-size: 12px;
+    color: var(--museum);
+    margin-top: 14px;
+}
+.visit-summary
+{
+    color: #62625F;
+    font-size: 10px;
+    margin-top: 25px;
+}
+.events-list
+{
+    margin-top: 50px;
+    max-width: 930px;
+}
+.event
+{
+    display: grid;
+    grid-template-columns: 110px 1fr auto;
+    gap: 30px;
+    align-items: center;
+    border-top: 1px solid var(--line);
+    padding: 28px 0;
+}
+.event-time
+{
+    color: var(--museum);
+    font-size: 12px;
+}
+.event-time span
+{
+    display: block;
+}
+.event h3
+{
+    font-size: 27px;
+    font-weight: 400;
+    line-height: 1.3;
+    margin-bottom: 8px;
+}
+.event p
+{
+    font-size: 12px;
+    color: #62625F;
+}
+.event small
+{
+    display: block;
+    color: #62625F;
+    font-size: 12px;
+    margin-top: 4px;
+}
+.event-plan
+{
+    border: 0;
+    background: transparent;
+    color: var(--museum);
+    font-size: 12px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 10px 0;
+}
+.event-plan svg
+{
+    width: 16px;
+}
+.events-footnote
+{
+    color: #72736E;
+    font-size: 10px;
+    border-top: 1px solid var(--line);
+    padding-top: 25px;
+}
+.shop-grid
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+}
+.shop-art
+{
+    background: #FFFFFF;
+    border: 1px solid var(--line);
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+}
+.shop-art svg
+{
+    width: 80%;
+    height: 80%;
+}
+.shop-caption
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+}
+.shop-caption .mono
+{
+    color: #62625F;
+    font-size: 10px;
+}
+.price
+{
+    font-size: 22px;
+    white-space: nowrap;
+}
+.shop-note
+{
+    color: #62625F;
+    font-size: 13px;
+    margin-top: 32px;
+    padding-top: 25px;
+    border-top: 1px solid var(--line);
+}
+.site-footer
+{
+    padding: 48px 0;
+}
+.footer-top
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 35px;
+}
+.footer-address
+{
+    font-size: 12px;
+    color: #62625F;
+    margin-top: 8px;
+}
+.footer-bottom
+{
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    font-size: 10px;
+    color: #72736E;
+}
+.footer-bottom a
+{
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+.reveal
+{
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 500ms ease, transform 500ms ease;
+}
+.reveal.visible
+{
+    opacity: 1;
+    transform: none;
+}
+@keyframes title-rise
+{
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes photo-settle
+{
+    from { transform: scale(1.02); }
+    to { transform: scale(1); }
+}
+@keyframes drawer
+{
+    from { opacity: 0; transform: translateY(-12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes confirmation
+{
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@media (min-width: 1400px)
+{
+    .hero-description
+    {
+        font-size: 18px;
+    }
+}
+@media (max-width: 960px)
+{
+    .container
+    {
+        padding: 0 24px;
+    }
+    .desktop-nav
+    {
+        gap: 20px;
+    }
+    .intro-grid
+    {
+        gap: 32px;
+    }
+    .stat
+    {
+        padding: 0 12px;
+    }
+    .object-row
+    {
+        gap: 40px;
+    }
+    .tickets-grid
+    {
+        gap: 40px;
+    }
+    .picker
+    {
+        padding: 24px;
+    }
+}
+@media (max-width: 720px)
+{
+    .desktop-nav, .header-inner > .ticket-link
+    {
+        display: none;
+    }
+    .menu-toggle
+    {
+        display: flex;
+    }
+    .hero
+    {
+        padding-top: 64px;
+        padding-bottom: 36px;
+    }
+    .hero-grid
+    {
+        grid-template-columns: 1fr;
+    }
+    h1
+    {
+        font-size: clamp(64px, 18vw, 100px);
+        letter-spacing: -.055em;
+        margin-left: -2px;
+    }
+    .eyebrow
+    {
+        font-size: 10px;
+        margin-bottom: 25px;
+    }
+    .hero-description
+    {
+        margin: 25px 0 20px;
+        font-size: 15px;
+        max-width: 40ch;
+    }
+    .hero-figure
+    {
+        padding-top: 38px;
+        margin: 0;
+    }
+    .hero-caption
+    {
+        font-size: 10px;
+        line-height: 1.9;
+    }
+    .hero-end
+    {
+        padding-top: 36px;
+        margin-top: 0;
+        gap: 20px;
+    }
+    .hero-end .mono
+    {
+        font-size: 8px;
+    }
+    .intro
+    {
+        padding: 38px 0;
+    }
+    .intro-grid
+    {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+    .intro p
+    {
+        font-size: 14px;
+    }
+    .stats
+    {
+        border-top: 1px solid var(--line);
+        padding-top: 20px;
+    }
+    .stat
+    {
+        padding: 0 18px;
+    }
+    .stat strong
+    {
+        font-size: 32px;
+    }
+    .stat .mono
+    {
+        font-size: 10px;
+        white-space: normal;
+    }
+    .section
+    {
+        padding: 80px 0;
+    }
+    .section-label
+    {
+        font-size: 9px;
+        margin-bottom: 18px;
+    }
+    .section-heading
+    {
+        display: block;
+        margin-bottom: 38px;
+    }
+    .section-heading p
+    {
+        margin-top: 24px;
+    }
+    .object-row, .object-row:nth-child(even)
+    {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        padding: 38px 0;
+    }
+    .object-row:nth-child(even) figure
+    {
+        order: 0;
+    }
+    .object-number
+    {
+        margin-bottom: 16px;
+        font-size: 10px;
+    }
+    .object-copy h3
+    {
+        font-size: 29px;
+    }
+    .material
+    {
+        font-size: 10px;
+        margin-bottom: 16px;
+    }
+    .object-note
+    {
+        margin-bottom: 18px;
+        max-width: none;
+        font-size: 14px;
+    }
+    .visit-grid
+    {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        margin-top: 40px;
+    }
+    .visit-column h3
+    {
+        margin-bottom: 18px;
+    }
+    .tickets-grid
+    {
+        grid-template-columns: 1fr;
+        gap: 35px;
+        margin-top: 28px;
+    }
+    .picker
+    {
+        padding: 22px 18px;
+    }
+    .day
+    {
+        min-height: 44px;
+        font-size: 9px;
+    }
+    .event
+    {
+        grid-template-columns: 62px 1fr;
+        gap: 16px;
+        align-items: start;
+        padding: 24px 0;
+    }
+    .event h3
+    {
+        font-size: 25px;
+    }
+    .event-plan
+    {
+        grid-column: 2;
+        justify-self: start;
+        padding: 2px 0;
+    }
+    .events-footnote
+    {
+        font-size: 9px;
+    }
+    .shop-grid
+    {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        margin-top: 35px;
+    }
+    .shop-caption .mono
+    {
+        font-size: 11px;
+    }
+    .footer-top
+    {
+        align-items: start;
+        gap: 25px;
+    }
+    .footer-top .text-link
+    {
+        font-size: 0;
+        gap: 0;
+    }
+    .footer-bottom
+    {
+        flex-direction: column;
+        gap: 18px;
+        max-width: 35ch;
+        font-size: 11px;
+    }
+}
+@media (prefers-reduced-motion: reduce)
+{
+    html
+    {
+        scroll-behavior: auto;
+    }
+    *, *::before, *::after
+    {
+        animation: none !important;
+        transition: none !important;
+    }
+    .reveal
+    {
+        opacity: 1;
+        transform: none;
+    }
+}

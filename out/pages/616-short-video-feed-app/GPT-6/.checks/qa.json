@@ -1,0 +1,108 @@
+{
+  "prompt": "616-short-video-feed-app",
+  "staticDigest": "4af010704bb24b3246c751ceb4c9f3a55d46bd4427f44ba730e027621ba55a99",
+  "assertions": [
+    "Desktop initial no horizontal overflow",
+    "HTTP 200, nonblank homepage; real 720px WebM actively advances",
+    "Like, save and follow actual browser state transitions",
+    "Comment submitted visibly, stored locally; Escape closes modal",
+    "Likes, saves, follow and comments persist after reload",
+    "Sharing copies an actual story deep link",
+    "Keyboard next, Space pause/play, ambient sound toggle and actual seeking",
+    "All six independently decoded local WebM clips are 720×1080, >4.5 seconds",
+    "Following and saved feeds filter by actual local state",
+    "Topic filters, text search, empty state and reset work",
+    "Desktop after interactions no horizontal overflow",
+    "Creator profile has actual media grid and reopens selected video",
+    "Valid story parameter opens requested story; invalid falls back to first",
+    "Device-video selection creates playable local-only preview; no upload or remote sharing",
+    "Desktop wheel scrolling snaps to another actual story",
+    "Mobile initial no horizontal overflow",
+    "Mobile tap playback, like, comment, follow, following filter and genuine touch scroll",
+    "Mobile after interactions/search no horizontal overflow",
+    "Mobile expanding search returns the matching video",
+    "Reduced-motion/storage-disabled mobile remains usable",
+    "Reduced motion starts paused; blocked localStorage gracefully falls back to memory",
+    "No HTTP, failed resource, console or page errors in desktop/mobile/fallback tests"
+  ],
+  "videos": [
+    {
+      "id": "sun-room",
+      "width": 720,
+      "height": 1080,
+      "duration": 4.919039,
+      "decoded": true
+    },
+    {
+      "id": "quiet-tide",
+      "width": 720,
+      "height": 1080,
+      "duration": 4.973215,
+      "decoded": true
+    },
+    {
+      "id": "morning-cup",
+      "width": 720,
+      "height": 1080,
+      "duration": 4.949577,
+      "decoded": true
+    },
+    {
+      "id": "somewhere-slow",
+      "width": 720,
+      "height": 1080,
+      "duration": 4.954444,
+      "decoded": true
+    },
+    {
+      "id": "balance",
+      "width": 720,
+      "height": 1080,
+      "duration": 4.966104,
+      "decoded": true
+    },
+    {
+      "id": "green-hour",
+      "width": 720,
+      "height": 1080,
+      "duration": 4.957735,
+      "decoded": true
+    }
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "width": 1200,
+      "height": 900,
+      "deviceScaleFactor": 1
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 1,
+      "isMobile": true,
+      "hasTouch": true
+    }
+  ],
+  "visualReviewed": true,
+  "resourcesClosed": true,
+  "passed": true,
+  "visualReview": {
+    "desktop": "最终许可修订后的 1200×900 真实 PNG 已通过 view 打开：三栏布局、暖白背景、衬线标题和原创立体几何视频主视觉层次清楚，留白均衡。已收紧右侧主标题至两行并增大创作者文字与正文。右下札记自然延续至首屏以下，无横向溢出。",
+    "mobile": "最终许可修订后的 390×844 真实 PNG 已通过 view 打开：顶部品牌/标签、全宽单条视频、白色操作图标及底栏均完整，标题与作者区不碰撞，进度栏无裁切；桌面侧栏隐藏。",
+    "screenshotState": "真实静态首页已解码的首帧暂停截图；独立运行断言已验证视频实际前进、播放/暂停、拖动及触摸滚动。",
+    "refinements": [
+      "桌面编辑标题缩小以维持两行节奏",
+      "创作者标签与说明文字增大"
+    ],
+    "reviewedAt": "2026-11-16T16:14:38.312Z"
+  },
+  "validationIterations": [
+    "初次发现普通静态服务缺乏 byte-range 响应导致 WebM 拖动回到起点；改为完整抓取本地影片并创建可寻址 blob，已实测拖动成功。",
+    "触屏测试初次滑动短于半屏触发原生吸附回弹；改用超过半屏的连续实际触控事件并验证换条。",
+    "补充 tag 字段至本地文本检索，修复 green 标签搜索后实测通过。",
+    "核对已安装 Lucide 原文后更新 2026 版权声明及完整 Feather MIT 法律条款；最终完整 QA 再次通过。"
+  ],
+  "previewVisualReviewed": true,
+  "previewReview": "已通过 view 打开最终 ensurePreview 新生成的 1200×900 真实首页 PNG。预览器使用 reducedMotion=reduce，因而显示实际首页的暂停首帧及 Play 控件；版式、配色、文字层级与本轮实际静态产物一致，无错页/空白/裁切。视频动态与可拖动播放已由独立浏览器测试证明。"
+}

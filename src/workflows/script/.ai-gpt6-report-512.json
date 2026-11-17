@@ -1,0 +1,142 @@
+{
+  "prompt": "512-web3-branding-creative-collective",
+  "status": "blocked",
+  "modelId": "gpt-6.1-sol",
+  "display_model_name": "GPT-6",
+  "tags": [
+    "Web3",
+    "Branding"
+  ],
+  "tagsBasis": "原始需求主题；未生成页面或元数据，不声称已写入作品标签。",
+  "generated": null,
+  "preview": null,
+  "validated": null,
+  "config_added": null,
+  "flags": {
+    "generated": null,
+    "preview": null,
+    "validated": null,
+    "config_added": null
+  },
+  "metadata": null,
+  "output": "C:\\Code\\MusePages\\out\\pages\\512-web3-branding-creative-collective\\GPT-6",
+  "outputExists": false,
+  "input": "C:\\Code\\MusePages\\data\\prompts\\512-web3-branding-creative-collective\\512-web3-branding-creative-collective.md",
+  "inputDesignSha256": "45784b2b24c79fa3e24f3aa2ffe881a41ae09ca88a52abca2a869bec2ea26ca6",
+  "lock": {
+    "verified": true,
+    "prompt": "512-web3-branding-creative-collective",
+    "pid": 12268,
+    "processRunning": true,
+    "ownedLockMatched": true,
+    "coordinatorPreserved": true
+  },
+  "qa": {
+    "executed": false,
+    "passed": false,
+    "path": null,
+    "reason": "强制精确媒体许可阻塞发生在生成前；没有可测试的静态首页。"
+  },
+  "screenshots": {
+    "desktop": null,
+    "mobile": null,
+    "opened": []
+  },
+  "visualReviewed": false,
+  "visualReview": {
+    "executed": false,
+    "observations": [],
+    "reason": "没有生成截图；未伪造视觉验收。"
+  },
+  "tests": [
+    {
+      "name": "原始完整需求、AGENTS、README、AI guide、DESIGN、MIT 来源读取",
+      "passed": true
+    },
+    {
+      "name": "实际锁 PID 与 durable manifest ownedLock 对应",
+      "passed": true,
+      "pid": 12268
+    },
+    {
+      "name": "目标模型目录与登记核对",
+      "passed": true,
+      "targetExists": false,
+      "registrationExists": false
+    },
+    {
+      "name": "强制 CloudFront 视频 HEAD 可访问性",
+      "passed": true,
+      "httpStatus": 200,
+      "contentType": "video/mp4",
+      "contentLength": 5179533,
+      "bodyDownloaded": false
+    },
+    {
+      "name": "Britanica-Black 指定 CSS 与字体详情许可复核",
+      "passed": true,
+      "observation": "CSS 宣称 CC BY 4.0；对应字体详情 License 栏为空，并标注 Copyright 2020 by Santi Rey. All rights reserved.，授权链未证实。"
+    },
+    {
+      "name": "source/static/Playwright/ensurePreview/registration",
+      "executed": false,
+      "passed": null,
+      "reason": "生成前精确资产许可阻塞"
+    }
+  ],
+  "provenance": {
+    "source": "https://github.com/frostmute/msites-prompt-collection/blob/d4974f4296e2851e05eabddb9240170cc423dd46/motionsites-prompts/105-creative-agency/prompt.md",
+    "licenseFile": "data\\downloads\\github.com\\frostmute-msites-prompt-collection\\d4974f4296e2851e05eabddb9240170cc423dd46\\LICENSE",
+    "license": "MIT",
+    "copyright": "Copyright (c) 2026 Nomaan Khan",
+    "scope": "已核对需求仓库 MIT 许可；它不提供所链接外部视频和第三方字体权利人的授权链。"
+  },
+  "registration": {
+    "performed": false,
+    "exists": false,
+    "entry": null,
+    "enabled": null,
+    "deployed": null,
+    "configUnchanged": true
+  },
+  "limits": [
+    "完整原文要求 section must match these specs exactly，并明确 Background video asset (verbatim URL) 及 video src equal to the URL above；不是可自由替换的参考。",
+    "原标题和两组 SVG 路径可准确实现；这里未将可实现部分或外部 URL 本身列为阻塞。",
+    "Inter/Geist fallback、React 到静态 HTML 的适配不是本次阻塞原因。",
+    "未构建、未部署、未下载媒体/字体二进制、未调用外部 AI、未访问密钥、未修改并发输出/协调状态。",
+    "无页面 README/LICENSE/metadata/static/截图：因生成前阻塞未创建模型目录，以免产生未经授权重试的 generated=false 残留。"
+  ],
+  "blocker": {
+    "code": "mandatory-exact-media-rights-unverified",
+    "summary": "精确必需视频的授权依据缺失，必需 Britanica-Black 的来源授权声明相互矛盾；不能将替代原创背景或字体冒充满足 exact/verbatim 需求。",
+    "assets": [
+      {
+        "kind": "video",
+        "url": "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260511_213626_db1bde2b-521c-4b22-91f3-35c072eb8771.mp4",
+        "mandatory": true,
+        "available": true,
+        "evidence": "HEAD 200，AmazonS3/CloudFront；响应为视频，可访问性已确认，不是缺失 URL。输入与本地 MIT 许可未说明该独立媒体的作者、使用/嵌入授权。",
+        "needed": "提供该精确视频的权利人授权或许可依据；或明确修改需求允许原创本地替代背景。"
+      },
+      {
+        "kind": "font",
+        "url": "https://db.onlinewebfonts.com/c/38c9851a552c219fba7878035cef1a1c?family=Britanica-Black",
+        "detailsUrl": "https://www.onlinewebfonts.com/download/38c9851a552c219fba7878035cef1a1c",
+        "mandatory": true,
+        "available": true,
+        "evidence": "指定 CSS 包含 CC BY 4.0 attribution 模板；对应详情却列 Santi Rey、MyFonts webfont kit version、Copyright 2020 by Santi Rey. All rights reserved. 且 License 为空，未证明托管者有权授予该字体许可。",
+        "needed": "提供来自字体权利人的有效 webfont 使用授权；或明确允许换用已许可字体。"
+      }
+    ],
+    "notClaimingInfringement": true,
+    "reevaluatedFromFullInput": true
+  },
+  "resourcesClosed": true,
+  "resources": {
+    "browsersStarted": 0,
+    "serversStarted": 0,
+    "ownedHelpersStarted": 0,
+    "coordinatorLockHolderUntouched": true
+  },
+  "completedAt": "2026-11-15T20:14:57.454Z"
+}

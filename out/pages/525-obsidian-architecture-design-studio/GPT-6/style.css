@@ -1,0 +1,742 @@
+:root
+{
+    color-scheme: dark;
+    --white: #ffffff;
+    --muted: rgba(255, 255, 255, .7);
+    --line: rgba(255, 255, 255, .25);
+    --space: 48px;
+}
+*
+{
+    box-sizing: border-box;
+}
+body
+{
+    margin: 0;
+    background: #080808;
+    color: var(--white);
+    font-family: Lexend, sans-serif;
+}
+button, a, input, textarea
+{
+    font: inherit;
+}
+button, a
+{
+    -webkit-tap-highlight-color: transparent;
+}
+button
+{
+    color: inherit;
+    cursor: pointer;
+}
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible
+{
+    outline: 2px solid white;
+    outline-offset: 5px;
+}
+.symbols
+{
+    display: none;
+}
+.icon
+{
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.logo
+{
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+}
+.hero
+{
+    position: relative;
+    height: 100vh;
+    height: 100svh;
+    width: 100%;
+    overflow: hidden;
+    background: #080808;
+}
+.film, .shade
+{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.shade
+{
+    background: linear-gradient(90deg, rgba(0, 0, 0, .5), rgba(0, 0, 0, .02) 72%), linear-gradient(0deg, rgba(0, 0, 0, .24), transparent 45%, rgba(0, 0, 0, .25));
+}
+.navigation
+{
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px var(--space);
+}
+.nav-left, .nav-right, .desktop-links
+{
+    display: flex;
+    align-items: center;
+}
+.nav-left
+{
+    gap: 44px;
+}
+.brand
+{
+    display: flex;
+    color: white;
+}
+.desktop-links
+{
+    gap: 29px;
+}
+.desktop-links button, .enter
+{
+    border: 0;
+    background: none;
+    padding: 8px 0;
+    font-size: 12px;
+    color: var(--muted);
+    transition: color .25s;
+}
+.desktop-links .active, .desktop-links button:hover, .enter:hover
+{
+    color: white;
+}
+.nav-right
+{
+    gap: 28px;
+}
+.enter span
+{
+    margin-left: 8px;
+}
+.icon-button
+{
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border: 0;
+    background: transparent;
+    border-radius: 50%;
+}
+.icon-button:hover
+{
+    background: rgba(255, 255, 255, .1);
+}
+main
+{
+    position: static;
+}
+.intro
+{
+    position: relative;
+    max-width: 570px;
+    padding: 60px 0 0 var(--space);
+}
+.eyebrow
+{
+    font-size: 9px;
+    letter-spacing: .2em;
+    color: rgba(255, 255, 255, .7);
+    margin-bottom: 23px;
+}
+h1
+{
+    font-weight: 400;
+    font-size: 72px;
+    line-height: .95;
+    letter-spacing: -.055em;
+    margin: 0 0 26px;
+}
+.intro p
+{
+    max-width: 305px;
+    margin: 0 0 30px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--muted);
+}
+.projects-button
+{
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid var(--line);
+    border-radius: 50px;
+    background: transparent;
+    padding: 13px 23px;
+    font-size: 12px;
+    transition: background .25s;
+}
+.projects-button:hover
+{
+    background: rgba(255, 255, 255, .12);
+}
+.projects-button .icon
+{
+    width: 16px;
+    height: 16px;
+}
+.project-cards
+{
+    display: grid;
+    grid-template-columns: repeat(2, 240px);
+    gap: 20px;
+    position: absolute;
+    right: var(--space);
+    bottom: 48px;
+}
+.project-card
+{
+    position: relative;
+    width: 240px;
+    aspect-ratio: 1;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, .12);
+    border-radius: 16px;
+    overflow: hidden;
+    text-align: left;
+    background: #292824;
+}
+.craft
+{
+    grid-column: 1;
+    grid-row: 1;
+    align-self: end;
+}
+.arcvault
+{
+    grid-column: 2;
+    grid-row: 2;
+}
+.project-card img
+{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .6s ease;
+}
+.project-card:hover img
+{
+    transform: scale(1.06);
+}
+.project-card::after
+{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(0, 0, 0, .75), rgba(0, 0, 0, .2) 55%, transparent);
+}
+.card-content
+{
+    position: absolute;
+    z-index: 1;
+    left: 20px;
+    right: 34px;
+    bottom: 20px;
+}
+.card-label
+{
+    display: block;
+    margin-bottom: 10px;
+    font-size: 10px;
+    letter-spacing: .05em;
+    color: var(--muted);
+}
+.card-title
+{
+    display: block;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 1.25;
+    letter-spacing: -.03em;
+}
+.arcvault .card-title
+{
+    font-size: 23px;
+}
+.card-icon
+{
+    position: absolute;
+    right: 17px;
+    bottom: 20px;
+    z-index: 2;
+    width: 15px;
+    height: 15px;
+    color: var(--muted);
+}
+.annotation
+{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 10px;
+    color: rgba(255, 255, 255, .85);
+    text-shadow: 0 1px 8px #000;
+}
+.annotation span
+{
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, .1);
+}
+.atrium
+{
+    top: 25%;
+    right: 30%;
+}
+.arc
+{
+    top: 45%;
+    right: 15%;
+}
+.scroll-indicator
+{
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 9px;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, .5);
+}
+.film-toggle
+{
+    position: absolute;
+    bottom: 32px;
+    left: var(--space);
+    background: none;
+    border: 0;
+    padding: 8px 0;
+    font-size: 12px;
+    color: var(--muted);
+}
+.film-toggle span
+{
+    margin-left: 8px;
+    font-size: 9px;
+    letter-spacing: .07em;
+}
+dialog
+{
+    color: white;
+    border: 0;
+}
+dialog::backdrop
+{
+    background: rgba(0, 0, 0, .55);
+    backdrop-filter: blur(8px);
+}
+.menu-overlay
+{
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 24px var(--space);
+    background: rgba(0, 0, 0, .92);
+    backdrop-filter: blur(24px);
+}
+.menu-header, .detail-panel header
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.menu-overlay[open]
+{
+    animation: menu-fade .5s ease-out;
+}
+.menu-overlay nav
+{
+    max-width: 660px;
+    margin: 70px auto 40px;
+}
+.menu-overlay nav button
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
+    background: transparent;
+    text-align: left;
+    padding: 18px 0;
+    font-size: 44px;
+    font-weight: 300;
+    animation: menu-link .5s ease-out both;
+    animation-delay: .15s;
+}
+.menu-overlay nav button:nth-child(2)
+{
+    animation-delay: .225s;
+}
+.menu-overlay nav button:nth-child(3)
+{
+    animation-delay: .3s;
+}
+.menu-overlay nav button:nth-child(4)
+{
+    animation-delay: .375s;
+}
+.menu-overlay nav button span
+{
+    font-size: 10px;
+    color: var(--muted);
+}
+.menu-overlay footer
+{
+    max-width: 660px;
+    margin: auto;
+    font-size: 12px;
+    color: var(--muted);
+    animation: menu-link .5s .45s ease-out both;
+}
+.detail-panel
+{
+    width: min(700px, calc(100% - 36px));
+    max-height: calc(100svh - 36px);
+    padding: 26px 32px 34px;
+    border: 1px solid rgba(255, 255, 255, .18);
+    background: #141413;
+    border-radius: 16px;
+}
+.detail-panel header > span
+{
+    font-size: 9px;
+    letter-spacing: .15em;
+    color: var(--muted);
+}
+.detail-panel h2
+{
+    font-size: 36px;
+    font-weight: 400;
+    letter-spacing: -.04em;
+    margin: 28px 0 16px;
+}
+.detail-panel p
+{
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--muted);
+}
+.detail-panel .note
+{
+    font-size: 10px;
+    color: rgba(255, 255, 255, .65);
+}
+.work-list
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 24px 0;
+}
+.work-list button
+{
+    background: #222220;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 22px 16px;
+    text-align: left;
+}
+.work-list button:hover
+{
+    background: #33332f;
+}
+.work-list small
+{
+    display: block;
+    margin-top: 10px;
+    font-size: 11px;
+    color: var(--muted);
+}
+.project-facts
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--line);
+    margin-top: 24px;
+}
+.project-facts div
+{
+    padding: 20px 0;
+}
+.project-facts dt
+{
+    font-size: 10px;
+    color: var(--muted);
+    margin-bottom: 8px;
+}
+.project-facts dd
+{
+    margin: 0;
+    font-size: 13px;
+}
+.detail-panel form
+{
+    display: grid;
+    gap: 14px;
+}
+.detail-panel label
+{
+    font-size: 11px;
+    display: grid;
+    gap: 8px;
+}
+.detail-panel input, .detail-panel textarea
+{
+    width: 100%;
+    border: 1px solid var(--line);
+    background: #20201d;
+    color: white;
+    padding: 12px;
+    border-radius: 5px;
+}
+.detail-panel textarea
+{
+    min-height: 95px;
+    resize: vertical;
+}
+.detail-panel a
+{
+    color: white;
+}
+@keyframes menu-fade
+{
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes menu-link
+{
+    from { opacity: 0; transform: translateY(-32px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 1100px)
+{
+    .annotation
+    {
+        display: none;
+    }
+    h1
+    {
+        font-size: 60px;
+    }
+    .project-cards
+    {
+        grid-template-columns: repeat(2, 208px);
+    }
+    .project-card
+    {
+        width: 208px;
+    }
+}
+@media (max-width: 767px)
+{
+    :root
+    {
+        --space: 24px;
+    }
+    .navigation
+    {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    .desktop-links, .enter, .scroll-indicator
+    {
+        display: none;
+    }
+    .intro
+    {
+        padding-top: 24px;
+        padding-right: var(--space);
+    }
+    .film
+    {
+        object-position: 82% center;
+    }
+    h1
+    {
+        font-size: 44px;
+        margin-bottom: 20px;
+    }
+    .eyebrow
+    {
+        font-size: 8px;
+        margin-bottom: 18px;
+    }
+    .intro p
+    {
+        max-width: 270px;
+        font-size: 12px;
+        margin-bottom: 22px;
+    }
+    .project-cards
+    {
+        grid-template-columns: repeat(2, 176px);
+        gap: 16px;
+        bottom: 32px;
+    }
+    .project-card
+    {
+        width: 176px;
+    }
+    .card-content
+    {
+        left: 14px;
+        bottom: 15px;
+    }
+    .card-title
+    {
+        font-size: 14px;
+    }
+    .arcvault .card-title
+    {
+        font-size: 18px;
+    }
+    .card-icon
+    {
+        right: 13px;
+        bottom: 17px;
+        width: 13px;
+        height: 13px;
+    }
+    .film-toggle
+    {
+        bottom: 26px;
+    }
+    .film-toggle span
+    {
+        display: none;
+    }
+    .menu-overlay nav
+    {
+        margin-top: 45px;
+    }
+    .menu-overlay nav button
+    {
+        font-size: 36px;
+    }
+    .detail-panel
+    {
+        padding: 20px;
+    }
+    .detail-panel h2
+    {
+        font-size: 28px;
+    }
+}
+@media (max-width: 479px)
+{
+    :root
+    {
+        --space: 20px;
+    }
+    .intro
+    {
+        padding-top: 14px;
+    }
+    h1
+    {
+        font-size: 38px;
+    }
+    .project-cards
+    {
+        grid-template-columns: repeat(2, 144px);
+        gap: 12px;
+        bottom: 24px;
+    }
+    .project-card
+    {
+        width: 144px;
+        border-radius: 12px;
+    }
+    .card-label
+    {
+        font-size: 9px;
+        margin-bottom: 7px;
+    }
+    .card-content
+    {
+        left: 12px;
+        right: 22px;
+        bottom: 13px;
+    }
+    .card-title, .arcvault .card-title
+    {
+        font-size: 13px;
+    }
+    .card-icon
+    {
+        width: 11px;
+        height: 11px;
+        right: 9px;
+        bottom: 13px;
+    }
+    .work-list
+    {
+        grid-template-columns: 1fr;
+    }
+}
+@media (max-height: 690px) and (max-width: 767px)
+{
+    .intro
+    {
+        padding-top: 0;
+    }
+    .eyebrow
+    {
+        display: none;
+    }
+    h1
+    {
+        font-size: 32px;
+        margin-bottom: 14px;
+    }
+    .intro p
+    {
+        margin-bottom: 14px;
+    }
+    .project-cards
+    {
+        grid-template-columns: repeat(2, 120px);
+        gap: 10px;
+        bottom: 20px;
+    }
+    .project-card
+    {
+        width: 120px;
+    }
+}
+@media (prefers-reduced-motion: reduce)
+{
+    *, *::before, *::after
+    {
+        animation: none !important;
+        transition: none !important;
+    }
+}

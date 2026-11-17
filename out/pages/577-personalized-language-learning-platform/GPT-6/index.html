@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f7f8f3">
+    <meta name="description" content="A little practice. A world of possibility. Build your personal English learning routine with Fluent.">
+    <title>My learning space · Fluent</title>
+    <link rel="icon" href="mark.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <a class="skip" href="#main">Skip to learning</a>
+    <aside class="sidebar" aria-label="Main navigation">
+        <a class="brand" href="index.html" aria-label="Fluent home"><span class="brand-mark">f<span>.</span></span>fluent<span class="brand-dot">.</span></a>
+        <div class="workspace-label">YOUR LEARNING SPACE</div>
+        <nav>
+            <a href="#main" class="nav-link active" aria-label="Overview"><i data-icon="house"></i><span>Overview</span></a>
+            <a href="#path" class="nav-link" aria-label="My learning path"><i data-icon="route"></i><span>My learning path</span><span class="tiny-dot"></span></a>
+            <a href="#lessons" class="nav-link" aria-label="Lesson library"><i data-icon="book-open"></i><span>Lesson library</span></a>
+            <button class="nav-link" data-action="vocabulary" aria-label="Vocabulary"><i data-icon="layers"></i><span>Vocabulary</span><span class="nav-count" id="word-count">6</span></button>
+            <a href="#progress" class="nav-link" aria-label="My progress"><i data-icon="chart"></i><span>My progress</span></a>
+            <div class="nav-divider"></div>
+            <a href="#community" class="nav-link" aria-label="Learning together"><i data-icon="users"></i><span>Learning together</span></a>
+            <a href="#resources" class="nav-link" aria-label="Resources and tips"><i data-icon="compass"></i><span>Resources & tips</span></a>
+        </nav>
+        <div class="sidebar-bottom">
+            <div class="growth-art" aria-hidden="true"><span></span><b></b><em></em><i></i></div>
+            <strong>Small steps.<br>Big possibilities.</strong>
+            <p>Your next chapter starts<br>with a little practice.</p>
+            <button class="text-button" data-action="profile">Make it yours <i data-icon="arrow-right"></i></button>
+        </div>
+        <div class="local-status"><span></span> A private, local learning space</div>
+    </aside>
+    <div class="app-shell">
+        <header class="topbar">
+            <span class="breadcrumb">My workspace <span>/</span> <b>Overview</b></span>
+            <span class="mobile-brand">fluent<span>.</span></span>
+            <div class="header-actions">
+                <span class="streak"><i data-icon="flame"></i><b id="streak">0</b> <span>day streak</span></span>
+                <button class="icon-button notification-button" data-action="reminders" aria-label="Practice reminders"><i data-icon="bell"></i><span class="notification-dot" hidden></span></button>
+                <button class="avatar" data-action="profile" aria-label="Edit your local learner profile">A</button>
+            </div>
+        </header>
+        <main id="main">
+            <div class="page-heading">
+                <div><p class="eyebrow">A LITTLE EVERY DAY GOES A LONG WAY</p><h1>Your world, a little bigger<span>.</span></h1><p>Welcome back, <span id="learner-name">Alex</span>. Let's make room for something new.</p></div>
+                <button class="language-switch" data-action="profile"><span class="language-symbol" aria-hidden="true">Aa</span><span>Learning English <small id="header-level">Beginner · A1–A2</small></span><i data-icon="chevron-down"></i></button>
+            </div>
+            <div class="dashboard-grid">
+                <div class="primary-column">
+                    <section class="hero" aria-labelledby="hero-title">
+                        <div class="hero-copy"><span class="hero-label"><span></span> YOUR PERSONAL LEARNING JOURNEY</span><h2 id="hero-title">A little practice.<br>A world of possibility.</h2><p id="hero-description">Find your words. Build your confidence.<br>Your English journey starts right here.</p><button class="button dark" id="continue-lesson">Start my lesson <i data-icon="arrow-right"></i></button><span class="hero-footnote"><i data-icon="clock"></i> 5 minutes, just for you</span></div>
+                        <svg class="hero-art" viewBox="0 0 310 300" role="img" aria-label="An open book growing into a world of conversations">
+                            <circle cx="170" cy="145" r="111" fill="#ffb28c" opacity=".65"/>
+                            <circle cx="170" cy="145" r="85" fill="none" stroke="#f8d7b5" stroke-dasharray="3 7"/>
+                            <path d="M56 202L160 237L271 195L167 167Z" fill="#a84025" opacity=".18"/>
+                            <path d="M58 179L159 212L270 174L270 199L159 239L58 204Z" fill="#224738"/>
+                            <path d="M67 176L159 204L261 171L261 194L159 228L67 199Z" fill="#f3ead5"/>
+                            <path d="M160 205C127 175 94 167 57 179L57 194C92 183 126 197 160 222C194 196 231 182 273 175L273 160C232 163 195 180 160 205Z" fill="#fffdf3"/>
+                            <path d="M160 205C132 172 93 151 57 160L57 179C97 172 129 186 160 216C191 190 229 173 273 175L273 155C231 151 192 172 160 205Z" fill="#fffae9"/>
+                            <path d="M160 205L160 222M72 172C97 169 122 184 144 201M73 181C96 180 120 190 135 201M178 200C202 184 229 173 255 170" fill="none" stroke="#cfbfa0" stroke-width="2"/>
+                            <path d="M164 188C137 160 144 123 172 89M163 164C181 143 207 141 226 119" fill="none" stroke="#28503c" stroke-width="4" stroke-linecap="round"/>
+                            <path d="M159 149C127 146 124 120 131 111C151 116 161 129 159 149Z" fill="#426d4c"/>
+                            <path d="M166 124C162 94 181 78 193 80C198 100 186 117 166 124Z" fill="#24533d"/>
+                            <path d="M188 146C193 122 214 116 228 121C221 142 206 148 188 146Z" fill="#678655"/>
+                            <g transform="rotate(-12 101 92)"><rect x="51" y="58" width="95" height="58" rx="14" fill="#fffdf3"/><path d="M105 114L115 130L120 112" fill="#fffdf3"/><text x="98" y="94" text-anchor="middle" fill="#234436" font-size="21" font-family="Georgia,serif">Hello!</text></g>
+                            <g transform="rotate(10 239 70)"><rect x="209" y="43" width="58" height="47" rx="12" fill="#254c3b"/><path d="M219 87L216 101L232 89" fill="#254c3b"/><path d="M226 66L234 73L250 58" fill="none" stroke="#fff9e9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g>
+                            <path d="M66 126L69 134L77 137L69 140L66 148L63 140L55 137L63 134Z" fill="#fff4da"/><path d="M245 207L248 215L256 218L248 221L245 229L242 221L234 218L242 215Z" fill="#fff4da"/>
+                            <circle cx="194" cy="44" r="4" fill="#fff2cf"/><circle cx="37" cy="195" r="4" fill="#f4d395"/><path d="M276 108L282 114M282 108L276 114" stroke="#774732" stroke-width="2"/>
+                        </svg>
+                    </section>
+                    <section class="stats-row" id="progress" aria-label="Your learning progress">
+                        <div><span class="stat-icon mint"><i data-icon="book-open"></i></span><span><b id="completed-count">0</b><small>Lessons completed</small></span></div>
+                        <div><span class="stat-icon peach"><i data-icon="target"></i></span><span><b id="accuracy">—</b><small>Quiz accuracy</small></span></div>
+                        <div><span class="stat-icon lilac"><i data-icon="layers"></i></span><span><b id="mastered-count">0</b><small>Words practiced</small></span></div>
+                    </section>
+                    <section id="path" class="path-section">
+                        <div class="section-heading"><div><h2>Made for your next chapter</h2><p id="path-summary">Your beginner path · Everyday conversation</p></div><button class="text-button" data-action="profile">Personalize <i data-icon="sliders"></i></button></div>
+                        <div class="path-steps" id="path-steps"></div>
+                    </section>
+                    <section id="lessons" class="lesson-section">
+                        <div class="section-heading"><div><h2>A little curiosity looks good on you</h2><p>Pick a lesson. Discover what you can do.</p></div><span class="lesson-total" id="lesson-total">6 lessons</span></div>
+                        <div class="filters"><div class="filter-tabs" role="group" aria-label="Filter by skill"><button class="filter active" data-skill="all" aria-pressed="true">For you</button><button class="filter" data-skill="vocabulary" aria-pressed="false">Vocabulary</button><button class="filter" data-skill="grammar" aria-pressed="false">Grammar</button><button class="filter" data-skill="reading" aria-pressed="false">Reading</button></div><select id="difficulty" aria-label="Filter by difficulty"><option value="all">All levels</option><option value="beginner">Beginner</option><option value="intermediate">Intermediate</option></select></div>
+                        <div class="lesson-grid" id="lesson-grid"></div>
+                    </section>
+                    <section class="community-section" id="community">
+                        <div class="section-heading"><div><h2>Better, together.</h2><p>A place to reflect, find inspiration, and keep going.</p></div><i data-icon="users"></i></div>
+                        <div class="community-card"><div class="quote-mark">“</div><div><h3>Confidence grows one conversation at a time.</h3><p>Try this reflection: What would you like to feel comfortable saying next week?</p><span class="muted small">A writing prompt, not a learner testimonial.</span></div></div>
+                        <label class="field-label" for="reflection">Your learning journal <span>Saved on this device only</span></label>
+                        <textarea id="reflection" rows="3" maxlength="1200" placeholder="Next week, I want to feel confident introducing myself…"></textarea>
+                        <div class="journal-actions"><span id="journal-status" class="muted small">Your thoughts stay with you.</span><button class="button small-button secondary" id="save-journal">Save reflection <i data-icon="check"></i></button></div>
+                    </section>
+                    <section id="resources" class="resources-section">
+                        <div class="section-heading"><div><h2>A few things to help you grow</h2><p>Practical ideas for a practice that feels like you.</p></div></div>
+                        <div class="resource-links"><button data-guide="habit"><i data-icon="sun"></i><span><b>Build a five-minute habit</b><small>STUDY NOTES · 2 MIN READ</small></span><i data-icon="arrow-right"></i></button><button data-guide="words"><i data-icon="book-open"></i><span><b>Make new words stick</b><small>LEARNING STRATEGIES · 2 MIN READ</small></span><i data-icon="arrow-right"></i></button></div>
+                        <details><summary>How is my learning path personalized?</summary><p>Your level, goal, and focus select a transparent, preset sequence of English lessons. This is deterministic assistance running on your device, not external AI or inferred proficiency.</p></details>
+                        <details><summary>Can I use this as a secure online account?</summary><p>This is a static local learning workspace, not an authenticated service. There are no passwords, online accounts, external AI requests, or server storage. Avoid entering sensitive information. Clearing browser data removes your progress.</p></details>
+                        <details><summary>Are there live exchanges, referrals, or developer APIs?</summary><p>Not in this homepage edition. Forums, public success stories, referral rewards, third-party APIs, and real meetups need a backend. The journal and practice challenge here work locally. Audio uses your browser's optional English speech voice.</p></details>
+                    </section>
+                </div>
+                <aside class="right-column" aria-label="Your practice plan">
+                    <section class="daily-card">
+                        <div class="section-heading"><h2>Your daily moment</h2><i data-icon="sun"></i></div>
+                        <p>A little consistency. A lot of growth.</p>
+                        <div class="goal-ring" id="goal-ring"><div><b id="daily-count">0<span>/ 3</span></b><small>practices today</small></div></div>
+                        <div class="daily-caption"><span class="green-dot"></span><span id="daily-caption">A fresh start is a good start.</span></div>
+                        <div class="week-days" id="week-days" aria-label="Practice activity this week"></div>
+                        <button class="reminder-link" data-action="reminders"><i data-icon="bell"></i> Make time for yourself <i data-icon="arrow-right"></i></button>
+                    </section>
+                    <section class="today-section">
+                        <div class="section-heading"><h2>On your path today</h2><span class="small muted">3 steps</span></div>
+                        <div class="today-task"><span class="task-number">01</span><div><b id="task-lesson">Make a first connection</b><small>LESSON · 5 MIN</small></div><button class="icon-button" id="today-lesson" aria-label="Start today's lesson"><i data-icon="play"></i></button></div>
+                        <div class="today-task"><span class="task-number">02</span><div><b>A word worth keeping</b><small>FLASHCARDS · 3 MIN</small></div><button class="icon-button" data-action="vocabulary" aria-label="Practice vocabulary"><i data-icon="play"></i></button></div>
+                        <div class="today-task"><span class="task-number">03</span><div><b>A moment to reflect</b><small>JOURNAL · 2 MIN</small></div><a class="icon-button" href="#community" aria-label="Open your journal"><i data-icon="arrow-right"></i></a></div>
+                    </section>
+                    <section class="vocab-promo"><div class="vocab-heading"><span class="label">WORD OF THE MOMENT</span><i data-icon="sparkles"></i></div><h3>possibility</h3><span class="word-type">noun · something that could happen</span><p>“A new word opens up a<br>new possibility.”</p><button class="text-button" data-action="vocabulary">Make it part of your vocabulary <i data-icon="arrow-right"></i></button></section>
+                    <section class="challenge-card"><span class="challenge-icon"><i data-icon="award"></i></span><div><span class="label">YOUR WEEKLY CHALLENGE</span><h3>Show up for yourself</h3><p>Finish 3 lessons this week.</p></div><div class="challenge-track"><span id="challenge-fill"></span></div><div class="challenge-footer"><span id="challenge-progress">0 of 3 completed</span><b id="badge-status">Keep growing</b></div></section>
+                    <section class="privacy-note"><i data-icon="shield"></i><p><b>Your pace. Your space.</b><br>Progress is stored on this device.<br>Personalization follows local rules,<br>not AI. No sign-in needed.</p></section>
+                </aside>
+            </div>
+            <footer><span class="footer-brand">fluent.</span><span>A little progress is still progress.</span><a href="LICENSE">Credits & license</a><button class="text-button" id="reset-data">Reset local data</button></footer>
+        </main>
+    </div>
+    <dialog id="profile-dialog" aria-labelledby="profile-title">
+        <div class="dialog-header"><span class="label">MAKE ROOM FOR YOUR GOALS</span><button class="icon-button close-dialog" aria-label="Close profile"><i data-icon="x"></i></button></div>
+        <h2 id="profile-title">Your journey, your way.</h2><p class="dialog-intro">A few choices help us shape your next steps. Saved only in this browser.</p>
+        <form id="profile-form">
+            <label>Your first name<input name="name" maxlength="30" required autocomplete="given-name" value="Alex"></label>
+            <label>Language<input value="English" readonly><small>This edition teaches English using English-only explanations.</small></label>
+            <div class="form-pair"><label>My current level<select name="level"><option value="beginner">Beginner · A1–A2</option><option value="intermediate">Intermediate · B1–B2</option></select></label><label>My focus<select name="focus"><option value="vocabulary">Vocabulary</option><option value="grammar">Grammar</option><option value="reading">Reading</option></select></label></div>
+            <label>I want to feel confident with<select name="goal"><option value="conversation">Everyday conversation</option><option value="work">English at work</option><option value="travel">Travel and discovery</option></select></label>
+            <p class="info-note"><i data-icon="sliders"></i> Your selections reorder a preset lesson library. No external AI, inference, or proficiency assessment is used.</p>
+            <button type="submit" class="button dark">Create my learning path <i data-icon="arrow-right"></i></button>
+        </form>
+    </dialog>
+    <dialog id="lesson-dialog" aria-labelledby="lesson-title">
+        <div class="dialog-header"><span class="label" id="lesson-label">YOUR NEXT SMALL STEP</span><button class="icon-button close-dialog" aria-label="Close lesson"><i data-icon="x"></i></button></div>
+        <h2 id="lesson-title"></h2><div id="lesson-content"></div>
+    </dialog>
+    <dialog id="vocab-dialog" aria-labelledby="vocab-title">
+        <div class="dialog-header"><span class="label">WORDS TO TAKE WITH YOU</span><button class="icon-button close-dialog" aria-label="Close vocabulary"><i data-icon="x"></i></button></div><h2 id="vocab-title">A word worth keeping.</h2><p class="dialog-intro">Recall the meaning first. Then reveal and choose an honest rating.</p><div id="flashcard-content"></div>
+    </dialog>
+    <dialog id="reminder-dialog" aria-labelledby="reminder-title">
+        <div class="dialog-header"><span class="label">A SMALL APPOINTMENT WITH YOURSELF</span><button class="icon-button close-dialog" aria-label="Close reminders"><i data-icon="x"></i></button></div><h2 id="reminder-title">Make a little time.</h2><p class="dialog-intro">An on-page reminder, while this page is open. No email, push service, or background alarm.</p><form id="reminder-form"><label>My practice time<input type="time" name="time" value="18:00" required></label><label class="checkbox-label"><input type="checkbox" name="enabled"> Show my daily practice reminder</label><button class="button dark" type="submit">Save reminder <i data-icon="check"></i></button></form>
+    </dialog>
+    <dialog id="guide-dialog" aria-labelledby="guide-title"><div class="dialog-header"><span class="label">THE FLUENT NOTEBOOK</span><button class="icon-button close-dialog" aria-label="Close reading"><i data-icon="x"></i></button></div><h2 id="guide-title"></h2><div id="guide-content"></div></dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

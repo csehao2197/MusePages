@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>3D Neon Breakout Arcade</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./styles.css">
+    <script type="importmap">{"imports":{"three":"./vendor/three.module.min.js","three/addons/":"./vendor/addons/"}}</script>
+</head>
+<body>
+    <canvas id="court"></canvas>
+    <div id="ui">
+        <header id="hud" hidden></header>
+        <section id="card" class="card" aria-labelledby="heading"></section>
+        <div id="toast" role="status"></div>
+        <div id="powers"></div>
+        <div id="court-label" aria-hidden="true"></div>
+    </div>
+    <div id="live" class="sr-only" aria-live="polite"></div>
+    <script type="module" src="./main.js"></script>
+</body>
+</html>

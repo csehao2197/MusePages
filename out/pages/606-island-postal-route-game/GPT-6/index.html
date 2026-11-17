@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f2e9">
+    <meta name="description" content="A gentle, playable island postal adventure. Find three shrine stamps and make your final delivery.">
+    <title>Amberwick Post — Three stamps. One open gate.</title>
+    <link rel="icon" href="./assets/mail.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <header class="masthead">
+        <a class="brand" href="./index.html"><span class="brand-icon"><img src="./assets/mail.svg" alt="" width="24" height="24"></span><span>Amberwick <b>Post</b><small>THE ISLAND LETTER SERVICE</small></span></a>
+        <div class="edition"><span class="status-dot"></span> A quiet day on Amberwick Isle</div>
+        <div class="tools">
+            <button id="sound" class="icon-button" aria-label="Enable gentle sound" aria-pressed="false"><img src="./assets/volume-x.svg" alt=""></button>
+            <button id="help" class="icon-button" aria-label="How to play"><img src="./assets/circle-help.svg" alt=""></button>
+            <button id="reset" class="icon-button" aria-label="Reset journey"><img src="./assets/rotate-ccw.svg" alt=""></button>
+        </div>
+    </header>
+    <main>
+        <section class="intro">
+            <div><p class="eyebrow">FIELD NOTES / THE AUTUMN ROUTE</p><h1>A small island. <em>A special delivery.</em></h1><p class="subtitle">Three stamps. One open gate. Take the scenic route.</p></div>
+            <div class="dispatch"><img src="./assets/package.svg" alt=""><span>YOUR ASSIGNMENT<b>A letter for the North Temple</b></span></div>
+        </section>
+        <div class="play-layout">
+            <section class="world-panel" aria-label="Playable island">
+                <div id="world" tabindex="0" role="application" aria-label="Island game. Arrow keys or W A S D to walk. E to interact. Follow trail buttons provide assisted walking."></div>
+                <div class="world-top"><span class="location"><span class="status-dot"></span> AMBERWICK ISLE</span><span class="season">Late autumn · No need to hurry</span></div>
+                <div class="compass" aria-hidden="true"><b>N</b><span>↑</span><small>W &nbsp; + &nbsp; E</small><span>↓</span><b>S</b></div>
+                <div class="world-label">THE LONG WAY<br><i>is a good way.</i></div>
+                <div class="zoom"><button id="zoom-in" aria-label="Zoom in">+</button><button id="zoom-out" aria-label="Zoom out">−</button></div>
+                <div class="scene-bottom"><span id="place">Post House</span><span id="travel-state">Your first letter is waiting.</span></div>
+                <div id="toast" role="status" aria-live="polite"></div>
+                <div class="interaction"><button id="interact"><img src="./assets/package.svg" alt=""><span id="action-label">Pick up the letter</span><kbd>E</kbd></button></div>
+                <div class="touch-controls" aria-label="Touch movement">
+                    <button data-dir="up" aria-label="Walk north">↑</button><button data-dir="left" aria-label="Walk west">←</button><button data-dir="down" aria-label="Walk south">↓</button><button data-dir="right" aria-label="Walk east">→</button>
+                </div>
+                <div id="loading">Unfolding the island…</div>
+            </section>
+            <aside class="journal" aria-label="Route journal">
+                <div class="journal-heading"><span class="eyebrow">YOUR FIELD JOURNAL</span><img src="./assets/book-open.svg" alt=""><h2>A letter to deliver.</h2><p>Collect the island’s three shrine stamps. The north gate will know you.</p></div>
+                <div class="progress-label"><span>SHRINE STAMPS</span><b id="count">0 / 3</b></div>
+                <div class="progress-track"><span id="progress"></span></div>
+                <div id="quests"></div>
+                <div class="gate-entry"><span class="gate-symbol"><img src="./assets/lock-keyhole.svg" id="gate-icon" alt=""></span><div><h3>North Temple</h3><p id="gate-note">Three stamps open the gate.</p><button class="trail" id="temple-trail">Follow trail <span>↗</span></button></div></div>
+                <div class="bag"><img src="./assets/mail.svg" alt=""><span>IN YOUR SATCHEL<b id="satchel">Room for one special letter</b></span></div>
+                <p class="saved"><span class="status-dot"></span><span id="save-note">Stamps saved on this device</span></p>
+            </aside>
+        </div>
+        <div class="under-game"><div class="keyboard-hint"><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> or <kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd> Walk</span><span><kbd>E</kbd> Interact</span></div><p>Wander freely. Follow your curiosity.</p><button id="field-guide">Open field guide <span>↗</span></button></div>
+    </main>
+    <footer><span>Made for unhurried afternoons.</span><a href="https://vibefather.ai/t/island-postal-route-game" target="_blank" rel="noreferrer">Template by VibeFather ↗</a><span>AMBERWICK POST · EST. THIS AUTUMN</span></footer>
+    <dialog id="guide-dialog"><button class="close" aria-label="Close field guide">×</button><p class="eyebrow">A NOTE FOR NEW COURIERS</p><h2>There is no wrong turn.</h2><p>Welcome to Amberwick Isle, an autumn woodland island for players who enjoy quiet exploration.</p><ol><li>Pick up the letter at the Post House with <b>E</b> or the action button.</li><li>Walk with <b>W A S D</b>, arrow keys, or the touch arrows. “Follow trail” walks the route for you; any movement cancels it.</li><li>Visit Wind, River, and Mountain shrines in any order. Interact nearby to collect each stamp.</li><li>With all three stamps, follow the north trail and cross the open temple gate to deliver your letter.</li></ol><p>No timer. No combat. Stamps and sound preference stay on this device; each visit starts safely at the Post House.</p><button class="primary close-guide">Back to the island</button></dialog>
+    <dialog id="reset-dialog"><p class="eyebrow">A FRESH PAGE</p><h2>Begin a new round?</h2><p>This clears your three stamps and completed delivery on this device.</p><div class="dialog-actions"><button id="cancel-reset">Keep wandering</button><button id="confirm-reset" class="primary">Reset journey</button></div></dialog>
+    <dialog id="complete-dialog"><p class="eyebrow">SIGNED, SEALED & DELIVERED</p><div class="completion-stamps">W · R · M</div><h2>A little letter.<br>A whole island of stories.</h2><p>Your letter has arrived at the North Temple on Amberwick Isle. Three stamps. One open gate.</p><p class="score">DELIVERY SCORE <b>4 / 4</b><small>Three shrine stamps + one special delivery</small></p><button id="replay" class="primary">Deliver another letter</button><button id="wander">Stay a little longer</button></dialog>
+    <script type="module" src="./main.js"></script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+{
+  "prompt": "618-escape-room-website",
+  "modelId": "gpt-6.1-sol",
+  "assertions": [
+    {
+      "name": "Target-only HTTP preview responds at final public subpath",
+      "passed": true,
+      "evidence": "/pages/escape-room-website/GPT-6/index.html"
+    },
+    {
+      "name": "Nonblank homepage, four rooms, six real photographs and local font rendering",
+      "passed": true,
+      "evidence": {
+        "images": 6,
+        "rooms": 4
+      }
+    },
+    {
+      "name": "Desktop initial no horizontal overflow",
+      "passed": true,
+      "evidence": {
+        "width": 1200,
+        "document": 1200
+      }
+    },
+    {
+      "name": "Keyboard room exploration selects Ledger and transfers focus to booking",
+      "passed": true,
+      "evidence": "the-red-ledger"
+    },
+    {
+      "name": "Dark-hours weekday rule and selected late-slot fallback",
+      "passed": true,
+      "evidence": "FRI 23:00 allowed; THU resets to 17:00"
+    },
+    {
+      "name": "Party limits and pricing math",
+      "passed": true,
+      "evidence": {
+        "minimum": 2,
+        "minimumTotal": 76,
+        "maximum": 8,
+        "maximumTotal": 304
+      }
+    },
+    {
+      "name": "Local-only hold exact payload, reload persistence and prefilled edit",
+      "passed": true,
+      "evidence": {
+        "room": "hall-of-second-thoughts",
+        "day": "THU",
+        "slot": "17:00",
+        "players": 8
+      }
+    },
+    {
+      "name": "Exclusive FAQ keyboard open and close",
+      "passed": true,
+      "evidence": "Only one answer is accessible at a time"
+    },
+    {
+      "name": "Desktop after core interactions no horizontal overflow",
+      "passed": true,
+      "evidence": {
+        "width": 1200,
+        "document": 1200
+      }
+    },
+    {
+      "name": "Requested 1440px desktop no horizontal overflow",
+      "passed": true,
+      "evidence": {
+        "width": 1440,
+        "document": 1440
+      }
+    },
+    {
+      "name": "Mobile initial no horizontal overflow",
+      "passed": true,
+      "evidence": {
+        "width": 390,
+        "document": 390
+      }
+    },
+    {
+      "name": "Mobile after menu and hold interactions no horizontal overflow",
+      "passed": true,
+      "evidence": {
+        "width": 390,
+        "document": 390
+      }
+    },
+    {
+      "name": "Mobile touch room selection, Saturday late hold and keyboard menu trap/Escape",
+      "passed": true,
+      "evidence": {
+        "room": "the-clockmakers-debt",
+        "day": "SAT",
+        "slot": "23:00",
+        "players": 5
+      }
+    },
+    {
+      "name": "Keyboard focus has visible amber outline",
+      "passed": true,
+      "evidence": "rgb(226, 161, 60)"
+    },
+    {
+      "name": "Reduced motion readable without animation; malformed hold safely ignored",
+      "passed": true,
+      "evidence": true
+    },
+    {
+      "name": "Storage denial never claims a saved hold",
+      "passed": true,
+      "evidence": true
+    },
+    {
+      "name": "No HTTP, request, resource, console or page errors across all contexts",
+      "passed": true,
+      "evidence": []
+    }
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "width": 1200,
+      "height": 900,
+      "deviceScaleFactor": 1
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 1
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 1
+    }
+  ],
+  "screenshots": [
+    ".checks\\desktop.png",
+    ".checks\\mobile.png"
+  ],
+  "visualReviewed": true,
+  "resourcesClosed": true,
+  "passed": true,
+  "staticDigest": "a091e110d09c5575a3e19e1f033bb64860993bd213110677f29a35ca95ea7490",
+  "mount": "/pages/escape-room-website/GPT-6/index.html",
+  "finishedAt": "2026-11-16T16:37:30.650Z",
+  "visualReview": {
+    "reviewedAt": "2026-11-16T16:37:54.385Z",
+    "images": [
+      ".checks\\desktop.png",
+      ".checks\\mobile.png"
+    ],
+    "assessment": "已通过 view 打开两张真实 PNG。桌面单灯照片与左侧标题层级清晰；暖琥珀色焦点、暗色照片和细边框统一。四张房间卡、两栏预约、团队套餐与 FAQ 间距均衡；移动端单列无裁切，标题换行与控件布局合理。未见重叠、横向溢出或明显视觉缺陷。"
+  },
+  "preview": {
+    "path": "out\\preview.png",
+    "width": 1200,
+    "height": 900,
+    "deviceScaleFactor": 1,
+    "viewed": true,
+    "imageSHA256": "046a5aa74fa21c71a525cb68e63e5a5b62834b34ed1d1fdbb54663911ba53e37",
+    "staticDigest": "a091e110d09c5575a3e19e1f033bb64860993bd213110677f29a35ca95ea7490"
+  }
+}

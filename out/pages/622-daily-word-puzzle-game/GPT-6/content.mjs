@@ -1,0 +1,82 @@
+export const answers = [
+    "CRANE", "PLANT", "BRICK", "MOUSE", "DRIFT", "SPARK", "GLOVE", "TIDAL",
+    "MARCH", "QUITE", "FROST", "GRAPE", "SWORD", "HONEY", "PEARL", "CLOUD",
+    "SHINE", "BREAD", "RIVER", "STONE", "LEAFY", "MIRTH", "VOCAL", "WIDEN",
+    "ZESTY", "BLAZE", "CHARM", "DWELL", "EAGER", "FLINT", "GRASP", "HABIT",
+    "IVORY", "JOUST", "KNEEL", "LUNAR", "MEDAL", "NOBLE", "ORBIT", "PIQUE"
+];
+
+export const accepted = [
+    ...answers,
+    "ABOUT", "ABOVE", "ACTOR", "ADULT", "AFTER", "AGAIN", "AGENT", "AGREE",
+    "AHEAD", "ALBUM", "ALERT", "ALIKE", "ALIVE", "ALLOW", "ALONE", "ALONG",
+    "ALTER", "AMONG", "ANGEL", "ANGER", "ANGLE", "APPLE", "APPLY", "ARGUE",
+    "ARISE", "ASIDE", "AVOID", "AWAKE", "AWARD", "AWARE", "BEACH", "BEGAN",
+    "BEGIN", "BEING", "BELOW", "BENCH", "BERRY", "BIRTH", "BLACK", "BLAME",
+    "BLANK", "BLEND", "BLIND", "BLOCK", "BLOOM", "BOARD", "BOOST", "BOUND",
+    "BRAIN", "BRAVE", "BREAK", "BREED", "BRIEF", "BRING", "BROAD", "BROWN",
+    "BRUSH", "BUILD", "BURST", "CABIN", "CARRY", "CATCH", "CAUSE", "CHAIN",
+    "CHAIR", "CHEAP", "CHECK", "CHEST", "CHIEF", "CHILD", "CLEAN", "CLEAR",
+    "CLIMB", "CLOCK", "CLOSE", "COAST", "COULD", "COUNT", "CRISP", "STARE"
+];
+
+export const content = {
+    name: "Larkspur",
+    eyebrow: "A small pause. A little wordplay.",
+    headline: "Five letters. Endless possibility.",
+    subtitle: "Six tries. Take your time.",
+    puzzle: (n) => `PUZZLE ${n.toString().padStart(2, "0")}`,
+    status: (n) => `Puzzle ${n} · six tries`,
+    progress: (n) => `${n} of 6 guesses used · you have this`,
+    revealing: "A little suspense…",
+    needLetters: "Five letters, then the big reveal.",
+    invalid: "Not in the word list",
+    winner: "Nicely done. A little victory.",
+    loss: (answer) => `The word was ${answer}. Tomorrow's word forgives everything. (There's no tomorrow — just press next.)`,
+    resultKicker: "A little word, well played",
+    solved: (n) => `Solved in ${n}/6`,
+    lost: "Out of tries",
+    copy: "Copy result",
+    copied: "Copied — paste it anywhere",
+    copyFallback: "Clipboard unavailable — select and copy your result below.",
+    next: "Next puzzle",
+    rotation: (n) => `Sample rotation · puzzle ${n} of 40 · no dates here`,
+    footer: "A word at a time.",
+    credit: "Built with a VibeFather template",
+    creditUrl: "https://vibefather.ai",
+    statsKicker: "Your little collection of wins",
+    statsHeading: "Every guess counts.",
+    statsLabels: ["Played", "Win %", "Streak", "Best"],
+    distribution: "Guesses it took",
+    noStats: "A clean slate. Your first round starts the story.",
+    reset: "reset stats",
+    resetQuestion: "Reset your stats? The tiles forget faster than you will.",
+    resetConfirm: "Yes, reset",
+    cancel: "Keep them",
+    resetDone: "Stats reset. A fresh little start.",
+    back: "Back to puzzle",
+    history: "Recent rounds",
+    historyEmpty: "Finish a round to start your history.",
+    helpKicker: "The short version",
+    helpTitle: "A little how-to.",
+    helpRules: [
+        "Guess the word in six tries.",
+        "Each guess must be a five-letter word we know (the list is kind, not huge).",
+        "After each guess, the tiles show how close you are.",
+        "Forty handpicked everyday English words. A new puzzle after every round."
+    ],
+    examples: [
+        { word: "STARE", index: 0, state: "hit", title: "Right letter. Right place.", copy: "The S is in the word and in place." },
+        { word: "CRANE", index: 1, state: "near", title: "Right letter. New place.", copy: "The R is in the word, wrong spot." },
+        { word: "PLUMB", index: 2, state: "miss", title: "Not this time.", copy: "The U isn't in the word at all." }
+    ],
+    dry: "No letters are double-counted unless the word doubles them — fairness beats cleverness.",
+    start: "Let's play",
+    legend: [["hit", "Right spot"], ["near", "Wrong spot"], ["miss", "Not in word"]],
+    stateNames: { empty: "empty", typed: "not yet submitted", hit: "correct position", near: "present, wrong position", miss: "not in word" },
+    storageWarning: "Browser storage is unavailable. This game works, but progress will not survive a reload.",
+    recovered: "Saved data could not be read. Starting with a clean board.",
+    enter: "Enter",
+    backspace: "Backspace",
+    shareHeader: (status, count, number) => `Larkspur — ${status === "won" ? `solved in ${count}/6` : "unsolved X/6"} (sample puzzle ${number})`
+};

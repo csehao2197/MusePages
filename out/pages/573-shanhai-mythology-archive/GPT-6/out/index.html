@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#111612">
+    <meta name="description" content="An illustrated field guide to nine extraordinary beings from the Classic of Mountains and Seas. Explore their stories, territories, and traces.">
+    <title>Shanhai — Archive of Mythic Beasts</title>
+    <link rel="icon" href="mark.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+    <script src="archive.js" defer></script>
+</head>
+<body>
+    <a class="skip" href="#archive">Skip to the archive</a>
+    <header class="masthead">
+        <a class="identity" href="#home" aria-label="Shanhai archive home">
+            <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M3 32 13 9l8 17 6-12 10 18M8 32h24M16 32V22m10 10v-9"/></svg>
+            <span>SHANHAI<small>MYTHOLOGY ARCHIVE</small></span>
+        </a>
+        <button class="menu-toggle" aria-expanded="false" aria-controls="navigation">Menu <span>+</span></button>
+        <nav id="navigation" aria-label="Main navigation">
+            <a href="#archive">The archive</a>
+            <a href="#atlas">Mythic atlas</a>
+            <a href="#laboratory">Behind the glass</a>
+            <a class="ticket-link" href="#ticket"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v4a2 2 0 0 0 0 4v4H3v-4a2 2 0 0 0 0-4V6Zm13 0v12"/></svg>Your daily ticket <span>↗</span></a>
+        </nav>
+    </header>
+    <main>
+        <section class="hero" id="home" aria-labelledby="hero-title">
+            <div class="hero-grid" aria-hidden="true"></div>
+            <div class="hero-copy">
+                <p class="eyebrow"><span class="status-dot"></span> A FIELD GUIDE TO THE EXTRAORDINARY</p>
+                <h1 id="hero-title">Beyond the<br>mountains.<br><em>Before the known.</em></h1>
+                <p class="hero-description">Nine beings. Five realms. A world between myth and memory.<br class="desktop-break"> Enter the living margins of the <cite>Classic of Mountains and Seas.</cite></p>
+                <div class="hero-actions"><a class="button primary" href="#archive">Explore the archive <span>↗</span></a><a class="text-link" href="#specimen">Meet the keeper of day <span>→</span></a></div>
+                <p class="edition">DIGITAL EXHIBITION <span>VOL. 01 — THE NINE BEASTS</span></p>
+            </div>
+            <div class="hero-art">
+                <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+                <span class="art-axis">N</span>
+                <svg class="dragon-hero" viewBox="0 0 600 600" role="img" aria-label="Original engraved illustration of Zhulong, a coiled red dragon with antlers and a watchful eye"><use href="specimens.svg#zhulong"/></svg>
+                <span class="art-coordinate">76° N / BEYOND THE NORTHERN SEA</span>
+                <div class="hero-specimen-label"><span class="small-seal">DAY</span><div><span class="micro">S–001 · NORTHERN REALM</span><strong>Zhulong</strong><small>The eye that opens the day</small></div><a href="#specimen" aria-label="Study Zhulong">↗</a></div>
+            </div>
+            <div class="hero-bottom"><span>ANCIENT IMAGINATION. NEW WAYS OF SEEING.</span><a href="#introduction">SCROLL TO DISCOVER <span>↓</span></a></div>
+        </section>
+        <div class="data-strip" aria-label="Exhibition at a glance">
+            <div><strong>09</strong><span>ARCHIVED BEINGS</span></div><div><strong>05</strong><span>MYTHIC REALMS</span></div><div><strong>03</strong><span>VISITOR RITUALS</span></div><div><strong id="visit-count">01</strong><span>YOUR VISITS</span></div>
+        </div>
+        <section class="introduction section-wrap" id="introduction">
+            <div class="section-heading"><p class="eyebrow">01 / THE CURATOR'S NOTE</p><h2>Old pages.<br><em>Unfamiliar lives.</em></h2></div>
+            <div class="intro-body"><p class="lead">Before the world was mapped, it was imagined.</p><p>In the <cite>Shanhai Jing</cite>, mountains hold secrets, birds carry warnings, and a dragon's breath moves the night. We gather nine of these extraordinary beings—not as monsters to conquer, but as ideas to encounter.</p>
+                <div class="curator-method"><div><span>01</span><h3>Read the traces</h3><p>Begin with an ancient description.</p></div><div><span>02</span><h3>Give myth a form</h3><p>Study a new illustrated specimen.</p></div><div><span>03</span><h3>Leave an impression</h3><p>Keep a personal seal of your visit.</p></div></div>
+                <p class="caption">A contemporary interpretation, not a critical translation. Names are romanized; exhibition notes are newly written.</p>
+            </div>
+        </section>
+        <section class="archive-section section-wrap" id="archive" aria-labelledby="archive-title">
+            <div class="section-top"><div><p class="eyebrow">02 / THE SPECIMEN CABINET</p><h2 id="archive-title">An inventory of <em>the impossible.</em></h2></div><span class="catalog-label">CATALOGUE / S–001 TO S–009</span></div>
+            <div class="archive-toolbar">
+                <div class="filter-group" aria-label="Filter archive by region">
+                    <button class="filter active" data-region="All" aria-pressed="true">All beings <span>09</span></button><button class="filter" data-region="North" aria-pressed="false">North</button><button class="filter" data-region="East" aria-pressed="false">East</button><button class="filter" data-region="South" aria-pressed="false">South</button><button class="filter" data-region="West" aria-pressed="false">West</button><button class="filter" data-region="Central" aria-pressed="false">Central</button>
+                </div>
+                <label class="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg><input id="search" type="search" placeholder="Find a being..." aria-label="Search specimens by name or element"></label>
+            </div>
+            <p class="results" id="results" role="status">Showing all 9 specimens</p>
+            <div class="archive-grid" id="archive-grid"></div>
+            <p class="no-results" id="no-results" hidden>No traces found. Try a name, an element, or another realm.</p>
+            <div class="cabinet-footer"><span>SELECT A SPECIMEN TO OPEN ITS RECORD</span><span>ILLUSTRATED FROM THE IMAGINATION · NOT TO SCALE</span></div>
+        </section>
+        <section class="featured section-wrap" id="specimen" aria-labelledby="featured-heading">
+            <div class="section-top"><div><p class="eyebrow">03 / UNDER THE LOOKING GLASS</p><h2 id="featured-heading">One being. <em>A closer look.</em></h2></div></div>
+            <div class="featured-layout">
+                <div class="featured-art"><span class="micro" id="feature-number">PLATE I / S–001</span><svg viewBox="0 0 600 600" role="img" id="featured-image" aria-label="Illustration of Zhulong"><use href="specimens.svg#zhulong"/></svg><span class="plate-caption">ORIGINAL DIGITAL ENGRAVING / SHANHAI ARCHIVE</span></div>
+                <div class="featured-copy"><div class="feature-tabs" role="group" aria-label="Choose a featured specimen"><button data-feature="zhulong" aria-pressed="true" class="selected">Zhulong</button><button data-feature="dijiang" aria-pressed="false">Dijiang</button><button data-feature="jiuweihu" aria-pressed="false">Nine-tailed fox</button></div><p class="eyebrow" id="feature-epithet"></p><h3 id="feature-name">Zhulong</h3><p class="feature-summary" id="feature-description"></p><dl class="specimen-facts" id="feature-facts"></dl><blockquote id="feature-note"></blockquote><button class="text-link" id="feature-open">Read the complete record <span>↗</span></button></div>
+            </div>
+        </section>
+        <section class="atlas section-wrap" id="atlas" aria-labelledby="atlas-title">
+            <div class="section-top"><div><p class="eyebrow">04 / A GEOGRAPHY OF MYTH</p><h2 id="atlas-title">Every wonder has <em>a somewhere.</em></h2></div><p class="section-aside">Not a map of the world as it is.<br>A map of the world as it was imagined.</p></div>
+            <div class="atlas-layout"><div class="map" aria-label="Five mythic regions">
+                <svg viewBox="0 0 700 430" aria-hidden="true"><defs><pattern id="map-grid" width="38" height="38" patternUnits="userSpaceOnUse"><path d="M38 0H0V38" fill="none" stroke="#688374" stroke-opacity=".16"/></pattern></defs><rect width="700" height="430" fill="url(#map-grid)"/><g fill="none" stroke="#78917c"><path opacity=".2" d="M87 244 124 144 223 73 334 94 385 65 492 110 577 183 609 293 513 358 379 385 258 348 172 372 116 294Z"/><path opacity=".32" d="m130 240 32-87 78-49 90 19 52-28 92 42 74 61 19 83-70 46-116 26-115-36-74 17-44-71Z"/><path opacity=".3" d="m179 235 24-57 52-38 78 21 51-33 74 34 52 47 10 57-40 28-97 29-112-39-45 19-30-33Z"/><path opacity=".22" d="m238 235 39-60 59 20 48-31 50 32 34 58-87 37-99-34Z"/><path stroke-dasharray="3 7" opacity=".5" d="M350 35v354M79 215h547"/><path d="m315 130 13-27 13 27m-6 0 17-36 17 36m70 122 14-29 14 29m-249-44 12-29 12 29m98 115 16-33 16 33" opacity=".55"/></g><text x="355" y="27" fill="#9d987a" font-size="12" font-family="serif">N</text><text x="40" y="410" fill="#9d987a" font-size="10" letter-spacing="3">AN IMAGINED TOPOGRAPHY</text></svg>
+                <button class="map-pin north" data-atlas="North"><i></i>North</button><button class="map-pin west" data-atlas="West"><i></i>West</button><button class="map-pin east" data-atlas="East"><i></i>East</button><button class="map-pin south" data-atlas="South"><i></i>South</button><button class="map-pin central" data-atlas="Central"><i></i>Central</button>
+            </div><div class="atlas-detail"><p class="eyebrow">SELECT A REALM</p><h3 id="atlas-name">The Northern Mountains</h3><p id="atlas-description"></p><div id="atlas-beasts"></div><button class="text-link" id="atlas-filter">Explore this realm <span>↗</span></button></div></div>
+        </section>
+        <section class="ticket-section section-wrap" id="ticket" aria-labelledby="ticket-title">
+            <div class="ticket-intro"><p class="eyebrow">05 / PROOF OF YOUR WANDERING</p><h2 id="ticket-title">Take a myth<br><em>with you.</em></h2><p>No two visits need be alike. Discover the being for today, leave your seal, and gather the traces that speak to you.</p><span class="micro">PERSONAL SEALS STAY IN THIS BROWSER</span></div>
+            <div class="ticket"><div class="ticket-top"><span>SHANHAI / ADMIT ONE</span><time id="ticket-date"></time></div><div class="ticket-main"><svg viewBox="0 0 600 600" id="ticket-image" role="img" aria-label="Today's beast"></svg><div><p class="micro">YOUR BEING FOR TODAY</p><h3 id="daily-name"></h3><p id="daily-epithet"></p><span class="ticket-serial" id="ticket-serial"></span></div></div><div class="ticket-actions"><button class="button primary" id="seal-button">Leave your seal <span>◇</span></button><button class="text-link" id="daily-open">Study this being ↗</button></div><p id="seal-message" role="status">A small impression. A remembered encounter.</p><div class="ticket-bottom"><span>01 DISCOVER · 02 SEAL · 03 COLLECT</span><span id="collection-count">0 / 9 COLLECTED</span></div><button class="notebook-link" id="notebook-button">Open your collected records <span>→</span></button></div>
+        </section>
+        <section class="laboratory section-wrap" id="laboratory" aria-labelledby="lab-title"><div class="section-top"><div><p class="eyebrow">06 / BEHIND THE GLASS</p><h2 id="lab-title">From a line of ink<br>to <em>a life imagined.</em></h2></div><p class="section-aside">A cabinet is a way of paying attention.<br>This is how ours comes together.</p></div><div class="lab-grid"><article><span>Ⅰ</span><h3>Read the fragment</h3><p>A place, a gesture, an impossible anatomy. Each record begins with the vocabulary of an ancient world.</p></article><article><span>Ⅱ</span><h3>Shape the unseen</h3><p>Original digital linework gives each being a distinct silhouette, texture, and quiet presence.</p></article><article><span>Ⅲ</span><h3>Make an encounter</h3><p>Look closer. Follow a landscape. Leave a personal impression on the creature that stays with you.</p></article><article><span>Ⅳ</span><h3>Keep the trace</h3><p>Collect a record and return to it. An archive lives through the curiosity of its visitors.</p></article></div></section>
+        <section class="poster-section section-wrap" id="posters" aria-labelledby="poster-title"><div class="section-top"><div><p class="eyebrow">07 / FROM THE PRINT ROOM</p><h2 id="poster-title">Myths worth <em>keeping.</em></h2></div><span class="catalog-label">THREE DIGITAL EDITIONS / SVG</span></div><div class="poster-grid">
+            <a class="poster poster-red" href="poster-day.svg" download="shanhai-day.svg"><div><span>SHANHAI / FIELD NOTES 01</span><h3>The eye<br>of the day.</h3></div><svg viewBox="0 0 600 600" aria-hidden="true"><use href="specimens.svg#zhulong"/></svg><p>ZHULONG · A STUDY OF TIME <span>↓</span></p></a>
+            <a class="poster poster-jade" href="poster-echo.svg" download="shanhai-echo.svg"><div><span>SHANHAI / FIELD NOTES 02</span><h3>Nine paths.<br>One omen.</h3></div><svg viewBox="0 0 600 600" aria-hidden="true"><use href="specimens.svg#jiuweihu"/></svg><p>NINE-TAILED FOX · A STUDY OF FATE <span>↓</span></p></a>
+            <a class="poster poster-bone" href="poster-sound.svg" download="shanhai-sound.svg"><div><span>SHANHAI / FIELD NOTES 03</span><h3>Before<br>the name.</h3></div><svg viewBox="0 0 600 600" aria-hidden="true"><use href="specimens.svg#dijiang"/></svg><p>DIJIANG · A STUDY OF SOUND <span>↓</span></p></a>
+        </div><p class="caption">Select an edition to save an original, self-contained illustrated poster.</p></section>
+    </main>
+    <footer><a class="footer-wordmark" href="#home">SHANHAI<span>Mountains. Seas. Everything between.</span></a><p>An independent exhibition inspired by the <cite>Shanhai Jing</cite>.<br>Ancient stories, contemporary interpretations.</p><a href="#home" class="text-link">Back to the surface ↑</a><div class="footer-bottom"><span>ARCHIVE OF MYTHIC BEASTS / DIGITAL EDITION</span><span>ORIGINAL ARTWORK & EXHIBITION · <a href="LICENSE">CREDITS & LICENSE</a></span></div></footer>
+    <dialog id="record-dialog" aria-labelledby="record-name"><div class="dialog-top"><span id="record-id" class="micro"></span><button class="close-dialog" aria-label="Close specimen record">Close ×</button></div><div id="record-content"></div></dialog>
+    <dialog id="notebook-dialog" aria-labelledby="notebook-title"><div class="dialog-top"><span class="micro">YOUR FIELD NOTES</span><button class="close-dialog" aria-label="Close collected records">Close ×</button></div><h2 id="notebook-title">Collected <em>encounters.</em></h2><p class="caption">Kept on this device. Open a specimen record to add or remove a trace.</p><div id="notebook-list"></div></dialog>
+</body>
+</html>

@@ -1,0 +1,69 @@
+{
+  "prompt": "613-3d-wooden-fish-tapping-toy",
+  "modelId": "gpt-6.1-sol",
+  "passed": true,
+  "visualReviewed": true,
+  "previewVisualReviewed": true,
+  "viewports": {
+    "desktop": {
+      "width": 1200,
+      "height": 900,
+      "deviceScaleFactor": 1
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 1
+    }
+  },
+  "assertions": [
+    "最终公开子路径 HTTP 200；预览服务仅托管目标静态目录，仓库 README 返回 404",
+    "桌面 1200×900、DPR1：真实 WebGL 场景可见、页面非空、字体就绪、初始无音频上下文及横向溢出",
+    "射线拾取：空白区域不敲击；点击真实三维木鱼恰好增加一次计数",
+    "按钮点击、焦点 Enter/Space 与全局 Space 均只敲一次；连续三次出现 In rhythm",
+    "1.6 秒无敲击后连击归零，今日/会话计数不丢失",
+    "首次手势后才创建真实 AudioContext；合成振荡器启动且实际输出分析波形非零",
+    "关闭敲击音后视觉/计数继续且无新增敲击振荡器；环境音可独立开启和关闭",
+    "设置控件上的 Space 不触发全局敲击；控件保留正确 pressed/switch 语义和键盘支持",
+    "自动敲击每 1.2 秒恰好一次，切换停止后不再增加",
+    "visibilitychange 隐藏路径停止自动/环境音并挂起真实音频；返回不自行恢复",
+    "重载保留今日总数并重置会话，不自动播放声音",
+    "本地日键过期后今日归零，第一次敲击写入新日键与准确计数；界面不显示日期",
+    "原需求 1440×900 构图完整包含页脚，无溢出；键盘焦点 2px 可见，全部可见文案无中文字符",
+    "手机 390×844 真实触摸射线/按钮/自动敲击成功，无双触发；控件均≥44px，设置两行，交互前后无横向溢出",
+    "减少动态效果设置下正常计数，不启动浮动消息；静态三维模型保持可用",
+    "同时禁用 WebGL/AudioContext/localStorage 时明确 Canvas 降级，仍可敲击计数，无未捕获异常",
+    "静态独立资源与公开子路径检查通过；ensurePreview 实际截取 1200×900 首屏并保存双摘要",
+    "完整静态目录小于 20 MB，无远程运行时请求、HTTP/资源/控制台/页面错误"
+  ],
+  "errors": [],
+  "audio": {
+    "created": 1,
+    "oscillators": 15,
+    "starts": 15,
+    "peak": 0.001095046871341765,
+    "state": "running"
+  },
+  "resourcesClosed": true,
+  "staticDigest": "c253bbe41968c1fb35b0b55ef20f34f6a44651ff4db3dc0f7a6f1543adf016e7",
+  "preview": "generated",
+  "previewSha256": "1d1ca414f7467b00bcc2f1d3a990acdc332080b787d7d55c8bf16c8b4a2a573a",
+  "staticBytes": 1128194,
+  "visualNotes": [
+    "已通过 view 实际打开最终 .checks/desktop.png（1200×900）、.checks/mobile.png（390px 宽完整页面）和 out/preview.png（1200×900 首屏）。",
+    "桌面：左侧衬线邀请、中部立体木鱼与独立木槌、右侧开放式计数形成清晰层级；暖棕木纹、暗石台及背景竖向建筑有真实体积，文字未遮挡乐器。",
+    "已修整舞台四边混合、石台眩光及手机两行标题；计数对比、按钮、细分隔线和留白协调，桌面页脚完整可见。",
+    "手机：乐器完整位于首屏，计数双列、52px 敲击按钮、两行设置区均清晰；内容自然纵向滚动，无裁切或横向溢出。",
+    "最终正式 preview 与实际首页构图一致，不以截图代替可交互页面。"
+  ],
+  "screenshotDigests": {
+    "desktop.png": "c0a68a573cd61b1568a22c86b57356099fffc8e3537f18deea4ec59a4fff885f",
+    "mobile.png": "fd8e1b8fbbbb2c2aa291d553bde73b529abf57db13ee9615667683c22c121137",
+    "preview.png": "1d1ca414f7467b00bcc2f1d3a990acdc332080b787d7d55c8bf16c8b4a2a573a"
+  },
+  "iterationNotes": [
+    "首次旧日键测试被 reload 的真实 visibility 保存覆盖，已改为初始化注入独立旧日键。",
+    "主动禁用 WebGL 时发现库会记录错误，已在创建渲染器前检测上下文并无错误地显示 Canvas 降级。",
+    "焦点验收改为真实 Tab/Shift+Tab 键盘路径，验证 :focus-visible 而非鼠标模式的编程聚焦。"
+  ]
+}

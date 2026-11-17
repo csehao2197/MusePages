@@ -1,0 +1,178 @@
+{
+  "status": "failed",
+  "date": "2026-11-16T18:55:07.948Z",
+  "modelId": "gpt-6.1-sol",
+  "viewports": [
+    {
+      "width": 1200,
+      "height": 900
+    },
+    {
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "results": [
+    {
+      "name": "Independent static export and final public subpath",
+      "passed": true,
+      "evidence": {
+        "digest": "ba88d0f28e11b6c105817f800c7e7b1aadc7d19bc2cba8d69b8ab0c5cbbacd7a"
+      }
+    },
+    {
+      "name": "Isolated preview server is responsive at final mount",
+      "passed": true,
+      "evidence": {
+        "url": "http://127.0.0.1:51968/pages/skeuomorphism-music-player-tactile-leather-and-brass-now-playing-ui/GPT-6/index.html",
+        "status": 200
+      }
+    },
+    {
+      "name": "Preview server does not expose repository root",
+      "passed": true,
+      "evidence": {
+        "status": 404
+      }
+    },
+    {
+      "name": "Desktop: visible English player, user-initiated audio only",
+      "passed": true,
+      "evidence": {
+        "width": 1200,
+        "height": 900
+      }
+    },
+    {
+      "name": "Desktop: no horizontal overflow before interactions",
+      "passed": true,
+      "evidence": {
+        "viewport": 1200,
+        "document": 1200,
+        "body": 1200
+      }
+    },
+    {
+      "name": "Desktop: actual first-screen PNG captured",
+      "passed": true,
+      "evidence": {
+        "width": 1200,
+        "height": 900,
+        "deviceScaleFactor": 1
+      }
+    },
+    {
+      "name": "Desktop: all three real local audio files decode with non-silent unclipped signal",
+      "passed": true,
+      "evidence": [
+        {
+          "filename": "last-light.wav",
+          "duration": 36,
+          "sampleRate": 44100,
+          "rms": 0.09068814279753057,
+          "peak": 0.31277990341186523
+        },
+        {
+          "filename": "velvet-hours.wav",
+          "duration": 36,
+          "sampleRate": 44100,
+          "rms": 0.0817281806478128,
+          "peak": 0.2909192442893982
+        },
+        {
+          "filename": "quiet-return.wav",
+          "duration": 36,
+          "sampleRate": 44100,
+          "rms": 0.07585095112226573,
+          "peak": 0.28076672554016113
+        }
+      ]
+    },
+    {
+      "name": "Desktop: real audio plays and native time advances",
+      "passed": true,
+      "evidence": {
+        "paused": false,
+        "time": 0.424078
+      }
+    },
+    {
+      "name": "Desktop: pause stops actual media clock",
+      "passed": true,
+      "evidence": 0.457513
+    },
+    {
+      "name": "Desktop: actual native seek and keyboard slider input",
+      "passed": true,
+      "evidence": 14.6
+    },
+    {
+      "name": "Desktop: volume, mute restore and increase affect native audio",
+      "passed": true,
+      "evidence": {
+        "volume": 0.45
+      }
+    },
+    {
+      "name": "Desktop: favorite survives reload for the correct track",
+      "passed": true,
+      "evidence": {
+        "localStorage": true
+      }
+    },
+    {
+      "name": "Desktop: queue chooses and actually plays a different local recording",
+      "passed": true,
+      "evidence": "Velvet Hours"
+    },
+    {
+      "name": "Desktop: previous/next preserve playback and previous restarts after 3s",
+      "passed": true,
+      "evidence": {
+        "title": "Velvet Hours"
+      }
+    },
+    {
+      "name": "Desktop: shuffle changes actual track without immediate repeat",
+      "passed": true,
+      "evidence": {
+        "activeToggle": true
+      }
+    },
+    {
+      "name": "Desktop: real ended event repeats or advances the queue",
+      "passed": true,
+      "evidence": {
+        "repeatAndAdvance": true
+      }
+    },
+    {
+      "name": "Desktop: options restart and real original WAV download",
+      "passed": true,
+      "evidence": {
+        "filename": "resonant-last-light.wav"
+      }
+    },
+    {
+      "name": "Desktop: truthful liner notes, devices and unsupported AirPlay; Escape and focus restoration",
+      "passed": true,
+      "evidence": {
+        "nativeDialog": true
+      }
+    }
+  ],
+  "errors": [],
+  "failure": {
+    "message": "The expression evaluated to a falsy value:\n\n  assert.ok(await page.locator(\"#panel\").evaluate((element) => element.contains(document.activeElement)))\n",
+    "stack": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert.ok(await page.locator(\"#panel\").evaluate((element) => element.contains(document.activeElement)))\n\n    at file:///C:/Code/MusePages/out/pages/630-skeuomorphism-music-player-tactile-leather-and-brass-now-playing-ui/GPT-6/.checks/qa.mjs:233:16"
+  },
+  "screenshots": {
+    "desktop": ".checks\\desktop.png",
+    "mobile": ".checks\\mobile.png"
+  },
+  "visualReviewed": false,
+  "resourcesClosed": {
+    "browsers": true,
+    "servers": true
+  }
+}

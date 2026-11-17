@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#0E3B43">
+    <meta name="description" content="A small, code-drawn koi pond. Make ripples, feed the fish, and let a little time pass.">
+    <title>Emberfin · Koi Pond</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="preload" href="./fonts/shippori-mincho-b1-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="./fonts/instrument-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <style>html,body{background:#0E3B43;margin:0;overflow:hidden}</style>
+    <link rel="stylesheet" href="./styles.css">
+    <script type="module" src="./main.js"></script>
+</head>
+<body>
+    <main id="pond" aria-label="Interactive koi pond">
+        <canvas id="water" aria-hidden="true"></canvas>
+        <canvas id="life" aria-hidden="true"></canvas>
+        <canvas id="surface" tabindex="0" role="application" aria-label="Pond water. Tap for ripples, hold to feed, drag a current. Keyboard: Enter makes ripples, hold Space to feed, arrow keys draw a current."></canvas>
+        <div id="interface"></div>
+        <noscript>This pond needs JavaScript to swim.</noscript>
+    </main>
+</body>
+</html>

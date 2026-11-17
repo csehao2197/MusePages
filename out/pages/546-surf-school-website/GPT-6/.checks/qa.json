@@ -1,0 +1,731 @@
+{
+  "prompt": "546-surf-school-website",
+  "modelId": "gpt-6.1-sol",
+  "passed": true,
+  "visualReviewed": true,
+  "viewports": [
+    {
+      "label": "desktop",
+      "width": 1200,
+      "height": 900,
+      "deviceScaleFactor": 1
+    },
+    {
+      "label": "mobile",
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 1
+    },
+    {
+      "label": "wide",
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 1
+    }
+  ],
+  "assertions": [
+    {
+      "name": "StaticHomepage.validateStaticOutput passes at final subpath",
+      "passed": true,
+      "evidence": "1b85df505180b1f132f555d27a6ecc73f3e9f692a785861fc08f6f77765571a4"
+    },
+    {
+      "name": "owned preview server responsive; serves only static target mount",
+      "passed": true,
+      "evidence": {
+        "http": 200,
+        "outside": 404,
+        "url": "http://127.0.0.1:51481/pages/surf-school-website/GPT-6/index.html"
+      }
+    },
+    {
+      "name": "desktop: homepage no overflow before interactions",
+      "passed": true,
+      "evidence": {
+        "viewport": 1200,
+        "document": 1200,
+        "body": 1200
+      }
+    },
+    {
+      "name": "desktop: lessons no overflow before interactions",
+      "passed": true,
+      "evidence": {
+        "viewport": 1200,
+        "document": 1200,
+        "body": 1200
+      }
+    },
+    {
+      "name": "desktop: camps no overflow before interactions",
+      "passed": true,
+      "evidence": {
+        "viewport": 1200,
+        "document": 1200,
+        "body": 1200
+      }
+    },
+    {
+      "name": "desktop: coaches no overflow before interactions",
+      "passed": true,
+      "evidence": {
+        "viewport": 1200,
+        "document": 1200,
+        "body": 1200
+      }
+    },
+    {
+      "name": "desktop: book no overflow before interactions",
+      "passed": true,
+      "evidence": {
+        "viewport": 1200,
+        "document": 1200,
+        "body": 1200
+      }
+    },
+    {
+      "name": "desktop: find-us no overflow before interactions",
+      "passed": true,
+      "evidence": {
+        "viewport": 1200,
+        "document": 1200,
+        "body": 1200
+      }
+    },
+    {
+      "name": "desktop: all six exact local photos and three fonts loaded",
+      "passed": true,
+      "evidence": {
+        "images": [
+          {
+            "source": "images/hero-wave.webp",
+            "complete": true
+          },
+          {
+            "source": "images/surfer-small.webp",
+            "complete": true
+          },
+          {
+            "source": "images/coach-lineup.webp",
+            "complete": true
+          },
+          {
+            "source": "images/coach-push.webp",
+            "complete": true
+          },
+          {
+            "source": "images/coach-walk.webp",
+            "complete": true
+          },
+          {
+            "source": "images/boards-sand.webp",
+            "complete": true
+          }
+        ],
+        "fonts": [
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "name": "desktop: five labeled static forecast cells and height-scaled SVG arcs",
+      "passed": true,
+      "evidence": {
+        "cells": 5,
+        "distinctWavePaths": 3
+      }
+    },
+    {
+      "name": "desktop: hero CTA navigates to lessons",
+      "passed": true,
+      "evidence": {
+        "hash": "#lessons"
+      }
+    },
+    {
+      "name": "desktop: lesson link preselects Improver and opens booking below scrolled header",
+      "passed": true,
+      "evidence": {
+        "hash": "#book",
+        "level": "Improver"
+      }
+    },
+    {
+      "name": "desktop: blank request rejected, nothing stored",
+      "passed": true,
+      "evidence": {
+        "storage": null
+      }
+    },
+    {
+      "name": "desktop: invalid email rejected",
+      "passed": true,
+      "evidence": {
+        "storage": null
+      }
+    },
+    {
+      "name": "desktop: whitespace-only name rejected",
+      "passed": true,
+      "evidence": {
+        "storage": null
+      }
+    },
+    {
+      "name": "desktop: native chip radio group works with keyboard arrows",
+      "passed": true,
+      "evidence": {
+        "when": "Weekend mornings"
+      }
+    },
+    {
+      "name": "desktop: surfers bounded 1–6; keyboard decrement works",
+      "passed": true,
+      "evidence": {
+        "max": 6,
+        "afterDecrement": 5
+      }
+    },
+    {
+      "name": "desktop: complete request persisted locally, no submission",
+      "passed": true,
+      "evidence": {
+        "name": "Taylor Reef",
+        "email": "taylor@example.com",
+        "level": "Improver",
+        "when": "Weekend mornings",
+        "surfers": 5,
+        "package": "Weekend Camp"
+      }
+    },
+    {
+      "name": "desktop: no overflow after booking interactions",
+      "passed": true,
+      "evidence": {
+        "viewport": 1200,
+        "document": 1200,
+        "body": 1200
+      }
+    },
+    {
+      "name": "desktop: reload restores all saved fields and package",
+      "passed": true,
+      "evidence": {
+        "restored": true
+      }
+    },
+    {
+      "name": "desktop: removing package updates saved request",
+      "passed": true,
+      "evidence": {
+        "package": ""
+      }
+    },
+    {
+      "name": "desktop: no overflow after restore and changes",
+      "passed": true,
+      "evidence": {
+        "viewport": 1200,
+        "document": 1200,
+        "body": 1200
+      }
+    },
+    {
+      "name": "desktop: final page no overflow after interactions",
+      "passed": true,
+      "evidence": {
+        "viewport": 1200,
+        "document": 1200,
+        "body": 1200
+      }
+    },
+    {
+      "name": "mobile: homepage no overflow before interactions",
+      "passed": true,
+      "evidence": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "mobile: lessons no overflow before interactions",
+      "passed": true,
+      "evidence": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "mobile: camps no overflow before interactions",
+      "passed": true,
+      "evidence": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "mobile: coaches no overflow before interactions",
+      "passed": true,
+      "evidence": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "mobile: book no overflow before interactions",
+      "passed": true,
+      "evidence": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "mobile: find-us no overflow before interactions",
+      "passed": true,
+      "evidence": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "mobile: all six exact local photos and three fonts loaded",
+      "passed": true,
+      "evidence": {
+        "images": [
+          {
+            "source": "images/hero-wave.webp",
+            "complete": true
+          },
+          {
+            "source": "images/surfer-small.webp",
+            "complete": true
+          },
+          {
+            "source": "images/coach-lineup.webp",
+            "complete": true
+          },
+          {
+            "source": "images/coach-push.webp",
+            "complete": true
+          },
+          {
+            "source": "images/coach-walk.webp",
+            "complete": true
+          },
+          {
+            "source": "images/boards-sand.webp",
+            "complete": true
+          }
+        ],
+        "fonts": [
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "name": "mobile: five labeled static forecast cells and height-scaled SVG arcs",
+      "passed": true,
+      "evidence": {
+        "cells": 5,
+        "distinctWavePaths": 3
+      }
+    },
+    {
+      "name": "mobile: menu open no overflow",
+      "passed": true,
+      "evidence": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "mobile: menu open/Escape focus return/anchor close",
+      "passed": true,
+      "evidence": {
+        "hash": "#lessons"
+      }
+    },
+    {
+      "name": "mobile: lesson link preselects Improver and opens booking below scrolled header",
+      "passed": true,
+      "evidence": {
+        "hash": "#book",
+        "level": "Improver"
+      }
+    },
+    {
+      "name": "mobile: blank request rejected, nothing stored",
+      "passed": true,
+      "evidence": {
+        "storage": null
+      }
+    },
+    {
+      "name": "mobile: invalid email rejected",
+      "passed": true,
+      "evidence": {
+        "storage": null
+      }
+    },
+    {
+      "name": "mobile: whitespace-only name rejected",
+      "passed": true,
+      "evidence": {
+        "storage": null
+      }
+    },
+    {
+      "name": "mobile: native chip radio group works with keyboard arrows",
+      "passed": true,
+      "evidence": {
+        "when": "Weekend mornings"
+      }
+    },
+    {
+      "name": "mobile: surfers bounded 1–6; keyboard decrement works",
+      "passed": true,
+      "evidence": {
+        "max": 6,
+        "afterDecrement": 5
+      }
+    },
+    {
+      "name": "mobile: complete request persisted locally, no submission",
+      "passed": true,
+      "evidence": {
+        "name": "Taylor Reef",
+        "email": "taylor@example.com",
+        "level": "Improver",
+        "when": "Weekend mornings",
+        "surfers": 5,
+        "package": "Weekend Camp"
+      }
+    },
+    {
+      "name": "mobile: no overflow after booking interactions",
+      "passed": true,
+      "evidence": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "mobile: reload restores all saved fields and package",
+      "passed": true,
+      "evidence": {
+        "restored": true
+      }
+    },
+    {
+      "name": "mobile: removing package updates saved request",
+      "passed": true,
+      "evidence": {
+        "package": ""
+      }
+    },
+    {
+      "name": "mobile: no overflow after restore and changes",
+      "passed": true,
+      "evidence": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "mobile: final page no overflow after interactions",
+      "passed": true,
+      "evidence": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "wide: lessons no overflow before interactions",
+      "passed": true,
+      "evidence": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440
+      }
+    },
+    {
+      "name": "wide: camps no overflow before interactions",
+      "passed": true,
+      "evidence": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440
+      }
+    },
+    {
+      "name": "wide: coaches no overflow before interactions",
+      "passed": true,
+      "evidence": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440
+      }
+    },
+    {
+      "name": "wide: book no overflow before interactions",
+      "passed": true,
+      "evidence": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440
+      }
+    },
+    {
+      "name": "wide: find-us no overflow before interactions",
+      "passed": true,
+      "evidence": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440
+      }
+    },
+    {
+      "name": "wide: all six exact local photos and three fonts loaded",
+      "passed": true,
+      "evidence": {
+        "images": [
+          {
+            "source": "images/hero-wave.webp",
+            "complete": true
+          },
+          {
+            "source": "images/surfer-small.webp",
+            "complete": true
+          },
+          {
+            "source": "images/coach-lineup.webp",
+            "complete": true
+          },
+          {
+            "source": "images/coach-push.webp",
+            "complete": true
+          },
+          {
+            "source": "images/coach-walk.webp",
+            "complete": true
+          },
+          {
+            "source": "images/boards-sand.webp",
+            "complete": true
+          }
+        ],
+        "fonts": [
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    {
+      "name": "wide: five labeled static forecast cells and height-scaled SVG arcs",
+      "passed": true,
+      "evidence": {
+        "cells": 5,
+        "distinctWavePaths": 3
+      }
+    },
+    {
+      "name": "wide: requested 1440×900 clean render",
+      "passed": true,
+      "evidence": {
+        "viewport": 1440,
+        "document": 1440,
+        "body": 1440
+      }
+    },
+    {
+      "name": "reduced motion: no zoom, loops, parallax or transform reveals; map pin visible",
+      "passed": true,
+      "evidence": {
+        "heroAnimation": "none",
+        "waveAnimation": "none",
+        "heroTranslate": "none",
+        "revealTransform": "none",
+        "pinScale": "1"
+      }
+    },
+    {
+      "name": "malformed saved data does not break homepage",
+      "passed": true,
+      "evidence": {
+        "usable": true
+      }
+    },
+    {
+      "name": "storage denied: honest inline failure, no exception or transmission",
+      "passed": true,
+      "evidence": {
+        "inlineFailure": true
+      }
+    },
+    {
+      "name": "reduced-motion/storage failure: no overflow after interactions",
+      "passed": true,
+      "evidence": {
+        "viewport": 390,
+        "document": 390,
+        "body": 390
+      }
+    },
+    {
+      "name": "all contexts: zero HTTP/resource/request/console/page/external-network/submission errors",
+      "passed": true,
+      "evidence": {
+        "errors": 0
+      }
+    }
+  ],
+  "errors": [],
+  "screenshots": {
+    "desktop": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\desktop.png",
+    "desktop-booking": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\desktop-booking.png",
+    "desktop-lessons": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\desktop-lessons.png",
+    "desktop-camps": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\desktop-camps.png",
+    "desktop-coaches": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\desktop-coaches.png",
+    "desktop-find-us": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\desktop-find-us.png",
+    "desktop-forecast": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\desktop-forecast.png",
+    "mobile": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\mobile.png",
+    "mobile-booking": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\mobile-booking.png",
+    "mobile-lessons": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\mobile-lessons.png",
+    "mobile-camps": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\mobile-camps.png",
+    "mobile-coaches": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\mobile-coaches.png",
+    "mobile-find-us": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\mobile-find-us.png",
+    "mobile-forecast": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\mobile-forecast.png",
+    "wide": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\wide.png",
+    "mobile-storage-failure": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\mobile-storage-failure.png"
+  },
+  "resourcesClosed": true,
+  "staticDigest": "1b85df505180b1f132f555d27a6ecc73f3e9f692a785861fc08f6f77765571a4",
+  "visualEvidence": {
+    "openedViaView": [
+      "desktop.png",
+      "mobile.png",
+      "desktop-lessons.png",
+      "desktop-camps.png",
+      "desktop-coaches.png",
+      "desktop-forecast.png",
+      "mobile-forecast.png",
+      "mobile-booking.png",
+      "mobile-find-us.png",
+      "out\\preview.png"
+    ],
+    "assessment": "实际打开最终桌面/手机首屏及新预览。海浪主视觉、清晰标题与按钮、柔和沙色渐变、课程对齐和留白、营地编辑式布局、无可辨识正脸的教练取景均一致；手机预约提示和北端地图定位可见，无文字横向溢出。预报截图等待揭示动画稳定后重新拍摄并打开。",
+    "imageEvidence": {
+      "desktop": {
+        "path": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\desktop.png",
+        "width": 1200,
+        "height": 900,
+        "sha256": "f3c13ba1ebe8c08047d5c69c98bf120961c931c30f9036aab81f01be455b77cf"
+      },
+      "desktop-booking": {
+        "path": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\desktop-booking.png",
+        "width": 1200,
+        "height": 900,
+        "sha256": "15458b3cdaf5368678cf03e3f9312b259ce978026fd8830226fd421a63fc08a3"
+      },
+      "desktop-lessons": {
+        "path": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\desktop-lessons.png",
+        "width": 1200,
+        "height": 900,
+        "sha256": "c62f03d68f7d8a18d1a2beea2b673abb47d7be8bc8e60133b84415585be42440"
+      },
+      "desktop-camps": {
+        "path": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\desktop-camps.png",
+        "width": 1200,
+        "height": 900,
+        "sha256": "3102b87fbeafbbd278540ed029ef59e9fc8c0fd866adf0f3121908dacd8d19cb"
+      },
+      "desktop-coaches": {
+        "path": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\desktop-coaches.png",
+        "width": 1200,
+        "height": 900,
+        "sha256": "9e29398d2105d1a4fc720aa97c8a7d6127c17acf33ccd725563827a51ec7d585"
+      },
+      "desktop-find-us": {
+        "path": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\desktop-find-us.png",
+        "width": 1200,
+        "height": 900,
+        "sha256": "3cd9ed611f319bbaaa7c6c4841edc037cafb7160635d78758ab71b944ebdd2e0"
+      },
+      "desktop-forecast": {
+        "path": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\desktop-forecast.png",
+        "width": 1200,
+        "height": 900,
+        "sha256": "9d06f91d73f8440419c542c3cbc4da74cff5b91dab792e27f3a33a08e85ddafe"
+      },
+      "mobile": {
+        "path": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\mobile.png",
+        "width": 390,
+        "height": 844,
+        "sha256": "c34aeeffb421210cdd32e377b3d50a8145409fceae8a6c7e7c052d07e01f2fd5"
+      },
+      "mobile-booking": {
+        "path": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\mobile-booking.png",
+        "width": 390,
+        "height": 844,
+        "sha256": "f8017110e7a2b93ee6039fb827e7749937fd5040352924d3ff285f3b4a1a5cbc"
+      },
+      "mobile-lessons": {
+        "path": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\mobile-lessons.png",
+        "width": 390,
+        "height": 844,
+        "sha256": "fb39c65791e875c810cad02cd6100fdd7a35c759dcc69289691880208387613f"
+      },
+      "mobile-camps": {
+        "path": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\mobile-camps.png",
+        "width": 390,
+        "height": 844,
+        "sha256": "25943cdd3ca9f1ea34d409cdb489047b2f83d1e32fe67f5673217b612b97ea8e"
+      },
+      "mobile-coaches": {
+        "path": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\mobile-coaches.png",
+        "width": 390,
+        "height": 844,
+        "sha256": "d8d9d4cee4a0a11cbaa091af55f0802cfb82576959a220957295deaa130b4614"
+      },
+      "mobile-find-us": {
+        "path": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\mobile-find-us.png",
+        "width": 390,
+        "height": 844,
+        "sha256": "381815bcff1bde37970e730ae54442ee5e28c0631648f1a871a23c6c399b63bd"
+      },
+      "mobile-forecast": {
+        "path": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\mobile-forecast.png",
+        "width": 390,
+        "height": 844,
+        "sha256": "7d155ba1ad600819bc24764051415e95966cf3b340d00c9e30bff184dace479e"
+      },
+      "wide": {
+        "path": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\wide.png",
+        "width": 1440,
+        "height": 900,
+        "sha256": "e8063e079e1befc0d7c2e2e52aaa2270a489dc6cd87a1d4306a74b71abee656b"
+      },
+      "mobile-storage-failure": {
+        "path": "C:\\Code\\MusePages\\out\\pages\\546-surf-school-website\\GPT-6\\.checks\\mobile-storage-failure.png",
+        "width": 390,
+        "height": 844,
+        "sha256": "9c53cb024ef348961a4211e7ea3de5cb621aa6b32f797077932bd26a3dd8b5ad"
+      }
+    }
+  }
+}

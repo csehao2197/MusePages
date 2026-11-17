@@ -1,0 +1,871 @@
+@font-face
+{
+    font-family: Newsreader;
+    src: url("./vendor/newsreader.woff2") format("woff2");
+    font-weight: 400 700;
+    font-display: swap;
+}
+@font-face
+{
+    font-family: Inter;
+    src: url("./vendor/inter.woff2") format("woff2");
+    font-weight: 100 900;
+    font-display: swap;
+}
+:root
+{
+    --ink: #293d39;
+    --muted: #64736a;
+    --paper: #eeece1;
+    --rust: #9c4a36;
+    --line: #334d3838;
+}
+*
+{
+    box-sizing: border-box;
+}
+html, body
+{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: Inter, sans-serif;
+}
+button, a
+{
+    -webkit-tap-highlight-color: transparent;
+}
+button
+{
+    font: inherit;
+    cursor: pointer;
+    color: inherit;
+}
+button:focus-visible, a:focus-visible, canvas:focus-visible
+{
+    outline: 2px solid var(--rust);
+    outline-offset: 4px;
+}
+button:disabled
+{
+    opacity: .45;
+}
+button[hidden], [hidden]
+{
+    display: none !important;
+}
+svg
+{
+    width: 18px;
+    height: 18px;
+    stroke-width: 1.5;
+}
+#adventure, #world
+{
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+#world
+{
+    display: block;
+    touch-action: none;
+}
+.paper
+{
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: .13;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='.45' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+}
+.wash
+{
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(90deg, #eeece1f5 0%, #eeece1dd 14%, #eeece195 27%, #eeece100 44%, #eeece100 75%, #eeece1b0 100%), linear-gradient(0deg, #eeece1d9 0%, #eeece100 25%);
+}
+.frame
+{
+    position: absolute;
+    inset: 18px;
+    border: 1px solid var(--line);
+    pointer-events: none;
+}
+.masthead
+{
+    position: absolute;
+    top: 48px;
+    left: 52px;
+    pointer-events: none;
+}
+.eyebrow
+{
+    font-size: 9px;
+    letter-spacing: 2.2px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.seal
+{
+    width: 23px;
+    height: 25px;
+    display: grid;
+    place-items: center;
+    background: var(--rust);
+    color: var(--paper);
+    font: 20px Newsreader, serif;
+    transform: rotate(-4deg);
+    border: 2px double #f1e7d270;
+}
+h1
+{
+    font: 500 76px/.95 Newsreader, Georgia, serif;
+    letter-spacing: -3.2px;
+    margin: 20px 0 9px;
+}
+h1 span
+{
+    display: inline-block;
+    font: 11px Inter, sans-serif;
+    vertical-align: top;
+    margin: 6px 0 0 8px;
+    letter-spacing: 0;
+}
+.masthead > p
+{
+    font: 16px Newsreader, Georgia, serif;
+    margin: 0;
+    color: #4a6058;
+}
+.vitals
+{
+    width: 192px;
+    margin-top: 37px;
+}
+.meter-label
+{
+    display: flex;
+    justify-content: space-between;
+    font-size: 8px;
+    letter-spacing: 1.9px;
+}
+.meter
+{
+    height: 3px;
+    background: #435c4430;
+    margin: 10px 0 13px;
+}
+.meter > div
+{
+    height: 100%;
+    background: #425f52;
+    width: 100%;
+}
+.composure
+{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 8px;
+    color: #6b756a;
+}
+#hearts
+{
+    color: var(--rust);
+    letter-spacing: 3px;
+    white-space: nowrap;
+}
+.utilities
+{
+    position: absolute;
+    right: 48px;
+    top: 49px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.weather
+{
+    font-size: 8px;
+    letter-spacing: 1.5px;
+    margin-right: 20px;
+}
+.weather > span
+{
+    display: inline-block;
+    height: 4px;
+    width: 4px;
+    border-radius: 50%;
+    background: #718678;
+    margin: 0 8px 2px 0;
+}
+.icon-button
+{
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--line);
+    background: #eeece14f;
+    display: grid;
+    place-items: center;
+}
+.icon-button:hover
+{
+    background: var(--paper);
+}
+.journey
+{
+    position: absolute;
+    top: 32%;
+    right: 48px;
+    display: flex;
+    gap: 19px;
+    pointer-events: none;
+}
+.vertical-label
+{
+    font-size: 7px;
+    letter-spacing: 2px;
+    writing-mode: vertical-rl;
+    padding-top: 8px;
+    color: #6e7c70;
+}
+.journey ol
+{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.journey li
+{
+    display: flex;
+    gap: 13px;
+    height: 77px;
+    position: relative;
+    opacity: .45;
+    align-items: flex-start;
+    font: 20px Newsreader, Georgia, serif;
+}
+.journey li:not(:last-child)::after
+{
+    content: "";
+    position: absolute;
+    height: 38px;
+    left: 14px;
+    top: 33px;
+    border-left: 1px dashed #435d4855;
+}
+.route-node
+{
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #536a4f6b;
+    border-radius: 50%;
+    font: 8px Inter, sans-serif;
+    flex-shrink: 0;
+    background: #e6e9db70;
+}
+.journey li > span:last-child
+{
+    padding-top: 3px;
+}
+.journey small
+{
+    display: block;
+    font: 8px Inter, sans-serif;
+    padding-top: 6px;
+}
+.journey li.current
+{
+    opacity: 1;
+}
+.current .route-node
+{
+    background: var(--rust);
+    color: var(--paper);
+    border-color: var(--rust);
+    box-shadow: 0 0 0 4px #9c4a3610;
+}
+.journey li.done
+{
+    opacity: .85;
+}
+.done .route-node
+{
+    background: var(--ink);
+    color: var(--paper);
+}
+.journey .summit
+{
+    font-size: 15px;
+}
+.lesson
+{
+    position: absolute;
+    left: 52px;
+    bottom: 116px;
+    width: 310px;
+    pointer-events: none;
+}
+.lesson .eyebrow
+{
+    font-size: 8px;
+    letter-spacing: 1.6px;
+}
+.lesson .eyebrow > span:first-child
+{
+    color: var(--rust);
+}
+.dash
+{
+    height: 1px;
+    width: 26px;
+    background: #5b73625c;
+}
+h2
+{
+    font: 500 36px/1.03 Newsreader, Georgia, serif;
+    letter-spacing: -.8px;
+    margin: 18px 0 12px;
+}
+.lesson p
+{
+    font-size: 10px;
+    line-height: 1.8;
+    color: #596c5e;
+    max-width: 270px;
+    min-height: 36px;
+}
+.primary
+{
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 27px;
+    background: var(--ink);
+    color: #f3efe3;
+    border: none;
+    padding: 14px 18px;
+    font-size: 10px;
+    letter-spacing: .5px;
+}
+.primary:hover
+{
+    background: #456154;
+}
+.lesson button
+{
+    pointer-events: auto;
+    margin-top: 8px;
+}
+.text-button
+{
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    padding: 8px 0;
+    background: none;
+    font-size: 10px;
+}
+.controls-hint
+{
+    position: absolute;
+    bottom: 113px;
+    left: 50%;
+    transform: translateX(-25%);
+    display: flex;
+    gap: 21px;
+    align-items: center;
+    pointer-events: none;
+}
+.controls-hint > span, .controls-hint > button
+{
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-direction: column;
+}
+.key-action
+{
+    pointer-events: auto;
+    background: transparent;
+    padding: 5px;
+    border: 0;
+}
+.key-action:hover kbd
+{
+    background: #e8dfc7;
+    border-color: var(--rust);
+}
+.controls-hint small
+{
+    font-size: 8px;
+    white-space: nowrap;
+    color: #536457;
+}
+kbd
+{
+    width: 23px;
+    height: 22px;
+    border: 1px solid #3b57433b;
+    display: inline-grid;
+    place-items: center;
+    font: 8px Inter, sans-serif;
+    background: #f3f0e052;
+}
+.wasd
+{
+    display: flex;
+    gap: 3px;
+    margin-top: -3px;
+}
+kbd.wide
+{
+    width: 58px;
+}
+.controls-hint .hint-divider
+{
+    height: 34px;
+    border-left: 1px solid var(--line);
+}
+.controls-hint .mouse-hint
+{
+    margin-left: 8px;
+}
+footer
+{
+    position: absolute;
+    bottom: 42px;
+    left: 52px;
+    right: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 7px;
+    letter-spacing: 1px;
+    pointer-events: none;
+    color: #596c5e;
+}
+footer b
+{
+    font-weight: 400;
+    margin: 0 9px;
+    opacity: .5;
+}
+footer a
+{
+    pointer-events: auto;
+    color: inherit;
+    text-decoration: none;
+    letter-spacing: .2px;
+}
+footer a span
+{
+    margin-left: 6px;
+}
+footer time
+{
+    font-variant-numeric: tabular-nums;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+.target
+{
+    position: absolute;
+    width: 160px;
+    text-align: center;
+    pointer-events: none;
+    transform: translate(-50%, -100%);
+    text-shadow: 0 1px 5px #eeece1;
+}
+.target-type
+{
+    font-size: 6px;
+    letter-spacing: 1.8px;
+}
+.target strong
+{
+    display: block;
+    font: 19px Newsreader, Georgia, serif;
+    font-weight: 500;
+    margin: 5px 0 7px;
+}
+.target-meter
+{
+    width: 88px;
+    height: 2px;
+    margin: auto;
+    background: #34493e32;
+}
+.target-meter > span
+{
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: var(--rust);
+}
+.target small
+{
+    display: block;
+    font-size: 8px;
+    margin-top: 7px;
+    color: #455e51;
+}
+.target.warning small
+{
+    color: #a13e2d;
+    font-weight: 700;
+}
+.feedback
+{
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+    font: 23px Newsreader, Georgia, serif;
+    color: var(--rust);
+    text-align: center;
+    pointer-events: none;
+    width: min(80%, 420px);
+    text-shadow: 0 1px 12px var(--paper), 0 1px 4px var(--paper);
+}
+.touch-controls
+{
+    display: none;
+}
+dialog
+{
+    max-width: min(490px, calc(100vw - 32px));
+    max-height: calc(100dvh - 40px);
+    background: #f0eee3;
+    color: var(--ink);
+    border: 1px solid #4d675653;
+    padding: 38px;
+    box-shadow: 0 20px 90px #1c362837;
+}
+dialog::backdrop
+{
+    background: #243f344f;
+    backdrop-filter: blur(5px);
+}
+dialog h2
+{
+    font-size: 43px;
+}
+dialog p
+{
+    font-size: 12px;
+    line-height: 1.8;
+    color: #5d6e60;
+}
+dialog dl > div
+{
+    display: grid;
+    grid-template-columns: 58px 1fr;
+    padding: 12px 0;
+    border-top: 1px solid var(--line);
+    font-size: 11px;
+    line-height: 1.7;
+}
+dialog dt
+{
+    font-weight: 600;
+}
+dialog dd
+{
+    margin: 0;
+    color: #596a5c;
+}
+dialog .fine
+{
+    font-size: 9px;
+}
+dialog .primary
+{
+    margin-top: 12px;
+}
+#result-stats
+{
+    display: flex;
+    gap: 28px;
+    padding: 18px 0;
+    border-block: 1px solid var(--line);
+    margin: 18px 0 8px;
+}
+#result-stats span
+{
+    font-size: 9px;
+    color: #627362;
+}
+#result-stats strong
+{
+    display: block;
+    font: 28px Newsreader, Georgia, serif;
+    color: var(--ink);
+    margin-bottom: 5px;
+}
+@media (max-width: 800px), (pointer: coarse)
+{
+    .frame
+    {
+        inset: 10px;
+    }
+    .masthead
+    {
+        left: 26px;
+        top: 29px;
+    }
+    h1
+    {
+        font-size: 57px;
+        margin-top: 15px;
+    }
+    .masthead > p
+    {
+        font-size: 13px;
+    }
+    .eyebrow
+    {
+        font-size: 7px;
+        gap: 9px;
+        letter-spacing: 1.6px;
+    }
+    .seal
+    {
+        width: 19px;
+        height: 20px;
+        font-size: 17px;
+    }
+    .vitals
+    {
+        width: 154px;
+        margin-top: 24px;
+    }
+    .composure
+    {
+        font-size: 6px;
+        gap: 7px;
+    }
+    .utilities
+    {
+        top: 28px;
+        right: 25px;
+        gap: 5px;
+    }
+    .icon-button
+    {
+        width: 30px;
+        height: 31px;
+    }
+    .utilities .weather
+    {
+        display: none;
+    }
+    .journey
+    {
+        left: 26px;
+        right: auto;
+        top: 226px;
+    }
+    .journey ol
+    {
+        display: flex;
+        gap: 8px;
+    }
+    .vertical-label, .journey li > span:last-child
+    {
+        display: none;
+    }
+    .journey li
+    {
+        height: 25px;
+    }
+    .route-node
+    {
+        width: 25px;
+        height: 25px;
+        font-size: 7px;
+    }
+    .journey li:not(:last-child)::after
+    {
+        display: none;
+    }
+    .lesson
+    {
+        left: 26px;
+        bottom: 186px;
+        width: 290px;
+    }
+    .lesson h2
+    {
+        font-size: 25px;
+        margin: 13px 0 8px;
+    }
+    .lesson p
+    {
+        font-size: 9px;
+        margin: 8px 0;
+    }
+    .lesson .primary
+    {
+        padding: 11px 14px;
+        font-size: 9px;
+    }
+    .controls-hint
+    {
+        display: none;
+    }
+    .touch-controls
+    {
+        position: absolute;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        bottom: 72px;
+        left: 26px;
+        right: 26px;
+        pointer-events: none;
+    }
+    .touch-controls button
+    {
+        pointer-events: auto;
+        touch-action: none;
+        user-select: none;
+        -webkit-user-select: none;
+        background: #edece2b5;
+        border: 1px solid #3f5b434a;
+        min-width: 43px;
+        height: 43px;
+        display: grid;
+        place-items: center;
+    }
+    .touch-controls button:active, .touch-controls button.held
+    {
+        background: #bcc7b8;
+    }
+    .dpad
+    {
+        display: grid;
+        grid-template: repeat(2, 43px) / repeat(3, 43px);
+        gap: 3px;
+    }
+    .dpad button:first-child
+    {
+        grid-column: 2;
+    }
+    .dpad button:nth-child(2)
+    {
+        grid-column: 1;
+    }
+    .touch-actions
+    {
+        display: flex;
+        gap: 8px;
+        align-items: flex-end;
+    }
+    .touch-actions button
+    {
+        border-radius: 50%;
+        font: 17px Newsreader, Georgia, serif;
+        width: 62px;
+        height: 62px;
+        align-content: center;
+        gap: 3px;
+    }
+    .touch-actions button small
+    {
+        font: 5px Inter, sans-serif;
+        letter-spacing: .7px;
+    }
+    .touch-actions #touch-strike
+    {
+        width: 72px;
+        height: 72px;
+        background: #2f493ee8;
+        color: #f1eee1;
+    }
+    footer
+    {
+        left: 26px;
+        right: 26px;
+        bottom: 29px;
+        font-size: 6px;
+        letter-spacing: .5px;
+        gap: 9px;
+    }
+    footer .edition
+    {
+        display: none;
+    }
+    footer time
+    {
+        font-size: 9px;
+    }
+    .feedback
+    {
+        top: 34%;
+        font-size: 20px;
+    }
+    .target
+    {
+        width: 145px;
+    }
+    .target strong
+    {
+        font-size: 17px;
+    }
+    dialog
+    {
+        padding: 27px;
+    }
+    dialog h2
+    {
+        font-size: 35px;
+    }
+    .wash
+    {
+        background: linear-gradient(180deg, #eeece1e8 0%, #eeece1b3 17%, #eeece100 32%, #eeece100 49%, #eeece1c7 64%, #eeece1e0 78%, #eeece1ac 100%);
+    }
+}
+@media (max-height: 650px) and (min-width: 801px)
+{
+    .masthead
+    {
+        top: 33px;
+    }
+    h1
+    {
+        font-size: 52px;
+        margin-top: 12px;
+    }
+    .vitals
+    {
+        margin-top: 18px;
+    }
+    .lesson
+    {
+        bottom: 93px;
+    }
+    .lesson h2
+    {
+        font-size: 27px;
+    }
+    .journey li
+    {
+        height: 58px;
+    }
+    .journey li:not(:last-child)::after
+    {
+        height: 20px;
+    }
+}

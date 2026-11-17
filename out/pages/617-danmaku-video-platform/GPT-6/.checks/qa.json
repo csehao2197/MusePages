@@ -1,0 +1,280 @@
+{
+  "prompt": "617-danmaku-video-platform",
+  "modelId": "gpt-6.1-sol",
+  "passed": true,
+  "checkedAt": "2026-11-16T16:28:22.061Z",
+  "viewports": {
+    "desktop": {
+      "width": 1200,
+      "height": 900,
+      "deviceScaleFactor": 1
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 1
+    }
+  },
+  "staticDigest": "5b5fbc08350d0e46950ecb770615f5bc91bdf7b8a7e5741f64103685fcacbd8e",
+  "assertions": [
+    {
+      "name": "Desktop HTTP, meaningful English homepage, six loaded original thumbnails and local fonts",
+      "passed": true,
+      "detail": {
+        "status": 200,
+        "cards": 6
+      }
+    },
+    {
+      "name": "Desktop initial no horizontal overflow",
+      "passed": true,
+      "detail": {
+        "scroll": 1200,
+        "viewport": 1200
+      }
+    },
+    {
+      "name": "Keyboard search, empty search state, real category filtering and title sorting",
+      "passed": true,
+      "detail": {
+        "sortedTitles": [
+          "A City Before It Wakes",
+          "A Little Room for Play",
+          "Made Slowly, by Hand",
+          "Somewhere, Things Are Growing",
+          "The Ocean Has a Rhythm",
+          "Windows After Hours"
+        ]
+      }
+    },
+    {
+      "name": "Actual local WebM decoding, 960×540 video playback and stable pause",
+      "passed": true,
+      "detail": {
+        "duration": 24,
+        "width": 960,
+        "height": 540,
+        "src": "blob:http://127.0.0.1:51703/86fead44-b6c3-4e62-a2ed-556a8930937f",
+        "ready": 4
+      }
+    },
+    {
+      "name": "Seek/pause synchronization and keyboard play, seek, overlay controls",
+      "passed": true,
+      "detail": {
+        "pausedTransforms": 4
+      }
+    },
+    {
+      "name": "Timed local injection, actual danmaku visibility, density update, type/my-comment filters and seekable map",
+      "passed": true,
+      "detail": {
+        "before": 12,
+        "after": 13,
+        "densityCount": 13
+      }
+    },
+    {
+      "name": "Real film end and replay reset the actual media clock",
+      "passed": true
+    },
+    {
+      "name": "Desktop after watch interactions no horizontal overflow",
+      "passed": true,
+      "detail": {
+        "scroll": 1200,
+        "viewport": 1200
+      }
+    },
+    {
+      "name": "Persistent saved/follow/comment/preferences state and real share clipboard",
+      "passed": true,
+      "detail": {
+        "clipboard": "http://127.0.0.1:51703/pages/danmaku-video-platform/GPT-6/index.html#/watch?id=city"
+      }
+    },
+    {
+      "name": "Saved/followed feeds and related catalogue navigation",
+      "passed": true,
+      "detail": {
+        "saved": 1,
+        "followedFilms": 2
+      }
+    },
+    {
+      "name": "All five additional original local clips decode, play and seek",
+      "passed": true,
+      "detail": [
+        {
+          "id": "form",
+          "seconds": 8,
+          "duration": 12,
+          "frames": 108
+        },
+        {
+          "id": "tide",
+          "seconds": 8,
+          "duration": 12,
+          "frames": 108
+        },
+        {
+          "id": "clay",
+          "seconds": 8,
+          "duration": 12,
+          "frames": 108
+        },
+        {
+          "id": "night",
+          "seconds": 8,
+          "duration": 12,
+          "frames": 107
+        },
+        {
+          "id": "garden",
+          "seconds": 8,
+          "duration": 12,
+          "frames": 106
+        }
+      ]
+    },
+    {
+      "name": "Related-film hash navigation changes actual film",
+      "passed": true
+    },
+    {
+      "name": "Mobile initial no horizontal overflow",
+      "passed": true,
+      "detail": {
+        "scroll": 390,
+        "viewport": 390
+      }
+    },
+    {
+      "name": "Mobile after actual playback, keyboard seeking and comment/save/follow interactions no overflow",
+      "passed": true,
+      "detail": {
+        "scroll": 390,
+        "viewport": 390
+      }
+    },
+    {
+      "name": "Mobile actual media, keyboard range seeking, touch controls and local comment workflow",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 390,
+          "height": 844,
+          "deviceScaleFactor": 1
+        },
+        "touchSizes": [
+          {
+            "name": "Jump to 0:00 — 1 comments",
+            "width": 53.34375,
+            "height": 44
+          },
+          {
+            "name": "Jump to 0:02 — 2 comments",
+            "width": 53.328125,
+            "height": 44
+          },
+          {
+            "name": "Jump to 0:04 — 2 comments",
+            "width": 53.34375,
+            "height": 44
+          },
+          {
+            "name": "Jump to 0:06 — 2 comments",
+            "width": 53.328125,
+            "height": 44
+          },
+          {
+            "name": "Jump to 0:08 — 2 comments",
+            "width": 53.328125,
+            "height": 44
+          },
+          {
+            "name": "Jump to 0:10 — 1 comments",
+            "width": 53.328125,
+            "height": 44
+          },
+          {
+            "name": "Play film",
+            "width": 44,
+            "height": 44
+          },
+          {
+            "name": "Show synchronized comments",
+            "width": 44,
+            "height": 44
+          },
+          {
+            "name": "Saved",
+            "width": 82.203125,
+            "height": 44
+          },
+          {
+            "name": "Share",
+            "width": 80.125,
+            "height": 44
+          },
+          {
+            "name": "Following",
+            "width": 71.296875,
+            "height": 44
+          },
+          {
+            "name": "Send ",
+            "width": 68.09375,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "name": "Honest local profile disclosure, accessible modal and Escape dismissal",
+      "passed": true
+    },
+    {
+      "name": "Storage-blocked memory fallback and clipboard-unavailable selectable-link fallback",
+      "passed": true
+    },
+    {
+      "name": "Zero console/page/request/HTTP errors and zero external runtime requests",
+      "passed": true
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestErrors": [],
+  "httpErrors": [],
+  "externalRequests": [],
+  "screenshots": {
+    "desktop": "C:\\Code\\MusePages\\out\\pages\\617-danmaku-video-platform\\GPT-6\\.checks\\desktop.png",
+    "desktopWatch": "C:\\Code\\MusePages\\out\\pages\\617-danmaku-video-platform\\GPT-6\\.checks\\desktop-watch.png",
+    "mobile": "C:\\Code\\MusePages\\out\\pages\\617-danmaku-video-platform\\GPT-6\\.checks\\mobile.png",
+    "mobileWatch": "C:\\Code\\MusePages\\out\\pages\\617-danmaku-video-platform\\GPT-6\\.checks\\mobile-watch.png"
+  },
+  "visualReviewed": true,
+  "resourcesClosed": true,
+  "mount": "/pages/danmaku-video-platform/GPT-6/index.html",
+  "finalStaticDigest": "e06049c536e99e8a0ce35759d466bacb9398e2ecff0cfd86601a68e05ad9a3c0",
+  "finalStaticRecheck": "Only license attribution files changed after the passing runtime QA; static validation rerun.",
+  "visualReview": {
+    "imagesOpenedWithViewTool": [
+      "C:\\Code\\MusePages\\out\\pages\\617-danmaku-video-platform\\GPT-6\\.checks\\desktop.png",
+      "C:\\Code\\MusePages\\out\\pages\\617-danmaku-video-platform\\GPT-6\\.checks\\mobile.png",
+      "C:\\Code\\MusePages\\out\\pages\\617-danmaku-video-platform\\GPT-6\\.checks\\desktop-watch.png",
+      "C:\\Code\\MusePages\\out\\pages\\617-danmaku-video-platform\\GPT-6\\.checks\\mobile-watch.png"
+    ],
+    "desktop": "已打开实际 1200×900 PNG。深绿与暖白层级清晰，原创城市主视觉、分栏留白、平衡标题与描边图标一致；次级元数据有意紧凑。",
+    "mobile": "已打开实际 390×844 PNG。导航、搜索、上下堆叠主视觉与播放入口完整，无横向溢出；主标题、按钮和视频控件清晰。",
+    "watch": "已打开桌面和移动观看页实际 PNG；真实影片、弹幕、密度条和评论面板无明显布局问题。",
+    "refinements": [
+      "修复 SVG 默认实心填充，统一 Lucide 描边",
+      "主标题 text-wrap: balance",
+      "筛选时正确隐藏简介",
+      "密度条按峰值归一化，防止新增评论撑破布局"
+    ],
+    "reviewedAt": "2026-11-16T16:30:36.306Z"
+  }
+}

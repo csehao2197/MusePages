@@ -1,0 +1,156 @@
+{
+  "runId": "ai-gpt6-all-28883b46-8438-4644-b660-725d7968c87c",
+  "prompt": "562-aquarium-exhibits-and-tickets-website",
+  "status": "completed",
+  "summary": "已完成此单一水族馆首页、真实桌面/手机交互和视觉验收、独立预览及默认关闭的唯一登记。未构建或部署。",
+  "modelId": "gpt-6.1-sol",
+  "display_model_name": "GPT-6",
+  "tags": [
+    "Aquarium",
+    "Bioluminescent"
+  ],
+  "generated": true,
+  "preview": true,
+  "validated": true,
+  "config_added": true,
+  "output": "C:\\Code\\MusePages\\out\\pages\\562-aquarium-exhibits-and-tickets-website\\GPT-6",
+  "staticDir": "C:\\Code\\MusePages\\out\\pages\\562-aquarium-exhibits-and-tickets-website\\GPT-6\\out",
+  "homepage": "C:\\Code\\MusePages\\out\\pages\\562-aquarium-exhibits-and-tickets-website\\GPT-6\\out\\index.html",
+  "metadataFile": "C:\\Code\\MusePages\\out\\pages\\562-aquarium-exhibits-and-tickets-website\\GPT-6\\metadata.json",
+  "qaFile": "C:\\Code\\MusePages\\out\\pages\\562-aquarium-exhibits-and-tickets-website\\GPT-6\\.checks\\qa.json",
+  "screenshots": [
+    "C:\\Code\\MusePages\\out\\pages\\562-aquarium-exhibits-and-tickets-website\\GPT-6\\.checks\\desktop.png",
+    "C:\\Code\\MusePages\\out\\pages\\562-aquarium-exhibits-and-tickets-website\\GPT-6\\.checks\\mobile.png",
+    "C:\\Code\\MusePages\\out\\pages\\562-aquarium-exhibits-and-tickets-website\\GPT-6\\.checks\\picker-mobile.png",
+    "C:\\Code\\MusePages\\out\\pages\\562-aquarium-exhibits-and-tickets-website\\GPT-6\\out\\preview.png"
+  ],
+  "visualReviewed": true,
+  "testEvidence": {
+    "command": "node out\\pages\\562-aquarium-exhibits-and-tickets-website\\GPT-6\\.checks\\qa.mjs",
+    "sourceCheck": "html",
+    "assertionCount": 91,
+    "passed": true,
+    "viewports": [
+      {
+        "width": 1200,
+        "height": 900,
+        "deviceScaleFactor": 1
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "deviceScaleFactor": 1
+      }
+    ],
+    "additionalWidths": [
+      320,
+      768,
+      1024
+    ],
+    "noOverflowBeforeAndAfterInteractions": true,
+    "browserErrors": [],
+    "interactions": [
+      "键盘及指针手机菜单、Escape 返回焦点、跳过链接",
+      "五区地图导航/焦点及活动区跟踪",
+      "工作日/周末排程和方向键/End 日筛选",
+      "成人/青年/长者总价、0–12边界、售罄时段、少量剩余时段",
+      "本地保存、重载恢复、编辑、零人数拒绝",
+      "损坏数据、无效售罄存档、存储权限拒绝",
+      "减少动态效果、六幅图片解码、六种本地字重、无外部运行请求"
+    ],
+    "assetsDecoded": true,
+    "publicFileCount": 24,
+    "staticBytesIncludingPreview": 1876018,
+    "exportMatchesSource": true,
+    "inputDigest": "8c727ffadbb76d9b370f1168e4249a83a28a614611b2e9a9b0b1a57a99981a99",
+    "staticDigest": "7b1b8ea72cdf2ae6fcaa672d27ae3b293bfc65151af77b7acd31bc323bbe08a2",
+    "previewDigest": "fdab5da61770164e5b558edff9fa38ef858e67519c1f1f525b00adf31016a445",
+    "previewFingerprintVerified": true,
+    "visualEvidence": {
+      "reviewer": "gpt-6.1-sol",
+      "method": "通过 view 工具实际打开最终桌面、手机、手机选票 PNG 以及独立生成的最终预览。",
+      "files": [
+        {
+          "file": ".checks/desktop.png",
+          "sha256": "529f41c57f4ff5e2ad79ef3d99c8aa2001c9fff3fc71ce2ddc0dcc823ec5b4fc"
+        },
+        {
+          "file": ".checks/mobile.png",
+          "sha256": "b509475e6ef99909d19baefa12c990d71cad76b51051e0e9d9f8d1099355c40f"
+        },
+        {
+          "file": ".checks/picker-mobile.png",
+          "sha256": "09f4451ed29bd87f3452f574675de6bc17861f698cbd14e1acd9aaa8ca77950f"
+        },
+        {
+          "file": "out/preview.png",
+          "sha256": "fdab5da61770164e5b558edff9fa38ef858e67519c1f1f525b00adf31016a445"
+        }
+      ],
+      "observations": [
+        "桌面双栏层级清晰，水母肖像与大标题平衡；留白、边界及低对比水纹均统一。",
+        "手机首屏标题与两个入口完整可读，肖像顺序下移，无横向裁切。",
+        "手机选票的日期、售罄、总价与保存状态间距清晰，页头没有遮住操作区。"
+      ],
+      "verdict": "通过；未将截图替代静态首页。"
+    },
+    "investigation": {
+      "records": [
+        ".checks/qa-initial.json",
+        ".checks/qa-second.json",
+        ".checks/qa-third.json"
+      ],
+      "fixes": [
+        "地图观察器改为比较当前可见区域，地图点击将目标卡片定位到观察区域。",
+        "测试定位器不依赖点击后会改变的无障碍名称。",
+        "修复手机图标替换后冒泡事件将菜单误判为外部点击的问题，使用原始 composedPath；增加指针回归断言。"
+      ],
+      "finalRun": "91 项全部通过；errors 为空。"
+    }
+  },
+  "registration": {
+    "added": true,
+    "uniqueCount": 1,
+    "model": "GPT-6",
+    "slug": "aquarium-exhibits-and-tickets-website",
+    "title": "Aquarium Exhibits and Tickets Website",
+    "tags": [
+      "Aquarium",
+      "Bioluminescent"
+    ],
+    "staticDir": "out",
+    "enabled": false,
+    "deployed": false,
+    "file": "C:\\Code\\MusePages\\deploy\\config.json",
+    "existingConfigurationPreserved": true,
+    "category": null
+  },
+  "provenance": {
+    "title": "Aquarium Exhibits and Tickets Website",
+    "category": "Education",
+    "source_url": "https://github.com/liyupi/awesome-vibe-coding-websites/blob/85431a57f231fa59269dad62c757193d6a3fd0ff/templates/aquarium-exhibits-and-tickets-website/prompt.md",
+    "license": "CC-BY-NC-4.0",
+    "license_file": "data\\downloads\\github.com\\liyupi-awesome-vibe-coding-websites\\85431a57f231fa59269dad62c757193d6a3fd0ff\\LICENSE"
+  },
+  "attribution": "保留 VibeFather 署名、CC BY-NC 4.0 链接、六幅指定图像的原始生成来源与再分发声明，以及 Fontsource 字体 OFL、Lucide ISC 许可。",
+  "limitations": [
+    "免构建 HTML/CSS/ES-module 静态适配，不是原指定 Vite/React/TypeScript/Tailwind 版本；content.js 替代类型化 content.ts，CSS 替代 Motion。",
+    "票务仅 localStorage 本地示例：不付款、不预订、不锁库存。会员仅信息展示，无办理流程。",
+    "场馆、居民、地址、营业时间与排程均为虚构示例；样例时段不随现实日期和营业时间计算。",
+    "字体与图像已本地化；非商业模板与各资源仍受原许可限制，不授予额外商业权利。",
+    "登记选项保持 enabled=false、deployed=false；未汇集、发布或上传。登记帮助函数未新增 prompt 级 category 字段。"
+  ],
+  "blocker": null,
+  "buildsRun": false,
+  "deploymentsRun": false,
+  "agentsUsed": false,
+  "resourcesClosed": true,
+  "resourceEvidence": "所有本任务 Playwright 浏览器和仅托管目标 out 的临时预览服务已在 finally 中关闭；每次命令均已退出。",
+  "coordinatorLock": {
+    "pid": 30508,
+    "verifiedAlive": true,
+    "retained": true,
+    "runId": "ai-gpt6-all-28883b46-8438-4644-b660-725d7968c87c"
+  },
+  "reportFile": "C:\\Code\\MusePages\\src\\workflows\\script\\.ai-gpt6-report-562.json"
+}

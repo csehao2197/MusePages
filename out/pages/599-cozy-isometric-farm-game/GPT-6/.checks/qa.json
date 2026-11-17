@@ -1,0 +1,153 @@
+{
+  "prompt": "599-cozy-isometric-farm-game",
+  "modelId": "gpt-6.1-sol",
+  "passed": true,
+  "generatedAt": "2026-11-16T11:02:02.015Z",
+  "viewports": [
+    {
+      "width": 1200,
+      "height": 900,
+      "deviceScaleFactor": 1
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 1
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 1,
+      "touch": true
+    }
+  ],
+  "results": [
+    {
+      "name": "Engine: all three exact-price crop lifecycles and invalid saves",
+      "passed": true,
+      "evidence": "2/3/4 watered days; 9/14/22 harvest; insufficient funds immutable"
+    },
+    {
+      "name": "Static export independent subpath validation",
+      "passed": true,
+      "evidence": "1c96a8bb21f51776fa033d96e20bab15737242dd26007a56f0c1d6dffa672988"
+    },
+    {
+      "name": "Actual isolated preview server ready",
+      "passed": true,
+      "evidence": "http://127.0.0.1:53241/pages/cozy-isometric-farm-game/GPT-6/index.html"
+    },
+    {
+      "name": "Desktop 1200×900 initial no overflow",
+      "passed": true,
+      "evidence": {
+        "scroll": 1200,
+        "viewport": 1200
+      }
+    },
+    {
+      "name": "Desktop 1440×900 no overflow",
+      "passed": true,
+      "evidence": {
+        "scroll": 1440,
+        "viewport": 1440
+      }
+    },
+    {
+      "name": "1440 desktop composition",
+      "passed": true,
+      "evidence": "Complete board, tools, day action and shop in 900px height"
+    },
+    {
+      "name": "Desktop real gameplay and keyboard",
+      "passed": true,
+      "evidence": "Till Enter; Plant Space; arrows; watering; double-day guard; no dry growth; exact inventory and +9 harvest"
+    },
+    {
+      "name": "Full state persists after reload",
+      "passed": true,
+      "evidence": "Day, coins, tool, seed, inventory and all tiles unchanged"
+    },
+    {
+      "name": "Help/reset accessible dialog and scoped reset",
+      "passed": true,
+      "evidence": "Focus trap; Escape; trigger focus restoration; cancel preserves; confirm resets only game data"
+    },
+    {
+      "name": "Desktop post-interaction no overflow",
+      "passed": true,
+      "evidence": {
+        "scroll": 1200,
+        "viewport": 1200
+      }
+    },
+    {
+      "name": "Mobile 390×844 initial no overflow",
+      "passed": true,
+      "evidence": {
+        "scroll": 390,
+        "viewport": 390
+      }
+    },
+    {
+      "name": "Mobile open shop no overflow",
+      "passed": true,
+      "evidence": {
+        "scroll": 390,
+        "viewport": 390
+      }
+    },
+    {
+      "name": "Mobile post-interaction no overflow",
+      "passed": true,
+      "evidence": {
+        "scroll": 390,
+        "viewport": 390
+      }
+    },
+    {
+      "name": "Real touch/mobile core and shop",
+      "passed": true,
+      "evidence": "Touch harvest +9; strawberry purchase −9; seed select/plant/water; reduced-motion day +1; disabled insufficient purchases; Escape restore"
+    },
+    {
+      "name": "Offline gameplay after load",
+      "passed": true,
+      "evidence": "Successful till while browser network offline; no remote state"
+    },
+    {
+      "name": "Corrupt and illegal local saves",
+      "passed": true,
+      "evidence": "Bad JSON and impossible crop progress reset safely to exact initial state"
+    },
+    {
+      "name": "Unavailable storage remains playable and truthful",
+      "passed": true,
+      "evidence": "Quota failure reports local saving unavailable without runtime error"
+    },
+    {
+      "name": "Browser resource and runtime monitoring",
+      "passed": true,
+      "evidence": "No page/console/request/HTTP errors across desktop, mobile, reloads and storage denial"
+    }
+  ],
+  "errors": [],
+  "screenshots": [
+    "desktop.png",
+    "desktop-wide.png",
+    "mobile.png"
+  ],
+  "visualReviewed": true,
+  "resourcesClosed": true,
+  "visualReview": {
+    "language": "zh-CN",
+    "imagesOpened": [
+      ".checks\\desktop.png",
+      ".checks\\mobile.png",
+      ".checks\\desktop-wide.png",
+      "out\\preview.png"
+    ],
+    "evaluation": "已实际打开全部所列PNG。桌面左右栏与农场场景平衡，暖色衬底和深绿工具有清楚层次，字体一致。手机首屏完整呈现田地及四种工具，标题、状态与控件未被裁剪；后续日程和商店自然纵向滚动，无横向溢出。保留精确SVG投影，窄屏菱形触区小于44px的限制已披露。",
+    "reviewedAt": "2026-11-16T11:02:36.974Z"
+  }
+}

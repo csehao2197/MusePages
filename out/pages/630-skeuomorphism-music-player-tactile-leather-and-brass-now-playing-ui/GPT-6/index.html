@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#191a1c">
+    <meta name="description" content="Resonant. A tactile listening room in leather, graphite and brass. Three original instrumental studies, yours to explore.">
+    <title>RESONANT — A little closer to the music</title>
+    <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="app.js"></script>
+</head>
+<body>
+    <header class="masthead">
+        <a class="wordmark" href="index.html" aria-label="Resonant home"><img src="assets/mark.svg" alt="" width="24" height="24"> RESONANT<span>®</span></a>
+        <span class="masthead-note">THE PERSONAL LISTENING ROOM</span>
+        <button class="text-button" id="about-open">A note on the music <svg><use href="assets/icons.svg#arrow-up-right"/></svg></button>
+    </header>
+    <main>
+        <section class="introduction" aria-label="The Resonant listening room">
+            <div class="edition"><span></span> OBJECT NO. 01 / THE POCKET PLAYER</div>
+            <h1>A little closer<br>to the <em>music.</em></h1>
+            <p>Less noise. More feeling.<br>A listening room for the moments<br>you want to hold on to.</p>
+            <div class="material-samples" aria-hidden="true"><i></i><i></i><i></i><span>GRAPHITE · LEATHER · BRASS</span></div>
+            <div class="intro-footer"><span class="rule"></span><p>Made for listening.<br><b>Not for scrolling.</b></p></div>
+        </section>
+        <section class="player" aria-label="Resonant music player">
+            <div class="chassis-screw screw-left" aria-hidden="true"></div>
+            <div class="chassis-screw screw-right" aria-hidden="true"></div>
+            <div class="screen">
+                <header class="player-header">
+                    <button class="metal header-chip" id="library-open" aria-label="Open listening library"><svg><use href="assets/icons.svg#chevron-left"/></svg></button>
+                    <div><h2>NOW PLAYING</h2><p>THE AFTERHOURS SESSIONS</p></div>
+                    <div class="options-wrap">
+                        <button class="metal header-chip" id="options-open" aria-label="Player options" aria-expanded="false"><svg><use href="assets/icons.svg#ellipsis"/></svg></button>
+                        <div class="options-menu" id="options-menu" hidden>
+                            <button id="restart">Restart this track</button>
+                            <button id="download">Download original sample</button>
+                            <button id="shortcuts-open">Keyboard shortcuts</button>
+                        </div>
+                    </div>
+                </header>
+                <div class="album-stage">
+                    <div class="vinyl" aria-hidden="true"><span>R</span></div>
+                    <div class="album-frame">
+                        <div class="album-art">
+                            <div class="cover-top"><span>RESONANT RECORDINGS</span><span>VOL. 01</span></div>
+                            <div class="cover-orbit" aria-hidden="true"></div>
+                            <div class="cover-mountains" aria-hidden="true"></div>
+                            <div class="cover-title">AFTER<br>HOURS<span>STUDIES IN STILLNESS</span></div>
+                            <div class="cover-bottom"><span>ORIGINAL INSTRUMENTALS</span><span>STEREO / R—01</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="track-meta">
+                    <div><p class="track-category">SIDE A <span>·</span> TRACK <span id="track-number">01</span></p><h3 id="track-title">The Last Light</h3><p class="artist">Resonant Studio <span>·</span> After Hours</p></div>
+                    <button class="metal favorite" id="favorite" aria-label="Save The Last Light" aria-pressed="false"><svg><use href="assets/icons.svg#heart"/></svg></button>
+                </div>
+                <div class="timeline">
+                    <label class="sr-only" for="seek">Track position</label>
+                    <input type="range" id="seek" min="0" max="36" step="0.1" value="0" style="--fill: 0%" aria-valuetext="0:00 of 0:36">
+                    <div class="time-display"><output id="elapsed" for="seek">0:00</output><span class="signal" id="signal">READY TO LISTEN</span><output id="remaining" for="seek">−0:36</output></div>
+                </div>
+                <div class="leather">
+                    <div class="transport">
+                        <button class="metal small" id="shuffle" aria-label="Shuffle" aria-pressed="false"><svg><use href="assets/icons.svg#shuffle"/></svg></button>
+                        <button class="metal medium" id="previous" aria-label="Previous track"><svg><use href="assets/icons.svg#skip-back"/></svg></button>
+                        <button class="brass play" id="play" aria-label="Play"><svg id="play-icon"><use href="assets/icons.svg#play"/></svg></button>
+                        <button class="metal medium" id="next" aria-label="Next track"><svg><use href="assets/icons.svg#skip-forward"/></svg></button>
+                        <button class="metal small" id="repeat" aria-label="Repeat track" aria-pressed="false"><svg><use href="assets/icons.svg#repeat"/></svg></button>
+                    </div>
+                    <div class="leather-label"><span>HIGH FIDELITY</span><i></i><span>PURELY PERSONAL</span></div>
+                </div>
+                <div class="volume-row">
+                    <button class="icon-button" id="mute" aria-label="Mute" aria-pressed="false"><svg><use href="assets/icons.svg#volume-1"/></svg></button>
+                    <label class="sr-only" for="volume">Volume</label>
+                    <input type="range" id="volume" min="0" max="100" step="1" value="65" style="--fill: 65%" aria-valuetext="65 percent">
+                    <button class="icon-button volume-up" id="volume-up" aria-label="Increase volume"><svg><use href="assets/icons.svg#volume-2"/></svg></button>
+                </div>
+                <nav class="bottom-controls" aria-label="Listening tools">
+                    <button class="metal tool" id="airplay"><svg><use href="assets/icons.svg#airplay"/></svg><span>AIRPLAY</span></button>
+                    <button class="metal tool" id="lyrics"><svg><use href="assets/icons.svg#text-align-start"/></svg><span>LINER NOTES</span></button>
+                    <button class="metal tool active" id="queue-open"><svg><use href="assets/icons.svg#list-music"/></svg><span>QUEUE <small>3</small></span></button>
+                    <button class="metal tool" id="devices"><svg><use href="assets/icons.svg#speaker"/></svg><span>DEVICES</span></button>
+                </nav>
+                <div class="player-signature"><span>R E S O N A N T</span><i></i><span>EST. 2026</span></div>
+            </div>
+        </section>
+        <aside class="session-note">
+            <span class="tiny-label">ON THE TURNTABLE</span>
+            <h2>The Afterhours<br>Sessions.</h2>
+            <p>Three small studies in slowing down.<br>Warm keys. Soft pulses. Room to breathe.</p>
+            <button class="session-link" id="session-open">Explore the session <svg><use href="assets/icons.svg#arrow-right"/></svg></button>
+            <div class="session-stamp"><svg><use href="assets/icons.svg#disc-3"/></svg><span>ORIGINAL SOUNDS<br><b>NO SUBSCRIPTION. JUST PLAY.</b></span></div>
+        </aside>
+    </main>
+    <footer class="page-footer"><span>AN INTENTIONAL LISTENING EXPERIENCE</span><span>Original 36-second instrumental samples. Headphones recommended.</span><span>VOLUME IS A FEELING.</span></footer>
+    <audio id="audio" preload="auto"></audio>
+    <div id="toast" role="status" aria-live="polite"></div>
+    <dialog id="panel" aria-labelledby="panel-title">
+        <div class="dialog-header"><span class="tiny-label">RESONANT / LISTENING ROOM</span><button class="metal header-chip" id="panel-close" aria-label="Close dialog"><svg><use href="assets/icons.svg#x"/></svg></button></div>
+        <h2 id="panel-title">Up next</h2>
+        <div id="panel-body"></div>
+    </dialog>
+</body>
+</html>
